@@ -427,12 +427,12 @@ a:hover { opacity:.75; }
 ═══════════════════════════════════════════════════ -->
 <nav class="site-nav">
   <!-- Logo — links back to home, href updated by populateProject() -->
-  <a id="nav-logo-home" href="https://joselitosering.github.io/aima/index.html" class="nav-logo" style="text-decoration:none;" title="Back to Home">
+  <a id="nav-logo-home" href="https://joselitosering.github.io/aima" class="nav-logo" style="text-decoration:none;" title="Back to Home">
     <span class="dot"></span>
     <span>AI</span><span class="cyan">MEDIA AGENCY</span>
   </a>
   <div class="nav-links">
-    <a id="nav-home-link" href="https://joselitosering.github.io/aima/index.html" class="nav-back-home">← Home</a>
+    <a id="nav-home-link" href="https://joselitosering.github.io/aima/" class="nav-back-home">← Home</a>
     <a id="nav-work"      href="#gallery">Work</a>
     <a id="nav-services"  href="#services">Services</a>
     <a id="nav-process"   href="#logistics">Process</a>
@@ -856,7 +856,7 @@ function safeEmbedUrl(raw) {
 //  POPULATE: PROJECT INFO
 // ─────────────────────────────────────────────
 function populateProject(p, budgetTotal) {
-  document.title = p.page_title || 'Project Deep Dive — AIMA';
+  document.title = p.page_title || 'Project Apophis — AIMA';
 
   const setText = (id, val) => { const el = $(id); if (el) el.textContent = val; };
   const setHref = (id, url) => { const el = $(id); if (el && url) el.href = url; };
@@ -879,7 +879,7 @@ function populateProject(p, budgetTotal) {
   setHref('nav-services', p.nav_link_services);
 
   // ── Home URL ──────────────────────────────────────────────────
-  const homeUrl = p.home_url || '../index.html';
+  const homeUrl = p.home_url || '../aima/index.html';
   ['nav-logo-home', 'nav-home-link', 'footer-logo-home', 'footer-home-btn'].forEach(id => {
     setHref(id, homeUrl);
   });
