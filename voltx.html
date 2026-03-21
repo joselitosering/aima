@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Loading Project… — AIMA</title>
+<title>Projects Template — AIMA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
@@ -20,7 +20,7 @@
      3. Copy the Web App URL and paste below
      ═══════════════════════════════════════════════════ -->
 <script>
-const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbyV1-eg0oP27oqoXzZQgg6LSQxwvOId7IYydDx4FwVsNedV-BafHG8vXcgliDloS0CQSg/exec';
+const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbxap4_3Zb2x5IP2IGDMykq4WCRYE8cX-kzizHlYPgXLbs3mfIbBS9VqrBoMX5mMAxY/exec';
 
 // ── Traditional Equivalent Agency Reference Rates ──────────────
 // These are the benchmark multipliers used to compute savings.
@@ -63,7 +63,7 @@ const AGENCY_RATE_BENCHMARKS = {
 
 *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
 /* Offset anchor scroll for fixed 64px nav */
-[id] { scroll-margin-top: 80px; }
+[id] { scroll-margin-top: 88px; }
 html { scroll-behavior:smooth; font-size:16px; }
 body {
   font-family:'DM Sans', sans-serif;
@@ -125,50 +125,71 @@ a:hover { opacity:.75; }
 .delay-5 { transition-delay:.6s; }
 
 /* ─── NAV ───────────────────────────────────────── */
-.site-nav {
-  position:fixed; top:0; left:0; right:0; height:64px;
-  background:rgba(6,8,16,.88); backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border2);
-  z-index:200; display:flex; align-items:center; padding:0 40px; gap:24px;
+/* ── NAV ────────────────────────────────────────────────────────── */
+#nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  height:72px;
+  display:flex; align-items:center;
+  transition:background .3s, border-color .3s;
+  border-bottom:1px solid transparent;
 }
+#nav.scrolled {
+  background:rgba(6,8,16,.95);
+  backdrop-filter:blur(20px);
+  border-bottom-color:var(--border);
+}
+.nav-inner { display:flex; align-items:center; width:100%; gap:0; }
 .nav-logo {
-  font-family:'Anton',sans-serif; font-size:17px;
-  text-transform:uppercase; letter-spacing:.05em; color:#fff;
-  display:flex; align-items:center; gap:8px; margin-right:auto;
+  display:flex; align-items:center; gap:10px;
+  font-family:'Anton',sans-serif;
+  font-size:15px; letter-spacing:.05em; text-transform:uppercase; color:#fff;
+  white-space:nowrap; text-decoration:none; margin-right:auto;
 }
-.nav-logo .dot { width:7px; height:7px; background:var(--mm-cyan); border-radius:50%; box-shadow:0 0 7px var(--mm-cyan); animation:blink 2.2s ease-in-out infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-.nav-logo .cyan { color:var(--mm-cyan); }
-.nav-links { display:flex; gap:28px; }
-.nav-links a { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mm-muted); transition:color .18s; }
-.nav-links a:hover { color:var(--mm-text); }
-.nav-cta { font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#000; background:var(--mm-cyan); padding:9px 20px; border-radius:var(--radius); transition:opacity .18s; flex-shrink:0; }
-.nav-cta:hover { opacity:.85; color:#000; }
-.nav-back-home {
-  color:var(--mm-cyan) !important;
-  border:1px solid rgba(0,217,245,.25);
-  border-radius:var(--radius);
-  padding:5px 12px !important;
-  font-size:10px !important;
-  letter-spacing:.12em !important;
-  transition:background .18s !important;
-  white-space:nowrap;
+.nav-logo .pulse {
+  width:8px; height:8px; background:var(--mm-cyan); border-radius:50%;
+  box-shadow:0 0 8px var(--mm-cyan);
+  animation:pulse 2.2s ease-in-out infinite;
+  flex-shrink:0;
 }
-.nav-back-home:hover { background:rgba(0,217,245,.08); opacity:1 !important; }
-.nav-project-nav {
-  display:flex; align-items:center; gap:4px;
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
+.nav-logo .m3 { color:var(--mm-cyan); }
+.nav-links { display:flex; align-items:center; gap:24px; list-style:none; margin-right:20px; }
+.nav-links a {
+  font-size:12px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--mm-muted); transition:color .2s;
+  position:relative; padding-bottom:2px; text-decoration:none;
 }
+.nav-links a::after {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:1px; background:var(--mm-cyan);
+  transform:scaleX(0); transform-origin:left; transition:transform .25s;
+}
+.nav-links a:hover { color:#fff; }
+.nav-links a:hover::after { transform:scaleX(1); }
+.nav-links a.active { color:var(--mm-cyan); }
+.nav-links a.active::after { transform:scaleX(1); }
+.nav-cta {
+  font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:700;
+  background:var(--mm-cyan); color:var(--bg);
+  padding:10px 20px; border-radius:var(--radius);
+  transition:box-shadow .2s, opacity .2s; white-space:nowrap;
+  text-decoration:none; flex-shrink:0;
+}
+.nav-cta:hover { box-shadow:0 0 22px rgba(0,217,245,.3); opacity:.9; color:var(--bg); }
+/* Prev / Next project buttons */
+.nav-project-nav { display:flex; align-items:center; gap:4px; margin-right:16px; }
 .nav-proj-btn {
   display:inline-flex; align-items:center; gap:6px;
   font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--mm-muted);
-  border:1px solid var(--border2);
+  color:var(--mm-muted); border:1px solid var(--border2);
   border-radius:var(--radius); padding:6px 14px;
   transition:border-color .18s, color .18s, background .18s;
   text-decoration:none; white-space:nowrap;
 }
-.nav-proj-btn:hover { border-color:var(--mm-cyan); color:var(--mm-cyan); background:rgba(0,217,245,.06); opacity:1; }
+.nav-proj-btn:hover { border-color:var(--mm-cyan); color:var(--mm-cyan); background:rgba(0,217,245,.06); }
 .nav-proj-btn svg { width:14px; height:14px; flex-shrink:0; stroke:currentColor; }
+@media(max-width:900px){ .nav-links { display:none; } }
+@media(max-width:640px){ .nav-cta { display:none; } .nav-project-nav { display:none; } }
 
 /* ─── SECTION SCAFFOLDING ───────────────────────── */
 .page-section { padding:100px 64px; border-bottom:1px solid var(--border2); }
@@ -425,31 +446,38 @@ a:hover { opacity:.75; }
 <!-- ═══════════════════════════════════════════════
      NAV
 ═══════════════════════════════════════════════════ -->
-<nav class="site-nav">
-  <!-- Logo — links back to home, href updated by populateProject() -->
-  <a id="nav-logo-home" href="../index.html" class="nav-logo" style="text-decoration:none;" title="Back to Home">
-    <span class="dot"></span>
-    <span>AI</span><span class="cyan">MA</span>
-  </a>
-  <div class="nav-links">
-    <a id="nav-home-link" href="../index.html" class="nav-back-home">← Home</a>
-    <a id="nav-work"      href="#gallery">Work</a>
-    <a id="nav-services"  href="#services">Services</a>
-    <a id="nav-process"   href="#logistics">Process</a>
-    <a id="nav-about"     href="#testimonials">About</a>
-  </div>
-  <!-- Prev / Next project — shown only when URLs are in the sheet -->
-  <div class="nav-project-nav">
-    <a id="nav-prev" href="#" class="nav-proj-btn" style="display:none;">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span id="nav-prev-label">Prev</span>
+<nav id="nav">
+  <div class="container nav-inner">
+
+    <!-- Logo — href updated by populateProject() from sheet home_url -->
+    <a id="nav-logo-home" href="https://joselitosering.github.io/aima/index.html" class="nav-logo" title="Back to Home">
+      <div class="pulse"></div>
+      <span style="letter-spacing:0;"><span style="color:#fff;">AI</span><span style="color:var(--mm-cyan);">MA</span></span>
     </a>
-    <a id="nav-next" href="#" class="nav-proj-btn" style="display:none;">
-      <span id="nav-next-label">Next</span>
-      <svg viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a id="nav-home-link" href="https://joselitosering.github.io/aima/index.html" class="active">Home</a></li>
+      <li><a id="nav-work"      href="#gallery">Work</a></li>
+      <li><a id="nav-services"  href="#services">Services</a></li>
+      <li><a id="nav-process"   href="#logistics">Process</a></li>
+      <li><a id="nav-about"     href="#testimonials">About</a></li>
+    </ul>
+
+    <!-- Prev / Next project — shown only when URLs set in sheet -->
+    <div class="nav-project-nav">
+      <a id="nav-prev" href="#" class="nav-proj-btn" style="display:none;">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span id="nav-prev-label">Prev</span>
+      </a>
+      <a id="nav-next" href="#" class="nav-proj-btn" style="display:none;">
+        <span id="nav-next-label">Next</span>
+        <svg viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <a href="https://joselitosering.github.io/aima/index.html#contact" class="nav-cta">Get A Quote</a>
+
   </div>
-  <a href="#services" class="nav-cta">Get A Quote</a>
 </nav>
 
 
@@ -680,7 +708,7 @@ a:hover { opacity:.75; }
         <div class="sc-desc">For brands launching their first professional video presence. Focused scope, fast turnaround, zero waste.</div>
         <ul class="sc-deliverables"><li>1× Hero Brand Video (:60–:90)</li><li>1× :15 Social Cut-Down</li><li>3× Thumbnail Variants</li><li>Subtitle + Caption File</li><li>1 Round of Revisions</li></ul>
         <div class="sc-turnaround">Turnaround: <strong>7–10 Business Days</strong></div>
-        <a href="#services" class="sc-cta outline">Learn More →</a>
+        
       </div>
       <div class="service-card apex fade-in delay-2">
         <div class="sc-tier orange">Apex Tier · Most Popular</div>
@@ -688,7 +716,7 @@ a:hover { opacity:.75; }
         <div class="sc-desc">The complete AIMA production package — everything needed to launch, distribute, and measure a professional video campaign.</div>
         <ul class="sc-deliverables"><li>Hero Brand Film (:60–:120)</li><li>:30, :15, :06 Cut-Down Suite</li><li>9:16 Vertical + 1:1 Square Edits</li><li>Full Color Grade + Sound Design</li><li>Motion Graphics & Animated Titles</li><li>10× Production Stills (Edited)</li><li>2 Rounds of Revisions</li><li>30-Day Analytics Report</li></ul>
         <div class="sc-turnaround">Turnaround: <strong>14 Business Days</strong></div>
-        <a href="/cdn-cgi/l/email-protection#d8b0bdb4b4b798b9b1b5b9a8aab7bcadbbacb1b7b6abf6bbb7b5" class="sc-cta">Get A Quote →</a>
+        
       </div>
       <div class="service-card sovereign fade-in delay-3">
         <div class="sc-tier purple">Sovereign Tier</div>
@@ -696,7 +724,7 @@ a:hover { opacity:.75; }
         <div class="sc-desc">For enterprise brands and agencies requiring full campaign architecture — multiple hero films, platform variants, and ongoing retainer support.</div>
         <ul class="sc-deliverables"><li>Up to 3× Hero Films</li><li>Full Platform Variant Suite</li><li>BTS Documentary Package</li><li>AI-Powered Ad Creative Testing</li><li>Dedicated PM + Creative Director</li><li>Unlimited Revisions</li><li>90-Day Campaign Analytics</li><li>Monthly Retainer Option</li></ul>
         <div class="sc-turnaround">Turnaround: <strong>21–30 Business Days</strong></div>
-        <a href="/cdn-cgi/l/email-protection#157d7079797a55747c787465677a716076617c7a7b663b767a78" class="sc-cta outline">Book a Strategy Call →</a>
+        
       </div>
     </div>
 
@@ -705,7 +733,7 @@ a:hover { opacity:.75; }
         <div class="scs-title">Not Sure Which Tier Fits?</div>
         <div class="scs-sub">Book a free 20-minute strategy call. We'll scope your project and recommend the right package.</div>
       </div>
-      <a href="/cdn-cgi/l/email-protection#cea6aba2a2a18eafa7a3afbebca1aabbadbaa7a1a0bde0ada1a3" class="scs-btn" style="display:inline-block;text-decoration:none;">Book Free Strategy Call</a>
+      <a href="https://joselitosering.github.io/aima/index.html#contact" class="scs-btn" style="display:inline-block;text-decoration:none;">Book Free Strategy Call</a>
     </div>
   </div>
 </section>
@@ -732,7 +760,7 @@ a:hover { opacity:.75; }
   <div class="footer-inner">
     <div>
       <a id="footer-logo-home" href="../index.html" class="footer-logo" style="text-decoration:none;">
-        <span class="dot"></span><span>AI</span><span class="cyan">MA</span>
+        <span class="dot"></span><span style="letter-spacing:0;"><span style="color:#fff;">AI</span><span style="color:var(--mm-cyan);">MA</span></span>
       </a>
       <div class="footer-tagline">A Monkey Matters LLC Production · Wyoming LLC</div>
       <div class="footer-tagline" style="margin-top:8px;">The art and the algorithm. Refused to choose.</div>
@@ -1273,6 +1301,26 @@ async function loadFromSheet() {
 //  BOOT
 // ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', loadFromSheet);
+
+// ── NAV SCROLL BEHAVIOR (matches main page) ──────────────────────
+const _nav = document.getElementById('nav');
+const _navLinks = document.querySelectorAll('#navLinks a');
+
+function updateNavScroll() {
+  if (!_nav) return;
+  _nav.classList.toggle('scrolled', window.scrollY > 60);
+  // Active link highlighting based on scroll position
+  let current = '';
+  document.querySelectorAll('[id]').forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+  });
+  _navLinks.forEach(a => {
+    const href = a.getAttribute('href');
+    a.classList.toggle('active', href === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateNavScroll, { passive: true });
+updateNavScroll();
 </script>
 
 </body>
