@@ -1842,7 +1842,32 @@ footer {
 
   </section>
 
-
+  <!-- Article Navigation Footer -->
+  <footer class="article-nav-footer">
+    <div class="article-nav-container">
+      <div class="article-nav-label">Continue Reading</div>
+      
+      <div class="article-nav-grid">
+        <a href="#" class="nav-card" id="prev-article-card">
+          <span class="nav-card-icon">←</span>
+          <div class="nav-card-label">Previous Article</div>
+          <div class="nav-card-title">Loading...</div>
+        </a>
+        
+        <a href="http://joselitosering.github.io/aima/articles/allarticles.html" class="nav-card">
+          <span class="nav-card-icon">⊞</span>
+          <div class="nav-card-label">All Articles</div>
+          <div class="nav-card-title">Browse the complete AIMA knowledge base</div>
+        </a>
+        
+        <a href="#" class="nav-card" id="next-article-card">
+          <span class="nav-card-icon">→</span>
+          <div class="nav-card-label">Next Article</div>
+          <div class="nav-card-title">Loading...</div>
+        </a>
+      </div>
+    </div>
+  </footer>
 
 </article>
 
@@ -2031,8 +2056,12 @@ function loadDynamicNavigation() {
       if (prevTitle) {
         prevCard.querySelector('.nav-card-title').textContent = decodeURIComponent(prevTitle);
       }
+      prevCard.style.opacity = '1';
+      prevCard.style.pointerEvents = 'auto';
+      prevCard.style.cursor = 'pointer';
     } else {
       // Disable card if no previous article
+      prevCard.querySelector('.nav-card-title').textContent = 'No previous article';
       prevCard.style.opacity = '0.4';
       prevCard.style.pointerEvents = 'none';
       prevCard.style.cursor = 'not-allowed';
@@ -2045,10 +2074,14 @@ function loadDynamicNavigation() {
     if (nextSlug) {
       nextCard.href = nextSlug;
       if (nextTitle) {
-        nextCard.querySelector('.nav-card-t        nextCard.querySelector('.nav-card-title').textContent = decodeURIComponent(nextTitle);
+        nextCard.querySelector('.nav-card-title').textContent = decodeURIComponent(nextTitle);
       }
+      nextCard.style.opacity = '1';
+      nextCard.style.pointerEvents = 'auto';
+      nextCard.style.cursor = 'pointer';
     } else {
       // Disable card if no next article
+      nextCard.querySelector('.nav-card-title').textContent = 'No next article';
       nextCard.style.opacity = '0.4';
       nextCard.style.pointerEvents = 'none';
       nextCard.style.cursor = 'not-allowed';
@@ -2166,6 +2199,7 @@ function populateArticleContent(article) {
     prevCard.style.pointerEvents = 'auto';
     prevCard.style.cursor = 'pointer';
   } else if (prevCard) {
+    prevCard.querySelector('.nav-card-title').textContent = 'No previous article';
     prevCard.style.opacity = '0.4';
     prevCard.style.pointerEvents = 'none';
     prevCard.style.cursor = 'not-allowed';
@@ -2182,6 +2216,7 @@ function populateArticleContent(article) {
     nextCard.style.pointerEvents = 'auto';
     nextCard.style.cursor = 'pointer';
   } else if (nextCard) {
+    nextCard.querySelector('.nav-card-title').textContent = 'No next article';
     nextCard.style.opacity = '0.4';
     nextCard.style.pointerEvents = 'none';
     nextCard.style.cursor = 'not-allowed';
