@@ -1848,19 +1848,22 @@ footer {
       <div class="article-nav-label">Continue Reading</div>
       
       <div class="article-nav-grid">
-        <a href="#" class="nav-card" id="prev-article-card">
+        <!-- Previous Article - Starts disabled, JavaScript will enable if data exists -->
+        <a href="javascript:void(0);" class="nav-card" id="prev-article-card" style="opacity: 0.4; pointer-events: none;">
           <span class="nav-card-icon">←</span>
           <div class="nav-card-label">Previous Article</div>
           <div class="nav-card-title">Loading...</div>
         </a>
         
+        <!-- All Articles - Always enabled -->
         <a href="http://joselitosering.github.io/aima/articles/allarticles.html" class="nav-card">
           <span class="nav-card-icon">⊞</span>
           <div class="nav-card-label">All Articles</div>
           <div class="nav-card-title">Browse the complete AIMA knowledge base</div>
         </a>
         
-        <a href="#" class="nav-card" id="next-article-card">
+        <!-- Next Article - Starts disabled, JavaScript will enable if data exists -->
+        <a href="javascript:void(0);" class="nav-card" id="next-article-card" style="opacity: 0.4; pointer-events: none;">
           <span class="nav-card-icon">→</span>
           <div class="nav-card-label">Next Article</div>
           <div class="nav-card-title">Loading...</div>
@@ -1935,7 +1938,7 @@ footer {
 // ═══════════════════════════════════════════════════
 //
 // 📋 STEP 1: Deploy your Google Sheets as a Web App
-// 📋 STEP 2: Copy the Web App URL
+// 📋 STEP 2: Copy the Web App URL  
 // 📋 STEP 3: Paste it between the quotes below
 //
 // Example: const SHEETS_API_URL = 'https://script.google.com/macros/s/ABC123.../exec';
@@ -2059,6 +2062,8 @@ function loadDynamicNavigation() {
   const nextTitle = urlParams.get('nextTitle');
   const headerImageUrl = urlParams.get('headerImage');
   
+  console.log('   URL params found:', {prevSlug, nextSlug, prevTitle, nextTitle});
+  
   // Update Header Image
   if (headerImageUrl) {
     const headerImg = document.getElementById('headerImage');
@@ -2072,17 +2077,15 @@ function loadDynamicNavigation() {
   // Update Previous Article Card
   const prevCard = document.getElementById('prev-article-card');
   if (prevCard) {
-    if (prevSlug) {
+    if (prevSlug && prevTitle) {
       prevCard.href = prevSlug;
-      if (prevTitle) {
-        prevCard.querySelector('.nav-card-title').textContent = decodeURIComponent(prevTitle);
-      }
+      prevCard.querySelector('.nav-card-title').textContent = decodeURIComponent(prevTitle);
       prevCard.style.opacity = '1';
       prevCard.style.pointerEvents = 'auto';
       prevCard.style.cursor = 'pointer';
-      console.log(`  ✓ Previous: ${prevTitle || prevSlug}`);
+      console.log(`  ✓ Previous: ${decodeURIComponent(prevTitle)}`);
     } else {
-      // Disable card if no previous article
+      prevCard.href = 'javascript:void(0);';
       prevCard.querySelector('.nav-card-title').textContent = 'No previous article';
       prevCard.style.opacity = '0.4';
       prevCard.style.pointerEvents = 'none';
@@ -2094,17 +2097,15 @@ function loadDynamicNavigation() {
   // Update Next Article Card
   const nextCard = document.getElementById('next-article-card');
   if (nextCard) {
-    if (nextSlug) {
+    if (nextSlug && nextTitle) {
       nextCard.href = nextSlug;
-      if (nextTitle) {
-        nextCard.querySelector('.nav-card-title').textContent = decodeURIComponent(nextTitle);
-      }
+      nextCard.querySelector('.nav-card-title').textContent = decodeURIComponent(nextTitle);
       nextCard.style.opacity = '1';
       nextCard.style.pointerEvents = 'auto';
       nextCard.style.cursor = 'pointer';
-      console.log(`  ✓ Next: ${nextTitle || nextSlug}`);
+      console.log(`  ✓ Next: ${decodeURIComponent(nextTitle)}`);
     } else {
-      // Disable card if no next article
+      nextCard.href = 'javascript:void(0);';
       nextCard.querySelector('.nav-card-title').textContent = 'No next article';
       nextCard.style.opacity = '0.4';
       nextCard.style.pointerEvents = 'none';
@@ -2117,6 +2118,65 @@ function loadDynamicNavigation() {
 }
 
 // ═══════════════════════════════════════════════════
+// GOOGLE SHEETS API DATA LOADING (v9)
+// ═══════════════════════════════════════════════════
+
+function loadArticleDataFromSheets() {
+  // Check if API is configured
+  if (!SHEETS_API_URL || SHEETS_API_URL.trim() === '') {
+    console.log('📋 Google Sheets API not configured - using URL parameters mode');
+    loadDynamicNavigation();
+    return;
+  }
+  
+  console.log('🔄 Loading article data from Google Sheets...');
+  
+  const articleId = document.querySelector('meta[name="article:id"]')?.content;
+  
+  if (!articleId) {
+    console.error('❌ No article ID found in meta tags');
+    console.log('💡 Falling back to URL parameters mode');
+    loadDynamicNavigation();
+    return;
+  }
+  
+  console.log(`📍 Article ID: ${articleId}`);
+  console.log(`📡 API URL: ${SHEETS_API_URL}`);
+  
+  fetch(`${SHEETS_API_URL}?id=${articleId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('📦 API Response received:', data);
+      
+      if (data.error) {
+        console.error('❌ API Error:', data.error);
+        console.log('💡 Falling back to URL parameters mode');
+        loadDynamicNavigation();
+        return;
+      }
+      
+      const article = data.article;
+      if (article) {
+        populateArticleContent(article);
+      } else {
+        console.error('❌ No article data in API response');
+        console.log('💡 Falling back to URL parameters mode');
+        loadDynamicNavigation();
+      }
+    })
+    .catch(error => {
+      console.error('❌ Error loading article data:', error);
+      console.log('💡 Falling back to URL parameters mode');
+      loadDynamicNavigation();
+    });
+}
+
+// ═══════════════════════════════════════════════════
 // INITIALIZE ON PAGE LOAD
 // ═══════════════════════════════════════════════════
 
@@ -2126,6 +2186,117 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('🚀 Page loaded - initializing article data...');
   loadArticleDataFromSheets();
 });
+
+function populateArticleContent(article) {
+  console.log('🎨 Populating article content from API...');
+  console.log('📦 Article data received:', article);
+  
+  if (article.title) {
+    document.getElementById('pageTitle').textContent = article.title + ' — AIMA Magazine';
+    document.getElementById('articleTitle').innerHTML = article.title;
+    console.log(`  ✓ Title: ${article.title}`);
+  }
+  
+  if (article.headerImageUrl) {
+    const headerImg = document.getElementById('headerImage');
+    if (headerImg) {
+      headerImg.style.background = `linear-gradient(135deg, rgba(0,217,245,0.2), rgba(255,94,32,0.1)), url('${article.headerImageUrl}') center/cover no-repeat`;
+      console.log('  ✓ Header image updated');
+    }
+  }
+  
+  if (article.category) {
+    document.getElementById('articleCategory').textContent = article.category;
+    document.getElementById('categoryValue').textContent = article.category;
+    console.log(`  ✓ Category: ${article.category}`);
+  }
+  
+  if (article.publishDate) {
+    const date = new Date(article.publishDate);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('publishDate').textContent = date.toLocaleDateString('en-US', options);
+    console.log(`  ✓ Publish date: ${article.publishDate}`);
+  }
+  
+  if (article.readTime) {
+    document.getElementById('readTime').textContent = article.readTime + ' min read';
+    console.log(`  ✓ Read time: ${article.readTime} min`);
+  }
+  
+  if (article.author) {
+    document.getElementById('authorName').textContent = article.author;
+    const initials = article.author.split(' ').map(n => n[0]).join('');
+    document.getElementById('authorAvatar').textContent = initials;
+    console.log(`  ✓ Author: ${article.author}`);
+  }
+  
+  // Update Previous Article Card
+  console.log('🔗 Setting up navigation cards...');
+  console.log('   Previous filename:', article.prevFilename);
+  console.log('   Previous title:', article.prevTitle);
+  
+  const prevCard = document.getElementById('prev-article-card');
+  if (prevCard) {
+    if (article.prevFilename && article.prevTitle) {
+      // Build full URL
+      const prevUrl = `http://joselitosering.github.io/aima/articles/${article.prevFilename}`;
+      prevCard.href = prevUrl;
+      prevCard.querySelector('.nav-card-title').textContent = article.prevTitle;
+      prevCard.style.opacity = '1';
+      prevCard.style.pointerEvents = 'auto';
+      prevCard.style.cursor = 'pointer';
+      console.log(`  ✓ Previous card enabled:`);
+      console.log(`    → URL: ${prevUrl}`);
+      console.log(`    → Title: ${article.prevTitle}`);
+    } else {
+      prevCard.href = 'javascript:void(0);';
+      prevCard.querySelector('.nav-card-title').textContent = 'No previous article';
+      prevCard.style.opacity = '0.4';
+      prevCard.style.pointerEvents = 'none';
+      prevCard.style.cursor = 'not-allowed';
+      console.log('  ℹ Previous card disabled (no data)');
+    }
+  } else {
+    console.error('  ❌ Previous card element #prev-article-card not found!');
+  }
+  
+  // Update Next Article Card
+  console.log('   Next filename:', article.nextFilename);
+  console.log('   Next title:', article.nextTitle);
+  
+  const nextCard = document.getElementById('next-article-card');
+  if (nextCard) {
+    if (article.nextFilename && article.nextTitle) {
+      // Build full URL
+      const nextUrl = `http://joselitosering.github.io/aima/articles/${article.nextFilename}`;
+      nextCard.href = nextUrl;
+      nextCard.querySelector('.nav-card-title').textContent = article.nextTitle;
+      nextCard.style.opacity = '1';
+      nextCard.style.pointerEvents = 'auto';
+      nextCard.style.cursor = 'pointer';
+      console.log(`  ✓ Next card enabled:`);
+      console.log(`    → URL: ${nextUrl}`);
+      console.log(`    → Title: ${article.nextTitle}`);
+    } else {
+      nextCard.href = 'javascript:void(0);';
+      nextCard.querySelector('.nav-card-title').textContent = 'No next article';
+      nextCard.style.opacity = '0.4';
+      nextCard.style.pointerEvents = 'none';
+      nextCard.style.cursor = 'not-allowed';
+      console.log('  ℹ Next card disabled (no data)');
+    }
+  } else {
+    console.error('  ❌ Next card element #next-article-card not found!');
+  }
+  
+  console.log('✅ Article content population complete!');
+}
+
+// Load article data from Google Sheets API (if configured)
+// This takes priority over URL parameters
+if (SHEETS_API_URL) {
+  document.addEventListener('DOMContentLoaded', loadArticleDataFromSheets);
+}
 
 // ═══════════════════════════════════════════════════
 // NAVIGATION SCROLL & MOBILE MENU
