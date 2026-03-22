@@ -1930,6 +1930,24 @@ footer {
 </footer>
 
 <script>
+// ═══════════════════════════════════════════════════
+// ⚙️ CONFIGURATION - PASTE YOUR GOOGLE SHEETS API URL HERE
+// ═══════════════════════════════════════════════════
+//
+// 📋 STEP 1: Deploy your Google Sheets as a Web App
+// 📋 STEP 2: Copy the Web App URL
+// 📋 STEP 3: Paste it between the quotes below
+//
+// Example: const SHEETS_API_URL = 'https://script.google.com/macros/s/ABC123.../exec';
+//
+// ⚠️ Leave empty ('') to use URL parameter mode instead
+//
+// ═══════════════════════════════════════════════════
+
+const SHEETS_API_URL = ''; // ← PASTE YOUR WEB APP URL HERE
+
+// ═══════════════════════════════════════════════════
+
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
 
 // ═══════════════════════════════════════════════════
@@ -2031,6 +2049,8 @@ document.querySelectorAll('.toc-link').forEach(link => {
 // ═══════════════════════════════════════════════════
 
 function loadDynamicNavigation() {
+  console.log('📋 Loading navigation from URL parameters...');
+  
   const urlParams = new URLSearchParams(window.location.search);
   
   const prevSlug = urlParams.get('prev');
@@ -2045,6 +2065,7 @@ function loadDynamicNavigation() {
     if (headerImg) {
       const decodedUrl = decodeURIComponent(headerImageUrl);
       headerImg.style.background = `linear-gradient(135deg, rgba(0,217,245,0.2), rgba(255,94,32,0.1)), url('${decodedUrl}') center/cover no-repeat`;
+      console.log('  ✓ Header image updated from URL param');
     }
   }
   
@@ -2059,12 +2080,14 @@ function loadDynamicNavigation() {
       prevCard.style.opacity = '1';
       prevCard.style.pointerEvents = 'auto';
       prevCard.style.cursor = 'pointer';
+      console.log(`  ✓ Previous: ${prevTitle || prevSlug}`);
     } else {
       // Disable card if no previous article
       prevCard.querySelector('.nav-card-title').textContent = 'No previous article';
       prevCard.style.opacity = '0.4';
       prevCard.style.pointerEvents = 'none';
       prevCard.style.cursor = 'not-allowed';
+      console.log('  ℹ No previous article in URL params');
     }
   }
   
@@ -2079,157 +2102,30 @@ function loadDynamicNavigation() {
       nextCard.style.opacity = '1';
       nextCard.style.pointerEvents = 'auto';
       nextCard.style.cursor = 'pointer';
+      console.log(`  ✓ Next: ${nextTitle || nextSlug}`);
     } else {
       // Disable card if no next article
       nextCard.querySelector('.nav-card-title').textContent = 'No next article';
       nextCard.style.opacity = '0.4';
       nextCard.style.pointerEvents = 'none';
       nextCard.style.cursor = 'not-allowed';
-    }
-  }
-}
-
-// Load dynamic navigation on page load
-// Only use URL parameters if Google Sheets API is NOT configured
-// This ensures API data (when configured) is the single source of truth
-if (!SHEETS_API_URL) {
-  document.addEventListener('DOMContentLoaded', loadDynamicNavigation);
-} else {
-  console.log('Using Google Sheets API for navigation (URL parameters ignored)');
-}
-
-// ═══════════════════════════════════════════════════
-// LOAD ARTICLE DATA FROM GOOGLE SHEETS API
-// ═══════════════════════════════════════════════════
-
-// ═══════════════════════════════════════════════════
-// DATA LOADING PRIORITY SYSTEM
-// ═══════════════════════════════════════════════════
-// 
-// This template supports TWO methods of loading article data:
-//
-// METHOD 1: Google Sheets API (Recommended)
-// - Configure SHEETS_API_URL with your Web App URL
-// - Data loads from Google Sheets (Columns K-N for prev/next)
-// - Google Sheets is the single source of truth
-// - URL parameters are IGNORED when API is configured
-//
-// METHOD 2: URL Parameters (Fallback)
-// - Used only if SHEETS_API_URL is not configured
-// - Data comes from URL: ?prev=...&prevTitle=...&next=...&nextTitle=...
-// - Useful for static hosting without API
-//
-// PRIORITY: API takes precedence when configured
-//
-// ═══════════════════════════════════════════════════
-
-const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbyYj_mjYIaQ94H8BSTjZs7iMofvd_ZssFQ7dEjA3VUVAtRO3Ouq-9aY-TVQW8q8a1He/exec'; // Insert your Google Sheets Web App URL here
-
-function loadArticleDataFromSheets() {
-  const articleId = document.querySelector('meta[name="article:id"]')?.content;
-  
-  if (!SHEETS_API_URL) {
-    console.log('Google Sheets API URL not configured');
-    return;
-  }
-  
-  if (!articleId) {
-    console.log('No article ID found');
-    return;
-  }
-  
-  fetch(`${SHEETS_API_URL}?id=${articleId}`)
-    .then(response => response.json())
-    .then(data => {
-      if (data.error) {
-        console.error('API Error:', data.error);
-        return;
-      }
-      
-      const article = data.article;
-      if (article) {
-        populateArticleContent(article);
-      }
-    })
-    .catch(error => console.error('Error loading article data:', error));
-}
-
-function populateArticleContent(article) {
-  if (article.title) {
-    document.getElementById('pageTitle').textContent = article.title + ' — AIMA Magazine';
-    document.getElementById('articleTitle').innerHTML = article.title;
-  }
-  
-  if (article.headerImageUrl) {
-    const headerImg = document.getElementById('headerImage');
-    if (headerImg) {
-      headerImg.style.background = `linear-gradient(135deg, rgba(0,217,245,0.2), rgba(255,94,32,0.1)), url('${article.headerImageUrl}') center/cover no-repeat`;
+      console.log('  ℹ No next article in URL params');
     }
   }
   
-  if (article.category) {
-    document.getElementById('articleCategory').textContent = article.category;
-    document.getElementById('categoryValue').textContent = article.category;
-  }
-  
-  if (article.publishDate) {
-    const date = new Date(article.publishDate);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('publishDate').textContent = date.toLocaleDateString('en-US', options);
-  }
-  
-  if (article.readTime) {
-    document.getElementById('readTime').textContent = article.readTime + ' min read';
-  }
-  
-  if (article.author) {
-    document.getElementById('authorName').textContent = article.author;
-    const initials = article.author.split(' ').map(n => n[0]).join('');
-    document.getElementById('authorAvatar').textContent = initials;
-  }
-  
-  // Update Previous Article Card
-  const prevCard = document.getElementById('prev-article-card');
-  if (prevCard && article.prevFilename) {
-    prevCard.href = article.prevFilename;
-    if (article.prevTitle) {
-      prevCard.querySelector('.nav-card-title').textContent = article.prevTitle;
-    }
-    prevCard.style.opacity = '1';
-    prevCard.style.pointerEvents = 'auto';
-    prevCard.style.cursor = 'pointer';
-  } else if (prevCard) {
-    prevCard.querySelector('.nav-card-title').textContent = 'No previous article';
-    prevCard.style.opacity = '0.4';
-    prevCard.style.pointerEvents = 'none';
-    prevCard.style.cursor = 'not-allowed';
-  }
-  
-  // Update Next Article Card
-  const nextCard = document.getElementById('next-article-card');
-  if (nextCard && article.nextFilename) {
-    nextCard.href = article.nextFilename;
-    if (article.nextTitle) {
-      nextCard.querySelector('.nav-card-title').textContent = article.nextTitle;
-    }
-    nextCard.style.opacity = '1';
-    nextCard.style.pointerEvents = 'auto';
-    nextCard.style.cursor = 'pointer';
-  } else if (nextCard) {
-    nextCard.querySelector('.nav-card-title').textContent = 'No next article';
-    nextCard.style.opacity = '0.4';
-    nextCard.style.pointerEvents = 'none';
-    nextCard.style.cursor = 'not-allowed';
-  }
-  
-  console.log('✓ Article loaded from Google Sheets');
+  console.log('✅ URL parameters mode complete');
 }
 
-// Load article data from Google Sheets API (if configured)
-// This takes priority over URL parameters
-if (SHEETS_API_URL) {
-  document.addEventListener('DOMContentLoaded', loadArticleDataFromSheets);
-}
+// ═══════════════════════════════════════════════════
+// INITIALIZE ON PAGE LOAD
+// ═══════════════════════════════════════════════════
+
+// Always try to load article data on page load
+// The function will decide whether to use API or URL params
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🚀 Page loaded - initializing article data...');
+  loadArticleDataFromSheets();
+});
 
 // ═══════════════════════════════════════════════════
 // NAVIGATION SCROLL & MOBILE MENU
