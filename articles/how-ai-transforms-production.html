@@ -1399,11 +1399,11 @@ footer {
   <a href="http://joselitosering.github.io/aima/index.html#contact" class="m-cta" onclick="closeMobile()">Get a Quote</a>
   <p class="m-contact"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff9c90918b9e9c8bbf929091949a86929e8b8b9a8d8cd19c9092">[email&#160;protected]</a> · (415) 555-0200</p>
   <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:12px;">
-    <a href="/legal-tos" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Terms</a>
-    <a href="/legal-privacy" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Privacy</a>
-    <a href="/legal-refund" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Refunds</a>
-    <a href="/legal-licensing" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Licensing</a>
-    <a href="/legal-cookies" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Cookies</a>
+    <a href="http://joselitosering.github.io/aima/index.html#legal-tos" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Terms</a>
+    <a href="http://joselitosering.github.io/aima/index.html#legal-privacy" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Privacy</a>
+    <a href="http://joselitosering.github.io/aima/index.html#legal-refund" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Refunds</a>
+    <a href="http://joselitosering.github.io/aima/index.html#legal-licensing" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Licensing</a>
+    <a href="http://joselitosering.github.io/aima/index.html#legal-cookies" onclick="closeMobile()" style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;">Cookies</a>
   </div>
 </div>
 
@@ -1912,11 +1912,11 @@ footer {
       <div>
         <div class="fl-head">Legal</div>
         <ul class="fl-list">
-          <li><a href="/legal-tos">Terms of Service</a></li>
-          <li><a href="/legal-privacy">Privacy Policy</a></li>
-          <li><a href="/legal-refund">Refund Policy</a></li>
-          <li><a href="/legal-licensing">Licensing FAQ</a></li>
-          <li><a href="/legal-cookies">Cookie Settings</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#legal-tos">Terms of Service</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#legal-privacy">Privacy Policy</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#legal-refund">Refund Policy</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#legal-licensing">Licensing FAQ</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#legal-cookies">Cookie Settings</a></li>
         </ul>
       </div>
 
@@ -2151,6 +2151,38 @@ function populateArticleContent(article) {
     document.getElementById('authorName').textContent = article.author;
     const initials = article.author.split(' ').map(n => n[0]).join('');
     document.getElementById('authorAvatar').textContent = initials;
+  }
+  
+  // Update Previous Article Card
+  const prevCard = document.getElementById('prev-article-card');
+  if (prevCard && article.prevFilename) {
+    prevCard.href = article.prevFilename;
+    if (article.prevTitle) {
+      prevCard.querySelector('.nav-card-title').textContent = article.prevTitle;
+    }
+    prevCard.style.opacity = '1';
+    prevCard.style.pointerEvents = 'auto';
+    prevCard.style.cursor = 'pointer';
+  } else if (prevCard) {
+    prevCard.style.opacity = '0.4';
+    prevCard.style.pointerEvents = 'none';
+    prevCard.style.cursor = 'not-allowed';
+  }
+  
+  // Update Next Article Card
+  const nextCard = document.getElementById('next-article-card');
+  if (nextCard && article.nextFilename) {
+    nextCard.href = article.nextFilename;
+    if (article.nextTitle) {
+      nextCard.querySelector('.nav-card-title').textContent = article.nextTitle;
+    }
+    nextCard.style.opacity = '1';
+    nextCard.style.pointerEvents = 'auto';
+    nextCard.style.cursor = 'pointer';
+  } else if (nextCard) {
+    nextCard.style.opacity = '0.4';
+    nextCard.style.pointerEvents = 'none';
+    nextCard.style.cursor = 'not-allowed';
   }
   
   console.log('✓ Article loaded from Google Sheets');
