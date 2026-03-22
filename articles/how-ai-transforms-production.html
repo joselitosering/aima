@@ -1929,7 +1929,7 @@ footer {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
 
 // ═══════════════════════════════════════════════════
@@ -2082,13 +2082,40 @@ function loadDynamicNavigation() {
 }
 
 // Load dynamic navigation on page load
-document.addEventListener('DOMContentLoaded', loadDynamicNavigation);
+// Only use URL parameters if Google Sheets API is NOT configured
+// This ensures API data (when configured) is the single source of truth
+if (!SHEETS_API_URL) {
+  document.addEventListener('DOMContentLoaded', loadDynamicNavigation);
+} else {
+  console.log('Using Google Sheets API for navigation (URL parameters ignored)');
+}
 
 // ═══════════════════════════════════════════════════
 // LOAD ARTICLE DATA FROM GOOGLE SHEETS API
 // ═══════════════════════════════════════════════════
 
-const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbyYj_mjYIaQ94H8BSTjZs7iMofvd_ZssFQ7dEjA3VUVAtRO3Ouq-9aY-TVQW8q8a1He/exec'; // Insert your Google Sheets Web App URL here
+// ═══════════════════════════════════════════════════
+// DATA LOADING PRIORITY SYSTEM
+// ═══════════════════════════════════════════════════
+// 
+// This template supports TWO methods of loading article data:
+//
+// METHOD 1: Google Sheets API (Recommended)
+// - Configure SHEETS_API_URL with your Web App URL
+// - Data loads from Google Sheets (Columns K-N for prev/next)
+// - Google Sheets is the single source of truth
+// - URL parameters are IGNORED when API is configured
+//
+// METHOD 2: URL Parameters (Fallback)
+// - Used only if SHEETS_API_URL is not configured
+// - Data comes from URL: ?prev=...&prevTitle=...&next=...&nextTitle=...
+// - Useful for static hosting without API
+//
+// PRIORITY: API takes precedence when configured
+//
+// ═══════════════════════════════════════════════════
+
+const SHEETS_API_URL = ''; // Insert your Google Sheets Web App URL here
 
 function loadArticleDataFromSheets() {
   const articleId = document.querySelector('meta[name="article:id"]')?.content;
@@ -2188,6 +2215,8 @@ function populateArticleContent(article) {
   console.log('✓ Article loaded from Google Sheets');
 }
 
+// Load article data from Google Sheets API (if configured)
+// This takes priority over URL parameters
 if (SHEETS_API_URL) {
   document.addEventListener('DOMContentLoaded', loadArticleDataFromSheets);
 }
