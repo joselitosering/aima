@@ -17,6 +17,9 @@
 <!-- Page Title -->
 <title id="pageTitle">Boycott or Bigotry? The Backlash Against AI Artists — AIMA Magazine</title>
 
+<!-- Canonical URL -->
+<link rel="canonical" href="https://joselitosering.github.io/aima/articles/article-boycott-or-bigotry-002.html"/>
+
 <!-- SEO Meta Tags -->
 <meta name="description" content="A persuasive deep-dive into the moral panic surrounding AI-assisted art, explored through the lens of music sampling lawsuits, CGI resistance, ghostwriting, and every technological disruption that was first called theft and later called progress."/>
 <meta name="keywords" content="AI art, boycott, AI ethics, music sampling, CGI, ghostwriting, creative technology, humane technology, AIMA"/>
@@ -99,8 +102,8 @@
   display: flex; align-items: center;
   transition: background .3s, border-color .3s;
   border-bottom: 1px solid transparent;
-  background: rgba(6,8,16,.85);
-  backdrop-filter: blur(10px);
+  background: rgba(6,8,16,.60);
+  backdrop-filter: blur(20px);
 }
 #nav.scrolled {
   background: rgba(6,8,16,.98);
@@ -452,6 +455,10 @@ a:hover {
   color: var(--cyan);
   background: rgba(0,217,245,0.05);
   border-color: var(--border);
+}
+
+.share-link svg {
+  flex-shrink: 0;
 }
 
 .table-of-contents {
@@ -1303,7 +1310,7 @@ footer {
   
   <!-- Header with Media Asset -->
   <header class="article-header">
-    <div class="header-media" id="headerImage"></div>
+    <div class="header-media" id="headerImage" style="background: linear-gradient(135deg, rgba(0,217,245,0.2), rgba(255,94,32,0.1)), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&q=80'); background-size: cover; background-position: center;"></div>
     <div class="header-overlay"></div>
     
     <div class="header-content">
@@ -1355,21 +1362,25 @@ footer {
     <aside class="article-sidebar-left fade-in delay-3">
       <div class="sidebar-label">Share</div>
       <div class="share-links">
-        <a href="#" class="share-link" onclick="shareOnFacebook(); return false;">
-          <span>&#x1F4D8;</span>
+        <a href="#" class="share-link" onclick="shareOnFacebook(); return false;" title="Share on Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           <span>Facebook</span>
         </a>
-        <a href="#" class="share-link" onclick="shareOnTwitter(); return false;">
-          <span>&#x1F426;</span>
-          <span>Twitter</span>
+        <a href="#" class="share-link" onclick="shareOnTwitter(); return false;" title="Share on X / Twitter">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>X / Twitter</span>
         </a>
-        <a href="#" class="share-link" onclick="shareOnLinkedIn(); return false;">
-          <span>&#x1F4BC;</span>
+        <a href="#" class="share-link" onclick="shareOnLinkedIn(); return false;" title="Share on LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           <span>LinkedIn</span>
         </a>
-        <a href="#" class="share-link" onclick="shareViaEmail(); return false;">
-          <span>&#x1F4E7;</span>
+        <a href="#" class="share-link" onclick="shareViaEmail(); return false;" title="Share via Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           <span>Email</span>
+        </a>
+        <a href="#" class="share-link" id="copyLinkBtn" onclick="copyArticleLink(); return false;" title="Copy link to clipboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span>Copy Link</span>
         </a>
       </div>
     </aside>
@@ -1979,26 +1990,79 @@ footer {
 // SOCIAL SHARING FUNCTIONS
 // ═══════════════════════════════════════════════════
 
+// Canonical URL for sharing (falls back to current page)
+function getShareURL() {
+  var canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) return canonical.href;
+  // If on deployed site, use current URL; otherwise use placeholder
+  var loc = window.location.href;
+  if (loc.indexOf('file:///') === 0) {
+    return 'https://joselitosering.github.io/aima/articles/article-boycott-or-bigotry-002.html';
+  }
+  return loc;
+}
+
+function getShareTitle() {
+  var el = document.querySelector('.article-title');
+  return el ? el.innerText.replace(/\s+/g, ' ').trim() : document.title;
+}
+
 function shareOnFacebook() {
-  var url = encodeURIComponent(window.location.href);
-  window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, 'facebook-share', 'width=600,height=400');
+  var url = encodeURIComponent(getShareURL());
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, 'facebook-share', 'width=600,height=400,menubar=no,toolbar=no');
 }
 
 function shareOnTwitter() {
-  var url = encodeURIComponent(window.location.href);
-  var text = encodeURIComponent(document.querySelector('.article-title').innerText);
-  window.open('https://twitter.com/intent/tweet?url=' + url + '&text=' + text, 'twitter-share', 'width=600,height=400');
+  var url = encodeURIComponent(getShareURL());
+  var text = encodeURIComponent(getShareTitle());
+  window.open('https://x.com/intent/tweet?url=' + url + '&text=' + text, 'twitter-share', 'width=600,height=400,menubar=no,toolbar=no');
 }
 
 function shareOnLinkedIn() {
-  var url = encodeURIComponent(window.location.href);
-  window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, 'linkedin-share', 'width=600,height=400');
+  var url = encodeURIComponent(getShareURL());
+  window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, 'linkedin-share', 'width=600,height=400,menubar=no,toolbar=no');
 }
 
 function shareViaEmail() {
-  var subject = encodeURIComponent(document.querySelector('.article-title').innerText);
-  var body = encodeURIComponent('I thought you might find this article interesting:\n\n' + window.location.href);
+  var subject = encodeURIComponent(getShareTitle());
+  var body = encodeURIComponent('I thought you might find this article interesting:\n\n' + getShareURL());
   window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+}
+
+function copyArticleLink() {
+  var url = getShareURL();
+  var btn = document.getElementById('copyLinkBtn');
+  var label = btn.querySelector('span:last-child');
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function() {
+      label.textContent = 'Copied!';
+      btn.style.color = 'var(--green)';
+      setTimeout(function() { label.textContent = 'Copy Link'; btn.style.color = ''; }, 2000);
+    }).catch(function() {
+      fallbackCopy(url, label, btn);
+    });
+  } else {
+    fallbackCopy(url, label, btn);
+  }
+}
+
+function fallbackCopy(text, label, btn) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    label.textContent = 'Copied!';
+    btn.style.color = 'var(--green)';
+    setTimeout(function() { label.textContent = 'Copy Link'; btn.style.color = ''; }, 2000);
+  } catch (e) {
+    label.textContent = 'Failed';
+    setTimeout(function() { label.textContent = 'Copy Link'; }, 2000);
+  }
+  document.body.removeChild(ta);
 }
 
 // ═══════════════════════════════════════════════════
