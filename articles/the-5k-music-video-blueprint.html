@@ -172,8 +172,19 @@ a:hover { opacity: 0.8; }
 .article-sidebar-left, .article-sidebar-right { position: sticky; top: 100px; }
 .sidebar-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border2); }
 .share-links { display: flex; flex-direction: column; gap: 12px; }
-.share-link { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); transition: color 0.2s; padding: 8px 12px; border-radius: 4px; border: 1px solid transparent; }
+.share-link {
+  display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted);
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+  padding: 8px 12px; border-radius: 4px; border: 1px solid transparent;
+  text-decoration: none;
+}
+button.share-link {
+  background: none; cursor: pointer; width: 100%;
+  font-family: 'DM Sans', sans-serif;
+}
 .share-link:hover { color: var(--cyan); background: rgba(0,217,245,0.05); border-color: var(--border); }
+.share-link svg { flex-shrink: 0; }
+.share-link.copied { color: var(--green); border-color: var(--green); background: rgba(45,202,115,0.06); }
 .table-of-contents { display: flex; flex-direction: column; gap: 8px; }
 .toc-link { font-size: 13px; color: var(--muted); padding: 8px 12px; border-left: 2px solid var(--border2); transition: all 0.2s; }
 .toc-link:hover, .toc-link.active { color: var(--cyan); border-left-color: var(--cyan); padding-left: 16px; }
@@ -473,10 +484,57 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
     <aside class="article-sidebar-left fade-in delay-3">
       <div class="sidebar-label">Share</div>
       <div class="share-links">
-        <a href="#" class="share-link" onclick="shareOnFacebook(); return false;"><span>📘</span><span>Facebook</span></a>
-        <a href="#" class="share-link" onclick="shareOnTwitter();  return false;"><span>𝕏</span><span>Twitter</span></a>
-        <a href="#" class="share-link" onclick="shareOnLinkedIn(); return false;"><span>💼</span><span>LinkedIn</span></a>
-        <a href="#" class="share-link" onclick="shareViaEmail();   return false;"><span>📧</span><span>Email</span></a>
+
+        <a class="share-link"
+           data-share="facebook"
+           href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
+
+        <a class="share-link"
+           data-share="twitter"
+           href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4l16 16M4 20L20 4"/>
+          </svg>
+          <span>Twitter</span>
+        </a>
+
+        <a class="share-link"
+           data-share="linkedin"
+           href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+          <span>LinkedIn</span>
+        </a>
+
+        <a class="share-link"
+           data-share="email"
+           href="mailto:?subject=PAGE_TITLE&body=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <span>Email</span>
+        </a>
+
+        <button class="share-link" id="copyLinkBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span id="copyLinkLabel">Copy Link</span>
+        </button>
+
       </div>
     </aside>
 
@@ -961,20 +1019,63 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ═══════════════════════════════════════════════════
-// SOCIAL SHARING
+// SHARE BUTTONS — LOCKED DESIGN
 // ═══════════════════════════════════════════════════
-function shareOnFacebook() {
-  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), 'fb', 'width=600,height=400');
-}
-function shareOnTwitter() {
-  window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(document.querySelector('.article-title').innerText), 'tw', 'width=600,height=400');
-}
-function shareOnLinkedIn() {
-  window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href), 'li', 'width=600,height=400');
-}
-function shareViaEmail() {
-  window.location.href = 'mailto:?subject=' + encodeURIComponent(document.querySelector('.article-title').innerText) + '&body=' + encodeURIComponent('I thought you might find this article interesting:\n\n' + window.location.href);
-}
+(function () {
+  const url   = encodeURIComponent(window.location.href);
+  const title = encodeURIComponent(document.title);
+
+  // Upgrade data-share links to popup windows
+  document.querySelectorAll('a[data-share]').forEach(function (a) {
+    // Hydrate placeholder tokens in href
+    a.href = a.href
+      .replace('PAGE_URL',   url)
+      .replace('PAGE_TITLE', title);
+
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (a.dataset.share === 'email') {
+        window.location.href = a.href;
+      } else {
+        window.open(a.href, 'share-' + a.dataset.share, 'width=600,height=460,noopener');
+      }
+    });
+  });
+
+  // Copy Link button
+  var btn   = document.getElementById('copyLinkBtn');
+  var label = document.getElementById('copyLinkLabel');
+  if (btn && label) {
+    btn.addEventListener('click', function () {
+      var raw = window.location.href;
+      var done = function () {
+        btn.classList.add('copied');
+        label.textContent = 'Copied!';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          label.textContent = 'Copy Link';
+        }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(raw).then(done).catch(function () {
+          fallback(raw, done);
+        });
+      } else {
+        fallback(raw, done);
+      }
+    });
+  }
+
+  function fallback(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); cb(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+})();
 
 // ═══════════════════════════════════════════════════
 // TOC ACTIVE STATE TRACKING
