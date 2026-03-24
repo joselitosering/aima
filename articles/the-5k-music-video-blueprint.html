@@ -268,7 +268,7 @@ a:hover { opacity: 0.8; }
 .reference-item .ref-link { color: var(--cyan); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; display: block; font-family: var(--mono); font-size: 12px; margin-top: 4px; word-break: break-all; }
 .reference-item .ref-link:hover { border-bottom-color: var(--cyan); }
 
-.glossary-item { background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; scroll-margin-top: 100px; }
+.glossary-item { background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; scroll-margin-top: calc(var(--nav-h) + 20px); }
 .glossary-term-title { font-family: 'Anton', sans-serif; font-size: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .back-link { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 4px 8px; border: 1px solid var(--border2); border-radius: 2px; transition: all 0.2s; margin-left: auto; }
 .back-link:hover { color: var(--cyan); border-color: var(--border); }
@@ -1007,7 +1007,10 @@ document.querySelectorAll('.toc-link').forEach(link => {
   link.addEventListener('click', function(e) {
     e.preventDefault();
     const target = document.getElementById(this.getAttribute('href').substring(1));
-    if (target) window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+    if (target) {
+      const navOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navOffset - 20, behavior: 'smooth' });
+    }
   });
 });
 
