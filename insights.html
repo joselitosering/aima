@@ -131,7 +131,6 @@ button{cursor:pointer;font-family:inherit;border:none}
   padding:14px 0;
 }
 .filter-row1{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
-.filter-row2{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .search-wrap{position:relative;flex:1;min-width:200px;max-width:320px}
 .search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 #searchInput{width:100%;background:var(--surf2);border:1px solid var(--border2);border-radius:var(--radius);padding:9px 14px 9px 36px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .2s}
@@ -144,12 +143,6 @@ button{cursor:pointer;font-family:inherit;border:none}
 .filter-select{background:var(--surf2);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:8px 10px;outline:none;cursor:pointer;transition:border-color .2s;-webkit-appearance:none;appearance:none;min-width:120px}
 .filter-select:focus,.filter-select:hover{border-color:var(--cyan)}
 
-/* Category pills — pf-btn style from homepage */
-.cat-pills{display:flex;gap:8px;flex-wrap:wrap;flex:1}
-.pf-btn{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;border-radius:100px;border:1px solid var(--border2);color:var(--muted);background:transparent;cursor:pointer;transition:all .2s;white-space:nowrap}
-.pf-btn:hover,.pf-btn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,217,245,.06)}
-.pf-btn.dimmed{opacity:.35;border-color:transparent}
-.pf-btn.dimmed:hover{opacity:1;border-color:rgba(0,217,245,.35);color:var(--text)}
 
 /* Sort + view + count */
 .filter-right{display:flex;align-items:center;gap:10px;margin-left:auto}
@@ -450,10 +443,6 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
         <div class="l">Published Articles</div>
       </div>
       <div class="hero-meta-item fi">
-        <div class="n" id="heroCats">—</div>
-        <div class="l">Categories</div>
-      </div>
-      <div class="hero-meta-item fi">
         <div class="n">3<sup>×</sup></div>
         <div class="l">Monthly Cadence</div>
       </div>
@@ -518,10 +507,6 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
 
     </div>
 
-    <!-- Row 2: Category pills -->
-    <div class="cat-pills" id="catPills">
-      <button class="pf-btn active" data-cat="">All Categories</button>
-    </div>
 
   </div>
 </div>
@@ -723,7 +708,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
    Step 3: Copy the /exec URL and paste it below
 ════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec'
+  SHEETS_API_URL: ''
   // e.g. 'https://script.google.com/macros/s/AKfy.../exec'
 };
 
@@ -731,7 +716,6 @@ const CONFIG = {
    STATE
 ════════════════════════════════════════════════════════════ */
 let ALL_ARTICLES = [];   // full dataset from GS
-let ACTIVE_CAT   = '';   // '' = All
 let IS_LIST_VIEW = false;
 
 /* ════════════════════════════════════════════════════════════
@@ -931,7 +915,7 @@ function applyFilters() {
   const sort   = document.getElementById('sortSelect').value;
   const now    = Date.now();
   const cutoff = days ? now - days * 86400000 : 0;
-  const isFiltered = !!(ACTIVE_CAT || author || days || q);
+  const isFiltered = !!(author || days || q);
 
   // Toggle data-filtered attribute — CSS collapses mosaic spans when active
   grid.toggleAttribute('data-filtered', isFiltered);
@@ -945,12 +929,11 @@ function applyFilters() {
     const cardDate  = card.dataset.date    || '';
     const search    = card.dataset.search  || '';
 
-    const catMatch    = !ACTIVE_CAT || ck === ACTIVE_CAT;
     const authorMatch = !author || cardAuthor === author;
     const dateMatch   = !cutoff || (cardDate && new Date(cardDate).getTime() >= cutoff);
     const qMatch      = !q || search.includes(q);
 
-    const show = catMatch && authorMatch && dateMatch && qMatch;
+    const show = authorMatch && dateMatch && qMatch;
     card.classList.toggle('hidden', !show);
     if (show) visible++;
   });
@@ -974,19 +957,6 @@ function applyFilters() {
    POPULATE FILTERS FROM DATA
 ════════════════════════════════════════════════════════════ */
 function buildFilters(articles) {
-  // Categories → pills
-  const cats   = [...new Set(articles.map(a => a.category).filter(Boolean))];
-  const pills  = document.getElementById('catPills');
-  pills.innerHTML = '<button class="pf-btn active" data-cat="" onclick="setCat(this,\'\')">All Categories</button>';
-  cats.forEach(c => {
-    const btn = document.createElement('button');
-    btn.className  = 'pf-btn';
-    btn.dataset.cat = catKey(c);
-    btn.textContent = c;
-    btn.onclick = function() { setCat(this, catKey(c)); };
-    pills.appendChild(btn);
-  });
-
   // Authors → dropdown
   const authors = [...new Set(articles.map(a => a.author).filter(Boolean))].sort();
   const sel     = document.getElementById('authorSelect');
@@ -1016,20 +986,6 @@ function buildFilters(articles) {
 
   // Hero counts
   document.getElementById('heroCount').textContent = articles.length + '+';
-  document.getElementById('heroCats').textContent  = cats.length;
-}
-
-/* ════════════════════════════════════════════════════════════
-   CATEGORY PILL HANDLER
-════════════════════════════════════════════════════════════ */
-function setCat(btn, cat) {
-  ACTIVE_CAT = cat;
-  document.querySelectorAll('#catPills .pf-btn').forEach(p => {
-    p.classList.remove('active', 'dimmed');
-    if (cat !== '' && p !== btn) p.classList.add('dimmed');
-  });
-  btn.classList.add('active');
-  applyFilters();
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1040,11 +996,7 @@ function clearAllFilters() {
   document.getElementById('authorSelect').value = '';
   document.getElementById('dateSelect').value   = '';
   document.getElementById('sortSelect').value   = 'newest';
-  ACTIVE_CAT = '';
-  document.querySelectorAll('#catPills .pf-btn').forEach((p, i) => {
-    p.classList.remove('dimmed');
-    p.classList.toggle('active', i === 0);
-  });
+
   applyFilters();
 }
 
