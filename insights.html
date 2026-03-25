@@ -148,6 +148,8 @@ button{cursor:pointer;font-family:inherit;border:none}
 .cat-pills{display:flex;gap:8px;flex-wrap:wrap;flex:1}
 .pf-btn{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;border-radius:100px;border:1px solid var(--border2);color:var(--muted);background:transparent;cursor:pointer;transition:all .2s;white-space:nowrap}
 .pf-btn:hover,.pf-btn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,217,245,.06)}
+.pf-btn.dimmed{opacity:.35;border-color:transparent}
+.pf-btn.dimmed:hover{opacity:1;border-color:rgba(0,217,245,.35);color:var(--text)}
 
 /* Sort + view + count */
 .filter-right{display:flex;align-items:center;gap:10px;margin-left:auto}
@@ -707,11 +709,16 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   CONFIG — paste your deployed Apps Script Web App URL here
+   CONFIG
+   Step 1: Paste doGet-snippet.gs at the bottom of your
+           Apps Script project (does not alter existing code)
+   Step 2: Deploy → New deployment → Web app
+           Execute as: Me  |  Access: Anyone
+   Step 3: Copy the /exec URL and paste it below
 ════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec'
-  // Example: 'https://script.google.com/macros/s/AKfy.../exec'
+  SHEETS_API_URL: ''
+  // e.g. 'https://script.google.com/macros/s/AKfy.../exec'
 };
 
 /* ════════════════════════════════════════════════════════════
@@ -991,7 +998,10 @@ function buildFilters(articles) {
 ════════════════════════════════════════════════════════════ */
 function setCat(btn, cat) {
   ACTIVE_CAT = cat;
-  document.querySelectorAll('#catPills .pf-btn').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#catPills .pf-btn').forEach(p => {
+    p.classList.remove('active', 'dimmed');
+    if (cat !== '' && p !== btn) p.classList.add('dimmed');
+  });
   btn.classList.add('active');
   applyFilters();
 }
@@ -1005,7 +1015,10 @@ function clearAllFilters() {
   document.getElementById('dateSelect').value   = '';
   document.getElementById('sortSelect').value   = 'newest';
   ACTIVE_CAT = '';
-  document.querySelectorAll('#catPills .pf-btn').forEach((p, i) => p.classList.toggle('active', i === 0));
+  document.querySelectorAll('#catPills .pf-btn').forEach((p, i) => {
+    p.classList.remove('dimmed');
+    p.classList.toggle('active', i === 0);
+  });
   applyFilters();
 }
 
@@ -1038,8 +1051,8 @@ async function loadArticles() {
   apiStatus.textContent = 'Connecting';
   apiStatus.style.color = 'var(--muted)';
 
-  // Guard: check for placeholder URL
-  if (!CONFIG.SHEETS_API_URL || CONFIG.SHEETS_API_URL.includes('YOUR_APPS')) {
+  // Guard: check for unconfigured URL
+  if (!CONFIG.SHEETS_API_URL || CONFIG.SHEETS_API_URL.trim() === '') {
     loading.style.display = 'none';
     grid.style.display    = 'grid';
     errEl.style.display   = 'block';
