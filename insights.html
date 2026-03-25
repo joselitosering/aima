@@ -708,7 +708,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
    Step 3: Copy the /exec URL and paste it below
 ════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec'
+  SHEETS_API_URL: ''
   // e.g. 'https://script.google.com/macros/s/AKfy.../exec'
 };
 
@@ -968,7 +968,8 @@ function buildFilters(articles) {
     sel.appendChild(opt);
   });
 
-  // Tag cloud (unique categories + tools mentioned in titles)
+  // Tag cloud (tools)
+  const cats  = [...new Set(articles.map(a => a.category).filter(Boolean))];
   const tools = ['Kling AI','ElevenLabs','Suno','HeyGen','Synthesia','MidJourney','Runway','n8n'];
   const cloud = document.getElementById('tagCloud');
   cloud.innerHTML = '';
