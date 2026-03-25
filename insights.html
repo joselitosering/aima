@@ -270,6 +270,12 @@ button{cursor:pointer;font-family:inherit;border:none}
 /* hidden cards */
 .m-card.hidden{display:none}
 
+/* FILTERED STATE — collapse mosaic spans to uniform grid */
+#mosaic-grid[data-filtered] [data-span]{grid-column:span 1}
+#mosaic-grid[data-filtered] .m-card{flex-direction:column}
+#mosaic-grid[data-filtered] .m-card .m-thumb{width:100% !important;height:160px !important;min-height:0 !important}
+#mosaic-grid[data-filtered] .m-card .m-body{padding:22px}
+
 /* LIST VIEW card overrides */
 #mosaic-grid.list-view .m-card{flex-direction:row;min-height:0}
 #mosaic-grid.list-view .m-thumb{width:160px;height:auto;flex-shrink:0}
@@ -717,7 +723,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
    Step 3: Copy the /exec URL and paste it below
 ════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec'
+  SHEETS_API_URL: ''
   // e.g. 'https://script.google.com/macros/s/AKfy.../exec'
 };
 
@@ -883,65 +889,85 @@ function buildCard(article, visibleIndex) {
 }
 
 /* ════════════════════════════════════════════════════════════
-   FILTER & RENDER
+   INITIAL RENDER — called once after data loads
+   Renders ALL cards into the DOM. Filtering uses show/hide only —
+   cards are never removed/re-inserted after this point.
+════════════════════════════════════════════════════════════ */
+function renderAllCards(articles) {
+  const grid  = document.getElementById('mosaic-grid');
+  const noRes = document.getElementById('no-results');
+  const errEl = document.getElementById('error-state');
+
+  // Clear any previous cards (safety guard)
+  [...grid.children].forEach(c => {
+    if (c.id !== 'no-results' && c.id !== 'error-state') c.remove();
+  });
+
+  const frag = document.createDocumentFragment();
+  articles.forEach((a, i) => {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = buildCard(a, i);
+    frag.appendChild(tmp.firstElementChild);
+  });
+  grid.insertBefore(frag, noRes);
+
+  errEl.style.display = 'none';
+  noRes.style.display = 'none';
+  document.getElementById('rcNum').textContent = articles.length;
+
+  // Observe all cards for fade-in (once)
+  grid.querySelectorAll('.m-card').forEach(el => obs.observe(el));
+}
+
+/* ════════════════════════════════════════════════════════════
+   FILTER — show/hide existing DOM cards, then sort visible ones
 ════════════════════════════════════════════════════════════ */
 function applyFilters() {
+  const grid   = document.getElementById('mosaic-grid');
+  const noRes  = document.getElementById('no-results');
   const q      = (document.getElementById('searchInput').value || '').toLowerCase().trim();
   const author = document.getElementById('authorSelect').value;
   const days   = parseInt(document.getElementById('dateSelect').value, 10) || 0;
   const sort   = document.getElementById('sortSelect').value;
   const now    = Date.now();
   const cutoff = days ? now - days * 86400000 : 0;
+  const isFiltered = !!(ACTIVE_CAT || author || days || q);
 
-  // Filter
-  let filtered = ALL_ARTICLES.filter(a => {
-    const catMatch    = !ACTIVE_CAT || catKey(a.category) === ACTIVE_CAT;
-    const authorMatch = !author || a.author === author;
-    const dateMatch   = !cutoff || (a.publishDate && new Date(a.publishDate).getTime() >= cutoff);
-    const qMatch      = !q || (a.title + ' ' + a.description + ' ' + a.category + ' ' + a.author).toLowerCase().includes(q);
-    return catMatch && authorMatch && dateMatch && qMatch;
+  // Toggle data-filtered attribute — CSS collapses mosaic spans when active
+  grid.toggleAttribute('data-filtered', isFiltered);
+
+  const cards = [...grid.querySelectorAll('.m-card')];
+  let visible = 0;
+
+  cards.forEach(card => {
+    const ck        = card.dataset.catKey  || '';
+    const cardAuthor= card.dataset.author  || '';
+    const cardDate  = card.dataset.date    || '';
+    const search    = card.dataset.search  || '';
+
+    const catMatch    = !ACTIVE_CAT || ck === ACTIVE_CAT;
+    const authorMatch = !author || cardAuthor === author;
+    const dateMatch   = !cutoff || (cardDate && new Date(cardDate).getTime() >= cutoff);
+    const qMatch      = !q || search.includes(q);
+
+    const show = catMatch && authorMatch && dateMatch && qMatch;
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
   });
 
-  // Sort
-  filtered.sort((a, b) => {
-    if (sort === 'newest') return (new Date(b.publishDate) - new Date(a.publishDate)) || 0;
-    if (sort === 'oldest') return (new Date(a.publishDate) - new Date(b.publishDate)) || 0;
-    if (sort === 'az') return (a.title || '').localeCompare(b.title || '');
+  // Sort: reorder visible cards in the DOM
+  const visCards = cards.filter(c => !c.classList.contains('hidden'));
+  visCards.sort((a, b) => {
+    if (sort === 'newest') return new Date(b.dataset.date) - new Date(a.dataset.date);
+    if (sort === 'oldest') return new Date(a.dataset.date) - new Date(b.dataset.date);
+    if (sort === 'az') return (a.dataset.title || '').localeCompare(b.dataset.title || '');
     return 0;
   });
+  visCards.forEach(c => grid.insertBefore(c, noRes));
 
-  renderCards(filtered);
-}
-
-function renderCards(articles) {
-  const grid    = document.getElementById('mosaic-grid');
-  const noRes   = document.getElementById('no-results');
-  const errEl   = document.getElementById('error-state');
-
-  // Remove old cards (keep no-results and error-state nodes)
-  [...grid.children].forEach(c => {
-    if (c.id !== 'no-results' && c.id !== 'error-state') c.remove();
-  });
-
-  // Build and insert new cards
-  const frag = document.createDocumentFragment();
-  articles.forEach((a, i) => {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = buildCard(a, i);
-    const card = tmp.firstElementChild;
-    frag.appendChild(card);
-  });
-  grid.insertBefore(frag, noRes);
-
-  // No results
-  noRes.style.display  = articles.length === 0 ? 'block' : 'none';
-  errEl.style.display  = 'none';
-
-  // Count
-  document.getElementById('rcNum').textContent = articles.length;
-
-  // Re-observe new cards for fade-in
-  grid.querySelectorAll('.m-card.fi').forEach(el => obs.observe(el));
+  // No results state
+  noRes.style.display = visible === 0 ? 'block' : 'none';
+  document.getElementById('rcNum').textContent = visible;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1030,8 +1056,6 @@ function setView(v) {
   document.getElementById('mosaic-grid').classList.toggle('list-view', IS_LIST_VIEW);
   document.getElementById('gridBtn').classList.toggle('active', !IS_LIST_VIEW);
   document.getElementById('listBtn').classList.toggle('active',  IS_LIST_VIEW);
-  // Re-render so spans update
-  applyFilters();
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1090,8 +1114,9 @@ async function loadArticles() {
     }
     document.getElementById('totalCount').textContent = ALL_ARTICLES.length;
 
-    buildFilters(ALL_ARTICLES);
-    applyFilters();
+    buildFilters(ALL_ARTICLES);  // populate pills, dropdowns, tag cloud
+    renderAllCards(ALL_ARTICLES); // render all cards once into DOM
+    // no applyFilters() call here — all cards visible by default
 
   } catch (err) {
     console.error('[AIMA Insights] Fetch error:', err);
