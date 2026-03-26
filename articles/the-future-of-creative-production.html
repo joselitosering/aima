@@ -11,7 +11,7 @@
 <meta name="article:author" content="Joselito Sering"/>
 <meta name="article:publish-date" content="2026-03-21"/>
 <meta name="article:read-time" content="8"/>
-<meta name="article:category" content="AI Innovation"/>
+<meta name="article:category" content="Innovation"/>
 <meta name="article:header-image" content="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920"/>
 
 <!-- Page Title -->
@@ -64,8 +64,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
 
 <style>
+  
 /* ═══════════════════════════════════════════════════
-   AIMA BRAND DESIGN TOKENS
+   AIMA BRAND DESIGN TOKENS -- COPY FROM HERE
 ═══════════════════════════════════════════════════ */
 :root {
   --bg:      #060810; --surface: #0B0E1C; --surface2: #10142A; --surface3: #161B36;
@@ -402,7 +403,7 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 </div>
 
 <!-- ══════════════════════════════════════════════
-     FIXED NAVIGATION
+     MAIN NAVIGATION
 ══════════════════════════════════════════════ -->
 <nav id="nav">
   <div class="container nav-inner">
@@ -427,6 +428,9 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
   </div>
 </nav>
 
+<!-- Back to Top Button -->
+<button id="back-to-top" aria-label="Back to top">↑</button>
+  
 <!-- ══════════════════════════════════════════════
      ARTICLE
 ══════════════════════════════════════════════ -->
@@ -858,9 +862,15 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
             Joselito Sering is a creative technologist exploring the intersection of artificial intelligence, media production, and generational wealth creation. Based in the Philippines, he focuses on leveraging AI agents to create artistic and scientific works that serve human kindness and philanthropic impact.
           </p>
           <div class="author-card-links">
-            <a href="http://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
-            <a href="http://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧 Portfolio</a>
-            <a href="https://www.blockchain.com/btc/address/333avr5LEQBkft7p9YC3Hi4PCEwvZt8bnM" class="author-link" target="_blank" rel="noopener noreferrer">₿ Tip Jar</a>
+            <a href="http://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg><span>LinkedIn</span></a>
+            <a href="http://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg><span>Portfolio</span></a>
+            <a href="https://www.blockchain.com/btc/address/333avr5LEQBkft7p9YC3Hi4PCEwvZt8bnM" class="author-link" target="_blank" rel="noopener noreferrer"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg><span>Tip Jar</span></a>
           </div>
         </div>
       </div>
@@ -884,22 +894,22 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
       <div class="article-nav-label">Continue Reading</div>
       
       <div class="article-nav-grid">
-        <!-- Previous Article - EDIT HREF AND TITLE FOR EACH ARTICLE -->
-        <a href="http://joselitosering.github.io/aima/articles/article-intro-000.html" class="nav-card" id="prev-article-card">
-          <span class="nav-card-icon">←</span>
-          <div class="nav-card-label">Previous Article</div>
-          <div class="nav-card-title">Introduction to AIMA Magazine</div>
-        </a>
+//        <!-- Previous Article - EDIT HREF AND TITLE FOR EACH ARTICLE -->
+//        <a href="http://joselitosering.github.io/aima/articles/article-intro-000.html" class="nav-card" id="prev-article-card">
+//          <span class="nav-card-icon">←</span>
+//          <div class="nav-card-label">Previous Article</div>
+//          <div class="nav-card-title">Introduction to AIMA Magazine</div>
+//        </a>
         
         <!-- All Articles - Always enabled -->
-        <a href="http://joselitosering.github.io/aima/articles/allarticles.html" class="nav-card">
+        <a href="http://joselitosering.github.io/aima/insights.html" class="nav-card">
           <span class="nav-card-icon">⊞</span>
           <div class="nav-card-label">All Articles</div>
           <div class="nav-card-title">Browse the complete AIMA knowledge base</div>
         </a>
         
         <!-- Next Article - EDIT HREF AND TITLE FOR EACH ARTICLE -->
-        <a href="http://joselitosering.github.io/aima/articles/article-voice-cloning-002.html" class="nav-card" id="next-article-card">
+        <a href="https://joselitosering.github.io/aima/articles/the-5k-music-video-blueprint.html" class="nav-card" id="next-article-card">
           <span class="nav-card-icon">→</span>
           <div class="nav-card-label">Next Article</div>
           <div class="nav-card-title">Voice Cloning Ethics: Best Practices for 2026</div>
@@ -972,7 +982,7 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 
     <div class="footer-bottom">
       <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
-      <span>v1.0 · aima.media</span>
+      <span>v10.0 · aima.media</span>
     </div>
   </div>
 </footer>
