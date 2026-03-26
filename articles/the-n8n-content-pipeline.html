@@ -445,20 +445,22 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
       background-repeat: no-repeat;
     "></div>
     <div class="header-content">
+      <div class="container">
       <span class="article-category fade-in delay-1">AI Automation</span>
-      <h1 class="article-title fade-in delay-2">
+      <h1 class="article-title fade-in delay-2" id="articleTitle">
         Build a Zero-Touch <span class="highlight">Content Pipeline</span> with n8n
       </h1>
     </div>
+  </div>
   </header>
 
-  <!-- Article Meta -->
-  <div class="article-meta fade-in delay-3">
+  <!-- META ROW -->
+  <div class="article-meta fade-in delay-2">
     <div class="meta-author">
-      <div class="author-avatar">JS</div>
+      <div class="author-avatar" id="authorAvatar">JS</div>
       <div class="author-info">
-        <span class="author-name">Joselito Sering</span>
-        <span class="author-role">Contributing Writer · Creative Technologist</span>
+        <div class="author-name" id="authorName">Joselito Sering</div>
+        <div class="author-role">Editor-in-Chief · AIMA</div>
       </div>
     </div>
     <div class="meta-divider"></div>
@@ -478,17 +480,64 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
     </div>
   </div>
 
-  <!-- Article Body Grid -->
+  <!-- 3-COLUMN GRID -->
   <div class="article-container">
 
-    <!-- Left Sidebar: Share Links -->
+    <!-- LEFT: Share -->
     <aside class="article-sidebar-left fade-in delay-3">
       <div class="sidebar-label">Share</div>
       <div class="share-links">
-        <a href="#" class="share-link" onclick="shareOnTwitter(); return false;">𝕏 Twitter</a>
-        <a href="#" class="share-link" onclick="shareOnLinkedIn(); return false;">in LinkedIn</a>
-        <a href="#" class="share-link" onclick="shareOnFacebook(); return false;">f Facebook</a>
-        <a href="#" class="share-link" onclick="shareViaEmail(); return false;">✉ Email</a>
+
+        <a class="share-link"
+           data-share="facebook"
+           href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
+
+        <a class="share-link"
+           data-share="twitter"
+           href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4l16 16M4 20L20 4"/>
+          </svg>
+          <span>Twitter</span>
+        </a>
+
+        <a class="share-link"
+           data-share="linkedin"
+           href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+          <span>LinkedIn</span>
+        </a>
+
+        <a class="share-link"
+           data-share="email"
+           href="mailto:?subject=PAGE_TITLE&body=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <span>Email</span>
+        </a>
+
+        <button class="share-link" id="copyLinkBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span id="copyLinkLabel">Copy Link</span>
+        </button>
+
       </div>
     </aside>
 
