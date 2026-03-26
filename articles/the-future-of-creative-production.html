@@ -487,64 +487,40 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
     </div>
   </div>
 
-  <!-- 3-COLUMN GRID -->
+  <!-- Article Container with Sidebar Layout -->
   <div class="article-container">
-
-    <!-- LEFT: Share -->
+    
+    <!-- Left Sidebar: Social Sharing -->
+    <!-- ═══════════════════════════════════════════════
+         LOCKED SHARE BUTTON DESIGN — v10 STANDARD
+         5 buttons: Facebook, X/Twitter, LinkedIn, Email, Copy Link
+         SVG stroke icons (18×18), currentColor inheritance
+         Progressive enhancement: direct href URLs + JS popup upgrade
+         Copy Link: <button> with clipboard API + execCommand fallback
+    ═══════════════════════════════════════════════ -->
     <aside class="article-sidebar-left fade-in delay-3">
       <div class="sidebar-label">Share</div>
-      <div class="share-links">
-
-        <a class="share-link"
-           data-share="facebook"
-           href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL"
-           target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg>
+      <div class="share-links" id="shareLinks">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjoselitosering.github.io%2Faima%2Farticles%2Farticle-boycott-or-bigotry-002.html" class="share-link" data-share="facebook" target="_blank" rel="noopener noreferrer" title="Share on Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           <span>Facebook</span>
         </a>
-
-        <a class="share-link"
-           data-share="twitter"
-           href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE"
-           target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4l16 16M4 20L20 4"/>
-          </svg>
-          <span>Twitter</span>
+        <a href="https://x.com/intent/tweet?url=https%3A%2F%2Fjoselitosering.github.io%2Faima%2Farticles%2Farticle-boycott-or-bigotry-002.html&text=Boycott%20or%20Bigotry%3F%20The%20Backlash%20Against%20AI%20Artists" class="share-link" data-share="twitter" target="_blank" rel="noopener noreferrer" title="Share on X / Twitter">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>X / Twitter</span>
         </a>
-
-        <a class="share-link"
-           data-share="linkedin"
-           href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL"
-           target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-          </svg>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjoselitosering.github.io%2Faima%2Farticles%2Farticle-boycott-or-bigotry-002.html" class="share-link" data-share="linkedin" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           <span>LinkedIn</span>
         </a>
-
-        <a class="share-link"
-           data-share="email"
-           href="mailto:?subject=PAGE_TITLE&body=PAGE_URL"
-           target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
+        <a href="mailto:?subject=Boycott%20or%20Bigotry%3F%20The%20Backlash%20Against%20AI%20Artists&body=I%20thought%20you%20might%20find%20this%20article%20interesting%3A%0A%0Ahttps%3A%2F%2Fjoselitosering.github.io%2Faima%2Farticles%2Farticle-boycott-or-bigotry-002.html" class="share-link" data-share="email" title="Share via Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           <span>Email</span>
         </a>
-
-        <button class="share-link" id="copyLinkBtn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-          </svg>
-          <span id="copyLinkLabel">Copy Link</span>
+        <button type="button" class="share-link" id="copyLinkBtn" title="Copy link to clipboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span>Copy Link</span>
         </button>
-
       </div>
     </aside>
 
@@ -694,9 +670,8 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
         <p class="footer-cta-text">
           Discover how AI-powered creative production can help you achieve professional results at a fraction of traditional costs.
         </p>
-        <a href="/#services" class="footer-cta-button">Explore Our Services</a>
+         <a href="http://joselitosering.github.io/aima/index.html#services" class="footer-cta-button">Explore Our Services</a>
       </div>
-
     </main>
 
     <!-- Right Sidebar: Table of Contents -->
@@ -851,27 +826,21 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
   <!-- About The Author & Explore Our Services Side-by-Side -->
   <section class="author-services-section">
     
-    <!-- About The Author Card -->
+     <!-- About The Author Card -->
     <div class="about-author-card">
       <div class="author-section-header">About The Author</div>
       <div class="author-card">
         <div class="author-card-avatar">JS</div>
         <div class="author-card-content">
           <div class="author-card-name">Joselito Sering</div>
-          <div class="author-card-title">Contributing Writer · Creative Technologist</div>
+          <div class="author-card-title">Contributing Writer &middot; Creative Technologist</div>
           <p class="author-card-bio">
             Joselito Sering is a creative technologist exploring the intersection of artificial intelligence, media production, and generational wealth creation. Based in the Philippines, he focuses on leveraging AI agents to create artistic and scientific works that serve human kindness and philanthropic impact.
           </p>
           <div class="author-card-links">
-            <a href="http://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg><span>LinkedIn</span></a>
-            <a href="http://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg><span>Portfolio</span></a>
-            <a href="https://www.blockchain.com/btc/address/333avr5LEQBkft7p9YC3Hi4PCEwvZt8bnM" class="author-link" target="_blank" rel="noopener noreferrer"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg><span>Tip Jar</span></a>
+            <a href="http://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">&#x1F4BC; LinkedIn</a>
+            <a href="http://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">&#x1F527; Portfolio</a>
+            <a href="https://www.blockchain.com/btc/address/333avr5LEQBkft7p9YC3Hi4PCEwvZt8bnM" class="author-link" target="_blank" rel="noopener noreferrer">&#x20BF; Tip Jar</a>
           </div>
         </div>
       </div>
@@ -895,12 +864,12 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
       <div class="article-nav-label">Continue Reading</div>
       
       <div class="article-nav-grid">
-//        <!-- Previous Article - EDIT HREF AND TITLE FOR EACH ARTICLE -->
-//        <a href="http://joselitosering.github.io/aima/articles/article-intro-000.html" class="nav-card" id="prev-article-card">
-//          <span class="nav-card-icon">←</span>
-//          <div class="nav-card-label">Previous Article</div>
-//          <div class="nav-card-title">Introduction to AIMA Magazine</div>
-//        </a>
+        <!-- Previous Article - EDIT HREF AND TITLE FOR EACH ARTICLE -->
+        <a href="http://joselitosering.github.io/aima/articles/article-intro-000.html" class="nav-card" id="prev-article-card">
+          <span class="nav-card-icon">←</span>
+          <div class="nav-card-label">Previous Article</div>
+          <div class="nav-card-title">Introduction to AIMA Magazine</div>
+        </a>
         
         <!-- All Articles - Always enabled -->
         <a href="http://joselitosering.github.io/aima/insights.html" class="nav-card">
@@ -989,35 +958,73 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  
 // ═══════════════════════════════════════════════════
 // SOCIAL SHARING FUNCTIONS
 // ═══════════════════════════════════════════════════
 
-function shareOnFacebook() {
-  const url = encodeURIComponent(window.location.href);
-  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-  window.open(shareUrl, 'facebook-share', 'width=600,height=400');
-}
+(function() {
+  // Upgrade social share links to open in popup windows
+  var shareContainer = document.getElementById('shareLinks');
+  if (!shareContainer) return;
 
-function shareOnTwitter() {
-  const url = encodeURIComponent(window.location.href);
-  const text = encodeURIComponent(document.querySelector('.article-title').innerText);
-  const shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
-  window.open(shareUrl, 'twitter-share', 'width=600,height=400');
-}
+  // Facebook, Twitter, LinkedIn — open in popup instead of new tab
+  shareContainer.querySelectorAll('a[data-share]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      if (!href || href.indexOf('mailto:') === 0) return; // let email fall through
+      e.preventDefault();
+      window.open(href, this.getAttribute('data-share') + '-share', 'width=600,height=500,menubar=no,toolbar=no,scrollbars=yes');
+    });
+  });
 
-function shareOnLinkedIn() {
-  const url = encodeURIComponent(window.location.href);
-  const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
-  window.open(shareUrl, 'linkedin-share', 'width=600,height=400');
-}
+  // Copy Link button
+  var copyBtn = document.getElementById('copyLinkBtn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function() {
+      var canonical = document.querySelector('link[rel="canonical"]');
+      var url = canonical ? canonical.href : window.location.href;
+      var label = copyBtn.querySelector('span:last-child');
 
-function shareViaEmail() {
-  const subject = encodeURIComponent(document.querySelector('.article-title').innerText);
-  const body = encodeURIComponent(`I thought you might find this article interesting:\n\n${window.location.href}`);
-  window.location.href = `mailto:?subject=${subject}&body=${body}`;
-}
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+          onCopySuccess(label);
+        }).catch(function() {
+          fallbackCopy(url, label);
+        });
+      } else {
+        fallbackCopy(url, label);
+      }
+    });
+  }
 
+  function onCopySuccess(label) {
+    label.textContent = 'Copied!';
+    var btn = document.getElementById('copyLinkBtn');
+    btn.style.color = '#2DCA73';
+    setTimeout(function() {
+      label.textContent = 'Copy Link';
+      btn.style.color = '';
+    }, 2000);
+  }
+
+  function fallbackCopy(text, label) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      onCopySuccess(label);
+    } catch (e) {
+      label.textContent = 'Failed';
+      setTimeout(function() { label.textContent = 'Copy Link'; }, 2000);
+    }
+    document.body.removeChild(ta);
+  }
+})();
 // ═══════════════════════════════════════════════════
 // TABLE OF CONTENTS - ACTIVE STATE TRACKING
 // ═══════════════════════════════════════════════════
