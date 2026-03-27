@@ -942,7 +942,7 @@ function populateGallery(items) {
   const count = $('gallery-count');
   if (!grid) return;
   const cssClasses = ['mi-1','mi-2','mi-3','mi-4','mi-5','mi-6','mi-7','mi-8'];
-  grid.innerHTML = items.filter(t => t.quote && t.quote.trim() !== '').map((t, i) => {
+  grid.innerHTML = items.filter(item => item.image_url && item.image_url.trim() !== '').slice(0,8).map((item, i) => {
     const cls    = cssClasses[i] || '';
     const hasImg = item.image_url && item.image_url.trim() !== '';
     const inner  = hasImg
