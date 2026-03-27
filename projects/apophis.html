@@ -753,45 +753,72 @@ a:hover { opacity:.75; }
 </section>
 
 
-<!-- ═══════════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════════════ -->
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div>
-      <a id="footer-logo-home" href="../index.html" class="footer-logo" style="text-decoration:none;">
-        <span class="dot"></span><span style="letter-spacing:0;"><span style="color:#fff;">AI</span><span style="color:var(--mm-cyan);">MA</span></span>
-      </a>
-      <div class="footer-tagline">A Monkey Matters LLC Production · Wyoming LLC</div>
-      <div class="footer-tagline" style="margin-top:8px;">The art and the algorithm. Refused to choose.</div>
-      <a id="footer-home-btn" href="../index.html" style="
-        display:inline-flex;align-items:center;gap:8px;margin-top:20px;
-        font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-        color:var(--mm-muted);border:1px solid var(--border2);border-radius:var(--radius);
-        padding:8px 16px;text-decoration:none;transition:border-color .18s,color .18s;
-      " onmouseover="this.style.borderColor='var(--mm-cyan)';this.style.color='var(--mm-cyan)'"
-         onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.color='var(--mm-muted)'">
-        ← Back to Home
-      </a>
+<!-- ══════════════════════════════════════════════════
+     FOOTER — shared across all pages
+══════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+
+      <!-- Brand column -->
+      <div>
+        <!-- AIMA logo: pulse dot + single wordmark wrapper = no gap -->
+        <div class="fb-logo-wrap">
+          <div class="pulse-ft"></div>
+          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
+        </div>
+        <div class="fb-sub">AI Media Agency</div>
+        <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+        <!-- Back to Top replaces social icons -->
+        <button class="back-to-top" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
+          <span class="arr">↑</span> Back to Top
+        </button>
+      </div>
+
+      <!-- Services column -->
+      <div>
+        <div class="fl-head">Services</div>
+        <ul class="fl-list">
+          <li><a href="index.html#services">Music Video</a></li>
+          <li><a href="index.html#services">Corporate Explainer</a></li>
+          <li><a href="index.html#services">TV Commercial</a></li>
+          <li><a href="index.html#rates">Social Media Packages</a></li>
+          <li><a href="index.html#rates">Monthly Retainers</a></li>
+          <li><a href="index.html#rates">AI Automation Pipeline</a></li>
+        </ul>
+      </div>
+
+      <!-- Company column -->
+      <div>
+        <div class="fl-head">Company</div>
+        <ul class="fl-list">
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#process">Our Process</a></li>
+          <li><a href="index.html#work">Portfolio</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="#contact">Get a Quote</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal column -->
+      <div>
+        <div class="fl-head">Legal</div>
+        <ul class="fl-list">
+          <li><a href="legal.html#tos">Terms of Service</a></li>
+          <li><a href="legal.html#privacy">Privacy Policy</a></li>
+          <li><a href="legal.html#refund">Refund Policy</a></li>
+          <li><a href="legal.html#licensing">Licensing FAQ</a></li>
+          <li><a href="legal.html#cookies">Cookie Settings</a></li>
+        </ul>
+      </div>
+
     </div>
-    <div class="footer-links">
-      <div class="fl-group">
-        <div class="fl-group-label">Work</div>
-        <ul><li><a href="#video">Case Studies</a></li><li><a href="#gallery">Video Portfolio</a></li><li><a href="#bts">Brand Films</a></li><li><a href="#metrics">Ad Campaigns</a></li></ul>
-      </div>
-      <div class="fl-group">
-        <div class="fl-group-label">Services</div>
-        <ul><li><a href="#services">Signal Tier</a></li><li><a href="#services">Apex Tier</a></li><li><a href="#services">Sovereign Tier</a></li><li><a href="#services">Custom Scope</a></li></ul>
-      </div>
-      <div class="fl-group">
-        <div class="fl-group-label">Company</div>
-        <ul><li><a href="#testimonials">About AIMA</a></li><li><a href="#logistics">Process</a></li><li><a href="#budget">AI Stack</a></li><li><a href="/cdn-cgi/l/email-protection#93fbf6fffffcd3f2fafef2e3e1fcf7e6f0e7fafcfde0bdf0fcfe" id="footer-contact">Contact</a></li></ul>
-      </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
+      <span>v1.0 · aima.media</span>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Monkey Matters LLC · All Rights Reserved · Wyoming LLC</div>
-    <div class="footer-copy" id="footer-email">Brand Identity v1.0 · March 2026</div>
   </div>
 </footer>
 
