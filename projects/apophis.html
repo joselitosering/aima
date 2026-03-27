@@ -446,6 +446,29 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
   .footer-links { flex-direction:column; gap:24px; }
   .footer-inner { flex-direction:column; }
 }
+.footer-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 44px; }
+@media(max-width:780px){ .footer-top { grid-template-columns: 1fr 1fr; } }
+@media(max-width:480px){ .footer-top { grid-template-columns: 1fr; } }
+
+.fb-logo-wrap { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.fb-logo-wrap .pulse-ft { width: 7px; height: 7px; flex-shrink: 0; background: var(--mm-cyan); border-radius: 50%; box-shadow: 0 0 7px var(--mm-cyan); animation: pulse 2.2s ease-in-out infinite; }
+.fb-wordmark { font-family: 'Anton', sans-serif; font-size: 20px; text-transform: uppercase; letter-spacing: .05em; }
+.fb-wordmark .ai { color: #fff; }
+.fb-wordmark .ma { color: var(--mm-cyan); }
+.fb-sub { font-family: var(--mono); font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--mm-cyan); margin-bottom: 8px; }
+.fb-tagline { font-size: 13px; color: var(--mm-muted); line-height: 1.75; margin-bottom: 20px; max-width: 280px; }
+.back-to-top { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mm-muted); background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 18px; transition: all .2s; cursor: pointer; }
+.back-to-top:hover { color: var(--mm-cyan); border-color: var(--mm-cyan); }
+.back-to-top .arr { font-size: 16px; color: var(--mm-cyan); }
+.fl-head { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 16px; text-transform: uppercase; letter-spacing: .06em; }
+.fl-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.fl-list a { font-size: 13px; color: var(--mm-muted); transition: color .2s; }
+.fl-list a:hover { color: var(--mm-cyan); }
+.footer-bottom { padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-bottom p, .footer-bottom span { font-size: 11px; color: var(--mm-muted); }
+#back-to-top { position: fixed; bottom: 32px; right: 32px; z-index: 100; width: 50px; height: 50px; background: var(--mm-cyan); color: var(--bg); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,217,245,0.3); }
+#back-to-top:hover { background: #fff; color: var(--mm-cyan); box-shadow: 0 6px 20px rgba(0,217,245,0.5); transform: translateY(-3px); }
+#back-to-top.show { opacity: 1; visibility: visible; }
 </style>
 </head>
 <body>
@@ -776,8 +799,6 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 <footer>
   <div class="container">
     <div class="footer-top">
-
-      <!-- Brand column -->
       <div>
         <div class="fb-logo-wrap">
           <div class="pulse-ft"></div>
@@ -785,12 +806,10 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
         </div>
         <div class="fb-sub">AI Media Agency</div>
         <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
-        <button class="back-to-top-footer" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
           <span class="arr">↑</span> Back to Top
         </button>
       </div>
-
-      <!-- Services column -->
       <div>
         <div class="fl-head">Services</div>
         <ul class="fl-list">
@@ -802,8 +821,6 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
           <li><a href="http://joselitosering.github.io/aima/index.html#rates">AI Automation Pipeline</a></li>
         </ul>
       </div>
-
-      <!-- Company column -->
       <div>
         <div class="fl-head">Company</div>
         <ul class="fl-list">
@@ -815,8 +832,6 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
           <li><a href="http://joselitosering.github.io/aima/index.html#contact">Get a Quote</a></li>
         </ul>
       </div>
-
-      <!-- Legal column -->
       <div>
         <div class="fl-head">Legal</div>
         <ul class="fl-list">
@@ -827,16 +842,14 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
           <li><a href="http://joselitosering.github.io/aima/legal.html#cookies">Cookie Settings</a></li>
         </ul>
       </div>
-
     </div>
-
     <div class="footer-bottom">
       <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
       <span>v10.0 · aima.media</span>
     </div>
   </div>
 </footer>
-
+<button id="back-to-top" aria-label="Back to top">↑</button>
 
 <!-- ═══════════════════════════════════════════════
      DATA LAYER — FETCH + POPULATE
@@ -1364,6 +1377,11 @@ function updateNavScroll() {
 window.addEventListener('scroll', updateNavScroll, { passive: true });
 updateNavScroll();
 </script>
-
+// Floating back-to-top button
+const _btt = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  _btt.classList.toggle('show', window.scrollY > 400);
+}, { passive: true });
+_btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </body>
 </html>
