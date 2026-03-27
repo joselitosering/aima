@@ -429,7 +429,7 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 </nav>
 
 <!-- Back to Top Button -->
-<button id="back-to-top" aria-label="Back to top">↑</button>
+<button id="back-to-top" aria-label="Back to top">&uarr;</button>
   
 <!-- ══════════════════════════════════════════════
      ARTICLE
@@ -1091,21 +1091,79 @@ document.querySelectorAll('.toc-link').forEach(link => {
 });
 
 // ═══════════════════════════════════════════════════
-// LOAD HEADER IMAGE FROM META TAG
+// LOAD HEADER IMAGE FROM META TAG (v10 pattern)
 // ═══════════════════════════════════════════════════
-
 document.addEventListener('DOMContentLoaded', function() {
   const headerImageMeta = document.querySelector('meta[name="article:header-image"]');
   if (headerImageMeta) {
     const headerImg = document.getElementById('headerImage');
-    const imageUrl = headerImageMeta.getAttribute('content');
+    const imageUrl  = headerImageMeta.getAttribute('content');
     if (headerImg && imageUrl) {
-      headerImg.style.backgroundImage = `linear-gradient(135deg, rgba(0,217,245,0.2), rgba(255,94,32,0.1)), url('${imageUrl}')`;
-      headerImg.style.backgroundSize = 'cover';
+      headerImg.style.backgroundImage  = `linear-gradient(135deg, rgba(255,94,32,0.28), rgba(0,217,245,0.10)), url('${imageUrl}')`;
+      headerImg.style.backgroundSize    = 'cover';
       headerImg.style.backgroundPosition = 'center';
     }
   }
 });
+
+// ═══════════════════════════════════════════════════
+// SHARE BUTTONS — LOCKED DESIGN
+// ═══════════════════════════════════════════════════
+(function () {
+  const url   = encodeURIComponent(window.location.href);
+  const title = encodeURIComponent(document.title);
+
+  // Upgrade data-share links to popup windows
+  document.querySelectorAll('a[data-share]').forEach(function (a) {
+    // Hydrate placeholder tokens in href
+    a.href = a.href
+      .replace('PAGE_URL',   url)
+      .replace('PAGE_TITLE', title);
+
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (a.dataset.share === 'email') {
+        window.location.href = a.href;
+      } else {
+        window.open(a.href, 'share-' + a.dataset.share, 'width=600,height=460,noopener');
+      }
+    });
+  });
+
+  // Copy Link button
+  var btn   = document.getElementById('copyLinkBtn');
+  var label = document.getElementById('copyLinkLabel');
+  if (btn && label) {
+    btn.addEventListener('click', function () {
+      var raw = window.location.href;
+      var done = function () {
+        btn.classList.add('copied');
+        label.textContent = 'Copied!';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          label.textContent = 'Copy Link';
+        }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(raw).then(done).catch(function () {
+          fallback(raw, done);
+        });
+      } else {
+        fallback(raw, done);
+      }
+    });
+  }
+
+  function fallback(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); cb(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+})();
 
 // ═══════════════════════════════════════════════════
 // NAVIGATION SCROLL & MOBILE MENU
@@ -1136,19 +1194,14 @@ function closeMobile() {
 }
 
 // ═══════════════════════════════════════════════════
-// BACK TO TOP BUTTON
+// BACK TO TOP (floating)
 // ═══════════════════════════════════════════════════
-
 const backToTopBtn = document.getElementById('back-to-top');
-
-// Show/hide button on scroll
 window.addEventListener('scroll', function() {
-  if (window.scrollY > 300) {
-    backToTopBtn.classList.add('show');
-  } else {
-    backToTopBtn.classList.remove('show');
-  }
+  if (backToTopBtn) backToTopBtn.classList.toggle('show', window.scrollY > 300);
 }, { passive: true });
+if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
 
-// Scroll to top on click
-backToT
+</body>
+</html>
