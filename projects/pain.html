@@ -1035,7 +1035,7 @@ function populateDelivery(items) {
 function populateTestimonials(items) {
   const grid = $('testimonials-grid');
   if (!grid) return;
-  grid.innerHTML = items.map((t, i) => {
+  grid.innerHTML = items.filter(t => t.quote && t.quote.trim() !== '').map((t, i) => {
     const hasQuote = t.quote && t.quote.trim() !== '';
     const stars    = '★'.repeat(Math.min(t.stars||5, 5));
     const initials = t.avatar_initial || (t.client_name ? t.client_name[0].toUpperCase() : '?');
