@@ -1097,11 +1097,11 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
         </a>
         
         <!-- Next Article -->
-//        <a href="http://joselitosering.github.io/aima/articles/article-voice-cloning-003.html" class="nav-card" id="next-article-card">
-//          <span class="nav-card-icon">&rarr;</span>
-//          <div class="nav-card-label">Next Article</div>
-//          <div class="nav-card-title">Voice Cloning Ethics: Best Practices for 2026</div>
-//        </a>
+       <a href="" class="nav-card" id="next-article-card">
+        <span class="nav-card-icon">&rarr;</span>
+         <div class="nav-card-label">Next Article</div>
+          <div class="nav-card-title">Coming Soon</div>
+        </a>
       </div>
     </div>
   </footer>
@@ -1297,42 +1297,128 @@ document.querySelectorAll('.toc-link').forEach(function(link) {
 });
 
 // ═══════════════════════════════════════════════════
-// LOAD HEADER IMAGE FROM META TAG
+// LOAD HEADER IMAGE FROM META TAG (v10 pattern)
 // ═══════════════════════════════════════════════════
-
 document.addEventListener('DOMContentLoaded', function() {
-  var headerImageMeta = document.querySelector('meta[name="article:header-image"]');
+  const headerImageMeta = document.querySelector('meta[name="article:header-image"]');
   if (headerImageMeta) {
-    var headerImg = document.getElementById('headerImage');
-    var imageUrl = headerImageMeta.getAttribute('content');
+    const headerImg = document.getElementById('headerImage');
+    const imageUrl  = headerImageMeta.getAttribute('content');
     if (headerImg && imageUrl) {
-      headerImg.style.backgroundImage = 'linear-gradient(135deg, rgba(0,217,245,0.2), rgba(255,94,32,0.1)), url(\'' + imageUrl + '\')';
-      headerImg.style.backgroundSize = 'cover';
+      headerImg.style.backgroundImage  = `linear-gradient(135deg, rgba(255,94,32,0.28), rgba(0,217,245,0.10)), url('${imageUrl}')`;
+      headerImg.style.backgroundSize    = 'cover';
       headerImg.style.backgroundPosition = 'center';
     }
   }
 });
 
 // ═══════════════════════════════════════════════════
-// NAVIGATION SCROLL & MOBILE MENU
+// SHARE BUTTONS — LOCKED DESIGN
 // ═══════════════════════════════════════════════════
+(function () {
+  const url   = encodeURIComponent(window.location.href);
+  const title = encodeURIComponent(document.title);
 
-var nav = document.getElementById('nav');
-function updateNav() {
-  if (!nav) return;
-  nav.classList.toggle('scrolled', window.scrollY > 60);
+  // Upgrade data-share links to popup windows
+  document.querySelectorAll('a[data-share]').forEach(function (a) {
+    // Hydrate placeholder tokens in href
+    a.href = a.href
+      .replace('PAGE_URL',   url)
+      .replace('PAGE_TITLE', title);
+
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (a.dataset.share === 'email') {
+        window.location.href = a.href;
+      } else {
+        window.open(a.href, 'share-' + a.dataset.share, 'width=600,height=460,noopener');
+      }
+    });
+  });
+
+  // Copy Link button
+  var btn   = document.getElementById('copyLinkBtn');
+  var label = document.getElementById('copyLinkLabel');
+  if (btn && label) {
+    btn.addEventListener('click', function () {
+      var raw = window.location.href;
+      var done = function () {
+        btn.classList.add('copied');
+        label.textContent = 'Copied!';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          label.textContent = 'Copy Link';
+        }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(raw).then(done).catch(function () {
+          fallback(raw, done);
+        });
+      } else {
+        fallback(raw, done);
+      }
+    });
+  }
+
+  function fallback(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); cb(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+})();
+
+// ═══════════════════════════════════════════════════
+// TOC ACTIVE STATE TRACKING
+// ═══════════════════════════════════════════════════
+function updateActiveSection() {
+  const sections = [
+    { id: 'section-context',       link: document.querySelector('a[href="#section-context"]') },
+    { id: 'section-toolstack',     link: document.querySelector('a[href="#section-toolstack"]') },
+    { id: 'section-preproduction', link: document.querySelector('a[href="#section-preproduction"]') },
+    { id: 'section-shots',         link: document.querySelector('a[href="#section-shots"]') },
+    { id: 'section-audio',         link: document.querySelector('a[href="#section-audio"]') },
+    { id: 'section-automation',    link: document.querySelector('a[href="#section-automation"]') },
+    { id: 'section-post',          link: document.querySelector('a[href="#section-post"]') },
+    { id: 'section-performance',   link: document.querySelector('a[href="#section-performance"]') },
+    { id: 'section-lessons',       link: document.querySelector('a[href="#section-lessons"]') }
+  ];
+  const scrollPos = window.scrollY + 50;
+  let current = null;
+  sections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el && scrollPos >= el.offsetTop && scrollPos < el.offsetTop + el.offsetHeight) current = s;
+  });
+  document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+  if (current && current.link) current.link.classList.add('active');
 }
-window.addEventListener('scroll', updateNav, { passive: true });
-updateNav();
+window.addEventListener('scroll', updateActiveSection);
+document.addEventListener('DOMContentLoaded', updateActiveSection);
 
+document.querySelectorAll('.toc-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById(this.getAttribute('href').substring(1));
+    if (target) {
+      const navOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navOffset - 20, behavior: 'smooth' });
+    }
+  });
+});
+
+// ═══════════════════════════════════════════════════
+// MOBILE MENU
+// ═══════════════════════════════════════════════════
 function toggleMobile() {
-  var menu = document.getElementById('mobileMenu');
-  var burger = document.getElementById('navBurger');
+  const menu   = document.getElementById('mobileMenu');
+  const burger = document.getElementById('navBurger');
   menu.classList.toggle('open');
   burger.classList.toggle('open');
   document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
 }
-
 function closeMobile() {
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('navBurger').classList.remove('open');
@@ -1340,19 +1426,14 @@ function closeMobile() {
 }
 
 // ═══════════════════════════════════════════════════
-// BACK TO TOP BUTTON
+// BACK TO TOP (floating)
 // ═══════════════════════════════════════════════════
-
 const backToTopBtn = document.getElementById('back-to-top');
-
-// Show/hide button on scroll
 window.addEventListener('scroll', function() {
-  if (window.scrollY > 300) {
-    backToTopBtn.classList.add('show');
-  } else {
-    backToTopBtn.classList.remove('show');
-  }
+  if (backToTopBtn) backToTopBtn.classList.toggle('show', window.scrollY > 300);
 }, { passive: true });
+if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
 
-// Scroll to top on click
-backToT
+</body>
+</html>
