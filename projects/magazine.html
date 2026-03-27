@@ -457,10 +457,10 @@ a:hover { opacity:.75; }
 
     <ul class="nav-links" id="navLinks">
       <li><a id="nav-home-link" href="https://joselitosering.github.io/aima/index.html" class="active">Home</a></li>
-      <li><a id="nav-work"      href="#gallery">Work</a></li>
+      <li><a id="nav-work"      href="#gallery">Deliverables</a></li>
       <li><a id="nav-services"  href="#services">Services</a></li>
-      <li><a id="nav-process"   href="#logistics">Process</a></li>
-      <li><a id="nav-about"     href="#testimonials">About</a></li>
+      <li><a id="nav-process"   href="#logistics">Logistics</a></li>
+      <li><a id="nav-about"     href="#testimonials">Clients</a></li>
     </ul>
 
     <!-- Prev / Next project — shown only when URLs set in sheet -->
@@ -1148,7 +1148,7 @@ function populateVideos(videos) {
     return;
   }
 
-  btsGrid.innerHTML = videos.bts.map(clip => {
+btsGrid.innerHTML = videos.bts.filter(clip => !isTemplate(clip.embed_url || '')).map(clip => {
     const rawUrl = clip.embed_url || '';
     const frameContent = !isTemplate(rawUrl)
       ? `<iframe src="${safeEmbedUrl(rawUrl)}" ${iframeAttrs}></iframe>`
