@@ -1148,7 +1148,7 @@ function populateVideos(videos) {
     return;
   }
 
-  btsGrid.innerHTML = videos.bts.map(clip => {
+btsGrid.innerHTML = videos.bts.filter(clip => !isTemplate(clip.embed_url || '')).map(clip => {
     const rawUrl = clip.embed_url || '';
     const frameContent = !isTemplate(rawUrl)
       ? `<iframe src="${safeEmbedUrl(rawUrl)}" ${iframeAttrs}></iframe>`
