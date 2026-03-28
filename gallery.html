@@ -666,7 +666,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
    Step 4: Paste the /exec URL below
 ════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbwNcN8O62QP07r8zS2W1NEE2b6hxbgsUFSxTgSqWTDcNCnm3s-tr4rx4yeSpyiapqFPiw/exec'
+  SHEETS_API_URL: ''
   // e.g. 'https://script.google.com/macros/s/AKfy.../exec'
 };
 
@@ -720,14 +720,17 @@ function escHtml(str) {
   return d.innerHTML;
 }
 
-// Convert Google Drive share URLs to direct embeddable URLs
+// Convert Google Drive share URLs to direct embeddable thumbnail URLs
 function toDriveDirectUrl(url) {
   if (!url) return '';
-  if (url.includes('drive.google.com/uc')) return url;
+  // Already a thumbnail endpoint — return as-is
+  if (url.includes('drive.google.com/thumbnail')) return url;
+  // Extract FILE_ID from /file/d/FILE_ID/view (most common share format)
   const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-  if (m) return 'https://drive.google.com/uc?export=view&id=' + m[1];
+  if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800';
+  // Extract FILE_ID from ?id=FILE_ID
   const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if (m2) return 'https://drive.google.com/uc?export=view&id=' + m2[1];
+  if (m2) return 'https://drive.google.com/thumbnail?id=' + m2[1] + '&sz=w800';
   return url;
 }
 
