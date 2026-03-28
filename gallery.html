@@ -666,7 +666,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
    Step 4: Paste the /exec URL below
 ════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  SHEETS_API_URL: 'https://script.google.com/macros/s/AKfycbyA5_HW1eCM4d6M3VJyb3Cm922o2-PfRjIWhpBQoh_e4tKmsbaXo7JVvZg4cO0IZf4D-Q/exec'
+  SHEETS_API_URL: ''
   // e.g. 'https://script.google.com/macros/s/AKfy.../exec'
 };
 
@@ -718,6 +718,17 @@ function escHtml(str) {
   const d = document.createElement('div');
   d.textContent = str || '';
   return d.innerHTML;
+}
+
+// Convert Google Drive share URLs to direct embeddable URLs
+function toDriveDirectUrl(url) {
+  if (!url) return '';
+  if (url.includes('drive.google.com/uc')) return url;
+  const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return 'https://drive.google.com/uc?export=view&id=' + m[1];
+  const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m2) return 'https://drive.google.com/uc?export=view&id=' + m2[1];
+  return url;
 }
 
 function formatDisplayDate(isoStr) {
@@ -788,10 +799,11 @@ function buildCard(project, visibleIndex) {
   const sClass  = statusClass(project.status);
 
   // Thumbnail
+  const thumbSrc = toDriveDirectUrl(project.thumbnail_url || '');
   let thumbInner;
-  if (project.thumbnail_url) {
+  if (thumbSrc) {
     thumbInner = `
-      <img src="${escHtml(project.thumbnail_url)}" alt="${escHtml(project.title)}"
+      <img src="${escHtml(thumbSrc)}" alt="${escHtml(project.title)}"
            onerror="this.style.display='none';this.nextElementSibling.style.opacity='1'"/>
       <div class="m-thumb-bg" style="background:${fallbackGradient(project.category)};opacity:0;position:absolute;inset:0"></div>`;
   } else {
