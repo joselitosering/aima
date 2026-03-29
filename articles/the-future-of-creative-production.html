@@ -480,47 +480,66 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
       <div class="meta-label">Category</div>
       <div class="meta-value" id="categoryValue">AI Innovation</div>
     </div>
-    <div class="meta-divider"></div>
-    <div class="meta-item">
-      <div class="meta-label">Series</div>
-      <div class="meta-value">AI Production Case Studies</div>
-    </div>
   </div>
 
-  <!-- Article Container with Sidebar Layout -->
+ <!-- 3-COLUMN GRID -->
   <div class="article-container">
-    
-    <!-- Left Sidebar: Social Sharing -->
-    <!-- ═══════════════════════════════════════════════
-         LOCKED SHARE BUTTON DESIGN — v10 STANDARD
-         5 buttons: Facebook, X/Twitter, LinkedIn, Email, Copy Link
-         SVG stroke icons (18×18), currentColor inheritance
-         Progressive enhancement: direct href URLs + JS popup upgrade
-         Copy Link: <button> with clipboard API + execCommand fallback
-    ═══════════════════════════════════════════════ -->
+
+    <!-- LEFT: Share -->
     <aside class="article-sidebar-left fade-in delay-3">
       <div class="sidebar-label">Share</div>
-      <div class="share-links" id="shareLinks">
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjoselitosering.github.io%2Faima%2Farticles%2Farticle-boycott-or-bigotry-002.html" class="share-link" data-share="facebook" target="_blank" rel="noopener noreferrer" title="Share on Facebook">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      <div class="share-links">
+
+        <a class="share-link"
+           data-share="facebook"
+           href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
           <span>Facebook</span>
         </a>
-        <a href="https://x.com/intent/tweet?url=https%3A%2F%2Fjoselitosering.github.io%2Faima%2Farticles%2Farticle-boycott-or-bigotry-002.html&text=Boycott%20or%20Bigotry%3F%20The%20Backlash%20Against%20AI%20Artists" class="share-link" data-share="twitter" target="_blank" rel="noopener noreferrer" title="Share on X / Twitter">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          <span>X / Twitter</span>
+
+        <a class="share-link"
+           data-share="twitter"
+           href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4l16 16M4 20L20 4"/>
+          </svg>
+          <span>Twitter</span>
         </a>
-        <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjoselitosering.github.io%2Faima%2Farticles%2Farticle-boycott-or-bigotry-002.html" class="share-link" data-share="linkedin" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+
+        <a class="share-link"
+           data-share="linkedin"
+           href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
           <span>LinkedIn</span>
         </a>
-        <a href="mailto:?subject=Boycott%20or%20Bigotry%3F%20The%20Backlash%20Against%20AI%20Artists&body=I%20thought%20you%20might%20find%20this%20article%20interesting%3A%0A%0Ahttps%3A%2F%2Fjoselitosering.github.io%2Faima%2Farticles%2Farticle-boycott-or-bigotry-002.html" class="share-link" data-share="email" title="Share via Email">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+
+        <a class="share-link"
+           data-share="email"
+           href="mailto:?subject=PAGE_TITLE&body=PAGE_URL"
+           target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
           <span>Email</span>
         </a>
-        <button type="button" class="share-link" id="copyLinkBtn" title="Copy link to clipboard">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          <span>Copy Link</span>
+
+        <button class="share-link" id="copyLinkBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span id="copyLinkLabel">Copy Link</span>
         </button>
+
       </div>
     </aside>
 
@@ -956,75 +975,83 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
     </div>
   </div>
 </footer>
+  
+<!-- FLOATING BACK TO TOP -->
+<button id="back-to-top" aria-label="Back to top">↑</button>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   
-// ═══════════════════════════════════════════════════
-// SOCIAL SHARING FUNCTIONS
-// ═══════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
+     SITE FOOTER (v10)
+══════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
 
-<!-- ══ FLOATING SHARE SIDEBAR ══════════════════════════════ -->
-<div id="share-sidebar">
-  <div class="share-sidebar-label">Share</div>
+      <!-- Brand column (v10) -->
+      <div>
+        <div class="fb-logo-wrap">
+          <div class="pulse-ft"></div>
+          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
+        </div>
+        <div class="fb-sub">AI Media Agency</div>
+        <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+          <span class="arr">↑</span> Back to Top
+        </button>
+      </div>
 
-  <!-- Facebook -->
-  <a class="share-fab" title="Share on Facebook" onclick="shareOnFacebook(); return false;" href="#">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-    </svg>
-  </a>
+      <!-- Services column -->
+      <div>
+        <div class="fl-head">Services</div>
+        <ul class="fl-list">
+          <li><a href="http://joselitosering.github.io/aima/index.html#services">Music Video</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#services">Corporate Explainer</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#services">TV Commercial</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#rates">Social Media Packages</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#rates">Monthly Retainers</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#rates">AI Automation Pipeline</a></li>
+        </ul>
+      </div>
 
-  <!-- X / Twitter -->
-  <a class="share-fab" title="Share on X" onclick="shareOnTwitter(); return false;" href="#">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 4l16 16M4 20L20 4"/>
-    </svg>
-  </a>
+      <!-- Company column (v10 — includes gallery + insights) -->
+      <div>
+        <div class="fl-head">Company</div>
+        <ul class="fl-list">
+          <li><a href="http://joselitosering.github.io/aima/index.html#about">About Us</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#process">Our Process</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#work">Portfolio</a></li>
+          <li><a href="http://joselitosering.github.io/aima/insights.html">Insights</a></li>
+          <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#contact">Get a Quote</a></li>
+        </ul>
+      </div>
 
-  <!-- LinkedIn -->
-  <a class="share-fab" title="Share on LinkedIn" onclick="shareOnLinkedIn(); return false;" href="#">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-      <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-    </svg>
-  </a>
+      <!-- Legal column (v10 — index.html#hash format) -->
+      <div>
+        <div class="fl-head">Legal</div>
+        <ul class="fl-list">
+          <li><a href="http://joselitosering.github.io/aima/index.html#tos">Terms of Service</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#privacy">Privacy Policy</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#refund">Refund Policy</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#licensing">Licensing FAQ</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#cookies">Cookie Settings</a></li>
+        </ul>
+      </div>
 
-  <!-- Email -->
-  <a class="share-fab" title="Email this page" onclick="shareViaEmail(); return false;" href="#">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-      <polyline points="22,6 12,13 2,6"/>
-    </svg>
-  </a>
+    </div>
 
-  <!-- Copy Link -->
-  <button class="share-fab copy-btn" title="Copy link" id="copyLinkBtn">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-    </svg>
-  </button>
-</div>
-  
-// ═══════════════════════════════════════════════════
-// TABLE OF CONTENTS - ACTIVE STATE TRACKING
-// ═══════════════════════════════════════════════════
-
-<!-- ══ FLOATING TOC SIDEBAR ════════════════════════════════ -->
-<div id="toc-sidebar">
-  <div class="toc-panel">
-    <span class="toc-panel-label">Contents</span>
-    <nav class="toc-nav">
-      <a href="#section-paradigm" class="toc-link">The New Paradigm</a>
-      <a href="#section-tech-stack" class="toc-link">Technology Stack</a>
-      <a href="#section-quality" class="toc-link">Quality Standards</a>
-      <a href="#section-business" class="toc-link">Business Implications</a>
-      <a href="#section-future" class="toc-link">Future Trajectory</a>
-      <a href="#section-ethics" class="toc-link">Ethical Considerations</a>
-    </nav>
+    <div class="footer-bottom">
+      <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
+      <span>v10.0 · aima.media</span>
+    </div>
   </div>
-</div>
+</footer>
 
+<!-- FLOATING BACK TO TOP -->
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ═══════════════════════════════════════════════════
 // LOAD HEADER IMAGE FROM META TAG (v10 pattern)
 // ═══════════════════════════════════════════════════
@@ -1100,75 +1127,66 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })();
 
-// ══ COPY LINK BUTTON ═════════════════════════════════════════
-(function() {
-  const btn = document.getElementById('copyLinkBtn');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    const url = window.location.href;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => flashCopy(btn));
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-      document.body.removeChild(ta); flashCopy(btn);
-    }
-  });
-  function flashCopy(btn) {
-    const origSvg = btn.innerHTML;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';
-    btn.style.color = 'var(--green)'; btn.style.borderColor = 'var(--green)';
-    setTimeout(() => { btn.innerHTML = origSvg; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
-  }
-})();
-
-// ══ SHARE & TOC SIDEBAR VISIBILITY (show after scroll) ═══════
-const _shareSidebar = document.getElementById('share-sidebar');
-const _tocSidebar   = document.getElementById('toc-sidebar');
-window.addEventListener('scroll', () => {
-  const show = window.scrollY > 300;
-  if (_shareSidebar) _shareSidebar.classList.toggle('visible', show);
-  if (_tocSidebar)   _tocSidebar.classList.toggle('visible', show);
-}, { passive: true });
-
-// ══ TOC ACTIVE LINK HIGHLIGHTING ═════════════════════════════
-const _tocLinks = document.querySelectorAll('.toc-link');
-window.addEventListener('scroll', () => {
-  // UPDATE THIS ARRAY to match your article's section IDs
-  const sections = ['section-paradigm','section-tech-stack','section-quality','section-business','section-future','section-ethics'];
-  let current = '';
-  sections.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 120) current = id;
-  });
-  _tocLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
-}, { passive: true });
+  <!-- ══ FLOATING TOC SIDEBAR ════════════════════════════════ -->
+<div id="toc-sidebar">
+  <div class="toc-panel">
+    <span class="toc-panel-label">Contents</span>
+    <nav class="toc-nav">
+      <a href="#section-paradigm" class="toc-link">The New Paradigm</a>
+      <a href="#section-tech-stack" class="toc-link">Technology Stack</a>
+      <a href="#section-quality" class="toc-link">Quality Standards</a>
+      <a href="#section-business" class="toc-link">Business Implications</a>
+      <a href="#section-future" class="toc-link">Future Trajectory</a>
+      <a href="#section-ethics" class="toc-link">Ethical Considerations</a>
+    </nav>
+  </div>
+</div>
   
 // ═══════════════════════════════════════════════════
-// NAVIGATION SCROLL & MOBILE MENU
+// TOC ACTIVE STATE TRACKING
 // ═══════════════════════════════════════════════════
-
-// Navigation scroll effect
-const nav = document.getElementById('nav');
-function updateNav() {
-  if (!nav) return;
-  nav.classList.toggle('scrolled', window.scrollY > 60);
+function updateActiveSection() {
+  const sections = [
+    { id: 'section-paradigm',      link: document.querySelector('a[href="#section-paradigm"]') },
+    { id: 'section-toolstack',     link: document.querySelector('a[href="#section-toolstack"]') },
+    { id: 'section-quality',       link: document.querySelector('a[href="#section-quality"]') },
+    { id: 'section-business',      link: document.querySelector('a[href="#section-business"]') },
+    { id: 'section-future',        link: document.querySelector('a[href="#section-future"]') },
+    { id: 'section-ethics',        link: document.querySelector('a[href="#section-ethics"]') },
+  ];
+  const scrollPos = window.scrollY + 50;
+  let current = null;
+  sections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el && scrollPos >= el.offsetTop && scrollPos < el.offsetTop + el.offsetHeight) current = s;
+  });
+  document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+  if (current && current.link) current.link.classList.add('active');
 }
-window.addEventListener('scroll', updateNav, { passive: true });
-updateNav();
+window.addEventListener('scroll', updateActiveSection);
+document.addEventListener('DOMContentLoaded', updateActiveSection);
 
-// Mobile menu toggle
+document.querySelectorAll('.toc-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById(this.getAttribute('href').substring(1));
+    if (target) {
+      const navOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navOffset - 20, behavior: 'smooth' });
+    }
+  });
+});
+
+// ═══════════════════════════════════════════════════
+// MOBILE MENU
+// ═══════════════════════════════════════════════════
 function toggleMobile() {
-  const menu = document.getElementById('mobileMenu');
+  const menu   = document.getElementById('mobileMenu');
   const burger = document.getElementById('navBurger');
   menu.classList.toggle('open');
   burger.classList.toggle('open');
   document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
 }
-
 function closeMobile() {
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('navBurger').classList.remove('open');
@@ -1187,3 +1205,4 @@ if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({
 
 </body>
 </html>
+
