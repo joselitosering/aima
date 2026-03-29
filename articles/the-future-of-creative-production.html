@@ -963,132 +963,67 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 // SOCIAL SHARING FUNCTIONS
 // ═══════════════════════════════════════════════════
 
-(function() {
-  // Upgrade social share links to open in popup windows
-  var shareContainer = document.getElementById('shareLinks');
-  if (!shareContainer) return;
+<!-- ══ FLOATING SHARE SIDEBAR ══════════════════════════════ -->
+<div id="share-sidebar">
+  <div class="share-sidebar-label">Share</div>
 
-  // Facebook, Twitter, LinkedIn — open in popup instead of new tab
-  shareContainer.querySelectorAll('a[data-share]').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      var href = this.getAttribute('href');
-      if (!href || href.indexOf('mailto:') === 0) return; // let email fall through
-      e.preventDefault();
-      window.open(href, this.getAttribute('data-share') + '-share', 'width=600,height=500,menubar=no,toolbar=no,scrollbars=yes');
-    });
-  });
+  <!-- Facebook -->
+  <a class="share-fab" title="Share on Facebook" onclick="shareOnFacebook(); return false;" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </svg>
+  </a>
 
-  // Copy Link button
-  var copyBtn = document.getElementById('copyLinkBtn');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', function() {
-      var canonical = document.querySelector('link[rel="canonical"]');
-      var url = canonical ? canonical.href : window.location.href;
-      var label = copyBtn.querySelector('span:last-child');
+  <!-- X / Twitter -->
+  <a class="share-fab" title="Share on X" onclick="shareOnTwitter(); return false;" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4l16 16M4 20L20 4"/>
+    </svg>
+  </a>
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function() {
-          onCopySuccess(label);
-        }).catch(function() {
-          fallbackCopy(url, label);
-        });
-      } else {
-        fallbackCopy(url, label);
-      }
-    });
-  }
+  <!-- LinkedIn -->
+  <a class="share-fab" title="Share on LinkedIn" onclick="shareOnLinkedIn(); return false;" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+      <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+    </svg>
+  </a>
 
-  function onCopySuccess(label) {
-    label.textContent = 'Copied!';
-    var btn = document.getElementById('copyLinkBtn');
-    btn.style.color = '#2DCA73';
-    setTimeout(function() {
-      label.textContent = 'Copy Link';
-      btn.style.color = '';
-    }, 2000);
-  }
+  <!-- Email -->
+  <a class="share-fab" title="Email this page" onclick="shareViaEmail(); return false;" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </svg>
+  </a>
 
-  function fallbackCopy(text, label) {
-    var ta = document.createElement('textarea');
-    ta.value = text;
-    ta.setAttribute('readonly', '');
-    ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
-    document.body.appendChild(ta);
-    ta.select();
-    try {
-      document.execCommand('copy');
-      onCopySuccess(label);
-    } catch (e) {
-      label.textContent = 'Failed';
-      setTimeout(function() { label.textContent = 'Copy Link'; }, 2000);
-    }
-    document.body.removeChild(ta);
-  }
-})();
+  <!-- Copy Link -->
+  <button class="share-fab copy-btn" title="Copy link" id="copyLinkBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+    </svg>
+  </button>
+</div>
+  
 // ═══════════════════════════════════════════════════
 // TABLE OF CONTENTS - ACTIVE STATE TRACKING
 // ═══════════════════════════════════════════════════
 
-function updateActiveSection() {
-  const sections = [
-    { id: 'section-paradigm', link: document.querySelector('a[href="#section-paradigm"]') },
-    { id: 'section-tech-stack', link: document.querySelector('a[href="#section-tech-stack"]') },
-    { id: 'section-quality', link: document.querySelector('a[href="#section-quality"]') },
-    { id: 'section-business', link: document.querySelector('a[href="#section-business"]') },
-    { id: 'section-future', link: document.querySelector('a[href="#section-future"]') },
-    { id: 'section-ethics', link: document.querySelector('a[href="#section-ethics"]') }
-  ];
-
-  const scrollPosition = window.scrollY + 50; // Small offset for active state detection
-
-  let currentSection = null;
-
-  sections.forEach(section => {
-    const element = document.getElementById(section.id);
-    if (element) {
-      const offsetTop = element.offsetTop;
-      const offsetBottom = offsetTop + element.offsetHeight;
-
-      if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-        currentSection = section;
-      }
-    }
-  });
-
-  // Remove active class from all links
-  document.querySelectorAll('.toc-link').forEach(link => {
-    link.classList.remove('active');
-  });
-
-  // Add active class to current section link
-  if (currentSection && currentSection.link) {
-    currentSection.link.classList.add('active');
-  }
-}
-
-// Update on scroll
-window.addEventListener('scroll', updateActiveSection);
-
-// Update on page load
-document.addEventListener('DOMContentLoaded', updateActiveSection);
-
-// Smooth scroll for table of contents links
-document.querySelectorAll('.toc-link').forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('href').substring(1);
-    const targetElement = document.getElementById(targetId);
-    
-    if (targetElement) {
-      const targetPosition = targetElement.offsetTop;
-      
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
-    }
-  });
-});
+<!-- ══ FLOATING TOC SIDEBAR ════════════════════════════════ -->
+<div id="toc-sidebar">
+  <div class="toc-panel">
+    <span class="toc-panel-label">Contents</span>
+    <nav class="toc-nav">
+      <a href="#section-paradigm" class="toc-link">The New Paradigm</a>
+      <a href="#section-tech-stack" class="toc-link">Technology Stack</a>
+      <a href="#section-quality" class="toc-link">Quality Standards</a>
+      <a href="#section-business" class="toc-link">Business Implications</a>
+      <a href="#section-future" class="toc-link">Future Trajectory</a>
+      <a href="#section-ethics" class="toc-link">Ethical Considerations</a>
+    </nav>
+  </div>
+</div>
 
 // ═══════════════════════════════════════════════════
 // LOAD HEADER IMAGE FROM META TAG (v10 pattern)
@@ -1165,6 +1100,53 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })();
 
+// ══ COPY LINK BUTTON ═════════════════════════════════════════
+(function() {
+  const btn = document.getElementById('copyLinkBtn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const url = window.location.href;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => flashCopy(btn));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta); flashCopy(btn);
+    }
+  });
+  function flashCopy(btn) {
+    const origSvg = btn.innerHTML;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';
+    btn.style.color = 'var(--green)'; btn.style.borderColor = 'var(--green)';
+    setTimeout(() => { btn.innerHTML = origSvg; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+  }
+})();
+
+// ══ SHARE & TOC SIDEBAR VISIBILITY (show after scroll) ═══════
+const _shareSidebar = document.getElementById('share-sidebar');
+const _tocSidebar   = document.getElementById('toc-sidebar');
+window.addEventListener('scroll', () => {
+  const show = window.scrollY > 300;
+  if (_shareSidebar) _shareSidebar.classList.toggle('visible', show);
+  if (_tocSidebar)   _tocSidebar.classList.toggle('visible', show);
+}, { passive: true });
+
+// ══ TOC ACTIVE LINK HIGHLIGHTING ═════════════════════════════
+const _tocLinks = document.querySelectorAll('.toc-link');
+window.addEventListener('scroll', () => {
+  // UPDATE THIS ARRAY to match your article's section IDs
+  const sections = ['section-paradigm','section-tech-stack','section-quality','section-business','section-future','section-ethics'];
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 120) current = id;
+  });
+  _tocLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+  
 // ═══════════════════════════════════════════════════
 // NAVIGATION SCROLL & MOBILE MENU
 // ═══════════════════════════════════════════════════
