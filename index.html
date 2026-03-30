@@ -100,6 +100,17 @@ button { cursor: pointer; font-family: inherit; }
   background: var(--cyan); color: var(--bg);
   padding: 14px 36px; border-radius: var(--radius); margin-top: 8px;
 }
+.mobile-menu .m-legal {
+  display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 8px;
+}
+.mobile-menu .m-legal a {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  color: var(--muted); text-transform: uppercase;
+  font-size: 10px;
+}
+.mobile-menu .m-contact {
+  font-size: 12px; color: var(--muted); text-align: center; margin-top: 4px;
+}
 
 /* ═══════════════════════════════════════════════════════════
    NAVIGATION
@@ -309,162 +320,7 @@ footer {
 }
 .tp-card .desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
 
-/* ═══ HOMEPAGE PAGE STYLES ═════════════════════════════ */
-/* ═══════════════════════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════════════════════ */
-:root {
-  --bg:       #060810;
-  --surface:  #0B0E1C;
-  --surface2: #10142A;
-  --surface3: #161B36;
-  --cyan:     #00D9F5;
-  --orange:   #FF5E20;
-  --gold:     #C8A84B;
-  --gold-lt:  #EDD483;
-  --green:    #2DCA73;
-  --purple:   #A259FF;
-  --text:     #DFE6F5;
-  --muted:    #7A8BAA;
-  --border:   rgba(0,217,245,0.10);
-  --border2:  rgba(255,255,255,0.05);
-  --glow-c:   rgba(0,217,245,0.20);
-  --glow-o:   rgba(255,94,32,0.15);
-  --radius:   6px;
-  --mono:     'Courier Prime', monospace;
-  --nav-h:    72px;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  line-height: 1.65;
-}
-a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; }
-button { cursor: pointer; font-family: inherit; }
 
-/* ═══════════════════════════════════════════════════
-   UTILITY
-═══════════════════════════════════════════════════ */
-.container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
-.tag {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
-  color: var(--cyan);
-  border: 1px solid var(--border);
-  border-radius: 2px; padding: 4px 10px; margin-bottom: 16px;
-}
-.section-title {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(36px, 5.5vw, 68px);
-  line-height: .94; letter-spacing: .01em; text-transform: uppercase; color: #fff;
-}
-.section-title .c  { color: var(--cyan); }
-.section-title .o  { color: var(--orange); }
-.section-title .g  { color: var(--gold-lt); }
-.section-title .gr { color: var(--green); }
-.section-title .p  { color: var(--purple); }
-.section-title .ghost { -webkit-text-stroke: 1px rgba(255,255,255,.22); color: transparent; }
-.lead { font-size: 16px; color: var(--muted); max-width: 580px; line-height: 1.82; margin-top: 16px; }
-.divider { width: 44px; height: 2px; background: linear-gradient(90deg,var(--cyan),transparent); margin: 18px 0 28px; }
-.sec-header { margin-bottom: 56px; }
-
-/* scroll-offset for fixed nav */
-[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
-
-/* ═══════════════════════════════════════════════════
-   FADE-IN ANIMATIONS
-═══════════════════════════════════════════════════ */
-.fi { opacity:0; transform:translateY(22px); transition: opacity .6s ease, transform .6s ease; }
-.fi.vis { opacity:1; transform:none; }
-.fi-l { opacity:0; transform:translateX(-20px); transition: opacity .6s ease, transform .6s ease; }
-.fi-l.vis { opacity:1; transform:none; }
-.fi-r { opacity:0; transform:translateX(20px); transition: opacity .6s ease, transform .6s ease; }
-.fi-r.vis { opacity:1; transform:none; }
-
-/* ═══════════════════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════════════════ */
-#nav {
-  position: fixed; top:0; left:0; right:0; z-index:200;
-  height: var(--nav-h);
-  display: flex; align-items: center;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background .3s, border-color .3s;
-}
-#nav.scrolled {
-  background: rgba(6,8,16,.60);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom-color: var(--border);
-}
-.nav-inner { display: flex; align-items: center; justify-content: space-between; width:100%; }
-/* duplicate .nav-logo removed */
-/* duplicate .nav-logo .pulse rule removed */
-/* duplicate @keyframes pulse removed */
-/* duplicate .nav-logo .m3 removed */
-
-.nav-links { display:flex; align-items:center; gap:30px; list-style:none; }
-.nav-links a {
-  font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
-  color: var(--muted); transition: color .2s; position: relative; padding-bottom: 2px;
-}
-.nav-links a::after {
-  content:''; position:absolute; bottom:0; left:0; right:0;
-  height:1px; background:var(--cyan);
-  transform: scaleX(0); transform-origin:left; transition:transform .25s;
-}
-.nav-links a:hover { color:#fff; }
-.nav-links a:hover::after { transform:scaleX(1); }
-.nav-links a.active { color:var(--cyan); }
-.nav-links a.active::after { transform:scaleX(1); }
-
-.nav-cta {
-  font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:700;
-  background:var(--cyan); color:var(--bg);
-  padding:10px 20px; border-radius:var(--radius);
-  transition: box-shadow .2s, opacity .2s; white-space:nowrap;
-}
-.nav-cta:hover { box-shadow:0 0 22px var(--glow-c); opacity:.9; }
-
-/* hamburger */
-.nav-burger { display:none; flex-direction:column; gap:5px; padding:4px; cursor:pointer; }
-.nav-burger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:.3s; }
-.nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-.nav-burger.open span:nth-child(2) { opacity:0; }
-.nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-
-/* mobile overlay */
-.mobile-menu {
-  display: none;
-  position: fixed; inset: 0; z-index: 190;
-  background: rgba(6,8,16,.98); backdrop-filter: blur(20px);
-  flex-direction: column; align-items: center; justify-content: center; gap: 28px;
-  padding-top: var(--nav-h, 72px);
-  overflow-y: auto;
-}
-.mobile-menu.open { display:flex; }
-.mobile-menu a {
-  font-family:'Anton',sans-serif; font-size:32px; text-transform:uppercase;
-  letter-spacing:.05em; color: var(--muted); transition:color .2s;
-}
-.mobile-menu a:hover { color:#fff; }
-.mobile-menu .m-cta {
-  font-size:14px; letter-spacing:.12em; text-transform:uppercase; font-weight:700;
-  background:var(--cyan); color:var(--bg);
-  padding:14px 36px; border-radius:var(--radius); margin-top:12px;
-}
-
-@media(max-width:900px){ .nav-links { display:none; } }
-@media(max-width:640px){ .nav-cta { display:none; } .nav-burger { display:flex; } }
-
-/* ═══════════════════════════════════════════════════
    ████  SECTION 1: HOME / HERO  ████
 ═══════════════════════════════════════════════════ */
 #home {
@@ -1144,56 +1000,6 @@ button { cursor: pointer; font-family: inherit; }
 /* ═══════════════════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════════════════ */
-footer {
-  background:#030508;
-  border-top:1px solid var(--border);
-  padding:56px 0 28px;
-}
-.footer-top { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; margin-bottom:44px; }
-@media(max-width:780px){ .footer-top { grid-template-columns:1fr 1fr; } }
-@media(max-width:480px){ .footer-top { grid-template-columns:1fr; } }
-.fb-logo { font-family:'Anton',sans-serif; font-size:18px; text-transform:uppercase; letter-spacing:.05em; color:#fff; margin-bottom:12px; }
-.fb-logo .m3 { color:var(--cyan); }
-.fb-tagline { font-size:13px; color:var(--muted); line-height:1.75; margin-bottom:20px; max-width:280px; }
-.fb-social { display:flex; gap:10px; }
-.social-btn {
-  width:34px; height:34px; background:var(--surface2); border:1px solid var(--border2);
-  border-radius:var(--radius); display:flex; align-items:center; justify-content:center;
-  font-size:14px; transition:border-color .2s;
-}
-.social-btn:hover { border-color:var(--cyan); }
-.fl-head { font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
-.fl-list { list-style:none; }
-.fl-list li { margin-bottom:9px; }
-.fl-list a { font-size:13px; color:var(--muted); transition:color .2s; }
-.fl-list a:hover { color:var(--cyan); }
-.footer-bottom {
-  padding-top:24px; border-top:1px solid var(--border2);
-  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
-}
-.footer-bottom p, .footer-bottom span { font-size:12px; color:var(--muted); }
-.footer-bottom .mono { font-family:var(--mono); font-size:10px; }
-
-/* ═══════════════════════════════════════════════════
-   SECTION WRAPPERS / ALTERNATING BG
-═══════════════════════════════════════════════════ */
-.page-section { padding:110px 0; }
-.bg-dark { background:var(--bg); }
-.bg-mid  { background:var(--surface); }
-
-/* section dividers */
-.sec-divider {
-  height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent);
-}
-
-/* ═══════════════════════════════════════════════════
-   SCROLLBAR
-═══════════════════════════════════════════════════ */
-::-webkit-scrollbar { width:6px; }
-::-webkit-scrollbar-track { background:var(--bg); }
-::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:3px; }
-::-webkit-scrollbar-thumb:hover { background:var(--muted); }
-
 
 /* ── homepage.html is embedded inside index.html ──────────────
    The parent index.html provides the fixed nav and its height
@@ -1201,105 +1007,6 @@ footer {
    applies the offset via its own CSS.                         */
 [id] { scroll-margin-top: 88px; }
 #home { padding-top: var(--nav-h); }
-
-
-
-/* ── Card link wrappers ───────────────────────────────────
-   work-card, port-item, blog-card are now <a> tags.
-   Set href="" to the page URL. Leave href="#" as default.
-   data-href="#" keeps them inert until a real URL is set.  */
-a.work-card  { display:block; color:inherit; text-decoration:none; }
-a.port-item  { display:block; color:inherit; text-decoration:none; }
-a.blog-card  { display:block; color:inherit; text-decoration:none; }
-a.work-card:hover  { transform:translateY(-5px); border-color:var(--border); }
-a.port-item:hover  { transform:translateY(-5px); border-color:var(--border); }
-a.blog-card:hover  { transform:translateY(-5px); border-color:var(--border); }
-/* PORT: "View Case Study" overlay text — already wired in CSS */
-a.port-item:hover .port-overlay { background:rgba(0,0,0,.45); }
-a.port-item:hover .port-view    { opacity:1; transform:scale(1); }
-/* WORK: play overlay */
-a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
-
-/* ── Submit button press + loading + success states ─────────────── */
-.form-submit { position: relative; overflow: hidden; }
-.form-submit:active { transform: scale(0.98); opacity: .85; }
-.form-submit.state-sending {
-  background: var(--surface2) !important;
-  color: var(--cyan) !important;
-  border: 1px solid var(--cyan);
-  cursor: not-allowed;
-}
-.form-submit.state-success {
-  background: var(--green) !important;
-  color: #fff !important;
-  cursor: default;
-}
-.form-submit.state-error {
-  background: var(--orange) !important;
-  color: #fff !important;
-  cursor: pointer;
-}
-/* spinner dot pulse */
-@keyframes btnDot {
-  0%,80%,100% { opacity:.2; transform:scale(.6); }
-  40%         { opacity:1;  transform:scale(1); }
-}
-.btn-dots { display:inline-flex; gap:5px; vertical-align:middle; margin-left:8px; }
-.btn-dots span {
-  display:inline-block; width:5px; height:5px;
-  background:var(--cyan); border-radius:50%;
-  animation: btnDot 1.2s ease-in-out infinite;
-}
-.btn-dots span:nth-child(2) { animation-delay:.2s; }
-.btn-dots span:nth-child(3) { animation-delay:.4s; }
-
-
-/* ── Form confirmation panel ─────────────────────────────────────── */
-#formConfirm {
-  display: none;
-  background: linear-gradient(135deg, rgba(45,202,115,.08), rgba(0,217,245,.05));
-  border: 1px solid rgba(45,202,115,.3);
-  border-radius: 8px;
-  padding: 32px 28px;
-  margin-top: 20px;
-  text-align: center;
-  animation: confirmIn .4s ease;
-}
-#formConfirm.visible { display: block; }
-@keyframes confirmIn {
-  from { opacity:0; transform:translateY(12px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-.confirm-icon {
-  font-size: 40px;
-  margin-bottom: 14px;
-  display: block;
-}
-.confirm-title {
-  font-family: 'Anton', sans-serif;
-  font-size: 22px; text-transform: uppercase; letter-spacing: .04em;
-  color: #fff; margin-bottom: 8px;
-}
-.confirm-body {
-  font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 20px;
-}
-.confirm-body strong { color: var(--text); }
-.confirm-ref {
-  font-family: var(--mono); font-size: 11px;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: var(--green);
-  background: rgba(45,202,115,.08);
-  border: 1px solid rgba(45,202,115,.2);
-  border-radius: 4px; padding: 8px 16px; display: inline-block;
-}
-/* ── Thumbnail image + icon fallback ─────────────────────────────────
-   Set src="" on .thumb-img → icon shows. Add a URL → image shows.   */
-.cs-visual .blog-img  .thumb-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
-  display: block;
-}
 </style>
 </head>
 <body>
@@ -1318,13 +1025,12 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
   <a href="gallery.html"  onclick="closeMobile()">Gallery</a>
   <a href="#contact" class="m-cta" onclick="closeMobile()">Get a Quote</a>
   <div class="m-legal">
-    <a href="index.html#legal-tos">Terms</a>
-    <a href="index.html#legal-privacy">Privacy</a>
-    <a href="index.html#legal-refund">Refunds</a>
-    <a href="index.html#legal-licensing">Licensing</a>
-    <a href="index.html#legal-cookies">Cookies</a>
+    <a href="legal.html#tos">Terms</a>
+    <a href="legal.html#privacy">Privacy</a>
+    <a href="legal.html#refund">Refunds</a>
+    <a href="legal.html#licensing">Licensing</a>
+    <a href="legal.html#cookies">Cookies</a>
   </div>
-  <p class="m-contact"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="553d3039393a15343c38347b3830313c34">[email&#160;protected]</a> &nbsp;·&nbsp; (415) 555-0200</p>
 </div>
 
 <!-- ══════════════════════════════════════════════════
@@ -1497,26 +1203,18 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <p class="lead">A snapshot of what AI Media Agency · A Creative Engineering Company looks like at AIMA quality standards.</p>
     </div>
     <div class="work-grid fi">
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="work-card" href="http://joselitosering.github.io/aima/projects/bellicose.html">
-        <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=11htyR8NmEIm5yP8u6sxFj1v3mwxB2m-i&sz=w800 -->
-        <div class="work-thumb t1">
-          <img class="thumb-img" src="https://drive.google.com/thumbnail?id=11htyR8NmEIm5yP8u6sxFj1v3mwxB2m-i&sz=w800" alt="Bellicose - Divulge"/>
+      <div class="work-card">
+        <div class="work-thumb t1">🎬
           <div class="work-play"></div>
         </div>
         <div class="work-meta">
           <div class="work-cat">Music Video</div>
-          <div class="work-title">Bellicose</div>
-          <p class="work-desc">3-minute cinematic music video — AI avatar cast, Kling-generated visuals, original score, color grade.</p>
+          <div class="work-title">Neon Reverie</div>
+          <p class="work-desc">4-minute cinematic music video — AI avatar cast, Kling-generated visuals, original score, color grade.</p>
         </div>
-      </a>
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="work-card" href="#">
-        <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-        <div class="work-thumb t2">
-          <img class="thumb-img" src="" alt="FinTech Forward"/>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb t2">📊
           <div class="work-play"></div>
         </div>
         <div class="work-meta">
@@ -1524,13 +1222,9 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="work-title">FinTech Forward</div>
           <p class="work-desc">2-minute explainer with AI presenter, animated data charts, branded motion graphics.</p>
         </div>
-      </a>
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="work-card" href="#">
-        <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-        <div class="work-thumb t3">
-          <img class="thumb-img" src="" alt="Sunrise Health"/>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb t3">📺
           <div class="work-play"></div>
         </div>
         <div class="work-meta">
@@ -1538,7 +1232,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="work-title">Sunrise Health</div>
           <p class="work-desc">30-second broadcast spot — fully AI-generated, broadcast-spec, closed-captioned delivery.</p>
         </div>
-      </a>
+      </div>
     </div>
     <div style="text-align:center;margin-top:36px;">
       <a href="#work" class="btn-outline">View Full Portfolio →</a>
@@ -2176,26 +1870,18 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
     </div>
 
     <div class="portfolio-grid fi">
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="port-item wide" href="https://drive.google.com/file/d/11htyR8NmEIm5yP8u6sxFj1v3mwxB2m-i/thumbnail?id=FILE_ID&sz=w800" data-cat="mv">
-        <div class="port-thumb bg-a">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="Bellicose — VANTA"/>
+      <div class="port-item wide" data-cat="mv">
+        <div class="port-thumb bg-a"><span>🎬</span>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
           <div class="port-cat">Music Video · Featured</div>
-          <div class="port-title">Bellicose — VANTA</div>
+          <div class="port-title">Neon Reverie — VANTA</div>
           <p class="port-desc">4-min cinematic music video — Kling AI visuals, custom AI avatar cast, ElevenLabs audio sync, original Suno score, Logic Pro master.</p>
         </div>
-      </a>
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="port-item" href="#" data-cat="corp">
-        <div class="port-thumb bg-b normal">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="FinTech Forward"/>
+      </div>
+      <div class="port-item" data-cat="corp">
+        <div class="port-thumb bg-b normal"><span>📊</span>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2203,13 +1889,9 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="port-title">FinTech Forward</div>
           <p class="port-desc">2-min explainer with AI presenter, data animation, branded motion graphics.</p>
         </div>
-      </a>
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="port-item" href="#" data-cat="tv">
-        <div class="port-thumb bg-c normal">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="Sunrise Health"/>
+      </div>
+      <div class="port-item" data-cat="tv">
+        <div class="port-thumb bg-c normal"><span>📺</span>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2217,13 +1899,9 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="port-title">Sunrise Health — :30</div>
           <p class="port-desc">30-sec broadcast spot, DCP delivery, AI VO, music composition.</p>
         </div>
-      </a>
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="port-item" href="#" data-cat="social">
-        <div class="port-thumb bg-d normal">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="Bloom Beauty"/>
+      </div>
+      <div class="port-item" data-cat="social">
+        <div class="port-thumb bg-d normal"><span>📱</span>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2231,13 +1909,9 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="port-title">Bloom Beauty — Q1 2026</div>
           <p class="port-desc">60-asset social package — Reels, Stories, static posts, branded captions.</p>
         </div>
-      </a>
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="port-item" href="#" data-cat="audio">
-        <div class="port-thumb bg-e normal">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="Pacific Radio Campaign"/>
+      </div>
+      <div class="port-item" data-cat="audio">
+        <div class="port-thumb bg-e normal"><span>🎵</span>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2245,13 +1919,9 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="port-title">Pacific Radio — Campaign</div>
           <p class="port-desc">6-spot radio campaign — scripted, voice-cloned, broadcast mixed and mastered.</p>
         </div>
-      </a>
-      <!-- PAGE LINK: replace href="#" with URL to this project page -->
-      <a class="port-item" href="#" data-cat="corp">
-        <div class="port-thumb bg-f normal">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="MedCore Compliance Series"/>
+      </div>
+      <div class="port-item" data-cat="corp">
+        <div class="port-thumb bg-f normal"><span>🎓</span>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2259,7 +1929,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="port-title">MedCore — Compliance Series</div>
           <p class="port-desc">12-module training series — AI instructor, 3 languages, LMS-ready SCORM.</p>
         </div>
-      </a>
+      </div>
     </div>
 
     <!-- CASE STUDIES -->
@@ -2272,7 +1942,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <div class="cs-card fi">
         <div class="cs-text">
           <div class="cs-label">Case Study 01 · Music Video</div>
-          <h3 class="cs-title"><br/>by VANTA</h3>
+          <h3 class="cs-title">Neon Reverie<br/>by VANTA</h3>
           <p class="cs-copy">An independent artist with a $6,000 budget wanted a music video that could compete visually with major-label productions. Using Kling AI for video generation, MidJourney v7 for world-building storyboards, ElevenLabs for vocal sync, and Suno v4 for the custom orchestral score, we delivered a 4-minute cinematic experience in 11 days. The video hit 280K YouTube views in the first 30 days — without a single traditional production crew member.</p>
           <div class="cs-tags">
             <span class="cs-tag">Kling AI</span>
@@ -2288,11 +1958,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             <div class="cs-stat"><div class="n">11</div><div class="l">Days to delivery</div></div>
           </div>
         </div>
-        <div class="cs-visual bg-a">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=11htyR8NmEIm5yP8u6sxFj1v3mwxB2m-i&sz=w800 -->
-          <img class="thumb-img" src="https://drive.google.com/thumbnail?id=11htyR8NmEIm5yP8u6sxFj1v3mwxB2m-i&sz=w800" alt="Bellicose Case Study"/>
-        </div>
+        <div class="cs-visual bg-a">🎬</div>
       </div>
 
       <div class="cs-card fi">
@@ -2314,11 +1980,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             <div class="cs-stat"><div class="n">4</div><div class="l">TV networks, first airing</div></div>
           </div>
         </div>
-        <div class="cs-visual bg-b">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="FinTech Forward case study"/>
-        </div>
+        <div class="cs-visual bg-b">📊</div>
       </div>
     </div>
   </div>
@@ -2616,13 +2278,8 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
     <div class="blog-grid fi">
 
       <!-- FEATURED -->
-      <!-- PAGE LINK: replace href="#" with URL to this article -->
-      <a class="blog-card featured" href="#">
-        <div class="blog-img bi-a">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="$5,000 Music Video Blueprint"/>
-        </div>
+      <div class="blog-card featured">
+        <div class="blog-img bi-a">📡</div>
         <div class="blog-body">
           <div class="blog-cat">Featured · Deep Dive</div>
           <div class="blog-title">The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget</div>
@@ -2632,15 +2289,10 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             <span class="blog-read">12 min read</span>
           </div>
         </div>
-      </a>
+      </div>
 
-      <!-- PAGE LINK: replace href="#" with URL to this article -->
-      <a class="blog-card" href="#">
-        <div class="blog-img bi-b">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="ElevenLabs vs Kits.ai"/>
-        </div>
+      <div class="blog-card">
+        <div class="blog-img bi-b">🎙️</div>
         <div class="blog-body">
           <div class="blog-cat">Tool Review</div>
           <div class="blog-title">ElevenLabs v3 vs. Kits.ai: Which Voice Cloning Platform Wins in 2026?</div>
@@ -2650,15 +2302,10 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             <span class="blog-read">8 min read</span>
           </div>
         </div>
-      </a>
+      </div>
 
-      <!-- PAGE LINK: replace href="#" with URL to this article -->
-      <a class="blog-card" href="#">
-        <div class="blog-img bi-c">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="30 Social Media Assets in 3 Days"/>
-        </div>
+      <div class="blog-card">
+        <div class="blog-img bi-c">📱</div>
         <div class="blog-body">
           <div class="blog-cat">Strategy</div>
           <div class="blog-title">30 Social Media Assets in 3 Days: Our AI Content Sprint Framework</div>
@@ -2668,15 +2315,10 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             <span class="blog-read">6 min read</span>
           </div>
         </div>
-      </a>
+      </div>
 
-      <!-- PAGE LINK: replace href="#" with URL to this article -->
-      <a class="blog-card" href="#">
-        <div class="blog-img bi-d">
-          <!-- IMG SRC: replace src="" with your Drive thumbnail URL
-             Pattern: https://drive.google.com/thumbnail?id=FILE_ID&sz=w800 -->
-          <img class="thumb-img" src="" alt="Zero-Touch Content Pipeline"/>
-        </div>
+      <div class="blog-card">
+        <div class="blog-img bi-d">⚡</div>
         <div class="blog-body">
           <div class="blog-cat">Automation</div>
           <div class="blog-title">Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide</div>
@@ -2686,7 +2328,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             <span class="blog-read">10 min read</span>
           </div>
         </div>
-      </a>
+      </div>
 
     </div>
 
@@ -2697,7 +2339,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
         <p>Tool drops, workflow templates, and creative strategy — every Tuesday. Free forever.</p>
       </div>
       <div class="nb-form">
-        <input class="nb-input" type="email" id="ff-email"     name="email"     placeholder="your@email.com" required/>
+        <input class="nb-input" type="email" placeholder="your@email.com"/>
         <button class="nb-btn" type="button">Subscribe Free</button>
       </div>
     </div>
@@ -2760,11 +2402,11 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="form-row-2">
             <div class="field">
               <label>First Name</label>
-              <input type="text" id="ff-firstName" name="firstName" placeholder="Your first name"/>
+              <input type="text" placeholder="Your first name"/>
             </div>
             <div class="field">
               <label>Last Name</label>
-              <input type="text" id="ff-lastName"  name="lastName"  placeholder="Your last name"/>
+              <input type="text" placeholder="Your last name"/>
             </div>
           </div>
           <div class="field">
@@ -2773,15 +2415,15 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           </div>
           <div class="field">
             <label>Company / Brand Name</label>
-            <input type="text" id="ff-company"   name="company"   placeholder="Your brand or company (optional)"/>
+            <input type="text" placeholder="Your brand or company (optional)"/>
           </div>
           <div class="field">
             <label>Phone / WhatsApp (optional)</label>
-            <input type="tel"  id="ff-phone"     name="phone"     placeholder="+1 (___) ___-____"/>
+            <input type="tel" placeholder="+1 (___) ___-____"/>
           </div>
           <div class="field">
             <label>Project Type</label>
-            <select id="ff-projectType" name="projectType">
+            <select>
               <option value="">Select the primary deliverable...</option>
               <option>Music Video (2–5 min)</option>
               <option>Corporate / Brand Explainer</option>
@@ -2805,7 +2447,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="form-row-2">
             <div class="field">
               <label>Estimated Budget</label>
-              <select id="ff-budget" name="budget">
+              <select>
                 <option value="">Select range...</option>
                 <option>Under $2,500 (Spark tier)</option>
                 <option>$2,500–$10,000 (Signal tier)</option>
@@ -2817,7 +2459,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             </div>
             <div class="field">
               <label>Target Delivery Date</label>
-              <select id="ff-deliveryDate" name="deliveryDate">
+              <select>
                 <option>ASAP — Rush (48hr + $500)</option>
                 <option>Within 1 week</option>
                 <option>Within 2 weeks</option>
@@ -2829,11 +2471,11 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           </div>
           <div class="field">
             <label>Tell Us Your Story</label>
-            <textarea id="ff-story" name="story" placeholder="Describe your project — creative vision, key messages, target audience, competitive references, technical requirements, and any inspiration links or examples. The more detail you provide, the better our proposal will match your expectations."></textarea>
+            <textarea placeholder="Describe your project — creative vision, key messages, target audience, competitive references, technical requirements, and any inspiration links or examples. The more detail you provide, the better our proposal will match your expectations."></textarea>
           </div>
           <div class="field">
             <label>How Did You Hear About Us?</label>
-            <select id="ff-referral" name="referral">
+            <select>
               <option value="">Select...</option>
               <option>Google Search</option>
               <option>Instagram / Social Media</option>
@@ -2845,16 +2487,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             </select>
           </div>
           <button class="form-submit" id="submitBtn" type="button" onclick="handleSubmit()">Submit Project Brief →</button>
-
-          <!-- Confirmation panel — shown on successful submit -->
-          <div id="formConfirm">
-            <span class="confirm-icon">✅</span>
-            <div class="confirm-title">Brief Received!</div>
-            <p class="confirm-body">Thank you, <strong id="confirmName">there</strong>! Your project brief has been sent to the AIMA team. We'll review your request and respond to <strong id="confirmEmail"></strong> within 24 hours. Discovery calls are always free.</p>
-            <span class="confirm-ref" id="confirmRef">REF: AIMA-000000</span>
-          </div>
-
-          <p class="form-note" id="formNote">We respond within 24 hours. Your information is never shared or sold. Discovery calls are always free.</p>
+          <p class="form-note">We respond within 24 hours. Your information is never shared or sold. Discovery calls are always free.</p>
         </div>
       </div>
 
@@ -2942,65 +2575,6 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
      ████  LEGAL PAGES  ████
 ══════════════════════════════════════════════════ -->
 <style>
-/* ── LEGAL PAGE STYLES ───────────────────────────── */
-.legal-section { padding:100px 0; background:var(--bg); }
-.legal-section:nth-of-type(even) { background:var(--surface); }
-.legal-wrap { max-width:780px; margin:0 auto; }
-.legal-wrap .tag { margin-bottom:12px; }
-.legal-title { font-family:'Anton',sans-serif; font-size:clamp(32px,5vw,58px); text-transform:uppercase; letter-spacing:.01em; color:#fff; margin-bottom:8px; line-height:.95; }
-.legal-title span { color:var(--cyan); }
-.legal-date { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:36px; display:block; }
-.legal-body h3 { font-family:'Anton',sans-serif; font-size:20px; text-transform:uppercase; letter-spacing:.04em; color:#fff; margin:36px 0 12px; padding-top:12px; border-top:1px solid var(--border2); }
-.legal-body h3:first-child { border-top:none; margin-top:0; }
-.legal-body p { font-size:14.5px; color:var(--muted); line-height:1.85; margin-bottom:14px; }
-.legal-body p strong { color:var(--text); font-weight:500; }
-.legal-body ul { list-style:none; margin:12px 0 18px; padding:0; }
-.legal-body ul li { font-size:14px; color:var(--muted); padding:6px 0; border-bottom:1px solid var(--border2); display:flex; gap:10px; }
-.legal-body ul li::before { content:'→'; color:var(--cyan); flex-shrink:0; }
-.legal-body a { color:var(--cyan); text-decoration:underline; text-underline-offset:3px; }
-.legal-highlight {
-  background:var(--surface2); border-left:3px solid var(--orange);
-  border-radius:0 var(--radius) var(--radius) 0;
-  padding:18px 20px; margin:24px 0; font-size:13.5px; color:var(--muted); line-height:1.8;
-}
-.legal-highlight strong { color:var(--text); }
-.legal-back { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--cyan); margin-bottom:36px; transition:gap .2s; }
-.legal-back:hover { gap:14px; }
-.cookie-toggle-row { display:flex; align-items:center; justify-content:space-between; padding:16px 0; border-bottom:1px solid var(--border2); gap:16px; }
-.cookie-toggle-row:last-child { border-bottom:none; }
-.ct-info {}
-.ct-name { font-size:14px; font-weight:500; color:var(--text); margin-bottom:4px; }
-.ct-desc { font-size:12px; color:var(--muted); line-height:1.65; }
-.ct-required { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--green); background:rgba(45,202,115,.08); border:1px solid rgba(45,202,115,.15); padding:3px 8px; border-radius:100px; }
-.toggle-switch { position:relative; width:44px; height:24px; flex-shrink:0; }
-.toggle-switch input { opacity:0; width:0; height:0; }
-.toggle-slider {
-  position:absolute; cursor:pointer; inset:0;
-  background:var(--surface2); border:1px solid var(--border2);
-  border-radius:100px; transition:.3s;
-}
-.toggle-slider::before {
-  content:''; position:absolute; width:18px; height:18px;
-  left:2px; bottom:2px; background:var(--muted);
-  border-radius:50%; transition:.3s;
-}
-input:checked + .toggle-slider { background:rgba(0,217,245,.2); border-color:var(--cyan); }
-input:checked + .toggle-slider::before { transform:translateX(20px); background:var(--cyan); }
-.cookie-save-btn {
-  margin-top:28px; padding:13px 32px; background:var(--cyan); color:var(--bg);
-  border:none; border-radius:var(--radius); font-size:12px; font-weight:700;
-  letter-spacing:.12em; text-transform:uppercase; cursor:pointer; font-family:inherit;
-  transition:box-shadow .2s, opacity .2s;
-}
-.cookie-save-btn:hover { box-shadow:0 0 22px var(--glow-c); opacity:.9; }
-.lic-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
-@media(max-width:600px){ .lic-grid { grid-template-columns:1fr; } }
-.lic-card { background:var(--surface2); border:1px solid var(--border2); border-radius:8px; padding:22px 20px; }
-.lic-card h4 { font-family:'Anton',sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:.04em; color:#fff; margin-bottom:8px; }
-.lic-card p { font-size:13px; color:var(--muted); line-height:1.72; }
-.lic-check { color:var(--green); } .lic-x { color:var(--orange); }
-</style>
-<style>
 .legal-section { padding:80px 0; }
 .legal-section:nth-child(odd) { background:var(--bg); }
 .legal-section:nth-child(even) { background:var(--surface); }
@@ -3045,6 +2619,18 @@ input:checked + .toggle-slider::before { transform:translateX(20px); background:
 .toggle-switch input:checked + .toggle-slider::before { transform:translateX(20px); background:var(--cyan); }
 .cookie-save-btn { display:block; margin:20px 0 28px; padding:13px 28px; background:var(--cyan); color:var(--bg); border:none; border-radius:var(--radius); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; font-family:inherit; transition:box-shadow .2s,opacity .2s; }
 .cookie-save-btn:hover { box-shadow:0 0 22px var(--glow-c); opacity:.9; }
+
+/* ── Legal body prose rules ── */
+.legal-body h3 { font-family:'Anton',sans-serif; font-size:20px; text-transform:uppercase; letter-spacing:.04em; color:#fff; margin:36px 0 12px; padding-top:12px; border-top:1px solid var(--border2); }
+.legal-body h3:first-child { border-top:none; margin-top:0; }
+.legal-body p { font-size:14.5px; color:var(--muted); line-height:1.85; margin-bottom:14px; }
+.legal-body p strong { color:var(--text); font-weight:500; }
+.legal-body ul { list-style:none; margin:12px 0 18px; padding:0; }
+.legal-body ul li { font-size:14px; color:var(--muted); padding:6px 0; border-bottom:1px solid var(--border2); display:flex; gap:10px; }
+.legal-body ul li::before { content:'\u2192'; color:var(--cyan); flex-shrink:0; }
+.legal-body a { color:var(--cyan); text-decoration:underline; text-underline-offset:3px; }
+.legal-highlight { background:var(--surface2); border-left:3px solid var(--orange); border-radius:0 var(--radius) var(--radius) 0; padding:18px 20px; margin:24px 0; font-size:13.5px; color:var(--muted); line-height:1.8; }
+.legal-highlight strong { color:var(--text); }
 </style>
 
 <div class="sec-divider"></div>
@@ -3153,6 +2739,211 @@ input:checked + .toggle-slider::before { transform:translateX(20px); background:
   </div></div>
 </section>
 
+<script>
+
+/* ── NAV SCROLL ─────────────────────────────────────── */
+const nav = document.getElementById('nav');
+const navLinks = document.querySelectorAll('.nav-lnk');
+function updateNav() {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  let current = '';
+  document.querySelectorAll('[id]').forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+  });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+
+/* ── MOBILE MENU ─────────────────────────────────────── */
+function toggleMobile() {
+  const menu = document.getElementById('mobileMenu');
+  const burger = document.getElementById('navBurger');
+  menu.classList.toggle('open');
+  burger.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('navBurger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── SMOOTH SCROLL ───────────────────────────────────── */
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── FADE-IN OBSERVER ────────────────────────────────── */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      const siblings = [...e.target.parentElement.children]
+        .filter(c => c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r'));
+      const idx = siblings.indexOf(e.target);
+      setTimeout(() => e.target.classList.add('vis'), idx * 70);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => obs.observe(el));
+
+/* ── PORTFOLIO FILTER ────────────────────────────────── */
+document.querySelectorAll('.pf-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.port-item').forEach(item => {
+      const show = filter === 'all' || item.dataset.cat === filter;
+      item.style.opacity = show ? '1' : '0.2';
+      item.style.pointerEvents = show ? 'auto' : 'none';
+    });
+  });
+});
+
+/* ── FAQ ACCORDION ───────────────────────────────────── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── LEGAL ACCORDION ─────────────────────────────────── */
+function toggleLegal(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── COOKIE PREFS ────────────────────────────────────── */
+function saveCookies() {
+  const btn = event.target;
+  const prefs = {
+    analytics: document.getElementById('cookieAnalytics').checked,
+    functional: document.getElementById('cookieFunctional').checked,
+    marketing: document.getElementById('cookieMarketing').checked,
+    performance: document.getElementById('cookiePerf').checked,
+    saved: true
+  };
+  try { localStorage.setItem('mm_prefs', JSON.stringify(prefs)); } catch(e) {}
+  btn.textContent = '\u2713 Preferences Saved';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
+}
+try {
+  const saved = JSON.parse(localStorage.getItem('mm_prefs') || '{}');
+  if (saved.saved) {
+    document.getElementById('cookieAnalytics').checked = saved.analytics;
+    document.getElementById('cookieFunctional').checked = saved.functional;
+    document.getElementById('cookieMarketing').checked = saved.marketing;
+    document.getElementById('cookiePerf').checked = saved.performance;
+  }
+} catch(e) {}
+
+/* ── FORM SUBMIT ─────────────────────────────────────── */
+function handleSubmit() {
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = "\u2713 Brief Received \u2014 You'll hear from us within 24 hours";
+  btn.style.background = 'var(--green)';
+  btn.style.color = '#fff';
+  btn.disabled = true;
+}
+
+/* ── NEWSLETTER ──────────────────────────────────────── */
+document.querySelectorAll('.nb-btn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    this.textContent = '\u2713 Subscribed';
+    this.style.background = 'var(--green)';
+  });
+});
+
+/* ── PORTFOLIO FILTER ────────────────────────────────── */
+document.querySelectorAll('.pf-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.port-item').forEach(item => {
+      const show = filter === 'all' || item.dataset.cat === filter;
+      item.style.opacity = show ? '1' : '0.2';
+      item.style.pointerEvents = show ? 'auto' : 'none';
+    });
+  });
+});
+
+/* ── FAQ ACCORDION ───────────────────────────────────── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── LEGAL ACCORDION ─────────────────────────────────── */
+function toggleLegal(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── COOKIE PREFS ────────────────────────────────────── */
+function saveCookies() {
+  const btn = event.target;
+  const prefs = {
+    analytics: document.getElementById('cookieAnalytics').checked,
+    functional: document.getElementById('cookieFunctional').checked,
+    marketing:  document.getElementById('cookieMarketing').checked,
+    performance:document.getElementById('cookiePerf').checked,
+    saved: true
+  };
+  try { localStorage.setItem('aima_prefs', JSON.stringify(prefs)); } catch(e) {}
+  btn.textContent = '\u2713 Preferences Saved';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
+}
+try {
+  const saved = JSON.parse(localStorage.getItem('aima_prefs') || '{}');
+  if (saved.saved) {
+    document.getElementById('cookieAnalytics').checked  = saved.analytics;
+    document.getElementById('cookieFunctional').checked = saved.functional;
+    document.getElementById('cookieMarketing').checked  = saved.marketing;
+    document.getElementById('cookiePerf').checked       = saved.performance;
+  }
+} catch(e) {}
+
+/* ── FORM SUBMIT ─────────────────────────────────────── */
+function handleSubmit() {
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = "\u2713 Brief Received \u2014 We'll respond within 24 hours";
+  btn.style.background = 'var(--green)';
+  btn.style.color = '#fff';
+  btn.disabled = true;
+}
+
+/* ── NEWSLETTER ──────────────────────────────────────── */
+document.querySelectorAll('.nb-btn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    this.textContent = '\u2713 Subscribed';
+    this.style.background = 'var(--green)';
+  });
+});
+</script>
+  
+
+  <!-- ╔══════════════════════════════════════════════╗
+       ║  PAGE END                                    ║
+       ╚══════════════════════════════════════════════╝ -->
+
+</main>
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER — shared across all pages
+══════════════════════════════════════════════════ -->
 <footer>
   <div class="container">
     <div class="footer-top">
@@ -3202,11 +2993,11 @@ input:checked + .toggle-slider::before { transform:translateX(20px); background:
       <div>
         <div class="fl-head">Legal</div>
         <ul class="fl-list">
-          <li><a href="index.html#tos">Terms of Service</a></li>
-          <li><a href="index.html#privacy">Privacy Policy</a></li>
-          <li><a href="index.html#refund">Refund Policy</a></li>
-          <li><a href="index.html#licensing">Licensing FAQ</a></li>
-          <li><a href="index.html#cookies">Cookie Settings</a></li>
+          <li><a href="legal.html#tos">Terms of Service</a></li>
+          <li><a href="legal.html#privacy">Privacy Policy</a></li>
+          <li><a href="legal.html#refund">Refund Policy</a></li>
+          <li><a href="legal.html#licensing">Licensing FAQ</a></li>
+          <li><a href="legal.html#cookies">Cookie Settings</a></li>
         </ul>
       </div>
 
@@ -3214,12 +3005,15 @@ input:checked + .toggle-slider::before { transform:translateX(20px); background:
 
     <div class="footer-bottom">
       <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
-      <span>v12.0 · aima.media</span>
+      <span>v1.0 · aima.media</span>
     </div>
   </div>
 </footer>
 
-<script>
+<!-- ══════════════════════════════════════════════════
+     SHARED JAVASCRIPT
+══════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── NAV: scroll state + active link ────────────────── */
 const nav      = document.getElementById('nav');
 const navLinks = document.querySelectorAll('.nav-lnk');
@@ -3267,130 +3061,122 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
 
 document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => observer.observe(el));
-/* ── FORM SUBMIT — full UX with states + confirmation ────────────── */
+</script>
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxJ8SjLqAF9s0W75kp7OY3G_srnOEs1E0EwUkg6ipFoIqrxU62Tbnx_XxM2HuO-XH3i/exec';
-
-function handleSubmit() {
-  var btn      = document.getElementById('submitBtn');
-  var emailEl  = document.getElementById('ff-email');
-  var emailVal = emailEl ? emailEl.value.trim() : '';
-
-  /* onPress — instant feedback */
-  btn.classList.add('state-sending');
-  btn.innerHTML = 'Sending<span class="btn-dots"><span></span><span></span><span></span></span>';
-  btn.disabled = true;
-
-  /* Validate email */
-  if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) {
-    btn.classList.remove('state-sending');
-    btn.classList.add('state-error');
-    btn.textContent = '\u26a0 Please enter a valid email address';
-    btn.disabled = false;
-    if (emailEl) { emailEl.style.borderColor = 'var(--orange)'; emailEl.focus(); }
-    setTimeout(function() {
-      btn.classList.remove('state-error');
-      btn.textContent = 'Submit Project Brief \u2192';
-      if (emailEl) emailEl.style.borderColor = '';
-    }, 3500);
-    return;
-  }
-
-  /* Collect fields */
-  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
-  var firstName = val('ff-firstName');
-  var data = {
-    firstName:    firstName,
-    lastName:     val('ff-lastName'),
-    email:        emailVal,
-    company:      val('ff-company'),
-    phone:        val('ff-phone'),
-    projectType:  val('ff-projectType'),
-    budget:       val('ff-budget'),
-    deliveryDate: val('ff-deliveryDate'),
-    story:        val('ff-story'),
-    referral:     val('ff-referral'),
-    userAgent:    navigator.userAgent,
-  };
-
-  /* Dev mode */
-  if (!GAS_URL || GAS_URL === 'YOUR_GAS_EXEC_URL_HERE') {
-    console.warn('AIMA Form: GAS_URL not configured — preview mode.');
-    setTimeout(function() { showSuccess(btn, data); }, 1500);
-    return;
-  }
-
-  /* POST to GAS */
-  fetch(GAS_URL, {
-    method: 'POST', mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-  .then(function() { showSuccess(btn, data); })
-  .catch(function() {
-    btn.classList.remove('state-sending');
-    btn.classList.add('state-error');
-    btn.textContent = '\u26a0 Send failed — email us at hello@aima.media';
-    btn.disabled = false;
-    setTimeout(function() {
-      btn.classList.remove('state-error');
-      btn.textContent = 'Submit Project Brief \u2192';
-    }, 5000);
+<script>
+/* ── NAV SCROLL ─────────────────────────────────────── */
+const nav = document.getElementById('nav');
+const navLinks = document.querySelectorAll('.nav-lnk');
+function updateNav() {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  let current = '';
+  document.querySelectorAll('[id]').forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
   });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+
+/* ── MOBILE MENU ─────────────────────────────────────── */
+function toggleMobile() {
+  const menu = document.getElementById('mobileMenu');
+  const burger = document.getElementById('navBurger');
+  menu.classList.toggle('open');
+  burger.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('navBurger').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-function showSuccess(btn, data) {
-  btn.classList.remove('state-sending');
-  btn.classList.add('state-success');
-  btn.textContent = '\u2713 Brief Sent Successfully';
-  btn.disabled = true;
-  var nameEl  = document.getElementById('confirmName');
-  var emailEl = document.getElementById('confirmEmail');
-  var refEl   = document.getElementById('confirmRef');
-  var noteEl  = document.getElementById('formNote');
-  if (nameEl)  nameEl.textContent  = data && data.firstName ? data.firstName : 'there';
-  if (emailEl) emailEl.textContent = data && data.email     ? data.email     : 'your inbox';
-  if (refEl)   refEl.textContent   = 'REF: AIMA-' + Date.now().toString().slice(-6);
-  if (noteEl)  noteEl.style.display = 'none';
-  var panel = document.getElementById('formConfirm');
-  if (panel) { panel.classList.add('visible'); panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+/* ── SMOOTH SCROLL ───────────────────────────────────── */
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ── Cookie prefs ─────────────────────────────────────────────────── */
-function saveCookies() {
-  var btn = event.target;
-  var prefs = {
-    analytics:   document.getElementById('cookieAnalytics').checked,
-    functional:  document.getElementById('cookieFunctional').checked,
-    marketing:   document.getElementById('cookieMarketing').checked,
-    performance: document.getElementById('cookiePerf').checked,
-    saved: true
-  };
-  try { localStorage.setItem('aima_prefs', JSON.stringify(prefs)); } catch(e) {}
-  btn.textContent = '\u2713 Preferences Saved';
-  btn.style.background = 'var(--green)';
-  setTimeout(function() { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
-}
-try {
-  var _p = JSON.parse(localStorage.getItem('aima_prefs') || '{}');
-  if (_p.saved) {
-    document.getElementById('cookieAnalytics').checked  = _p.analytics;
-    document.getElementById('cookieFunctional').checked = _p.functional;
-    document.getElementById('cookieMarketing').checked  = _p.marketing;
-    document.getElementById('cookiePerf').checked       = _p.performance;
-  }
-} catch(e) {}
+/* ── FADE-IN OBSERVER ────────────────────────────────── */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      const siblings = [...e.target.parentElement.children]
+        .filter(c => c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r'));
+      const idx = siblings.indexOf(e.target);
+      setTimeout(() => e.target.classList.add('vis'), idx * 70);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => obs.observe(el));
 
-/* ── Legal accordion ──────────────────────────────────────────────── */
-function toggleLegal(el) {
-  var item = el.parentElement;
-  var wasOpen = item.classList.contains('open');
-  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(function(i) { i.classList.remove('open'); });
+/* ── PORTFOLIO FILTER ────────────────────────────────── */
+document.querySelectorAll('.pf-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.port-item').forEach(item => {
+      const show = filter === 'all' || item.dataset.cat === filter;
+      item.style.opacity = show ? '1' : '0.2';
+      item.style.pointerEvents = show ? 'auto' : 'none';
+    });
+  });
+});
+
+/* ── FAQ ACCORDION ───────────────────────────────────── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
   if (!wasOpen) item.classList.add('open');
 }
 
+/* ── LEGAL ACCORDION ─────────────────────────────────── */
+function toggleLegal(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
 
-/* ── Newsletter ───────────────────────────────────────────────────── */
+/* ── COOKIE PREFS ────────────────────────────────────── */
+function saveCookies() {
+  const btn = event.target;
+  const prefs = {
+    analytics: document.getElementById('cookieAnalytics').checked,
+    functional: document.getElementById('cookieFunctional').checked,
+    marketing: document.getElementById('cookieMarketing').checked,
+    performance: document.getElementById('cookiePerf').checked,
+    saved: true
+  };
+  try { localStorage.setItem('mm_prefs', JSON.stringify(prefs)); } catch(e) {}
+  btn.textContent = '\u2713 Preferences Saved';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
+}
+try {
+  const saved = JSON.parse(localStorage.getItem('mm_prefs') || '{}');
+  if (saved.saved) {
+    document.getElementById('cookieAnalytics').checked = saved.analytics;
+    document.getElementById('cookieFunctional').checked = saved.functional;
+    document.getElementById('cookieMarketing').checked = saved.marketing;
+    document.getElementById('cookiePerf').checked = saved.performance;
+  }
+} catch(e) {}
+
+/* ── FORM SUBMIT ─────────────────────────────────────── */
+function handleSubmit() {
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = "\u2713 Brief Received \u2014 You'll hear from us within 24 hours";
+  btn.style.background = 'var(--green)';
+  btn.style.color = '#fff';
+  btn.disabled = true;
+}
+
+/* ── NEWSLETTER ──────────────────────────────────────── */
 document.querySelectorAll('.nb-btn').forEach(function(b) {
   b.addEventListener('click', function() {
     this.textContent = '\u2713 Subscribed';
@@ -3398,28 +3184,77 @@ document.querySelectorAll('.nb-btn').forEach(function(b) {
   });
 });
 
-/* ── Portfolio filter ─────────────────────────────────────────────── */
-document.querySelectorAll('.pf-btn').forEach(function(btn) {
+/* ── PORTFOLIO FILTER ────────────────────────────────── */
+document.querySelectorAll('.pf-btn').forEach(btn => {
   btn.addEventListener('click', function() {
-    document.querySelectorAll('.pf-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
-    var filter = this.dataset.filter;
-    document.querySelectorAll('.port-item').forEach(function(item) {
-      var show = filter === 'all' || item.dataset.cat === filter;
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.port-item').forEach(item => {
+      const show = filter === 'all' || item.dataset.cat === filter;
       item.style.opacity = show ? '1' : '0.2';
       item.style.pointerEvents = show ? 'auto' : 'none';
     });
   });
 });
 
-/* ── FAQ accordion ────────────────────────────────────────────────── */
+/* ── FAQ ACCORDION ───────────────────────────────────── */
 function toggleFaq(el) {
-  var item = el.parentElement;
-  var wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(function(f) { f.classList.remove('open'); });
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
   if (!wasOpen) item.classList.add('open');
 }
 
+/* ── LEGAL ACCORDION ─────────────────────────────────── */
+function toggleLegal(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── COOKIE PREFS ────────────────────────────────────── */
+function saveCookies() {
+  const btn = event.target;
+  const prefs = {
+    analytics: document.getElementById('cookieAnalytics').checked,
+    functional: document.getElementById('cookieFunctional').checked,
+    marketing:  document.getElementById('cookieMarketing').checked,
+    performance:document.getElementById('cookiePerf').checked,
+    saved: true
+  };
+  try { localStorage.setItem('aima_prefs', JSON.stringify(prefs)); } catch(e) {}
+  btn.textContent = '\u2713 Preferences Saved';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
+}
+try {
+  const saved = JSON.parse(localStorage.getItem('aima_prefs') || '{}');
+  if (saved.saved) {
+    document.getElementById('cookieAnalytics').checked  = saved.analytics;
+    document.getElementById('cookieFunctional').checked = saved.functional;
+    document.getElementById('cookieMarketing').checked  = saved.marketing;
+    document.getElementById('cookiePerf').checked       = saved.performance;
+  }
+} catch(e) {}
+
+/* ── FORM SUBMIT ─────────────────────────────────────── */
+function handleSubmit() {
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = "\u2713 Brief Received \u2014 We'll respond within 24 hours";
+  btn.style.background = 'var(--green)';
+  btn.style.color = '#fff';
+  btn.disabled = true;
+}
+
+/* ── NEWSLETTER ──────────────────────────────────────── */
+document.querySelectorAll('.nb-btn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    this.textContent = '\u2713 Subscribed';
+    this.style.background = 'var(--green)';
+  });
+});
 </script>
 </body>
 </html>
