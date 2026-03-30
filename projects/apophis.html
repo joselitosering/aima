@@ -582,9 +582,20 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 .fb-wordmark .ma { color: var(--cyan); }
 .fb-sub { font-family: var(--mono); font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
 .fb-tagline { font-size: 13px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; max-width: 280px; }
-.back-to-top-inline { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 18px; transition: all .2s; cursor: pointer; }
-.back-to-top-inline:hover { color: var(--cyan); border-color: var(--cyan); }
-.back-to-top-inline .arr { font-size: 16px; color: var(--cyan); }
+.back-to-top {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); background: var(--surface2);
+  border: 1px solid var(--border2); border-radius: var(--radius);
+  padding: 9px 16px; transition: border-color .2s, color .2s, box-shadow .2s;
+  cursor: pointer;
+}
+.back-to-top:hover {
+  border-color: var(--cyan); color: var(--cyan);
+  box-shadow: 0 0 14px var(--glow-c);
+}
+.back-to-top .arr { font-size: 14px; transition: transform .2s; }
+.back-to-top:hover .arr { transform: translateY(-3px); }
 .fl-head { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 16px; text-transform: uppercase; letter-spacing: .06em; }
 .fl-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .fl-list a { font-size: 13px; color: var(--muted); transition: color .2s; text-decoration: none; }
