@@ -102,7 +102,14 @@
 .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-burger.open span:nth-child(2) { opacity: 0; }
 .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mobile-menu { display: none; position: fixed; inset: 0; z-index: 190; background: rgba(6,8,16,.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+.mobile-menu {
+  display: none;
+  position: fixed; inset: 0; z-index: 190;
+  background: rgba(6,8,16,.98); backdrop-filter: blur(20px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+  padding-top: var(--nav-h, 72px);
+  overflow-y: auto;
+}
 .mobile-menu.open { display: flex; }
 .mobile-menu a { font-family: 'Anton', sans-serif; font-size: 30px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); transition: color .2s; }
 .mobile-menu a:hover { color: #fff; }
