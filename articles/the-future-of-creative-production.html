@@ -929,13 +929,15 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 
       <!-- Brand column -->
       <div>
+        <!-- AIMA logo: pulse dot + single wordmark wrapper = no gap -->
         <div class="fb-logo-wrap">
           <div class="pulse-ft"></div>
           <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
         </div>
         <div class="fb-sub">AI Media Agency</div>
         <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
-        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <!-- Back to Top replaces social icons -->
+        <button class="back-to-top" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
           <span class="arr">↑</span> Back to Top
         </button>
       </div>
@@ -962,7 +964,7 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
           <li><a href="http://joselitosering.github.io/aima/index.html#work">Portfolio</a></li>
           <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
           <li><a href="http://joselitosering.github.io/aima/insights.html">Insights</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#contact">Get a Quote</a></li>
+          <li><a href="http://joselitosering.github.io/aima/#contact">Get a Quote</a></li>
         </ul>
       </div>
 
@@ -970,11 +972,11 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
       <div>
         <div class="fl-head">Legal</div>
         <ul class="fl-list">
-          <li><a href="http://joselitosering.github.io/aima/index.html#legal-tos">Terms of Service</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#legal-privacy">Privacy Policy</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#legal-refund">Refund Policy</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#legal-licensing">Licensing FAQ</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#legal-cookies">Cookie Settings</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#tos">Terms of Service</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#privacy">Privacy Policy</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#refund">Refund Policy</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#licensing">Licensing FAQ</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#cookies">Cookie Settings</a></li>
         </ul>
       </div>
 
@@ -982,7 +984,7 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 
     <div class="footer-bottom">
       <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
-      <span>v10.0 · aima.media</span>
+      <span>v12.0 · aima.media</span>
     </div>
   </div>
 </footer>
