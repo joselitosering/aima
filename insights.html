@@ -261,14 +261,10 @@ button{cursor:pointer;font-family:inherit;border:none}
 .m-byline{display:flex;flex-direction:column;gap:2px}
 .m-byline .by{font-size:11px;color:var(--text);font-weight:500}
 .m-byline .dt{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.06em}
-.m-cta{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);opacity:0;transition:opacity .2s,gap .2s}
+.m-card .m-cta{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);opacity:0;transition:opacity .2s,gap .2s}
 .m-card:hover .m-cta{opacity:1}
-.m-cta .arr{display:inline-block;transition:transform .2s}
+.m-card .m-cta .arr{display:inline-block;transition:transform .2s}
 .m-card:hover .m-cta .arr{transform:translateX(3px)}
-.read-time-badge{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-
-/* hidden cards */
-.m-card.hidden{display:none}
 
 /* FILTERED STATE — collapse mosaic spans to uniform grid */
 #mosaic-grid[data-filtered] [data-span]{grid-column:span 1}
