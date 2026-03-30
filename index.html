@@ -993,38 +993,28 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
 </div>
 
 <!-- ══════════════════════════════════════════════════
-     FIXED NAVIGATION
-     ─ Transparent on load. Frosted glass on scroll.
+     NAVIGATION (locked — transparency 0.60, blur 20)
 ══════════════════════════════════════════════════ -->
 <nav id="nav">
   <div class="container nav-inner">
-
-    <!-- LOGO -->
-    <a href="#home" class="nav-logo">
-        <div class="fb-logo-wrap">
-          <div class="pulse-ft"></div>
-          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
-        </div>
+    <a href="index.html" class="nav-logo">
+      <div class="pulse"></div>
+      <span><span style="color:#fff">AI</span><span class="m3">MA</span></span>
     </a>
-
-    <!-- DESKTOP LINKS — 8 pages + CTA -->
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html#home"    class="nav-lnk active">Home</a></li>
+      <li><a href="index.html"          class="nav-lnk">Home</a></li>
       <li><a href="index.html#services" class="nav-lnk">Services</a></li>
-      <li><a href="index.html#rates" class="nav-lnk">Rates</a></li>
-      <li><a href="index.html#work" class="nav-lnk">Work</a></li>
-      <li><a href="index.html#process" class="nav-lnk">Process</a></li>
-      <li><a href="index.html#about" class="nav-lnk">About</a></li>
-      <li><a href="insights.html" class="nav-lnk">Insights</a></li>
-      <li><a href="gallery.html"  class="nav-lnk">Gallery</a></li>
+      <li><a href="index.html#rates"    class="nav-lnk">Rates</a></li>
+      <li><a href="index.html#work"     class="nav-lnk">Work</a></li>
+      <li><a href="index.html#process"  class="nav-lnk">Process</a></li>
+      <li><a href="index.html#about"    class="nav-lnk">About</a></li>
+      <li><a href="insights.html"       class="nav-lnk active">Insights</a></li>
+      <li><a href="gallery.html"        class="nav-lnk">Gallery</a></li>
     </ul>
-
     <a href="index.html#contact" class="nav-cta">Get a Quote</a>
-
-    <div class="nav-burger" id="navBurger" onclick="toggleMobile()">
+    <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu">
       <span></span><span></span><span></span>
-    </div>
-
+    </button>
   </div>
 </nav>
 
