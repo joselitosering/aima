@@ -414,19 +414,10 @@ button { cursor: pointer; font-family: inherit; }
   border-bottom-color: var(--border);
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; width:100%; }
-.nav-logo {
-  display: flex; align-items: center; gap: 10px;
-  font-family: 'Anton', sans-serif;
-  font-size: 17px; letter-spacing: .05em; text-transform: uppercase; color: #fff;
-  white-space: nowrap;
-}
-.nav-logo .pulse {
-  width:8px; height:8px; background:var(--cyan); border-radius:50%;
-  box-shadow:0 0 8px var(--cyan);
-  animation: pulse 2.2s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
-.nav-logo .m3 { color: var(--cyan); }
+/* duplicate .nav-logo removed */
+/* duplicate .nav-logo .pulse rule removed */
+/* duplicate @keyframes pulse removed */
+/* duplicate .nav-logo .m3 removed */
 
 .nav-links { display:flex; align-items:center; gap:30px; list-style:none; }
 .nav-links a {
@@ -1218,24 +1209,7 @@ footer {
 [id] { scroll-margin-top: 88px; }
 #home { padding-top: var(--nav-h); }
 
-/* ── Card image cover + icon fallback ────────────────────
-   Add src URL to data-img-src="" to display an image.
-   Leave src="" blank to show the fallback icon instead.  */
-.thumb-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center;
-  display: block;
-  transition: opacity .3s ease;
-}
-.thumb-icon {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 48px;
-  /* hidden when a real img loads; shown on error/no-src */
-}
-.cs-visual .thumb-icon { font-size: 80px; }
-.blog-img .thumb-icon  { font-size: 48px; }
+
 
 /* ── Card link wrappers ───────────────────────────────────
    work-card, port-item, blog-card are now <a> tags.
@@ -1286,6 +1260,53 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
 .btn-dots span:nth-child(2) { animation-delay:.2s; }
 .btn-dots span:nth-child(3) { animation-delay:.4s; }
 
+
+/* ── Form confirmation panel ─────────────────────────────────────── */
+#formConfirm {
+  display: none;
+  background: linear-gradient(135deg, rgba(45,202,115,.08), rgba(0,217,245,.05));
+  border: 1px solid rgba(45,202,115,.3);
+  border-radius: 8px;
+  padding: 32px 28px;
+  margin-top: 20px;
+  text-align: center;
+  animation: confirmIn .4s ease;
+}
+#formConfirm.visible { display: block; }
+@keyframes confirmIn {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.confirm-icon {
+  font-size: 40px;
+  margin-bottom: 14px;
+  display: block;
+}
+.confirm-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 22px; text-transform: uppercase; letter-spacing: .04em;
+  color: #fff; margin-bottom: 8px;
+}
+.confirm-body {
+  font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 20px;
+}
+.confirm-body strong { color: var(--text); }
+.confirm-ref {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--green);
+  background: rgba(45,202,115,.08);
+  border: 1px solid rgba(45,202,115,.2);
+  border-radius: 4px; padding: 8px 16px; display: inline-block;
+}
+/* ── Thumbnail image + icon fallback ─────────────────────────────────
+   Set src="" on .thumb-img → icon shows. Add a URL → image shows.   */
+.cs-visual .blog-img  .thumb-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -1487,9 +1508,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="work-card" href="#">
         <!-- IMG SRC: replace src="" with your hosted image URL -->
         <div class="work-thumb t1">
-          <img class="thumb-img" src="" alt="Neon Reverie"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">🎬</span>
+          <img class="thumb-img" src="" alt="Neon Reverie"/>
           <div class="work-play"></div>
         </div>
         <div class="work-meta">
@@ -1502,9 +1521,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="work-card" href="#">
         <!-- IMG SRC: replace src="" with your hosted image URL -->
         <div class="work-thumb t2">
-          <img class="thumb-img" src="" alt="FinTech Forward"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">📊</span>
+          <img class="thumb-img" src="" alt="FinTech Forward"/>
           <div class="work-play"></div>
         </div>
         <div class="work-meta">
@@ -1517,9 +1534,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="work-card" href="#">
         <!-- IMG SRC: replace src="" with your hosted image URL -->
         <div class="work-thumb t3">
-          <img class="thumb-img" src="" alt="Sunrise Health"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">📺</span>
+          <img class="thumb-img" src="" alt="Sunrise Health"/>
           <div class="work-play"></div>
         </div>
         <div class="work-meta">
@@ -2169,9 +2184,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="port-item wide" href="#" data-cat="mv">
         <div class="port-thumb bg-a">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="Neon Reverie — VANTA"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">🎬</span>
+          <img class="thumb-img" src="" alt="Neon Reverie — VANTA"/>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2184,9 +2197,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="port-item" href="#" data-cat="corp">
         <div class="port-thumb bg-b normal">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="FinTech Forward"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">📊</span>
+          <img class="thumb-img" src="" alt="FinTech Forward"/>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2199,9 +2210,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="port-item" href="#" data-cat="tv">
         <div class="port-thumb bg-c normal">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="Sunrise Health"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">📺</span>
+          <img class="thumb-img" src="" alt="Sunrise Health"/>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2214,9 +2223,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="port-item" href="#" data-cat="social">
         <div class="port-thumb bg-d normal">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="Bloom Beauty"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">📱</span>
+          <img class="thumb-img" src="" alt="Bloom Beauty"/>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2229,9 +2236,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="port-item" href="#" data-cat="audio">
         <div class="port-thumb bg-e normal">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="Pacific Radio Campaign"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">🎵</span>
+          <img class="thumb-img" src="" alt="Pacific Radio Campaign"/>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2244,9 +2249,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="port-item" href="#" data-cat="corp">
         <div class="port-thumb bg-f normal">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="MedCore Compliance Series"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">🎓</span>
+          <img class="thumb-img" src="" alt="MedCore Compliance Series"/>
           <div class="port-overlay"><div class="port-view">View Case Study</div></div>
         </div>
         <div class="port-meta">
@@ -2285,9 +2288,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
         </div>
         <div class="cs-visual bg-a">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="Neon Reverie case study"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">🎬</span>
+          <img class="thumb-img" src="" alt="Neon Reverie case study"/>
         </div>
       </div>
 
@@ -2312,9 +2313,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
         </div>
         <div class="cs-visual bg-b">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="FinTech Forward case study"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">📊</span>
+          <img class="thumb-img" src="" alt="FinTech Forward case study"/>
         </div>
       </div>
     </div>
@@ -2617,9 +2616,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="blog-card featured" href="#">
         <div class="blog-img bi-a">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="$5,000 Music Video Blueprint"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">📡</span>
+          <img class="thumb-img" src="" alt="$5,000 Music Video Blueprint"/>
         </div>
         <div class="blog-body">
           <div class="blog-cat">Featured · Deep Dive</div>
@@ -2636,9 +2633,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="blog-card" href="#">
         <div class="blog-img bi-b">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="ElevenLabs vs Kits.ai"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">🎙️</span>
+          <img class="thumb-img" src="" alt="ElevenLabs vs Kits.ai"/>
         </div>
         <div class="blog-body">
           <div class="blog-cat">Tool Review</div>
@@ -2655,9 +2650,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="blog-card" href="#">
         <div class="blog-img bi-c">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="30 Social Media Assets in 3 Days"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">📱</span>
+          <img class="thumb-img" src="" alt="30 Social Media Assets in 3 Days"/>
         </div>
         <div class="blog-body">
           <div class="blog-cat">Strategy</div>
@@ -2674,9 +2667,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
       <a class="blog-card" href="#">
         <div class="blog-img bi-d">
           <!-- IMG SRC: replace src="" with your hosted image URL -->
-          <img class="thumb-img" src="" alt="Zero-Touch Content Pipeline"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <span class="thumb-icon">⚡</span>
+          <img class="thumb-img" src="" alt="Zero-Touch Content Pipeline"/>
         </div>
         <div class="blog-body">
           <div class="blog-cat">Automation</div>
@@ -2846,7 +2837,16 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             </select>
           </div>
           <button class="form-submit" id="submitBtn" type="button" onclick="handleSubmit()">Submit Project Brief →</button>
-          <p class="form-note">We respond within 24 hours. Your information is never shared or sold. Discovery calls are always free.</p>
+
+          <!-- Confirmation panel — shown on successful submit -->
+          <div id="formConfirm">
+            <span class="confirm-icon">✅</span>
+            <div class="confirm-title">Brief Received!</div>
+            <p class="confirm-body">Thank you, <strong id="confirmName">there</strong>! Your project brief has been sent to the AIMA team. We'll review your request and respond to <strong id="confirmEmail"></strong> within 24 hours. Discovery calls are always free.</p>
+            <span class="confirm-ref" id="confirmRef">REF: AIMA-000000</span>
+          </div>
+
+          <p class="form-note" id="formNote">We respond within 24 hours. Your information is never shared or sold. Discovery calls are always free.</p>
         </div>
       </div>
 
@@ -3145,25 +3145,95 @@ input:checked + .toggle-slider::before { transform:translateX(20px); background:
   </div></div>
 </section>
 
-<script>
+<footer>
+  <div class="container">
+    <div class="footer-top">
 
-/* ── NAV SCROLL ─────────────────────────────────────── */
-const nav = document.getElementById('nav');
+      <!-- Brand column -->
+      <div>
+        <!-- AIMA logo: pulse dot + single wordmark wrapper = no gap -->
+        <div class="fb-logo-wrap">
+          <div class="pulse-ft"></div>
+          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
+        </div>
+        <div class="fb-sub">AI Media Agency</div>
+        <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+        <!-- Back to Top replaces social icons -->
+        <button class="back-to-top" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
+          <span class="arr">↑</span> Back to Top
+        </button>
+      </div>
+
+      <!-- Services column -->
+      <div>
+        <div class="fl-head">Services</div>
+        <ul class="fl-list">
+          <li><a href="index.html#services">Music Video</a></li>
+          <li><a href="index.html#services">Corporate Explainer</a></li>
+          <li><a href="index.html#services">TV Commercial</a></li>
+          <li><a href="index.html#rates">Social Media Packages</a></li>
+          <li><a href="index.html#rates">Monthly Retainers</a></li>
+          <li><a href="index.html#rates">AI Automation Pipeline</a></li>
+        </ul>
+      </div>
+
+      <!-- Company column -->
+      <div>
+        <div class="fl-head">Company</div>
+        <ul class="fl-list">
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#process">Our Process</a></li>
+          <li><a href="index.html#work">Portfolio</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="#contact">Get a Quote</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal column -->
+      <div>
+        <div class="fl-head">Legal</div>
+        <ul class="fl-list">
+          <li><a href="legal.html#tos">Terms of Service</a></li>
+          <li><a href="legal.html#privacy">Privacy Policy</a></li>
+          <li><a href="legal.html#refund">Refund Policy</a></li>
+          <li><a href="legal.html#licensing">Licensing FAQ</a></li>
+          <li><a href="legal.html#cookies">Cookie Settings</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
+      <span>v12.0 · aima.media</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── NAV: scroll state + active link ────────────────── */
+const nav      = document.getElementById('nav');
 const navLinks = document.querySelectorAll('.nav-lnk');
+
 function updateNav() {
   nav.classList.toggle('scrolled', window.scrollY > 60);
-  let current = '';
-  document.querySelectorAll('[id]').forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
-  });
-  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
 }
 window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 
+/* ── Set active nav link from current filename ──────── */
+(function setActiveLink() {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  navLinks.forEach(a => {
+    const href = a.getAttribute('href');
+    a.classList.toggle('active', href === page);
+  });
+})();
+
 /* ── MOBILE MENU ─────────────────────────────────────── */
 function toggleMobile() {
-  const menu = document.getElementById('mobileMenu');
+  const menu   = document.getElementById('mobileMenu');
   const burger = document.getElementById('navBurger');
   menu.classList.toggle('open');
   burger.classList.toggle('open');
@@ -3175,183 +3245,54 @@ function closeMobile() {
   document.body.style.overflow = '';
 }
 
-/* ── SMOOTH SCROLL ───────────────────────────────────── */
-function scrollTo(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
 /* ── FADE-IN OBSERVER ────────────────────────────────── */
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach((e) => {
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
     if (e.isIntersecting) {
       const siblings = [...e.target.parentElement.children]
         .filter(c => c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r'));
       const idx = siblings.indexOf(e.target);
-      setTimeout(() => e.target.classList.add('vis'), idx * 70);
-      obs.unobserve(e.target);
+            setTimeout(() => e.target.classList.add('vis'), idx * 70);
+      observer.unobserve(e.target);
     }
   });
 }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => obs.observe(el));
 
-/* ── PORTFOLIO FILTER ────────────────────────────────── */
-document.querySelectorAll('.pf-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const filter = this.dataset.filter;
-    document.querySelectorAll('.port-item').forEach(item => {
-      const show = filter === 'all' || item.dataset.cat === filter;
-      item.style.opacity = show ? '1' : '0.2';
-      item.style.pointerEvents = show ? 'auto' : 'none';
-    });
-  });
-});
+document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => observer.observe(el));
+/* ── FORM SUBMIT — full UX with states + confirmation ────────────── */
 
-/* ── FAQ ACCORDION ───────────────────────────────────── */
-function toggleFaq(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── LEGAL ACCORDION ─────────────────────────────────── */
-function toggleLegal(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── COOKIE PREFS ────────────────────────────────────── */
-function saveCookies() {
-  const btn = event.target;
-  const prefs = {
-    analytics: document.getElementById('cookieAnalytics').checked,
-    functional: document.getElementById('cookieFunctional').checked,
-    marketing: document.getElementById('cookieMarketing').checked,
-    performance: document.getElementById('cookiePerf').checked,
-    saved: true
-  };
-  try { localStorage.setItem('mm_prefs', JSON.stringify(prefs)); } catch(e) {}
-  btn.textContent = '\u2713 Preferences Saved';
-  btn.style.background = 'var(--green)';
-  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
-}
-try {
-  const saved = JSON.parse(localStorage.getItem('mm_prefs') || '{}');
-  if (saved.saved) {
-    document.getElementById('cookieAnalytics').checked = saved.analytics;
-    document.getElementById('cookieFunctional').checked = saved.functional;
-    document.getElementById('cookieMarketing').checked = saved.marketing;
-    document.getElementById('cookiePerf').checked = saved.performance;
-  }
-} catch(e) {}
-
-/* ── FORM SUBMIT: see first definition above ── */
-
-/* ── NEWSLETTER ──────────────────────────────────────── */
-document.querySelectorAll('.nb-btn').forEach(function(b) {
-  b.addEventListener('click', function() {
-    this.textContent = '\u2713 Subscribed';
-    this.style.background = 'var(--green)';
-  });
-});
-
-/* ── PORTFOLIO FILTER ────────────────────────────────── */
-document.querySelectorAll('.pf-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const filter = this.dataset.filter;
-    document.querySelectorAll('.port-item').forEach(item => {
-      const show = filter === 'all' || item.dataset.cat === filter;
-      item.style.opacity = show ? '1' : '0.2';
-      item.style.pointerEvents = show ? 'auto' : 'none';
-    });
-  });
-});
-
-/* ── FAQ ACCORDION ───────────────────────────────────── */
-function toggleFaq(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── LEGAL ACCORDION ─────────────────────────────────── */
-function toggleLegal(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── COOKIE PREFS ────────────────────────────────────── */
-function saveCookies() {
-  const btn = event.target;
-  const prefs = {
-    analytics: document.getElementById('cookieAnalytics').checked,
-    functional: document.getElementById('cookieFunctional').checked,
-    marketing:  document.getElementById('cookieMarketing').checked,
-    performance:document.getElementById('cookiePerf').checked,
-    saved: true
-  };
-  try { localStorage.setItem('aima_prefs', JSON.stringify(prefs)); } catch(e) {}
-  btn.textContent = '\u2713 Preferences Saved';
-  btn.style.background = 'var(--green)';
-  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
-}
-try {
-  const saved = JSON.parse(localStorage.getItem('aima_prefs') || '{}');
-  if (saved.saved) {
-    document.getElementById('cookieAnalytics').checked  = saved.analytics;
-    document.getElementById('cookieFunctional').checked = saved.functional;
-    document.getElementById('cookieMarketing').checked  = saved.marketing;
-    document.getElementById('cookiePerf').checked       = saved.performance;
-  }
-} catch(e) {}
-
-/* ── FORM SUBMIT — live GAS endpoint ────────────────────
-   1. Paste your Apps Script /exec URL below.
-   2. The form collects all fields, POSTs JSON to GAS,
-      GAS writes a row to Google Sheets and emails you.  */
-
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxUewicyycEmauO-3npPjk-f4j5XMGLD4wKDfKKQU64gJyFgWuOfL6NffnqbeGBq_JI/exec'; // ← paste /exec URL after deploying aima-contact-form.gs
+const GAS_URL = 'YOUR_GAS_EXEC_URL_HERE'; // ← paste your Apps Script /exec URL
 
 function handleSubmit() {
-  var btn   = document.getElementById('submitBtn');
-  var email = document.getElementById('ff-email');
+  var btn      = document.getElementById('submitBtn');
+  var emailEl  = document.getElementById('ff-email');
+  var emailVal = emailEl ? emailEl.value.trim() : '';
 
-  // 1. Instant onPress visual feedback
+  /* onPress — instant feedback */
   btn.classList.add('state-sending');
   btn.innerHTML = 'Sending<span class="btn-dots"><span></span><span></span><span></span></span>';
   btn.disabled = true;
 
-  // 2. Validate email
-  var emailVal = (email || {}).value || '';
-  if (!emailVal || !emailVal.includes('@')) {
+  /* Validate email */
+  if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) {
     btn.classList.remove('state-sending');
     btn.classList.add('state-error');
     btn.textContent = '\u26a0 Please enter a valid email address';
     btn.disabled = false;
-    if (email) { email.style.borderColor = 'var(--orange)'; email.focus(); }
+    if (emailEl) { emailEl.style.borderColor = 'var(--orange)'; emailEl.focus(); }
     setTimeout(function() {
       btn.classList.remove('state-error');
       btn.textContent = 'Submit Project Brief \u2192';
-      btn.disabled = false;
-      if (email) email.style.borderColor = '';
-    }, 3000);
+      if (emailEl) emailEl.style.borderColor = '';
+    }, 3500);
     return;
   }
 
-  // 3. Collect form data
-  function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+  /* Collect fields */
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  var firstName = val('ff-firstName');
   var data = {
-    firstName:    val('ff-firstName'),
+    firstName:    firstName,
     lastName:     val('ff-lastName'),
     email:        emailVal,
     company:      val('ff-company'),
@@ -3364,41 +3305,84 @@ function handleSubmit() {
     userAgent:    navigator.userAgent,
   };
 
-  // 4. Dev mode: GAS_URL not yet configured — show success after delay
+  /* Dev mode */
   if (!GAS_URL || GAS_URL === 'YOUR_GAS_EXEC_URL_HERE') {
-    console.warn('AIMA: GAS_URL not set. Running in dev mode.');
-    setTimeout(function() { showSuccess(btn); }, 1500);
+    console.warn('AIMA Form: GAS_URL not configured — preview mode.');
+    setTimeout(function() { showSuccess(btn, data); }, 1500);
     return;
   }
 
-  // 5. POST to Google Apps Script
+  /* POST to GAS */
   fetch(GAS_URL, {
-    method:  'POST',
-    mode:    'no-cors',
+    method: 'POST', mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify(data),
+    body: JSON.stringify(data),
   })
-  .then(function() { showSuccess(btn); })
+  .then(function() { showSuccess(btn, data); })
   .catch(function() {
     btn.classList.remove('state-sending');
     btn.classList.add('state-error');
-    btn.textContent = '\u26a0 Send failed \u2014 email hello@aima.media';
+    btn.textContent = '\u26a0 Send failed — email us at hello@aima.media';
+    btn.disabled = false;
     setTimeout(function() {
       btn.classList.remove('state-error');
-      btn.textContent = 'Try Again \u2192';
-      btn.disabled = false;
+      btn.textContent = 'Submit Project Brief \u2192';
     }, 5000);
   });
 }
 
-function showSuccess(btn) {
+function showSuccess(btn, data) {
   btn.classList.remove('state-sending');
   btn.classList.add('state-success');
-  btn.textContent = '\u2713 Brief Received \u2014 We\'ll respond within 24 hours';
+  btn.textContent = '\u2713 Brief Sent Successfully';
   btn.disabled = true;
+  var nameEl  = document.getElementById('confirmName');
+  var emailEl = document.getElementById('confirmEmail');
+  var refEl   = document.getElementById('confirmRef');
+  var noteEl  = document.getElementById('formNote');
+  if (nameEl)  nameEl.textContent  = data && data.firstName ? data.firstName : 'there';
+  if (emailEl) emailEl.textContent = data && data.email     ? data.email     : 'your inbox';
+  if (refEl)   refEl.textContent   = 'REF: AIMA-' + Date.now().toString().slice(-6);
+  if (noteEl)  noteEl.style.display = 'none';
+  var panel = document.getElementById('formConfirm');
+  if (panel) { panel.classList.add('visible'); panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
 }
 
-/* ── NEWSLETTER ──────────────────────────────────────── */
+/* ── Cookie prefs ─────────────────────────────────────────────────── */
+function saveCookies() {
+  var btn = event.target;
+  var prefs = {
+    analytics:   document.getElementById('cookieAnalytics').checked,
+    functional:  document.getElementById('cookieFunctional').checked,
+    marketing:   document.getElementById('cookieMarketing').checked,
+    performance: document.getElementById('cookiePerf').checked,
+    saved: true
+  };
+  try { localStorage.setItem('aima_prefs', JSON.stringify(prefs)); } catch(e) {}
+  btn.textContent = '\u2713 Preferences Saved';
+  btn.style.background = 'var(--green)';
+  setTimeout(function() { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
+}
+try {
+  var _p = JSON.parse(localStorage.getItem('aima_prefs') || '{}');
+  if (_p.saved) {
+    document.getElementById('cookieAnalytics').checked  = _p.analytics;
+    document.getElementById('cookieFunctional').checked = _p.functional;
+    document.getElementById('cookieMarketing').checked  = _p.marketing;
+    document.getElementById('cookiePerf').checked       = _p.performance;
+  }
+} catch(e) {}
+
+/* ── Legal accordion ──────────────────────────────────────────────── */
+function toggleLegal(el) {
+  var item = el.parentElement;
+  var wasOpen = item.classList.contains('open');
+  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+
+
+/* ── Newsletter ───────────────────────────────────────────────────── */
 document.querySelectorAll('.nb-btn').forEach(function(b) {
   b.addEventListener('click', function() {
     this.textContent = '\u2713 Subscribed';
@@ -3406,21 +3390,28 @@ document.querySelectorAll('.nb-btn').forEach(function(b) {
   });
 });
 
-/* ── Thumbnail image fallback init ───────────────────────
-   If src is empty on page load, hide img and show icon.
-   When you add a real URL to src="", the browser handles
-   load/error automatically without any JS changes needed. */
-(function initThumbs() {
-  document.querySelectorAll('.thumb-img').forEach(function(img) {
-    if (!img.src || img.src === window.location.href) {
-      img.style.display = 'none';
-      var icon = img.nextElementSibling;
-      if (icon && icon.classList.contains('thumb-icon')) {
-        icon.style.display = 'flex';
-      }
-    }
+/* ── Portfolio filter ─────────────────────────────────────────────── */
+document.querySelectorAll('.pf-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pf-btn').forEach(function(b) { b.classList.remove('active'); });
+    this.classList.add('active');
+    var filter = this.dataset.filter;
+    document.querySelectorAll('.port-item').forEach(function(item) {
+      var show = filter === 'all' || item.dataset.cat === filter;
+      item.style.opacity = show ? '1' : '0.2';
+      item.style.pointerEvents = show ? 'auto' : 'none';
+    });
   });
-})();
+});
+
+/* ── FAQ accordion ────────────────────────────────────────────────── */
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(f) { f.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+
 </script>
 </body>
 </html>
