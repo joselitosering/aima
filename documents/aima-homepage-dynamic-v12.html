@@ -1252,6 +1252,40 @@ a.port-item:hover .port-overlay { background:rgba(0,0,0,.45); }
 a.port-item:hover .port-view    { opacity:1; transform:scale(1); }
 /* WORK: play overlay */
 a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
+
+/* ── Submit button press + loading + success states ─────────────── */
+.form-submit { position: relative; overflow: hidden; }
+.form-submit:active { transform: scale(0.98); opacity: .85; }
+.form-submit.state-sending {
+  background: var(--surface2) !important;
+  color: var(--cyan) !important;
+  border: 1px solid var(--cyan);
+  cursor: not-allowed;
+}
+.form-submit.state-success {
+  background: var(--green) !important;
+  color: #fff !important;
+  cursor: default;
+}
+.form-submit.state-error {
+  background: var(--orange) !important;
+  color: #fff !important;
+  cursor: pointer;
+}
+/* spinner dot pulse */
+@keyframes btnDot {
+  0%,80%,100% { opacity:.2; transform:scale(.6); }
+  40%         { opacity:1;  transform:scale(1); }
+}
+.btn-dots { display:inline-flex; gap:5px; vertical-align:middle; margin-left:8px; }
+.btn-dots span {
+  display:inline-block; width:5px; height:5px;
+  background:var(--cyan); border-radius:50%;
+  animation: btnDot 1.2s ease-in-out infinite;
+}
+.btn-dots span:nth-child(2) { animation-delay:.2s; }
+.btn-dots span:nth-child(3) { animation-delay:.4s; }
+
 </style>
 </head>
 <body>
@@ -3216,6 +3250,71 @@ try {
   }
 } catch(e) {}
 
+/* ── FORM SUBMIT: see first definition above ── */
+
+/* ── NEWSLETTER ──────────────────────────────────────── */
+document.querySelectorAll('.nb-btn').forEach(function(b) {
+  b.addEventListener('click', function() {
+    this.textContent = '\u2713 Subscribed';
+    this.style.background = 'var(--green)';
+  });
+});
+
+/* ── PORTFOLIO FILTER ────────────────────────────────── */
+document.querySelectorAll('.pf-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const filter = this.dataset.filter;
+    document.querySelectorAll('.port-item').forEach(item => {
+      const show = filter === 'all' || item.dataset.cat === filter;
+      item.style.opacity = show ? '1' : '0.2';
+      item.style.pointerEvents = show ? 'auto' : 'none';
+    });
+  });
+});
+
+/* ── FAQ ACCORDION ───────────────────────────────────── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── LEGAL ACCORDION ─────────────────────────────────── */
+function toggleLegal(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── COOKIE PREFS ────────────────────────────────────── */
+function saveCookies() {
+  const btn = event.target;
+  const prefs = {
+    analytics: document.getElementById('cookieAnalytics').checked,
+    functional: document.getElementById('cookieFunctional').checked,
+    marketing:  document.getElementById('cookieMarketing').checked,
+    performance:document.getElementById('cookiePerf').checked,
+    saved: true
+  };
+  try { localStorage.setItem('aima_prefs', JSON.stringify(prefs)); } catch(e) {}
+  btn.textContent = '\u2713 Preferences Saved';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
+}
+try {
+  const saved = JSON.parse(localStorage.getItem('aima_prefs') || '{}');
+  if (saved.saved) {
+    document.getElementById('cookieAnalytics').checked  = saved.analytics;
+    document.getElementById('cookieFunctional').checked = saved.functional;
+    document.getElementById('cookieMarketing').checked  = saved.marketing;
+    document.getElementById('cookiePerf').checked       = saved.performance;
+  }
+} catch(e) {}
+
 /* ── FORM SUBMIT — live GAS endpoint ────────────────────
    1. Paste your Apps Script /exec URL below.
    2. The form collects all fields, POSTs JSON to GAS,
@@ -3224,624 +3323,79 @@ try {
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxUewicyycEmauO-3npPjk-f4j5XMGLD4wKDfKKQU64gJyFgWuOfL6NffnqbeGBq_JI/exec'; // ← paste /exec URL after deploying aima-contact-form.gs
 
 function handleSubmit() {
-  const btn = document.getElementById('submitBtn');
+  var btn   = document.getElementById('submitBtn');
+  var email = document.getElementById('ff-email');
 
-  // ── Collect field values ──────────────────────────────
-  const data = {
-    firstName:    (document.getElementById('ff-firstName')    || {}).value || '',
-    lastName:     (document.getElementById('ff-lastName')     || {}).value || '',
-    email:        (document.getElementById('ff-email')        || {}).value || '',
-    company:      (document.getElementById('ff-company')      || {}).value || '',
-    phone:        (document.getElementById('ff-phone')        || {}).value || '',
-    projectType:  (document.getElementById('ff-projectType')  || {}).value || '',
-    budget:       (document.getElementById('ff-budget')       || {}).value || '',
-    deliveryDate: (document.getElementById('ff-deliveryDate') || {}).value || '',
-    story:        (document.getElementById('ff-story')        || {}).value || '',
-    referral:     (document.getElementById('ff-referral')     || {}).value || '',
-    userAgent:    navigator.userAgent,
-  };
+  // 1. Instant onPress visual feedback
+  btn.classList.add('state-sending');
+  btn.innerHTML = 'Sending<span class="btn-dots"><span></span><span></span><span></span></span>';
+  btn.disabled = true;
 
-  // ── Basic validation ──────────────────────────────────
-  if (!data.email || !data.email.includes('@')) {
-    const emailField = document.getElementById('ff-email');
-    if (emailField) {
-      emailField.style.borderColor = 'var(--orange)';
-      emailField.focus();
-    }
+  // 2. Validate email
+  var emailVal = (email || {}).value || '';
+  if (!emailVal || !emailVal.includes('@')) {
+    btn.classList.remove('state-sending');
+    btn.classList.add('state-error');
+    btn.textContent = '\u26a0 Please enter a valid email address';
+    btn.disabled = false;
+    if (email) { email.style.borderColor = 'var(--orange)'; email.focus(); }
+    setTimeout(function() {
+      btn.classList.remove('state-error');
+      btn.textContent = 'Submit Project Brief \u2192';
+      btn.disabled = false;
+      if (email) email.style.borderColor = '';
+    }, 3000);
     return;
   }
 
-  // ── Sending state ─────────────────────────────────────
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  btn.style.opacity = '0.7';
-
-  // ── POST to Google Apps Script ────────────────────────
-  fetch(GAS_URL, {
-    method: 'POST',
-    mode: 'no-cors',          // GAS requires no-cors; response will be opaque
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-  .then(function() {
-    // no-cors = opaque response; treat any resolved promise as success
-    btn.textContent = '\u2713 Brief Received \u2014 We\'ll respond within 24 hours';
-    btn.style.background = 'var(--green)';
-    btn.style.color = '#fff';
-    btn.style.opacity = '1';
-    btn.disabled = true;
-  })
-  .catch(function() {
-    // Network error fallback
-    btn.textContent = '\u26a0 Something went wrong — email us at hello@aima.media';
-    btn.style.background = 'var(--orange)';
-    btn.style.color = '#fff';
-    btn.style.opacity = '1';
-    btn.disabled = false;
-  });
-}
-
-/* ── NEWSLETTER ──────────────────────────────────────── */
-document.querySelectorAll('.nb-btn').forEach(function(b) {
-  b.addEventListener('click', function() {
-    this.textContent = '\u2713 Subscribed';
-    this.style.background = 'var(--green)';
-  });
-});
-
-/* ── PORTFOLIO FILTER ────────────────────────────────── */
-document.querySelectorAll('.pf-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const filter = this.dataset.filter;
-    document.querySelectorAll('.port-item').forEach(item => {
-      const show = filter === 'all' || item.dataset.cat === filter;
-      item.style.opacity = show ? '1' : '0.2';
-      item.style.pointerEvents = show ? 'auto' : 'none';
-    });
-  });
-});
-
-/* ── FAQ ACCORDION ───────────────────────────────────── */
-function toggleFaq(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── LEGAL ACCORDION ─────────────────────────────────── */
-function toggleLegal(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── COOKIE PREFS ────────────────────────────────────── */
-function saveCookies() {
-  const btn = event.target;
-  const prefs = {
-    analytics: document.getElementById('cookieAnalytics').checked,
-    functional: document.getElementById('cookieFunctional').checked,
-    marketing:  document.getElementById('cookieMarketing').checked,
-    performance:document.getElementById('cookiePerf').checked,
-    saved: true
-  };
-  try { localStorage.setItem('aima_prefs', JSON.stringify(prefs)); } catch(e) {}
-  btn.textContent = '\u2713 Preferences Saved';
-  btn.style.background = 'var(--green)';
-  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
-}
-try {
-  const saved = JSON.parse(localStorage.getItem('aima_prefs') || '{}');
-  if (saved.saved) {
-    document.getElementById('cookieAnalytics').checked  = saved.analytics;
-    document.getElementById('cookieFunctional').checked = saved.functional;
-    document.getElementById('cookieMarketing').checked  = saved.marketing;
-    document.getElementById('cookiePerf').checked       = saved.performance;
-  }
-} catch(e) {}
-
-/* ── FORM SUBMIT — live GAS endpoint ────────────────────
-   1. Paste your Apps Script /exec URL below.
-   2. The form collects all fields, POSTs JSON to GAS,
-      GAS writes a row to Google Sheets and emails you.  */
-
-const GAS_URL = 'YOUR_GAS_EXEC_URL_HERE'; // ← paste /exec URL after deploying aima-contact-form.gs
-
-function handleSubmit() {
-  const btn = document.getElementById('submitBtn');
-
-  // ── Collect field values ──────────────────────────────
-  const data = {
-    firstName:    (document.getElementById('ff-firstName')    || {}).value || '',
-    lastName:     (document.getElementById('ff-lastName')     || {}).value || '',
-    email:        (document.getElementById('ff-email')        || {}).value || '',
-    company:      (document.getElementById('ff-company')      || {}).value || '',
-    phone:        (document.getElementById('ff-phone')        || {}).value || '',
-    projectType:  (document.getElementById('ff-projectType')  || {}).value || '',
-    budget:       (document.getElementById('ff-budget')       || {}).value || '',
-    deliveryDate: (document.getElementById('ff-deliveryDate') || {}).value || '',
-    story:        (document.getElementById('ff-story')        || {}).value || '',
-    referral:     (document.getElementById('ff-referral')     || {}).value || '',
+  // 3. Collect form data
+  function val(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+  var data = {
+    firstName:    val('ff-firstName'),
+    lastName:     val('ff-lastName'),
+    email:        emailVal,
+    company:      val('ff-company'),
+    phone:        val('ff-phone'),
+    projectType:  val('ff-projectType'),
+    budget:       val('ff-budget'),
+    deliveryDate: val('ff-deliveryDate'),
+    story:        val('ff-story'),
+    referral:     val('ff-referral'),
     userAgent:    navigator.userAgent,
   };
 
-  // ── Basic validation ──────────────────────────────────
-  if (!data.email || !data.email.includes('@')) {
-    const emailField = document.getElementById('ff-email');
-    if (emailField) {
-      emailField.style.borderColor = 'var(--orange)';
-      emailField.focus();
-    }
+  // 4. Dev mode: GAS_URL not yet configured — show success after delay
+  if (!GAS_URL || GAS_URL === 'YOUR_GAS_EXEC_URL_HERE') {
+    console.warn('AIMA: GAS_URL not set. Running in dev mode.');
+    setTimeout(function() { showSuccess(btn); }, 1500);
     return;
   }
 
-  // ── Sending state ─────────────────────────────────────
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  btn.style.opacity = '0.7';
-
-  // ── POST to Google Apps Script ────────────────────────
+  // 5. POST to Google Apps Script
   fetch(GAS_URL, {
-    method: 'POST',
-    mode: 'no-cors',          // GAS requires no-cors; response will be opaque
+    method:  'POST',
+    mode:    'no-cors',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body:    JSON.stringify(data),
   })
-  .then(function() {
-    // no-cors = opaque response; treat any resolved promise as success
-    btn.textContent = '\u2713 Brief Received \u2014 We\'ll respond within 24 hours';
-    btn.style.background = 'var(--green)';
-    btn.style.color = '#fff';
-    btn.style.opacity = '1';
-    btn.disabled = true;
-  })
+  .then(function() { showSuccess(btn); })
   .catch(function() {
-    // Network error fallback
-    btn.textContent = '\u26a0 Something went wrong — email us at hello@aima.media';
-    btn.style.background = 'var(--orange)';
-    btn.style.color = '#fff';
-    btn.style.opacity = '1';
-    btn.disabled = false;
+    btn.classList.remove('state-sending');
+    btn.classList.add('state-error');
+    btn.textContent = '\u26a0 Send failed \u2014 email hello@aima.media';
+    setTimeout(function() {
+      btn.classList.remove('state-error');
+      btn.textContent = 'Try Again \u2192';
+      btn.disabled = false;
+    }, 5000);
   });
 }
 
-/* ── NEWSLETTER ──────────────────────────────────────── */
-document.querySelectorAll('.nb-btn').forEach(function(b) {
-  b.addEventListener('click', function() {
-    this.textContent = '\u2713 Subscribed';
-    this.style.background = 'var(--green)';
-  });
-});
-</script>
-  
-
-  <!-- ╔══════════════════════════════════════════════╗
-       ║  PAGE END                                    ║
-       ╚══════════════════════════════════════════════╝ -->
-
-</main>
-
-<!-- ══════════════════════════════════════════════════
-     FOOTER — shared across all pages
-══════════════════════════════════════════════════ -->
-<footer>
-  <div class="container">
-    <div class="footer-top">
-
-      <!-- Brand column -->
-      <div>
-        <!-- AIMA logo: pulse dot + single wordmark wrapper = no gap -->
-        <div class="fb-logo-wrap">
-          <div class="pulse-ft"></div>
-          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
-        </div>
-        <div class="fb-sub">AI Media Agency</div>
-        <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
-        <!-- Back to Top replaces social icons -->
-        <button class="back-to-top" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
-          <span class="arr">↑</span> Back to Top
-        </button>
-      </div>
-
-      <!-- Services column -->
-      <div>
-        <div class="fl-head">Services</div>
-        <ul class="fl-list">
-          <li><a href="index.html#services">Music Video</a></li>
-          <li><a href="index.html#services">Corporate Explainer</a></li>
-          <li><a href="index.html#services">TV Commercial</a></li>
-          <li><a href="index.html#rates">Social Media Packages</a></li>
-          <li><a href="index.html#rates">Monthly Retainers</a></li>
-          <li><a href="index.html#rates">AI Automation Pipeline</a></li>
-        </ul>
-      </div>
-
-      <!-- Company column -->
-      <div>
-        <div class="fl-head">Company</div>
-        <ul class="fl-list">
-          <li><a href="index.html#about">About Us</a></li>
-          <li><a href="index.html#process">Our Process</a></li>
-          <li><a href="index.html#work">Portfolio</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="insights.html">Insights</a></li>
-          <li><a href="#contact">Get a Quote</a></li>
-        </ul>
-      </div>
-
-      <!-- Legal column -->
-      <div>
-        <div class="fl-head">Legal</div>
-        <ul class="fl-list">
-          <li><a href="legal.html#tos">Terms of Service</a></li>
-          <li><a href="legal.html#privacy">Privacy Policy</a></li>
-          <li><a href="legal.html#refund">Refund Policy</a></li>
-          <li><a href="legal.html#licensing">Licensing FAQ</a></li>
-          <li><a href="legal.html#cookies">Cookie Settings</a></li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
-      <span>v1.0 · aima.media</span>
-    </div>
-  </div>
-</footer>
-
-<!-- ══════════════════════════════════════════════════
-     SHARED JAVASCRIPT
-══════════════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ── NAV: scroll state + active link ────────────────── */
-const nav      = document.getElementById('nav');
-const navLinks = document.querySelectorAll('.nav-lnk');
-
-function updateNav() {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-}
-window.addEventListener('scroll', updateNav, { passive: true });
-updateNav();
-
-/* ── Set active nav link from current filename ──────── */
-(function setActiveLink() {
-  const page = window.location.pathname.split('/').pop() || 'index.html';
-  navLinks.forEach(a => {
-    const href = a.getAttribute('href');
-    a.classList.toggle('active', href === page);
-  });
-})();
-
-/* ── MOBILE MENU ─────────────────────────────────────── */
-function toggleMobile() {
-  const menu   = document.getElementById('mobileMenu');
-  const burger = document.getElementById('navBurger');
-  menu.classList.toggle('open');
-  burger.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-}
-function closeMobile() {
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('navBurger').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-/* ── FADE-IN OBSERVER ────────────────────────────────── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const siblings = [...e.target.parentElement.children]
-        .filter(c => c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r'));
-      const idx = siblings.indexOf(e.target);
-            setTimeout(() => e.target.classList.add('vis'), idx * 70);
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
-
-document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => observer.observe(el));
-</script>
-
-<script>
-/* ── NAV SCROLL ─────────────────────────────────────── */
-const nav = document.getElementById('nav');
-const navLinks = document.querySelectorAll('.nav-lnk');
-function updateNav() {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-  let current = '';
-  document.querySelectorAll('[id]').forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
-  });
-  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
-}
-window.addEventListener('scroll', updateNav, { passive: true });
-updateNav();
-
-/* ── MOBILE MENU ─────────────────────────────────────── */
-function toggleMobile() {
-  const menu = document.getElementById('mobileMenu');
-  const burger = document.getElementById('navBurger');
-  menu.classList.toggle('open');
-  burger.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-}
-function closeMobile() {
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('navBurger').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-/* ── SMOOTH SCROLL ───────────────────────────────────── */
-function scrollTo(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-/* ── FADE-IN OBSERVER ────────────────────────────────── */
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach((e) => {
-    if (e.isIntersecting) {
-      const siblings = [...e.target.parentElement.children]
-        .filter(c => c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r'));
-      const idx = siblings.indexOf(e.target);
-      setTimeout(() => e.target.classList.add('vis'), idx * 70);
-      obs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => obs.observe(el));
-
-/* ── PORTFOLIO FILTER ────────────────────────────────── */
-document.querySelectorAll('.pf-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const filter = this.dataset.filter;
-    document.querySelectorAll('.port-item').forEach(item => {
-      const show = filter === 'all' || item.dataset.cat === filter;
-      item.style.opacity = show ? '1' : '0.2';
-      item.style.pointerEvents = show ? 'auto' : 'none';
-    });
-  });
-});
-
-/* ── FAQ ACCORDION ───────────────────────────────────── */
-function toggleFaq(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── LEGAL ACCORDION ─────────────────────────────────── */
-function toggleLegal(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── COOKIE PREFS ────────────────────────────────────── */
-function saveCookies() {
-  const btn = event.target;
-  const prefs = {
-    analytics: document.getElementById('cookieAnalytics').checked,
-    functional: document.getElementById('cookieFunctional').checked,
-    marketing: document.getElementById('cookieMarketing').checked,
-    performance: document.getElementById('cookiePerf').checked,
-    saved: true
-  };
-  try { localStorage.setItem('mm_prefs', JSON.stringify(prefs)); } catch(e) {}
-  btn.textContent = '\u2713 Preferences Saved';
-  btn.style.background = 'var(--green)';
-  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
-}
-try {
-  const saved = JSON.parse(localStorage.getItem('mm_prefs') || '{}');
-  if (saved.saved) {
-    document.getElementById('cookieAnalytics').checked = saved.analytics;
-    document.getElementById('cookieFunctional').checked = saved.functional;
-    document.getElementById('cookieMarketing').checked = saved.marketing;
-    document.getElementById('cookiePerf').checked = saved.performance;
-  }
-} catch(e) {}
-
-/* ── FORM SUBMIT — live GAS endpoint ────────────────────
-   1. Paste your Apps Script /exec URL below.
-   2. The form collects all fields, POSTs JSON to GAS,
-      GAS writes a row to Google Sheets and emails you.  */
-
-const GAS_URL = 'YOUR_GAS_EXEC_URL_HERE'; // ← paste /exec URL after deploying aima-contact-form.gs
-
-function handleSubmit() {
-  const btn = document.getElementById('submitBtn');
-
-  // ── Collect field values ──────────────────────────────
-  const data = {
-    firstName:    (document.getElementById('ff-firstName')    || {}).value || '',
-    lastName:     (document.getElementById('ff-lastName')     || {}).value || '',
-    email:        (document.getElementById('ff-email')        || {}).value || '',
-    company:      (document.getElementById('ff-company')      || {}).value || '',
-    phone:        (document.getElementById('ff-phone')        || {}).value || '',
-    projectType:  (document.getElementById('ff-projectType')  || {}).value || '',
-    budget:       (document.getElementById('ff-budget')       || {}).value || '',
-    deliveryDate: (document.getElementById('ff-deliveryDate') || {}).value || '',
-    story:        (document.getElementById('ff-story')        || {}).value || '',
-    referral:     (document.getElementById('ff-referral')     || {}).value || '',
-    userAgent:    navigator.userAgent,
-  };
-
-  // ── Basic validation ──────────────────────────────────
-  if (!data.email || !data.email.includes('@')) {
-    const emailField = document.getElementById('ff-email');
-    if (emailField) {
-      emailField.style.borderColor = 'var(--orange)';
-      emailField.focus();
-    }
-    return;
-  }
-
-  // ── Sending state ─────────────────────────────────────
-  btn.textContent = 'Sending...';
+function showSuccess(btn) {
+  btn.classList.remove('state-sending');
+  btn.classList.add('state-success');
+  btn.textContent = '\u2713 Brief Received \u2014 We\'ll respond within 24 hours';
   btn.disabled = true;
-  btn.style.opacity = '0.7';
-
-  // ── POST to Google Apps Script ────────────────────────
-  fetch(GAS_URL, {
-    method: 'POST',
-    mode: 'no-cors',          // GAS requires no-cors; response will be opaque
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-  .then(function() {
-    // no-cors = opaque response; treat any resolved promise as success
-    btn.textContent = '\u2713 Brief Received \u2014 We\'ll respond within 24 hours';
-    btn.style.background = 'var(--green)';
-    btn.style.color = '#fff';
-    btn.style.opacity = '1';
-    btn.disabled = true;
-  })
-  .catch(function() {
-    // Network error fallback
-    btn.textContent = '\u26a0 Something went wrong — email us at hello@aima.media';
-    btn.style.background = 'var(--orange)';
-    btn.style.color = '#fff';
-    btn.style.opacity = '1';
-    btn.disabled = false;
-  });
-}
-
-/* ── NEWSLETTER ──────────────────────────────────────── */
-document.querySelectorAll('.nb-btn').forEach(function(b) {
-  b.addEventListener('click', function() {
-    this.textContent = '\u2713 Subscribed';
-    this.style.background = 'var(--green)';
-  });
-});
-
-/* ── PORTFOLIO FILTER ────────────────────────────────── */
-document.querySelectorAll('.pf-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    const filter = this.dataset.filter;
-    document.querySelectorAll('.port-item').forEach(item => {
-      const show = filter === 'all' || item.dataset.cat === filter;
-      item.style.opacity = show ? '1' : '0.2';
-      item.style.pointerEvents = show ? 'auto' : 'none';
-    });
-  });
-});
-
-/* ── FAQ ACCORDION ───────────────────────────────────── */
-function toggleFaq(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── LEGAL ACCORDION ─────────────────────────────────── */
-function toggleLegal(el) {
-  const item = el.parentElement;
-  const wasOpen = item.classList.contains('open');
-  item.closest('.legal-accordion').querySelectorAll('.la-item').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-/* ── COOKIE PREFS ────────────────────────────────────── */
-function saveCookies() {
-  const btn = event.target;
-  const prefs = {
-    analytics: document.getElementById('cookieAnalytics').checked,
-    functional: document.getElementById('cookieFunctional').checked,
-    marketing:  document.getElementById('cookieMarketing').checked,
-    performance:document.getElementById('cookiePerf').checked,
-    saved: true
-  };
-  try { localStorage.setItem('aima_prefs', JSON.stringify(prefs)); } catch(e) {}
-  btn.textContent = '\u2713 Preferences Saved';
-  btn.style.background = 'var(--green)';
-  setTimeout(() => { btn.textContent = 'Save My Preferences'; btn.style.background = 'var(--cyan)'; }, 3000);
-}
-try {
-  const saved = JSON.parse(localStorage.getItem('aima_prefs') || '{}');
-  if (saved.saved) {
-    document.getElementById('cookieAnalytics').checked  = saved.analytics;
-    document.getElementById('cookieFunctional').checked = saved.functional;
-    document.getElementById('cookieMarketing').checked  = saved.marketing;
-    document.getElementById('cookiePerf').checked       = saved.performance;
-  }
-} catch(e) {}
-
-/* ── FORM SUBMIT — live GAS endpoint ────────────────────
-   1. Paste your Apps Script /exec URL below.
-   2. The form collects all fields, POSTs JSON to GAS,
-      GAS writes a row to Google Sheets and emails you.  */
-
-const GAS_URL = 'YOUR_GAS_EXEC_URL_HERE'; // ← paste /exec URL after deploying aima-contact-form.gs
-
-function handleSubmit() {
-  const btn = document.getElementById('submitBtn');
-
-  // ── Collect field values ──────────────────────────────
-  const data = {
-    firstName:    (document.getElementById('ff-firstName')    || {}).value || '',
-    lastName:     (document.getElementById('ff-lastName')     || {}).value || '',
-    email:        (document.getElementById('ff-email')        || {}).value || '',
-    company:      (document.getElementById('ff-company')      || {}).value || '',
-    phone:        (document.getElementById('ff-phone')        || {}).value || '',
-    projectType:  (document.getElementById('ff-projectType')  || {}).value || '',
-    budget:       (document.getElementById('ff-budget')       || {}).value || '',
-    deliveryDate: (document.getElementById('ff-deliveryDate') || {}).value || '',
-    story:        (document.getElementById('ff-story')        || {}).value || '',
-    referral:     (document.getElementById('ff-referral')     || {}).value || '',
-    userAgent:    navigator.userAgent,
-  };
-
-  // ── Basic validation ──────────────────────────────────
-  if (!data.email || !data.email.includes('@')) {
-    const emailField = document.getElementById('ff-email');
-    if (emailField) {
-      emailField.style.borderColor = 'var(--orange)';
-      emailField.focus();
-    }
-    return;
-  }
-
-  // ── Sending state ─────────────────────────────────────
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  btn.style.opacity = '0.7';
-
-  // ── POST to Google Apps Script ────────────────────────
-  fetch(GAS_URL, {
-    method: 'POST',
-    mode: 'no-cors',          // GAS requires no-cors; response will be opaque
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-  .then(function() {
-    // no-cors = opaque response; treat any resolved promise as success
-    btn.textContent = '\u2713 Brief Received \u2014 We\'ll respond within 24 hours';
-    btn.style.background = 'var(--green)';
-    btn.style.color = '#fff';
-    btn.style.opacity = '1';
-    btn.disabled = true;
-  })
-  .catch(function() {
-    // Network error fallback
-    btn.textContent = '\u26a0 Something went wrong — email us at hello@aima.media';
-    btn.style.background = 'var(--orange)';
-    btn.style.color = '#fff';
-    btn.style.opacity = '1';
-    btn.disabled = false;
-  });
 }
 
 /* ── NEWSLETTER ──────────────────────────────────────── */
