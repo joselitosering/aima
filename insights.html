@@ -642,17 +642,23 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
 <footer>
   <div class="container">
     <div class="footer-top">
+
+      <!-- Brand column -->
       <div>
+        <!-- AIMA logo: pulse dot + single wordmark wrapper = no gap -->
         <div class="fb-logo-wrap">
           <div class="pulse-ft"></div>
-          <span class="fb-wordmark"><span>AI</span><span class="ma">MA</span></span>
+          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
         </div>
         <div class="fb-sub">AI Media Agency</div>
         <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
-        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <!-- Back to Top replaces social icons -->
+        <button class="back-to-top" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
           <span class="arr">↑</span> Back to Top
         </button>
       </div>
+
+      <!-- Services column -->
       <div>
         <div class="fl-head">Services</div>
         <ul class="fl-list">
@@ -664,31 +670,37 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
           <li><a href="index.html#rates">AI Automation Pipeline</a></li>
         </ul>
       </div>
+
+      <!-- Company column -->
       <div>
         <div class="fl-head">Company</div>
         <ul class="fl-list">
           <li><a href="index.html#about">About Us</a></li>
           <li><a href="index.html#process">Our Process</a></li>
           <li><a href="index.html#work">Portfolio</a></li>
-          <li><a href="insights.html">Insights</a></li>
           <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="index.html#contact">Get a Quote</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="#contact">Get a Quote</a></li>
         </ul>
       </div>
+
+      <!-- Legal column -->
       <div>
         <div class="fl-head">Legal</div>
         <ul class="fl-list">
-          <li><a href="index.html#legal-tos">Terms of Service</a></li>
-          <li><a href="index.html#legal-privacy">Privacy Policy</a></li>
-          <li><a href="index.html#legal-refund">Refund Policy</a></li>
-          <li><a href="index.html#legal-licensing">Licensing FAQ</a></li>
-          <li><a href="index.html#legal-cookies">Cookie Settings</a></li>
+          <li><a href="index.html#tos">Terms of Service</a></li>
+          <li><a href="index.html#privacy">Privacy Policy</a></li>
+          <li><a href="index.html#refund">Refund Policy</a></li>
+          <li><a href="index.html#licensing">Licensing FAQ</a></li>
+          <li><a href="index.html#cookies">Cookie Settings</a></li>
         </ul>
       </div>
+
     </div>
+
     <div class="footer-bottom">
       <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
-      <span class="mono">v2.0 · insights.html · aima.media/insights</span>
+      <span>v12.0 · aima.media</span>
     </div>
   </div>
 </footer>
