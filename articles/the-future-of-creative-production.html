@@ -397,40 +397,50 @@ footer { background: #030508; border-top: 1px solid var(--border); padding: 56px
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════════
      MOBILE MENU OVERLAY
-══════════════════════════════════════════════ -->
+══════════════════════════════════════════════════ -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="http://joselitosering.github.io/aima/index.html#home"    onclick="closeMobile()">Home</a>
+  <a href="http://joselitosering.github.io/aima/index.html#home" onclick="closeMobile()">Home</a>
   <a href="http://joselitosering.github.io/aima/index.html#services" onclick="closeMobile()">Services</a>
-  <a href="http://joselitosering.github.io/aima/index.html#rates"   onclick="closeMobile()">Rates</a>
-  <a href="http://joselitosering.github.io/aima/index.html#work"    onclick="closeMobile()">Work</a>
+  <a href="http://joselitosering.github.io/aima/index.html#rates" onclick="closeMobile()">Rates</a>
+  <a href="http://joselitosering.github.io/aima/index.html#work" onclick="closeMobile()">Work</a>
   <a href="http://joselitosering.github.io/aima/index.html#process" onclick="closeMobile()">Process</a>
-  <a href="http://joselitosering.github.io/aima/index.html#about"   onclick="closeMobile()">About</a>
-  <a href="http://joselitosering.github.io/aima/insights.html"      onclick="closeMobile()">Insights</a>
-  <a href="http://joselitosering.github.io/aima/gallery.html"       onclick="closeMobile()">Gallery</a>
+  <a href="http://joselitosering.github.io/aima/index.html#about" onclick="closeMobile()">About</a>
+  <a href="http://joselitosering.github.io/aima/insights.html" onclick="closeMobile()">Insights</a>
+  <a href="http://joselitosering.github.io/aima/gallery.html" onclick="closeMobile()">Gallery</a>
   <a href="http://joselitosering.github.io/aima/index.html#contact" class="m-cta" onclick="closeMobile()">Get a Quote</a>
+  <div class="m-legal">
+    <a href="http://joselitosering.github.io/aima/index.html#tos">Terms</a>
+    <a href="http://joselitosering.github.io/aima/index.html#privacy">Privacy</a>
+    <a href="http://joselitosering.github.io/aima/index.html#refund">Refunds</a>
+    <a href="http://joselitosering.github.io/aima/index.html#licensing">Licensing</a>
+    <a href="http://joselitosering.github.io/aima/index.html#cookies">Cookies</a>
+  </div>
+  <p class="m-contact">hello@aima.media &nbsp;&middot;&nbsp; (415) 555-0200</p>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     MAIN NAVIGATION
-══════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════
+     FIXED NAVIGATION
+══════════════════════════════════════════════════ -->
 <nav id="nav">
   <div class="container nav-inner">
-    <a href="http://joselitosering.github.io/aima/index.html" class="nav-logo">
+    <a href="http://joselitosering.github.io/aima/index.html#home" class="nav-logo">
       <div class="pulse"></div>
       <span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
     </a>
+
     <ul class="nav-links" id="navLinks">
-      <li><a href="http://joselitosering.github.io/aima/index.html#home">Home</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#services">Services</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#rates">Rates</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#work">Work</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#process">Process</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#about">About</a></li>
-      <li><a href="http://joselitosering.github.io/aima/insights.html" class="active">Insights</a></li>
-      <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#home" class="nav-lnk">Home</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#services" class="nav-lnk">Services</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#rates" class="nav-lnk">Rates</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#work" class="nav-lnk">Work</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#process" class="nav-lnk">Process</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#about" class="nav-lnk">About</a></li>
+      <li><a href="http://joselitosering.github.io/aima/insights.html" class="nav-lnk active">Insights</a></li>
+      <li><a href="http://joselitosering.github.io/aima/gallery.html" class="nav-lnk">Gallery</a></li>
     </ul>
+
     <a href="http://joselitosering.github.io/aima/index.html#contact" class="nav-cta">Get a Quote</a>
     <div class="nav-burger" id="navBurger" onclick="toggleMobile()">
       <span></span><span></span><span></span>
