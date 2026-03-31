@@ -969,8 +969,12 @@ a.blog-card:hover  { transform:translateY(-5px); border-color:var(--border); }
 a.port-item:hover .port-overlay { background:rgba(0,0,0,.45); }
 a.port-item:hover .port-view    { opacity:1; transform:scale(1); }
 a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
-/* ── Thumbnail image fallback ── */
-.thumb-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+
+/* Or hide the entire parent card if image is missing */
+.work-card:has(img[src=""]), 
+.work-card:has(img:not([src])) {
+  display: none;
+}
 </style>
 </head>
 <body>
