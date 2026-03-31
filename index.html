@@ -970,9 +970,11 @@ a.port-item:hover .port-overlay { background:rgba(0,0,0,.45); }
 a.port-item:hover .port-view    { opacity:1; transform:scale(1); }
 a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
 
-/* Or hide the entire parent card if image is missing */
-.work-card:has(img[src=""]), 
-.work-card:has(img:not([src])) {
+/* Universal: hide any card container with missing image */
+[class*="card"]:has(img[src=""]),
+[class*="card"]:has(img:not([src])),
+[class*="item"]:has(img[src=""]),
+[class*="item"]:has(img:not([src])) {
   display: none;
 }
 </style>
