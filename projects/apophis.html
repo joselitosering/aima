@@ -1105,6 +1105,16 @@ function showError(msg) {
 function hideLoader() { const ov = $('loading-overlay'); if (ov) ov.classList.add('hidden'); }
 
 // ── EMBED URL NORMALIZER ──────────────────────────────────
+function safeImageUrl(raw) {
+  if (!raw || typeof raw !== 'string') return raw;
+  const url = raw.trim();
+  const fileId = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (fileId) return 'https://drive.google.com/thumbnail?id=' + fileId[1] + '&sz=w1200';
+  const idParam = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (idParam) return 'https://drive.google.com/thumbnail?id=' + idParam[1] + '&sz=w1200';
+  return url;
+}
+     
 function safeEmbedUrl(raw) {
   if (!raw || typeof raw !== 'string') return '';
   const url = raw.trim();
@@ -1167,7 +1177,7 @@ function populateGallery(items) {
   grid.innerHTML = filtered.slice(0,8).map((item, i) => {
     const cls = cssClasses[i] || '';
     return `<div class="mosaic-item ${cls} fade-in">
-      <img src="${safe(item.image_url)}" alt="${safe(item.alt_text||item.caption)}" loading="lazy"/>
+      <img src="${safe(safeImageUrl(item.image_url))}" alt="${safe(item.alt_text||item.caption)}" loading="lazy"/>
       <div class="mosaic-caption-overlay"><span>${safe(item.caption||'')}</span></div>
     </div>`;
   }).join('');
