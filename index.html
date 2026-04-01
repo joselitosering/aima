@@ -2397,34 +2397,34 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
         </div>
       </div>
 
-      <!-- FORM COLUMN -->
+<!-- FORM COLUMN -->
       <div class="fi-r">
         <div class="intake-form">
           <div class="form-row-2">
             <div class="field">
               <label>First Name</label>
-              <input type="text" placeholder="Your first name"/>
+              <input type="text" id="ff-firstName" placeholder="Your first name"/>
             </div>
             <div class="field">
               <label>Last Name</label>
-              <input type="text" placeholder="Your last name"/>
+              <input type="text" id="ff-lastName" placeholder="Your last name"/>
             </div>
           </div>
           <div class="field">
             <label>Email Address</label>
-            <input type="email" placeholder="your@email.com"/>
+            <input type="email" id="ff-email" placeholder="your@email.com"/>
           </div>
           <div class="field">
             <label>Company / Brand Name</label>
-            <input type="text" placeholder="Your brand or company (optional)"/>
+            <input type="text" id="ff-company" placeholder="Your brand or company (optional)"/>
           </div>
           <div class="field">
             <label>Phone / WhatsApp (optional)</label>
-            <input type="tel" placeholder="+1 (___) ___-____"/>
+            <input type="tel" id="ff-phone" placeholder="+1 (___) ___-____"/>
           </div>
           <div class="field">
             <label>Project Type</label>
-            <select>
+            <select id="ff-projectType">
               <option value="">Select the primary deliverable...</option>
               <option>Music Video (2–5 min)</option>
               <option>Corporate / Brand Explainer</option>
@@ -2448,7 +2448,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <div class="form-row-2">
             <div class="field">
               <label>Estimated Budget</label>
-              <select>
+              <select id="ff-budget">
                 <option value="">Select range...</option>
                 <option>Under $2,500 (Spark tier)</option>
                 <option>$2,500–$10,000 (Signal tier)</option>
@@ -2460,7 +2460,7 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
             </div>
             <div class="field">
               <label>Target Delivery Date</label>
-              <select>
+              <select id="ff-deliveryDate">
                 <option>ASAP — Rush (48hr + $500)</option>
                 <option>Within 1 week</option>
                 <option>Within 2 weeks</option>
@@ -2472,11 +2472,11 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           </div>
           <div class="field">
             <label>Tell Us Your Story</label>
-            <textarea placeholder="Describe your project — creative vision, key messages, target audience, competitive references, technical requirements, and any inspiration links or examples. The more detail you provide, the better our proposal will match your expectations."></textarea>
+            <textarea id="ff-story" placeholder="Describe your project — creative vision, key messages, target audience, competitive references, technical requirements, and any inspiration links or examples. The more detail you provide, the better our proposal will match your expectations."></textarea>
           </div>
           <div class="field">
             <label>How Did You Hear About Us?</label>
-            <select>
+            <select id="ff-referral">
               <option value="">Select...</option>
               <option>Google Search</option>
               <option>Instagram / Social Media</option>
@@ -2491,7 +2491,6 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
           <p class="form-note">We respond within 24 hours. Your information is never shared or sold. Discovery calls are always free.</p>
         </div>
       </div>
-
     </div>
 
     <!-- FAQ -->
