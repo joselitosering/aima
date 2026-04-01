@@ -318,6 +318,61 @@ a:hover { opacity:.75; }
 .mosaic-view-btn { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--mm-cyan); border:1px solid rgba(0,217,245,.28); border-radius:var(--radius); padding:9px 20px; transition:background .18s; cursor:pointer; background:transparent; }
 .mosaic-view-btn:hover { background:rgba(0,217,245,.08); }
 
+/* Expanded gallery state */
+.gallery-expanded #gallery-grid {
+  /* Remove any height constraints and show all items */
+  max-height: none;
+  overflow: visible;
+}
+
+.gallery-expanded .mi-1,
+.gallery-expanded .mi-2,
+.gallery-expanded .mi-3,
+.gallery-expanded .mi-4,
+.gallery-expanded .mi-5,
+.gallery-expanded .mi-6,
+.gallery-expanded .mi-7,
+.gallery-expanded .mi-8,
+.gallery-expanded .mi-9,
+.gallery-expanded .mi-10,
+.gallery-expanded .mi-11,
+.gallery-expanded .mi-12,
+.gallery-expanded .mi-13,
+.gallery-expanded .mi-14,
+.gallery-expanded .mi-15,
+.gallery-expanded .mi-16,
+.gallery-expanded .mi-17,
+.gallery-expanded .mi-18,
+.gallery-expanded .mi-19,
+.gallery-expanded .mi-20,
+.gallery-expanded .mi-21,
+.gallery-expanded .mi-22,
+.gallery-expanded .mi-23,
+.gallery-expanded .mi-24,
+.gallery-expanded .mi-25,
+.gallery-expanded .mi-26,
+.gallery-expanded .mi-27,
+.gallery-expanded .mi-28,
+.gallery-expanded .mi-29,
+.gallery-expanded .mi-30,
+.gallery-expanded .mi-31,
+.gallery-expanded .mi-32,
+.gallery-expanded .mi-33 {
+  grid-column: span 4;
+  grid-row: auto;
+  min-height: 200px;
+}
+
+/* Button state change */
+.gallery-expanded .mosaic-view-btn {
+  color: var(--mm-orange);
+  border-color: rgba(255, 94, 32, 0.28);
+}
+
+.gallery-expanded .mosaic-view-btn:hover {
+  background: rgba(255, 94, 32, 0.08);
+}
+
 /* ══════════════════════════════════════════════════════════
    PLAYLIST SECTION — Curated Playlists (Spotify/Apple/YouTube)
    4 cards per row on desktop · 2 on tablet · 1 on mobile
@@ -1472,6 +1527,34 @@ function populateGallery(items) {
   }).join('');
   if (count) count.textContent = `Showing ${Math.min(filtered.length,8)} of ${filtered.length} visual assets`;
 }
+// Gallery Expand/Collapse Handler
+document.addEventListener('DOMContentLoaded', function() {
+  const gallerySection = document.getElementById('gallery');
+  const viewBtn = document.querySelector('.mosaic-view-btn');
+  
+  if (!viewBtn) return;
+  
+  viewBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Toggle expanded class on the gallery section
+    gallerySection.classList.toggle('gallery-expanded');
+    
+    // Update button text
+    if (gallerySection.classList.contains('gallery-expanded')) {
+      viewBtn.textContent = 'Collapse Gallery ↑';
+    } else {
+      viewBtn.textContent = 'View Full Gallery →';
+    }
+    
+    // Smooth scroll to gallery if expanding (optional)
+    if (gallerySection.classList.contains('gallery-expanded')) {
+      setTimeout(() => {
+        gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  });
+});
 
 // ── POPULATE: BUDGET ─────────────────────────────────────
 function populateBudget(budget) {
