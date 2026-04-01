@@ -325,12 +325,20 @@ a:hover { opacity:.75; }
 .playlist-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
 .playlist-card { background:var(--surface2); border:1px solid var(--border2); border-radius:8px; overflow:hidden; transition:border-color .2s, box-shadow .2s; }
 .playlist-card:hover { border-color:rgba(0,217,245,.2); box-shadow:0 6px 28px rgba(0,217,245,.06); }
+/* Add to your <style> section - Find the playlist embed CSS and replace */
+
 .playlist-embed-frame {
-  position:relative;
-     height:1000px;
-  background:var(--surface3);
+  position: relative;
+  height: 450px;  /* Changed from 380px for visual mode */
+  background: var(--surface3);
 }
-.playlist-embed-frame iframe { width:100%; height:100%; border:none; }
+
+.playlist-embed-frame iframe { 
+  width: 100%; 
+  height: 100%;  /* Changed to fill container */
+  border: none; 
+  border-radius: 8px;
+}
 .playlist-ph { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
 .playlist-play { width:48px; height:48px; border-radius:50%; background:rgba(255,94,32,.1); border:1.5px solid rgba(255,94,32,.35); display:flex; align-items:center; justify-content:center; }
 .playlist-play svg { width:20px; height:20px; fill:var(--mm-orange); margin-left:3px; }
@@ -1366,9 +1374,9 @@ function safeAudioEmbedUrl(raw) {
   if (!raw || typeof raw !== 'string') return '';
   const url = raw.trim();
   
-  // SoundCloud
+  // SoundCloud - with visual mode (album artwork)
   const scTrack = url.match(/soundcloud\.com\/([^/]+)\/([^/?]+)/);
-  if (scTrack) return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%2300d9f5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
+  if (scTrack) return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%2300d9f5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
   if (url.includes('w.soundcloud.com')) return url;
   
   // Spotify (track or album)
@@ -1378,9 +1386,9 @@ function safeAudioEmbedUrl(raw) {
   if (spotifyAlbum) return `https://open.spotify.com/embed/album/${spotifyAlbum[1]}?utm_source=generator&theme=0`;
   if (url.includes('open.spotify.com/embed')) return url;
   
-  // Apple Music (approximate — Apple doesn't offer direct embeds without MusicKit)
+  // Apple Music
   const appleId = url.match(/music\.apple\.com\/[a-z]{2}\/album\/[^/]+\/([0-9]+)/);
-  if (appleId) return url; // Apple Music embeds require MusicKit JS, return URL as-is for manual handling
+  if (appleId) return url;
   
   return url;
 }
@@ -1394,9 +1402,9 @@ function safePlaylistEmbedUrl(raw) {
   if (spotifyPlaylist) return `https://open.spotify.com/embed/playlist/${spotifyPlaylist[1]}?utm_source=generator&theme=0`;
   if (url.includes('open.spotify.com/embed/playlist')) return url;
   
-  // SoundCloud Playlist
+  // SoundCloud Playlist - with visual mode (album artwork + waveform)
   const scPlaylist = url.match(/soundcloud\.com\/([^/]+)\/sets\/([^/?]+)/);
-  if (scPlaylist) return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%2300d9f5&auto_play=false&hide_related=true&show_comments=false`;
+  if (scPlaylist) return `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%2300d9f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=true&visual=true`;
   
   // YouTube Playlist
   const ytPlaylist = url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
