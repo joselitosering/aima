@@ -318,60 +318,12 @@ a:hover { opacity:.75; }
 .mosaic-view-btn { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--mm-cyan); border:1px solid rgba(0,217,245,.28); border-radius:var(--radius); padding:9px 20px; transition:background .18s; cursor:pointer; background:transparent; }
 .mosaic-view-btn:hover { background:rgba(0,217,245,.08); }
 
-/* Expanded gallery state */
-.gallery-expanded #gallery-grid {
-  /* Remove any height constraints and show all items */
-  max-height: none;
-  overflow: visible;
-}
-
-.gallery-expanded .mi-1,
-.gallery-expanded .mi-2,
-.gallery-expanded .mi-3,
-.gallery-expanded .mi-4,
-.gallery-expanded .mi-5,
-.gallery-expanded .mi-6,
-.gallery-expanded .mi-7,
-.gallery-expanded .mi-8,
-.gallery-expanded .mi-9,
-.gallery-expanded .mi-10,
-.gallery-expanded .mi-11,
-.gallery-expanded .mi-12,
-.gallery-expanded .mi-13,
-.gallery-expanded .mi-14,
-.gallery-expanded .mi-15,
-.gallery-expanded .mi-16,
-.gallery-expanded .mi-17,
-.gallery-expanded .mi-18,
-.gallery-expanded .mi-19,
-.gallery-expanded .mi-20,
-.gallery-expanded .mi-21,
-.gallery-expanded .mi-22,
-.gallery-expanded .mi-23,
-.gallery-expanded .mi-24,
-.gallery-expanded .mi-25,
-.gallery-expanded .mi-26,
-.gallery-expanded .mi-27,
-.gallery-expanded .mi-28,
-.gallery-expanded .mi-29,
-.gallery-expanded .mi-30,
-.gallery-expanded .mi-31,
-.gallery-expanded .mi-32,
-.gallery-expanded .mi-33 {
+/* Extra mosaic items (beyond first 8) shown in uniform grid when expanded */
+.mosaic-item.mi-extra {
   grid-column: span 4;
-  grid-row: auto;
   min-height: 200px;
 }
 
-/* Button state change */
-.gallery-expanded .mosaic-view-btn {
-  color: var(--mm-orange);
-  border-color: rgba(255, 94, 32, 0.28);
-}
-
-.gallery-expanded .mosaic-view-btn:hover {
-  background: rgba(255, 94, 32, 0.08);
-}
 
 /* ══════════════════════════════════════════════════════════
    PLAYLIST SECTION — Curated Playlists (Spotify/Apple/YouTube)
@@ -1516,45 +1468,35 @@ function populateGallery(items) {
   const grid  = $('gallery-grid');
   const count = $('gallery-count');
   if (!grid) return;
-  const cssClasses = ['mi-1','mi-2','mi-3','mi-4','mi-5','mi-6','mi-7','mi-8'];
+  const mosaicClasses = ['mi-1','mi-2','mi-3','mi-4','mi-5','mi-6','mi-7','mi-8'];
   const filtered = items.filter(item => item.image_url && item.image_url.trim() !== '');
-  grid.innerHTML = filtered.slice(0,8).map((item, i) => {
-    const cls = cssClasses[i] || '';
-    return `<div class="mosaic-item ${cls} fade-in">
+  grid.innerHTML = filtered.map((item, i) => {
+    const cls     = mosaicClasses[i] || 'mi-extra';
+    const hidden  = i >= 8 ? 'style="display:none"' : '';
+    return `<div class="mosaic-item ${cls} fade-in" data-idx="${i}" ${hidden}>
       <img src="${safeImageUrl(item.image_url)}" alt="${safe(item.alt_text||item.caption)}" loading="lazy"/>
       <div class="mosaic-caption-overlay"><span>${safe(item.caption||'')}</span></div>
     </div>`;
   }).join('');
-  if (count) count.textContent = `Showing ${Math.min(filtered.length,8)} of ${filtered.length} visual assets`;
-}
-// Gallery Expand/Collapse Handler
-document.addEventListener('DOMContentLoaded', function() {
-  const gallerySection = document.getElementById('gallery');
+  if (count) count.textContent = `Showing 8 of ${filtered.length} images`;
+
+  // Expand/Collapse handler (set once after render)
   const viewBtn = document.querySelector('.mosaic-view-btn');
-  
   if (!viewBtn) return;
-  
-  viewBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    // Toggle expanded class on the gallery section
-    gallerySection.classList.toggle('gallery-expanded');
-    
-    // Update button text
-    if (gallerySection.classList.contains('gallery-expanded')) {
-      viewBtn.textContent = 'Collapse Gallery ↑';
-    } else {
-      viewBtn.textContent = 'View Full Gallery →';
-    }
-    
-    // Smooth scroll to gallery if expanding (optional)
-    if (gallerySection.classList.contains('gallery-expanded')) {
-      setTimeout(() => {
-        gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    }
-  });
-});
+  viewBtn.onclick = function() {
+    const expanded = grid.querySelector('[data-idx="8"]')?.style.display !== 'none';
+    grid.querySelectorAll('.mosaic-item[data-idx]').forEach(el => {
+      const idx = parseInt(el.dataset.idx);
+      if (idx >= 8) el.style.display = expanded ? 'none' : '';
+    });
+    const showing = expanded ? 8 : filtered.length;
+    if (count) count.textContent = `Showing ${showing} of ${filtered.length} images`;
+    viewBtn.textContent = expanded ? 'View Full Gallery →' : 'Collapse Gallery ↑';
+    viewBtn.style.color = expanded ? '' : 'var(--mm-orange)';
+    viewBtn.style.borderColor = expanded ? '' : 'rgba(255,94,32,0.28)';
+    if (!expanded) observeAll();
+  };
+}
 
 // ── POPULATE: BUDGET ─────────────────────────────────────
 function populateBudget(budget) {
