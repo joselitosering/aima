@@ -2845,8 +2845,21 @@ try {
   }
 } catch(e) {}
 
-/* ── FORM SUBMIT ─────────────────────────────────────── */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyEe2g-QeQzAGZeFIMjyP9L9lt5_zVSrK8-yeNibO8E9RxPwuHI2oMTtuogAl8iYJE/exec';
+/* ── FORM SUBMIT — Google Forms wiring ────────────────────────────── */
+
+var GF_ACTION = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfFwbmDH60dS6NlAGhYGJ1QZb5HZV0eNr63UGYAO5opxtbGlQ/formResponse';
+var GF_FIELDS = {
+  firstName:    'entry.543365381',
+  lastName:     'entry.1002326396',
+  email:        'entry.1958451477',
+  company:      'entry.1660259561',
+  phone:        'entry.265162494',
+  projectType:  'entry.720256830',
+  budget:       'entry.600036179',
+  deliveryDate: 'entry.1803310031',
+  story:        'entry.2103515218',
+  referral:     'entry.381748778'
+};
 
 function handleSubmit() {
   var btn      = document.getElementById('submitBtn');
@@ -2872,9 +2885,8 @@ function handleSubmit() {
   }
 
   function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
-  var firstName = val('ff-firstName');
   var data = {
-    firstName:    firstName,
+    firstName:    val('ff-firstName'),
     lastName:     val('ff-lastName'),
     email:        emailVal,
     company:      val('ff-company'),
@@ -2883,22 +2895,22 @@ function handleSubmit() {
     budget:       val('ff-budget'),
     deliveryDate: val('ff-deliveryDate'),
     story:        val('ff-story'),
-    referral:     val('ff-referral'),
-    userAgent:    navigator.userAgent,
+    referral:     val('ff-referral')
   };
 
-  if (!GAS_URL || GAS_URL === 'YOUR_GAS_EXEC_URL_HERE') {
-    console.warn('AIMA Form: GAS_URL not configured — preview mode.');
-    setTimeout(function() { showSuccess(btn, data); }, 1500);
-    return;
-  }
+  var fd = new FormData();
+  Object.keys(GF_FIELDS).forEach(function(key) {
+    fd.append(GF_FIELDS[key], data[key] || '');
+  });
 
-  fetch(GAS_URL, {
-    method: 'POST', mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+  fetch(GF_ACTION, {
+    method: 'POST',
+    mode:   'no-cors',
+    body:   fd
   })
-  .then(function() { showSuccess(btn, data); })
+  .then(function() {
+    showSuccess(btn, data);
+  })
   .catch(function() {
     btn.classList.remove('state-sending');
     btn.classList.add('state-error');
@@ -2911,22 +2923,6 @@ function handleSubmit() {
   });
 }
 
-function showSuccess(btn, data) {
-  btn.classList.remove('state-sending');
-  btn.classList.add('state-success');
-  btn.textContent = '✓ Brief Sent Successfully';
-  btn.disabled = true;
-  var nameEl  = document.getElementById('confirmName');
-  var emailEl = document.getElementById('confirmEmail');
-  var refEl   = document.getElementById('confirmRef');
-  var noteEl  = document.getElementById('formNote');
-  if (nameEl)  nameEl.textContent  = data && data.firstName ? data.firstName : 'there';
-  if (emailEl) emailEl.textContent = data && data.email     ? data.email     : 'your inbox';
-  if (refEl)   refEl.textContent   = 'REF: AIMA-' + Date.now().toString().slice(-6);
-  if (noteEl)  noteEl.style.display = 'none';
-  var panel = document.getElementById('formConfirm');
-  if (panel) { panel.classList.add('visible'); panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-}
 
 /* ── NEWSLETTER ──────────────────────────────────────── */
 document.querySelectorAll('.nb-btn').forEach(function(b) {
