@@ -1720,14 +1720,30 @@ async function loadFromSheet() {
       resp = await fetch(SHEETS_API_URL, { signal: controller.signal });
     } catch (fetchErr) {
       clearTimeout(timeoutId);
-      if (fetchErr.name === 'AbortError') throw new Error('Request timed out after 10s. Check Apps Script deployment settings.');
+      if (fetchErr.name === 'AbortError') {
+        console.error('Timeout after 30s');
+        throw new Error('Request timed out after 30s. Check Apps Script deployment settings.');
+      }
+      console.error('Fetch error:', fetchErr);
       throw fetchErr;
     }
     clearTimeout(timeoutId);
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    
+    console.log('Response status:', resp.status);
+    console.log('Response headers:', [...resp.headers.entries()]);
+    
+    if (!resp.ok) {
+      const errorText = await resp.text();
+      console.error('HTTP error response:', errorText);
+      throw new Error('HTTP ' + resp.status + ': ' + errorText.substring(0, 200));
+    }
+    
     setStatus('Parsing data…');
     const data = await resp.json();
+    console.log('Data received, keys:', Object.keys(data));
     
+    if (data.error) throw new Error(data.error);
+
     populateProject(data.project || {}, data.budget?.total_actual);
     populateAudio(data.audio || { primary: null, playlists: [] });
     populateGallery(data.gallery || []);
