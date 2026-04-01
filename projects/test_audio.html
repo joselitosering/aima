@@ -1234,7 +1234,11 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 const $ = id => document.getElementById(id);
 const fmt = n => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits:0, maximumFractionDigits:0 });
 const pct = n => Math.round(n) + '%';
-const safe = s => (s || '').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const safe = s => {
+  if (s === null || s === undefined) return '';
+  if (typeof s !== 'string') s = String(s);
+  return s.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+};
 
 function setStatus(msg) { const el = $('lo-status'); if (el) el.textContent = msg; }
 function showError(msg) {
