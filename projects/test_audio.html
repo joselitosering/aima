@@ -204,6 +204,76 @@ a:hover { opacity:.75; }
 .amb-tag.cyan { color:var(--mm-cyan); border-color:rgba(0,217,245,.22); background:rgba(0,217,245,.06); }
 .amb-platform { margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--mm-muted); }
 
+/* ── NATIVE HTML5 AUDIO PLAYER ────────────────────────────── */
+.audio-player-native {
+  background: linear-gradient(135deg, var(--surface2), var(--surface3));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 0 60px rgba(0,217,245,.06);
+}
+.audio-player-native audio {
+  width: 100%;
+  height: 54px;
+  border-radius: 8px;
+  background: var(--surface);
+  margin-bottom: 20px;
+  outline: none;
+}
+.audio-player-native audio::-webkit-media-controls-panel {
+  background: var(--surface);
+}
+.audio-player-native audio::-webkit-media-controls-play-button,
+.audio-player-native audio::-webkit-media-controls-mute-button {
+  background-color: var(--cyan);
+  border-radius: 50%;
+}
+.audio-track-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border2);
+}
+.track-artwork {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  background: var(--surface3);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.track-meta { flex: 1; }
+.track-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.track-artist {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.track-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.track-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: rgba(0,217,245,.08);
+  border: 1px solid rgba(0,217,245,.2);
+  border-radius: 3px;
+  padding: 4px 10px;
+}
+
 /* ══════════════════════════════════════════════════════════
    LOGISTICS — Recording Industry Phases
 ══════════════════════════════════════════════════════════ */
@@ -778,15 +848,36 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 
 
 <!-- ══════════════════════════════════════════════════════════
-     02 — PRIMARY AUDIO — SoundCloud / Spotify / Apple Music
+     02 — PRIMARY AUDIO — Native HTML5 Player
 ══════════════════════════════════════════════════════════ -->
 <section class="page-section surface" id="audio">
   <div class="section-inner">
     <span class="section-label fade-in">01 — Primary Release</span>
     <h2 class="section-title fade-in delay-1">Listen to the <span class="c">Full Album</span></h2>
     <div class="rule fade-in delay-1"></div>
-    <p class="section-desc fade-in delay-2">Stream the complete recording on your preferred platform.</p>
-    <div class="audio-embed-block fade-in delay-2">
+    <p class="section-desc fade-in delay-2">Stream the complete recording with full playback controls.</p>
+    
+    <!-- Native HTML5 Audio Player -->
+    <div class="audio-player-native fade-in delay-2" id="audio-player-block" style="display:none;">
+      <audio id="primary-audio" controls preload="metadata">
+        <source src="" type="audio/mpeg" id="audio-source">
+        Your browser does not support the audio element.
+      </audio>
+      
+      <div class="audio-track-info" id="track-info">
+        <img src="" alt="Album artwork" class="track-artwork" id="track-artwork" style="display:none;">
+        <div class="track-meta">
+          <div class="track-title" id="track-title">Loading track...</div>
+          <div class="track-artist" id="track-artist">Artist Name</div>
+          <div class="track-tags" id="track-tags">
+            <span class="track-tag">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Fallback: Embed Player (if no direct audio URL) -->
+    <div class="audio-embed-block fade-in delay-2" id="audio-embed-block" style="display:none;">
       <div class="audio-embed-wrapper" id="primary-audio-wrapper">
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:var(--surface3);">
           <svg viewBox="0 0 24 24" style="width:40px;height:40px;fill:var(--mm-cyan);opacity:.4"><path d="M8 5v14l11-7z"/></svg>
@@ -796,6 +887,18 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
       <div class="audio-meta-bar" id="primary-audio-meta">
         <span class="amb-tag cyan">Loading…</span>
       </div>
+    </div>
+    
+    <!-- Placeholder if no audio -->
+    <div id="audio-placeholder" style="display:none; padding:60px; text-align:center; background:var(--surface2); border:2px dashed var(--border2); border-radius:12px;">
+      <svg viewBox="0 0 24 24" style="width:48px;height:48px;fill:var(--mm-cyan);opacity:.3;margin:0 auto 16px;"><path d="M8 5v14l11-7z"/></svg>
+      <p style="font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mm-muted); margin-bottom:8px;">
+        Add Direct Audio URL to Sheet
+      </p>
+      <p style="font-size:12px; color:var(--mm-muted); max-width:420px; margin:0 auto;">
+        AUDIO_ASSETS sheet → Column H: <code style="color:var(--mm-cyan);">direct_audio_url</code><br>
+        Paste MP3/WAV/OGG file URL for native player
+      </p>
     </div>
   </div>
 </section>
@@ -1219,7 +1322,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 
     <div class="footer-bottom">
       <p>© 2026 AIMA · AI Media Agency · AIRA Music Label · A Monkey Matters LLC Production · Wyoming LLC</p>
-      <span>v11.3 · aira.music</span>
+      <span>v12.3 · aira.music</span>
     </div>
   </div>
 </footer>
@@ -1452,31 +1555,82 @@ function populateAudio(audio) {
     'frameborder="0"','allowfullscreen','loading="lazy"'
   ].join(' ');
 
-  function placeholder(msg) {
-    return `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;text-align:center;background:linear-gradient(135deg,var(--mm-dark2),var(--mm-dark3));border:2px dashed rgba(0,217,245,.2);">
-      <svg viewBox="0 0 24 24" style="width:32px;height:32px;fill:var(--mm-cyan);opacity:.5"><path d="M8 5v14l11-7z"/></svg>
-      <p style="font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--mm-muted);">${msg}</p>
-    </div>`;
-  }
   function isTemplate(url) {
-    return !url || url.includes('TRACK_ID_HERE') || url.includes('PLAYLIST_ID_') || url.includes('ALBUM_ID');
+    return !url || url.includes('TRACK_ID_HERE') || url.includes('PLAYLIST_ID_') || url.includes('ALBUM_ID') || url.includes('YOUR_') || url.includes('PASTE_');
   }
 
-  // Primary Audio
-  const wrapper = $('primary-audio-wrapper');
-  const metaBar = $('primary-audio-meta');
-  const rawPrimary = audio.primary?.embed_url || '';
-  if (wrapper) {
-    wrapper.innerHTML = !isTemplate(rawPrimary)
-      ? `<iframe src="${safeAudioEmbedUrl(rawPrimary)}" ${iframeAttrs} height="166"></iframe>`
-      : placeholder('Paste SoundCloud, Spotify, or Apple Music URL in AUDIO_ASSETS sheet');
+  // Get references to all player containers
+  const nativePlayerBlock = $('audio-player-block');
+  const embedPlayerBlock = $('audio-embed-block');
+  const placeholder = $('audio-placeholder');
+  
+  // Get direct audio URL (for native HTML5 player)
+  const directUrl = audio.primary?.direct_audio_url || audio.primary?.audio_url || '';
+  const embedUrl = audio.primary?.embed_url || '';
+  
+  // Decision: Native player > Embed player > Placeholder
+  if (directUrl && !isTemplate(directUrl)) {
+    // SHOW NATIVE PLAYER
+    if (nativePlayerBlock) nativePlayerBlock.style.display = 'block';
+    if (embedPlayerBlock) embedPlayerBlock.style.display = 'none';
+    if (placeholder) placeholder.style.display = 'none';
+    
+    // Set audio source
+    const audioEl = $('primary-audio');
+    const sourceEl = $('audio-source');
+    if (audioEl && sourceEl) {
+      sourceEl.src = directUrl;
+      audioEl.load();
+    }
+    
+    // Set track info
+    const trackTitle = $('track-title');
+    const trackArtist = $('track-artist');
+    if (trackTitle) trackTitle.textContent = audio.primary?.track_title || 'Album Title';
+    if (trackArtist) trackArtist.textContent = audio.primary?.artist_name || 'Artist Name';
+    
+    // Set artwork
+    const artworkUrl = audio.primary?.artwork_url || '';
+    const artworkEl = $('track-artwork');
+    if (artworkEl && artworkUrl && !isTemplate(artworkUrl)) {
+      artworkEl.src = safeImageUrl(artworkUrl);
+      artworkEl.style.display = 'block';
+    } else if (artworkEl) {
+      artworkEl.style.display = 'none';
+    }
+    
+    // Set tags
+    const tags = [audio.primary?.tag_1, audio.primary?.tag_2, audio.primary?.tag_3, audio.primary?.tag_4].filter(Boolean);
+    const tagsEl = $('track-tags');
+    if (tagsEl && tags.length) {
+      tagsEl.innerHTML = tags.map(tag => `<span class="track-tag">${safe(tag)}</span>`).join('');
+    }
+    
+  } else if (embedUrl && !isTemplate(embedUrl)) {
+    // SHOW EMBED PLAYER (fallback for Spotify/SoundCloud)
+    if (nativePlayerBlock) nativePlayerBlock.style.display = 'none';
+    if (embedPlayerBlock) embedPlayerBlock.style.display = 'block';
+    if (placeholder) placeholder.style.display = 'none';
+    
+    const wrapper = $('primary-audio-wrapper');
+    if (wrapper) {
+      wrapper.innerHTML = `<iframe src="${safeAudioEmbedUrl(embedUrl)}" ${iframeAttrs} height="166"></iframe>`;
+    }
+    
+    const tags = [audio.primary?.tag_1, audio.primary?.tag_2, audio.primary?.tag_3, audio.primary?.tag_4].filter(Boolean);
+    const platform = audio.primary?.platform || '';
+    const metaBar = $('primary-audio-meta');
+    if (metaBar) metaBar.innerHTML =
+      (tags.length ? `<span class="amb-tag cyan">${safe(tags[0])}</span>` : '') +
+      tags.slice(1).map(t => `<span class="amb-tag">${safe(t)}</span>`).join('') +
+      (platform ? `<span class="amb-platform">Streaming on ${safe(platform)}</span>` : '');
+    
+  } else {
+    // SHOW PLACEHOLDER
+    if (nativePlayerBlock) nativePlayerBlock.style.display = 'none';
+    if (embedPlayerBlock) embedPlayerBlock.style.display = 'none';
+    if (placeholder) placeholder.style.display = 'block';
   }
-  const tags = [audio.primary?.tag_1, audio.primary?.tag_2, audio.primary?.tag_3, audio.primary?.tag_4].filter(Boolean);
-  const platform = audio.primary?.platform || '';
-  if (metaBar) metaBar.innerHTML =
-    (tags.length ? `<span class="amb-tag cyan">${safe(tags[0])}</span>` : '') +
-    tags.slice(1).map(t => `<span class="amb-tag">${safe(t)}</span>`).join('') +
-    (platform ? `<span class="amb-platform">Streaming on ${safe(platform)}</span>` : '');
 
   // Playlists — filter out placeholder rows, display only real playlists
   const playlistGrid = $('playlist-grid');
@@ -1549,8 +1703,13 @@ async function loadFromSheet() {
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     setStatus('Parsing data…');
     const data = await resp.json();
+    console.log('Raw data from sheet:', data);
     if (data.error) throw new Error(data.error);
 
+    console.log('Project data:', data.project);
+    console.log('Audio data:', data.audio);
+    console.log('Gallery data:', data.gallery);
+    
     populateProject(data.project || {}, data.budget?.total_actual);
     populateAudio(data.audio || { primary: null, playlists: [] });
     populateGallery(data.gallery || []);
