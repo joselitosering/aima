@@ -1466,7 +1466,7 @@ function populateGallery(items) {
   grid.innerHTML = filtered.slice(0,8).map((item, i) => {
     const cls = cssClasses[i] || '';
     return `<div class="mosaic-item ${cls} fade-in">
-      <img src="${safe(safeImageUrl(item.image_url))}" alt="${safe(item.alt_text||item.caption)}" loading="lazy"/>
+      <img src="${safeImageUrl(item.image_url)}" alt="${safe(item.alt_text||item.caption)}" loading="lazy"/>
       <div class="mosaic-caption-overlay"><span>${safe(item.caption||'')}</span></div>
     </div>`;
   }).join('');
