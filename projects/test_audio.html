@@ -52,7 +52,7 @@
      3. Paste the Web App URL below
      ══════════════════════════════════════════════════════════ -->
 <script>
-const SHEETS_API_URL = 'YOUR_APP_SCRIPT_HERE';
+const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbxap4_3Zb2x5IP2IGDMykq4WCRYE8cX-kzizHlYPgXLbs3mfIbBS9VqrBoMX5mMAxY/exec';
 
 const AGENCY_RATE_BENCHMARKS = {
   label:  'Major Recording Studio (Abbey Road / Capitol / Electric Lady benchmark)',
@@ -864,7 +864,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 
 
 <!-- ══════════════════════════════════════════════════════════
-     06 — BUDGET BREAKDOWN
+     06 — BUDGET BREAKDOWN — Music Production Ledger
 ══════════════════════════════════════════════════════════ -->
 <section class="page-section surface2" id="budget">
   <div class="section-inner">
@@ -881,27 +881,165 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
               <th style="text-align:right">Amount</th>
             </tr>
           </thead>
-          <tbody id="budget-tbody"></tbody>
+          <tbody id="budget-tbody">
+            <!-- Example Music Production Ledger Structure -->
+            <tr>
+              <td class="phase-cell">PRE-PRODUCTION</td>
+              <td>Songwriting Session</td>
+              <td>Lyric development, chord progressions, demo recording<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:15%"></div></div></div></td>
+              <td class="amount cyan">$800</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">PRE-PRODUCTION</td>
+              <td>Arrangement & Charts</td>
+              <td>Full arrangement, lead sheets, session charts for all instruments<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:12%"></div></div></div></td>
+              <td class="amount">$650</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">PRE-PRODUCTION</td>
+              <td>Pre-Production Demos</td>
+              <td>Reference demos for all tracks, tempo/key lock, vocal guide tracks<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:18%"></div></div></div></td>
+              <td class="amount">$950</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">TRACKING</td>
+              <td>Studio Time (Block Rate)</td>
+              <td>40 hours @ $85/hr · Pro Tools HD · SSL console · Tracking room A<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill orange" style="width:65%"></div></div></div></td>
+              <td class="amount cyan">$3,400</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">TRACKING</td>
+              <td>Session Musicians</td>
+              <td>Drums (live), bass, guitar overdubs, keys @ union scale + 10%<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill orange" style="width:42%"></div></div></div></td>
+              <td class="amount">$2,200</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">TRACKING</td>
+              <td>MIDI Programming</td>
+              <td>Synths, pads, orchestral elements (Kontakt, Omnisphere, Serum)<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill orange" style="width:28%"></div></div></div></td>
+              <td class="amount">$1,450</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">TRACKING</td>
+              <td>Sound Design & FX</td>
+              <td>Custom synth patches, risers, impacts, transitions, texture layers<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill orange" style="width:22%"></div></div></div></td>
+              <td class="amount">$1,150</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">VOCALS</td>
+              <td>Lead Vocal Recording</td>
+              <td>10 hours studio time · Neumann U87 · vocal chain compression/EQ<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:32%"></div></div></div></td>
+              <td class="amount cyan">$1,700</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">VOCALS</td>
+              <td>Harmony & BGV Stacks</td>
+              <td>Background vocals, doubles, harmonies, ad-libs across all tracks<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:24%"></div></div></div></td>
+              <td class="amount">$1,250</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">VOCALS</td>
+              <td>Vocal Comping & Tuning</td>
+              <td>Melodyne pitch correction, timing edits, breath control, de-essing<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:20%"></div></div></div></td>
+              <td class="amount">$1,050</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">VOCALS</td>
+              <td>Voice Cloning (AI)</td>
+              <td>ElevenLabs voice model training, synthetic vocal layers (optional)<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:15%"></div></div></div></td>
+              <td class="amount">$800</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">MIXING</td>
+              <td>Mixing Engineer (Day Rate)</td>
+              <td>5 days @ $450/day · stereo mix + stems · iZotope Neutron AI assist<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:45%"></div></div></div></td>
+              <td class="amount cyan">$2,250</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">MIXING</td>
+              <td>Mix Revisions</td>
+              <td>2 rounds of mix notes, client feedback implementation, tweaks<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:18%"></div></div></div></td>
+              <td class="amount">$950</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">MIXING</td>
+              <td>Stems Export</td>
+              <td>Full stem bounce per track: drums, bass, guitars, keys, vocals, FX<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:12%"></div></div></div></td>
+              <td class="amount">$650</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">MASTERING</td>
+              <td>Mastering Engineer</td>
+              <td>Per-track mastering @ $125/track × 8 tracks · attended session<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:20%"></div></div></div></td>
+              <td class="amount cyan">$1,000</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">MASTERING</td>
+              <td>Platform Optimization</td>
+              <td>Spotify/Apple/YouTube loudness standards (LUFS -14/-16), metadata<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:10%"></div></div></div></td>
+              <td class="amount">$500</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">MASTERING</td>
+              <td>Vinyl Pre-Master (Optional)</td>
+              <td>Vinyl-specific master with RIAA EQ curve, side length balancing<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:14%"></div></div></div></td>
+              <td class="amount">$750</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">DISTRIBUTION</td>
+              <td>ISRC Code Registration</td>
+              <td>International Standard Recording Code × 8 tracks via RIAA registry<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:5%"></div></div></div></td>
+              <td class="amount">$250</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">DISTRIBUTION</td>
+              <td>Digital Distribution</td>
+              <td>DistroKid / TuneCore / CD Baby — all platforms, UPC barcode included<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:8%"></div></div></div></td>
+              <td class="amount">$400</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">DISTRIBUTION</td>
+              <td>Copyright Registration</td>
+              <td>US Copyright Office registration + SR forms for sound recordings<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:6%"></div></div></div></td>
+              <td class="amount">$300</td>
+            </tr>
+            <tr>
+              <td class="phase-cell">POST-RELEASE</td>
+              <td>Analytics & Monitoring</td>
+              <td>30-day streaming metrics, playlist tracking, Spotify for Artists setup<div class="budget-bar-wrap"><div class="budget-bar"><div class="budget-bar-fill" style="width:10%"></div></div></div></td>
+              <td class="amount">$500</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3" style="font-family:'Anton',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:#fff;">Total Recording Investment</td>
+              <td class="amount" style="color:var(--mm-gold-lt);font-size:26px;">$22,950</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div class="budget-sidebar-card fade-in delay-3">
         <div class="bsc-label">Total Recording Investment</div>
-        <div class="bsc-total" id="bsc-total">$—</div>
+        <div class="bsc-total" id="bsc-total">$22,950</div>
         <div class="bsc-note">USD · All-in · No hidden fees</div>
         <hr class="bsc-divider"/>
-        <div id="bsc-phase-breakdown"></div>
+        <div id="bsc-phase-breakdown">
+          <div class="bsc-row"><span>Pre-Production</span><span>11%</span></div>
+          <div class="bsc-row"><span>Tracking</span><span>37%</span></div>
+          <div class="bsc-row"><span>Vocals</span><span>21%</span></div>
+          <div class="bsc-row"><span>Mixing</span><span>17%</span></div>
+          <div class="bsc-row"><span>Mastering</span><span>10%</span></div>
+          <div class="bsc-row"><span>Distribution</span><span>4%</span></div>
+        </div>
         <hr class="bsc-divider"/>
-        <div class="bsc-trad">Major Studio Equivalent: <span id="bsc-trad-val">$—</span></div>
+        <div class="bsc-trad">Major Studio Equivalent: <span id="bsc-trad-val">$68,500</span></div>
         <div class="bsc-efficiency">
-          <strong id="bsc-savings-pct">—%</strong>
+          <strong id="bsc-savings-pct">66%</strong>
           saved vs. <span id="bsc-agency-label">major recording studio</span> benchmark.
         </div>
-        <div class="bsc-source" id="bsc-source"></div>
+        <div class="bsc-source" id="bsc-source">Source: RIAA Production Cost Survey 2024 · Sound on Sound Studio Rate Index 2023</div>
       </div>
     </div>
   </div>
 </section>
-
 
 <!-- ══════════════════════════════════════════════════════════
      07 — STREAMING METRICS
