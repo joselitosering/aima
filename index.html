@@ -2884,9 +2884,9 @@ function handleSubmit() {
     referral:     val('ff-referral')
   };
 
- var encoded = Object.keys(GF_FIELDS).map(function(key) {
+var encoded = Object.keys(GF_FIELDS).map(function(key) {
     return encodeURIComponent(GF_FIELDS[key]) + '=' + encodeURIComponent(data[key] || '');
-  }).join('&');
+  }).join('&') + '&fvv=1&fbzx=4861860369586496882';
 
   fetch(GF_ACTION, {
     method:  'POST',
