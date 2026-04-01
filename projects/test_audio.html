@@ -1360,13 +1360,16 @@ function showError(msg) {
 function hideLoader() { const ov = $('loading-overlay'); if (ov) ov.classList.add('hidden'); }
 
 // ── AUDIO EMBED URL NORMALIZER ────────────────────────────
-function safeImageUrl(raw) {
-  if (!raw || typeof raw !== 'string') return raw;
-  const url = raw.trim();
-  const fileId = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-  if (fileId) return 'https://drive.google.com/thumbnail?id=' + fileId[1] + '&sz=w1200';
-  const idParam = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if (idParam) return 'https://drive.google.com/thumbnail?id=' + idParam[1] + '&sz=w1200';
+function safeImageUrl(url) {
+  if (!url) return '';
+  // Already a thumbnail endpoint — return as-is
+  if (url.includes('drive.google.com/thumbnail')) return url;
+  // Extract FILE_ID from /file/d/FILE_ID/view (most common share format)
+  const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1200';
+  // Extract FILE_ID from ?id=FILE_ID
+  const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m2) return 'https://drive.google.com/thumbnail?id=' + m2[1] + '&sz=w1200';
   return url;
 }
 
