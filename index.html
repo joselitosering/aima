@@ -2742,19 +2742,6 @@ a.work-card:hover .work-play    { background:rgba(0,217,245,.08); }
 
 <script>
 
-/* ── NAV SCROLL1 ─────────────────────────────────────── */
-const nav = document.getElementById('nav');
-const navLinks = document.querySelectorAll('.nav-lnk');
-function updateNav() {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-  let current = '';
-  document.querySelectorAll('[id]').forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
-  });
-  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
-}
-window.addEventListener('scroll', updateNav, { passive: true });
-updateNav();
 
 /* ── MOBILE MENU ─────────────────────────────────────── */
 function toggleMobile() {
@@ -2987,15 +2974,6 @@ try {
   }
 } catch(e) {}
 
-/* ── FORM SUBMIT ─────────────────────────────────────── */
-function handleSubmit() {
-  const btn = document.getElementById('submitBtn');
-  btn.textContent = "\u2713 Brief Received \u2014 We'll respond within 24 hours";
-  btn.style.background = 'var(--green)';
-  btn.style.color = '#fff';
-  btn.disabled = true;
-}
-
 /* ── NEWSLETTER ──────────────────────────────────────── */
 document.querySelectorAll('.nb-btn').forEach(function(b) {
   b.addEventListener('click', function() {
@@ -3081,56 +3059,6 @@ document.querySelectorAll('.nb-btn').forEach(function(b) {
   </div>
 </footer>
 
-<!-- ══════════════════════════════════════════════════
-     SHARED JAVASCRIPT
-══════════════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ── NAV: scroll state + active link ────────────────── */
-
-function updateNav() {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-}
-window.addEventListener('scroll', updateNav, { passive: true });
-updateNav();
-
-/* ── Set active nav link from current filename ──────── */
-(function setActiveLink() {
-  const page = window.location.pathname.split('/').pop() || 'index.html';
-  navLinks.forEach(a => {
-    const href = a.getAttribute('href');
-    a.classList.toggle('active', href === page);
-  });
-})();
-
-/* ── MOBILE MENU ─────────────────────────────────────── */
-function toggleMobile() {
-  const menu   = document.getElementById('mobileMenu');
-  const burger = document.getElementById('navBurger');
-  menu.classList.toggle('open');
-  burger.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-}
-function closeMobile() {
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('navBurger').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-/* ── FADE-IN OBSERVER ────────────────────────────────── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const siblings = [...e.target.parentElement.children]
-        .filter(c => c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r'));
-      const idx = siblings.indexOf(e.target);
-            setTimeout(() => e.target.classList.add('vis'), idx * 70);
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
-
-document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => observer.observe(el));
-</script>
 
 <script>
 
@@ -3223,14 +3151,6 @@ try {
   }
 } catch(e) {}
 
-/* ── FORM SUBMIT ─────────────────────────────────────── */
-function handleSubmit() {
-  const btn = document.getElementById('submitBtn');
-  btn.textContent = "\u2713 Brief Received \u2014 You'll hear from us within 24 hours";
-  btn.style.background = 'var(--green)';
-  btn.style.color = '#fff';
-  btn.disabled = true;
-}
 
 /* ── NEWSLETTER ──────────────────────────────────────── */
 document.querySelectorAll('.nb-btn').forEach(function(b) {
@@ -3295,14 +3215,6 @@ try {
   }
 } catch(e) {}
 
-/* ── FORM SUBMIT ─────────────────────────────────────── */
-function handleSubmit() {
-  const btn = document.getElementById('submitBtn');
-  btn.textContent = "\u2713 Brief Received \u2014 We'll respond within 24 hours";
-  btn.style.background = 'var(--green)';
-  btn.style.color = '#fff';
-  btn.disabled = true;
-}
 
 /* ── NEWSLETTER ──────────────────────────────────────── */
 document.querySelectorAll('.nb-btn').forEach(function(b) {
