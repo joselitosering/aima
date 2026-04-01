@@ -861,7 +861,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 <section class="page-section surface" id="audio">
   <div class="section-inner">
     <span class="section-label fade-in">01 — Primary Release</span>
-    <h2 class="section-title fade-in delay-1">Listen to the <span class="c">Top</span> <span class="ghost" id="title-ghost">Trending</span> <span class="c">Track</span></h2>
+    <h2 class="section-title fade-in delay-1">Listen to the <span class="c">Full Album</span></h2>
     <div class="rule fade-in delay-1"></div>
     <p class="section-desc fade-in delay-2">Stream the complete recording with full playback controls.</p>
     
@@ -966,7 +966,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 <section class="page-section" id="playlist">
   <div class="section-inner">
     <span class="section-label fade-in">04 — Curated Playlists</span>
-    <h2 class="section-title fade-in delay-1">Listen to the <span class="o">Full Album</span></h2>
+    <h2 class="section-title fade-in delay-1">Explore <span class="o">Themed Playlists</span></h2>
     <div class="rule fade-in delay-1"></div>
     <p class="section-desc fade-in delay-2">Artist curated playlists, influences, and genre companions.</p>
     <div class="playlist-grid" id="playlist-grid"></div>
@@ -1640,38 +1640,22 @@ function populateAudio(audio) {
     if (placeholder) placeholder.style.display = 'block';
   }
 
-// Playlists — lazy load when section is visible
-const playlistGrid = $('playlist-grid');
-if (!playlistGrid) return;
-const playlists = (audio.playlists || []).filter(pl => !isTemplate(pl.embed_url || ''));
-if (!playlists.length) { 
-  playlistGrid.innerHTML = ''; 
-  return; 
-}
-
-// Don't render iframes immediately - just placeholders
-playlistGrid.innerHTML = playlists.map((pl, idx) => `
-  <div class="playlist-card fade-in" data-playlist-idx="${idx}">
-    <div class="playlist-embed-frame" id="playlist-${idx}">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--surface3);cursor:pointer;" onclick="loadPlaylist(${idx}, '${safePlaylistEmbedUrl(pl.embed_url).replace(/'/g, "\\'")}')">
-        <svg viewBox="0 0 24 24" style="width:64px;height:64px;fill:var(--mm-cyan);opacity:.6"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8l6 4-6 4z"/></svg>
+  // Playlists — filter out placeholder rows, display only real playlists
+  const playlistGrid = $('playlist-grid');
+  if (!playlistGrid) return;
+  const playlists = (audio.playlists || []).filter(pl => !isTemplate(pl.embed_url || ''));
+  if (!playlists.length) { playlistGrid.innerHTML = ''; return; }
+  playlistGrid.innerHTML = playlists.map(pl => `
+    <div class="playlist-card fade-in">
+      <div class="playlist-embed-frame">
+        <iframe src="${safePlaylistEmbedUrl(pl.embed_url)}" ${iframeAttrs} height="380"></iframe>
       </div>
-    </div>
-    <div class="playlist-card-body">
-      <div class="playlist-badge">Curated Playlist</div>
-      <div class="playlist-card-title">${safe(pl.title||'Playlist')}</div>
-      <div class="playlist-card-desc">${safe(pl.description||'')}</div>
-    </div>
-  </div>`).join('');
-
-// Store playlist data globally
-window.playlistData = playlists.map(pl => safePlaylistEmbedUrl(pl.embed_url));
-
-// Lazy load playlist on click
-function loadPlaylist(idx, url) {
-  const container = $(`playlist-${idx}`);
-  if (!container) return;
-  container.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen loading="lazy" height="450"></iframe>`;
+      <div class="playlist-card-body">
+        <div class="playlist-badge">Curated Playlist</div>
+        <div class="playlist-card-title">${safe(pl.title||'Playlist')}</div>
+        <div class="playlist-card-desc">${safe(pl.description||'')}</div>
+      </div>
+    </div>`).join('');
 }
 
 // ── SCROLL OBSERVER ───────────────────────────────────────
@@ -1714,36 +1698,26 @@ async function loadFromSheet() {
   try {
     setStatus('Fetching sheet data…');
     const controller = new AbortController();
-    const timeoutId  = setTimeout(() => controller.abort(), 30000);
+    const timeoutId  = setTimeout(() => controller.abort(), 10000);
     let resp;
     try {
       resp = await fetch(SHEETS_API_URL, { signal: controller.signal });
     } catch (fetchErr) {
       clearTimeout(timeoutId);
-      if (fetchErr.name === 'AbortError') {
-        console.error('Timeout after 30s');
-        throw new Error('Request timed out after 30s. Check Apps Script deployment settings.');
-      }
-      console.error('Fetch error:', fetchErr);
+      if (fetchErr.name === 'AbortError') throw new Error('Request timed out after 10s. Check Apps Script deployment settings.');
       throw fetchErr;
     }
     clearTimeout(timeoutId);
-    
-    console.log('Response status:', resp.status);
-    console.log('Response headers:', [...resp.headers.entries()]);
-    
-    if (!resp.ok) {
-      const errorText = await resp.text();
-      console.error('HTTP error response:', errorText);
-      throw new Error('HTTP ' + resp.status + ': ' + errorText.substring(0, 200));
-    }
-    
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
     setStatus('Parsing data…');
     const data = await resp.json();
-    console.log('Data received, keys:', Object.keys(data));
-    
+    console.log('Raw data from sheet:', data);
     if (data.error) throw new Error(data.error);
 
+    console.log('Project data:', data.project);
+    console.log('Audio data:', data.audio);
+    console.log('Gallery data:', data.gallery);
+    
     populateProject(data.project || {}, data.budget?.total_actual);
     populateAudio(data.audio || { primary: null, playlists: [] });
     populateGallery(data.gallery || []);
