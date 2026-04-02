@@ -38,7 +38,7 @@
 <!-- production window shown next to date -->
      
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Album Title - Artist Name · AIRA Music</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -550,18 +550,14 @@ a:hover { opacity:.75; }
   .budget-layout { grid-template-columns: 1fr 380px; }
 }
 @media(max-width:768px) {
-  .project-hero,.page-section,.project-nav-section { padding:60px 28px; }
-  .logistics-grid,.services-grid,.testimonials-grid { grid-template-columns:1fr; }
-  .metrics-detail-grid,.metrics-top { grid-template-columns:1fr 1fr; }
-  .playlist-grid { grid-template-columns:repeat(2,1fr); }
-  .mosaic-grid { grid-template-columns:1fr 1fr; }
-  .mi-1,.mi-2,.mi-3,.mi-4,.mi-5,.mi-6,.mi-7,.mi-8 { grid-column:auto; grid-row:auto; min-height:160px; }
-  .project-nav-grid { grid-template-columns:1fr 1fr; }
-  .nav-card.all-projects { grid-column:1/-1; order:3; }
-  .budget-table { font-size: 12px; }
-  .budget-table td.phase-cell { display: none; }  /* hide phase column on mobile */
-  .budget-table td.amount { white-space: normal; font-size: 15px; }
-  .budget-table thead th:first-child { display: none; }
+  .page-section { padding: 48px 16px; }
+  .budget-sidebar-card { padding: 20px 16px; overflow: hidden; max-width: 100%; }
+  .bsc-efficiency { overflow: hidden; }
+  .bsc-source { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .metrics-detail-card { overflow: hidden; max-width: 100%; }
+  .mdc-title { overflow: hidden; }
+  .ch-name { width: 80px; }
+  .delivery-spec { display: none; }
 }
 @media(max-width:480px) {
   .playlist-grid { grid-template-columns:1fr; }
