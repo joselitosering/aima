@@ -2875,7 +2875,7 @@ var encoded = Object.keys(GF_FIELDS).map(function(key) {
     return encodeURIComponent(GF_FIELDS[key]) + '=' + encodeURIComponent(data[key] || '');
   }).join('&') + '&fvv=1&fbzx=4861860369586496882';
 
- fetch(GF_ACTION, {
+  fetch(GF_ACTION, {
     method: 'POST',
     mode:   'no-cors',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -2887,6 +2887,23 @@ var encoded = Object.keys(GF_FIELDS).map(function(key) {
   .catch(function() {
     showSuccess(btn, data);
   });
+}
+
+function showSuccess(btn, data) {
+  btn.classList.remove('state-sending');
+  btn.classList.add('state-success');
+  btn.textContent = '\u2713 Brief Sent Successfully';
+  btn.disabled = true;
+  var nameEl  = document.getElementById('confirmName');
+  var emailEl = document.getElementById('confirmEmail');
+  var refEl   = document.getElementById('confirmRef');
+  var noteEl  = document.getElementById('formNote');
+  if (nameEl)  nameEl.textContent  = data && data.firstName ? data.firstName : 'there';
+  if (emailEl) emailEl.textContent = data && data.email     ? data.email     : 'your inbox';
+  if (refEl)   refEl.textContent   = 'REF: AIMA-' + Date.now().toString().slice(-6);
+  if (noteEl)  noteEl.style.display = 'none';
+  var panel = document.getElementById('formConfirm');
+  if (panel) { panel.classList.add('visible'); panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
 }
 
 
