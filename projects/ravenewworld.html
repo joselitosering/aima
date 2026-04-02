@@ -373,18 +373,18 @@ a:hover { opacity:.75; }
 .budget-bar { height:4px; border-radius:2px; background:rgba(255,255,255,.06); overflow:hidden; margin-top:6px; }
 .budget-bar-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--mm-cyan),var(--mm-purple)); transition:width 1s cubic-bezier(.22,1,.36,1) .3s; }
 .budget-bar-fill.orange { background:linear-gradient(90deg,var(--mm-orange),var(--mm-gold)); }
-.budget-sidebar-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:28px; top:24px; }
 .bsc-label { font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--mm-muted); margin-bottom:8px; }
 .bsc-total { font-family:'Anton',sans-serif; font-size:clamp(20px,8vw,42px); color:var(--mm-gold-lt); letter-spacing:.02em; line-height:1; margin-bottom:6px; }
 .bsc-note { font-size:12px; color:var(--mm-muted); margin-bottom:24px; }
 .bsc-divider { border:none; border-top:1px solid var(--border2); margin:20px 0; }
 .bsc-row { display:flex; justify-content:space-between; font-size:13px; color:var(--mm-muted); margin-bottom:10px; }
 .bsc-row span:last-child { color:var(--mm-text); font-weight:500; }
-.bsc-trad { font-size:13px; color:var(--mm-muted); margin-bottom:6px; }
 .bsc-trad span { color:var(--mm-text); text-decoration:line-through; }
 .bsc-efficiency { margin-top:20px; background:rgba(45,202,115,.06); border:1px solid rgba(45,202,115,.2); border-radius:6px; padding:14px; font-size:13px; color:var(--mm-green); }
 .bsc-efficiency strong { display:block; font-family:'Anton',sans-serif; font-size:28px; margin-bottom:4px; }
-.bsc-source { margin-top:12px; font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--mm-muted); opacity:.7; }
+.budget-sidebar-card * { max-width:100%; }
+.bsc-trad { word-break:break-word; }
+.bsc-source { word-break:break-word; letter-spacing:0; }
 
 /* ══════════════════════════════════════════════════════════
    METRICS
