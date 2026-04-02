@@ -568,7 +568,8 @@ a:hover { opacity:.75; }
   .budget-table td.phase-cell { display: none; }  /* hide phase column on mobile */
   .budget-table td.amount { white-space: normal; font-size: 15px; }
   .budget-table thead th:first-child { display: none; }
-  .budget-sidebar-card { width:100%; box-sizing:border-box; }
+  .budget-table .total-row { display:none; }
+  .budget-sidebar-card { width:100%; max-width:100%; box-sizing:border-box; overflow:hidden; }
 }
 @media(max-width:480px) {
   .playlist-grid { grid-template-columns:1fr; }
