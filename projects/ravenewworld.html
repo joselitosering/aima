@@ -38,7 +38,7 @@
 <!-- production window shown next to date -->
      
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Album Title - Artist Name · AIRA Music</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -55,8 +55,8 @@
 const SHEETS_API_URL = 'https://joselitosering.github.io/aima/docs/project-neon-pills-gallery-data.json';
 
 const AGENCY_RATE_BENCHMARKS = {
-  label:  'Major Recording Studio Benchmark',
-  source: 'RIAA Production Cost Survey 2024 · Sound on Sound 2023'
+  label:  'Major Recording Studio (Abbey Road / Capitol / Electric Lady benchmark)',
+  source: 'RIAA Production Cost Survey 2024 · Sound on Sound Studio Rate Index 2023'
 };
 </script>
 
@@ -358,8 +358,8 @@ a:hover { opacity:.75; }
 /* ══════════════════════════════════════════════════════════
    BUDGET
 ══════════════════════════════════════════════════════════ */
-.budget-layout { display: grid;  grid-template-columns: 1fr;  gap: 32px;  align-items: start; }
-.budget-table td.amount { font-family:'Anton',sans-serif; font-size:17px; color:#fff; letter-spacing:.02em; text-align:right; white-space:normal; }.budget-table td.amount { font-family:'Anton',sans-serif; font-size:17px; color:#fff; letter-spacing:.02em; text-align:right; white-space:normal; }
+.budget-layout { display:grid; grid-template-columns:1fr 380px; gap:32px; align-items:start; }
+.budget-table { width:100%; border-collapse:collapse; font-size:14px; }
 .budget-table thead th { font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--mm-muted); text-align:left; padding:10px 16px; border-bottom:1px solid var(--border); background:rgba(0,0,0,.2); }
 .budget-table tbody tr { border-bottom:1px solid var(--border2); transition:background .15s; }
 .budget-table tbody tr:hover { background:rgba(255,255,255,.025); }
@@ -372,18 +372,18 @@ a:hover { opacity:.75; }
 .budget-bar { height:4px; border-radius:2px; background:rgba(255,255,255,.06); overflow:hidden; margin-top:6px; }
 .budget-bar-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--mm-cyan),var(--mm-purple)); transition:width 1s cubic-bezier(.22,1,.36,1) .3s; }
 .budget-bar-fill.orange { background:linear-gradient(90deg,var(--mm-orange),var(--mm-gold)); }
-.budget-sidebar-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:28px; position:sticky; top:24px; min-width:0; overflow:hidden; }
+.budget-sidebar-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:28px; position:sticky; top:24px; }
 .bsc-label { font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--mm-muted); margin-bottom:8px; }
-.bsc-total { font-family:'Anton',sans-serif; font-size:clamp(24px,6vw,42px); color:var(--mm-gold-lt); letter-spacing:.02em; line-height:1; margin-bottom:6px; word-break:break-word; }
+.bsc-total { font-family:'Anton',sans-serif; font-size:42px; color:var(--mm-gold-lt); letter-spacing:.02em; line-height:1; margin-bottom:6px; }
 .bsc-note { font-size:12px; color:var(--mm-muted); margin-bottom:24px; }
 .bsc-divider { border:none; border-top:1px solid var(--border2); margin:20px 0; }
 .bsc-row { display:flex; justify-content:space-between; font-size:13px; color:var(--mm-muted); margin-bottom:10px; }
 .bsc-row span:last-child { color:var(--mm-text); font-weight:500; }
 .bsc-trad { font-size:13px; color:var(--mm-muted); margin-bottom:6px; }
 .bsc-trad span { color:var(--mm-text); text-decoration:line-through; }
-.bsc-efficiency { word-break: break-word; overflow-wrap: break-word; }
+.bsc-efficiency { margin-top:20px; background:rgba(45,202,115,.06); border:1px solid rgba(45,202,115,.2); border-radius:6px; padding:14px; font-size:13px; color:var(--mm-green); }
 .bsc-efficiency strong { display:block; font-family:'Anton',sans-serif; font-size:28px; margin-bottom:4px; }
-.bsc-source { word-break: break-word; overflow-wrap: break-word; white-space: normal; }
+.bsc-source { margin-top:12px; font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--mm-muted); opacity:.7; }
 
 /* ══════════════════════════════════════════════════════════
    METRICS
@@ -546,25 +546,32 @@ a:hover { opacity:.75; }
 /* ══════════════════════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════════════════════ */
-@media(min-width:1025px) {
-  .budget-layout { grid-template-columns: 1fr 380px; }
+@media(max-width:1024px) {
+  .logistics-grid,.services-grid,.testimonials-grid { grid-template-columns:1fr 1fr; }
+  .metrics-top { grid-template-columns:1fr 1fr; }
+  .budget-layout { grid-template-columns:1fr; }
+  .budget-sidebar-card { position:static; }
+  .playlist-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media(max-width:768px) {
-  .page-section { padding: 48px 16px; }
-  .budget-sidebar-card { padding: 20px 16px; overflow: hidden; max-width: 100%; }
-  .bsc-efficiency { overflow: hidden; }
-  .bsc-source { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .metrics-detail-card { overflow: hidden; max-width: 100%; }
-  .mdc-title { overflow: hidden; }
-  .ch-name { width: 80px; }
-  .delivery-spec { display: none; }
+  .project-hero,.page-section,.project-nav-section { padding:60px 28px; }
+  .logistics-grid,.services-grid,.testimonials-grid { grid-template-columns:1fr; }
+  .metrics-detail-grid,.metrics-top { grid-template-columns:1fr 1fr; }
+  .playlist-grid { grid-template-columns:repeat(2,1fr); }
+  .mosaic-grid { grid-template-columns:1fr 1fr; }
+  .mi-1,.mi-2,.mi-3,.mi-4,.mi-5,.mi-6,.mi-7,.mi-8 { grid-column:auto; grid-row:auto; min-height:160px; }
+  .project-nav-grid { grid-template-columns:1fr 1fr; }
+  .nav-card.all-projects { grid-column:1/-1; order:3; }
+  .budget-table { font-size: 12px; }
+  .budget-table td.phase-cell { display: none; }  /* hide phase column on mobile */
+  .budget-table td.amount { white-space: normal; font-size: 15px; }
+  .budget-table thead th:first-child { display: none; }
 }
 @media(max-width:480px) {
   .playlist-grid { grid-template-columns:1fr; }
   .project-nav-grid { grid-template-columns:1fr; }
   .nav-card.next { text-align:left; }
 }
-
 
 /* ══ NAV (v10 blueprint) ══════════════════════════════════════ */
 #nav{
