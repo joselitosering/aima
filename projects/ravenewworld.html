@@ -569,11 +569,16 @@ a:hover { opacity:.75; }
   .budget-table td.phase-cell { display: none; }  /* hide phase column on mobile */
   .budget-table td.amount { white-space: normal; font-size: 15px; }
   .budget-table thead th:first-child { display: none; }
+  .budget-sidebar-card { min-width:0; overflow:hidden; }
+  .bsc-total { font-size:clamp(22px,5vw,42px); word-break:break-word; }
 }
 @media(max-width:480px) {
   .playlist-grid { grid-template-columns:1fr; }
   .project-nav-grid { grid-template-columns:1fr; }
   .nav-card.next { text-align:left; }
+  .budget-sidebar-card { padding:16px; }
+  .bsc-efficiency { word-break:break-word; overflow-wrap:break-word; }
+  .bsc-source { white-space:normal; word-break:break-word; }
 }
 
 /* ══ NAV (v10 blueprint) ══════════════════════════════════════ */
