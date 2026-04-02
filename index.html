@@ -2762,19 +2762,6 @@ function scrollTo(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ── FADE-IN OBSERVER ────────────────────────────────── */
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach((e) => {
-    if (e.isIntersecting) {
-      const siblings = [...e.target.parentElement.children]
-        .filter(c => c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r'));
-      const idx = siblings.indexOf(e.target);
-      setTimeout(() => e.target.classList.add('vis'), idx * 70);
-      obs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(el => obs.observe(el));
 
 /* ── PORTFOLIO FILTER ────────────────────────────────── */
 document.querySelectorAll('.pf-btn').forEach(btn => {
