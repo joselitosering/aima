@@ -360,7 +360,7 @@ a:hover { opacity:.75; }
 ══════════════════════════════════════════════════════════ */
 
 .budget-layout { display:grid; grid-template-columns:1fr; gap:32px; align-items:start; }
-.budget-sidebar-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:28px; min-width:0; overflow:hidden; }
+.budget-sidebar-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:28px; position:sticky; top:24px; min-width:0; overflow:hidden; }
 .bsc-total { font-family:'Anton',sans-serif; font-size:clamp(22px,5vw,42px); color:var(--mm-gold-lt); letter-spacing:.02em; line-height:1; margin-bottom:6px; word-break:break-word; }
 .bsc-source { margin-top:12px; font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--mm-muted); opacity:.7; word-break:break-word; overflow-wrap:break-word; }
 .bsc-efficiency { margin-top:20px; background:rgba(45,202,115,.06); border:1px solid rgba(45,202,115,.2); border-radius:6px; padding:14px; font-size:13px; color:var(--mm-green); word-break:break-word; overflow-wrap:break-word; }
@@ -1149,7 +1149,8 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
             </tr>
           </tbody>
         </table>
-        </div>
+      </div>
+    </div>
       <div class="budget-sidebar-card fade-in delay-3">
         <div class="bsc-label">Total Recording Investment</div>
         <div class="bsc-total" id="bsc-total">$22,950</div>
