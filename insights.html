@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -267,10 +268,7 @@ button{cursor:pointer;font-family:inherit;border:none}
 .m-card:hover .m-cta .arr{transform:translateX(3px)}
 
 /* FILTERED STATE — collapse mosaic spans to uniform grid */
-#mosaic-grid[data-filtered] [data-span]{grid-column:span 1}
-#mosaic-grid[data-filtered] .m-card{flex-direction:column}
-#mosaic-grid[data-filtered] .m-card .m-thumb{width:100% !important;height:160px !important;min-height:0 !important}
-#mosaic-grid[data-filtered] .m-card .m-body{padding:22px}
+.m-card.hidden{display:none}
 
 /* LIST VIEW card overrides */
 #mosaic-grid.list-view .m-card{flex-direction:row;min-height:0}
@@ -944,9 +942,6 @@ function applyFilters() {
   const cutoff = days ? now - days * 86400000 : 0;
   const isFiltered = !!(author || days || q);
 
-  // Toggle data-filtered attribute — CSS collapses mosaic spans when active
-  grid.toggleAttribute('data-filtered', isFiltered);
-
   const cards = [...grid.querySelectorAll('.m-card')];
   let visible = 0;
 
@@ -973,7 +968,15 @@ function applyFilters() {
     if (sort === 'az') return (a.dataset.title || '').localeCompare(b.dataset.title || '');
     return 0;
   });
-  visCards.forEach(c => grid.insertBefore(c, noRes));
+  // Re-insert all cards (visible + hidden) before #no-results; reassign data-span on visible only
+  let visIdx = 0;
+  const allOrdered = [...visCards, ...cards.filter(c => c.classList.contains('hidden'))];
+  allOrdered.forEach(c => {
+    if (!c.classList.contains('hidden')) {
+      c.dataset.span = IS_LIST_VIEW ? 1 : getMosaicSpan(visIdx++);
+    }
+    grid.insertBefore(c, noRes);
+  });
 
   // No results state
   noRes.style.display = visible === 0 ? 'block' : 'none';
