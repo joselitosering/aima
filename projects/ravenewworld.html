@@ -562,6 +562,10 @@ a:hover { opacity:.75; }
   .mi-1,.mi-2,.mi-3,.mi-4,.mi-5,.mi-6,.mi-7,.mi-8 { grid-column:auto; grid-row:auto; min-height:160px; }
   .project-nav-grid { grid-template-columns:1fr 1fr; }
   .nav-card.all-projects { grid-column:1/-1; order:3; }
+  .budget-table { font-size: 12px; }
+  .budget-table td.phase-cell { display: none; }  /* hide phase column on mobile */
+  .budget-table td.amount { white-space: normal; font-size: 15px; }
+  .budget-table thead th:first-child { display: none; }
 }
 @media(max-width:480px) {
   .playlist-grid { grid-template-columns:1fr; }
@@ -992,7 +996,8 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
     <p class="section-desc fade-in delay-2">Recording industry standard pricing with AI-assisted efficiency gains.</p>
     <div class="budget-layout fade-in delay-2">
       <div>
-        <table class="budget-table">
+        <div style="overflow-x:auto;">
+          <table class="budget-table">
           <thead>
             <tr>
               <th>Phase</th><th>Line Item</th><th>Detail + Allocation</th>
