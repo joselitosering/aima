@@ -247,7 +247,8 @@ a:hover { opacity:.75; }
 .mosaic-meta { display:flex; align-items:center; justify-content:space-between; margin-top:16px; flex-wrap:wrap; gap:12px; }
 .mosaic-count { font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:var(--mm-muted); }
 .mosaic-view-btn { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--mm-cyan); border:1px solid rgba(0,217,245,.28); border-radius:var(--radius); padding:9px 20px; transition:background .18s; cursor:pointer; background:transparent; }
-.mosaic-view-btn:hover { background:rgba(0,217,245,.08); }
+.mosaic-view-btn:hover { background:rgba(0,217,245,.08); } 
+.mosaic-view-btn.hidden { display:none; }
 
 /* ══════════════════════════════════════════════════════════
    BTS — 9:16 VERTICAL FORMAT
@@ -1191,6 +1192,8 @@ function populateGallery(items) {
     </div>`;
   }).join('');
   if (count) count.textContent = `Showing ${Math.min(filtered.length,8)} of ${filtered.length} production assets`;
+  const btn = document.querySelector('.mosaic-view-btn');
+  if (btn) btn.classList.toggle('hidden', filtered.length <= 8);
 }
 
 // ── POPULATE: BUDGET ─────────────────────────────────────
