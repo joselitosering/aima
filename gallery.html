@@ -207,6 +207,7 @@ button{cursor:pointer;font-family:inherit;border:none}
 .m-card[data-cat-key="doc"]:hover{border-color:rgba(45,202,115,.4)}
 .m-card[data-cat-key="social"]:hover::before{background:var(--purple)}
 .m-card[data-cat-key="social"]:hover{border-color:rgba(162,89,255,.4)}
+.m-card.hidden{display:none;}
 
 /* Thumbnail */
 .m-thumb{position:relative;overflow:hidden;background:var(--surf2);flex-shrink:0}
@@ -273,10 +274,6 @@ button{cursor:pointer;font-family:inherit;border:none}
 .m-card:hover .m-cta .arr{transform:translateX(3px)}
 
 /* FILTERED STATE */
-#mosaic-grid[data-filtered] [data-span]{grid-column:span 1}
-#mosaic-grid[data-filtered] .m-card{flex-direction:column}
-#mosaic-grid[data-filtered] .m-card .m-thumb{width:100% !important;height:160px !important;min-height:0 !important}
-#mosaic-grid[data-filtered] .m-card .m-body{padding:22px}
 
 /* LIST VIEW */
 #mosaic-grid.list-view .m-card{flex-direction:row;min-height:0}
@@ -957,8 +954,16 @@ function applyFilters() {
     if (sort === 'az')     return (a.dataset.title || '').localeCompare(b.dataset.title || '');
     return 0;
   });
-  visCards.forEach((c, i) => {
-    c.dataset.span = IS_LIST_VIEW ? 1 : getMosaicSpan(i);
+  // Reassign span based on visible position, then re-insert all cards in order
+  let visIdx = 0;
+  const allOrdered = [
+    ...visCards,
+    ...cards.filter(c => c.classList.contains('hidden'))
+  ];
+  allOrdered.forEach(c => {
+    if (!c.classList.contains('hidden')) {
+      c.dataset.span = IS_LIST_VIEW ? 1 : getMosaicSpan(visIdx++);
+    }
     grid.insertBefore(c, noRes);
   });
 
