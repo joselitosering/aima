@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -241,6 +242,9 @@ button{cursor:pointer;font-family:inherit;border:none}
 .cat-doc   {color:var(--green);border-color:rgba(45,202,115,.3);background:rgba(45,202,115,.05)}
 .cat-social{color:var(--purple);border-color:rgba(162,89,255,.3);background:rgba(162,89,255,.05)}
 .cat-corp  {color:#fff;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
+.cat-music {color:#C084FC;border-color:rgba(192,132,252,.3);background:rgba(192,132,252,.06)}
+.cat-micro {color:#67E8F9;border-color:rgba(103,232,249,.3);background:rgba(103,232,249,.06)}
+.cat-commercial{color:var(--gold-lt);border-color:rgba(237,212,131,.3);background:rgba(237,212,131,.05)}
 .m-proj-id{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted)}
 .m-title{font-family:'Anton',sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:.01em;line-height:1.1;color:#fff;margin-bottom:6px;transition:color .2s;flex:1}
 [data-span="3"] .m-title{font-size:clamp(22px,2.5vw,32px);margin-bottom:10px}
@@ -627,7 +631,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
         <div class="fb-sub">AI Media Agency</div>
         <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
         <!-- Back to Top replaces social icons -->
-        <button class="back-to-top" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
+        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
           <span class="arr">↑</span> Back to Top
         </button>
       </div>
@@ -771,7 +775,12 @@ function formatDisplayDate(isoStr) {
 
 function catKey(category) {
   const c = (category || '').toLowerCase();
-  if (c.includes('brand') || c.includes('film'))      return 'brand';
+  if (c.includes('music video'))                      return 'music';
+  if (c.includes('micro film'))                       return 'micro';
+  if (c.includes('commercial'))                       return 'commercial';
+  if (c.includes('brand film') || c === 'brand')      return 'brand';
+  if (c.includes('brand') && !c.includes('film'))     return 'brand';
+  if (c.includes('film'))                             return 'brand';
   if (c.includes('campaign') || c.includes('ad'))     return 'campaign';
   if (c.includes('doc'))                              return 'doc';
   if (c.includes('social') || c.includes('content'))  return 'social';
@@ -781,26 +790,29 @@ function catKey(category) {
 
 function catBadgeClass(category) {
   const k = catKey(category);
-  const map = { brand:'cat-brand', campaign:'cat-campaign', doc:'cat-doc', social:'cat-social', corp:'cat-corp', ai:'cat-ai' };
+  const map = { brand:'cat-brand', campaign:'cat-campaign', doc:'cat-doc', social:'cat-social', corp:'cat-corp', music:'cat-music', micro:'cat-micro', commercial:'cat-commercial', ai:'cat-ai' };
   return map[k] || 'cat-ai';
 }
 
 function fallbackGradient(category) {
   const k = catKey(category);
   const map = {
-    brand   : 'linear-gradient(135deg,#140C02,#2A1605)',
-    campaign: 'linear-gradient(135deg,#160600,#2A0E00)',
-    doc     : 'linear-gradient(135deg,#02100A,#052018)',
-    social  : 'linear-gradient(135deg,#060214,#0E0528)',
-    corp    : 'linear-gradient(135deg,#080808,#141414)',
-    ai      : 'linear-gradient(135deg,#040F1A,#0A2030)'
+    brand     : 'linear-gradient(135deg,#140C02,#2A1605)',
+    campaign  : 'linear-gradient(135deg,#160600,#2A0E00)',
+    doc       : 'linear-gradient(135deg,#02100A,#052018)',
+    social    : 'linear-gradient(135deg,#060214,#0E0528)',
+    corp      : 'linear-gradient(135deg,#080808,#141414)',
+    music     : 'linear-gradient(135deg,#0A0018,#1A0040)',
+    micro     : 'linear-gradient(135deg,#001018,#002A3A)',
+    commercial: 'linear-gradient(135deg,#0F0800,#261A00)',
+    ai        : 'linear-gradient(135deg,#040F1A,#0A2030)'
   };
   return map[k] || map.ai;
 }
 
 function fallbackEmoji(category) {
   const k = catKey(category);
-  const map = { brand:'🎬', campaign:'📣', doc:'🎥', social:'📱', corp:'🏢', ai:'🤖' };
+  const map = { brand:'🎬', campaign:'📣', doc:'🎥', social:'📱', corp:'🏢', music:'🎵', micro:'🎞', commercial:'📺', ai:'🤖' };
   return map[k] || '🎬';
 }
 
@@ -945,7 +957,10 @@ function applyFilters() {
     if (sort === 'az')     return (a.dataset.title || '').localeCompare(b.dataset.title || '');
     return 0;
   });
-  visCards.forEach(c => grid.insertBefore(c, noRes));
+  visCards.forEach((c, i) => {
+    c.dataset.span = IS_LIST_VIEW ? 1 : getMosaicSpan(i);
+    grid.insertBefore(c, noRes);
+  });
 
   noRes.style.display = visible === 0 ? 'block' : 'none';
   document.getElementById('rcNum').textContent = visible;
