@@ -559,20 +559,16 @@ a:hover { opacity:.75; }
 @media(max-width:768px) {
   .project-hero,.page-section,.project-nav-section { padding:60px 28px; }
   .logistics-grid,.services-grid,.testimonials-grid { grid-template-columns:1fr; }
-  .metrics-detail-grid,.metrics-top { grid-template-columns:1fr; }
-  .playlist-grid { grid-template-columns:1fr; }
+  .metrics-detail-grid,.metrics-top { grid-template-columns:1fr 1fr; }
+  .playlist-grid { grid-template-columns:repeat(2,1fr); }
   .mosaic-grid { grid-template-columns:1fr 1fr; }
   .mi-1,.mi-2,.mi-3,.mi-4,.mi-5,.mi-6,.mi-7,.mi-8 { grid-column:auto; grid-row:auto; min-height:160px; }
   .project-nav-grid { grid-template-columns:1fr 1fr; }
   .nav-card.all-projects { grid-column:1/-1; order:3; }
-  .budget-sidebar-card { position:static; width:100%; min-width:0; overflow:hidden; }
-  .bsc-total { font-size:clamp(22px,5vw,42px); word-break:break-word; }
-  .bsc-efficiency { word-break:break-word; overflow-wrap:break-word; }
-  .bsc-source { word-break:break-word; overflow-wrap:break-word; white-space:normal; }
-  .ch-name { width:70px; font-size:12px; }
-  .ch-val { width:36px; font-size:10px; }
-  .delivery-spec { display:none; }
-  .metrics-detail-card { padding:20px 16px; overflow:hidden; }
+  .budget-table { font-size: 12px; }
+  .budget-table td.phase-cell { display: none; }  /* hide phase column on mobile */
+  .budget-table td.amount { white-space: normal; font-size: 15px; }
+  .budget-table thead th:first-child { display: none; }
 }
 @media(max-width:480px) {
   .playlist-grid { grid-template-columns:1fr; }
