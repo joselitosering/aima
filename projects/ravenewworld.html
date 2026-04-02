@@ -553,7 +553,7 @@ a:hover { opacity:.75; }
   .logistics-grid,.services-grid,.testimonials-grid { grid-template-columns:1fr 1fr; }
   .metrics-top { grid-template-columns:1fr 1fr; }
   .budget-layout { grid-template-columns:1fr; }
-  .budget-sidebar-card { position:static; width:100%; }
+  .budget-sidebar-card { position:static; width:100%; max-width:100%; overflow:hidden; }
   .playlist-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media(max-width:768px) {
@@ -572,6 +572,8 @@ a:hover { opacity:.75; }
   .budget-table thead th:first-child { display: none; }
   .budget-sidebar-card { min-width:0; overflow:hidden; }
   .bsc-total { font-size:clamp(22px,5vw,42px); word-break:break-word; }
+  .bsc-efficiency { overflow:hidden; max-width:100%; }
+  .bsc-source { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }
 }
 @media(max-width:480px) {
   .playlist-grid { grid-template-columns:1fr; }
