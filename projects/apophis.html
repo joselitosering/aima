@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -243,6 +244,7 @@ a:hover { opacity:.75; }
 .mi-3{grid-column:10/13;grid-row:1/2;min-height:160px;} .mi-4{grid-column:7/10;grid-row:2/3;min-height:160px;}
 .mi-5{grid-column:10/13;grid-row:2/3;min-height:160px;} .mi-6{grid-column:1/5;grid-row:3/4;min-height:200px;}
 .mi-7{grid-column:5/9;grid-row:3/4;min-height:200px;} .mi-8{grid-column:9/13;grid-row:3/4;min-height:200px;}
+.mosaic-item.mi-extra{grid-column:span 4;min-height:200px;}
 .mosaic-meta { display:flex; align-items:center; justify-content:space-between; margin-top:16px; flex-wrap:wrap; gap:12px; }
 .mosaic-count { font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:var(--mm-muted); }
 .mosaic-view-btn { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--mm-cyan); border:1px solid rgba(0,217,245,.28); border-radius:var(--radius); padding:9px 20px; transition:background .18s; cursor:pointer; background:transparent; }
@@ -1182,9 +1184,10 @@ function populateGallery(items) {
   if (!grid) return;
   const cssClasses = ['mi-1','mi-2','mi-3','mi-4','mi-5','mi-6','mi-7','mi-8'];
   const filtered = items.filter(item => item.image_url && item.image_url.trim() !== '');
-  grid.innerHTML = filtered.slice(0,8).map((item, i) => {
-    const cls = cssClasses[i] || '';
-    return `<div class="mosaic-item ${cls} fade-in">
+  grid.innerHTML = filtered.map((item, i) => {
+    const cls     = cssClasses[i] || 'mi-extra';
+    const hidden  = i >= 8 ? ' style="display:none"' : '';
+    return `<div class="mosaic-item ${cls} fade-in" data-idx="${i}"${hidden}>
       <img src="${safe(safeImageUrl(item.image_url))}" alt="${safe(item.alt_text||item.caption)}" loading="lazy"/>
       <div class="mosaic-caption-overlay"><span>${safe(item.caption||'')}</span></div>
     </div>`;
