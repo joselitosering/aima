@@ -375,7 +375,7 @@ a:hover { opacity:.75; }
 .budget-bar-fill.orange { background:linear-gradient(90deg,var(--mm-orange),var(--mm-gold)); }
 .budget-sidebar-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:28px; top:24px; }
 .bsc-label { font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--mm-muted); margin-bottom:8px; }
-.bsc-total { font-family:'Anton',sans-serif; font-size:42px; color:var(--mm-gold-lt); letter-spacing:.02em; line-height:1; margin-bottom:6px; }
+.bsc-total { font-family:'Anton',sans-serif; font-size:clamp(22px,5vw,42px); color:var(--mm-gold-lt); letter-spacing:.02em; line-height:1; margin-bottom:6px; }
 .bsc-note { font-size:12px; color:var(--mm-muted); margin-bottom:24px; }
 .bsc-divider { border:none; border-top:1px solid var(--border2); margin:20px 0; }
 .bsc-row { display:flex; justify-content:space-between; font-size:13px; color:var(--mm-muted); margin-bottom:10px; }
@@ -551,7 +551,7 @@ a:hover { opacity:.75; }
   .logistics-grid,.services-grid,.testimonials-grid { grid-template-columns:1fr 1fr; }
   .metrics-top { grid-template-columns:1fr 1fr; }
   .budget-layout { grid-template-columns:1fr; }
-  .budget-sidebar-card { width:100%; box-sizing:border-box; }
+  .budget-sidebar-card { padding:20px; }
   .playlist-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media(max-width:768px) {
@@ -1140,8 +1140,9 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
             </tr>
           </tbody>
         </table>
+       </div>
      </div>
-      <div class="budget-sidebar-card fade-in delay-3" style="width:100%;box-sizing:border-box;">
+      <div class="budget-sidebar-card fade-in delay-3";">
         <div class="bsc-label">Total Recording Investment</div>
         <div class="bsc-total" id="bsc-total">$22,950</div>
         <div class="bsc-note">USD · All-in · No hidden fees</div>
