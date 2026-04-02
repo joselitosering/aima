@@ -550,7 +550,7 @@ a:hover { opacity:.75; }
   .logistics-grid,.services-grid,.testimonials-grid { grid-template-columns:1fr 1fr; }
   .metrics-top { grid-template-columns:1fr 1fr; }
   .budget-layout { grid-template-columns:1fr; }
-  .budget-sidebar-card { position:static; }
+  .budget-sidebar-card { position:static; wiidth: 100%; box-sizing: border-box; }
   .playlist-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media(max-width:768px) {
@@ -572,6 +572,7 @@ a:hover { opacity:.75; }
   .project-nav-grid { grid-template-columns:1fr; }
   .nav-card.next { text-align:left; }
 }
+
 
 /* ══ NAV (v10 blueprint) ══════════════════════════════════════ */
 #nav{
