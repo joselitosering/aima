@@ -473,11 +473,15 @@ a:hover { opacity:.75; }
   .logistics-grid,.services-grid,.testimonials-grid { grid-template-columns:1fr; }
   .metrics-top { grid-template-columns:1fr 1fr; }
   .metrics-detail-grid { grid-template-columns:1fr; }
-  .bts-grid { grid-template-columns:repeat(2,1fr); }
+  .playlist-grid { grid-template-columns:repeat(2,1fr); }
   .mosaic-grid { grid-template-columns:1fr 1fr; }
   .mi-1,.mi-2,.mi-3,.mi-4,.mi-5,.mi-6,.mi-7,.mi-8 { grid-column:auto; grid-row:auto; min-height:160px; }
   .project-nav-grid { grid-template-columns:1fr 1fr; }
   .nav-card.all-projects { grid-column:1/-1; order:3; }
+  .budget-table { font-size: 12px; }
+  .budget-table td.phase-cell { display: none; }  /* hide phase column on mobile */
+  .budget-table td.amount { white-space: normal; font-size: 15px; }
+  .budget-table thead th:first-child { display: none; }
   .budget-table .total-row { display:none; }
   .budget-sidebar-card { width:100%; max-width:100%; box-sizing:border-box; overflow:hidden; }
 }
