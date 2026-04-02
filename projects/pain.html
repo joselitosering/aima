@@ -12,34 +12,34 @@
      ═══════════════════════════════════════════════════════════════ -->
 
 <!-- Standard OG tags — read as fallback by all scrapers -->
-<meta property="og:title"       content="A Lesson In Pain: A Memoir"/>
-<meta property="og:description" content="A Poem Written After A Major Defeat"/>
+<meta property="og:title"       content="VoltX: Sabong Federation"/>
+<meta property="og:description" content="A Sparring Club for FMA Practitioners in the SF Bay Area"/>
 <meta property="og:image"       content=""/>
 <meta property="og:type"        content="website"/>
 
 <!-- AIMA-specific gallery metadata -->
-<meta name="aima:project_id"    content="002"/>
-<meta name="aima:client"        content="In-House"/>
-<meta name="aima:category"      content="Micro Film"/>
+<meta name="aima:project_id"    content="004"/>
+<meta name="aima:client"        content="Sabong Federation"/>
+<meta name="aima:category"      content="Commercial"/>
 <!-- category options: Brand Film · Ad Campaign · Documentary · Social Content · Corporate Explainer -->
 
-<meta name="aima:tools"         content="Kling AI, ElevenLabs, Suno, MidJourney"/>
+<meta name="aima:tools"         content="Kling AI, Higgsfield, Suno, MidJourney"/>
 <!-- comma-separated — these become the tool tags on the gallery card -->
 
-<meta name="aima:date"          content="2026-01-25"/>
+<meta name="aima:date"          content="2026-02-14"/>
 <!-- YYYY-MM-DD format -->
 
 <meta name="aima:status"        content="Live"/>
 <!-- options: Live · In Production · Draft -->
 
-<meta name="aima:deliverables"  content="12 Assets"/>
+<meta name="aima:deliverables"  content="10 Assets"/>
 <!-- shown in card footer, e.g. "12 Assets" or "Hero Film + 4 Cut-downs" -->
 
-<meta name="aima:duration"      content="21 Days"/>
+<meta name="aima:duration"      content="4 Days"/>
 <!-- production window shown next to date -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>A Lesson In Pain: A Memoir</title>
+<title>VoltX: Sabong Federation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
@@ -52,7 +52,7 @@
      3. Paste the Web App URL below
      ══════════════════════════════════════════════════════════ -->
 <script>
-const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbyAvigzxHvCfyY6PVgQO5t0umqKpnZu3D_f4ahFr3RrOQvBeveWnU7AQW4M1bDJlPz5bA/exec';
+const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbyV1-eg0oP27oqoXzZQgg6LSQxwvOId7IYydDx4FwVsNedV-BafHG8vXcgliDloS0CQSg/exec';
 
 const AGENCY_RATE_BENCHMARKS = {
   label:  'Major Media Agency (WPP / Omnicom / Publicis benchmark)',
@@ -790,9 +790,9 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 <section class="page-section surface" id="video">
   <div class="section-inner">
     <span class="section-label fade-in">01 — Primary Deliverable</span>
-    <h2 class="section-title fade-in delay-1">Watch the <span class="c">Final Film</span></h2>
+    <h2 class="section-title fade-in delay-1">Watch the <span class="c">Final Video</span></h2>
     <div class="rule fade-in delay-1"></div>
-    <p class="section-desc fade-in delay-2">The primary deliverable.</p>
+    <p class="section-desc fade-in delay-2">The primary deliverable. </p>
     <div class="video-embed-block fade-in delay-2">
       <div class="video-embed-wrapper" id="primary-video-wrapper">
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:var(--surface3);">
@@ -846,7 +846,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
     <span class="section-label fade-in">03 — Visual Gallery</span>
     <h2 class="section-title fade-in delay-1">Production <span class="c">Stills</span></h2>
     <div class="rule fade-in delay-1"></div>
-    <p class="section-desc fade-in delay-2">Storyboard, Shotlists, Ideation.</p>
+    <p class="section-desc fade-in delay-2">Images, mood boards, and ideation designs</p>
     <div class="mosaic-grid fade-in delay-2" id="gallery-grid"></div>
     <div class="mosaic-meta fade-in">
       <span class="mosaic-count" id="gallery-count">Loading gallery…</span>
@@ -985,7 +985,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
     <span class="section-label fade-in">08 — Client Voices</span>
     <h2 class="section-title fade-in delay-1">What Clients <span class="c">Say</span></h2>
     <div class="rule fade-in delay-1"></div>
-    <p class="section-desc fade-in delay-2">Testimonials.</p>
+    <p class="section-desc fade-in delay-2">Testimonials entered in TESTIMONIALS tab. Leave quote blank to show placeholder card.</p>
     <div class="testimonials-grid" id="testimonials-grid"></div>
   </div>
 </section>
@@ -1008,17 +1008,17 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
       </a>
 
       <!-- All projects -->
-      <a href="https://joselitosering.github.io/aima/gallery.html" class="nav-card all-projects">
+      <a href="https://joselitosering.github.io/aima/index.html#work" class="nav-card all-projects">
         <span class="nav-card-icon">⊞</span>
         <div class="nav-card-label">All Projects</div>
         <div class="nav-card-title">Browse the Portfolio</div>
       </a>
 
       <!-- Next project — hidden until sheet provides URL -->
-      <a id="proj-next-card" href="https://joselitosering.github.io/aima/projects/apophis.html" class="nav-card next hidden">
+      <a id="proj-next-card" href="#" class="nav-card next hidden">
         <span class="nav-card-icon">→</span>
         <div class="nav-card-label">Next Project</div>
-        <div class="nav-card-title" id="proj-next-title">Apophis: The Movie</div>
+        <div class="nav-card-title" id="proj-next-title">Next Project</div>
       </a>
 
     </div>
