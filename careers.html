@@ -81,9 +81,10 @@ button{cursor:pointer;font-family:inherit}
 .divider{width:44px;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);margin:18px 0 28px}
 .sec-header{margin-bottom:56px}
 .sec-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
-.fi{opacity:1;transform:none}
-.fi-l{opacity:1;transform:none}
-.fi-r{opacity:1;transform:none}
+.fi { opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
+.fi-l { opacity:0; transform:translateX(-20px); transition:opacity .6s ease, transform .6s ease; }
+.fi-r { opacity:0; transform:translateX(20px); transition:opacity .6s ease, transform .6s ease; }
+.fi.vis, .fi-l.vis, .fi-r.vis { opacity:1; transform:none; }
 
 .btn-fill{font-size:12px;letter-spacing:.11em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:14px 30px;border-radius:var(--radius);transition:box-shadow .25s,opacity .2s;display:inline-block}
 .btn-fill:hover{box-shadow:0 0 30px var(--glow-c);opacity:.9}
@@ -91,7 +92,8 @@ button{cursor:pointer;font-family:inherit}
 .btn-outline:hover{border-color:var(--cyan);color:var(--cyan)}
 
 /* ── NAV ── */
-#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;background:rgba(6,8,16,.60);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,217,245,0.10)}
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;background:rgba(6,8,16,.60);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,217,245,0.10);transition:background .3s}
+#nav.scrolled{background:rgba(6,8,16,.92)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%}
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.05em;text-transform:uppercase;color:#fff;white-space:nowrap}
 .nav-logo .pulse{width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:pulse 2.2s ease-in-out infinite}
@@ -196,7 +198,8 @@ button{cursor:pointer;font-family:inherit}
 
 /* ── EP FAQ (homepage v12.5 accordion pattern) ── */
 #ep-faq{padding:100px 0;background:var(--surface)}
-.ep-faq-grid{display:flex;flex-direction:column;gap:8px;margin-top:40px}
+.ep-faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:40px}
+@media(max-width:700px){.ep-faq-grid{grid-template-columns:1fr}}
 .ep-faq-item{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;overflow:hidden}
 .ep-faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;cursor:pointer;transition:background .2s;gap:16px}
 .ep-faq-q:hover{background:rgba(0,217,245,.03)}
@@ -269,7 +272,9 @@ button{cursor:pointer;font-family:inherit}
 #toc-sidebar {
   position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
   z-index: 150; width: 200px;
+  opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
 }
+#toc-sidebar.visible { opacity: 1; visibility: visible; }
 .toc-panel {
   background: var(--surface2); border: 1px solid var(--border2);
   border-radius: 8px; padding: 16px;
@@ -290,8 +295,9 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:1300px){ #toc-sidebar { display: none; } }
 
 /* ── SHARE SIDEBAR ── */
-#share-sidebar{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:8px}
-@media(max-width:1100px){#share-sidebar{display:none}}
+#share-sidebar{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:8px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+#share-sidebar.visible{opacity:1;visibility:visible}
+@media(max-width:1280px){#share-sidebar{display:none}}
 .share-fab{width:36px;height:36px;border-radius:50%;background:var(--surface2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,box-shadow .2s;text-decoration:none;color:var(--muted)}
 .share-fab:hover{border-color:var(--cyan);box-shadow:0 0 12px var(--glow-c);color:var(--cyan)}
 .share-fab svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -1098,40 +1104,51 @@ function scrollTo(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ── FADE-IN OBSERVER ── */
-// Force-show all fi elements if observer doesn't fire within 800ms
-const fiEls = document.querySelectorAll('.fi, .fi-l, .fi-r');
-const safetyTimer = setTimeout(() => fiEls.forEach(el => el.classList.add('vis')), 800);
-
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
+/* ── FADE-IN OBSERVER (projects-template-v12 pattern) ── */
+var _obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
     if (e.isIntersecting) {
-      clearTimeout(safetyTimer);
-      const siblings = [...e.target.parentElement.children].filter(c => c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r'));
-      setTimeout(() => e.target.classList.add('vis'), siblings.indexOf(e.target) * 70);
-      obs.unobserve(e.target);
+      var siblings = Array.from(e.target.parentElement.children).filter(function(c) {
+        return c.classList.contains('fi') || c.classList.contains('fi-l') || c.classList.contains('fi-r');
+      });
+      var idx = siblings.indexOf(e.target);
+      setTimeout(function() { e.target.classList.add('vis'); }, idx * 70);
+      _obs.unobserve(e.target);
     }
   });
-}, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
-fiEls.forEach(el => obs.observe(el));
+}, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.fi, .fi-l, .fi-r').forEach(function(el) { _obs.observe(el); });
 
-// TOC always visible on desktop — no scroll toggle needed
+/* ── NAV SCROLL STATE ── */
+var _nav = document.getElementById('nav');
+function updateNav() { if (_nav) _nav.classList.toggle('scrolled', window.scrollY > 60); }
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
 
-// ── TOC ACTIVE LINK ──
+/* ── SHARE + TOC FADE ON SCROLL ── */
+var _shareSidebar = document.getElementById('share-sidebar');
+var _tocSidebar   = document.getElementById('toc-sidebar');
+window.addEventListener('scroll', function() {
+  var show = window.scrollY > 300;
+  if (_shareSidebar) _shareSidebar.classList.toggle('visible', show);
+  if (_tocSidebar)   _tocSidebar.classList.toggle('visible', show);
+}, { passive: true });
+
+/* ── TOC ACTIVE LINK ── */
 var _tocLinks = document.querySelectorAll('.toc-link');
 var _tocSections = [];
-_tocLinks.forEach(function (a) {
+_tocLinks.forEach(function(a) {
   var href = a.getAttribute('href');
   if (href && href.startsWith('#')) _tocSections.push(href.substring(1));
 });
-window.addEventListener('scroll', function () {
+window.addEventListener('scroll', function() {
   var scrollPos = window.scrollY + 120;
   var current = '';
-  _tocSections.forEach(function (id) {
+  _tocSections.forEach(function(id) {
     var el = document.getElementById(id);
     if (el && el.offsetTop <= scrollPos) current = id;
   });
-  _tocLinks.forEach(function (a) {
+  _tocLinks.forEach(function(a) {
     a.classList.toggle('active', a.getAttribute('href') === '#' + current);
   });
 }, { passive: true });
