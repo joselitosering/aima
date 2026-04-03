@@ -69,7 +69,7 @@ button{cursor:pointer;font-family:inherit}
 
 /* ── SHARED UTILITY ── */
 .container{max-width:1180px;margin:0 auto;padding:0 32px}
-.container.narrow{max-width:860px}
+
 .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);border:1px solid var(--border);border-radius:2px;padding:4px 10px;margin-bottom:16px}
 .section-title{font-family:'Anton',sans-serif;font-size:clamp(36px,5.5vw,68px);line-height:.94;letter-spacing:.01em;text-transform:uppercase;color:#fff}
 .section-title .c{color:var(--cyan)}
@@ -457,7 +457,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
      ABOUT THE PROGRAM
 ══════════════════════════════════════════════ -->
 <section id="ep-overview">
-  <div class="container narrow">
+  <div class="container">
     <div class="overview-grid">
       <div class="fi-l">
         <div class="tag">About the Program</div>
@@ -507,7 +507,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
      EARNING TIERS
 ══════════════════════════════════════════════ -->
 <section id="ep-tiers">
-  <div class="container narrow">
+  <div class="container">
     <div class="sec-header fi">
       <div class="tag">Earning Structure</div>
       <h2 class="section-title">Three Tiers.<br/><span class="c">Unlimited</span> Growth.</h2>
@@ -596,7 +596,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
      HOW IT WORKS
 ══════════════════════════════════════════════ -->
 <section id="ep-how">
-  <div class="container narrow">
+  <div class="container">
     <div class="sec-header fi">
       <div class="tag">How It Works</div>
       <h2 class="section-title">Five Steps to Your<br/><span class="o">First</span> <span class="c">Royalty.</span></h2>
@@ -649,7 +649,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
      CONTENT POLICY
 ══════════════════════════════════════════════ -->
 <section id="ep-policy">
-  <div class="container narrow">
+  <div class="container">
     <div class="sec-header fi">
       <div class="tag">Content Policy</div>
       <h2 class="section-title">Free Speech.<br/><span class="c">Responsible</span> <span class="o">Production.</span></h2>
@@ -686,7 +686,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
      FAQ
 ══════════════════════════════════════════════ -->
 <section id="ep-faq">
-  <div class="container narrow">
+  <div class="container">
     <div class="sec-header">
       <div class="tag">Frequently Asked Questions</div>
       <h2 class="section-title">Every Question.<br/><span class="c">Answered.</span></h2>
@@ -783,7 +783,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
      APPLICATION FORM
 ══════════════════════════════════════════════ -->
 <section id="ep-apply">
-  <div class="container narrow">
+  <div class="container">
     <div class="apply-wrap">
 
       <!-- INFO COLUMN -->
@@ -956,7 +956,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
      REFERENCES & GLOSSARY
 ══════════════════════════════════════════════ -->
 <section id="ep-refs">
-  <div class="container narrow">
+  <div class="container">
 
     <div class="sec-header fi" style="margin-bottom:40px">
       <div class="tag">Sources</div>
@@ -1050,7 +1050,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
         </div>
         <div class="fb-sub">AI Media Agency</div>
         <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
-        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <button class="back-to-top" onclick="document.getElementById('ep-hero').scrollIntoView({behavior:'smooth'})">
           <span>↑</span> Back to Top
         </button>
       </div>
@@ -1073,7 +1073,7 @@ footer{background:#030508;border-top:1px solid var(--border);padding:56px 0 28px
           <li><a href="index.html#work">Portfolio</a></li>
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="insights.html">Insights</a></li>
-          <li><a href="careers.html">Careers</a></li>
+          <li><a href="careers.html" style="color:var(--cyan)">EP Program</a></li>
         </ul>
       </div>
       <div>
