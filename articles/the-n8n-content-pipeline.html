@@ -419,6 +419,16 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 /* ══ ARTICLE LISTS ═════════════════════════════════════ */
 .article-content ul { margin: 0 0 24px 24px; display: flex; flex-direction: column; gap: 10px; color: var(--text); font-size: 16px; line-height: 1.75; }
 .article-content li { padding-left: 4px; }
+
+/* ══ FADE-IN MOBILE SAFETY ════════════════════════════════
+   Prevents content from staying invisible if IntersectionObserver
+   does not fire on mobile browsers or low-power mode.          */
+@media (max-width: 768px) {
+  .fade-in { opacity: 1 !important; transform: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
 </style>
 </head>
 <body>
@@ -1219,6 +1229,15 @@ if (_btt) _btt.addEventListener('click', function () { window.scrollTo({ top: 0,
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(function (el) { obs.observe(el); });
 })();
+
+// ══ FADE-IN TIMEOUT FALLBACK ═════════════════════════════════
+// Forces all fade-in elements visible after 800ms as a safety net
+// for mobile browsers where IntersectionObserver may not fire.
+setTimeout(function () {
+  document.querySelectorAll('.fade-in').forEach(function (el) {
+    el.classList.add('visible');
+  });
+}, 800);
 </script>
 
 </body>
