@@ -14,7 +14,7 @@
 <meta name="article:publish-date" content="2026-04-20"/>
 <meta name="article:read-time"    content="18"/>
 <meta name="article:category"     content="AI &amp; Society"/>
-<meta name="article:header-image" content="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1920&q=80"/>
+<meta name="article:header-image" content="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&q=80"/>
 
 <!-- Prev / Next article — set to empty string to hide the card -->
 <meta name="article:prev-url"   content="https://joselitosering.github.io/aima/articles/boycott-or-bigotry.html"/>
@@ -225,6 +225,23 @@ a:hover { opacity: 0.8; }
 .toc-link:hover { color: var(--cyan); border-left-color: var(--cyan); padding-left: 14px; opacity: 1; }
 .toc-link.active { color: var(--cyan); border-left-color: var(--cyan); padding-left: 14px; }
 @media(max-width:1400px){ #toc-sidebar { display: none; } }
+
+/* ══ STAT CARDS ══════════════════════════════════════════ */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 28px 0; }
+@media(max-width:700px){ .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:400px){ .stat-grid { grid-template-columns: 1fr; } }
+.stat-card {
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: 8px; padding: 24px 16px; text-align: center;
+}
+.stat-number {
+  font-family: 'Anton', sans-serif; font-size: 38px;
+  color: var(--cyan); line-height: 1; letter-spacing: .02em;
+}
+.stat-number.orange { color: var(--orange); }
+.stat-number.gold   { color: var(--gold); }
+.stat-number.green  { color: var(--green); }
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
 
 /* ══ ARTICLE LAYOUT ═════════════════════════════════════ */
 .article-wrapper { min-height: 100vh; background: var(--bg); }
