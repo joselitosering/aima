@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AIMA — Agency Brochure · Print Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════════════
+   SCREEN PREVIEW UI
+═══════════════════════════════════════════════ */
+:root {
+  --ink:     #060810;
+  --ink2:    #2A2A2A;
+  --ink3:    #555;
+  --muted:   #888;
+  --rule:    #D0D0D0;
+  --rule2:   #E8E8E8;
+  --accent:  #00D9F5;
+  --accent2: #00A8C0;
+  --gold:    #9A7A1A;
+  --bg-page: #FFFFFF;
+  --cover-bg:#060810;
+  --ui-bg:   #1A1A1A;
+  --page-w:  8.5in;
+  --page-h:  11in;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'DM Sans', sans-serif; background: var(--ui-bg); min-height: 100vh; }
+
+/* ── TOOLBAR ── */
+#toolbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: #111; border-bottom: 1px solid #2a2a2a;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 56px;
+}
+.tb-brand { font-family: 'Anton', sans-serif; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: #fff; }
+.tb-brand span { color: var(--accent); }
+.tb-info { font-size: 12px; color: #666; font-family: 'Courier Prime', monospace; letter-spacing: .06em; }
+.tb-right { display: flex; align-items: center; gap: 12px; }
+.tb-btn {
+  font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  padding: 8px 20px; border-radius: 4px; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif;
+  transition: opacity .2s;
+}
+.tb-btn:hover { opacity: .85; }
+.btn-print { background: var(--accent); color: #060810; }
+.btn-outline { background: transparent; border: 1px solid #333; color: #aaa; }
+
+/* ── PAGE GALLERY ── */
+#gallery {
+  padding: 80px 40px 60px;
+  display: flex; flex-direction: column; align-items: center; gap: 32px;
+}
+.page-label {
+  font-family: 'Courier Prime', monospace; font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase; color: #444;
+  margin-bottom: -20px; align-self: flex-start;
+  margin-left: calc(50% - var(--page-w)/2 * 0.62);
+}
+@media (max-width: 680px) { .page-label { margin-left: 0; } }
+
+/* ── PAGE SHELL ── */
+.page {
+  width: var(--page-w);
+  min-height: var(--page-h);
+  background: var(--bg-page);
+  box-shadow: 0 8px 48px rgba(0,0,0,.6), 0 2px 8px rgba(0,0,0,.4);
+  position: relative; overflow: hidden;
+  transform: scale(0.62); transform-origin: top center;
+  margin: calc((var(--page-h) * 0.62 - var(--page-h)) / 2) auto;
+}
+@media (max-width: 680px) {
+  .page { transform: scale(0.44); margin: calc((var(--page-h)*0.44 - var(--page-h))/2) auto; }
+}
+
+/* ── COMMON PAGE ELEMENTS ── */
+.page-inner { padding: 0.65in 0.75in; height: var(--page-h); display: flex; flex-direction: column; overflow: hidden; }
+.page-inner-full { padding: 0; height: var(--page-h); display: flex; flex-direction: column; overflow: hidden; }
+
+/* Running header / footer */
+.run-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 0.5pt solid var(--rule); padding-bottom: 6pt; margin-bottom: 18pt;
+}
+.run-footer {
+  margin-top: auto; padding-top: 8pt;
+  border-top: 0.5pt solid var(--rule);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.run-brand { font-family: 'Anton', sans-serif; font-size: 9pt; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.run-brand span { color: var(--accent); }
+.run-chapter { font-family: 'Courier Prime', monospace; font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.run-page { font-family: 'Courier Prime', monospace; font-size: 8pt; color: var(--muted); }
+.run-date { font-family: 'Courier Prime', monospace; font-size: 8pt; color: var(--muted); }
+
+/* Typography scale */
+.t-display {
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase; letter-spacing: .02em; color: var(--ink); line-height: .92;
+}
+.t-h1 { font-family: 'Anton', sans-serif; font-size: 36pt; text-transform: uppercase; letter-spacing: .03em; color: var(--ink); line-height: .94; }
+.t-h2 { font-family: 'Anton', sans-serif; font-size: 22pt; text-transform: uppercase; letter-spacing: .03em; color: var(--ink); line-height: .95; margin-bottom: 8pt; }
+.t-h3 { font-family: 'Anton', sans-serif; font-size: 13pt; text-transform: uppercase; letter-spacing: .04em; color: var(--ink); margin-bottom: 5pt; }
+.t-h4 { font-family: 'Courier Prime', monospace; font-size: 8pt; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: 3pt; }
+.t-body { font-family: 'DM Sans', sans-serif; font-size: 9pt; color: var(--ink2); line-height: 1.65; }
+.t-body-sm { font-family: 'DM Sans', sans-serif; font-size: 8pt; color: var(--ink3); line-height: 1.6; }
+.t-serif { font-family: 'Playfair Display', serif; font-style: italic; font-size: 11pt; color: var(--ink2); line-height: 1.6; }
+.t-mono { font-family: 'Courier Prime', monospace; font-size: 8pt; color: var(--muted); letter-spacing: .06em; }
+.t-accent { color: var(--accent); }
+.t-gold { color: var(--gold); }
+.t-rule { color: var(--muted); }
+.strong { font-weight: 600; color: var(--ink); }
+
+/* Layout helpers */
+.col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22pt; }
+.col-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16pt; }
+.col-2-3 { display: grid; grid-template-columns: 2fr 3fr; gap: 24pt; }
+.col-3-2 { display: grid; grid-template-columns: 3fr 2fr; gap: 24pt; }
+.mt4 { margin-top: 4pt; } .mt8 { margin-top: 8pt; } .mt12 { margin-top: 12pt; }
+.mt16 { margin-top: 16pt; } .mt20 { margin-top: 20pt; } .mt24 { margin-top: 24pt; }
+.mb4 { margin-bottom: 4pt; } .mb8 { margin-bottom: 8pt; } .mb12 { margin-bottom: 12pt; }
+
+/* Rule line */
+.rule { border: none; border-top: 0.5pt solid var(--rule); margin: 10pt 0; }
+.rule-heavy { border: none; border-top: 1.5pt solid var(--ink); margin: 10pt 0; }
+.rule-accent { border: none; border-top: 2pt solid var(--accent); margin: 8pt 0 12pt; }
+
+/* Tags / chips */
+.chip {
+  display: inline-block; font-family: 'Courier Prime', monospace;
+  font-size: 7pt; letter-spacing: .12em; text-transform: uppercase;
+  border: 0.5pt solid var(--rule); padding: 2pt 6pt; color: var(--muted);
+}
+.chip-accent { border-color: var(--accent); color: var(--accent); }
+.chip-dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* Stat display */
+.stat-block { display: flex; flex-direction: column; gap: 0; }
+.stat-num { font-family: 'Anton', sans-serif; font-size: 28pt; color: var(--ink); line-height: 1; }
+.stat-num .sup { font-size: 14pt; color: var(--accent); }
+.stat-lbl { font-family: 'Courier Prime', monospace; font-size: 7.5pt; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-top: 2pt; }
+
+/* Accent bar (left border) */
+.accent-bar { border-left: 2.5pt solid var(--accent); padding-left: 10pt; }
+.gold-bar   { border-left: 2.5pt solid var(--gold);   padding-left: 10pt; }
+
+/* Bullet list */
+ul.blt { list-style: none; padding: 0; }
+ul.blt li { font-size: 8.5pt; color: var(--ink2); line-height: 1.6; padding: 2.5pt 0; display: flex; gap: 7pt; }
+ul.blt li::before { content: '—'; color: var(--accent); flex-shrink: 0; font-weight: 700; }
+
+/* Table */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  font-family: 'Courier Prime', monospace; font-size: 7.5pt; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted); text-align: left;
+  border-bottom: 1pt solid var(--ink); padding: 4pt 6pt 4pt 0;
+}
+.data-table td {
+  font-size: 8.5pt; color: var(--ink2); padding: 5pt 6pt 5pt 0;
+  border-bottom: 0.5pt solid var(--rule2); vertical-align: top;
+}
+.data-table td.num { font-family: 'Anton', sans-serif; font-size: 10pt; color: var(--ink); }
+.data-table td.accent { color: var(--accent); font-weight: 600; }
+.data-table td.muted { color: var(--muted); font-family: 'Courier Prime', monospace; font-size: 7.5pt; }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* Chapter opener accent */
+.chap-num {
+  font-family: 'Anton', sans-serif; font-size: 72pt; line-height: 1;
+  color: rgba(0,107,255,0.07); position: absolute; top: 0.5in; right: 0.6in;
+  pointer-events: none; user-select: none;
+}
+
+/* Tier box */
+.tier-box {
+  border: 0.5pt solid var(--rule); padding: 10pt 12pt;
+  position: relative;
+}
+.tier-box.featured { border: 1.5pt solid var(--ink); }
+.tier-box .t-badge {
+  position: absolute; top: -6pt; left: 10pt;
+  background: var(--ink); color: #fff;
+  font-family: 'Courier Prime', monospace; font-size: 7pt; letter-spacing: .1em;
+  text-transform: uppercase; padding: 2pt 7pt;
+}
+.tier-box .t-price {
+  font-family: 'Anton', sans-serif; font-size: 20pt; color: var(--ink); line-height: 1;
+}
+.tier-box .t-price sup { font-size: 11pt; color: var(--accent); }
+.tier-box .t-qual { font-family: 'Courier Prime', monospace; font-size: 7pt; color: var(--muted); margin-top: 2pt; }
+
+/* Process step */
+.proc-step { display: flex; gap: 14pt; align-items: flex-start; padding: 8pt 0; border-bottom: 0.5pt solid var(--rule2); }
+.proc-step:last-child { border-bottom: none; }
+.proc-num {
+  font-family: 'Anton', sans-serif; font-size: 20pt; color: rgba(0,107,255,.15);
+  line-height: 1; flex-shrink: 0; width: 28pt; text-align: right;
+}
+.proc-body h4 { font-family: 'Anton', sans-serif; font-size: 10pt; text-transform: uppercase; letter-spacing: .04em; color: var(--ink); margin-bottom: 3pt; }
+.proc-body p { font-size: 8pt; color: var(--ink3); line-height: 1.6; }
+
+/* Cover-specific */
+.cover-bg {
+  position: absolute; inset: 0;
+  background: var(--cover-bg);
+}
+.cover-grid-lines {
+  position: absolute; inset: 0; opacity: .04;
+  background-image:
+    linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.cover-accent-bar {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 0.25in;
+  background: var(--accent);
+}
+.cover-inner {
+  position: relative; z-index: 2;
+  padding: 0.75in 0.75in 0.65in 1in;
+  height: var(--page-h); display: flex; flex-direction: column; overflow: hidden;
+}
+.cover-logo {
+  font-family: 'Anton', sans-serif; font-size: 13pt; text-transform: uppercase;
+  letter-spacing: .08em; color: rgba(255,255,255,.5);
+  display: flex; align-items: center; gap: 8pt;
+}
+.cover-logo .dot { width: 6pt; height: 6pt; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+.cover-logo span { color: var(--accent); }
+.cover-headline {
+  font-family: 'Anton', sans-serif;
+  font-size: 68pt; line-height: .88; text-transform: uppercase;
+  letter-spacing: .01em; color: #fff; margin-top: auto;
+}
+.cover-headline .c { color: var(--accent); }
+.cover-sub {
+  font-size: 11pt; color: rgba(255,255,255,.55); max-width: 4.5in;
+  line-height: 1.65; margin-top: 18pt; font-family: 'DM Sans', sans-serif;
+}
+.cover-foot {
+  margin-top: auto; padding-top: 18pt;
+  border-top: 0.5pt solid rgba(255,255,255,.12);
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.cover-foot-left { display: flex; gap: 24pt; }
+.cover-stat .n { font-family: 'Anton', sans-serif; font-size: 22pt; color: #fff; line-height: 1; }
+.cover-stat .n sup { font-size: 11pt; color: var(--accent); }
+.cover-stat .l { font-family: 'Courier Prime', monospace; font-size: 7.5pt; color: rgba(255,255,255,.4); letter-spacing: .1em; text-transform: uppercase; margin-top: 2pt; }
+.cover-edition { font-family: 'Courier Prime', monospace; font-size: 7.5pt; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.3); text-align: right; }
+
+/* TOC */
+.toc-item { display: flex; align-items: baseline; gap: 0; padding: 6pt 0; border-bottom: 0.5pt solid var(--rule2); }
+.toc-num { font-family: 'Courier Prime', monospace; font-size: 8pt; color: var(--accent); width: 24pt; flex-shrink: 0; }
+.toc-title { font-family: 'Anton', sans-serif; font-size: 12pt; text-transform: uppercase; letter-spacing: .03em; color: var(--ink); flex: 1; }
+.toc-dots { flex: 1; border-bottom: 1pt dotted var(--rule); margin: 0 8pt; position: relative; top: -3pt; }
+.toc-page { font-family: 'Courier Prime', monospace; font-size: 9pt; color: var(--muted); }
+.toc-sub { font-size: 8pt; color: var(--muted); margin-left: 24pt; margin-top: 1pt; font-family: 'DM Sans', sans-serif; }
+
+/* Back cover */
+.back-bg { position: absolute; inset: 0; background: var(--ink); }
+.back-inner { position: relative; z-index: 2; padding: 0.75in 0.75in 0.65in 1in; height: var(--page-h); display: flex; flex-direction: column; overflow: hidden; }
+.back-accent { position: absolute; right: 0; top: 0; bottom: 0; width: 0.25in; background: var(--accent); }
+
+/* ═══════════════════════════════════════════════
+   LANDSCAPE MODE — screen preview
+   Zoom-scale: 0.773 (8.5 / 11) keeps all content
+   proportional to portrait while fitting 8.5in height.
+   Width is pre-expanded so zoomed result fills page.
+═══════════════════════════════════════════════ */
+body.landscape { --page-w: 11in; --page-h: 8.5in; }
+
+body.landscape .page-inner {
+  width:  calc(var(--page-w) / 0.773);
+  height: calc(var(--page-h) / 0.773);   /* ≈ 11in — same as portrait */
+  padding: 0.65in 0.75in;                /* portrait padding — zoom shrinks it */
+  zoom: 0.773;
+}
+body.landscape .page-inner-full {
+  width:  calc(var(--page-w) / 0.773);
+  height: calc(var(--page-h) / 0.773);
+  padding: 0;
+  zoom: 0.773;
+}
+body.landscape .cover-inner {
+  width:  calc(var(--page-w) / 0.773);
+  height: calc(var(--page-h) / 0.773);
+  padding: 0.75in 0.75in 0.65in 1in;
+  zoom: 0.773;
+}
+body.landscape .back-inner {
+  width:  calc(var(--page-w) / 0.773);
+  height: calc(var(--page-h) / 0.773);
+  padding: 0.75in 0.75in 0.65in 1in;
+  zoom: 0.773;
+}
+
+/* ═══════════════════════════════════════════════
+   PRINT MEDIA
+   Portrait:  8.5 × 11   — content at native scale
+   Landscape: 11  × 8.5   — content zoom-scaled to fit
+   Printer-safe 0.25in @page margin on all sides;
+   inner padding reduced by the same to preserve
+   visible content area.
+═══════════════════════════════════════════════ */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  html, body {
+    background: #fff !important;
+    margin: 0; padding: 0;
+    font-size: 9pt;
+  }
+
+  /* Portrait (default) — printer-safe margin */
+  @page { size: 8.5in 11in; margin: 0.25in; }
+
+  #toolbar, #gallery > .page-label, #orient-note { display: none !important; }
+
+  #gallery {
+    padding: 0; gap: 0; background: #fff;
+    display: block;
+  }
+
+  .page {
+    width:  calc(var(--page-w) - 0.5in) !important;  /* account for @page margin */
+    height: calc(var(--page-h) - 0.5in) !important;
+    min-height: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    page-break-after: always;
+    break-after: page;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: avoid; break-after: avoid; }
+
+  /* Portrait inner — reduce padding to compensate for @page margin */
+  .page-inner {
+    height: calc(var(--page-h) - 0.5in) !important;
+    padding: 0.4in 0.5in !important;
+  }
+  .page-inner-full {
+    height: calc(var(--page-h) - 0.5in) !important;
+  }
+  .cover-inner {
+    height: calc(var(--page-h) - 0.5in) !important;
+    padding: 0.5in 0.5in 0.4in 0.75in !important;
+  }
+  .back-inner {
+    height: calc(var(--page-h) - 0.5in) !important;
+    padding: 0.5in 0.5in 0.4in 0.75in !important;
+  }
+
+  a { color: inherit; text-decoration: none; }
+}
+
+/* ── Landscape print overrides ── */
+@media print {
+  body.landscape {
+    --page-w: 11in;
+    --page-h: 8.5in;
+  }
+
+  body.landscape .page {
+    width:  calc(11in - 0.5in) !important;   /* 10.5in */
+    height: calc(8.5in - 0.5in) !important;  /* 8in */
+  }
+
+  body.landscape .page-inner {
+    width:  calc((11in - 0.5in) / 0.773) !important;
+    height: calc((8.5in - 0.5in) / 0.773) !important;  /* ≈ 10.35in */
+    padding: 0.4in 0.5in !important;
+    zoom: 0.773 !important;
+  }
+  body.landscape .page-inner-full {
+    width:  calc((11in - 0.5in) / 0.773) !important;
+    height: calc((8.5in - 0.5in) / 0.773) !important;
+    padding: 0 !important;
+    zoom: 0.773 !important;
+  }
+  body.landscape .cover-inner {
+    width:  calc((11in - 0.5in) / 0.773) !important;
+    height: calc((8.5in - 0.5in) / 0.773) !important;
+    padding: 0.5in 0.5in 0.4in 0.75in !important;
+    zoom: 0.773 !important;
+  }
+  body.landscape .back-inner {
+    width:  calc((11in - 0.5in) / 0.773) !important;
+    height: calc((8.5in - 0.5in) / 0.773) !important;
+    padding: 0.5in 0.5in 0.4in 0.75in !important;
+    zoom: 0.773 !important;
+  }
+}
+
+/* Landscape @page rule — added dynamically by JS */
+</style>
+</head>
+<body>
+
+<!-- ── TOOLBAR ── -->
+<div id="toolbar">
+  <div class="tb-brand">AI<span>MA</span></div>
+  <div class="tb-info">Agency Brochure · 8.5" × 11" / 11" × 8.5" · Portrait + Landscape</div>
+  <div class="tb-right">
+    <button class="tb-btn btn-outline" id="btn-orient" onclick="toggleOrientation()">⟳ Landscape</button>
+    <button class="tb-btn btn-outline" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+    <button class="tb-btn btn-print" onclick="handlePrint()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<div id="gallery">
+
+<!-- ════════════════════════════════════════════
+     PAGE 1 — COVER
+════════════════════════════════════════════ -->
+<div class="page-label">Page 1 — Cover</div>
+<div class="page">
+  <div class="cover-bg"></div>
+  <div class="cover-grid-lines"></div>
+  <div class="cover-accent-bar"></div>
+  <div class="cover-inner">
+
+    <div class="cover-logo">
+      <div class="dot"></div>
+      AI<span>MA</span>
+    </div>
+
+    <div class="cover-headline">
+      Million<br/>
+      Dollar<br/>
+      <span class="c">Quality.</span><br/>
+      Fraction<br/>
+      of the<br/>
+      Cost.
+    </div>
+
+    <p class="cover-sub">Cinema-grade video, audio, and media campaigns powered entirely by generative AI — avatar creation, voice cloning, original music, motion graphics, and automated content pipelines at 90% less than traditional studios.</p>
+
+    <div class="cover-foot">
+      <div class="cover-foot-left">
+        <div class="cover-stat">
+          <div class="n">97<sup>%</sup></div>
+          <div class="l">Cost Reduction</div>
+        </div>
+        <div class="cover-stat">
+          <div class="n">48<sup>hr</sup></div>
+          <div class="l">Avg. Turnaround</div>
+        </div>
+        <div class="cover-stat">
+          <div class="n">4<sup>K</sup></div>
+          <div class="l">Output Resolution</div>
+        </div>
+        <div class="cover-stat">
+          <div class="n">∞</div>
+          <div class="l">Scalable Iterations</div>
+        </div>
+      </div>
+      <div class="cover-edition">
+        Agency Brochure<br/>
+        2026 Edition<br/>
+        aimediaagency.com
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 2 — TABLE OF CONTENTS
+════════════════════════════════════════════ -->
+<div class="page-label">Page 2 — Table of Contents</div>
+<div class="page">
+  <div class="page-inner">
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-date">2026 Agency Brochure</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40pt;flex:1;align-items:start;">
+      <div>
+        <div class="t-h4">Contents</div>
+        <div class="rule-accent"></div>
+        <div class="t-h1" style="font-size:48pt;color:var(--ink);line-height:.9;margin-bottom:24pt;">What's<br/>Inside.</div>
+
+        <div class="t-serif mt12" style="max-width:2.8in;">
+          AIMA is an AI-native creative production studio. This brochure covers everything you need to know — our services, rates, process, and how to start a project.
+        </div>
+
+        <div style="margin-top:24pt;">
+          <div class="t-h4">Contact</div>
+          <div class="rule" style="margin:6pt 0 10pt;"></div>
+          <div class="t-body-sm" style="line-height:2;">
+            hello@aimediaagency.com<br/>
+            +1 (415) 555-0200<br/>
+            aimediaagency.com<br/>
+            San Francisco, CA · Remote Worldwide
+          </div>
+        </div>
+
+        <div style="margin-top:20pt;">
+          <div class="chip-accent chip">A Monkey Matters, LLC Production</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="toc-item">
+          <div class="toc-num">01</div>
+          <div style="flex:1;">
+            <div class="toc-title">Who We Are</div>
+            <div class="toc-sub">Studio philosophy, values, AI production stack</div>
+          </div>
+          <div class="toc-page">3</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">02</div>
+          <div style="flex:1;">
+            <div class="toc-title">Services</div>
+            <div class="toc-sub">Four production pillars + tier overview</div>
+          </div>
+          <div class="toc-page">4</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">03</div>
+          <div style="flex:1;">
+            <div class="toc-title">Pricing Packages</div>
+            <div class="toc-sub">Spark · Signal · Apex · Sovereign</div>
+          </div>
+          <div class="toc-page">5</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">04</div>
+          <div style="flex:1;">
+            <div class="toc-title">Rate Sheet — Video &amp; Audio</div>
+            <div class="toc-sub">A la carte individual service pricing</div>
+          </div>
+          <div class="toc-page">6</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">05</div>
+          <div style="flex:1;">
+            <div class="toc-title">Rate Sheet — Social, Print &amp; AI</div>
+            <div class="toc-sub">Social media, print, automation, avatar services</div>
+          </div>
+          <div class="toc-page">7</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">06</div>
+          <div style="flex:1;">
+            <div class="toc-title">Retainer Plans</div>
+            <div class="toc-sub">Monthly plans + add-on menu</div>
+          </div>
+          <div class="toc-page">8</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">07</div>
+          <div style="flex:1;">
+            <div class="toc-title">Production Process</div>
+            <div class="toc-sub">Six-step pipeline · Tools · Timelines</div>
+          </div>
+          <div class="toc-page">9</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">08</div>
+          <div style="flex:1;">
+            <div class="toc-title">Portfolio &amp; Case Studies</div>
+            <div class="toc-sub">Selected work · Results · Capabilities</div>
+          </div>
+          <div class="toc-page">10</div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">09</div>
+          <div style="flex:1;">
+            <div class="toc-title">Start a Project</div>
+            <div class="toc-sub">Intake process · FAQs · Contact</div>
+          </div>
+          <div class="toc-page">11</div>
+        </div>
+        <div class="toc-item" style="border-bottom:none;">
+          <div class="toc-num">10</div>
+          <div style="flex:1;">
+            <div class="toc-title">Legal Summary</div>
+            <div class="toc-sub">Licensing · Ownership · Guarantee</div>
+          </div>
+          <div class="toc-page">12</div>
+        </div>
+        <div class="toc-item" style="border-bottom:none;border-top:0.5pt solid var(--rule2);">
+          <div class="toc-num">11</div>
+          <div style="flex:1;">
+            <div class="toc-title">About the Author</div>
+            <div class="toc-sub">Joselito Sering · Founder &amp; Creative Director</div>
+          </div>
+          <div class="toc-page">13</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Table of Contents</div>
+      <div class="run-page">2</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 3 — CHAPTER 1: WHO WE ARE
+════════════════════════════════════════════ -->
+<div class="page-label">Page 3 — Chapter 1: Who We Are</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">01</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 01 · Who We Are</div>
+    </div>
+
+    <div class="t-h4">Chapter 01</div>
+    <div class="t-h1" style="font-size:40pt;">Who<br/>We Are.</div>
+    <div class="rule-accent"></div>
+
+    <div class="col-2" style="flex:1;align-items:start;">
+      <div>
+        <div class="t-serif accent-bar">
+          "We are storytellers first. Every project begins with a human narrative — your story, your brand's mission, your audience's deepest desire. Then we deploy the most advanced AI production stack in the world to bring that story to life."
+        </div>
+
+        <div class="mt16">
+          <p class="t-body">AIMA was built on one uncompromising conviction: <span class="strong">generative AI is not a shortcut — it is a new creative instrument.</span> Like electricity transformed music production in the 1950s, and digital technology reimagined cinema in the 1990s, AI is rewriting the laws of what's possible in creative production.</p>
+        </div>
+        <div class="mt8">
+          <p class="t-body">Founded in San Francisco by a team of martial artists, traders, producers, and technologists, AIMA sits at the intersection of <span class="strong">financial intelligence, creative excellence, and technological innovation.</span></p>
+        </div>
+        <div class="mt8">
+          <p class="t-body">Our deeper mission: make world-class creative production accessible to every visionary — and build a legacy of generational wealth and philanthropic impact through the art of storytelling.</p>
+        </div>
+
+        <div class="mt16">
+          <div class="t-h4">Our Values</div>
+          <div class="rule" style="margin:5pt 0 8pt;"></div>
+          <ul class="blt">
+            <li><span><span class="strong">Intentionality</span> — Every creative decision is deliberate.</span></li>
+            <li><span><span class="strong">Velocity</span> — Speed is a creative value, not a compromise.</span></li>
+            <li><span><span class="strong">Innovation</span> — We test every new AI tool the day it launches.</span></li>
+            <li><span><span class="strong">Transparency</span> — No hidden fees. No scope creep. No surprises.</span></li>
+            <li><span><span class="strong">Legacy</span> — We build for generational impact.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="t-h4">Our AI Production Stack</div>
+        <div class="rule" style="margin:5pt 0 10pt;"></div>
+
+        <div style="display:flex;flex-direction:column;gap:8pt;">
+          <div>
+            <div style="font-family:'Courier Prime',monospace;font-size:7pt;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:3pt;">🎬 Video Generation</div>
+            <div class="t-body-sm">Kling AI · Runway Gen-3 · Google Veo 3 · Pika Labs · LTX Studio</div>
+          </div>
+          <div class="rule" style="margin:3pt 0;"></div>
+          <div>
+            <div style="font-family:'Courier Prime',monospace;font-size:7pt;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:3pt;">🤖 Avatar &amp; Presenter</div>
+            <div class="t-body-sm">HeyGen · Synthesia · D-ID · Colossyan · ElevenLabs Video</div>
+          </div>
+          <div class="rule" style="margin:3pt 0;"></div>
+          <div>
+            <div style="font-family:'Courier Prime',monospace;font-size:7pt;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:3pt;">🗣️ Voice &amp; Audio</div>
+            <div class="t-body-sm">ElevenLabs · Kits.ai · AIVA · Suno v4 · Logic Pro X · iZotope RX</div>
+          </div>
+          <div class="rule" style="margin:3pt 0;"></div>
+          <div>
+            <div style="font-family:'Courier Prime',monospace;font-size:7pt;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:3pt;">🎨 Image &amp; Design</div>
+            <div class="t-body-sm">MidJourney v7 · Stable Diffusion XL · DALL·E 3 · Adobe Firefly</div>
+          </div>
+          <div class="rule" style="margin:3pt 0;"></div>
+          <div>
+            <div style="font-family:'Courier Prime',monospace;font-size:7pt;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:3pt;">✨ Motion Graphics</div>
+            <div class="t-body-sm">After Effects + AI · CapCut Pro · DaVinci Resolve · Jitter</div>
+          </div>
+          <div class="rule" style="margin:3pt 0;"></div>
+          <div>
+            <div style="font-family:'Courier Prime',monospace;font-size:7pt;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:3pt;">⚡ Automation</div>
+            <div class="t-body-sm">n8n · Zapier · Make.com · Google Workspace APIs · Airtable</div>
+          </div>
+          <div class="rule" style="margin:3pt 0;"></div>
+          <div>
+            <div style="font-family:'Courier Prime',monospace;font-size:7pt;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:3pt;">📝 Content &amp; Copy</div>
+            <div class="t-body-sm">Claude 4 · ChatGPT-4o · Gemini Pro · Perplexity Pro</div>
+          </div>
+        </div>
+
+        <div class="mt16" style="background:#F0FAFF;border-left:2.5pt solid var(--accent);padding:10pt 12pt;">
+          <div class="t-h4" style="margin-bottom:5pt;">The AIMA Guarantee</div>
+          <ul class="blt">
+            <li><span>Locked Creative Brief — zero scope creep</span></li>
+            <li><span>First draft within 72 hours of approval</span></li>
+            <li><span>Revisions returned within 24 hours per round</span></li>
+            <li><span>100% satisfaction or full reshoot at no charge</span></li>
+            <li><span>Commercial license included on every project</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 01 · Who We Are</div>
+      <div class="run-page">3</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 4 — CHAPTER 2: SERVICES OVERVIEW
+════════════════════════════════════════════ -->
+<div class="page-label">Page 4 — Chapter 2: Services Overview</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">02</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 02 · Services</div>
+    </div>
+
+    <div class="t-h4">Chapter 02</div>
+    <div class="t-h1" style="font-size:40pt;">Services<br/>&amp; Capabilities.</div>
+    <div class="rule-accent"></div>
+
+    <p class="t-body mt4" style="max-width:5in;">One studio. Four disciplines. Every deliverable produced with generative AI — faster, cheaper, and more scalable than any traditional crew. No cameras. No locations. No scheduling delays.</p>
+
+    <div class="col-2 mt16">
+      <!-- PILLAR 1 -->
+      <div style="border-top:2pt solid var(--ink);padding-top:10pt;">
+        <div class="t-h4">01 · Video Production</div>
+        <div class="t-h3 mt4">Cinema-Grade<br/>Video at Scale</div>
+        <div class="rule" style="margin:8pt 0;"></div>
+        <p class="t-body-sm">Music videos, corporate explainers, instructional modules, TV commercials, and short films — all produced with AI-directed cinematography, AI avatars, and professional color grading.</p>
+        <div class="mt10">
+          <ul class="blt">
+            <li><span>Music videos (2–5 min, 4K cinematic)</span></li>
+            <li><span>Corporate explainers (1–3 min, branded)</span></li>
+            <li><span>Training &amp; instructional modules</span></li>
+            <li><span>TV commercials (15–60 sec, broadcast spec)</span></li>
+            <li><span>Short films and branded content</span></li>
+          </ul>
+        </div>
+        <div class="mt10">
+          <div class="chip">Traditional: $15K–$500K+</div>
+          <div class="chip-accent chip mt4">Our rate: $2K–$18K</div>
+        </div>
+      </div>
+
+      <!-- PILLAR 2 -->
+      <div style="border-top:2pt solid var(--accent);padding-top:10pt;">
+        <div class="t-h4">02 · Audio Production</div>
+        <div class="t-h3 mt4">Broadcast-Ready<br/>Audio &amp; Music</div>
+        <div class="rule" style="margin:8pt 0;"></div>
+        <p class="t-body-sm">Original AI-composed music across every genre, professional mix and mastering, voice cloning in any language, radio spot production, and jingle/sonic branding at indie-budget prices.</p>
+        <div class="mt10">
+          <ul class="blt">
+            <li><span>Original music composition + mix/master</span></li>
+            <li><span>Voice cloning &amp; custom VO (29+ languages)</span></li>
+            <li><span>Radio spots (30 sec + 60 sec, broadcast)</span></li>
+            <li><span>Podcast production &amp; audiograms</span></li>
+            <li><span>Sonic branding &amp; jingle packages</span></li>
+          </ul>
+        </div>
+        <div class="mt10">
+          <div class="chip">Traditional: $1.5K–$10K/track</div>
+          <div class="chip-accent chip mt4">Our rate: $300–$3K</div>
+        </div>
+      </div>
+
+      <!-- PILLAR 3 -->
+      <div style="border-top:2pt solid var(--gold);padding-top:10pt;">
+        <div class="t-h4" style="color:var(--gold);">03 · Social &amp; Print</div>
+        <div class="t-h3 mt4">Content at the<br/>Speed of AI</div>
+        <div class="rule" style="margin:8pt 0;"></div>
+        <p class="t-body-sm">Monthly social media asset packages, AI-generated campaign photography, billboard and magazine print layouts, email templates, and branded content calendars. Consistent. Scalable. On-brand.</p>
+        <div class="mt10">
+          <ul class="blt">
+            <li><span>Social media packages (10–30 assets/mo)</span></li>
+            <li><span>Print campaigns (billboard, magazine, OOH)</span></li>
+            <li><span>Email campaign design (HTML, mobile-ready)</span></li>
+            <li><span>Content writing &amp; SEO blog packages</span></li>
+            <li><span>Brand identity &amp; visual system work</span></li>
+          </ul>
+        </div>
+        <div class="mt10">
+          <div class="chip">Traditional: $2K–$10K/month</div>
+          <div class="chip" style="border-color:var(--gold);color:var(--gold);">Our rate: $500–$2.5K</div>
+        </div>
+      </div>
+
+      <!-- PILLAR 4 -->
+      <div style="border-top:2pt solid #888;padding-top:10pt;">
+        <div class="t-h4" style="color:var(--ink3);">04 · AI Automation</div>
+        <div class="t-h3 mt4">The Machine<br/>Behind the Machine</div>
+        <div class="rule" style="margin:8pt 0;"></div>
+        <p class="t-body-sm">Custom n8n and Zapier pipelines that auto-publish content, generate analytics reports, send project alerts, and manage your entire content lifecycle — freeing your team from manual production tasks entirely.</p>
+        <div class="mt10">
+          <ul class="blt">
+            <li><span>Custom n8n content pipeline builds</span></li>
+            <li><span>CMS + social auto-publishing workflows</span></li>
+            <li><span>Analytics reporting automation</span></li>
+            <li><span>AI website design &amp; development</span></li>
+            <li><span>30-day support + documentation handoff</span></li>
+          </ul>
+        </div>
+        <div class="mt10">
+          <div class="chip">Traditional: $8K–$40K</div>
+          <div class="chip-accent chip mt4">Our rate: $2K–$12K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 02 · Services</div>
+      <div class="run-page">4</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 5 — CHAPTER 3: PRICING PACKAGES
+════════════════════════════════════════════ -->
+<div class="page-label">Page 5 — Chapter 3: Pricing Packages</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">03</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 03 · Pricing Packages</div>
+    </div>
+
+    <div class="t-h4">Chapter 03</div>
+    <div class="t-h1" style="font-size:40pt;">Pricing<br/>&amp; Packages.</div>
+    <div class="rule-accent"></div>
+
+    <!-- Comparison bar -->
+    <div style="display:flex;align-items:center;gap:16pt;background:#F0FAFF;padding:10pt 14pt;border:0.5pt solid #CCF0F8;margin-bottom:16pt;">
+      <div style="flex:1;">
+        <div class="t-mono" style="margin-bottom:3pt;">Traditional Agency — 30-sec TV Spot</div>
+        <div style="font-family:'Anton',sans-serif;font-size:18pt;color:#bbb;text-decoration:line-through;">$50,000+</div>
+        <div class="t-mono" style="margin-top:2pt;">4–8 weeks · crew of 20+ · location costs</div>
+      </div>
+      <div style="text-align:center;padding:0 16pt;border-left:0.5pt solid var(--rule);border-right:0.5pt solid var(--rule);">
+        <div style="font-family:'Anton',sans-serif;font-size:10pt;color:var(--muted);text-transform:uppercase;">vs</div>
+        <div style="margin-top:4pt;background:var(--accent);color:#fff;font-family:'Courier Prime',monospace;font-size:7pt;letter-spacing:.1em;padding:3pt 10pt;">SAVE UP TO 97%</div>
+      </div>
+      <div style="flex:1;text-align:right;">
+        <div class="t-mono" style="margin-bottom:3pt;">AIMA — Same Deliverable</div>
+        <div style="font-family:'Anton',sans-serif;font-size:18pt;color:var(--accent);">$3,500</div>
+        <div class="t-mono" style="margin-top:2pt;">5–7 days · 4K · 3 revisions · broadcast-ready</div>
+      </div>
+    </div>
+
+    <div class="col-2" style="gap:12pt;flex:1;align-items:start;">
+
+      <!-- SPARK -->
+      <div class="tier-box">
+        <div class="t-badge">Tier 01 · Spark</div>
+        <div style="margin-top:8pt;">
+          <div class="t-h4" style="margin-bottom:6pt;">For artists, creators &amp; small businesses</div>
+          <div class="tier-box t-price" style="border:none;padding:0;"><sup>$</sup>1,500</div>
+          <div class="t-qual">Starting rate · single deliverable · 3–5 business days</div>
+        </div>
+        <div class="rule" style="margin:8pt 0;"></div>
+        <ul class="blt">
+          <li><span>1 short-form video (15–60 sec, 1080p)</span></li>
+          <li><span>AI avatar or character creation (1 character)</span></li>
+          <li><span>AI voice clone or text-to-speech narration</span></li>
+          <li><span>Original AI-composed background music</span></li>
+          <li><span>3 social media cut-downs (1:1, 9:16, 16:9)</span></li>
+          <li><span>2 revision rounds · Commercial license</span></li>
+        </ul>
+      </div>
+
+      <!-- SIGNAL -->
+      <div class="tier-box featured">
+        <div class="t-badge" style="background:var(--accent);">Tier 02 · Signal · Most Popular</div>
+        <div style="margin-top:8pt;">
+          <div class="t-h4" style="margin-bottom:6pt;">For brands, musicians &amp; growing companies</div>
+          <div class="tier-box t-price" style="border:none;padding:0;color:var(--accent);"><sup style="color:var(--ink);">$</sup>5,000</div>
+          <div class="t-qual">Starting rate · multi-deliverable · 7–10 business days</div>
+        </div>
+        <div class="rule" style="margin:8pt 0;"></div>
+        <ul class="blt">
+          <li><span>Music video (2–4 min) OR corporate explainer (2–3 min)</span></li>
+          <li><span>4K resolution output — broadcast ready</span></li>
+          <li><span>AI character cast — up to 3 custom avatars</span></li>
+          <li><span>Voice cloning — up to 2 custom voice profiles</span></li>
+          <li><span>Full AI music composition + basic mix/master</span></li>
+          <li><span>Social asset package: 5 cut-downs + 10 statics</span></li>
+          <li><span>Print-ready ad set (2 sizes) · 3 revision rounds</span></li>
+        </ul>
+      </div>
+
+      <!-- APEX -->
+      <div class="tier-box">
+        <div class="t-badge" style="background:#444;">Tier 03 · Apex</div>
+        <div style="margin-top:8pt;">
+          <div class="t-h4" style="margin-bottom:6pt;">Full campaign · all-platform market saturation</div>
+          <div class="tier-box t-price" style="border:none;padding:0;"><sup>$</sup>18,000</div>
+          <div class="t-qual">Starting rate · all-platform · 14–21 business days</div>
+        </div>
+        <div class="rule" style="margin:8pt 0;"></div>
+        <ul class="blt">
+          <li><span>TV commercial (30–60 sec, broadcast DCP spec)</span></li>
+          <li><span>Full music video (3–5 min, cinematic grade)</span></li>
+          <li><span>AI avatar cast — up to 6 custom characters</span></li>
+          <li><span>Voice cloning — up to 5 custom voice profiles</span></li>
+          <li><span>Original music: composition + pro mix/master</span></li>
+          <li><span>Radio spots (30 sec + 60 sec) · 5 revision rounds</span></li>
+          <li><span>Social package: 15 cut-downs + 25 statics</span></li>
+        </ul>
+      </div>
+
+      <!-- SOVEREIGN -->
+      <div class="tier-box" style="border-color:var(--gold);">
+        <div class="t-badge" style="background:var(--gold);">Tier 04 · Sovereign</div>
+        <div style="margin-top:8pt;">
+          <div class="t-h4" style="margin-bottom:6pt;">Enterprise-scale creative operations</div>
+          <div class="tier-box t-price" style="border:none;padding:0;color:var(--gold);"><sup style="color:var(--ink);">$</sup>50,000</div>
+          <div class="t-qual">3-month engagement · all-platform · dedicated director</div>
+        </div>
+        <div class="rule" style="margin:8pt 0;"></div>
+        <ul class="blt">
+          <li><span>Full integrated campaign: video, audio, print, social</span></li>
+          <li><span>Unlimited avatar/character library build</span></li>
+          <li><span>Complete brand voice cloning system</span></li>
+          <li><span>AI automation pipeline (custom n8n build)</span></li>
+          <li><span>3-month content calendar — 60+ deliverables</span></li>
+          <li><span>Priority 48-hr SLA · Unlimited revisions</span></li>
+          <li><span>Dedicated senior creative director</span></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 03 · Pricing Packages</div>
+      <div class="run-page">5</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 6 — CHAPTER 4: RATE SHEET (VIDEO & AUDIO)
+════════════════════════════════════════════ -->
+<div class="page-label">Page 6 — Chapter 4: Rate Sheet — Video &amp; Audio</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">04</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 04 · Rate Sheet</div>
+    </div>
+
+    <div class="t-h4">Chapter 04</div>
+    <div class="t-h1" style="font-size:36pt;">A La Carte<br/>Rate Sheet.</div>
+    <div class="rule-accent"></div>
+    <p class="t-body-sm mt4">All services available standalone or bundled into a tier package for maximum savings. Rates reflect finished, broadcast-ready deliverables — not raw tool output.</p>
+
+    <div class="col-2 mt12" style="flex:1;align-items:start;gap:24pt;">
+      <div>
+        <div class="t-h4" style="margin-bottom:6pt;">🎬 &nbsp;Video Production</div>
+        <table class="data-table" style="width:100%;">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th style="text-align:right;">Turnaround</th>
+              <th style="text-align:right;">Our Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="strong">Music Video</span><br/><span style="font-size:7.5pt;color:var(--muted);">2–5 min · 4K · cinematic · avatar cast</span></td>
+              <td class="muted" style="text-align:right;">7–14 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$5K–18K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Corporate Explainer</span><br/><span style="font-size:7.5pt;color:var(--muted);">1–3 min · AI presenter · motion graphics</span></td>
+              <td class="muted" style="text-align:right;">5–10 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$2K–8K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Training / Instructional</span><br/><span style="font-size:7.5pt;color:var(--muted);">per module · multi-language · SCORM</span></td>
+              <td class="muted" style="text-align:right;">5–7 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$1.5K–5K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">TV Promo / Commercial</span><br/><span style="font-size:7.5pt;color:var(--muted);">15–60 sec · broadcast DCP spec · captions</span></td>
+              <td class="muted" style="text-align:right;">5–10 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$3.5K–12K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Motion Graphics / Animation</span><br/><span style="font-size:7.5pt;color:var(--muted);">per minute · 2D/3D · AEP source files</span></td>
+              <td class="muted" style="text-align:right;">5–10 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$1K–5K</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="mt14" style="background:#F0FAFF;padding:8pt 10pt;border-left:2pt solid var(--accent);">
+          <div class="t-mono" style="margin-bottom:4pt;">Video — Traditional Studio Benchmark</div>
+          <div class="t-body-sm">Music video: <span class="strong">$15K–$500K+</span> &nbsp;|&nbsp; Explainer: <span class="strong">$3.6K–$9K/min</span><br/>TV commercial: <span class="strong">$15K–$100K+</span> &nbsp;|&nbsp; Training: <span class="strong">$2K–$10K/min</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="t-h4" style="margin-bottom:6pt;">🎵 &nbsp;Audio Production</div>
+        <table class="data-table" style="width:100%;">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th style="text-align:right;">Turnaround</th>
+              <th style="text-align:right;">Our Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="strong">Radio Spot Production</span><br/><span style="font-size:7.5pt;color:var(--muted);">30 &amp; 60 sec · script · music bed · broadcast WAV</span></td>
+              <td class="muted" style="text-align:right;">2–3 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$500–2K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Original Music + Mix/Master</span><br/><span style="font-size:7.5pt;color:var(--muted);">per track · stems · streaming-ready · full license</span></td>
+              <td class="muted" style="text-align:right;">3–5 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$800–3K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Voice Cloning &amp; VO</span><br/><span style="font-size:7.5pt;color:var(--muted);">per project · 29+ languages · exclusive license</span></td>
+              <td class="muted" style="text-align:right;">1–2 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$300–1.2K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Podcast Production</span><br/><span style="font-size:7.5pt;color:var(--muted);">per episode · show notes · audiogram · mix</span></td>
+              <td class="muted" style="text-align:right;">2–4 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$400–1.5K</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="mt14" style="background:#F0FAFF;padding:8pt 10pt;border-left:2pt solid var(--accent);">
+          <div class="t-mono" style="margin-bottom:4pt;">Audio — Traditional Studio Benchmark</div>
+          <div class="t-body-sm">Music production: <span class="strong">$1.5K–$10K/track</span><br/>VO session: <span class="strong">$500–$3K/session</span> &nbsp;|&nbsp; Radio spot: <span class="strong">$500–$5K+</span></div>
+        </div>
+
+        <div class="mt14">
+          <div class="t-h4">Delivery Formats Included</div>
+          <div class="rule" style="margin:5pt 0 8pt;"></div>
+          <div class="col-2" style="gap:8pt;">
+            <ul class="blt">
+              <li><span>4K MP4 (H.265)</span></li>
+              <li><span>ProRes 422 HQ</span></li>
+              <li><span>Web H.264 (1080p)</span></li>
+              <li><span>All social aspect ratios</span></li>
+            </ul>
+            <ul class="blt">
+              <li><span>Broadcast WAV (48kHz/24-bit)</span></li>
+              <li><span>MP3 (320kbps)</span></li>
+              <li><span>SRT/VTT captions</span></li>
+              <li><span>DCP on request</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 04 · Rate Sheet</div>
+      <div class="run-page">6</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 7 — CHAPTER 5: RATE SHEET (SOCIAL, PRINT & AI)
+════════════════════════════════════════════ -->
+<div class="page-label">Page 7 — Chapter 5: Rate Sheet — Social, Print &amp; AI</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">05</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 05 · Rate Sheet — Social, Print &amp; AI</div>
+    </div>
+
+    <div class="t-h4">Chapter 05 · Rate Sheet Continued</div>
+    <div class="t-h1" style="font-size:36pt;">Social, Print<br/>&amp; Advanced AI.</div>
+    <div class="rule-accent"></div>
+
+    <div class="col-2 mt12" style="flex:1;align-items:start;gap:24pt;">
+      <div>
+        <div class="t-h4" style="margin-bottom:6pt;">📱 &nbsp;Social Media &amp; Print</div>
+        <table class="data-table" style="width:100%;">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th style="text-align:right;">Turnaround</th>
+              <th style="text-align:right;">Our Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="strong">Social Media Package</span><br/><span style="font-size:7.5pt;color:var(--muted);">Monthly · 10–30 assets · all platforms · captions</span></td>
+              <td class="muted" style="text-align:right;">5–7 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$600–2.5K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Print Campaign</span><br/><span style="font-size:7.5pt;color:var(--muted);">Per set · 300dpi CMYK · billboard/magazine/OOH</span></td>
+              <td class="muted" style="text-align:right;">3–5 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$500–3K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Content Writing Package</span><br/><span style="font-size:7.5pt;color:var(--muted);">Monthly · 4–12 SEO articles · ad copy · emails</span></td>
+              <td class="muted" style="text-align:right;">3–5 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$500–2K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">Email Campaign Design</span><br/><span style="font-size:7.5pt;color:var(--muted);">Per campaign · HTML coded · dark-mode ready</span></td>
+              <td class="muted" style="text-align:right;">2–4 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$300–1.5K</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="mt14" style="background:#F0FAFF;padding:8pt 10pt;border-left:2pt solid var(--gold);">
+          <div class="t-mono" style="color:var(--gold);margin-bottom:4pt;">Social &amp; Print — Traditional Benchmark</div>
+          <div class="t-body-sm">Social media agency: <span class="strong">$2K–$10K/month</span><br/>Print design: <span class="strong">$500–$5K/asset</span><br/>Copywriting: <span class="strong">$1.5K–$6K/month</span></div>
+        </div>
+
+        <div class="mt14">
+          <div class="t-h4">Platform Coverage</div>
+          <div class="rule" style="margin:5pt 0 8pt;"></div>
+          <div class="t-body-sm" style="line-height:2;">
+            Instagram · TikTok · LinkedIn · X (Twitter)<br/>
+            Facebook · Pinterest · YouTube Shorts<br/>
+            Mailchimp · Klaviyo · HubSpot · Salesforce
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="t-h4" style="margin-bottom:6pt;">🤖 &nbsp;Advanced AI Services</div>
+        <table class="data-table" style="width:100%;">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th style="text-align:right;">Turnaround</th>
+              <th style="text-align:right;">Our Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="strong">AI Avatar Creation</span><br/><span style="font-size:7.5pt;color:var(--muted);">Custom character · 20-gesture library · brand kit</span></td>
+              <td class="muted" style="text-align:right;">3–5 days</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$1K–4K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">AI Automation Pipeline</span><br/><span style="font-size:7.5pt;color:var(--muted);">n8n custom build · API integrations · 30-day support</span></td>
+              <td class="muted" style="text-align:right;">1–2 weeks</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$3K–12K</td>
+            </tr>
+            <tr>
+              <td><span class="strong">AI Website Build</span><br/><span style="font-size:7.5pt;color:var(--muted);">Landing page to full site · Core Web Vitals · CMS</span></td>
+              <td class="muted" style="text-align:right;">1–3 weeks</td>
+              <td class="accent" style="text-align:right;font-family:'Anton',sans-serif;font-size:11pt;">$2K–15K</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="mt14" style="background:#F0FAFF;padding:8pt 10pt;border-left:2pt solid var(--accent);">
+          <div class="t-mono" style="margin-bottom:4pt;">AI Services — Traditional Benchmark</div>
+          <div class="t-body-sm">VFX character: <span class="strong">$5K–$50K+</span><br/>Agency automation: <span class="strong">$8K–$40K+</span><br/>Dev agency website: <span class="strong">$8K–$60K+</span></div>
+        </div>
+
+        <div class="mt14">
+          <div class="t-h4">Add-On Menu</div>
+          <div class="rule" style="margin:5pt 0;"></div>
+          <table class="data-table" style="width:100%;">
+            <tbody>
+              <tr><td class="t-body-sm">Rush delivery (48-hr guarantee)</td><td class="accent" style="text-align:right;font-weight:600;">+$500 flat</td></tr>
+              <tr><td class="t-body-sm">Extra revision round</td><td class="accent" style="text-align:right;font-weight:600;">+$200</td></tr>
+              <tr><td class="t-body-sm">New avatar creation</td><td class="accent" style="text-align:right;font-weight:600;">+$1,000</td></tr>
+              <tr><td class="t-body-sm">Language localization (per language)</td><td class="accent" style="text-align:right;font-weight:600;">+$300</td></tr>
+              <tr><td class="t-body-sm">Broadcast license bundle (PRO cleared)</td><td class="accent" style="text-align:right;font-weight:600;">+$500</td></tr>
+              <tr><td class="t-body-sm">Source file delivery</td><td class="accent" style="text-align:right;font-weight:600;">+$400</td></tr>
+              <tr><td class="t-body-sm">Extended music license</td><td class="accent" style="text-align:right;font-weight:600;">+$250</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 05 · Rate Sheet — Social, Print &amp; AI</div>
+      <div class="run-page">7</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 8 — CHAPTER 6: RETAINER PLANS
+════════════════════════════════════════════ -->
+<div class="page-label">Page 8 — Chapter 6: Retainer Plans</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">06</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 06 · Retainer Plans</div>
+    </div>
+
+    <div class="t-h4">Chapter 06</div>
+    <div class="t-h1" style="font-size:38pt;">Retainer<br/>&amp; Maintenance.</div>
+    <div class="rule-accent"></div>
+    <p class="t-body-sm mt4" style="max-width:5.5in;">Keep your brand's content engine running at full throttle with a monthly retainer. All plans include a dedicated creative manager, monthly performance review, and 24-hour SLA support. Cancel anytime with 30-day notice.</p>
+
+    <!-- Retainer comparison table -->
+    <div class="mt16">
+      <table class="data-table" style="width:100%;">
+        <thead>
+          <tr>
+            <th style="width:30%;">Included Deliverable</th>
+            <th style="text-align:center;">Content Pulse<br/><span style="font-size:8pt;font-family:'Anton',sans-serif;color:var(--accent);">$1,500/mo</span></th>
+            <th style="text-align:center;">Growth Engine<br/><span style="font-size:8pt;font-family:'Anton',sans-serif;color:var(--gold);">$3,500/mo</span></th>
+            <th style="text-align:center;">Enterprise Pipeline<br/><span style="font-size:8pt;font-family:'Anton',sans-serif;color:var(--ink);">$8,500/mo</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Social media static posts</td>
+            <td style="text-align:center;" class="t-body-sm">10 posts</td>
+            <td style="text-align:center;" class="t-body-sm">25 assets</td>
+            <td style="text-align:center;" class="t-body-sm">Unlimited (200-hr)</td>
+          </tr>
+          <tr>
+            <td>Short-form videos</td>
+            <td style="text-align:center;" class="t-body-sm">2 (30 sec each)</td>
+            <td style="text-align:center;" class="t-body-sm">4 (up to 2 min)</td>
+            <td style="text-align:center;" class="t-body-sm">8+ per month</td>
+          </tr>
+          <tr>
+            <td>Radio spot refresh</td>
+            <td style="text-align:center;" class="muted">—</td>
+            <td style="text-align:center;" class="t-body-sm">1 per month</td>
+            <td style="text-align:center;" class="t-body-sm">Included</td>
+          </tr>
+          <tr>
+            <td>Analytics report</td>
+            <td style="text-align:center;" class="muted">—</td>
+            <td style="text-align:center;" class="t-body-sm">Monthly</td>
+            <td style="text-align:center;" class="t-body-sm">Weekly</td>
+          </tr>
+          <tr>
+            <td>A/B testing variants</td>
+            <td style="text-align:center;" class="muted">—</td>
+            <td style="text-align:center;" class="t-body-sm">2 per asset</td>
+            <td style="text-align:center;" class="t-body-sm">Unlimited</td>
+          </tr>
+          <tr>
+            <td>Revision rounds per asset</td>
+            <td style="text-align:center;" class="t-body-sm">1 round</td>
+            <td style="text-align:center;" class="t-body-sm">3 rounds</td>
+            <td style="text-align:center;" class="t-body-sm">Unlimited</td>
+          </tr>
+          <tr>
+            <td>AI automation maintenance</td>
+            <td style="text-align:center;" class="muted">—</td>
+            <td style="text-align:center;" class="muted">—</td>
+            <td style="text-align:center;" class="t-body-sm">Included</td>
+          </tr>
+          <tr>
+            <td>Content calendar</td>
+            <td style="text-align:center;" class="t-body-sm">Monthly</td>
+            <td style="text-align:center;" class="t-body-sm">Monthly</td>
+            <td style="text-align:center;" class="t-body-sm">Monthly + weekly</td>
+          </tr>
+          <tr>
+            <td>Dedicated creative director</td>
+            <td style="text-align:center;" class="muted">—</td>
+            <td style="text-align:center;" class="muted">—</td>
+            <td style="text-align:center;" class="t-body-sm">✓ Senior</td>
+          </tr>
+          <tr>
+            <td>Support channel</td>
+            <td style="text-align:center;" class="t-body-sm">Email, 48-hr</td>
+            <td style="text-align:center;" class="t-body-sm">Slack, 24-hr</td>
+            <td style="text-align:center;" class="t-body-sm">Slack, 2-hr + calls</td>
+          </tr>
+          <tr>
+            <td>Turnaround SLA</td>
+            <td style="text-align:center;" class="t-body-sm">Standard</td>
+            <td style="text-align:center;" class="t-body-sm">Priority</td>
+            <td style="text-align:center;" class="t-body-sm">24-hr priority</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-2 mt20" style="gap:24pt;">
+      <div>
+        <div class="t-h4">Why Retainers Save More</div>
+        <div class="rule" style="margin:5pt 0 8pt;"></div>
+        <ul class="blt">
+          <li><span>Locked rates — no project-by-project price fluctuation</span></li>
+          <li><span>Rollover hours on Enterprise plan (up to 20 hrs/month)</span></li>
+          <li><span>Priority queue — retainer clients jump the production line</span></li>
+          <li><span>Brand consistency maintained across every asset</span></li>
+          <li><span>Monthly strategy sessions included at Growth+ tiers</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="t-h4">Payment &amp; Terms</div>
+        <div class="rule" style="margin:5pt 0 8pt;"></div>
+        <ul class="blt">
+          <li><span>Monthly billing on the 1st · Net-15 invoice terms</span></li>
+          <li><span>50% deposit on first month to begin</span></li>
+          <li><span>Cancel with 30-day written notice</span></li>
+          <li><span>Accept ACH · Wire · Credit card (3% fee) · USDC</span></li>
+          <li><span>All plans include full commercial license on every asset</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 06 · Retainer Plans</div>
+      <div class="run-page">8</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 9 — CHAPTER 7: PRODUCTION PROCESS
+════════════════════════════════════════════ -->
+<div class="page-label">Page 9 — Chapter 7: Production Process</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">07</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 07 · Production Process</div>
+    </div>
+
+    <div class="t-h4">Chapter 07</div>
+    <div class="t-h1" style="font-size:38pt;">The Production<br/>Pipeline.</div>
+    <div class="rule-accent"></div>
+    <p class="t-body-sm mt4">Six transparent steps from first conversation to final delivery. You always know where your project stands. No black boxes. No vague timelines.</p>
+
+    <div class="col-2 mt14" style="flex:1;gap:24pt;align-items:start;">
+      <div>
+        <div class="proc-step">
+          <div class="proc-num">01</div>
+          <div class="proc-body">
+            <h4>Discovery &amp; Creative Brief</h4>
+            <p>30-minute intake call or detailed online form. We document your story, audience, goals, and visual references into a locked Creative Brief — approved by you before a single frame is generated. No production begins without full alignment.</p>
+            <div class="t-mono mt4">Notion · Calendly · Miro · Loom</div>
+          </div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">02</div>
+          <div class="proc-body">
+            <h4>Concept &amp; Storyboard</h4>
+            <p>Within 24 hours of brief approval, our team delivers 2–3 AI-rendered concept directions — each with visual storyboard frames, a narrative treatment, and a color moodboard. You choose the direction and we lock scope.</p>
+            <div class="t-mono mt4">MidJourney v7 · DALL·E 3 · Kling · Figma</div>
+          </div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">03</div>
+          <div class="proc-body">
+            <h4>AI Production</h4>
+            <p>Video generation, avatar animation, voice synthesis, music composition, motion graphics, and sound design run simultaneously. Most projects produce a first draft within 24–72 hours of concept approval. Traditional studios need weeks for what we deliver in days.</p>
+            <div class="t-mono mt4">Kling · Runway · ElevenLabs · Suno · HeyGen</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="proc-step">
+          <div class="proc-num">04</div>
+          <div class="proc-body">
+            <h4>Post-Production &amp; Polish</h4>
+            <p>Human-guided final assembly: color grading, audio mastering, subtitle work, format optimization, and quality assurance against the locked Creative Brief. Our creative director reviews every frame before it reaches your inbox.</p>
+            <div class="t-mono mt4">CapCut Pro · Logic Pro · DaVinci · After Effects</div>
+          </div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">05</div>
+          <div class="proc-body">
+            <h4>Review &amp; Revisions</h4>
+            <p>Private password-protected review link with frame-level timestamped feedback. Leave notes directly on the video. Revisions returned within 24 hours per round. Additional rounds available at $200 each.</p>
+            <div class="t-mono mt4">Frame.io · Loom · Slack · Notion Revision Log</div>
+          </div>
+        </div>
+        <div class="proc-step" style="border-bottom:none;">
+          <div class="proc-num">06</div>
+          <div class="proc-body">
+            <h4>Delivery &amp; Automation</h4>
+            <p>All files delivered in every required format via branded shared drive. Sovereign-tier clients receive a custom n8n automation pipeline for ongoing publishing and analytics — documented and handed off with training.</p>
+            <div class="t-mono mt4">Google Drive · n8n · Zapier · Notion Handoff</div>
+          </div>
+        </div>
+
+        <!-- Timeline card -->
+        <div style="background:#F0FAFF;padding:10pt 12pt;border:0.5pt solid #CCF0F8;margin-top:10pt;">
+          <div class="t-h4" style="margin-bottom:8pt;">Typical Timeline by Tier</div>
+          <table class="data-table" style="width:100%;">
+            <tbody>
+              <tr><td class="t-body-sm">Spark · 1 deliverable</td><td class="accent" style="text-align:right;font-weight:600;">3–5 days</td></tr>
+              <tr><td class="t-body-sm">Signal · multi-deliverable</td><td class="accent" style="text-align:right;font-weight:600;">7–10 days</td></tr>
+              <tr><td class="t-body-sm">Apex · full campaign</td><td class="accent" style="text-align:right;font-weight:600;">14–21 days</td></tr>
+              <tr><td class="t-body-sm">Sovereign · enterprise</td><td class="accent" style="text-align:right;font-weight:600;">6–8 weeks</td></tr>
+              <tr><td class="t-body-sm" style="border:none;">Rush (any tier, +$500)</td><td class="accent" style="text-align:right;font-weight:600;border:none;">48 hours</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 07 · Production Process</div>
+      <div class="run-page">9</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 10 — CHAPTER 8: PORTFOLIO
+════════════════════════════════════════════ -->
+<div class="page-label">Page 10 — Chapter 8: Portfolio &amp; Case Studies</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">08</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 08 · Portfolio &amp; Case Studies</div>
+    </div>
+
+    <div class="t-h4">Chapter 08</div>
+    <div class="t-h1" style="font-size:38pt;">Portfolio &amp;<br/>Case Studies.</div>
+    <div class="rule-accent"></div>
+    <p class="t-body-sm mt4">Every project below was produced entirely with generative AI tools — no cameras, no studios, no traditional crew. View the full interactive portfolio at <span class="strong">aimediaagency.com/work</span></p>
+
+    <!-- Case study 1 -->
+    <div style="border:0.5pt solid var(--rule);padding:14pt;margin-top:16pt;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8pt;">
+        <div>
+          <div class="t-h4">Case Study 01 · Music Video</div>
+          <div class="t-h3" style="font-size:14pt;margin-top:3pt;">Neon Reverie — VANTA</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="chip-accent chip">Tier: Signal · $6,000</div>
+        </div>
+      </div>
+      <div class="col-2" style="gap:20pt;">
+        <div>
+          <p class="t-body-sm">An independent artist needed a music video that could compete visually with major-label productions on a $6,000 budget. Using Kling AI for video generation, MidJourney v7 for world-building storyboards, ElevenLabs for vocal sync, and Suno v4 for the orchestral score, we delivered a 4-minute cinematic experience in 11 days.</p>
+          <div class="mt8">
+            <div class="t-mono" style="margin-bottom:4pt;">Tools Used</div>
+            <div class="t-body-sm">Kling AI · MidJourney v7 · ElevenLabs · Suno v4 · Logic Pro · CapCut Pro</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10pt;">
+          <div class="stat-block" style="text-align:center;border:0.5pt solid var(--rule);padding:8pt 4pt;">
+            <div class="stat-num" style="font-size:20pt;">280<span class="sup" style="font-size:10pt;">K</span></div>
+            <div class="stat-lbl">YouTube Views<br/>First 30 Days</div>
+          </div>
+          <div class="stat-block" style="text-align:center;border:0.5pt solid var(--rule);padding:8pt 4pt;">
+            <div class="stat-num" style="font-size:20pt;">$6<span class="sup" style="font-size:10pt;">K</span></div>
+            <div class="stat-lbl">Total<br/>Budget</div>
+          </div>
+          <div class="stat-block" style="text-align:center;border:0.5pt solid var(--rule);padding:8pt 4pt;">
+            <div class="stat-num" style="font-size:20pt;">11</div>
+            <div class="stat-lbl">Days to<br/>Delivery</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case study 2 -->
+    <div style="border:0.5pt solid var(--rule);padding:14pt;margin-top:10pt;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8pt;">
+        <div>
+          <div class="t-h4">Case Study 02 · Corporate + TV Commercial</div>
+          <div class="t-h3" style="font-size:14pt;margin-top:3pt;">FinTech Forward — Investor Explainer + :30 Spot</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="chip chip-dark">Tier: Apex · $12,000</div>
+        </div>
+      </div>
+      <div class="col-2" style="gap:20pt;">
+        <div>
+          <p class="t-body-sm">A Series B fintech startup needed a board-ready explainer video and a 30-second TV commercial for a regional cable buy — both on a $12,000 combined budget with a 10-day deadline. We delivered a 2-minute explainer with a custom AI executive avatar and animated data visualizations, plus a broadcast spot with original music.</p>
+          <div class="mt8">
+            <div class="t-mono" style="margin-bottom:4pt;">Tools Used</div>
+            <div class="t-body-sm">Synthesia · HeyGen · After Effects · AIVA · Adobe Firefly · DCP Master</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10pt;">
+          <div class="stat-block" style="text-align:center;border:0.5pt solid var(--rule);padding:8pt 4pt;">
+            <div class="stat-num" style="font-size:20pt;">$12<span class="sup" style="font-size:10pt;">K</span></div>
+            <div class="stat-lbl">2 Videos<br/>Combined</div>
+          </div>
+          <div class="stat-block" style="text-align:center;border:0.5pt solid var(--rule);padding:8pt 4pt;">
+            <div class="stat-num" style="font-size:20pt;">10</div>
+            <div class="stat-lbl">Days Total<br/>Turnaround</div>
+          </div>
+          <div class="stat-block" style="text-align:center;border:0.5pt solid var(--rule);padding:8pt 4pt;">
+            <div class="stat-num" style="font-size:20pt;">4</div>
+            <div class="stat-lbl">TV Networks<br/>First Airing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Capabilities grid -->
+    <div class="mt16">
+      <div class="t-h4" style="margin-bottom:8pt;">Production Capabilities by Format</div>
+      <div class="col-3" style="gap:12pt;">
+        <div style="border-top:1.5pt solid var(--accent);padding-top:8pt;">
+          <div class="t-h4" style="font-size:7.5pt;">Music Video</div>
+          <ul class="blt" style="margin-top:5pt;">
+            <li><span>Up to 5 min, 4K</span></li>
+            <li><span>AI avatar cast</span></li>
+            <li><span>Original score</span></li>
+            <li><span>Color grade</span></li>
+          </ul>
+        </div>
+        <div style="border-top:1.5pt solid var(--gold);padding-top:8pt;">
+          <div class="t-h4" style="font-size:7.5pt;color:var(--gold);">Corporate / Brand</div>
+          <ul class="blt" style="margin-top:5pt;">
+            <li><span>AI presenter</span></li>
+            <li><span>Data animation</span></li>
+            <li><span>Branded motion</span></li>
+            <li><span>Multi-language</span></li>
+          </ul>
+        </div>
+        <div style="border-top:1.5pt solid var(--ink3);padding-top:8pt;">
+          <div class="t-h4" style="font-size:7.5pt;color:var(--ink3);">Broadcast / TV</div>
+          <ul class="blt" style="margin-top:5pt;">
+            <li><span>DCP delivery</span></li>
+            <li><span>Broadcast spec</span></li>
+            <li><span>Closed captions</span></li>
+            <li><span>PRO-cleared audio</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 08 · Portfolio</div>
+      <div class="run-page">10</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 11 — CHAPTER 9: START A PROJECT
+════════════════════════════════════════════ -->
+<div class="page-label">Page 11 — Chapter 9: Start a Project</div>
+<div class="page">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">09</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 09 · Start a Project</div>
+    </div>
+
+    <div class="t-h4">Chapter 09</div>
+    <div class="t-h1" style="font-size:38pt;">Let's Build<br/>Something<br/><span style="color:var(--accent);">Unforgettable.</span></div>
+    <div class="rule-accent"></div>
+
+    <div class="col-2 mt12" style="flex:1;gap:24pt;align-items:start;">
+      <div>
+        <p class="t-body">Tell us your story. Complete the project intake form at <span class="strong">aimediaagency.com/contact</span> and a creative director will respond within 24 hours with a custom scope proposal and timeline. Discovery calls are always free.</p>
+
+        <div class="mt16">
+          <div class="t-h4">Contact</div>
+          <div class="rule" style="margin:5pt 0 10pt;"></div>
+          <div class="t-body" style="line-height:2.2;">
+            <span class="strong">Email:</span> hello@aimediaagency.com<br/>
+            <span class="strong">Phone:</span> +1 (415) 555-0200<br/>
+            <span class="strong">Web:</span> aimediaagency.com<br/>
+            <span class="strong">Instagram:</span> @aimediaagency<br/>
+            <span class="strong">Location:</span> San Francisco, CA<br/>
+            <span class="strong">Availability:</span> Remote Worldwide
+          </div>
+        </div>
+
+        <div class="mt16">
+          <div class="t-h4">Response SLA</div>
+          <div class="rule" style="margin:5pt 0;"></div>
+          <table class="data-table" style="width:100%;">
+            <tbody>
+              <tr><td class="t-body-sm">New project inquiries</td><td class="accent" style="text-align:right;font-weight:600;">Within 24 hours</td></tr>
+              <tr><td class="t-body-sm">Active client support</td><td class="accent" style="text-align:right;font-weight:600;">Within 4 hours</td></tr>
+              <tr><td class="t-body-sm">Retainer client requests</td><td class="accent" style="text-align:right;font-weight:600;">Within 2 hours</td></tr>
+              <tr><td class="t-body-sm" style="border:none;">Rush project kickoff</td><td class="accent" style="text-align:right;font-weight:600;border:none;">Within 1 hour</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt16">
+          <div class="t-h4">Payment Methods</div>
+          <div class="rule" style="margin:5pt 0 8pt;"></div>
+          <div class="t-body-sm" style="line-height:2;">
+            ACH Bank Transfer (preferred) · Wire Transfer<br/>
+            Credit / Debit Card (3% processing fee)<br/>
+            Cryptocurrency: USDC, ETH, BTC<br/>
+            All payments secured via Stripe or direct invoice
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="t-h4" style="margin-bottom:8pt;">Common Questions</div>
+        <div class="rule" style="margin:0 0 10pt;"></div>
+
+        <div style="display:flex;flex-direction:column;gap:10pt;">
+          <div style="border-left:2pt solid var(--rule);padding-left:10pt;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:8.5pt;font-weight:600;color:var(--ink);margin-bottom:3pt;">Will AI video look as good as traditionally shot content?</div>
+            <p class="t-body-sm">At our quality tier — Kling AI, Runway Gen-3, 4K with professional color grading — the output is indistinguishable from traditionally produced content in most contexts. Our case studies include broadcast TV placements and 280K-view music videos.</p>
+          </div>
+          <div style="border-left:2pt solid var(--rule);padding-left:10pt;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:8.5pt;font-weight:600;color:var(--ink);margin-bottom:3pt;">Do I own the rights to the content?</div>
+            <p class="t-body-sm">Yes — full commercial license transfer is included with every project at no additional charge. You own the final delivered files outright, in perpetuity, for use across any platform.</p>
+          </div>
+          <div style="border-left:2pt solid var(--rule);padding-left:10pt;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:8.5pt;font-weight:600;color:var(--ink);margin-bottom:3pt;">Can you match my existing brand's visual style?</div>
+            <p class="t-body-sm">Absolutely. We conduct a full brand audit — collecting your existing assets, color system, typography, and visual references — and build AI prompting frameworks calibrated specifically to your brand identity.</p>
+          </div>
+          <div style="border-left:2pt solid var(--rule);padding-left:10pt;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:8.5pt;font-weight:600;color:var(--ink);margin-bottom:3pt;">What if I'm not satisfied?</div>
+            <p class="t-body-sm">We offer a 100% satisfaction guarantee. If after all included revision rounds the deliverable doesn't meet the locked Creative Brief, we will reshoot or refund — your choice. We've never had to issue a refund.</p>
+          </div>
+          <div style="border-left:2pt solid var(--rule);padding-left:10pt;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:8.5pt;font-weight:600;color:var(--ink);margin-bottom:3pt;">Can you handle multiple languages?</div>
+            <p class="t-body-sm">Yes — ElevenLabs supports 29+ languages with voice cloning. We've produced content in English, Spanish, French, Tagalog, Mandarin, Arabic, and Portuguese. Localization is +$300 per additional language.</p>
+          </div>
+          <div style="border-left:2pt solid var(--rule);padding-left:10pt;">
+            <div style="font-family:'DM Sans',sans-serif;font-size:8.5pt;font-weight:600;color:var(--ink);margin-bottom:3pt;">Do you offer white-label for agencies?</div>
+            <p class="t-body-sm">Yes — dedicated white-label program for agencies and PR firms. Volume pricing, NDA agreements, and dedicated account management. Email agencies@aimediaagency.com to discuss partnership rates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 09 · Start a Project</div>
+      <div class="run-page">11</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 12 — BACK COVER / LEGAL SUMMARY
+════════════════════════════════════════════ -->
+<div class="page-label">Page 12 — Back Cover · Legal Summary</div>
+<div class="page">
+  <div class="back-bg"></div>
+  <div class="back-accent"></div>
+  <div class="back-inner">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:16pt;border-bottom:0.5pt solid rgba(255,255,255,.12);margin-bottom:20pt;">
+      <div style="font-family:'Anton',sans-serif;font-size:13pt;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);">
+        AI<span style="color:var(--accent);">MA</span>
+      </div>
+      <div style="font-family:'Courier Prime',monospace;font-size:8pt;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;">
+        Chapter 10 · Legal Summary
+      </div>
+    </div>
+
+    <div class="col-2" style="gap:32pt;flex:1;align-items:start;">
+      <div>
+        <div style="font-family:'Anton',sans-serif;font-size:32pt;text-transform:uppercase;letter-spacing:.02em;color:#fff;line-height:.92;margin-bottom:14pt;">Legal<br/>Summary.</div>
+
+        <div style="font-family:'Courier Prime',monospace;font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8pt;">Ownership &amp; Licensing</div>
+        <ul style="list-style:none;padding:0;">
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;border-bottom:0.5pt solid rgba(255,255,255,.08);display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>Full commercial license included with every completed project</span></li>
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;border-bottom:0.5pt solid rgba(255,255,255,.08);display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>Delivered files owned by client — unlimited use, in perpetuity</span></li>
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;border-bottom:0.5pt solid rgba(255,255,255,.08);display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>Source files available as add-on ($400)</span></li>
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;border-bottom:0.5pt solid rgba(255,255,255,.08);display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>Voice clones: client-exclusive, 90-day retention post-delivery</span></li>
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;border-bottom:0.5pt solid rgba(255,255,255,.08);display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>AI avatars: exclusive to client — not licensed to other parties</span></li>
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>Music: Standard Sync License · Extended &amp; Broadcast available</span></li>
+        </ul>
+
+        <div style="font-family:'Courier Prime',monospace;font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:14pt 0 8pt;">Payment &amp; Refund</div>
+        <ul style="list-style:none;padding:0;">
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;border-bottom:0.5pt solid rgba(255,255,255,.08);display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>50% deposit required to begin · Balance due at final delivery</span></li>
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;border-bottom:0.5pt solid rgba(255,255,255,.08);display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>100% satisfaction guarantee — reshoot or refund</span></li>
+          <li style="font-size:8pt;color:rgba(255,255,255,.6);padding:4pt 0;display:flex;gap:8pt;"><span style="color:var(--accent);">—</span><span>Governed by Wyoming law · Arbitration in San Francisco, CA</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <div style="font-family:'Courier Prime',monospace;font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10pt;">Contact &amp; Social</div>
+        <div style="font-size:9pt;color:rgba(255,255,255,.7);line-height:2.3;">
+          hello@aimediaagency.com<br/>
+          agencies@aimediaagency.com<br/>
+          +1 (415) 555-0200<br/>
+          aimediaagency.com<br/>
+          @aimediaagency · Instagram / LinkedIn / X
+        </div>
+
+        <div style="margin-top:20pt;">
+          <div style="font-family:'Anton',sans-serif;font-size:11pt;text-transform:uppercase;letter-spacing:.04em;color:#fff;margin-bottom:8pt;">Start a Project</div>
+          <div style="font-size:9pt;color:rgba(255,255,255,.5);line-height:1.8;">Visit <span style="color:#fff;">aimediaagency.com/contact</span> to submit your project brief. A creative director responds within 24 hours. Discovery calls are free.</div>
+        </div>
+
+        <div style="margin-top:20pt;">
+          <div style="font-family:'Anton',sans-serif;font-size:11pt;text-transform:uppercase;letter-spacing:.04em;color:#fff;margin-bottom:8pt;">The AI Production Weekly</div>
+          <div style="font-size:9pt;color:rgba(255,255,255,.5);line-height:1.8;">Subscribe at <span style="color:#fff;">aimediaagency.com/blog</span> for weekly AI production tool drops, workflow templates, and creative strategy. Free forever.</div>
+        </div>
+
+        <div style="margin-top:auto;padding-top:30pt;">
+          <div style="font-family:'Anton',sans-serif;font-size:42pt;line-height:.88;text-transform:uppercase;color:#fff;letter-spacing:.01em;">
+            Million<br/>Dollar<br/><span style="color:var(--accent);">Quality.</span>
+          </div>
+          <div style="font-family:'Anton',sans-serif;font-size:42pt;line-height:.88;text-transform:uppercase;-webkit-text-stroke:1px rgba(255,255,255,.2);color:transparent;letter-spacing:.01em;">
+            Fraction<br/>of the<br/>Cost.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;padding-top:16pt;border-top:0.5pt solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-family:'Courier Prime',monospace;font-size:7.5pt;color:rgba(255,255,255,.3);letter-spacing:.08em;">
+        © 2026 AIMA · A Monkey Matters, LLC Production · Wyoming LLC · All Rights Reserved
+      </div>
+      <div style="font-family:'Courier Prime',monospace;font-size:7.5pt;color:rgba(255,255,255,.3);">12</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PAGE 13 — CHAPTER 11: ABOUT THE AUTHOR
+════════════════════════════════════════════ -->
+<div class="page-label" style="margin-left:calc(50% - var(--page-w)/2 * 0.62);">Page 13 — Chapter 11: About the Author</div>
+<div class="page" id="page-author" style="display:flex;">
+  <div class="page-inner" style="position:relative;">
+    <div class="chap-num">11</div>
+
+    <div class="run-header">
+      <div class="run-brand">AI<span>MA</span></div>
+      <div class="run-chapter">Chapter 11 · About the Author</div>
+    </div>
+
+    <div class="t-h4">Chapter 11</div>
+    <div class="t-h1" style="font-size:38pt;">About the<br/><span style="color:var(--accent);">Author.</span></div>
+    <div class="rule-accent"></div>
+
+    <div class="col-3-2" style="flex:1;align-items:start;">
+      <div>
+        <div class="t-serif accent-bar" style="margin-bottom:14pt;">
+          "Technology is only as valuable as the human story it serves. Every tool we deploy, every workflow we build, begins and ends with one question: does this make someone's life meaningfully better?"
+        </div>
+
+        <div class="t-h3" style="font-size:16pt;margin-bottom:2pt;">Joselito Sering</div>
+        <div class="t-h4" style="margin-bottom:10pt;">Founder &amp; Creative Director · AIMA</div>
+
+        <p class="t-body">Joselito Sering is the founder and creative director of AIMA — AI Media Agency, the client-facing creative production studio of Monkey Matters, LLC. Based in San Francisco, he leads a practice built on the conviction that generative AI is not a shortcut but a new creative instrument — one capable of democratizing world-class media production for every visionary, from independent artists to enterprise brands.</p>
+
+        <p class="t-body mt8">A multidisciplinary practitioner with roots in martial arts, financial markets, and digital production, Joselito brings a rare combination of strategic rigor and creative intuition to every engagement. His work sits at the intersection of financial intelligence, technological innovation, and human storytelling — informed by decades of experience across trading, content production, and systems design.</p>
+
+        <p class="t-body mt8">Under his direction, AIMA has delivered cinema-grade music videos, broadcast TV commercials, corporate explainer campaigns, and full-stack AI automation pipelines — all produced with generative AI tools at a fraction of traditional studio costs. His portfolio includes projects that have aired on broadcast television, accumulated hundreds of thousands of views, and earned recognition for their production quality.</p>
+
+        <p class="t-body mt8">Beyond the studio, Joselito is building toward a deeper purpose: <span class="strong">generational wealth and philanthropic impact through the art of storytelling.</span> He is developing a foundation in the Philippines focused on technological utility for financial freedom and spiritual growth — channeling the proceeds of creative production into lasting community impact.</p>
+      </div>
+
+      <div>
+        <div class="t-h4">Expertise</div>
+        <div class="rule" style="margin:5pt 0 8pt;"></div>
+        <ul class="blt">
+          <li><span>AI-native creative production &amp; direction</span></li>
+          <li><span>Generative video, audio &amp; avatar systems</span></li>
+          <li><span>Brand design systems &amp; visual identity</span></li>
+          <li><span>Workflow automation (n8n, Zapier, APIs)</span></li>
+          <li><span>Financial markets &amp; strategic planning</span></li>
+          <li><span>Full-stack web development</span></li>
+        </ul>
+
+        <div class="t-h4 mt16">AI Production Stack</div>
+        <div class="rule" style="margin:5pt 0 8pt;"></div>
+        <div class="t-body-sm" style="line-height:2;">
+          Kling AI · Runway Gen-3 · ElevenLabs<br/>
+          HeyGen · Synthesia · Suno v4<br/>
+          MidJourney v7 · Claude 4 · n8n<br/>
+          Logic Pro X · DaVinci Resolve
+        </div>
+
+        <div class="t-h4 mt16">Philosophy</div>
+        <div class="rule" style="margin:5pt 0 8pt;"></div>
+        <div class="t-serif" style="font-size:10pt;">
+          Humane Technology — the belief that every technological capability must serve human dignity, creativity, and connection before efficiency.
+        </div>
+
+        <div class="mt16" style="background:#F0FAFF;border-left:2.5pt solid var(--accent);padding:10pt 12pt;">
+          <div class="t-h4" style="margin-bottom:5pt;">Connect</div>
+          <div class="t-body-sm" style="line-height:2.2;">
+            <span class="strong">Email:</span> joselito@aimediaagency.com<br/>
+            <span class="strong">LinkedIn:</span> linkedin.com/in/joselitosering<br/>
+            <span class="strong">Portfolio:</span> aimediaagency.com/work<br/>
+            <span class="strong">Location:</span> San Francisco, CA
+          </div>
+        </div>
+
+        <div class="mt16" style="border:0.5pt solid var(--rule);padding:10pt 12pt;text-align:center;">
+          <div class="t-mono" style="margin-bottom:6pt;letter-spacing:.14em;">PUBLISHED BY</div>
+          <div style="font-family:'Anton',sans-serif;font-size:14pt;text-transform:uppercase;letter-spacing:.04em;color:var(--ink);">
+            AI<span style="color:var(--accent);">MA</span>
+          </div>
+          <div class="t-mono mt4">AI Media Agency</div>
+          <div class="t-body-sm mt4">A Monkey Matters, LLC Production<br/>San Francisco, CA · 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="run-footer">
+      <div class="run-chapter">Chapter 11 · About the Author</div>
+      <div class="run-page">13</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /gallery -->
+
+<div id="orient-note" style="display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#00D9F5;color:#060810;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:10px 24px;border-radius:6px;z-index:200;letter-spacing:.04em;">
+  ⟳ Landscape mode active — Print dialog will use 11" × 8.5"
+</div>
+
+<script>
+/* ── Orientation Toggle ── */
+let landscapeSheet = null;
+
+function toggleOrientation() {
+  const body = document.body;
+  const btn = document.getElementById('btn-orient');
+  const note = document.getElementById('orient-note');
+  body.classList.toggle('landscape');
+  const isLand = body.classList.contains('landscape');
+  btn.textContent = isLand ? '⟳ Portrait' : '⟳ Landscape';
+  note.style.display = isLand ? 'block' : 'none';
+
+  // Dynamically inject or remove @page landscape rule
+  if (isLand) {
+    landscapeSheet = document.createElement('style');
+    landscapeSheet.id = 'landscape-page-rule';
+    landscapeSheet.textContent = '@media print { @page { size: 11in 8.5in; margin: 0.25in; } }';
+    document.head.appendChild(landscapeSheet);
+  } else {
+    const existing = document.getElementById('landscape-page-rule');
+    if (existing) existing.remove();
+    landscapeSheet = null;
+  }
+}
+
+function handlePrint() {
+  window.print();
+}
+</script>
+</body>
+</html>
