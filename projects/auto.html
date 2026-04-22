@@ -791,8 +791,8 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
     <nav class="toc-nav">
       <a href="#video"        class="toc-link">Final Film</a>
       <a href="#logistics"    class="toc-link">Production Logistics</a>
-      <a href="#gallery"      class="toc-link">Production Stills</a>
-      <a href="#bts"          class="toc-link">Behind The Scenes</a>
+      <a href="#gallery"      class="toc-link">Campaign Stills</a>
+      <a href="#bts"          class="toc-link">Campaign Videos</a>
       <a href="#budget"       class="toc-link">Cost Ledger</a>
       <a href="#metrics"      class="toc-link">Marketing Metrics</a>
       <a href="#services"     class="toc-link">Our Services</a>
@@ -930,10 +930,10 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 ══════════════════════════════════════════════════════════ -->
 <section class="page-section" id="bts">
   <div class="section-inner">
-    <span class="section-label fade-in">04 — Behind The Scenes</span>
+    <span class="section-label fade-in">04 — Campaign Videos</span>
     <h2 class="section-title fade-in delay-1">Making <span class="o">Of</span></h2>
     <div class="rule fade-in delay-1"></div>
-    <p class="section-desc fade-in delay-2">Behind the scenes.</p>
+    <p class="section-desc fade-in delay-2">Campaign Videos.</p>
     <div class="bts-grid" id="bts-grid"></div>
   </div>
 </section>
@@ -1397,7 +1397,7 @@ function populateVideos(videos) {
         <iframe src="${safeEmbedUrl(clip.embed_url)}" ${iframeAttrs}></iframe>
       </div>
       <div class="bts-card-body">
-        <div class="bts-badge">Behind The Scenes</div>
+        <div class="bts-badge">Campaign Video</div>
         <div class="bts-card-title">${safe(clip.title||'BTS Clip')}</div>
         <div class="bts-card-desc">${safe(clip.description||'')}</div>
       </div>
