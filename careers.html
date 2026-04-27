@@ -1317,6 +1317,7 @@ function handleEPSubmit() {
 }
 
 function showEPSuccess(btn, data) {
+  window.aimaTrackLead('ep-application', 'EP Partner Application');
   btn.classList.remove('state-sending');
   btn.classList.add('state-success');
   btn.textContent = '✓ Application Submitted';
