@@ -3062,9 +3062,9 @@ var encoded = Object.keys(GF_FIELDS).map(function(key) {
 function showSuccess(btn, data) {
   window.aimaTrackLead('project-request', 'Project Request Form');
   window.aimaIdentify({
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value
-  });  // ← missing closing brace and parenthesis
+    email: document.getElementById('ff-email').value,
+    phone: document.getElementById('ff-phone').value
+  });
 
   btn.classList.remove('state-sending');
   btn.classList.add('state-success');
