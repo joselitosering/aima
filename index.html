@@ -3064,20 +3064,27 @@ function showSuccess(btn, data) {
   window.aimaIdentify({
     email: document.getElementById('email').value,
     phone: document.getElementById('phone').value
+  });  // ← missing closing brace and parenthesis
+
   btn.classList.remove('state-sending');
   btn.classList.add('state-success');
   btn.textContent = '\u2713 Brief Sent Successfully';
   btn.disabled = true;
+
   var nameEl  = document.getElementById('confirmName');
   var emailEl = document.getElementById('confirmEmail');
   var refEl   = document.getElementById('confirmRef');
   var noteEl  = document.getElementById('formNote');
+
   if (nameEl)  nameEl.textContent  = data && data.firstName ? data.firstName : 'there';
   if (emailEl) emailEl.textContent = data && data.email     ? data.email     : 'your inbox';
   if (refEl)   refEl.textContent   = 'REF: AIMA-' + Date.now().toString().slice(-6);
   if (noteEl)  noteEl.style.display = 'none';
+
   var panel = document.getElementById('formConfirm');
-  if (panel) { panel.classList.add('visible'); panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  if (panel) {
+    panel.classList.add('visible');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
