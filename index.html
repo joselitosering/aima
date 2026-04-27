@@ -3060,6 +3060,10 @@ var encoded = Object.keys(GF_FIELDS).map(function(key) {
 }
 
 function showSuccess(btn, data) {
+  window.aimaTrackLead('project-request', 'Project Request Form');
+  window.aimaIdentify({
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value
   btn.classList.remove('state-sending');
   btn.classList.add('state-success');
   btn.textContent = '\u2713 Brief Sent Successfully';
@@ -3074,6 +3078,7 @@ function showSuccess(btn, data) {
   if (noteEl)  noteEl.style.display = 'none';
   var panel = document.getElementById('formConfirm');
   if (panel) { panel.classList.add('visible'); panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  }
 }
 
 
