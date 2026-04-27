@@ -1319,8 +1319,8 @@ function handleEPSubmit() {
 function showEPSuccess(btn, data) {
   window.aimaTrackLead('project-request', 'Project Request Form');
   window.aimaIdentify({
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value
+    email: document.getElementById('ep-email').value,
+    phone: document.getElementById('ep-phone').value
   });  // ← missing closing brace and parenthesis
 
   btn.classList.remove('state-sending');
