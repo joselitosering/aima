@@ -1122,40 +1122,38 @@ document.addEventListener('DOMContentLoaded', function () {
     el.style.backgroundPosition = 'center';
   }
 
-// ── PREV / NEXT ARTICLE NAV — loaded from GAS ────────
-  (function () {
-    var ARTICLES_API = 'https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec';
-    var idMeta = document.querySelector('meta[name="article:id"]');
-    if (!idMeta) return;
-    var articleId = idMeta.getAttribute('content');
-    if (!articleId) return;
+// ── PREV / NEXT NAV — loaded from GAS ────────────────
+(function () {
+  var ARTICLES_API = 'https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec';
+  var idMeta = document.querySelector('meta[name="article:id"]');
+  if (!idMeta) return;
+  var articleId = idMeta.getAttribute('content');
+  if (!articleId) return;
 
-    var prevCard  = document.getElementById('art-prev-card');
-    var prevLabel = document.getElementById('art-prev-title');
-    var nextCard  = document.getElementById('art-next-card');
-    var nextLabel = document.getElementById('art-next-title');
-    var BASE      = 'https://joselitosering.github.io/aima/articles/';
+  var BASE = 'https://joselitosering.github.io/aima/articles/';
 
-    fetch(ARTICLES_API + '?id=' + encodeURIComponent(articleId))
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        var a = data && data.article;
-        if (!a) return;
+  fetch(ARTICLES_API + '?id=' + encodeURIComponent(articleId))
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var a = data && data.article;
+      if (!a) return;
 
-        if (prevCard && a.prevFilename) {
-          prevCard.href = BASE + a.prevFilename;
-          prevCard.classList.remove('hidden');
-          if (prevLabel) prevLabel.textContent = a.prevTitle || 'Previous Article';
-        }
-        if (nextCard && a.nextFilename) {
-          nextCard.href = BASE + a.nextFilename;
-          nextCard.classList.remove('hidden');
-          if (nextLabel) nextLabel.textContent = a.nextTitle || 'Next Article';
-        }
-      })
-      .catch(function () { /* silent fail — cards stay hidden */ });
-  })();
-});
+      var prevCard  = document.getElementById('prev-article-card');
+      var nextCard  = document.getElementById('next-article-card');
+
+      if (prevCard && a.prevFilename) {
+        prevCard.href = BASE + a.prevFilename;
+        var prevTitle = prevCard.querySelector('.nav-card-title');
+        if (prevTitle) prevTitle.textContent = a.prevTitle;
+      }
+      if (nextCard && a.nextFilename) {
+        nextCard.href = BASE + a.nextFilename;
+        var nextTitle = nextCard.querySelector('.nav-card-title');
+        if (nextTitle) nextTitle.textContent = a.nextTitle;
+      }
+    })
+    .catch(function () { /* silent fail */ });
+})();
 
 // ══ SHARE SIDEBAR — locked standard ══════════════════════
 (function () {
