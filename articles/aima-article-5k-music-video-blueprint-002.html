@@ -1122,27 +1122,39 @@ document.addEventListener('DOMContentLoaded', function () {
     el.style.backgroundPosition = 'center';
   }
 
-  // ── PREV / NEXT ARTICLE NAV ───────────────────────────
-  const prevUrl   = (document.querySelector('meta[name="article:prev-url"]')   || {}).content || '';
-  const prevTitle = (document.querySelector('meta[name="article:prev-title"]') || {}).content || '';
-  const nextUrl   = (document.querySelector('meta[name="article:next-url"]')   || {}).content || '';
-  const nextTitle = (document.querySelector('meta[name="article:next-title"]') || {}).content || '';
+// ── PREV / NEXT ARTICLE NAV — loaded from GAS ────────
+  (function () {
+    var ARTICLES_API = 'https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec';
+    var idMeta = document.querySelector('meta[name="article:id"]');
+    if (!idMeta) return;
+    var articleId = idMeta.getAttribute('content');
+    if (!articleId) return;
 
-  const prevCard  = document.getElementById('art-prev-card');
-  const prevLabel = document.getElementById('art-prev-title');
-  const nextCard  = document.getElementById('art-next-card');
-  const nextLabel = document.getElementById('art-next-title');
+    var prevCard  = document.getElementById('art-prev-card');
+    var prevLabel = document.getElementById('art-prev-title');
+    var nextCard  = document.getElementById('art-next-card');
+    var nextLabel = document.getElementById('art-next-title');
+    var BASE      = 'https://joselitosering.github.io/aima/articles/';
 
-  if (prevCard && prevUrl) {
-    prevCard.href = prevUrl;
-    prevCard.classList.remove('hidden');
-    if (prevLabel) prevLabel.textContent = prevTitle;
-  }
-  if (nextCard && nextUrl) {
-    nextCard.href = nextUrl;
-    nextCard.classList.remove('hidden');
-    if (nextLabel) nextLabel.textContent = nextTitle;
-  }
+    fetch(ARTICLES_API + '?id=' + encodeURIComponent(articleId))
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var a = data && data.article;
+        if (!a) return;
+
+        if (prevCard && a.prevFilename) {
+          prevCard.href = BASE + a.prevFilename;
+          prevCard.classList.remove('hidden');
+          if (prevLabel) prevLabel.textContent = a.prevTitle || 'Previous Article';
+        }
+        if (nextCard && a.nextFilename) {
+          nextCard.href = BASE + a.nextFilename;
+          nextCard.classList.remove('hidden');
+          if (nextLabel) nextLabel.textContent = a.nextTitle || 'Next Article';
+        }
+      })
+      .catch(function () { /* silent fail — cards stay hidden */ });
+  })();
 });
 
 // ══ SHARE SIDEBAR — locked standard ══════════════════════
