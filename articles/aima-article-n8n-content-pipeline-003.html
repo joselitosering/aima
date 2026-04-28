@@ -1156,7 +1156,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var ARTICLES_API = 'https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec';
   var idMeta = document.querySelector('meta[name="article:id"]');
   if (!idMeta) return;
-  var articleId = idMeta.getAttribute('content');
+  var articleId = 'AIMA-' + idMeta.getAttribute('content');
   if (!articleId) return;
 
   var BASE = 'https://joselitosering.github.io/aima/articles/';
