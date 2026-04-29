@@ -1,0 +1,811 @@
+/*
+  ═══════════════════════════════════════════════════════════════
+  AIMA MAGAZINE — print.css  v1.0
+  ─────────────────────────────────────────────────────────────
+  Add to every article page <head> — after all other stylesheets:
+  <link rel="stylesheet" href="/aima/docs/print.css" media="print"/>
+
+  Targets: article-template-v12_1.html and all articles
+  built from it. Screen layout is completely untouched.
+  ─────────────────────────────────────────────────────────────
+  Page size : US Legal  8.5 × 14 in
+  Margins   : 0.65 in outer · 0.75 in inner (left, gutter side)
+  Columns   : 2, equal width, 0.3 in gap
+  Ink mode  : Light — white paper, no dark fills,
+              brand identity via rules and type only
+  Fonts     : Falls back to system serif / monospace if
+              Google Fonts not cached — acceptable for print
+  ═══════════════════════════════════════════════════════════════
+*/
+
+@media print {
+
+/* ── PAGE SETUP ─────────────────────────────────────────────── */
+@page {
+  size: 8.5in 14in;
+  margin: 0.65in 0.65in 0.75in 0.75in;
+
+  /* Running header — left: category */
+  @top-left {
+    content: string(print-category);
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 7pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+    padding-top: 4mm;
+  }
+
+  /* Running header — right: issue / site */
+  @top-right {
+    content: "AIMA Magazine · aima.media";
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 7pt;
+    letter-spacing: 0.08em;
+    color: #888;
+    padding-top: 4mm;
+  }
+
+  /* Top rule — subtle brand line */
+  @top-center {
+    content: "";
+    border-bottom: 0.5pt solid #D0D0DC;
+    display: block;
+    width: 100%;
+    padding-top: 9mm;
+  }
+
+  /* Folio — centre */
+  @bottom-center {
+    content: counter(page);
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 8pt;
+    color: #aaa;
+    padding-bottom: 4mm;
+  }
+
+  /* Bottom left — author */
+  @bottom-left {
+    content: string(print-author);
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 7pt;
+    letter-spacing: 0.06em;
+    color: #aaa;
+    padding-bottom: 4mm;
+  }
+
+  /* Bottom right — url */
+  @bottom-right {
+    content: string(print-url);
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    font-size: 7pt;
+    color: #aaa;
+    padding-bottom: 4mm;
+  }
+}
+
+/* First page: no running header, no folio — hero takes that space */
+@page :first {
+  @top-left    { content: none }
+  @top-right   { content: none }
+  @top-center  { content: none }
+  @bottom-left { content: none }
+  @bottom-center { content: none }
+  @bottom-right  { content: none }
+}
+
+
+/* ── STRING HOOKS ───────────────────────────────────────────── */
+/*
+  Add these hidden spans to each article's <head> or just before
+  </article> — they feed the running headers automatically:
+
+  <span class="print-category-hook">AI Innovation</span>
+  <span class="print-author-hook">Joselito Sering</span>
+  <span class="print-url-hook">joselitosering.github.io/aima</span>
+
+  Alternatively the JS already sets #articleCategory text —
+  the fallback below reads that element directly.
+*/
+.print-category-hook { string-set: print-category content(); position: absolute; overflow: hidden; width: 0; height: 0 }
+.print-author-hook   { string-set: print-author   content(); position: absolute; overflow: hidden; width: 0; height: 0 }
+.print-url-hook      { string-set: print-url      content(); position: absolute; overflow: hidden; width: 0; height: 0 }
+
+
+/* ── GLOBAL RESET FOR PRINT ─────────────────────────────────── */
+*,
+*::before,
+*::after {
+  background: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+html, body {
+  font-size: 9.5pt;
+  color: #1C1C2C;
+  background: #fff !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+img {
+  max-width: 100%;
+  page-break-inside: avoid;
+}
+
+
+/* ── HIDE — everything except the article ───────────────────── */
+nav,
+#share-sidebar,
+#toc-sidebar,
+#back-to-top,
+.back-to-top,
+.article-nav-section,
+footer,
+.explore-services-card,
+.services-card-button,
+.author-card-links,
+.article-footer,
+.fade-in,          /* remove opacity:0 stall */
+.pulse,
+.pulse-ft,
+.nav-cta,
+.mobile-menu,
+.copyright-notice  /* verbose legal block — covered by footer strip */ {
+  display: none !important;
+}
+
+
+/* ── RESET FADE-IN OPACITY ──────────────────────────────────── */
+/* Some elements start opacity:0 via JS animation — force visible */
+.article-wrapper,
+.article-header,
+.article-meta,
+.article-content,
+.article-body,
+.article-lead,
+.references-section,
+.glossary-section,
+.author-services-section {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+  visibility: visible !important;
+}
+
+
+/* ── ARTICLE WRAPPER ────────────────────────────────────────── */
+.article-wrapper {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   HERO HEADER — ink-light version
+   Keep image for visual identity but very low opacity.
+   Solid dark fill replaced with light tint + brand rules.
+══════════════════════════════════════════════════════════════ */
+.article-header {
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  background: #fff !important;
+  border-bottom: 2pt solid #1C1C2C !important;
+  padding: 6mm 0 5mm !important;
+  margin-bottom: 5mm !important;
+  overflow: visible !important;
+  page-break-after: avoid !important;
+}
+
+/* Hide the JS-injected background div — too dark for ink-light */
+.header-media,
+.header-overlay {
+  display: none !important;
+}
+
+.header-content {
+  position: static !important;
+  padding: 0 !important;
+}
+
+.header-content .container {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+/* AIMA wordmark above the title — generated via ::before */
+.article-header::before {
+  content: "AI\00B7MA";   /* AI·MA */
+  display: block;
+  font-family: 'Anton', Impact, sans-serif;
+  font-size: 11pt;
+  letter-spacing: 0.12em;
+  color: #00D9F5 !important;   /* brand cyan — kept for identity */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  margin-bottom: 3mm;
+}
+
+/* Thin cyan rule under wordmark */
+.article-header::after {
+  content: "";
+  display: block;
+  width: 12mm;
+  height: 1.5pt;
+  background: #FF5E20 !important;  /* brand orange */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  margin-top: 4mm;
+}
+
+.article-category {
+  display: inline-block !important;
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 7pt !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: #FF5E20 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  border: 0.5pt solid rgba(255, 94, 32, 0.4) !important;
+  padding: 1.5mm 3.5mm !important;
+  border-radius: 1pt !important;
+  margin-bottom: 3mm !important;
+}
+
+.article-title {
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 26pt !important;
+  line-height: 0.93 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: uppercase !important;
+  color: #1C1C2C !important;
+  max-width: 100% !important;
+  margin: 2mm 0 0 !important;
+  text-shadow: none !important;
+}
+
+.article-title .highlight {
+  color: #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.article-title .highlight-orange {
+  color: #FF5E20 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   META BAR
+══════════════════════════════════════════════════════════════ */
+.article-meta {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5mm !important;
+  flex-wrap: wrap !important;
+  padding: 3.5mm 0 4mm !important;
+  border-bottom: 0.5pt solid #D8D8E4 !important;
+  margin-bottom: 6mm !important;
+  max-width: 100% !important;
+  page-break-after: avoid !important;
+}
+
+.author-avatar {
+  width: 7mm !important;
+  height: 7mm !important;
+  border-radius: 50% !important;
+  border: 0.5pt solid #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  background: transparent !important;
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 6pt !important;
+  color: #00D9F5 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.author-name {
+  font-size: 8.5pt !important;
+  font-weight: 600 !important;
+  color: #1C1C2C !important;
+}
+
+.author-role {
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 6pt !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #888 !important;
+}
+
+.meta-divider {
+  width: 0.5pt !important;
+  height: 5mm !important;
+  background: #D8D8E4 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.meta-label {
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 5.5pt !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #aaa !important;
+}
+
+.meta-value {
+  font-size: 8pt !important;
+  color: #1C1C2C !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   ARTICLE BODY — LAYOUT CONTAINER
+══════════════════════════════════════════════════════════════ */
+.article-body {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   TWO-COLUMN BODY
+══════════════════════════════════════════════════════════════ */
+.article-content {
+  column-count: 2 !important;
+  column-gap: 0.3in !important;
+  column-rule: 0.5pt solid #D8D8E4 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  orphans: 3 !important;
+  widows: 3 !important;
+}
+
+
+/* ── Lead paragraph — spans both columns ── */
+.article-lead {
+  column-span: all !important;
+  font-size: 11pt !important;
+  font-weight: 300 !important;
+  line-height: 1.72 !important;
+  color: #1C1C2C !important;
+  border-left: 2pt solid #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  padding-left: 4mm !important;
+  margin-bottom: 5mm !important;
+  background: transparent !important;
+}
+
+
+/* ── Headings ── */
+.article-content h2 {
+  column-span: all !important;
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 13pt !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  color: #1C1C2C !important;
+  line-height: 1.0 !important;
+  margin: 7mm 0 2.5mm !important;
+  padding-bottom: 2mm !important;
+  border-bottom: 0.5pt solid #D8D8E4 !important;
+  break-after: avoid !important;
+  page-break-after: avoid !important;
+}
+
+.article-content h2 .accent {
+  color: #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.article-content h3 {
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 9pt !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: #1C1C2C !important;
+  margin: 4mm 0 1.5mm !important;
+  break-after: avoid !important;
+  page-break-after: avoid !important;
+}
+
+
+/* ── Body text ── */
+.article-content p {
+  font-family: 'DM Sans', Georgia, serif !important;
+  font-size: 9pt !important;
+  line-height: 1.82 !important;
+  color: #2C2C42 !important;
+  margin-bottom: 3mm !important;
+  text-align: justify !important;
+  hyphens: auto !important;
+  orphans: 3 !important;
+  widows: 3 !important;
+}
+
+/* Drop cap — first paragraph after lead */
+.article-content > p:first-of-type::first-letter {
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 38pt !important;
+  line-height: 0.76 !important;
+  float: left !important;
+  margin-right: 2mm !important;
+  margin-top: 1.5mm !important;
+  color: #FF5E20 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.article-content strong { color: #1C1C2C !important; font-weight: 700 !important }
+.article-content em     { font-style: italic !important; color: #555 !important }
+
+/* Glossary term links — no underline, no color change */
+.glossary-term {
+  color: inherit !important;
+  border-bottom: none !important;
+  text-decoration: none !important;
+}
+
+
+/* ── Pull quote — full width, centred ── */
+.pullquote {
+  column-span: all !important;
+  margin: 5mm 8mm !important;
+  padding: 4.5mm 0 !important;
+  border-top: 0.5pt solid #D8D8E4 !important;
+  border-bottom: 0.5pt solid #D8D8E4 !important;
+  border-left: none !important;
+  background: transparent !important;
+  text-align: center !important;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+.pullquote-text {
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 12pt !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.2 !important;
+  color: #1C1C2C !important;
+  font-style: normal !important;
+  margin-bottom: 2mm !important;
+}
+
+.pullquote-attribution {
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 6.5pt !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #aaa !important;
+}
+
+
+/* ── Callout boxes — ink-light ── */
+.callout {
+  background: #F7F7FA !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  border: 0.5pt solid #D8D8E4 !important;
+  border-left: 2pt solid #00D9F5 !important;
+  padding: 3.5mm 4.5mm !important;
+  margin: 3mm 0 !important;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+.callout.warning {
+  border-left-color: #FF5E20 !important;
+}
+
+.callout.success {
+  border-left-color: #00C896 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.callout-title,
+.callout-icon + div > .callout-title {
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 6pt !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  margin-bottom: 1.5mm !important;
+  font-weight: 700 !important;
+}
+
+.callout.warning .callout-title { color: #FF5E20 !important }
+.callout.success .callout-title { color: #00C896 !important }
+
+.callout-content {
+  font-size: 8pt !important;
+  line-height: 1.65 !important;
+  color: #555 !important;
+}
+
+/* Hide emoji icons inside callouts */
+.callout-icon { display: none !important }
+
+
+/* ── Article footer CTA — hidden ── */
+.article-footer { display: none !important }
+
+
+/* ══════════════════════════════════════════════════════════════
+   REFERENCES SECTION
+══════════════════════════════════════════════════════════════ */
+.references-section {
+  margin-top: 8mm !important;
+  padding-top: 0 !important;
+  break-before: auto !important;
+}
+
+.references-section .section-heading,
+.glossary-section .section-heading {
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 14pt !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  color: #1C1C2C !important;
+  border-bottom: 1.5pt solid #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  padding-bottom: 2.5mm !important;
+  margin-bottom: 4mm !important;
+  background: transparent !important;
+}
+
+.reference-list {
+  column-count: 2 !important;
+  column-gap: 0.3in !important;
+  column-rule: 0.5pt solid #D8D8E4 !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.reference-item {
+  font-size: 7.5pt !important;
+  line-height: 1.65 !important;
+  color: #555 !important;
+  margin-bottom: 3.5mm !important;
+  padding-left: 3mm !important;
+  border-left: 1pt solid #D8D8E4 !important;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+  counter-increment: none !important;
+}
+
+.reference-item::before { display: none !important }
+
+.ref-authors { font-weight: 600 !important; color: #1C1C2C !important }
+
+.ref-title {
+  font-style: italic !important;
+  color: #1C1C2C !important;
+}
+
+.ref-link {
+  display: block !important;
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 6pt !important;
+  color: #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  word-break: break-all !important;
+  margin-top: 0.8mm !important;
+}
+
+.copyright-notice { display: none !important }
+
+
+/* ══════════════════════════════════════════════════════════════
+   GLOSSARY SECTION
+══════════════════════════════════════════════════════════════ */
+.glossary-section {
+  margin-top: 8mm !important;
+}
+
+.glossary-list {
+  column-count: 2 !important;
+  column-gap: 0.3in !important;
+  column-rule: 0.5pt solid #D8D8E4 !important;
+}
+
+.glossary-item {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+  margin-bottom: 4mm !important;
+  padding-bottom: 3.5mm !important;
+  border-bottom: 0.5pt solid #D8D8E4 !important;
+}
+
+.glossary-term-title {
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 8pt !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: #1C1C2C !important;
+  margin-bottom: 1.5mm !important;
+}
+
+/* Hide the back-link anchors in glossary */
+.back-link { display: none !important }
+
+.glossary-definition {
+  font-size: 7.5pt !important;
+  line-height: 1.68 !important;
+  color: #555 !important;
+  text-align: justify !important;
+  hyphens: auto !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   ABOUT THE AUTHOR
+══════════════════════════════════════════════════════════════ */
+.author-services-section {
+  margin-top: 8mm !important;
+  break-before: auto !important;
+}
+
+.about-author-card {
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
+
+.author-section-header {
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 14pt !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  color: #1C1C2C !important;
+  border-bottom: 1.5pt solid #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  padding-bottom: 2.5mm !important;
+  margin-bottom: 4mm !important;
+  background: transparent !important;
+}
+
+.author-card {
+  display: grid !important;
+  grid-template-columns: 28mm 1fr !important;
+  gap: 6mm !important;
+  padding: 5mm !important;
+  border: 0.5pt solid #D8D8E4 !important;
+  border-top: 1.5pt solid #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  background: #F7F7FA !important;
+}
+
+.author-card-avatar {
+  width: 24mm !important;
+  height: 24mm !important;
+  border-radius: 50% !important;
+  border: 0.5pt solid #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  background: transparent !important;
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 14pt !important;
+  color: #00D9F5 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.author-card-name {
+  font-family: 'Anton', Impact, sans-serif !important;
+  font-size: 12pt !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  color: #1C1C2C !important;
+  margin-bottom: 1mm !important;
+}
+
+.author-card-title {
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 6.5pt !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #FF5E20 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  margin-bottom: 2.5mm !important;
+}
+
+.author-card-bio {
+  font-size: 8pt !important;
+  line-height: 1.68 !important;
+  color: #555 !important;
+}
+
+/* Author links — show as plain text in print */
+.author-card-links {
+  display: flex !important;
+  gap: 3mm !important;
+  flex-wrap: wrap !important;
+  margin-top: 2.5mm !important;
+}
+
+.author-link {
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 6pt !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #00D9F5 !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  border: 0.5pt solid rgba(0,217,245,0.4) !important;
+  padding: 1mm 2.5mm !important;
+  border-radius: 1pt !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PRINT FOOTER STRIP
+   Injected via ::after on the article wrapper — replaces the
+   full site footer with a clean one-line brand strip.
+══════════════════════════════════════════════════════════════ */
+.article-wrapper::after {
+  content: "© 2026 AIMA — AI Media Agency  ·  A Monkey Matters LLC Production  ·  San Francisco, CA  ·  joselitosering.github.io/aima";
+  display: block !important;
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 6pt !important;
+  letter-spacing: 0.1em !important;
+  color: #aaa !important;
+  text-align: center !important;
+  border-top: 0.5pt solid #D8D8E4 !important;
+  padding-top: 3.5mm !important;
+  margin-top: 8mm !important;
+}
+
+
+/* ── PAGE BREAK RULES ───────────────────────────────────────── */
+.article-content h2 { break-after: avoid; page-break-after: avoid }
+.article-content h3 { break-after: avoid; page-break-after: avoid }
+.callout            { break-inside: avoid; page-break-inside: avoid }
+.pullquote          { break-inside: avoid; page-break-inside: avoid }
+.glossary-item      { break-inside: avoid; page-break-inside: avoid }
+.reference-item     { break-inside: avoid; page-break-inside: avoid }
+.about-author-card  { break-inside: avoid; page-break-inside: avoid }
+.author-card        { break-inside: avoid; page-break-inside: avoid }
+
+/* References and glossary prefer a fresh column or page */
+.references-section { break-before: column }
+.glossary-section   { break-before: column }
+.author-services-section { break-before: auto }
+
+} /* end @media print */
