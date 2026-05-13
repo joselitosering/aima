@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ═══════════════════════════════════════════════════════
+     ARTICLE METADATA — edit these values per article
+═══════════════════════════════════════════════════════ -->
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+<meta name="article:id"           content="008"/>
+<meta name="article:title"        content="The Healing Machine: AI and the Future of Medicine"/>
+<meta name="article:description"  content="From Stone Age skull surgery to AlphaFold and ambient AI scribes, explore how technology has always been humanity's tool for survival—and where AI is taking medicine next."/>
+<meta name="article:author"       content="Joselito Sering"/>
+<meta name="article:publish-date" content="2026-05-12"/>
+<meta name="article:read-time"    content="18"/>
+<meta name="article:category"     content="Health &amp; AI"/>
+<meta name="article:header-image" content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80"/>
+
+<!-- Prev / Next article — set to empty string to hide the card -->
+<meta name="article:prev-url"   content="https://joselitosering.github.io/aima/articles/aima-article-the-n8n-content-pipeline.html"/>
+<meta name="article:prev-title" content="The n8n Content Pipeline"/>
+<meta name="article:next-url"   content=""/>
+<meta name="article:next-title" content=""/>
+
+<title id="pageTitle">The Healing Machine: AI and the Future of Medicine — AIMA Magazine</title>
+
+<!-- SEO -->
+<meta name="description" content="From Stone Age skull surgery to AlphaFold and ambient AI scribes, explore how technology has always been humanity's tool for survival—and where AI is taking medicine next."/>
+<meta name="keywords"    content="AI in medicine, medical AI, AlphaFold, AI radiology, AI healthcare, history of surgery, AI drug discovery, AIMA"/>
+<link rel="canonical"   href="https://joselitosering.github.io/aima/articles/aima-article-ai-in-medicine.html"/>
+
+<!-- Open Graph -->
+<meta property="og:type"        content="article"/>
+<meta property="og:title"       content="The Healing Machine: AI and the Future of Medicine"/>
+<meta property="og:description" content="From Stone Age skull surgery to AlphaFold and ambient AI scribes, explore how technology has always been humanity's tool for survival—and where AI is taking medicine next."/>
+<meta property="og:image"       content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image"/>
+<meta name="twitter:title"       content="The Healing Machine: AI and the Future of Medicine"/>
+<meta name="twitter:description" content="From Stone Age skull surgery to AlphaFold and ambient AI scribes, explore how technology has always been humanity's tool for survival—and where AI is taking medicine next."/>
+<meta name="twitter:image"       content="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80"/>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://joselitosering.github.io/aima/articles/aima-article-ai-in-medicine.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://joselitosering.github.io/aima/articles/aima-article-ai-in-medicine.html"
+  },
+  "url": "https://joselitosering.github.io/aima/articles/aima-article-ai-in-medicine.html",
+  "headline": "The Healing Machine: AI and the Future of Medicine",
+  "description": "From Stone Age skull surgery to AlphaFold and ambient AI scribes, explore how technology has always been humanity's tool for survival—and where AI is taking medicine next.",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80",
+    "width": 1920,
+    "height": 1080
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Joselito Sering",
+    "url": "https://joselitosering.github.io/aima/about.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AIMA — AI Media Agency",
+    "url": "https://joselitosering.github.io/aima/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://joselitosering.github.io/aima/logo.png",
+      "width": 200,
+      "height": 60
+    }
+  },
+  "datePublished": "2026-05-12",
+  "dateModified": "2026-05-12",
+  "inLanguage": "en-US",
+  "articleSection": "Health & AI",
+  "isPartOf": {
+    "@type": "PublicationVolume",
+    "name": "AIMA Magazine",
+    "url": "https://joselitosering.github.io/aima/insights.html"
+  }
+}
+</script>
+
+<!-- Analytics: GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VCTF4DKBD5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VCTF4DKBD5');</script>
+
+<!-- Analytics: Meta Pixel -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','941204972168187');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=941204972168187&ev=PageView&noscript=1"/></noscript>
+
+<!-- Analytics: TikTok Pixel -->
+<script>!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};ttq.load('D7NFLLRC77UB8JB2C5N0');ttq.page();}(window,document,'ttq');</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   BRAND TOKENS
+══════════════════════════════════════════════════════════ */
+:root {
+  --bg:      #060810; --surface: #0B0E1C; --surface2: #10142A; --surface3: #161B36;
+  --cyan:    #00D9F5; --orange:  #FF5E20; --gold:     #C8A84B; --gold-lt: #EDD483;
+  --green:   #2DCA73; --purple:  #A259FF; --text:     #DFE6F5; --muted:   #7A8BAA;
+  --border:  rgba(0,217,245,0.12); --border2: rgba(255,255,255,0.06);
+  --glow-c:  rgba(0,217,245,0.20); --glow-o:  rgba(255,94,32,0.15);
+  --radius:  6px; --mono: 'Courier Prime', monospace; --nav-h: 72px;
+}
+
+/* ══ BASE RESET ═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+[id] { scroll-margin-top: calc(var(--nav-h) + 20px); }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  overflow-x: hidden; line-height: 1.65;
+  padding-top: var(--nav-h);
+}
+a { color: var(--cyan); text-decoration: none; transition: opacity 0.2s; }
+a:hover { opacity: 0.8; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+/* ══ FADE-IN ══════════════════════════════════════════════ */
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: .1s; } .delay-2 { transition-delay: .2s; }
+.delay-3 { transition-delay: .3s; } .delay-4 { transition-delay: .45s; }
+
+/* ══ NAVIGATION ══════════════════════════════════════════ */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--nav-h); display: flex; align-items: center;
+  background: rgba(6,8,16,0.60);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,217,245,0.10);
+}
+.container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Anton', sans-serif; font-size: 17px;
+  letter-spacing: .05em; text-transform: uppercase; color: #fff;
+  white-space: nowrap; text-decoration: none;
+}
+.nav-logo .pulse { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 8px var(--cyan); animation: pulse 2.2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
+.nav-logo .wordmark .ai { color: #fff; }
+.nav-logo .wordmark .ma { color: var(--cyan); }
+.nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+.nav-links a { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); transition: color .2s; position: relative; padding-bottom: 2px; text-decoration: none; }
+.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--cyan); transform: scaleX(0); transform-origin: left; transition: transform .25s; }
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-links a.active { color: var(--cyan); }
+.nav-links a.active::after { transform: scaleX(1); }
+.nav-cta { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; background: var(--cyan); color: var(--bg); padding: 10px 20px; border-radius: var(--radius); transition: box-shadow .2s, opacity .2s; white-space: nowrap; text-decoration: none; }
+.nav-cta:hover { box-shadow: 0 0 22px var(--glow-c); opacity: .9; color: var(--bg); }
+.nav-burger { display: none; flex-direction: column; gap: 5px; padding: 4px; cursor: pointer; background: none; border: none; }
+.nav-burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
+.nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 190;
+  background: rgba(6,8,16,.98); backdrop-filter: blur(20px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+  padding-top: var(--nav-h, 72px); overflow-y: auto;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: 'Anton', sans-serif; font-size: 30px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); transition: color .2s; text-decoration: none; }
+.mobile-menu a:hover { color: #fff; }
+.mobile-menu .m-cta { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; background: var(--cyan); color: var(--bg); padding: 14px 36px; border-radius: var(--radius); margin-top: 8px; }
+.mobile-menu .m-legal { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+.mobile-menu .m-legal a { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+@media(max-width:900px){ .nav-links { display: none; } }
+@media(max-width:640px){ .nav-cta { display: none; } .nav-burger { display: flex; } }
+
+/* ══ FLOATING SHARE SIDEBAR ══════════════════════════════ */
+#share-sidebar {
+  position: fixed; left: 20px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 8px;
+  opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+}
+#share-sidebar.visible { opacity: 1; visibility: visible; }
+.share-fab {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: 1px solid var(--border2);
+  background: var(--surface2); color: var(--muted);
+  transition: border-color .2s, color .2s, background .2s, transform .2s;
+  text-decoration: none;
+}
+.share-fab svg { width: 16px; height: 16px; flex-shrink: 0; }
+.share-fab:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,217,245,.08); transform: scale(1.1); opacity: 1; }
+.share-fab.copy-btn { padding: 0; background: none; border: 1px solid var(--border2); }
+.share-sidebar-label {
+  font-family: var(--mono); font-size: 8px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); text-align: center; margin-bottom: 4px;
+}
+button.share-fab { font: inherit; cursor: pointer; }
+@media(max-width:1280px){ #share-sidebar { display: none; } }
+
+/* ══ FLOATING TOC SIDEBAR ════════════════════════════════ */
+#toc-sidebar {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+  z-index: 150; width: 200px;
+  opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+}
+#toc-sidebar.visible { opacity: 1; visibility: visible; }
+.toc-panel { background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 16px; }
+.toc-panel-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border2); display: block;
+}
+.toc-nav { display: flex; flex-direction: column; gap: 2px; }
+.toc-link {
+  font-size: 11px; color: var(--muted); padding: 6px 10px;
+  border-left: 2px solid var(--border2); transition: all .2s;
+  text-decoration: none; display: block; line-height: 1.4;
+}
+.toc-link:hover { color: var(--cyan); border-left-color: var(--cyan); padding-left: 14px; opacity: 1; }
+.toc-link.active { color: var(--cyan); border-left-color: var(--cyan); padding-left: 14px; }
+@media(max-width:1400px){ #toc-sidebar { display: none; } }
+
+/* ══ ARTICLE LAYOUT ══════════════════════════════════════ */
+.article-wrapper { min-height: 100vh; background: var(--bg); }
+
+.article-header { position: relative; width: 100%; height: 72vh; min-height: 520px; overflow: hidden; background: var(--bg); }
+.article-header::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(6,8,16,0.10) 0%, transparent 30%, rgba(6,8,16,0.60) 75%, var(--bg) 100%);
+  z-index: 2;
+}
+.header-media {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  opacity: 0.75; filter: brightness(0.75) saturate(1.1);
+  transform: scale(1.03); transition: transform 8s ease-out;
+}
+.article-header:hover .header-media { transform: scale(1.0); }
+.header-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(105deg, rgba(6,8,16,0.72) 0%, rgba(6,8,16,0.20) 55%, transparent 80%),
+    radial-gradient(ellipse 70% 55% at 20% 60%, rgba(255,94,32,0.22), transparent 65%),
+    radial-gradient(ellipse 45% 40% at 78% 35%, rgba(0,217,245,0.12), transparent 65%);
+}
+.header-content { position: absolute; bottom: 80px; left: 0; right: 0; z-index: 3; padding: 0 32px; }
+
+.article-category { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); border: 1px solid rgba(255,94,32,0.30); border-radius: 2px; padding: 6px 14px; margin-bottom: 24px; background: rgba(255,94,32,0.07); }
+.article-title { font-family: 'Anton', sans-serif; font-size: clamp(42px, 7vw, 88px); line-height: 0.92; letter-spacing: 0.01em; text-transform: uppercase; color: #fff; max-width: 1200px; margin: 0 auto; text-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+.article-title .highlight { color: var(--cyan); }
+.article-title .highlight-orange { color: var(--orange); }
+
+.article-meta { max-width: 860px; margin: 0 auto; padding: 40px 32px; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; border-bottom: 1px solid var(--border2); }
+.meta-author { display: flex; align-items: center; gap: 14px; }
+.author-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--purple)); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 18px; color: var(--bg); }
+.author-info { display: flex; flex-direction: column; gap: 2px; }
+.author-name { font-weight: 600; font-size: 15px; color: var(--text); }
+.author-role { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.meta-divider { width: 1px; height: 32px; background: var(--border2); }
+.meta-item { display: flex; flex-direction: column; gap: 2px; }
+.meta-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.meta-value { font-size: 14px; color: var(--text); }
+
+/* ── Article body: single centred column ── */
+.article-body { max-width: 860px; margin: 0 auto; padding: 60px 32px 100px; }
+
+/* ══ ARTICLE CONTENT STYLES ══════════════════════════════ */
+.article-content h2 { font-family: 'Anton', sans-serif; font-size: clamp(26px, 3.5vw, 40px); text-transform: uppercase; letter-spacing: 0.02em; color: #fff; margin: 56px 0 20px; line-height: 1.0; }
+.article-content h3 { font-family: 'Anton', sans-serif; font-size: clamp(18px, 2.5vw, 24px); text-transform: uppercase; letter-spacing: 0.03em; color: var(--text); margin: 40px 0 16px; }
+.article-content .accent { color: var(--cyan); }
+.article-content p { font-size: 16px; line-height: 1.85; color: var(--text); margin-bottom: 24px; }
+.article-lead { font-size: 19px; line-height: 1.8; color: var(--text); margin-bottom: 40px; font-weight: 300; border-left: 3px solid var(--cyan); padding-left: 24px; }
+.article-content em { color: var(--gold-lt); font-style: italic; }
+.article-content strong { color: #fff; font-weight: 600; }
+.glossary-term { color: var(--cyan); border-bottom: 1px dashed rgba(0,217,245,0.4); padding-bottom: 1px; }
+.glossary-term:hover { opacity: 1; border-bottom-color: var(--cyan); }
+
+.callout { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--cyan); border-radius: var(--radius); padding: 20px 24px; margin: 32px 0; display: flex; gap: 16px; align-items: flex-start; }
+.callout.warning { border-left-color: var(--orange); border-color: rgba(255,94,32,0.20); background: rgba(255,94,32,0.05); }
+.callout.success { border-left-color: var(--green); border-color: rgba(45,202,115,0.20); background: rgba(45,202,115,0.05); }
+.callout.gold { border-left-color: var(--gold); border-color: rgba(200,168,75,0.20); background: rgba(200,168,75,0.05); }
+.callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.callout-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 6px; }
+.callout.warning .callout-title { color: var(--orange); }
+.callout.success .callout-title { color: var(--green); }
+.callout.gold .callout-title { color: var(--gold); }
+.callout-content { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+.pullquote { border-left: 3px solid var(--orange); padding: 24px 32px; margin: 40px 0; background: rgba(255,94,32,0.04); }
+.pullquote-text { font-family: 'Anton', sans-serif; font-size: clamp(22px,3vw,30px); text-transform: uppercase; line-height: 1.15; color: #fff; letter-spacing: 0.01em; margin-bottom: 12px; }
+.pullquote-attribution { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); }
+
+.article-footer { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 40px; margin-top: 60px; text-align: center; }
+.footer-cta-title { font-family: 'Anton', sans-serif; font-size: clamp(24px,3vw,36px); text-transform: uppercase; color: #fff; margin-bottom: 16px; }
+.footer-cta-title .highlight { color: var(--cyan); }
+.footer-cta-text { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+.footer-cta-button { display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; background: var(--cyan); color: var(--bg); padding: 14px 32px; border-radius: var(--radius); transition: box-shadow .2s; }
+.footer-cta-button:hover { box-shadow: 0 0 24px var(--glow-c); opacity: .9; color: var(--bg); }
+
+/* ══ REFERENCES ══════════════════════════════════════════ */
+.references-section { max-width: 860px; margin: 0 auto; padding: 60px 32px; border-top: 1px solid var(--border2); }
+.section-heading { font-family: 'Anton', sans-serif; font-size: clamp(22px,3vw,32px); text-transform: uppercase; color: #fff; margin-bottom: 32px; }
+.reference-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+.reference-item { font-size: 13px; line-height: 1.7; color: var(--muted); padding-left: 52px; position: relative; }
+.reference-item::before { content: attr(data-number); position: absolute; left: 0; top: 0; font-family: var(--mono); font-size: 11px; color: var(--cyan); letter-spacing: 0.08em; }
+.ref-authors { color: var(--text); font-weight: 500; }
+.ref-title { font-style: italic; color: var(--text); }
+.ref-link { font-family: var(--mono); font-size: 11px; color: var(--cyan); word-break: break-all; display: block; margin-top: 4px; }
+.copyright-notice { margin-top: 32px; padding: 16px 20px; background: var(--surface2); border-radius: var(--radius); font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ══ GLOSSARY ════════════════════════════════════════════ */
+.glossary-section { max-width: 860px; margin: 0 auto; padding: 60px 32px; border-top: 1px solid var(--border2); }
+.glossary-list { display: flex; flex-direction: column; gap: 32px; }
+.glossary-item { padding: 24px; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius); }
+.glossary-term-title { font-family: var(--mono); font-size: 13px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+.back-link { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); border-bottom: none; }
+.back-link:hover { color: var(--cyan); }
+.glossary-definition { font-size: 14px; line-height: 1.75; color: var(--text); }
+
+/* ══ AUTHOR + SERVICES ═══════════════════════════════════ */
+.author-services-section { max-width: 860px; margin: 0 auto; padding: 0 32px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.about-author-card, .explore-services-card { background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 28px; }
+.author-section-header, .services-card-header { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.author-card { display: flex; gap: 16px; align-items: flex-start; }
+.author-card-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--purple)); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 18px; color: var(--bg); flex-shrink: 0; }
+.author-card-name { font-weight: 600; font-size: 16px; color: #fff; margin-bottom: 2px; }
+.author-card-title { font-family: var(--mono); font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.author-card-bio { font-size: 13px; line-height: 1.7; color: var(--text); margin-bottom: 14px; }
+.author-card-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.author-link { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--cyan); border: 1px solid var(--border); padding: 6px 12px; border-radius: var(--radius); transition: background .2s; }
+.author-link:hover { background: rgba(0,217,245,0.08); opacity: 1; }
+.services-card-title { font-family: 'Anton', sans-serif; font-size: 22px; text-transform: uppercase; color: #fff; margin-bottom: 12px; }
+.services-card-title .highlight { color: var(--cyan); }
+.services-card-text { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+.services-card-button { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; background: var(--cyan); color: var(--bg); padding: 12px 24px; border-radius: var(--radius); transition: box-shadow .2s; }
+.services-card-button:hover { box-shadow: 0 0 20px var(--glow-c); opacity: .9; color: var(--bg); }
+@media(max-width:768px){ .author-services-section { grid-template-columns: 1fr; } }
+
+/* ══ ARTICLE NAV CARDS ═══════════════════════════════════ */
+.article-nav-section { background: var(--surface); border-top: 1px solid var(--border2); padding: 48px 32px; }
+.article-nav-inner { max-width: 860px; margin: 0 auto; }
+.article-nav-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 20px; }
+.article-nav-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.nav-card { display: flex; flex-direction: column; gap: 8px; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 20px; transition: border-color .2s, background .2s; text-decoration: none; }
+.nav-card:hover { border-color: var(--cyan); background: rgba(0,217,245,0.04); }
+.nav-card.hidden { display: none; }
+.nav-card-icon { font-size: 18px; color: var(--cyan); }
+.nav-card-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.nav-card-title { font-size: 14px; color: var(--text); line-height: 1.4; }
+.nav-card.all-articles .nav-card-icon { color: var(--orange); }
+@media(max-width:640px){ .article-nav-grid { grid-template-columns: 1fr; } }
+
+/* ══ BACK TO TOP ══════════════════════════════════════════ */
+#back-to-top { position: fixed; bottom: 32px; right: 32px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: var(--surface3); border: 1px solid var(--border2); color: var(--muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s, transform .3s; }
+#back-to-top.show { opacity: 1; visibility: visible; }
+#back-to-top:hover { color: var(--cyan); border-color: var(--cyan); transform: translateY(-3px); }
+
+/* ══ FOOTER ══════════════════════════════════════════════ */
+footer { background: var(--surface); border-top: 1px solid var(--border2); padding: 64px 0 0; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 48px; }
+.fb-logo-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.pulse-ft { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 8px var(--cyan); animation: pulse 2.2s ease-in-out infinite; }
+.fb-wordmark { font-family: 'Anton', sans-serif; font-size: 20px; letter-spacing: .05em; text-transform: uppercase; }
+.fb-wordmark .ai { color: #fff; }
+.fb-wordmark .ma { color: var(--cyan); }
+.fb-sub { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.fb-tagline { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+.back-to-top { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .10em; text-transform: uppercase; color: var(--muted); background: var(--surface2); border: 1px solid var(--border2); padding: 10px 18px; border-radius: var(--radius); cursor: pointer; transition: color .2s, border-color .2s; }
+.back-to-top:hover { color: var(--cyan); border-color: var(--cyan); }
+.fl-head { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; }
+.fl-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.fl-list a { font-size: 13px; color: var(--muted); transition: color .2s; text-decoration: none; }
+.fl-list a:hover { color: var(--text); }
+.footer-bottom { border-top: 1px solid var(--border2); padding: 20px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-bottom p { font-size: 12px; color: var(--muted); }
+.footer-bottom span { font-family: var(--mono); font-size: 11px; color: var(--surface3); }
+@media(max-width:900px){ .footer-top { grid-template-columns: 1fr 1fr; } }
+@media(max-width:640px){ .footer-top { grid-template-columns: 1fr; } }
+
+/* ══ RESPONSIVE ══════════════════════════════════════════ */
+@media(max-width:768px){
+  .article-header { height: 50vh; min-height: 400px; }
+  .header-content { bottom: 40px; }
+  .article-meta { padding: 24px 20px; gap: 20px; }
+  .article-body { padding: 40px 20px 80px; }
+  .article-title { font-size: clamp(32px, 8vw, 48px); }
+  .pullquote-text { font-size: 20px; }
+  .references-section, .glossary-section { padding: 40px 20px; }
+  .author-services-section { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ MOBILE MENU ══════════════════════════════════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="http://joselitosering.github.io/aima/index.html#home"     onclick="closeMobile()">Home</a>
+  <a href="http://joselitosering.github.io/aima/index.html#services" onclick="closeMobile()">Services</a>
+  <a href="http://joselitosering.github.io/aima/index.html#rates"    onclick="closeMobile()">Rates</a>
+  <a href="http://joselitosering.github.io/aima/index.html#work"     onclick="closeMobile()">Work</a>
+  <a href="http://joselitosering.github.io/aima/index.html#process"  onclick="closeMobile()">Process</a>
+  <a href="http://joselitosering.github.io/aima/index.html#about"    onclick="closeMobile()">About</a>
+  <a href="http://joselitosering.github.io/aima/insights.html"       onclick="closeMobile()">Insights</a>
+  <a href="http://joselitosering.github.io/aima/gallery.html"        onclick="closeMobile()">Gallery</a>
+  <a href="http://joselitosering.github.io/aima/index.html#contact"  class="m-cta" onclick="closeMobile()">Get a Quote</a>
+  <div class="m-legal">
+    <a href="http://joselitosering.github.io/aima/index.html#tos"       onclick="closeMobile()">Terms</a>
+    <a href="http://joselitosering.github.io/aima/index.html#privacy"   onclick="closeMobile()">Privacy</a>
+    <a href="http://joselitosering.github.io/aima/index.html#refund"    onclick="closeMobile()">Refunds</a>
+    <a href="http://joselitosering.github.io/aima/index.html#licensing" onclick="closeMobile()">Licensing</a>
+    <a href="http://joselitosering.github.io/aima/index.html#cookies"   onclick="closeMobile()">Cookies</a>
+  </div>
+</div>
+
+<!-- ══ NAVIGATION ══════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="http://joselitosering.github.io/aima/index.html" class="nav-logo">
+      <div class="pulse"></div>
+      <span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="http://joselitosering.github.io/aima/index.html#home">Home</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#services">Services</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#rates">Rates</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#work">Work</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#process">Process</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#about">About</a></li>
+      <li><a href="http://joselitosering.github.io/aima/insights.html" class="active">Insights</a></li>
+      <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
+    </ul>
+    <a href="http://joselitosering.github.io/aima/index.html#contact" class="nav-cta">Get a Quote</a>
+    <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ FLOATING SHARE SIDEBAR ══════════════════════════════ -->
+<div id="share-sidebar">
+  <div class="share-sidebar-label">Share</div>
+
+  <a class="share-fab" title="Share on Facebook"
+     data-share="facebook"
+     href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL"
+     target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </svg>
+  </a>
+
+  <a class="share-fab" title="Share on X / Twitter"
+     data-share="twitter"
+     href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE"
+     target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4l16 16M4 20L20 4"/>
+    </svg>
+  </a>
+
+  <a class="share-fab" title="Share on LinkedIn"
+     data-share="linkedin"
+     href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL"
+     target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+      <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+    </svg>
+  </a>
+
+  <a class="share-fab" title="Email this article"
+     data-share="email"
+     href="mailto:?subject=PAGE_TITLE&body=PAGE_URL"
+     target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </svg>
+  </a>
+
+  <button class="share-fab copy-btn" title="Copy link" id="copyLinkBtn" aria-label="Copy link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+    </svg>
+  </button>
+</div>
+
+<!-- ══ FLOATING TOC SIDEBAR ════════════════════════════════ -->
+<div id="toc-sidebar">
+  <div class="toc-panel">
+    <span class="toc-panel-label">Contents</span>
+    <nav class="toc-nav">
+      <a href="#section-ancient"    class="toc-link">Ancient Surgery</a>
+      <a href="#section-evolution"  class="toc-link">Technology Evolves</a>
+      <a href="#section-imaging"    class="toc-link">AI Imaging</a>
+      <a href="#section-discovery"  class="toc-link">Drug Discovery</a>
+      <a href="#section-workforce"  class="toc-link">The Workforce</a>
+      <a href="#section-humanity"   class="toc-link">For Humanity</a>
+      <a href="#section-guardrails" class="toc-link">Guardrails</a>
+      <a href="#section-orgs"       class="toc-link">Organizations</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ══ FLOATING BACK TO TOP ════════════════════════════════ -->
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     ARTICLE
+══════════════════════════════════════════════════════════ -->
+<article class="article-wrapper" id="article-top">
+
+  <!-- Hero Header -->
+  <header class="article-header">
+    <div class="header-media" id="headerImage"></div>
+    <div class="header-overlay"></div>
+    <div class="header-content">
+      <div class="container">
+        <span class="article-category fade-in" id="articleCategory">Health &amp; AI</span>
+        <h1 class="article-title fade-in delay-2" id="articleTitle">
+          The <span class="highlight">Healing</span> Machine: AI and the Future of <span class="highlight-orange">Medicine</span>
+        </h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- Meta Row -->
+  <div class="article-meta fade-in delay-2">
+    <div class="meta-author">
+      <div class="author-avatar" id="authorAvatar">JS</div>
+      <div class="author-info">
+        <div class="author-name" id="authorName">Joselito Sering</div>
+        <div class="author-role">Editor-in-Chief · AIMA</div>
+      </div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      <div class="meta-label">Published</div>
+      <div class="meta-value" id="publishDate">May 12, 2026</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      <div class="meta-label">Read Time</div>
+      <div class="meta-value" id="readTime">18 min read</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      <div class="meta-label">Category</div>
+      <div class="meta-value" id="categoryValue">Health &amp; AI</div>
+    </div>
+  </div>
+
+  <!-- Article Body -->
+  <div class="article-body">
+    <main class="article-content">
+
+      <!-- Lead Paragraph -->
+      <p class="article-lead">
+        Ten thousand years before the first hospital was built, a healer knelt beside a patient, picked up a sharpened stone, and drilled a hole into a living skull. Somehow, it worked. The patient survived. That act—terrifying, audacious, and compassionate—is the oldest recorded surgery in human history. It is also the beginning of a story that ends, so far, with <a href="#glossary-artificial-intelligence" class="glossary-term" id="mention-ai">artificial intelligence</a> predicting protein structures that took nature billions of years to perfect, detecting cancers invisible to the human eye, and writing clinical notes so doctors can look their patients in the face. <strong>The tools have changed. The impulse—to reach for whatever is available in service of healing—has not.</strong>
+      </p>
+
+      <!-- ══ SECTION 1 ═══════════════════════════════════════ -->
+      <h2 id="section-ancient">The First Surgeons: <span class="accent">Bone, Stone, and Survival</span></h2>
+
+      <p>
+        The oldest surgical procedure known to archaeology is <a href="#glossary-trepanation" class="glossary-term" id="mention-trepanation">trepanation</a>—the deliberate cutting or scraping of a hole into the human skull. Evidence for the practice dates to the Neolithic period, at least 10,000 years ago, and skull specimens bearing its marks have been found on every inhabited continent. In prehistoric Peru, surgeons used a ceremonial blade called a <em>tumi</em> to scrape through bone. In Europe, obsidian and flint were shaped into hand-held borers. In ancient Rome and Greece, refined metal instruments called <em>terebra serrata</em> were rolled manually between the surgeon's palms to penetrate the cranium with more precision.
+      </p>
+
+      <p>
+        What is most remarkable is not the procedure itself, but its survival rate. Comparative osteological studies of Inca-era skulls show that their <em>sirkaks</em>—trained surgical specialists—achieved patient survival rates of 50 to 70 percent, with surprisingly low rates of post-operative infection. For context: nineteenth-century European hospitals, despite their modern pretensions, recorded similarly grim surgical mortality, largely from hospital-acquired infections that ancient practitioners, operating outdoors in open air, accidentally avoided.
+      </p>
+
+      <div class="callout gold">
+        <span class="callout-icon">🗿</span>
+        <div>
+          <div class="callout-title">Archaeological Record</div>
+          <div class="callout-content">
+            The Edwin Smith Papyrus, dated to approximately 1600 BCE, describes 48 surgical cases with remarkably systematic logic: examination, diagnosis, prognosis, treatment. It is the earliest known medical text to treat the body empirically rather than through prayer alone. Hippocrates formalized this empirical tradition into ethical standards that physicians still swear by today.
+          </div>
+        </div>
+      </div>
+
+      <p>
+        The Egyptians documented surgical treatment for wounds, tumors, and fractures with a methodical discipline that suggests an institution, not an individual genius. The Greeks under Hippocrates—the so-called Father of Medicine—established ethical standards and systematized anatomical observation. Galen, centuries later, extended this work into physiology, even as his errors went unchallenged for over a thousand years. In China, the physician Hua Tuo reportedly performed complex abdominal surgery using herbal anesthesia. In India and South America, practitioners discovered that certain ants, if placed at the edges of a wound, could clamp the tissue shut with their mandibles—a biological staple that worked better than thread.
+      </p>
+
+      <p>
+        The through-line across all of these traditions is not mysticism. It is engineering. Every culture that practiced medicine looked at what was available—obsidian, bone needles, termite jaws, fermented grain for anesthesia—and asked: <em>how can this be made to serve the body?</em> That question has never stopped being asked.
+      </p>
+
+      <!-- ══ SECTION 2 ═══════════════════════════════════════ -->
+      <h2 id="section-evolution">From Scalpel to Scanner: <span class="accent">Technology in Stages</span></h2>
+
+      <p>
+        For most of recorded history, surgery meant one thing: a sharp instrument, a skilled hand, and a patient who was awake for it. The discovery of ether anesthesia in 1846—demonstrated publicly at Massachusetts General Hospital in what observers called a near-miraculous event—changed the terms of the relationship between surgeon and patient. Pain no longer set the clock. Surgeons could take time. Complexity became possible.
+      </p>
+
+      <p>
+        Then came antisepsis. Joseph Lister's 1867 application of carbolic acid to surgical wounds—inspired by Louis Pasteur's germ theory—transformed hospitals from places where patients went to die of infection into places where recovery was statistically probable. Within a generation, the surgical mortality rate for amputations fell from over 40 percent to under five. The hospital as a concept was reborn.
+      </p>
+
+      <p>
+        The twentieth century compressed the equivalent of millennia into decades. Wilhelm Röntgen's 1895 discovery of X-rays gave physicians the first non-invasive window into the living body. Penicillin arrived in clinical use in the 1940s, rendering previously fatal infections mundane. Open-heart surgery became possible with the heart-lung bypass machine in the 1950s. <a href="#glossary-mri" class="glossary-term" id="mention-mri">Magnetic resonance imaging (MRI)</a> arrived in the 1970s. Laparoscopic surgery—operating through tiny incisions using cameras and miniaturized tools—emerged in the 1980s, slashing recovery times and surgical trauma simultaneously.
+      </p>
+
+      <div class="callout">
+        <span class="callout-icon">💡</span>
+        <div>
+          <div class="callout-title">The Pattern</div>
+          <div class="callout-content">
+            Every major leap in medicine follows the same architecture: a new tool or understanding (anesthesia, germ theory, imaging) removes a constraint that previously limited what was survivable. <strong>The tool does not replace the healer. It expands what healing can mean.</strong> This is the correct frame through which to understand artificial intelligence in medicine today.
+          </div>
+        </div>
+      </div>
+
+      <p>
+        By the early twenty-first century, robotic surgical systems—most famously the da Vinci Surgical System—allowed surgeons to operate through incisions smaller than a fingertip, guided by high-definition three-dimensional imaging, their movements filtered and scaled by software. Genomic sequencing, once a decade-long, billion-dollar effort, became a matter of days and thousands of dollars, then hours and hundreds. The CRISPR gene-editing system, demonstrated in 2012, introduced the possibility of rewriting the source code of disease itself.
+      </p>
+
+      <p>
+        At each stage, the question that mattered was not philosophical. It was practical: <em>can this tool be made to serve the body?</em> And now, the tool is artificial intelligence.
+      </p>
+
+      <!-- ══ SECTION 3 ═══════════════════════════════════════ -->
+      <h2 id="section-imaging">AI and the <span class="accent">Eye That Never Tires</span></h2>
+
+      <p>
+        A radiologist reads between 20,000 and 30,000 images per year. Fatigue, time pressure, and the sheer volume of scans create conditions where even expert eyes miss things—not from incompetence, but from being human. AI does not get tired. It does not skip a scan because it has forty more to read before lunch. And, increasingly, it sees things that trained human eyes cannot.
+      </p>
+
+      <h3>Stroke Detection</h3>
+
+      <p>
+        Stroke is a race against time. Every minute a large vessel occlusion goes undetected, approximately 1.9 million neurons die. In 2018, Viz.ai became the first AI tool cleared by the U.S. Food and Drug Administration for neurovascular imaging—its algorithm automatically detects signs of large vessel occlusion in CT scans and alerts the entire care team within minutes, bypassing the traditional chain of calls. By 2025, Viz.ai's system was deployed in over 1,600 hospitals worldwide. The documented average time-to-treatment savings: approximately one hour per stroke patient. In stroke medicine, an hour is not a convenience. It is the difference between walking out and not.
+      </p>
+
+      <h3>Cancer Detection</h3>
+
+      <p>
+        In breast cancer screening, a 2025 study found that an AI-assisted mammography system reduced both false alarm rates and missed diagnoses compared to imaging physicians alone—false positives down by 5.7 percentage points relative to human readers working unassisted, missed diagnoses down by 9.4 points. For lung cancer, an AI model trained on CT imaging from the National Lung Cancer Screening Trial demonstrated a sensitivity of 94.4 percent and a specificity of 93.8 percent in predicting cancer risk—outperforming six radiologists on false positive and false negative rates when prior imaging was unavailable.
+      </p>
+
+      <p>
+        In thoracic imaging, deep learning platforms using <a href="#glossary-radiomics" class="glossary-term" id="mention-radiomics">radiomics</a>—the extraction of large amounts of quantitative features from medical images—are classifying pulmonary nodule subtypes with an area under the curve of 93.6 percent for invasive adenocarcinoma. These are not laboratory curiosities. The FDA had cleared over 873 AI-enabled medical devices by mid-2025, approximately 115 of which were specifically radiology algorithms. These tools are operating in clinical settings, on real patients, today.
+      </p>
+
+      <div class="callout success">
+        <span class="callout-icon">✓</span>
+        <div>
+          <div class="callout-title">Real Impact</div>
+          <div class="callout-content">
+            At KMC Manipal Hospital in India, AI-enabled CT workflows allowed clinicians to serve <strong>20 to 30 more patients daily</strong> while maintaining diagnostic accuracy—a meaningful expansion of access in a country where radiologist-to-patient ratios remain critically strained. AI, deployed thoughtfully, is not just a diagnostic tool. It is an access tool.
+          </div>
+        </div>
+      </div>
+
+      <h3>The Radiologist Redefined</h3>
+
+      <p>
+        The 2025 Philips Future Health Index surveyed radiologists worldwide. Eighty-five percent reported that AI will help ensure greater consistency in patient examinations; the same number said it can improve patient outcomes. But 43 percent also reported spending more time on administrative work and less time with patients than five years prior—a paradox that AI is beginning to directly address. Generative AI systems that convert spoken dictation into structured radiology reports are moving documentation off the physician's plate and returning attention to the image and the patient behind it.
+      </p>
+
+      <p>
+        The fear that AI will replace radiologists is, at this stage, unsupported by evidence. What the evidence shows is that AI removes the most cognitively draining, least clinically distinctive parts of radiology work—routine triage, normal/abnormal classification, report templating—freeing radiologists to do what they are irreplaceable at: clinical judgment in complex, ambiguous, edge-case scenarios. The eye that never tires serves the eye that understands.
+      </p>
+
+      <div class="pullquote">
+        <p class="pullquote-text">
+          The most effective AI tools put people first. Not as a replacement, but as an augmentation of human expertise and care.
+        </p>
+        <span class="pullquote-attribution">— Philips Future Health Index, 2025</span>
+      </div>
+
+      <!-- ══ SECTION 4 ═══════════════════════════════════════ -->
+      <h2 id="section-discovery">The Molecule Hunters: <span class="accent">AI and Drug Discovery</span></h2>
+
+      <p>
+        The standard drug development pipeline is one of the least efficient processes in modern science. From initial target identification to regulatory approval, a new drug takes an average of 12 to 15 years and costs upward of 2.5 billion dollars—and more than 90 percent of candidates that enter clinical trials still fail. The bottleneck is not ambition. It is the staggering complexity of biology.
+      </p>
+
+      <p>
+        Proteins are the machines of life. Every cellular process—every immune response, every signal between neurons, every act of digestion—is orchestrated by proteins that fold into precise three-dimensional shapes. Understanding those shapes is essential to designing drugs that fit into them like keys into locks. The problem is that predicting how a protein folds from its amino acid sequence—the protein folding problem—was considered one of the hardest unsolved challenges in science. It remained unsolved for 50 years.
+      </p>
+
+      <h3>AlphaFold: A Nobel-Worthy Leap</h3>
+
+      <p>
+        In 2020, Google DeepMind's <a href="#glossary-alphafold" class="glossary-term" id="mention-alphafold">AlphaFold</a> 2 solved it. Its predictions achieved near-experimental accuracy in protein structure—a result so significant that it was recognized with the 2024 Nobel Prize in Chemistry, awarded to DeepMind's Demis Hassabis and John Jumper. By 2025, the AlphaFold Protein Structure Database had grown from 300,000 structures to over 214 million—500 times larger—providing free, open access to structural data for researchers in 190 countries. An independent analysis found that researchers using AlphaFold 2 increased their submission of novel experimental protein structures by over 40 percent, and their work was twice as likely to be cited in clinical articles.
+      </p>
+
+      <p>
+        AlphaFold 3, released in 2024, extended predictions beyond single proteins to protein-ligand, protein-nucleic acid, and protein-protein complexes—the full choreography of molecular medicine. In peptide therapeutics, platforms combining AlphaFold with design tools like ProteinMPNN have accelerated the creation of stable, potent drug candidates. At the Oxford Drug Discovery Institute, researchers used AI to evaluate 54 immune-related genes as potential Alzheimer's disease targets—a process that once took weeks, now completed in days.
+      </p>
+
+      <h3>From Target to Trial in 18 Months</h3>
+
+      <p>
+        The most striking demonstration of AI-driven drug discovery to date may be Insilico Medicine's ISM001-055—a drug candidate for pulmonary fibrosis identified entirely through AI-powered target discovery and generative chemistry, from initial target identification to human clinical trials in under 18 months. The conventional timeline for that journey is measured in years to a decade. By 2025, global venture funding for AI drug discovery had reached 3.3 billion dollars, with notable partnerships including a one-billion-dollar alliance between Generate:Biomedicines and Novartis and Isomorphic Labs securing over 600 million dollars for AlphaFold-integrated drug design.
+      </p>
+
+      <p>
+        At the Massachusetts Institute of Technology's Jameel Clinic, AI systems have identified novel antibiotic compounds by screening chemical libraries at a scale impossible through manual methods—including candidates that evade the resistance mechanisms that have rendered many existing antibiotics ineffective. In an era of rising antimicrobial resistance, this is not academic. It is urgent.
+      </p>
+
+      <!-- ══ SECTION 5 ═══════════════════════════════════════ -->
+      <h2 id="section-workforce">The Human Side: <span class="accent">Patients, Practitioners, and the People in Between</span></h2>
+
+      <p>
+        Medicine is not only a scientific enterprise. It is a human one. And the people who practice it are in crisis.
+      </p>
+
+      <p>
+        Burnout among healthcare workers is not a fringe phenomenon. At least a quarter of all healthcare workers report symptoms—exhaustion, depersonalization, a reduced sense of accomplishment. In specific roles, the numbers are starker: 51 percent of radiologists, 56 percent of nurses, and 75 percent of sonographers report burnout symptoms. The cause is not complexity or responsibility, which most practitioners accept as inherent to the profession. The cause, consistently, is administrative burden—and most of it originates from <a href="#glossary-ehr" class="glossary-term" id="mention-ehr">electronic health records (EHR)</a>.
+      </p>
+
+      <p>
+        The average physician spends nearly two hours on documentation for every one hour of patient care. This is not medicine. It is data entry. And it is killing the people meant to heal others.
+      </p>
+
+      <h3>The AI Scribe</h3>
+
+      <p>
+        The most immediate impact of AI in clinical settings in 2025 is not surgery or diagnosis. It is the ambient clinical intelligence—the AI scribe—that listens to a physician-patient conversation and automatically generates structured clinical notes. A 2025 study published in <em>JAMA Network Open</em> tracked 263 physicians across six healthcare systems over 30 days with an ambient AI scribe. Burnout among ambulatory clinicians dropped significantly—from 51.9 percent to 38.8 percent. Documentation time after hours decreased. Focused attention on patients increased. Urgent access to care improved.
+      </p>
+
+      <p>
+        This is a 13-percentage-point reduction in burnout in 30 days. By comparison, most institutional wellness programs—yoga subscriptions, resilience workshops, gratitude apps—produce effects too small to measure at scale. The scribe works because it attacks the actual source of the problem.
+      </p>
+
+      <div class="callout">
+        <span class="callout-icon">🩺</span>
+        <div>
+          <div class="callout-title">For Nurses</div>
+          <div class="callout-content">
+            An integrative review of AI in nursing, synthesizing 18 studies across diverse healthcare settings, found that AI-powered monitoring systems—including wearable sensors and real-time alert platforms—enabled nurses to detect subtle physiological changes well before traditional methods. Early-warning algorithms facilitated faster clinical responses, reducing complications, shortening hospital stays, and lowering readmission rates. AI-based automation of scheduling and administrative tasks led to <strong>measurable reductions in nurse burnout and improved job satisfaction</strong>.
+          </div>
+        </div>
+      </div>
+
+      <h3>For Patients</h3>
+
+      <p>
+        The patient-facing implications are equally significant. AI-powered triage systems can stratify emergency department patients by acuity, ensuring that the patient having a heart attack is not waiting behind the patient with a sprained ankle. Predictive models flag high-risk patients for early intervention before deterioration becomes acute. Fall-prevention algorithms using computer vision detect when at-risk patients are attempting to leave their beds and alert nurses before an incident occurs.
+      </p>
+
+      <p>
+        In pathology, AI systems can analyze <a href="#glossary-digital-pathology" class="glossary-term" id="mention-digital-pathology">digital pathology</a> slides at speeds no human can match, flagging suspicious cellular patterns across thousands of images. In surgical robotics, AI is moving from passive instrument to active assistant—adjusting for tissue movement, providing haptic feedback on tension, and flagging proximity to critical structures during minimally invasive procedures.
+      </p>
+
+      <p>
+        The patient does not necessarily see the AI. What they see is a physician who makes eye contact. A nurse who is not buried in a screen. A diagnosis that arrives faster. A drug that was designed for their specific tumor's genetic profile rather than the average of the clinical trial population. The AI is the infrastructure. The care is still human.
+      </p>
+
+      <!-- ══ SECTION 6 ═══════════════════════════════════════ -->
+      <h2 id="section-humanity">Aimed at Humanity: <span class="accent">What We Could Do If We Chose To</span></h2>
+
+      <p>
+        Here is the uncomfortable truth about the current state of AI in medicine: its benefits are not evenly distributed. The hospitals deploying AI diagnostic tools are, overwhelmingly, in wealthy countries. The populations generating the training data are, overwhelmingly, European and North American. An AI diagnostic system trained on one demographic may perform measurably worse when applied to another—a problem with both technical and ethical dimensions.
+      </p>
+
+      <p>
+        A 2025 analysis in <em>Chambers Healthcare AI</em> noted this plainly: diagnostic tools trained primarily on data from Western populations may perform poorly when deployed among patients in sub-Saharan Africa or Southeast Asia. This is not speculation. It is a documented phenomenon in dermatology AI (trained predominantly on lighter skin tones), in cardiac risk prediction (trained predominantly on male patients), and in pain assessment algorithms (which have historically underestimated pain in Black patients).
+      </p>
+
+      <p>
+        But this same analysis shows the counter-possibility. <em>If AI systems are designed with equity as a first principle—if training datasets are actively diversified, if deployment is prioritized in underserved settings, if the infrastructure investment follows the need rather than the market—then AI could be the most powerful force for medical equity in human history.</em>
+      </p>
+
+      <h3>The Access Argument</h3>
+
+      <p>
+        The Philippines has approximately one radiologist for every 30,000 to 50,000 people in rural provinces. AI-powered diagnostic systems do not require a radiologist to be in the room. They require a device, a connection, and a trained technician to operate the scanner. A 2025 Frontiers paper on AI in developing-country health systems argued that digital health should be recognized as a top priority for these nations, with AI implemented as a mechanism for achieving equity, not replicating it. The WHO's Global Initiative on AI for Health (GI-AI4H) is already working toward this framework across 193 member states.
+      </p>
+
+      <p>
+        An AI that can read a chest X-ray and flag tuberculosis at 94 percent sensitivity, deployed on a tablet in a rural health center, is not a lesser version of hospital-based radiology. For the patient who would otherwise receive no radiology at all, it is everything.
+      </p>
+
+      <div class="pullquote">
+        <p class="pullquote-text">
+          For the patient who would otherwise receive no radiology at all, an AI that reads their X-ray on a tablet is not a second-best option. It is a miracle made ordinary.
+        </p>
+        <span class="pullquote-attribution">— AIMA Editorial Position</span>
+      </div>
+
+      <h3>Precision for the Underserved</h3>
+
+      <p>
+        <a href="#glossary-precision-medicine" class="glossary-term" id="mention-precision-medicine">Precision medicine</a>—the tailoring of treatment to an individual's genetic, environmental, and lifestyle profile—has historically been available only to patients at major academic medical centers with access to expensive genomic sequencing. AI is changing this calculus. As sequencing costs fall and AI analysis becomes cloud-deployable, the capacity for personalized treatment is becoming decoupled from geography and institutional resources.
+      </p>
+
+      <p>
+        Imagine a child in a low-income province receiving a tuberculosis diagnosis not just confirmed but matched against a database of regional strain resistance patterns, guiding a treatment plan calibrated to the specific bacterium she carries. Imagine a cancer patient whose tumor's genomic signature is analyzed by an AI that has processed millions of similar cases, surfacing a treatment protocol from a clinical trial she would never have known existed. These are not science fiction. They are extensions of capabilities that exist today, not yet deployed at scale.
+      </p>
+
+      <!-- ══ SECTION 7 ═══════════════════════════════════════ -->
+      <h2 id="section-guardrails">Guardrailing the <span class="accent">Humans Behind the Machine</span></h2>
+
+      <p>
+        The great irony of AI governance in healthcare is that the technology is, in many respects, more tractable than the humans deploying it. An AI algorithm, once trained, behaves consistently. It does not have a bad day. It does not accept pharmaceutical industry sponsorship. It does not have a financial incentive to order unnecessary procedures. The risks it poses are real but, in principle, auditable. The risks posed by human actors—regulatory capture, profit motive, willful neglect of equity—are far older and more stubborn.
+      </p>
+
+      <p>
+        By 2025, 67 countries had introduced national AI strategies, but most still lacked AI-specific healthcare legislation, relying instead on existing data privacy frameworks or medical device regulations that were not designed for adaptive algorithms. The patchwork is insufficient. The UN General Assembly's 2024 resolution on AI called for systems that are "safe, secure, and trustworthy," but the resolution carries no binding force. The G7 Hiroshima Process and G20 AI Principles offer voluntary guidelines. Voluntary is not enough when lives are at stake.
+      </p>
+
+      <h3>What Effective Governance Looks Like</h3>
+
+      <p>
+        The FUTURE-AI framework, published in the <em>BMJ</em> in 2025 and developed through international consensus, offers the most comprehensive existing blueprint for trustworthy health AI. Its principles include: fairness (algorithms must perform equitably across patient populations), universality (tools must be designed for global deployment, not just wealthy markets), traceability (every AI decision must be explainable and auditable), usability (tools must work in real clinical workflows, not just controlled research environments), and safety (robust post-deployment surveillance must be mandatory, not optional).
+      </p>
+
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div>
+          <div class="callout-title">The Bias Problem</div>
+          <div class="callout-content">
+            Algorithmic bias is not a theoretical risk. It is an active harm. AI systems trained on non-representative data have been documented to underperform for Black patients, women, elderly populations, and patients in low-income countries. <strong>Every AI tool deployed in healthcare must undergo mandatory bias auditing across demographic subgroups, not just overall performance metrics.</strong> Reporting overall accuracy while concealing disparate performance is a form of deception. It must be treated as such, legally and ethically.
+          </div>
+        </div>
+      </div>
+
+      <h3>Regulatory Pathways That Actually Work</h3>
+
+      <p>
+        The U.S. FDA's existing 510(k) clearance pathway was not designed for software that continuously learns and updates. The EU AI Act, which entered force in 2024, classifies most medical AI as high-risk, requiring conformity assessments and quality management systems before market entry. Neither framework is perfect. Both represent genuine attempts to build governance structures for a technology category that did not exist when the underlying regulatory architecture was designed.
+      </p>
+
+      <p>
+        What is needed, and what the WHO's GI-AI4H is actively working toward, is harmonized global governance: common standards for training data diversity, common requirements for pre-market bias testing, common frameworks for post-market surveillance, and—critically—common expectations that the nations where AI tools will be deployed have meaningful participation in setting those standards. A governance framework designed in California or Brussels without input from Manila or Nairobi is not global governance. It is global imposition.
+      </p>
+
+      <h3>AI as the Watchdog</h3>
+
+      <p>
+        Here is the deeper irony. AI may be the best tool available for auditing AI. Automated systems can monitor algorithm performance continuously across patient subgroups, flagging when a tool's accuracy degrades for specific demographics. Natural language processing can analyze clinical notes and billing codes for patterns consistent with overtreatment, undertreatment, or fraud. Predictive models can identify which healthcare facilities are most likely experiencing systemic failures in patient safety—directing human inspectors to where they are most needed.
+      </p>
+
+      <p>
+        We can use the tool to watch the tool. We can use the machine to audit the humans behind the machine. The technology to do this exists. What is required is the political will to mandate it, fund it, and enforce the results without regard for the commercial interests of the companies that built the systems under review.
+      </p>
+
+      <!-- ══ SECTION 8 ═══════════════════════════════════════ -->
+      <h2 id="section-orgs">Organizations Working Toward <span class="accent">AI for Good Health</span></h2>
+
+      <p>
+        The following organizations represent the most credible, active institutional efforts to ensure that AI in healthcare serves humanity rather than extracting from it. They are not exhaustive. They are a starting point.
+      </p>
+
+      <p>
+        <strong>World Health Organization (WHO) — AI for Health:</strong> The WHO's digital health team coordinates the Global Initiative on AI for Health (GI-AI4H), harmonizing governance standards across 193 member states with particular focus on low- and middle-income countries. Their publications include the first global regulatory considerations for AI in health and ongoing technical guidance for member states. <a href="https://www.who.int/teams/digital-health-and-innovation/harnessing-artificial-intelligence-for-health" target="_blank" rel="noopener noreferrer">who.int/ai-for-health</a>
+      </p>
+
+      <p>
+        <strong>MIT Abdul Latif Jameel Clinic for Machine Learning in Health:</strong> The Jameel Clinic is at the forefront of applied AI research for health equity, including antibiotic resistance, cancer detection, and pandemic preparedness. Its work explicitly prioritizes impact in underserved populations. <a href="https://jameel.mit.edu/" target="_blank" rel="noopener noreferrer">jameel.mit.edu</a>
+      </p>
+
+      <p>
+        <strong>Google DeepMind — AlphaFold:</strong> The AlphaFold Protein Structure Database is free, open-access, and used by over two million researchers in 190 countries. The open publication of AlphaFold 2's methodology was a deliberate act of scientific generosity with direct humanitarian implications for drug discovery in neglected tropical diseases. <a href="https://alphafold.ebi.ac.uk/" target="_blank" rel="noopener noreferrer">alphafold.ebi.ac.uk</a>
+      </p>
+
+      <p>
+        <strong>Partnership on AI — Health and Humanitarian Action:</strong> A multi-stakeholder organization working on responsible AI practices, with specific working groups on healthcare AI fairness, bias mitigation, and vulnerable population protection. <a href="https://partnershiponai.org/" target="_blank" rel="noopener noreferrer">partnershiponai.org</a>
+      </p>
+
+      <p>
+        <strong>Doctors Without Borders (MSF) — Digital Health:</strong> MSF operates in the most resource-constrained clinical environments on Earth. Their digital health team is evaluating and deploying AI tools for diagnostics, surveillance, and clinical decision support in conflict zones and epidemic settings where no alternative exists. <a href="https://www.msf.org/digital-health" target="_blank" rel="noopener noreferrer">msf.org/digital-health</a>
+      </p>
+
+      <p>
+        <strong>AI for Good — United Nations ITU:</strong> The UN ITU's AI for Good platform connects AI innovators with UN agencies, governments, and NGOs working on health challenges including infectious disease, maternal mortality, and mental health. <a href="https://aiforgood.itu.int/" target="_blank" rel="noopener noreferrer">aiforgood.itu.int</a>
+      </p>
+
+      <p>
+        <strong>The Lancet and Financial Times Commission on Governing Health Futures:</strong> A standing commission examining the digital transformation of health through an equity lens, producing binding-adjacent recommendations for national governments and international bodies. <a href="https://www.thelancet.com/commissions/governing-health-futures" target="_blank" rel="noopener noreferrer">thelancet.com/commissions</a>
+      </p>
+
+      <!-- Article Footer CTA -->
+      <div class="article-footer">
+        <h3 class="footer-cta-title">Ready to Build <span class="highlight">AI for Good?</span></h3>
+        <p class="footer-cta-text">
+          AIMA builds AI-native production systems at the intersection of technology and human kindness. If your organization is working toward health equity, we want to help tell that story.
+        </p>
+        <a href="http://joselitosering.github.io/aima/index.html#contact" class="footer-cta-button">Start the Conversation</a>
+      </div>
+
+    </main>
+  </div><!-- /.article-body -->
+
+  <!-- ══ REFERENCES ══════════════════════════════════════════ -->
+  <section class="references-section">
+    <h2 class="section-heading">References</h2>
+    <ol class="reference-list">
+
+      <li class="reference-item" data-number="[1]">
+        <span class="ref-authors">CNI College.</span>
+        "Surgical Technology in the Modern Age."
+        <span class="ref-title">CNI College Blog</span>, 22 Mar. 2024.
+        <a href="https://cnicollege.edu/blog/surgical-technology/surgical-technology-in-modern-age/" class="ref-link" target="_blank" rel="noopener noreferrer">https://cnicollege.edu/blog/surgical-technology/surgical-technology-in-modern-age/</a>
+      </li>
+
+      <li class="reference-item" data-number="[2]">
+        <span class="ref-authors">Verano, John W., et al.</span>
+        "Preconquest Peruvian Neurosurgeons: A Study of Inca and Pre-Columbian Trephination and the Art of Medicine in Ancient Peru."
+        <span class="ref-title">Neurosurgery</span>, vol. 47, no. 4, 2000, pp. 940–950.
+        <a href="https://pubmed.ncbi.nlm.nih.gov/11014434/" class="ref-link" target="_blank" rel="noopener noreferrer">https://pubmed.ncbi.nlm.nih.gov/11014434/</a>
+      </li>
+
+      <li class="reference-item" data-number="[3]">
+        <span class="ref-authors">IntuitionLabs.</span>
+        "AI in Radiology: 2025 Trends, FDA Approvals &amp; Adoption."
+        <span class="ref-title">IntuitionLabs Research</span>, 6 Nov. 2025.
+        <a href="https://intuitionlabs.ai/articles/ai-radiology-trends-2025" class="ref-link" target="_blank" rel="noopener noreferrer">https://intuitionlabs.ai/articles/ai-radiology-trends-2025</a>
+      </li>
+
+      <li class="reference-item" data-number="[4]">
+        <span class="ref-authors">Yang, et al.</span>
+        "Application of Artificial Intelligence in Medical Imaging: Current Status and Future Directions."
+        <span class="ref-title">iRadiology</span>, Wiley, 9 Apr. 2025.
+        <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ird3.70008" class="ref-link" target="_blank" rel="noopener noreferrer">https://onlinelibrary.wiley.com/doi/full/10.1002/ird3.70008</a>
+      </li>
+
+      <li class="reference-item" data-number="[5]">
+        <span class="ref-authors">Philips.</span>
+        "AI in Radiology: Three Keys to Real-World Impact."
+        <span class="ref-title">Philips Future Health Index</span>, 30 Jan. 2026.
+        <a href="https://www.philips.com/a-w/about/news/archive/features/2025/ai-in-radiology-three-keys-to-real-world-impact.html" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.philips.com/.../ai-in-radiology-three-keys-to-real-world-impact</a>
+      </li>
+
+      <li class="reference-item" data-number="[6]">
+        <span class="ref-authors">Drug Discovery News.</span>
+        "How AI Is Transforming Drug Discovery."
+        <span class="ref-title">Drug Discovery News</span>, 2 Oct. 2025.
+        <a href="https://www.drugdiscoverynews.com/ai-is-transforming-drug-discovery-16706" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.drugdiscoverynews.com/ai-is-transforming-drug-discovery-16706</a>
+      </li>
+
+      <li class="reference-item" data-number="[7]">
+        <span class="ref-authors">Google DeepMind.</span>
+        "AlphaFold: Five Years of Impact."
+        <span class="ref-title">DeepMind Blog</span>, 3 Mar. 2026.
+        <a href="https://deepmind.google/blog/alphafold-five-years-of-impact/" class="ref-link" target="_blank" rel="noopener noreferrer">https://deepmind.google/blog/alphafold-five-years-of-impact/</a>
+      </li>
+
+      <li class="reference-item" data-number="[8]">
+        <span class="ref-authors">Fang, Ziqi, et al.</span>
+        "AlphaFold 3: An Unprecedented Opportunity for Fundamental Research and Drug Development."
+        <span class="ref-title">Precision Clinical Medicine</span>, vol. 8, no. 3, Sept. 2025, pbaf015.
+        <a href="https://academic.oup.com/pcm/article/8/3/pbaf015/8180385" class="ref-link" target="_blank" rel="noopener noreferrer">https://academic.oup.com/pcm/article/8/3/pbaf015/8180385</a>
+      </li>
+
+      <li class="reference-item" data-number="[9]">
+        <span class="ref-authors">Olson, Kristine D., et al.</span>
+        "Use of Ambient AI Scribes to Reduce Administrative Burden and Professional Burnout."
+        <span class="ref-title">JAMA Network Open</span>, vol. 8, no. 10, 2 Oct. 2025, e2534976.
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12492056/" class="ref-link" target="_blank" rel="noopener noreferrer">https://pmc.ncbi.nlm.nih.gov/articles/PMC12492056/</a>
+      </li>
+
+      <li class="reference-item" data-number="[10]">
+        <span class="ref-authors">GE HealthCare.</span>
+        "3 Ways AI Helps Ease Clinician Burnout and Improve Patient Experience."
+        <span class="ref-title">GE HealthCare Insights</span>, 13 Nov. 2025.
+        <a href="https://www.gehealthcare.com/insights/article/3-ways-ai-can-help-ease-clinician-burnout-and-improve-patient-experience" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.gehealthcare.com/.../3-ways-ai-can-help-ease-clinician-burnout</a>
+      </li>
+
+      <li class="reference-item" data-number="[11]">
+        <span class="ref-authors">Sarraf, Berna, and Ali Ghasempour.</span>
+        "Impact of Artificial Intelligence on Electronic Health Record-Related Burnouts Among Healthcare Professionals: Systematic Review."
+        <span class="ref-title">Frontiers in Public Health</span>, 3 July 2025.
+        <a href="https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2025.1628831/full" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2025.1628831</a>
+      </li>
+
+      <li class="reference-item" data-number="[12]">
+        <span class="ref-authors">Chambers and Partners.</span>
+        "Healthcare AI 2025: Global Practice Guide."
+        <span class="ref-title">Chambers and Partners Global Practice Guides</span>, 6 Aug. 2025.
+        <a href="https://practiceguides.chambers.com/practice-guides/healthcare-ai-2025" class="ref-link" target="_blank" rel="noopener noreferrer">https://practiceguides.chambers.com/practice-guides/healthcare-ai-2025</a>
+      </li>
+
+      <li class="reference-item" data-number="[13]">
+        <span class="ref-authors">Frontiers in Digital Health.</span>
+        "Artificial Intelligence and Digital Health in the Health Systems of Developing Countries."
+        <span class="ref-title">Frontiers in Digital Health</span>, vol. 7, 20 May 2025.
+        <a href="https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2025.1532361/full" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2025.1532361</a>
+      </li>
+
+      <li class="reference-item" data-number="[14]">
+        <span class="ref-authors">Pham, Tuan, et al.</span>
+        "Ethical and Legal Considerations in Healthcare AI: Innovation and Policy for Safe and Fair Use."
+        <span class="ref-title">Royal Society Open Science</span>, vol. 12, no. 5, 14 May 2025, 241873.
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12076083/" class="ref-link" target="_blank" rel="noopener noreferrer">https://pmc.ncbi.nlm.nih.gov/articles/PMC12076083/</a>
+      </li>
+
+      <li class="reference-item" data-number="[15]">
+        <span class="ref-authors">World Health Organization.</span>
+        "Global Initiative on Artificial Intelligence for Health (GI-AI4H): Strategic Priorities."
+        <span class="ref-title">npj Digital Medicine</span>, 2025.
+        <a href="https://www.who.int/teams/digital-health-and-innovation/harnessing-artificial-intelligence-for-health" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.who.int/teams/digital-health-and-innovation/harnessing-artificial-intelligence-for-health</a>
+      </li>
+
+    </ol>
+
+    <div class="copyright-notice">
+      <strong>Copyright Acknowledgements:</strong> This article synthesizes published peer-reviewed research, institutional reports, and verified industry data. All external sources are cited in accordance with MLA 9th edition guidelines. No copyrighted material has been reproduced without proper attribution. All URLs were verified as accessible as of May 12, 2026.
+    </div>
+  </section>
+
+  <!-- ══ GLOSSARY ════════════════════════════════════════════ -->
+  <section class="glossary-section">
+    <h2 class="section-heading">Glossary</h2>
+    <div class="glossary-list">
+
+      <div class="glossary-item" id="glossary-artificial-intelligence">
+        <div class="glossary-term-title">
+          Artificial Intelligence (AI)
+          <a href="#mention-ai" class="back-link">↑ Back to text</a>
+        </div>
+        <p class="glossary-definition">
+          The simulation of human cognitive processes by computational systems, encompassing learning, reasoning, pattern recognition, and decision-making. In healthcare, AI refers to algorithms and software that can perform tasks—such as image interpretation, drug design, and clinical documentation—that would otherwise require human expertise. Current medical AI systems are predominantly "narrow AI," excelling at specific defined tasks rather than general intelligence.
+        </p>
+      </div>
+
+      <div class="glossary-item" id="glossary-trepanation">
+        <div class="glossary-term-title">
+          Trepanation (Trephination)
+          <a href="#mention-trepanation" class="back-link">↑ Back to text</a>
+        </div>
+        <p class="glossary-definition">
+          The oldest documented surgical procedure: the deliberate creation of a hole in the skull by cutting, scraping, or drilling, practiced across cultures from at least 10,000 BCE. Originally performed to relieve intracranial pressure, treat head injuries, or remove bone fragments, trepanation persists in modern medicine as craniotomy—performed with precision neurosurgical tools rather than flint, but mechanically analogous. Its documented survival rates in prehistoric Peru (50–70%) demonstrate that effective surgery predates germ theory by millennia.
+        </p>
+      </div>
+
+      <div class="glossary-item" id="glossary-mri">
+        <div class="glossary-term-title">
+          Magnetic Resonance Imaging (MRI)
+          <a href="#mention-mri" class="back-link">↑ Back to text</a>
+        </div>
+        <p class="glossary-definition">
+          A non-invasive imaging technology that uses strong magnetic fields and radio waves to generate detailed images of organs and tissues inside the body. Unlike X-rays or CT scans, MRI does not use ionizing radiation, making it particularly valuable for repeated imaging of soft tissues, the brain, and the spinal cord. AI is now routinely applied to MRI data for automated lesion detection, tumor segmentation, and structural analysis at speeds and scales beyond manual interpretation.
+        </p>
+      </div>
+
+      <div class="glossary-item" id="glossary-alphafold">
+        <div class="glossary-term-title">
+          AlphaFold
+          <a href="#mention-alphafold" class="back-link">↑ Back to text</a>
+        </div>
+        <p class="glossary-definition">
+          An AI system developed by Google DeepMind that predicts the three-dimensional structure of proteins from their amino acid sequences with near-experimental accuracy. First demonstrated in 2020, AlphaFold 2 solved the protein folding problem—a 50-year-old challenge in structural biology—earning its creators the 2024 Nobel Prize in Chemistry. The AlphaFold Protein Structure Database, now containing over 214 million predicted structures, is freely available to researchers worldwide and has fundamentally accelerated drug discovery, particularly for diseases affecting populations in low-income countries.
+        </p>
+      </div>
+
+      <div class="glossary-item" id="glossary-radiomics">
+        <div class="glossary-term-title">
+          Radiomics
+          <a href="#mention-radiomics" class="back-link">↑ Back to text</a>
+        </div>
+        <p class="glossary-definition">
+          A method that extracts large numbers of quantitative features from medical images using data-characterisation algorithms. Unlike traditional imaging, which focuses on what is visible to the human eye, radiomics captures texture, shape, intensity distribution, and spatial relationships at a sub-visual level. When combined with machine learning, radiomics can identify disease subtypes, predict treatment response, and stratify prognosis in ways invisible to conventional interpretation. It is particularly powerful in oncology imaging, where it enables differentiation between tumor types that appear identical on standard review.
+        </p>
+      </div>
+
+      <div class="glossary-item" id="glossary-ehr">
+        <div class="glossary-term-title">
+          Electronic Health Records (EHR)
+          <a href="#mention-ehr" class="back-link">↑ Back to text</a>
+        </div>
+        <p class="glossary-definition">
+          Digital records of patient health information maintained by healthcare providers. EHRs store clinical notes, diagnostic results, medication histories, treatment plans, and billing data in a structured, interoperable format. While EHRs have improved information sharing and reduced transcription errors, their documentation burden—requiring physicians to enter large volumes of structured data—has become a primary driver of clinician burnout. AI-powered ambient scribes and automated note generation are among the most actively deployed solutions to this problem as of 2025.
+        </p>
+      </div>
+
+      <div class="glossary-item" id="glossary-digital-pathology">
+        <div class="glossary-term-title">
+          Digital Pathology
+          <a href="#mention-digital-pathology" class="back-link">↑ Back to text</a>
+        </div>
+        <p class="glossary-definition">
+          The acquisition, management, sharing, and interpretation of pathology information in a digital environment. Digital pathology converts glass microscopy slides into high-resolution digital images that can be analyzed remotely and, increasingly, by AI algorithms. AI-assisted digital pathology has demonstrated the ability to detect cancer at the cellular level across thousands of slide images simultaneously, flagging suspicious regions for pathologist review and enabling quantitative analyses—such as tumor-infiltrating lymphocyte counts—that would be impractical to perform manually at scale.
+        </p>
+      </div>
+
+      <div class="glossary-item" id="glossary-precision-medicine">
+        <div class="glossary-term-title">
+          Precision Medicine
+          <a href="#mention-precision-medicine" class="back-link">↑ Back to text</a>
+        </div>
+        <p class="glossary-definition">
+          An approach to medical treatment that tailors therapy to the individual characteristics of each patient—including genetic makeup, environmental exposure, lifestyle, and biomarker profiles—rather than applying population-average protocols. Also called personalized medicine. AI is central to precision medicine because the analytical complexity of integrating genomic, proteomic, clinical, and environmental data at scale requires computational power beyond human capacity. AI models trained on large, diverse patient datasets can identify which subgroups respond to which therapies, transforming treatment from a best-guess exercise into a data-informed decision.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ AUTHOR + SERVICES ════════════════════════════════════ -->
+  <section class="author-services-section">
+    <div class="about-author-card">
+      <div class="author-section-header">About The Author</div>
+      <div class="author-card">
+        <div class="author-card-avatar">JS</div>
+        <div class="author-card-content">
+          <div class="author-card-name">Joselito Sering</div>
+          <div class="author-card-title">Editor-in-Chief · Creative Technologist</div>
+          <p class="author-card-bio">
+            Joselito Sering is a creative technologist exploring the intersection of artificial intelligence, media production, and generational wealth creation. He focuses on leveraging AI agents to create artistic and scientific works that serve human kindness and philanthropic impact, with particular interest in Southeast Asian access to emerging technologies.
+          </p>
+          <div class="author-card-links">
+            <a href="https://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
+            <a href="https://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧 Portfolio</a>
+            <a href="https://www.blockchain.com/btc/address/333avr5LEQBkft7p9YC3Hi4PCEwvZt8bnM" class="author-link" target="_blank" rel="noopener noreferrer">₿ Tip Jar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="explore-services-card">
+      <div class="services-card-header">Explore Our Services</div>
+      <h3 class="services-card-title">Ready to Tell Your <span class="highlight">Story with AI?</span></h3>
+      <p class="services-card-text">
+        AIMA creates cinema-grade, AI-native production at a fraction of traditional costs. From healthcare communications to impact-driven campaigns, we help your mission reach the people who need to hear it.
+      </p>
+      <a href="http://joselitosering.github.io/aima/index.html#services" class="services-card-button">View Our Services</a>
+    </div>
+  </section>
+
+</article><!-- /.article-wrapper -->
+
+
+<!-- ══ ARTICLE NAV CARDS ════════════════════════════════════ -->
+<nav class="article-nav-section" id="article-nav">
+  <div class="article-nav-inner">
+    <span class="article-nav-label">Continue Reading</span>
+    <div class="article-nav-grid">
+
+      <!-- Previous article — hidden until meta tag provides URL -->
+      <a id="art-prev-card" href="#" class="nav-card prev hidden">
+        <span class="nav-card-icon">←</span>
+        <div class="nav-card-label">Previous Article</div>
+        <div class="nav-card-title" id="art-prev-title">Previous Article</div>
+      </a>
+
+      <!-- All Articles -->
+      <a href="https://joselitosering.github.io/aima/insights.html" class="nav-card all-articles">
+        <span class="nav-card-icon">⊞</span>
+        <div class="nav-card-label">All Articles</div>
+        <div class="nav-card-title">Browse the Magazine</div>
+      </a>
+
+      <!-- Next article — hidden until meta tag provides URL -->
+      <a id="art-next-card" href="#" class="nav-card next hidden">
+        <span class="nav-card-icon">→</span>
+        <div class="nav-card-label">Next Article</div>
+        <div class="nav-card-title" id="art-next-title">Next Article</div>
+      </a>
+
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══ SITE FOOTER ══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+
+      <div>
+        <div class="fb-logo-wrap">
+          <div class="pulse-ft"></div>
+          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
+        </div>
+        <div class="fb-sub">AI Media Agency</div>
+        <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+        <button class="back-to-top" onclick="document.getElementById('article-top').scrollIntoView({behavior:'smooth'})">
+          <span class="arr">↑</span> Back to Top
+        </button>
+      </div>
+
+      <div>
+        <div class="fl-head">Services</div>
+        <ul class="fl-list">
+          <li><a href="http://joselitosering.github.io/aima/index.html#services">Music Video</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#services">Corporate Explainer</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#services">TV Commercial</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#rates">Social Media Packages</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#rates">Monthly Retainers</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#rates">AI Automation Pipeline</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="fl-head">Company</div>
+        <ul class="fl-list">
+          <li><a href="http://joselitosering.github.io/aima/index.html#about">About Us</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#process">Our Process</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#work">Portfolio</a></li>
+          <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
+          <li><a href="http://joselitosering.github.io/aima/insights.html">Insights</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#contact">Get a Quote</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="fl-head">Legal</div>
+        <ul class="fl-list">
+          <li><a href="http://joselitosering.github.io/aima/index.html#tos">Terms of Service</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#privacy">Privacy Policy</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#refund">Refund Policy</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#licensing">Licensing FAQ</a></li>
+          <li><a href="http://joselitosering.github.io/aima/index.html#cookies">Cookie Settings</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
+      <span>v12.0 · aima.productions</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+// ══ HEADER IMAGE from meta tag ════════════════════════════
+document.addEventListener('DOMContentLoaded', function () {
+  var meta = document.querySelector('meta[name="article:header-image"]');
+  var el   = document.getElementById('headerImage');
+  if (meta && el) {
+    var url = meta.getAttribute('content');
+    el.style.backgroundImage    = 'linear-gradient(135deg,rgba(255,94,32,0.28),rgba(0,217,245,0.10)),url(\'' + url + '\')';
+    el.style.backgroundSize     = 'cover';
+    el.style.backgroundPosition = 'center';
+  }
+
+  // ── PREV / NEXT ARTICLE NAV ───────────────────────────
+  var prevUrl   = (document.querySelector('meta[name="article:prev-url"]')   || {}).content || '';
+  var prevTitle = (document.querySelector('meta[name="article:prev-title"]') || {}).content || '';
+  var nextUrl   = (document.querySelector('meta[name="article:next-url"]')   || {}).content || '';
+  var nextTitle = (document.querySelector('meta[name="article:next-title"]') || {}).content || '';
+
+  var prevCard  = document.getElementById('art-prev-card');
+  var prevLabel = document.getElementById('art-prev-title');
+  var nextCard  = document.getElementById('art-next-card');
+  var nextLabel = document.getElementById('art-next-title');
+
+  if (prevCard && prevUrl) {
+    prevCard.href = prevUrl;
+    prevCard.classList.remove('hidden');
+    if (prevLabel) prevLabel.textContent = prevTitle;
+  }
+  if (nextCard && nextUrl) {
+    nextCard.href = nextUrl;
+    nextCard.classList.remove('hidden');
+    if (nextLabel) nextLabel.textContent = nextTitle;
+  }
+});
+
+// ══ SHARE SIDEBAR ═════════════════════════════════════════
+(function () {
+  var url   = encodeURIComponent(window.location.href);
+  var title = encodeURIComponent(document.title);
+
+  document.querySelectorAll('a[data-share]').forEach(function (a) {
+    a.href = a.href
+      .replace('PAGE_URL',   url)
+      .replace('PAGE_TITLE', title);
+
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (a.dataset.share === 'email') {
+        window.location.href = a.href;
+      } else {
+        window.open(a.href, 'share-' + a.dataset.share, 'width=600,height=460,noopener');
+      }
+    });
+  });
+
+  // Copy Link
+  var btn = document.getElementById('copyLinkBtn');
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var raw  = window.location.href;
+      var done = function () {
+        var origSvg = btn.innerHTML;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.style.color = 'var(--green)'; btn.style.borderColor = 'var(--green)';
+        setTimeout(function () { btn.innerHTML = origSvg; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(raw).then(done).catch(function () { fallback(raw, done); });
+      } else { fallback(raw, done); }
+    });
+  }
+
+  function fallback(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); cb(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+})();
+
+// ══ SHARE & TOC SIDEBAR VISIBILITY ═══════════════════════
+var _share = document.getElementById('share-sidebar');
+var _toc   = document.getElementById('toc-sidebar');
+window.addEventListener('scroll', function () {
+  var show = window.scrollY > 300;
+  if (_share) _share.classList.toggle('visible', show);
+  if (_toc)   _toc.classList.toggle('visible', show);
+}, { passive: true });
+
+// ══ TOC ACTIVE LINK ══════════════════════════════════════
+var _tocLinks    = document.querySelectorAll('.toc-link');
+var _tocSections = [];
+_tocLinks.forEach(function (a) {
+  var href = a.getAttribute('href');
+  if (href && href.startsWith('#')) _tocSections.push(href.substring(1));
+});
+window.addEventListener('scroll', function () {
+  var scrollPos = window.scrollY + 120;
+  var current   = '';
+  _tocSections.forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollPos) current = id;
+  });
+  _tocLinks.forEach(function (a) {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}, { passive: true });
+
+// ══ MOBILE MENU ══════════════════════════════════════════
+function toggleMobile() {
+  var menu   = document.getElementById('mobileMenu');
+  var burger = document.getElementById('navBurger');
+  if (!menu || !burger) return;
+  menu.classList.toggle('open');
+  burger.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+function closeMobile() {
+  var menu   = document.getElementById('mobileMenu');
+  var burger = document.getElementById('navBurger');
+  if (menu)   menu.classList.remove('open');
+  if (burger) burger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ══ FLOATING BACK TO TOP ═════════════════════════════════
+var _btt = document.getElementById('back-to-top');
+window.addEventListener('scroll', function () {
+  if (_btt) _btt.classList.toggle('show', window.scrollY > 400);
+}, { passive: true });
+if (_btt) _btt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+// ══ FADE-IN OBSERVER ═════════════════════════════════════
+(function () {
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(function (el) { obs.observe(el); });
+})();
+</script>
+
+</body>
+</html>
