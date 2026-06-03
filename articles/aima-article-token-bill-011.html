@@ -181,46 +181,34 @@ a:hover { opacity: 0.8; }
   background:rgba(6,8,16,.92);
   border-bottom-color:var(--border);
 }
-.container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-.nav-logo {
-  display: flex; align-items: center; gap: 10px;
-  font-family: 'Anton', sans-serif; font-size: 17px;
-  letter-spacing: .05em; text-transform: uppercase; color: #fff;
-  white-space: nowrap; text-decoration: none;
-}
-.nav-logo .pulse { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 8px var(--cyan); animation: pulse 2.2s ease-in-out infinite; flex-shrink: 0; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
-.nav-logo .m3{color:var(--cyan);}
-.nav-links { display: flex; align-items: center; gap: 22px; list-style: none; }
-.nav-links a { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); transition: color .2s; position: relative; padding-bottom: 2px; text-decoration: none; }
-.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--cyan); transform: scaleX(0); transform-origin: left; transition: transform .25s; }
-.nav-links a:hover { color: #fff; }
-.nav-links a:hover::after { transform: scaleX(1); }
-.nav-links a.active { color: var(--cyan); }
-.nav-links a.active::after { transform: scaleX(1); }
-.nav-cta { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; background: var(--cyan); color: var(--bg); padding: 10px 20px; border-radius: var(--radius); transition: box-shadow .2s, opacity .2s; white-space: nowrap; text-decoration: none; }
-.nav-cta:hover { box-shadow: 0 0 22px var(--glow-c); opacity: .9; color: var(--bg); }
-.nav-burger { display: none; flex-direction: column; gap: 5px; padding: 4px; cursor: pointer; background: none; border: none; }
-.nav-burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
-.nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-burger.open span:nth-child(2) { opacity: 0; }
-.nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mobile-menu {
-  display: none; position: fixed; inset: 0; z-index: 190;
-  background: rgba(6,8,16,.98); backdrop-filter: blur(20px);
-  flex-direction: column; align-items: center; justify-content: center; gap: 28px;
-  padding-top: var(--nav-h, 72px); overflow-y: auto;
-}
-.mobile-menu.open { display: flex; }
-.mobile-menu a { font-family: 'Anton', sans-serif; font-size: 30px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); transition: color .2s; text-decoration: none; }
-.mobile-menu a:hover { color: #fff; }
-.mobile-menu .m-cta { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; background: var(--cyan); color: var(--bg); padding: 14px 36px; border-radius: var(--radius); margin-top: 8px; }
-.mobile-menu .m-legal { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
-.mobile-menu .m-legal a { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
-@media(max-width:900px){ .nav-links { display: none; } }
-@media(max-width:640px){ .nav-cta { display: none; } .nav-burger { display: flex; } }
-
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.05em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.nav-logo .pulse{width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
+.nav-logo .m3{color:var(--cyan)}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:color .2s;position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-links a.active{color:var(--cyan)}
+.nav-links a.active::after{transform:scaleX(1)}
+.nav-cta{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:10px 20px;border-radius:var(--radius);transition:box-shadow .2s,opacity .2s;white-space:nowrap}
+.nav-cta:hover{box-shadow:0 0 22px var(--glow-c);opacity:.9}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:4px;cursor:pointer;background:none;border:none}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:190;background:rgba(6,8,16,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:28px;padding-top:var(--nav-h,72px);overflow-y:auto;}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Anton',sans-serif;font-size:30px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);transition:color .2s;text-decoration:none;}
+.mobile-menu a:hover{color:#fff}
+.mobile-menu .m-cta{font-size:14px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:14px 36px;border-radius:var(--radius);margin-top:8px}
+.mobile-menu .m-legal{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.mobile-menu .m-legal a{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:640px){.nav-cta{display:none}.nav-burger{display:flex}}
 /* ══ FLOATING SHARE SIDEBAR ══════════════════════════════ */
 #share-sidebar{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:8px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
 #share-sidebar.visible{opacity:1;visibility:visible;}
@@ -436,11 +424,11 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 
 <nav id="nav">
   <div class="container nav-inner">
-          <a href="http://joselitosering.github.io/aima/index.html" class="nav-logo">
+    <a href="http://joselitosering.github.io/aima/index.html" class="nav-logo">
       <div class="pulse"></div>
       <span><span style="color:#fff">AI</span><span class="m3">MA</span></span>
     </a>
-          <ul class="nav-links" id="navLinks">
+    <ul class="nav-links" id="navLinks">
       <li><a href="http://joselitosering.github.io/aima/index.html"          class="nav-lnk">Home</a></li>
       <li><a href="http://joselitosering.github.io/aima/index.html#services" class="nav-lnk">Services</a></li>
       <li><a href="http://joselitosering.github.io/aima/index.html#rates"    class="nav-lnk">Rates</a></li>
@@ -450,10 +438,10 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
       <li><a href="http://joselitosering.github.io/aima/insights.html"       class="nav-lnk active">Insights</a></li>
       <li><a href="http://joselitosering.github.io/aima/gallery.html"        class="nav-lnk">Gallery</a></li>
     </ul>
-      <a href="http://joselitosering.github.io/aima/index.html#contact" class="nav-cta">Get a Quote</a>
-      <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+    <a href="http://joselitosering.github.io/aima/index.html#contact" class="nav-cta">Get a Quote</a>
+    <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
