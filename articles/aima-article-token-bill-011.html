@@ -167,12 +167,19 @@ a:hover { opacity: 0.8; }
 .delay-3 { transition-delay: .3s; } .delay-4 { transition-delay: .45s; }
 
 /* ══ NAVIGATION ══════════════════════════════════════════ */
-#nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: var(--nav-h); display: flex; align-items: center;
-  background: rgba(6,8,16,0.60);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0,217,245,0.10);
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--nav-h);
+  display:flex;align-items:center;
+  background:rgba(6,8,16,.60);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid transparent;
+  transition:background .3s,border-color .3s;
+}
+#nav.scrolled{
+  background:rgba(6,8,16,.92);
+  border-bottom-color:var(--border);
 }
 .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
@@ -184,8 +191,7 @@ a:hover { opacity: 0.8; }
 }
 .nav-logo .pulse { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 8px var(--cyan); animation: pulse 2.2s ease-in-out infinite; flex-shrink: 0; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
-.nav-logo .wordmark .ai { color: #fff; }
-.nav-logo .wordmark .ma { color: var(--cyan); }
+.nav-logo .m3{color:var(--cyan);}
 .nav-links { display: flex; align-items: center; gap: 22px; list-style: none; }
 .nav-links a { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); transition: color .2s; position: relative; padding-bottom: 2px; text-decoration: none; }
 .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--cyan); transform: scaleX(0); transform-origin: left; transition: transform .25s; }
@@ -430,22 +436,22 @@ footer { background: var(--surface); border-top: 1px solid var(--border2); paddi
 
 <nav id="nav">
   <div class="container nav-inner">
-      <a href="http://joselitosering.github.io/aima/index.html" class="nav-logo">
-        <span class="pulse"></span>
-        <span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="http://joselitosering.github.io/aima/index.html#home">Home</a></li>
-        <li><a href="http://joselitosering.github.io/aima/index.html#services">Services</a></li>
-        <li><a href="http://joselitosering.github.io/aima/index.html#rates">Rates</a></li>
-        <li><a href="http://joselitosering.github.io/aima/index.html#work">Work</a></li>
-        <li><a href="http://joselitosering.github.io/aima/index.html#process">Process</a></li>
-        <li><a href="http://joselitosering.github.io/aima/index.html#about">About</a></li>
-        <li><a href="http://joselitosering.github.io/aima/insights.html" class="active">Insights</a></li>
-        <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
-      </ul>
+          <a href="http://joselitosering.github.io/aima/index.html" class="nav-logo">
+      <div class="pulse"></div>
+      <span><span style="color:#fff">AI</span><span class="m3">MA</span></span>
+    </a>
+          <ul class="nav-links" id="navLinks">
+      <li><a href="http://joselitosering.github.io/aima/index.html"          class="nav-lnk">Home</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#services" class="nav-lnk">Services</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#rates"    class="nav-lnk">Rates</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#work"     class="nav-lnk">Work</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#process"  class="nav-lnk">Process</a></li>
+      <li><a href="http://joselitosering.github.io/aima/index.html#about"    class="nav-lnk">About</a></li>
+      <li><a href="http://joselitosering.github.io/aima/insights.html"       class="nav-lnk active">Insights</a></li>
+      <li><a href="http://joselitosering.github.io/aima/gallery.html"        class="nav-lnk">Gallery</a></li>
+    </ul>
       <a href="http://joselitosering.github.io/aima/index.html#contact" class="nav-cta">Get a Quote</a>
-      <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Toggle menu">
+      <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
   </div>
@@ -1192,6 +1198,10 @@ function closeMobile() {
   if (menu) menu.classList.remove('open'); if (burger) burger.classList.remove('open');
   document.body.style.overflow = '';
 }
+var _nav = document.getElementById('nav');
+function _updateNav() { if (_nav) _nav.classList.toggle('scrolled', window.scrollY > 60); }
+window.addEventListener('scroll', _updateNav, { passive: true });
+_updateNav();
 var _btt = document.getElementById('back-to-top');
 window.addEventListener('scroll', function () { if (_btt) _btt.classList.toggle('show', window.scrollY > 400); }, { passive: true });
 if (_btt) _btt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
