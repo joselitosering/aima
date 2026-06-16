@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ology — Output (OBS)</title>
+  <link rel="icon" type="image/svg+xml" href="ology_favicon.svg">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { margin:0; padding:0; width:100%; height:100%; background:#000; overflow:hidden; position:relative; cursor:auto; }
+    canvas { display:block; }
+    /* M6 — param overlay. Discreet strip, top-left, no box/border.
+       Line 1: credit · Line 2: audio params
+       Colour set per-frame by renderOverlay() from the active theme palette.
+       Independent of ?obs=1. pointer-events:none. */
+    #paramOverlay {
+      display: none;
+      position: absolute;
+      top: 10px; left: 12px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11px;
+      line-height: 1.55;
+      pointer-events: none;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.7);
+      white-space: normal;
+      max-width: calc(100vw - 24px);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="outCanvas"></canvas>
+  <!-- M6 param overlay — toggled via ology_overlay localStorage key from index.html -->
+  <div id="paramOverlay"></div>
+
+  <script src="m1_shaders.js"></script>
+  <script src="m2_audio.js"></script>
+  <script>
+(function(){
+'use strict';
+
+/* ─── URL PARAMS (OUTPUT CONFIG) ─────────────────────────────────────── */
+const params=new URLSearchParams(location.search);
+const cfgAspect=params.get('ar')||'16:9';
+const cfgResolution=params.get('res')||'1080';
+const cfgFps=parseInt(params.get('fps'))||30;
+const cfgFullscreen=params.has('fs'); /* &fs=1 → auto-request fullscreen on load */
+
+/* aspect ratio → viewport constraint */
+const arMap={'16:9':{w:16,h:9},'9:16':{w:9,h:16},'1:1':{w:1,h:1},'4:3':{w:4,h:3}};
+const ar=arMap[cfgAspect]||{w:16,h:9};
+const resPx={'720':720,'1080':1080,'1440':1440,'4K':2160};
+const maxLongEdge=resPx[cfgResolution]||1080;
+
+/* ─── THEMES (from index.html) ────────────────────────────────────────── */
+const THEMES=[
+  {id:'intergalactic-beings', n:'Intergalactic Beings', c:['#0a0fff','#ffffff','#050510']},
+  {id:'supernovas',           n:'Supernovas',           c:['#fff1c9','#ff8a3d','#d61f4e']},
+  {id:'aurora-borealis',      n:'Aurora Borealis',      c:['#1b2a8a','#27c2e0','#cfd6ff']},
+  {id:'psilocybin-dreams',    n:'Psilocybin Dreams',    c:['#5a00cc','#39ff6a','#c200ff']},
+  {id:'microcosmos',          n:'Microcosmos',          c:['#16d39a','#2a6cff','#eafff6']},
+  {id:'quantum-fields',       n:'Quantum Fields',       c:['#0a0014','#ff00cc','#3d006b']},
+  {id:'torus-universes',      n:'Torus Universes',      c:['#08010f','#1a0a6b','#3b1205']}
+];
+
+/* ─── M6 DRONE / BED MAPS (duplicated from index.html ll.559–574)
+   MAINTENANCE: if drones/beds change in index.html, update here too.
+   Duplication is inherent to the no-modules architecture and is accepted. ── */
+var DRONES=[
+  ['delta-deep-healing','Delta · Deep Healing',100,2,'delta','binaural'],
+  ['delta-regeneration','Delta · Regeneration',100,3,'delta','binaural'],
+  ['theta-dreamgate','Theta · Dreamgate',120,4,'theta','binaural'],
+  ['theta-vision-quest','Theta · Vision Quest',120,4.5,'theta','binaural'],
+  ['theta-intuition','Theta · Intuition',136.1,6,'theta','binaural'],
+  ['schumann-earth-pulse','Schumann · Earth Pulse',136.1,7.83,'theta','isochronic'],
+  ['alpha-calm-mind','Alpha · Calm Mind',210,8.4,'alpha','binaural'],
+  ['alpha-serenity','Alpha · Serenity',200,10,'alpha','binaural'],
+  ['beta-focus','Beta · Focus',250,16,'beta','isochronic'],
+  ['gamma-insight','Gamma · Insight',300,40,'gamma','isochronic'],
+  ['solfeggio-transformation','Solfeggio · Transformation',528,7.83,'theta','isochronic'],
+  ['solfeggio-awaken-intuition','Solfeggio · Awaken Intuition',852,6,'theta','isochronic'],
+  ['solfeggio-crown-pineal','Solfeggio · Crown / Pineal',963,7.83,'theta','isochronic']
+];
+var BEDS=[['none','None'],['womb','Womb'],['waterfall','Waterfall'],['jungle','Jungle'],['forest','Forest'],['whales','Whales'],['ocean','Ocean']];
+var specOf={}; DRONES.forEach(function(d){specOf[d[0]]={name:d[1],carrier:d[2],beat:d[3],band:d[4],mode:d[5]};});
+var bedName={}; BEDS.forEach(function(b){bedName[b[0]]=b[1];});
+
+/* ─── PROGRAM STATE (matches index.html PROG) ──────────────────────────── */
+/* PROG default shape mirrors index.html's PROG (l.460) so localStorage sync
+   maps 1:1. `intensity` drives fractalDepth; `smooth` drives M1 edge/blur.
+   `int` is a legacy field kept only as a masterLevel fallback. */
+const PROG={th:0,speed:.4,chaos:.35,zoom:.30,seg:8,int:.65,intensity:.5,bloom:.25,smooth:.82,t:0,rot:.5,sym:2};
+PROG.audio={droneId:'theta-intuition',carrierHz:null,beatHz:null,mode:'binaural',brainTickleAmount:0.2,slowness:0.6,key:'C',scale:'minor',ambientBed:'womb',ambientBlend:0.3,loop:'evolving',routes:[{band:'sub',param:'bloom',amount:0.5},{band:'low',param:'zoom',amount:0.3},{band:'mid',param:'chaos',amount:0.4},{band:'high',param:'colorShift',amount:0.5}],masterLevel:0.8,isPlaying:false};
+
+/* output.html is VIDEO-ONLY (per White Paper v0.4). Audio is generated in
+   index.html and captured into OBS via Application/Desktop Audio Capture — this
+   page never instantiates OlogyAudio, avoiding dual-AudioContext playback and
+   binaural L/R degradation. `playing` only gates the local `t` clock; the
+   strobe gate is fixed at 1 on the clean output (no preview-style strobing). */
+let playing=true, strobeGate=1;
+
+/* ─── CANVAS FIT ──────────────────────────────────────────────────────── */
+/* Two separate concerns:
+   1. Pixel buffer (c.width/height) — always the full configured resolution
+      e.g. 1280×720 for 720p 16:9. This is what OBS and recordings receive.
+   2. CSS display size (c.style.width/height) — fills the window maintaining
+      AR, letterboxing only if the window AR differs from the output AR.
+   Keeping these separate means the popup window can be any size and the
+   canvas always fills it cleanly with no black bars (assuming same AR).   */
+function fit(c){
+  if(!c) return;
+  /* ── Pixel buffer: always full configured resolution ── */
+  const a=arMap[cfgAspect]||{w:16,h:9};
+  let pw,ph;
+  if(a.w>=a.h){ ph=maxLongEdge; pw=Math.round(maxLongEdge*a.w/a.h); }
+  else         { pw=maxLongEdge; ph=Math.round(maxLongEdge*a.h/a.w); }
+  pw-=pw%2; ph-=ph%2;
+  if(c.width!==pw||c.height!==ph){c.width=pw;c.height=ph;}
+  /* ── CSS display size: fill window, maintain AR ── */
+  const ww=window.innerWidth, wh=window.innerHeight;
+  let dw,dh;
+  if(ww/wh > a.w/a.h){ dh=wh; dw=Math.round(wh*a.w/a.h); }
+  else                { dw=ww; dh=Math.round(ww*a.h/a.w); }
+  c.style.width  = dw+'px';
+  c.style.height = dh+'px';
+  /* Centre the canvas in the window */
+  c.style.position='absolute';
+  c.style.left=Math.round((ww-dw)/2)+'px';
+  c.style.top =Math.round((wh-dh)/2)+'px';
+}
+
+/* ─── SYMMETRY MAPPER (from index.html) ──────────────────────────────── */
+function symToSegs(state){
+  if(state.sym===0)return 1;
+  if(state.sym===1)return 2;
+  return Math.max(2,Math.round(state.seg));
+}
+
+/* ─── STATE → M1 ADAPTER (from index.html) ──────────────────────────── */
+function toM1State(s, liveAudio){
+  return {
+    visual:{
+      themeId: THEMES[s.th].id,
+      speed:   s.speed,
+      chaos:   s.chaos,
+      zoom:    s.zoom,
+      rotation:s.rot,
+      symmetry:symToSegs(s),
+      bloom:   s.bloom,
+      fractalDepth: typeof s.intensity==='number' ? 1 + s.intensity*7 : 4,
+      strobeLimiterOn:true,
+      palette:{stops:[{pos:0,hex:THEMES[s.th].c[0]},{pos:.5,hex:THEMES[s.th].c[1]},{pos:1,hex:THEMES[s.th].c[2]}]},
+      smooth:  typeof s.smooth==='number' ? s.smooth : 0.82,
+      reactivityToColorAmount:.4,
+      referenceImage:null,
+      resolution:cfgResolution,
+      adaptive:true
+    },
+    audio: liveAudio || { isPlaying:false, routes:PROG.audio.routes, masterLevel:s.int },
+    t:s.t
+  };
+}
+
+const NULL_ANALYSIS={bands:{sub:0,low:0,mid:0,high:0},level:0,t:0};
+
+/* ─── LOCALSTORAGE SYNC ──────────────────────────────────────────────── */
+/* index.html writes the FLAT PROG object: localStorage.setItem('ology_prog',
+   JSON.stringify(PROG)) on every saveProg() (l.730). PROG carries audio as a
+   nested PROG.audio. We merge top-level visual fields and the audio object
+   separately so a partial/legacy payload can't blow away PROG.audio. */
+function loadProg(){
+  try {
+    const saved=localStorage.getItem('ology_prog');
+    if(!saved) return;
+    const s=JSON.parse(saved);
+    if(!s || typeof s!=='object') return;
+    const incomingAudio=s.audio;
+    /* merge flat visual/transport fields (skip audio; handled below) */
+    for(const k in s){ if(k!=='audio') PROG[k]=s[k]; }
+    /* deep-merge audio so routes + sub-fields propagate without clobbering */
+    if(incomingAudio && typeof incomingAudio==='object'){
+      Object.assign(PROG.audio, incomingAudio);
+      if(Array.isArray(incomingAudio.routes)) PROG.audio.routes=incomingAudio.routes;
+    }
+  } catch(e) {}
+}
+
+/* ─── v1.2 HTTP POLLING SYNC ─────────────────────────────────────────────
+   WebSocket to localhost is blocked by OBS CEF security policy.
+   Solution: output.html polls GET /sync/latest every 100ms.
+   The server caches the last POST from index.html and returns it instantly.
+   100ms interval = max 100ms visual lag, imperceptible at 30-60fps.
+
+   Fallback chain:
+     1. HTTP poll  — primary (OBS + local dev, any browser)
+     2. storage evt — secondary (same-browser two-tab use)
+     3. Cold localStorage on init — tertiary (static snapshot)              */
+
+let _wsFrame = null; // live audio frame from index.html via poll
+
+function loadProgObj(s){
+  try {
+    if(!s || typeof s!=='object') return;
+    const incomingAudio = s.audio;
+    for(const k in s){ if(k!=='audio') PROG[k]=s[k]; }
+    if(incomingAudio && typeof incomingAudio==='object'){
+      Object.assign(PROG.audio, incomingAudio);
+      if(Array.isArray(incomingAudio.routes)) PROG.audio.routes=incomingAudio.routes;
+    }
+  } catch(e) {}
+}
+
+(function startPolling(){
+  const POLL_URL = location.origin + '/sync/latest';
+  const INTERVAL = 100; // ms — 10 polls/sec, negligible server load
+  let _lastSeen = null;
+
+  function poll(){
+    fetch(POLL_URL, { cache: 'no-store' })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        if(!data) return;
+        /* Deduplicate: skip if prog content unchanged (ignore t — it ticks independently) */
+        const sig = data.prog ? JSON.stringify({
+          th:data.prog.th, speed:data.prog.speed, chaos:data.prog.chaos,
+          zoom:data.prog.zoom, seg:data.prog.seg, int:data.prog.int,
+          intensity:data.prog.intensity, bloom:data.prog.bloom,
+          smooth:data.prog.smooth, rot:data.prog.rot, sym:data.prog.sym,
+          audio: data.prog.audio ? data.prog.audio.droneId+data.prog.audio.mode+
+            data.prog.audio.ambientBed+data.prog.audio.carrierHz+data.prog.audio.beatHz : ''
+        }) : null;
+        if(sig === _lastSeen) return;
+        _lastSeen = sig;
+        if(data.prog)  loadProgObj(data.prog);
+        if(data.frame) _wsFrame = data.frame;
+      })
+      .catch(function(){}); /* server absent — fail silently */
+  }
+
+  setInterval(poll, INTERVAL);
+  poll(); /* fire once immediately on load */
+})();
+
+/* Keep storage event as secondary fallback for same-browser tab usage */
+window.addEventListener('storage',e=>{
+  if(e.key==='ology_prog') loadProg();
+  if(e.key==='ology_overlay') applyOverlayVisibility();
+});
+
+/* ─── M6 OVERLAY STATE & FUNCTIONS ──────────────────────────────────── */
+/* overlayOn: default OFF if key absent (as per M6 spec) */
+let overlayOn=(localStorage.getItem('ology_overlay')==='1');
+
+/* applyOverlayVisibility — called on storage event and on init */
+function applyOverlayVisibility(){
+  overlayOn=(localStorage.getItem('ology_overlay')==='1');
+  const el=document.getElementById('paramOverlay');
+  if(el) el.style.display=overlayOn?'block':'none';
+}
+
+/* ── Credit date — stamped once on load (refreshes each OBS Browser Source session) ── */
+const _creditDate=(function(){
+  const d=new Date();
+  return d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+})();
+
+/* renderOverlay — called each frame when overlayOn.
+   Layout: up to 3 lines, top-left, no box.
+     Line 1: Ology v1.5 · [Theme Name]           — always shown
+     Line 2: Visual params                        — always shown (output always rendering)
+     Line 3: Audio params                         — only when PROG.audio.isPlaying is true
+   Colour: lightest palette stop → HSL 88% lightness.
+   Quantum Fields override: navy blue (#1a3a6b) — palette is too dark for auto-compute.
+   Carrier/beat fallback: spec defaults when PROG.audio values are null. */
+function renderOverlay(){
+  const el=document.getElementById('paramOverlay');
+  if(!el) return;
+  const a=PROG.audio||{};
+
+  /* ── Theme ── */
+  const themeIdx=(typeof PROG.th==='number'&&PROG.th>=0&&PROG.th<THEMES.length)?PROG.th:0;
+  const theme=THEMES[themeIdx];
+
+  /* ── Overlay colour: per-theme lightest stop at L=88%; Quantum Fields → navy ── */
+  function hexToHsl(h){
+    let r=parseInt(h.slice(1,3),16)/255,
+        g=parseInt(h.slice(3,5),16)/255,
+        b=parseInt(h.slice(5,7),16)/255;
+    const max=Math.max(r,g,b),min=Math.min(r,g,b);
+    let hh=0,s=0,l=(max+min)/2;
+    if(max!==min){
+      const d=max-min;
+      s=l>0.5?d/(2-max-min):d/(max+min);
+      switch(max){
+        case r:hh=((g-b)/d+(g<b?6:0))/6;break;
+        case g:hh=((b-r)/d+2)/6;break;
+        default:hh=((r-g)/d+4)/6;
+      }
+    }
+    return[Math.round(hh*360),Math.round(s*100)];
+  }
+  function relLum(h){
+    return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]
+      .map(v=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4);})
+      .reduce((s,v,i)=>s+[0.2126,0.7152,0.0722][i]*v,0);
+  }
+  const overlayColor=theme.id==='quantum-fields'
+    ?'#1a3a6b'
+    :(function(){
+        const lightestStop=theme.c.slice().sort((a,b)=>relLum(b)-relLum(a))[0];
+        const [hh,sat]=hexToHsl(lightestStop);
+        return 'hsl('+hh+','+sat+'%,88%)';
+      })();
+
+  /* ── Line 1: always — app name + theme ── */
+  const line1='Ology v1.5 · '+theme.n;
+
+  /* ── Line 2: visual params — always shown on output (always rendering) ── */
+  const speed=typeof PROG.speed==='number'?PROG.speed.toFixed(2):'—';
+  const chaos=typeof PROG.chaos==='number'?PROG.chaos.toFixed(2):'—';
+  const zoom=typeof PROG.zoom==='number'?PROG.zoom.toFixed(2):'—';
+  const seg=typeof PROG.seg==='number'?Math.round(PROG.seg):'—';
+  const bloom=typeof PROG.bloom==='number'?PROG.bloom.toFixed(2):'—';
+  const smooth=typeof PROG.smooth==='number'?PROG.smooth.toFixed(2):'—';
+  const line2='Spd '+speed+' · Chaos '+chaos+' · Zoom '+zoom
+    +' · Seg '+seg+' · Bloom '+bloom+' · Smooth '+smooth;
+
+  /* ── Line 3: audio params — only when PROG.audio.isPlaying is true ── */
+  const audioActive=!!(a.isPlaying);
+  let line3='';
+  if(audioActive){
+    const droneId=a.droneId||'theta-intuition';
+    const spec=specOf[droneId]||{name:droneId,carrier:136.1,beat:6,band:'theta',mode:'binaural'};
+    const carrier=(a.carrierHz!=null)?+a.carrierHz:spec.carrier;
+    const beat=(a.beatHz!=null)?+a.beatHz:spec.beat;
+    const bedId=a.ambientBed||'none';
+    const bedLabel=(bedId!=='none')?(bedName[bedId]||bedId):'—';
+    const tickle=typeof a.brainTickleAmount==='number'?a.brainTickleAmount.toFixed(2):'0.00';
+    const slow=typeof a.slowness==='number'?a.slowness.toFixed(2):'0.00';
+    line3=(spec.name||droneId)
+      +' · '+carrier.toFixed(1)+'/'+beat.toFixed(2)+' Hz'
+      +' · '+(a.mode||spec.mode||'—')
+      +' · '+bedLabel
+      +' · t'+tickle+' m'+slow;
+  }
+
+  el.style.color=overlayColor;
+  el.innerHTML='<div>'+line1+'</div>'
+    +'<div>'+line2+'</div>'
+    +(line3?'<div>'+line3+'</div>':'');
+}
+
+/* Apply initial overlay visibility on load */
+applyOverlayVisibility();
+
+/* ─── INIT & RENDER LOOP ──────────────────────────────────────────────– */
+const canvas=document.getElementById('outCanvas');
+/* Load initial state from localStorage (if index.html has written it) */
+loadProg();
+/* Always start with audio params hidden — localStorage may carry isPlaying:true
+   from a previous session. output.html receives live updates via poll; the
+   overlay will show audio params as soon as the next poll confirms active playback. */
+PROG.audio.isPlaying = false;
+
+/* Init M1 once. Guard so a missing/failed shader module doesn't throw at load. */
+let m1Init=false;
+if(window.OlogyShaders){
+  try { m1Init=window.OlogyShaders.init(); }
+  catch(e){ console.error('[output.html] OlogyShaders.init failed:',e); }
+}
+
+/* ─── RENDER PAUSE DURING WINDOW MIGRATION ────────────────────────────── */
+/* Root cause of cursor flicker: dragging the popup to a second monitor
+   triggers a GPU compositing layer migration. The browser must re-allocate
+   the 1920×1080 backing store on the new display's GPU memory. While that
+   is in flight, every draw() call fights the migration for the GPU, starving
+   OS cursor compositing entirely.
+   Fix: set _resizing=true on first resize event, skip draw() until the
+   window has settled (200ms after last resize), then resume. Visuals freeze
+   briefly during drag — acceptable. PROG.t keeps incrementing so the
+   animation resumes at the correct position. */
+let _resizing=false;
+let _resizeTimer=null;
+function _onResize(){
+  _resizing=true;
+  clearTimeout(_resizeTimer);
+  _resizeTimer=setTimeout(()=>{
+    fit(canvas);
+    _resizing=false;
+  },200);
+}
+window.addEventListener('resize',_onResize);
+setTimeout(()=>fit(canvas),100);
+
+/* 60fps cap — leaves GPU scheduler headroom for OS cursor compositing. */
+const FPS_CAP=1000/60;
+let lastT=performance.now();
+let lastFrame=0;
+function loop(now){
+  if(now-lastFrame < FPS_CAP){ requestAnimationFrame(loop); return; }
+  lastFrame=now;
+  const dt=(now-lastT)/1000; lastT=now;
+  if(playing){PROG.t+=dt;}
+
+  /* Skip draw() while window is migrating to a new display. GPU layer
+     re-allocation must complete before we resume blitting. */
+  if(!_resizing && window.OlogyShaders&&window.OlogyShaders.isReady()){
+    /* Live audio reactivity REQUIRES index.html open and playing: it writes
+       'ology_frame' (AudioAnalysisFrame) every render tick (l.643). This page
+       reads it as the live frame; if index.html is closed/backgrounded the
+       key goes stale and we fall back to NULL_ANALYSIS (visuals still render,
+       reactivity flatlines). This page never owns an AudioContext. */
+    /* v1.1: prefer live frame from WebSocket (_wsFrame); fall back to
+       localStorage for same-browser tab use; fall back to NULL_ANALYSIS. */
+    let frame = _wsFrame || NULL_ANALYSIS;
+    if(!_wsFrame){
+      try {
+        const saved=localStorage.getItem('ology_frame');
+        if(saved) frame=JSON.parse(saved);
+      } catch(e) {}
+    }
+    try {
+      if(canvas)window.OlogyShaders.draw(canvas,toM1State(PROG,PROG.audio),frame,PROG.t,strobeGate);
+    } catch(e){ console.error('[output.html] draw error:',e); }
+  }
+
+  /* M6 — update overlay text every frame (cheap; text-only, no layout thrash when hidden) */
+  if(overlayOn) renderOverlay();
+
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* ─── AUTO FULLSCREEN ─────────────────────────────────────────────────── */
+/* When opened via the popup button (&fs=1), request fullscreen on the page
+   itself — more reliable than the opener calling requestFullscreen() across
+   window boundaries. User sees one Allow prompt, then clean fullscreen.    */
+if(cfgFullscreen){
+  window.addEventListener('click',function _fsClick(){
+    window.removeEventListener('click',_fsClick);
+    var el=document.documentElement;
+    if(el.requestFullscreen)            el.requestFullscreen().catch(function(){});
+    else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  },{once:true});
+  /* Also try immediately — works if browser allows programmatic fullscreen */
+  setTimeout(function(){
+    var el=document.documentElement;
+    if(!document.fullscreenElement){
+      if(el.requestFullscreen)            el.requestFullscreen().catch(function(){});
+      else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    }
+  },300);
+}
+
+})();
+  </script>
+</body>
+</html>

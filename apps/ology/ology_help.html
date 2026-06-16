@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Ology · Help Guide · Beta v1.5</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06070d;--surface:#0b0d15;--panel:#0e1022;
+  --stroke:rgba(255,255,255,.08);--s2:rgba(255,255,255,.14);
+  --txt:#e8eaf2;--dim:#8a90a8;--faint:#4a5068;
+  --acc:#a875ff;--acc-dark:#6c3fff;--teal:#35dfd6;
+  --red:#ff4e6a;--grn:#3ecc85;
+  --warn-bg:rgba(255,78,106,.08);--warn-border:rgba(255,78,106,.28);
+  --tip-bg:rgba(53,223,214,.07);--tip-border:rgba(53,223,214,.25);
+  --note-bg:rgba(168,117,255,.07);--note-border:rgba(168,117,255,.28);
+  --font-ui:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --font-mono:'SF Mono','Fira Code','Cascadia Code','Consolas',monospace;
+  --nav-w:220px;--content-max:860px;
+}
+html{scroll-behavior:smooth;height:100%}
+*{scrollbar-width:thin;scrollbar-color:rgba(168,117,255,.35) transparent}
+*::-webkit-scrollbar{width:4px;height:4px}
+*::-webkit-scrollbar-thumb{background:rgba(168,117,255,.3);border-radius:99px}
+body{background:var(--bg);color:var(--txt);font-family:var(--font-ui);font-size:14px;line-height:1.65;display:flex;height:100%;width:100%;overflow:hidden}
+
+/* ── Nav ── */
+#nav{width:var(--nav-w);flex-shrink:0;background:var(--surface);border-right:1px solid var(--stroke);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;scrollbar-width:thin;scrollbar-color:var(--s2) transparent}
+#nav::-webkit-scrollbar{width:3px}
+#nav::-webkit-scrollbar-thumb{background:var(--s2);border-radius:99px}
+.nav-brand{padding:20px 18px 16px;border-bottom:1px solid var(--stroke);flex-shrink:0}
+.nav-logo{display:block;width:120px;height:48px;margin-bottom:6px}
+.nav-brand .sub{font-size:9.5px;color:var(--faint);letter-spacing:1.8px;text-transform:uppercase;margin-top:2px}
+.nav-section-label{font-size:8.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--faint);font-weight:700;padding:16px 18px 6px}
+nav a{display:flex;align-items:center;gap:9px;padding:7px 18px;text-decoration:none;color:var(--dim);font-size:12.5px;font-weight:500;border-left:2px solid transparent;transition:color .14s,border-color .14s,background .14s;line-height:1.3}
+nav a:hover{color:var(--txt);background:rgba(255,255,255,.03)}
+nav a.active{color:var(--acc);border-left-color:var(--acc);background:rgba(168,117,255,.08)}
+nav a .nav-icon{width:14px;height:14px;flex-shrink:0;opacity:.6}
+nav a.active .nav-icon{opacity:1}
+.nav-footer{margin-top:auto;padding:14px 18px;border-top:1px solid var(--stroke);font-size:10px;color:var(--faint)}
+
+/* ── Content ── */
+#content{flex:1;overflow-y:auto;overflow-x:hidden;min-width:0;height:100%}
+.content-inner{
+  max-width:var(--content-max);margin:0 auto;
+  padding:48px 48px 96px;
+  /* Safari safe-area: adds notch/home-bar clearance on iOS */
+  padding-left:max(48px, calc(24px + env(safe-area-inset-left)));
+  padding-right:max(48px, calc(24px + env(safe-area-inset-right)));
+}
+
+/* ── Page hero ── */
+.page-hero{margin-bottom:52px;padding-bottom:32px;border-bottom:1px solid var(--stroke)}
+.page-hero .eyebrow{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:12px;font-family:var(--font-mono)}
+.page-hero h1{font-size:36px;font-weight:800;letter-spacing:-.5px;line-height:1.1;background:linear-gradient(120deg,#fff 30%,var(--acc) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+.page-hero .lead{font-size:15px;color:var(--dim);line-height:1.7;max-width:600px}
+
+/* ── Sections ── */
+.doc-section{margin-bottom:64px;scroll-margin-top:32px}
+.doc-section h2{font-size:22px;font-weight:700;letter-spacing:-.2px;color:var(--txt);margin-bottom:6px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.doc-section h2 .section-num{font-family:var(--font-mono);font-size:10px;color:var(--acc);background:rgba(168,117,255,.12);border:1px solid rgba(168,117,255,.25);border-radius:4px;padding:2px 7px;letter-spacing:.5px;flex-shrink:0;font-weight:600}
+.section-rule{height:1px;background:linear-gradient(90deg,rgba(168,117,255,.4),transparent);margin-bottom:24px}
+.doc-section h3{font-size:14px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--teal);margin:32px 0 12px;font-family:var(--font-mono)}
+.doc-section p{color:var(--dim);margin-bottom:14px;font-size:13.5px;line-height:1.7}
+.doc-section p:last-child{margin-bottom:0}
+
+/* ── Inline chips / keys ── */
+.ctrl{display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:linear-gradient(135deg,var(--acc),var(--acc-dark));color:#fff;letter-spacing:.3px;white-space:nowrap;vertical-align:middle;line-height:1.8}
+.tab-chip{display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:11px;font-weight:600;padding:2px 9px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid var(--s2);color:var(--txt);letter-spacing:.3px;white-space:nowrap;vertical-align:middle}
+.key{display:inline-block;font-family:var(--font-mono);font-size:10.5px;padding:1px 6px;border-radius:4px;background:var(--panel);border:1px solid var(--s2);color:var(--teal);vertical-align:middle}
+
+/* ── Callouts ── */
+.callout{border-radius:10px;padding:16px 18px;margin:20px 0;display:flex;gap:14px;align-items:flex-start;font-size:13px;line-height:1.65}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.callout-body{flex:1;min-width:0}
+.callout-body strong{display:block;margin-bottom:4px;font-size:12px;letter-spacing:.4px}
+.callout.warn{background:var(--warn-bg);border:1px solid var(--warn-border);color:#ffa0ae}
+.callout.warn .callout-body strong{color:var(--red)}
+.callout.tip{background:var(--tip-bg);border:1px solid var(--tip-border);color:#9aeae6}
+.callout.tip .callout-body strong{color:var(--teal)}
+.callout.note{background:var(--note-bg);border:1px solid var(--note-border);color:#c9aff8}
+.callout.note .callout-body strong{color:var(--acc)}
+
+/* ── Steps ── */
+.steps{counter-reset:step;list-style:none;margin:16px 0}
+.steps li{counter-increment:step;display:flex;gap:16px;align-items:flex-start;margin-bottom:18px;font-size:13.5px;color:var(--dim);line-height:1.65}
+.steps li::before{content:counter(step);display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(168,117,255,.15);border:1px solid rgba(168,117,255,.35);color:var(--acc);font-size:11px;font-weight:700;font-family:var(--font-mono);flex-shrink:0;margin-top:1px}
+.doc-section ul{list-style:none;margin:12px 0 16px}
+.doc-section ul li{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;color:var(--dim);margin-bottom:10px;line-height:1.65}
+.doc-section ul li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:8px}
+
+/* ── Control cards grid ── */
+.ctrl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.ctrl-card{background:var(--panel);border:1px solid var(--stroke);border-radius:10px;padding:14px 16px;transition:border-color .15s}
+.ctrl-card:hover{border-color:rgba(168,117,255,.3)}
+.ctrl-card-name{font-family:var(--font-mono);font-size:11.5px;font-weight:700;color:var(--txt);margin-bottom:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ctrl-card-range{font-size:10px;color:var(--acc);background:rgba(168,117,255,.1);border-radius:4px;padding:1px 6px;font-weight:600;border:1px solid rgba(168,117,255,.2)}
+.ctrl-card p{font-size:12.5px;color:var(--dim);line-height:1.55;margin:0!important}
+
+/* ── Tables — scrollable wrapper prevents spillover ── */
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0}
+.data-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.data-table th{background:rgba(168,117,255,.1);color:var(--acc);font-family:var(--font-mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;padding:9px 12px;text-align:left;border-bottom:1px solid rgba(168,117,255,.2);white-space:nowrap}
+.data-table td{padding:9px 12px;color:var(--dim);border-bottom:1px solid var(--stroke);vertical-align:top;line-height:1.5}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:rgba(255,255,255,.02)}
+.data-table td:first-child{color:var(--txt);font-weight:600;font-family:var(--font-mono);font-size:11.5px;white-space:nowrap}
+/* Description sub-row — spans full width below the key columns */
+.data-table .tr-desc td{
+  padding:3px 12px 12px;font-size:12px;color:var(--faint);
+  font-family:var(--font-ui);font-weight:400;white-space:normal;
+  border-bottom:1px solid var(--stroke)
+}
+.data-table .tr-desc td:first-child{
+  font-family:var(--font-ui);font-weight:400;color:var(--faint);
+  font-size:12px;white-space:normal
+}
+
+/* band pills */
+.band-pill{display:inline-block;font-family:var(--font-mono);font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:99px;letter-spacing:.4px;white-space:nowrap}
+.band-delta   {background:rgba(63,134,255,.15); color:#7aabff;border:1px solid rgba(63,134,255,.3)}
+.band-theta   {background:rgba(168,117,255,.15);color:#c9a0ff;border:1px solid rgba(168,117,255,.3)}
+.band-alpha   {background:rgba(53,223,214,.13); color:#6af0eb;border:1px solid rgba(53,223,214,.3)}
+.band-beta    {background:rgba(245,158,11,.13); color:#fbbf24;border:1px solid rgba(245,158,11,.3)}
+.band-gamma   {background:rgba(255,78,106,.13); color:#ff8f9e;border:1px solid rgba(255,78,106,.3)}
+.band-schumann{background:rgba(134,239,172,.12);color:#86efac;border:1px solid rgba(134,239,172,.3)}
+.band-solfeggio{background:rgba(251,191,36,.1); color:#fcd34d;border:1px solid rgba(251,191,36,.25)}
+
+/* ── Two-col text ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:20px 0;align-items:start}
+.two-col-full{grid-column:1/-1}
+
+/* ── UI diagrams (SVG-based) ── */
+.ui-diagram{background:var(--panel);border:1px solid var(--stroke);border-radius:12px;overflow:hidden;margin:20px 0}
+.ui-diagram-header{padding:10px 16px;border-bottom:1px solid var(--stroke);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);font-family:var(--font-mono);font-weight:700}
+.ui-diagram svg{display:block;width:100%;height:auto}
+.annot-row{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-top:1px solid var(--stroke)}
+.annot{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--dim)}
+.annot-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* ── Go explainer ── */
+.go-explainer{display:flex;gap:20px;align-items:center;background:var(--panel);border:1px solid rgba(62,204,133,.2);border-radius:10px;padding:16px 20px;margin:20px 0;flex-wrap:wrap}
+.go-btn-demo{background:linear-gradient(135deg,#3ecc85,#2aaa6a);color:#fff;font-size:13px;font-weight:800;letter-spacing:1.2px;padding:10px 22px;border-radius:8px;flex-shrink:0;text-align:center;white-space:nowrap}
+.go-explainer p{margin:0!important;font-size:13px;color:var(--dim);line-height:1.6;flex:1;min-width:180px}
+
+/* ── Entrainment mode cards ── */
+.mode-cards{display:grid;grid-template-columns:1fr;gap:14px;margin:16px 0}
+.mode-card-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+.mode-card{background:var(--panel);border:1px solid var(--stroke);border-radius:10px;padding:14px 16px}
+.mode-card-name{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--txt);margin-bottom:6px}
+.mode-card-tag{display:inline-block;font-size:9px;font-family:var(--font-mono);font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:4px;margin-bottom:8px}
+.tag-headphones{background:rgba(168,117,255,.15);color:var(--acc);border:1px solid rgba(168,117,255,.3)}
+.tag-speakers  {background:rgba(53,223,214,.12); color:var(--teal);border:1px solid rgba(53,223,214,.3)}
+.mode-card p{font-size:12px;color:var(--dim);line-height:1.55;margin:0!important}
+/* Advisory cards — inline beside mode cards */
+.advisory{border-radius:10px;padding:13px 14px;font-size:12px;line-height:1.6;display:flex;gap:10px;align-items:flex-start}
+.advisory-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.advisory-body strong{display:block;font-size:11px;font-weight:700;letter-spacing:.3px;margin-bottom:4px}
+.advisory-body p{margin:0;font-size:12px;line-height:1.55}
+.advisory.yellow{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.3);color:#fcd34d}
+.advisory.yellow strong{color:#fbbf24}
+.advisory.yellow p{color:rgba(252,211,77,.8)}
+.advisory.red{background:rgba(255,78,106,.07);border:1px solid rgba(255,78,106,.28);color:#ffa0ae}
+.advisory.red strong{color:#ff4e6a}
+.advisory.red p{color:rgba(255,160,174,.85)}
+.advisory.green{background:rgba(62,204,133,.07);border:1px solid rgba(62,204,133,.28);color:#6ee7b7}
+.advisory.green strong{color:#3ecc85}
+.advisory.green p{color:rgba(110,231,183,.85)}
+
+/* ── Session cards ── */
+.session-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.session-card{background:var(--panel);border:1px solid var(--stroke);border-radius:12px;padding:18px;transition:border-color .15s}
+.session-card:hover{border-color:rgba(168,117,255,.3)}
+.session-card-title{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.session-card-title .emoji{font-size:18px}
+.session-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid var(--stroke);font-size:12px;gap:8px}
+.session-row:last-child{border-bottom:none}
+.session-row .s-key{color:var(--faint);font-family:var(--font-mono);font-size:10px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;flex-shrink:0}
+.session-row .s-val{color:var(--txt);font-size:12px;text-align:right}
+
+/* ── OBS code ── */
+.obs-code{background:var(--panel);border:1px solid var(--stroke);border-radius:8px;padding:10px 14px;font-family:var(--font-mono);font-size:12px;color:var(--teal);margin:8px 0;overflow-x:auto;white-space:nowrap}
+
+/* ── Safety grid ── */
+.safety-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.safety-item{display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--panel);border:1px solid var(--stroke);border-radius:10px;font-size:12.5px;color:var(--dim);line-height:1.55}
+.safety-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+
+.divider{height:1px;background:var(--stroke);margin:40px 0}
+
+/* ── Progress bar ── */
+#progress-bar{position:fixed;top:0;left:var(--nav-w);right:0;height:2px;background:linear-gradient(90deg,var(--acc),var(--teal));transform-origin:left;transform:scaleX(0);z-index:100;transition:transform .1s linear}
+
+/* ── Mobile hamburger ── */
+#mob-btn{display:none;position:fixed;top:10px;left:12px;z-index:300;width:36px;height:36px;border-radius:8px;background:var(--surface);border:1px solid var(--s2);color:var(--txt);font-size:18px;cursor:pointer;align-items:center;justify-content:center;line-height:1}
+#mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200}
+#mob-overlay.open{display:block}
+
+/* ── Responsive ── */
+@media (max-width:800px){
+  :root{--nav-w:0px}
+  body{display:block;overflow-y:auto;overflow-x:hidden;height:auto;min-height:100vh}
+  #nav{position:fixed;top:0;left:0;width:240px;height:100vh;z-index:250;transform:translateX(-100%);transition:transform .22s ease;border-right:1px solid var(--s2)}
+  #nav.open{transform:translateX(0)}
+  #mob-btn{display:flex;top:max(10px, env(safe-area-inset-top));left:max(12px, env(safe-area-inset-left))}
+  #progress-bar{left:0}
+  #nav .nav-brand{padding-top:max(60px, calc(52px + env(safe-area-inset-top)))}
+  #content{display:block;width:100%;overflow:visible;height:auto}
+  .content-inner{
+    padding-top:max(56px, calc(44px + env(safe-area-inset-top)));
+    padding-bottom:max(80px, calc(60px + env(safe-area-inset-bottom)));
+    padding-left:max(24px, calc(20px + env(safe-area-inset-left)));
+    padding-right:max(24px, calc(20px + env(safe-area-inset-right)));
+  }
+  .page-hero h1{font-size:26px}
+  .page-hero .lead{font-size:13.5px}
+  .ctrl-grid{grid-template-columns:1fr}
+  .mode-card-row{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr;gap:20px}
+  .mode-cards{grid-template-columns:1fr}
+  .session-cards{grid-template-columns:1fr}
+  .safety-grid{grid-template-columns:1fr}
+  .go-explainer{flex-direction:column;gap:12px}
+  .callout{flex-direction:column;gap:8px}
+  .callout-icon{margin-top:0}
+}
+@media (max-width:480px){
+  .content-inner{
+    padding-top:max(64px, calc(52px + env(safe-area-inset-top)));
+    padding-bottom:max(80px, calc(60px + env(safe-area-inset-bottom)));
+    padding-left:max(28px, calc(20px + env(safe-area-inset-left)));
+    padding-right:max(28px, calc(20px + env(safe-area-inset-right)));
+  }
+  .page-hero h1{font-size:22px}
+  .doc-section h2{font-size:18px}
+  .session-row{flex-wrap:wrap}
+  .session-row .s-val{text-align:left}
+}
+@media print{
+  #nav,#progress-bar{display:none}
+  body{display:block}
+  #content{overflow:visible}
+  .ctrl-grid,.two-col,.mode-cards,.session-cards,.safety-grid{grid-template-columns:1fr 1fr;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<button id="mob-btn" aria-label="Open navigation" onclick="toggleNav()">☰</button>
+<div id="mob-overlay" onclick="closeNav()"></div>
+
+<aside id="nav">
+  <div class="nav-brand">
+    <div class="nav-logo" style="display:flex;align-items:center;gap:10px">
+      <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <defs>
+          <radialGradient id="nb" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a1f30"/>
+            <stop offset="100%" stop-color="#0b0f1a"/>
+          </radialGradient>
+          <radialGradient id="nb-bloom" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(255,255,255,.22)"/>
+            <stop offset="55%" stop-color="rgba(192,132,176,.07)"/>
+            <stop offset="100%" stop-color="rgba(11,15,26,0)"/>
+          </radialGradient>
+          <clipPath id="nb-clip"><circle cx="22" cy="22" r="21"/></clipPath>
+        </defs>
+        <circle cx="22" cy="22" r="21" fill="url(#nb)" stroke="rgba(168,117,255,.3)" stroke-width=".8"/>
+        <g clip-path="url(#nb-clip)">
+          <circle cx="31.2" cy="20.8" r="2.8" fill="#7BA7D4cc" stroke="#7BA7D4aa" stroke-width=".9"/>
+          <circle cx="26.4" cy="23.2" r="1.6" fill="#A8D8EA88" stroke="#A8D8EA" stroke-width=".5"/>
+          <circle cx="28.8" cy="18.4" r="1.5" fill="#E8896A88" stroke="#E8896A" stroke-width=".5"/>
+          <circle cx="22.4" cy="31.8" r="2.6" fill="#C084B0cc" stroke="#C084B0aa" stroke-width=".9"/>
+          <circle cx="19.2" cy="27.6" r="1.5" fill="#7BA7D488" stroke="#7BA7D4" stroke-width=".5"/>
+          <circle cx="24.8" cy="29.6" r="1.4" fill="#ffffffcc" stroke="#ffffff88" stroke-width=".5"/>
+          <circle cx="12.8" cy="31.2" r="2.4" fill="#E8896Acc" stroke="#E8896Aaa" stroke-width=".9"/>
+          <circle cx="15.6" cy="27.2" r="1.4" fill="#C084B088" stroke="#C084B0" stroke-width=".5"/>
+          <circle cx="13.2" cy="28.8" r="1.3" fill="#7BA7D488" stroke="#7BA7D4" stroke-width=".5"/>
+          <circle cx="12.8" cy="23.2" r="2.5" fill="#A8D8EAcc" stroke="#A8D8EAaa" stroke-width=".9"/>
+          <circle cx="17.6" cy="20.8" r="1.5" fill="#E8896A88" stroke="#E8896A" stroke-width=".5"/>
+          <circle cx="15.2" cy="25.6" r="1.4" fill="#C084B088" stroke="#C084B0" stroke-width=".5"/>
+          <circle cx="21.6" cy="12.2" r="2.6" fill="#7BA7D4cc" stroke="#7BA7D4aa" stroke-width=".9"/>
+          <circle cx="24.8" cy="16.4" r="1.5" fill="#ffffff88" stroke="#ffffff88" stroke-width=".5"/>
+          <circle cx="19.2" cy="14.4" r="1.4" fill="#A8D8EA88" stroke="#A8D8EA" stroke-width=".5"/>
+          <circle cx="31.2" cy="13.2" r="2.4" fill="#C084B0cc" stroke="#C084B0aa" stroke-width=".9"/>
+          <circle cx="28.4" cy="16.8" r="1.4" fill="#7BA7D488" stroke="#7BA7D4" stroke-width=".5"/>
+          <circle cx="29.6" cy="12.8" r="1.3" fill="#E8896A88" stroke="#E8896A" stroke-width=".5"/>
+          <circle cx="22" cy="22" r="18" fill="url(#nb-bloom)"/>
+          <circle cx="22" cy="22" r="2.5" fill="#ffffff" opacity=".7"/>
+        </g>
+      </svg>
+      <span style="font-family:'Marcellus','Georgia',serif;font-size:20px;font-weight:400;letter-spacing:3px;color:#ffffff">OLOGY</span>
+    </div>
+  </div>
+  <div class="nav-section-label">Getting Started</div>
+  <nav>
+    <a href="#overview" class="active"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>Overview</a>
+    <a href="#interface"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 8a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zm6-8a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2h-2zm0 8a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z"/></svg>Interface</a>
+    <a href="#mobile"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>Mobile</a>
+  </nav>
+  <div class="nav-section-label">Controls</div>
+  <nav>
+    <a href="#visuals-tab"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>Visuals</a>
+    <a href="#audio-tab"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"/></svg>Audio</a>
+    <a href="#output-tab"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm12.553 1.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>Output</a>
+    <a href="#presets-tab"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"/></svg>Presets</a>
+  </nav>
+  <div class="nav-section-label">Reference</div>
+  <nav>
+    <a href="#themes"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd"/></svg>Themes</a>
+    <a href="#drone-library"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"/></svg>Drone Library</a>
+    <a href="#frequency-guide"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>Frequencies</a>
+  </nav>
+  <div class="nav-section-label">Sessions</div>
+  <nav>
+    <a href="#sessions"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>Recipes</a>
+    <a href="#obs-setup"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm14 1a1 1 0 11-2 0 1 1 0 012 0zM2 13a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2zm14 1a1 1 0 11-2 0 1 1 0 012 0z" clip-rule="evenodd"/></svg>OBS Setup</a>
+  </nav>
+  <div class="nav-section-label">Safety</div>
+  <nav>
+    <a href="#safety"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Safety</a>
+  </nav>
+  <div class="nav-footer">Ology Beta v1.5 · AIMA Productions</div>
+</aside>
+
+<!-- ── Main Content ─────────────────────────────────────────────────────── -->
+<main id="content">
+<div class="content-inner">
+
+  <header class="page-hero">
+    <div class="eyebrow">Ology · Help Guide · Beta v1.5</div>
+    <h1>Everything you need<br>to run a session.</h1>
+    <p class="lead">Ology is a browser-based audio-reactive kaleidoscope for meditation, neuroplasticity, and live performance. This guide covers every control, the full drone library, OBS setup, and ready-to-use session recipes.</p>
+  </header>
+
+
+  <!-- ── 01 Overview ─────────────────────────────────────────────────────── -->
+  <section class="doc-section" id="overview">
+    <h2><span class="section-num">01</span> What Ology is</h2>
+    <div class="section-rule"></div>
+    <p>Ology renders an infinite, never-repeating fractal visual driven in real time by an internally synthesized audio engine. No sample files, no installation, no cloud services. Open the URL and the experience begins.</p>
+    <div class="two-col">
+      <div>
+        <h3>Three contexts</h3>
+        <ul>
+          <li><strong style="color:var(--txt)">Therapeutic sessions.</strong> Grief processing, anxiety relief, focus recovery, and inner journeying. Visuals and entrainment drones are paired by emotional and neurological intent.</li>
+          <li><strong style="color:var(--txt)">Neuroplasticity work.</strong> Structured sessions using binaural, isochronic, and monaural entrainment targeting specific EEG frequency bands correlated with learning, memory, and peak cognition.</li>
+          <li><strong style="color:var(--txt)">Live performance.</strong> DJ visuals, podcast backdrops, and OBS broadcast content. The two-page architecture keeps audio and video cleanly separated for the OBS bus.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Design principle</h3>
+        <p>Calm by default. Intense on demand.</p>
+        <p>Therapeutic presets bias toward slow, smooth, low-contrast motion. Performance presets unlock chaos, high-speed transitions, and visual density — always within the built-in strobe limiter that is on by default.</p>
+        <div class="callout tip" style="margin-top:14px">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body">
+            <strong>No auto-play</strong>
+            Audio never starts on its own. Press <span class="ctrl">Play</span> in the Audio tab to begin.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 02 Interface ─────────────────────────────────────────────────────── -->
+  <section class="doc-section" id="interface">
+    <h2><span class="section-num">02</span> Interface</h2>
+    <div class="section-rule"></div>
+    <p>Ology has two form factors — the desktop Stage (<span class="key">web.html</span>) and the <strong style="color:var(--txt)">Mobile App</strong>. Both share the same PREVIEW / PROGRAM model and identical controls. This section covers the desktop Stage in detail; the Mobile App layout follows below.</p>
+
+    <h3>Desktop Stage layout</h3>
+    <p>The Stage is divided into four permanent zones that are always visible. Nothing is hidden behind a fullscreen toggle or overlay — the operator sees everything at once.</p>
+
+    <!-- Updated desktop UI diagram -->
+    <div class="ui-diagram">
+      <div class="ui-diagram-header">web.html · Desktop Stage — four zones annotated</div>
+      <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono',monospace">
+        <defs>
+          <radialGradient id="prevGrad2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(123,167,212,.22)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <radialGradient id="progGrad2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,78,106,.16)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <linearGradient id="slGrad3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#a875ff"/><stop offset="100%" stop-color="#35dfd6"/></linearGradient>
+          <linearGradient id="goGrad2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3ecc85"/><stop offset="100%" stop-color="#2aaa6a"/></linearGradient>
+          <!-- Kaleidoscope pattern for canvas preview -->
+          <radialGradient id="kalGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7b3ff2"/><stop offset="40%" stop-color="#37e0d8"/><stop offset="100%" stop-color="#0a0c14"/></radialGradient>
+        </defs>
+        <!-- Overall bg -->
+        <rect width="700" height="260" fill="#06070d"/>
+
+        <!-- Zone A: TOPBAR -->
+        <rect x="0" y="0" width="700" height="36" fill="#0c0e1a"/>
+        <rect x="0" y="36" width="700" height="1" fill="rgba(255,255,255,.1)"/>
+        <!-- topbar label -->
+        <rect x="2" y="2" width="80" height="15" rx="3" fill="rgba(168,117,255,.12)" stroke="rgba(168,117,255,.3)" stroke-width=".6"/>
+        <text x="42" y="13" text-anchor="middle" font-size="7" font-weight="700" fill="#a875ff" letter-spacing=".8">A — TOPBAR</text>
+        <!-- logo mockup -->
+        <circle cx="120" cy="18" r="9" fill="rgba(123,167,212,.15)" stroke="rgba(123,167,212,.3)" stroke-width=".7"/>
+        <text x="120" y="22" text-anchor="middle" font-size="8" fill="#7BA7D4">◈</text>
+        <text x="136" y="22" font-size="10" font-weight="700" fill="#e8eaf2" letter-spacing="2">OLOGY</text>
+        <!-- engine button -->
+        <rect x="570" y="8" width="72" height="20" rx="5" fill="none" stroke="rgba(123,167,212,.3)" stroke-width=".8"/>
+        <text x="606" y="21" text-anchor="middle" font-size="8" fill="#6abfa0">❚❚ Running</text>
+
+        <!-- Zone B: LEFT SIDEBAR -->
+        <rect x="0" y="37" width="56" height="223" fill="#0b0d15"/>
+        <rect x="56" y="37" width="1" height="223" fill="rgba(255,255,255,.08)"/>
+        <!-- sidebar zone label -->
+        <rect x="2" y="42" width="52" height="15" rx="3" fill="rgba(168,117,255,.12)" stroke="rgba(168,117,255,.3)" stroke-width=".6"/>
+        <text x="28" y="53" text-anchor="middle" font-size="6" font-weight="700" fill="#a875ff" letter-spacing=".5">B — TABS</text>
+        <!-- tab icons -->
+        <rect x="8" y="62" width="40" height="40" rx="8" fill="rgba(168,117,255,.15)" stroke="rgba(168,117,255,.3)" stroke-width="1"/>
+        <text x="28" y="79" text-anchor="middle" font-size="13" fill="#fff">👁</text>
+        <text x="28" y="96" text-anchor="middle" font-size="5.5" fill="#a875ff" letter-spacing=".6">VISUALS</text>
+        <rect x="8" y="108" width="40" height="40" rx="8" fill="none"/>
+        <text x="28" y="125" text-anchor="middle" font-size="13" fill="#8a90a8">🔊</text>
+        <text x="28" y="142" text-anchor="middle" font-size="5.5" fill="#4a5068" letter-spacing=".6">AUDIO</text>
+        <rect x="8" y="154" width="40" height="40" rx="8" fill="none"/>
+        <text x="28" y="171" text-anchor="middle" font-size="13" fill="#8a90a8">📤</text>
+        <text x="28" y="188" text-anchor="middle" font-size="5.5" fill="#4a5068" letter-spacing=".6">OUTPUT</text>
+        <rect x="8" y="200" width="40" height="40" rx="8" fill="none"/>
+        <text x="28" y="217" text-anchor="middle" font-size="13" fill="#8a90a8">💾</text>
+        <text x="28" y="234" text-anchor="middle" font-size="5.5" fill="#4a5068" letter-spacing=".6">PRESETS</text>
+
+        <!-- Zone C: CENTER CANVAS MONITORS -->
+        <rect x="57" y="37" width="430" height="223" fill="#0a0c14"/>
+        <!-- zone label -->
+        <rect x="62" y="42" width="80" height="15" rx="3" fill="rgba(53,223,214,.1)" stroke="rgba(53,223,214,.3)" stroke-width=".6"/>
+        <text x="102" y="53" text-anchor="middle" font-size="7" font-weight="700" fill="#35dfd6" letter-spacing=".8">C — CANVAS</text>
+
+        <!-- PREVIEW monitor -->
+        <rect x="68" y="60" width="196" height="192" rx="9" fill="#000" stroke="rgba(42,85,204,.45)" stroke-width="1.2"/>
+        <rect x="68" y="60" width="196" height="22" rx="9" fill="#0b0d15"/>
+        <rect x="68" y="75" width="196" height="7" fill="#0b0d15"/>
+        <text x="78" y="74" font-size="7" font-weight="700" fill="#7aa2ff" letter-spacing="1">● PREVIEW</text>
+        <text x="234" y="74" font-size="6.5" fill="#4a5068" text-anchor="end">Intergalactic Beings</text>
+        <!-- kaleidoscope preview fill -->
+        <rect x="69" y="82" width="194" height="169" fill="#04060e"/>
+        <circle cx="166" cy="166" r="90" fill="url(#prevGrad2)" opacity=".7"/>
+        <text x="166" y="170" text-anchor="middle" font-size="9" fill="#3a4060" letter-spacing=".6">STAGING</text>
+
+        <!-- PROGRAM monitor -->
+        <rect x="274" y="60" width="196" height="192" rx="9" fill="#000" stroke="rgba(204,42,58,.4)" stroke-width="1.2"/>
+        <rect x="274" y="60" width="196" height="22" rx="9" fill="#0b0d15"/>
+        <rect x="274" y="75" width="196" height="7" fill="#0b0d15"/>
+        <text x="284" y="74" font-size="7" font-weight="700" fill="#ff7a8a" letter-spacing="1">● PROGRAM</text>
+        <text x="342" y="74" font-size="7" font-weight="700" fill="#ff4e6a" letter-spacing=".8"> · LIVE</text>
+        <!-- kaleidoscope program fill -->
+        <rect x="275" y="82" width="194" height="169" fill="#04060e"/>
+        <circle cx="372" cy="166" r="90" fill="url(#progGrad2)" opacity=".8"/>
+        <!-- simple kaleidoscope pattern suggestion -->
+        <line x1="372" y1="100" x2="372" y2="232" stroke="rgba(255,78,106,.12)" stroke-width=".8"/>
+        <line x1="308" y1="166" x2="436" y2="166" stroke="rgba(255,78,106,.12)" stroke-width=".8"/>
+        <line x1="326" y1="118" x2="418" y2="214" stroke="rgba(255,78,106,.12)" stroke-width=".8"/>
+        <line x1="418" y1="118" x2="326" y2="214" stroke="rgba(255,78,106,.12)" stroke-width=".8"/>
+        <circle cx="372" cy="166" r="42" fill="none" stroke="rgba(255,120,140,.15)" stroke-width=".8"/>
+        <circle cx="372" cy="166" r="22" fill="none" stroke="rgba(255,120,140,.2)" stroke-width=".8"/>
+        <circle cx="372" cy="166" r="6" fill="rgba(255,100,120,.3)"/>
+        <text x="372" y="230" text-anchor="middle" font-size="9" fill="#3a2030" letter-spacing=".6">LIVE</text>
+
+        <!-- Zone D: RIGHT PANEL -->
+        <rect x="487" y="37" width="213" height="223" fill="#0e1022"/>
+        <rect x="487" y="37" width="1" height="223" fill="rgba(255,255,255,.08)"/>
+        <!-- zone label -->
+        <rect x="492" y="42" width="90" height="15" rx="3" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.3)" stroke-width=".6"/>
+        <text x="537" y="53" text-anchor="middle" font-size="7" font-weight="700" fill="#fbbf24" letter-spacing=".8">D — CONTROLS</text>
+        <!-- panel header -->
+        <rect x="487" y="58" width="213" height="22" fill="#0b0d15"/>
+        <text x="499" y="72" font-size="7" fill="#4a5068" letter-spacing="1.6">VISUALS</text>
+        <!-- sliders -->
+        <text x="499" y="96" font-size="8.5" fill="#8a90a8">Intensity</text>
+        <rect x="552" y="90" width="130" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="552" y="90" width="65" height="3" rx="2" fill="url(#slGrad3)"/>
+        <text x="688" y="96" font-size="7.5" fill="#35dfd6" text-anchor="end">0.50</text>
+        <text x="499" y="115" font-size="8.5" fill="#8a90a8">Speed</text>
+        <rect x="552" y="109" width="130" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="552" y="109" width="100" height="3" rx="2" fill="url(#slGrad3)"/>
+        <text x="688" y="115" font-size="7.5" fill="#35dfd6" text-anchor="end">0.8×</text>
+        <text x="499" y="134" font-size="8.5" fill="#8a90a8">Chaos</text>
+        <rect x="552" y="128" width="130" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="552" y="128" width="58" height="3" rx="2" fill="url(#slGrad3)"/>
+        <text x="688" y="134" font-size="7.5" fill="#35dfd6" text-anchor="end">0.45</text>
+        <text x="499" y="153" font-size="8.5" fill="#8a90a8">Segments</text>
+        <rect x="552" y="147" width="130" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="552" y="147" width="30" height="3" rx="2" fill="url(#slGrad3)"/>
+        <text x="688" y="153" font-size="7.5" fill="#35dfd6" text-anchor="end">8</text>
+        <text x="499" y="172" font-size="8.5" fill="#8a90a8">Bloom</text>
+        <rect x="552" y="166" width="130" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="552" y="166" width="118" height="3" rx="2" fill="url(#slGrad3)"/>
+        <text x="688" y="172" font-size="7.5" fill="#35dfd6" text-anchor="end">1.00</text>
+        <text x="499" y="191" font-size="8.5" fill="#8a90a8">Smooth</text>
+        <rect x="552" y="185" width="130" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="552" y="185" width="107" height="3" rx="2" fill="url(#slGrad3)"/>
+        <text x="688" y="191" font-size="7.5" fill="#35dfd6" text-anchor="end">0.82</text>
+        <!-- GO button -->
+        <rect x="499" y="224" width="191" height="26" rx="7" fill="url(#goGrad2)"/>
+        <text x="594" y="241" text-anchor="middle" font-size="12" font-weight="800" fill="#fff" letter-spacing="1.5">GO</text>
+      </svg>
+      <div class="annot-row">
+        <div class="annot"><span class="annot-dot" style="background:#a875ff"></span> A — Topbar: logo + engine button</div>
+        <div class="annot"><span class="annot-dot" style="background:#a875ff"></span> B — Tab sidebar: Visuals · Audio · Output · Presets</div>
+        <div class="annot"><span class="annot-dot" style="background:#35dfd6"></span> C — Canvas: PREVIEW (blue) + PROGRAM (red)</div>
+        <div class="annot"><span class="annot-dot" style="background:#fbbf24"></span> D — Control panel: active tab content + GO</div>
+      </div>
+    </div>
+
+    <h3>Zone A — Topbar</h3>
+    <p>The topbar runs across the full width of the page and is always visible. It contains the Ology brand logo on the left and the <span class="ctrl">❚❚ Running</span> engine button on the right. The engine button pauses and resumes the visual render loop — it does not affect audio. The button shows <span class="key">Running</span> in teal when active and <span class="key">Paused</span> when stopped.</p>
+
+    <h3>Zone B — Tab sidebar</h3>
+    <p>The left sidebar holds the four navigation tabs. The active tab is highlighted in purple. Clicking a tab switches the control panel (Zone D) to that tab's content. The canvas (Zone C) is unaffected by tab switching — it keeps rendering regardless of which tab is open.</p>
+    <div class="ctrl-grid">
+      <div class="ctrl-card"><div class="ctrl-card-name">👁 Visuals</div><p>Theme selector and all visual parameter sliders. Changes go to PREVIEW only — press GO to commit to PROGRAM.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">🔊 Audio</div><p>Transport, drone preset, entrainment mode, ambient bed, blend, brain-tickle, slowness, reactivity routing, and master volume.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">📤 Output</div><p>Aspect ratio selector, param overlay toggle, and the Open output window button for OBS.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">💾 Presets</div><p>Save, load, favorite, delete, export, and import complete session snapshots.</p></div>
+    </div>
+
+    <h3>Zone C — Canvas</h3>
+    <p>The canvas zone holds two monitors side by side — PREVIEW on the left and PROGRAM on the right. This is where you see the kaleidoscope running in real time.</p>
+
+    <!-- Canvas image placeholder — uses an SVG kaleidoscope illustration -->
+    <div class="ui-diagram" style="margin-bottom:20px">
+      <div class="ui-diagram-header">Canvas monitors — PREVIEW staging · PROGRAM live</div>
+      <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="kal1a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7b3ff2"/><stop offset="35%" stop-color="#1a0a3a"/><stop offset="100%" stop-color="#04060e"/></radialGradient>
+          <radialGradient id="kal2a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#37e0d8"/><stop offset="35%" stop-color="#0a2a2a"/><stop offset="100%" stop-color="#04060e"/></radialGradient>
+          <radialGradient id="kal1b" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffd36e"/><stop offset="40%" stop-color="#1a100a"/><stop offset="100%" stop-color="#04060e"/></radialGradient>
+          <radialGradient id="kal2b" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff6e9a"/><stop offset="40%" stop-color="#1a050e"/><stop offset="100%" stop-color="#04060e"/></radialGradient>
+        </defs>
+        <rect width="640" height="200" fill="#06070d"/>
+        <!-- PREVIEW panel -->
+        <rect x="10" y="8" width="300" height="184" rx="10" fill="#000" stroke="rgba(42,85,204,.5)" stroke-width="1.5"/>
+        <rect x="10" y="8" width="300" height="24" rx="10" fill="#0b0d15"/>
+        <rect x="10" y="24" width="300" height="8" fill="#0b0d15"/>
+        <text x="22" y="23" font-size="8" font-weight="700" fill="#7aa2ff" font-family="monospace" letter-spacing="1">● PREVIEW — STAGING</text>
+        <rect x="11" y="32" width="298" height="159" fill="#04060e"/>
+        <!-- kaleidoscope art preview -->
+        <circle cx="160" cy="112" r="78" fill="url(#kal1a)" opacity=".9"/>
+        <circle cx="160" cy="112" r="55" fill="url(#kal2a)" opacity=".7"/>
+        <circle cx="160" cy="112" r="32" fill="url(#kal1a)" opacity=".8"/>
+        <line x1="160" y1="52" x2="160" y2="172" stroke="rgba(123,167,212,.12)" stroke-width="1"/>
+        <line x1="100" y1="112" x2="220" y2="112" stroke="rgba(123,167,212,.12)" stroke-width="1"/>
+        <line x1="117" y1="69" x2="203" y2="155" stroke="rgba(123,167,212,.1)" stroke-width="1"/>
+        <line x1="203" y1="69" x2="117" y2="155" stroke="rgba(123,167,212,.1)" stroke-width="1"/>
+        <circle cx="160" cy="112" r="8" fill="rgba(123,167,212,.4)"/>
+        <!-- PROGRAM panel -->
+        <rect x="330" y="8" width="300" height="184" rx="10" fill="#000" stroke="rgba(204,42,58,.45)" stroke-width="1.5"/>
+        <rect x="330" y="8" width="300" height="24" rx="10" fill="#0b0d15"/>
+        <rect x="330" y="24" width="300" height="8" fill="#0b0d15"/>
+        <text x="342" y="23" font-size="8" font-weight="700" fill="#ff7a8a" font-family="monospace" letter-spacing="1">● PROGRAM — LIVE</text>
+        <rect x="331" y="32" width="298" height="159" fill="#04060e"/>
+        <!-- kaleidoscope art program (slightly different phase) -->
+        <circle cx="480" cy="112" r="78" fill="url(#kal1b)" opacity=".85"/>
+        <circle cx="480" cy="112" r="55" fill="url(#kal2b)" opacity=".65"/>
+        <circle cx="480" cy="112" r="32" fill="url(#kal1b)" opacity=".75"/>
+        <line x1="480" y1="52" x2="480" y2="172" stroke="rgba(255,120,140,.12)" stroke-width="1"/>
+        <line x1="420" y1="112" x2="540" y2="112" stroke="rgba(255,120,140,.12)" stroke-width="1"/>
+        <line x1="437" y1="69" x2="523" y2="155" stroke="rgba(255,120,140,.1)" stroke-width="1"/>
+        <line x1="523" y1="69" x2="437" y2="155" stroke="rgba(255,120,140,.1)" stroke-width="1"/>
+        <circle cx="480" cy="112" r="8" fill="rgba(255,100,120,.4)"/>
+      </svg>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <p><strong style="color:#7aa2ff">PREVIEW</strong> (blue border) is your private staging area. All slider and theme changes go here first. Your audience never sees PREVIEW — only you do. Use it to audition a new look without disturbing a live session.</p>
+        <p>When you are happy with what you see in PREVIEW, press <span class="ctrl">GO</span> to push it to PROGRAM instantly.</p>
+      </div>
+      <div>
+        <p><strong style="color:#ff7a8a">PROGRAM</strong> (red border · LIVE) is what your audience sees — it is the canvas that syncs to the output window and OBS. It only changes when you press GO.</p>
+        <p>Audio parameter changes (drone, mode, bed, volume) bypass this model and take effect immediately in both monitors without pressing GO.</p>
+      </div>
+    </div>
+
+    <h3>Zone D — Control panel</h3>
+    <p>The right panel is the active tab's control surface. It changes completely depending on which tab is selected in Zone B. All visual controls in this panel write to PREVIEW only. The panel always ends with the <span class="ctrl">GO</span> button which commits the current PREVIEW state to PROGRAM.</p>
+
+    <div class="go-explainer">
+      <div class="go-btn-demo">GO</div>
+      <p>GO is the only action that changes what your audience sees. Every visual change you make — theme, speed, chaos, bloom, segments — stages silently in PREVIEW until you press GO. Audio changes (drone, mode, bed, volume) take effect immediately and do not require GO.</p>
+    </div>
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">
+        <strong>Audio vs Visual — two different commit rules</strong>
+        Visual parameters stage into PREVIEW and require GO. Audio parameters (drone selection, entrainment mode, carrier Hz, beat Hz, ambient bed, blend, volume) take effect immediately when you change them — there is no PREVIEW step for audio.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 03 Mobile ──────────────────────────────────────────────────────── -->
+  <section class="doc-section" id="mobile">
+    <h2><span class="section-num">03</span> Mobile App<span id="mobile-view" style="display:block;height:0;visibility:hidden"></span><span id="how-to-use" style="display:block;height:0;visibility:hidden"></span></h2>
+    <div class="section-rule"></div>
+    <p>The <strong style="color:var(--txt)">Ology Mobile App</strong> is a full Ology experience optimised for phones and tablets. It renders the kaleidoscope, generates audio, and provides complete visual and audio control — all in a single browser tab, no installation required.</p>
+
+    <!-- Desktop 3-col layout diagram -->
+    <div class="ui-diagram">
+      <div class="ui-diagram-header">Mobile app · Desktop / Tablet landscape — three-column layout</div>
+      <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono',monospace">
+        <rect width="700" height="230" fill="#0B0F1A"/>
+        <!-- Topbar -->
+        <rect x="0" y="0" width="700" height="44" fill="#111827"/>
+        <rect x="0" y="44" width="700" height="1" fill="rgba(123,167,212,.18)"/>
+        <!-- Logo -->
+        <circle cx="28" cy="22" r="12" fill="rgba(123,167,212,.15)" stroke="rgba(123,167,212,.3)" stroke-width="1"/>
+        <text x="28" y="27" text-anchor="middle" font-size="11" fill="#7BA7D4">◈</text>
+        <!-- Brand -->
+        <text x="48" y="19" font-size="13" font-weight="700" font-family="serif" fill="none" stroke="url(#brandGrad)" stroke-width="0.3">OLOGY</text>
+        <text x="48" y="19" font-size="13" font-weight="700" font-family="serif" fill="url(#brandGrad)">OLOGY</text>
+        <text x="48" y="33" font-size="7" fill="#A8D8EA" letter-spacing="2" font-family="monospace">v1.5 · Free Version</text>
+        <!-- Play btn -->
+        <rect x="604" y="10" width="84" height="24" rx="6" fill="none" stroke="rgba(123,167,212,.28)" stroke-width="1"/>
+        <text x="646" y="25" text-anchor="middle" font-size="8" fill="#6abfa0">❚❚ Running</text>
+        <defs>
+          <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#5B8FBF"/>
+            <stop offset="33%" stop-color="#A8D8EA"/>
+            <stop offset="66%" stop-color="#E8896A"/>
+            <stop offset="100%" stop-color="#C084B0"/>
+          </linearGradient>
+          <radialGradient id="dPrev" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(123,167,212,.2)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <radialGradient id="dProg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(232,137,106,.15)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <linearGradient id="slGrad2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#a875ff"/><stop offset="100%" stop-color="#35dfd6"/></linearGradient>
+        </defs>
+        <!-- COLUMN 1: Sidebar -->
+        <rect x="0" y="45" width="86" height="185" fill="#111827"/>
+        <rect x="86" y="45" width="1" height="185" fill="rgba(123,167,212,.18)"/>
+        <!-- nav items -->
+        <rect x="6" y="52" width="74" height="30" rx="8" fill="rgba(168,117,255,.15)" stroke="rgba(168,117,255,.3)" stroke-width="1"/>
+        <text x="43" y="64" text-anchor="middle" font-size="10" fill="#a875ff">👁</text>
+        <text x="43" y="77" text-anchor="middle" font-size="7" fill="#a875ff" letter-spacing=".6">VISUALS</text>
+        <text x="43" y="104" text-anchor="middle" font-size="10" fill="#8a90a8">🔊</text>
+        <text x="43" y="117" text-anchor="middle" font-size="7" fill="#4a5068" letter-spacing=".6">AUDIO</text>
+        <text x="43" y="144" text-anchor="middle" font-size="10" fill="#8a90a8">📤</text>
+        <text x="43" y="157" text-anchor="middle" font-size="7" fill="#4a5068" letter-spacing=".6">OUTPUT</text>
+        <text x="43" y="184" text-anchor="middle" font-size="10" fill="#8a90a8">💾</text>
+        <text x="43" y="197" text-anchor="middle" font-size="7" fill="#4a5068" letter-spacing=".6">PRESETS</text>
+        <text x="43" y="218" text-anchor="middle" font-size="7" fill="#4a5068" letter-spacing=".6">HELP ···</text>
+        <!-- COLUMN 2: Monitors (center) -->
+        <rect x="87" y="45" width="374" height="185" fill="#0a0c14"/>
+        <!-- PREVIEW monitor -->
+        <rect x="96" y="52" width="175" height="171" rx="8" fill="#000" stroke="rgba(42,85,204,.4)" stroke-width="1"/>
+        <rect x="96" y="52" width="175" height="20" rx="8" fill="#0b0d15"/>
+        <rect x="96" y="66" width="175" height="6" fill="#0b0d15"/>
+        <text x="104" y="66" font-size="7" font-weight="700" fill="#7aa2ff" letter-spacing="1">● PREVIEW</text>
+        <rect x="97" y="72" width="173" height="150" fill="url(#dPrev)"/>
+        <text x="183" y="150" text-anchor="middle" font-size="8" fill="#4a5068">staging area</text>
+        <!-- PROGRAM monitor -->
+        <rect x="279" y="52" width="175" height="171" rx="8" fill="#000" stroke="rgba(204,42,58,.35)" stroke-width="1"/>
+        <rect x="279" y="52" width="175" height="20" rx="8" fill="#0b0d15"/>
+        <rect x="279" y="66" width="175" height="6" fill="#0b0d15"/>
+        <text x="287" y="66" font-size="7" font-weight="700" fill="#ff7a8a" letter-spacing="1">● PROGRAM · LIVE</text>
+        <rect x="280" y="72" width="173" height="150" fill="url(#dProg)"/>
+        <text x="366" y="150" text-anchor="middle" font-size="8" fill="#4a5068">live output</text>
+        <!-- COLUMN 3: Right panel -->
+        <rect x="461" y="45" width="239" height="185" fill="#0e1022"/>
+        <rect x="461" y="45" width="1" height="185" fill="rgba(255,255,255,.08)"/>
+        <!-- panel header -->
+        <rect x="461" y="45" width="239" height="30" fill="#0b0d15"/>
+        <text x="473" y="64" font-size="8" fill="#4a5068" letter-spacing="1.8">VISUALS</text>
+        <!-- sliders -->
+        <text x="473" y="90" font-size="9" fill="#8a90a8">Intensity</text>
+        <rect x="540" y="83" width="140" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="540" y="83" width="70" height="3" rx="2" fill="url(#slGrad2)"/>
+        <text x="688" y="90" font-size="8" fill="#35dfd6" text-anchor="end">0.50</text>
+        <text x="473" y="110" font-size="9" fill="#8a90a8">Speed</text>
+        <rect x="540" y="103" width="140" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="540" y="103" width="100" height="3" rx="2" fill="url(#slGrad2)"/>
+        <text x="688" y="110" font-size="8" fill="#35dfd6" text-anchor="end">1.0×</text>
+        <text x="473" y="130" font-size="9" fill="#8a90a8">Chaos</text>
+        <rect x="540" y="123" width="140" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="540" y="123" width="77" height="3" rx="2" fill="url(#slGrad2)"/>
+        <text x="688" y="130" font-size="8" fill="#35dfd6" text-anchor="end">0.55</text>
+        <text x="473" y="150" font-size="9" fill="#8a90a8">Segments</text>
+        <rect x="540" y="143" width="140" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="540" y="143" width="46" height="3" rx="2" fill="url(#slGrad2)"/>
+        <text x="688" y="150" font-size="8" fill="#35dfd6" text-anchor="end">8</text>
+        <!-- GO button -->
+        <rect x="473" y="196" width="215" height="26" rx="7" fill="rgba(123,167,212,.1)" stroke="rgba(123,167,212,.3)" stroke-width="1"/>
+        <text x="580" y="213" text-anchor="middle" font-size="11" font-weight="800" fill="#A8D8EA" letter-spacing="2">GO</text>
+      </svg>
+      <div class="annot-row">
+        <div class="annot"><span class="annot-dot" style="background:#111827"></span> Topbar — logo, version, Running indicator</div>
+        <div class="annot"><span class="annot-dot" style="background:#111827;border:1px solid rgba(168,117,255,.4)"></span> Sidebar — 5 nav tabs + Help + About</div>
+        <div class="annot"><span class="annot-dot" style="background:#7aa2ff"></span> PREVIEW — staging canvas</div>
+        <div class="annot"><span class="annot-dot" style="background:#ff7a8a"></span> PROGRAM — live canvas</div>
+        <div class="annot"><span class="annot-dot" style="background:#0e1022"></span> Control panel — scrollable sliders &amp; GO</div>
+      </div>
+    </div>
+
+    <!-- Phone portrait layout diagram -->
+    <div class="ui-diagram" style="margin-top:28px">
+      <div class="ui-diagram-header">Mobile app · Phone portrait (≤430 px) — stacked layout</div>
+      <svg viewBox="0 0 320 520" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono',monospace">
+        <rect width="320" height="520" fill="#0B0F1A"/>
+        <!-- Topbar -->
+        <rect x="0" y="0" width="320" height="44" fill="#111827"/>
+        <rect x="0" y="44" width="320" height="1" fill="rgba(123,167,212,.18)"/>
+        <circle cx="24" cy="22" r="10" fill="rgba(123,167,212,.15)" stroke="rgba(123,167,212,.3)" stroke-width="1"/>
+        <text x="24" y="26" text-anchor="middle" font-size="9" fill="#7BA7D4">◈</text>
+        <text x="42" y="18" font-size="12" font-weight="700" fill="url(#brandGrad)">OLOGY</text>
+        <text x="42" y="31" font-size="6" fill="#A8D8EA" letter-spacing="1.5">v1.5 · FREE</text>
+        <rect x="238" y="10" width="70" height="24" rx="6" fill="none" stroke="rgba(106,191,160,.4)" stroke-width="1"/>
+        <text x="273" y="25" text-anchor="middle" font-size="8" fill="#6abfa0">❚❚ Running</text>
+        <!-- Zone 1: Canvas monitors (order:1, height ~38vh) -->
+        <rect x="0" y="45" width="320" height="150" fill="#0a0c14"/>
+        <rect x="0" y="195" width="320" height="1" fill="rgba(123,167,212,.18)"/>
+        <!-- preview -->
+        <rect x="6" y="51" width="152" height="138" rx="7" fill="#000" stroke="rgba(42,85,204,.4)" stroke-width="1"/>
+        <text x="12" y="63" font-size="6" font-weight="700" fill="#7aa2ff" letter-spacing="1">● PREV</text>
+        <defs>
+          <radialGradient id="mPrev2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(123,167,212,.2)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+          <radialGradient id="mProg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(232,137,106,.15)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+        </defs>
+        <rect x="7" y="66" width="150" height="122" fill="url(#mPrev2)"/>
+        <text x="82" y="132" text-anchor="middle" font-size="7" fill="#4a5068">staging</text>
+        <!-- program -->
+        <rect x="162" y="51" width="152" height="138" rx="7" fill="#000" stroke="rgba(204,42,58,.35)" stroke-width="1"/>
+        <text x="168" y="63" font-size="6" font-weight="700" fill="#ff7a8a" letter-spacing="1">● PROG·LIVE</text>
+        <rect x="163" y="66" width="150" height="122" fill="url(#mProg2)"/>
+        <text x="238" y="132" text-anchor="middle" font-size="7" fill="#4a5068">live out</text>
+        <!-- Zone 2: Horizontal nav tab strip (order:2) -->
+        <rect x="0" y="196" width="320" height="44" fill="#111827"/>
+        <rect x="0" y="239" width="320" height="1" fill="rgba(123,167,212,.18)"/>
+        <!-- active tab -->
+        <rect x="2" y="199" width="58" height="38" rx="7" fill="rgba(168,117,255,.15)" stroke="rgba(168,117,255,.3)" stroke-width="1"/>
+        <text x="31" y="214" text-anchor="middle" font-size="10" fill="#a875ff">👁</text>
+        <text x="31" y="229" text-anchor="middle" font-size="6" fill="#a875ff" letter-spacing=".5">VISUALS</text>
+        <!-- other tabs -->
+        <text x="95" y="214" text-anchor="middle" font-size="10" fill="#8a90a8">🔊</text>
+        <text x="95" y="229" text-anchor="middle" font-size="6" fill="#4a5068" letter-spacing=".5">AUDIO</text>
+        <text x="159" y="214" text-anchor="middle" font-size="10" fill="#8a90a8">📤</text>
+        <text x="159" y="229" text-anchor="middle" font-size="6" fill="#4a5068" letter-spacing=".5">OUTPUT</text>
+        <text x="223" y="214" text-anchor="middle" font-size="10" fill="#8a90a8">💾</text>
+        <text x="223" y="229" text-anchor="middle" font-size="6" fill="#4a5068" letter-spacing=".5">PRESETS</text>
+        <text x="287" y="214" text-anchor="middle" font-size="10" fill="#8a90a8">❓</text>
+        <text x="287" y="229" text-anchor="middle" font-size="6" fill="#4a5068" letter-spacing=".5">HELP</text>
+        <!-- Zone 3: Control panel (order:3, fills remaining) -->
+        <rect x="0" y="240" width="320" height="230" fill="#0e1022"/>
+        <!-- panel header -->
+        <rect x="0" y="240" width="320" height="28" fill="#0b0d15"/>
+        <text x="12" y="258" font-size="8" fill="#4a5068" letter-spacing="1.8">VISUALS</text>
+        <!-- sliders -->
+        <text x="12" y="284" font-size="9" fill="#8a90a8">Intensity</text>
+        <rect x="90" y="277" width="188" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="90" y="277" width="94" height="3" rx="2" fill="url(#slGrad2)"/>
+        <text x="287" y="284" font-size="8" fill="#35dfd6" text-anchor="end">0.50</text>
+        <text x="12" y="304" font-size="9" fill="#8a90a8">Speed</text>
+        <rect x="90" y="297" width="188" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="90" y="297" width="140" height="3" rx="2" fill="url(#slGrad2)"/>
+        <text x="287" y="304" font-size="8" fill="#35dfd6" text-anchor="end">1.0×</text>
+        <text x="12" y="324" font-size="9" fill="#8a90a8">Chaos</text>
+        <rect x="90" y="317" width="188" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="90" y="317" width="103" height="3" rx="2" fill="url(#slGrad2)"/>
+        <text x="287" y="324" font-size="8" fill="#35dfd6" text-anchor="end">0.55</text>
+        <text x="12" y="344" font-size="9" fill="#8a90a8">Segments</text>
+        <rect x="90" y="337" width="188" height="3" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="90" y="337" width="56" height="3" rx="2" fill="url(#slGrad2)"/>
+        <text x="287" y="344" font-size="8" fill="#35dfd6" text-anchor="end">8</text>
+        <!-- scroll hint -->
+        <text x="160" y="390" text-anchor="middle" font-size="8" fill="#4a5068">↕  scroll for more controls</text>
+        <!-- GO sticky bar -->
+        <rect x="0" y="430" width="320" height="50" fill="#0b0d15"/>
+        <rect x="0" y="430" width="320" height="1" fill="rgba(255,255,255,.08)"/>
+        <rect x="10" y="437" width="300" height="34" rx="9" fill="rgba(123,167,212,.08)" stroke="rgba(123,167,212,.3)" stroke-width="1"/>
+        <text x="160" y="459" text-anchor="middle" font-size="13" font-weight="800" fill="#A8D8EA" letter-spacing="2">GO</text>
+        <!-- home indicator -->
+        <rect x="110" y="508" width="100" height="4" rx="2" fill="rgba(255,255,255,.15)"/>
+      </svg>
+      <div class="annot-row">
+        <div class="annot"><span class="annot-dot" style="background:#111827"></span> Topbar — fixed 44 px, logo + Running status</div>
+        <div class="annot"><span class="annot-dot" style="background:#0a0c14"></span> Canvas zone — PREVIEW &amp; PROGRAM side by side, fixed ~38 vh</div>
+        <div class="annot"><span class="annot-dot" style="background:#111827;border:1px solid rgba(168,117,255,.4)"></span> Tab strip — horizontal, 5 tabs, scrollable</div>
+        <div class="annot"><span class="annot-dot" style="background:#0e1022"></span> Control panel — fills remaining height, scrolls vertically</div>
+        <div class="annot"><span class="annot-dot" style="background:#3ecc85"></span> GO bar — sticky at bottom, always visible</div>
+      </div>
+    </div>
+
+    <h3>How to use the Mobile App</h3>
+    <p>Open the Ology Mobile App in a mobile browser. The page fits entirely within the viewport — nothing overflows the screen edge.</p>
+
+    <div class="ctrl-grid">
+      <div class="ctrl-card">
+        <div class="ctrl-card-name">Topbar</div>
+        <p>The animated kaleidoscope logo confirms the engine is running. The <span class="key">❚❚ Running</span> button pauses and resumes rendering. Version and tier (Free / Premium) are shown in the sub-label.</p>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-card-name">Navigation tabs</div>
+        <p>On desktop/tablet: a vertical sidebar on the left. On phones: a horizontal tab strip below the monitors. Tap any tab to switch the control panel content. The active tab glows purple.</p>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-card-name">GO button</div>
+        <p>On desktop: at the bottom of the Visuals control panel. On phones: a sticky full-width bar fixed at the bottom of the screen — always reachable without scrolling.</p>
+      </div>
+    </div>
+
+    <h3>Tab-by-tab guide</h3>
+
+    <div class="ctrl-grid">
+      <div class="ctrl-card">
+        <div class="ctrl-card-name">👁 Visuals</div>
+        <p>Theme selector dropdown, then 8 sliders (Intensity, Speed, Chaos, Rotation, Zoom, Segments, Bloom, Smooth), then Symmetry type buttons (Radial / Mirror / Kaleidoscope). All changes update PREVIEW only. Tap GO to commit.</p>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-card-name">🔊 Audio</div>
+        <p>Transport (Stop / Play), Drone preset dropdown with live carrier·beat·band readout, Carrier Hz and Beat Hz sliders, Entrainment Mode buttons, Brain-tickle and Slowness sliders, Ambient Bed dropdown with Drone↔Bed blend, Loop mode, and Master volume.</p>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-card-name">📤 Output</div>
+        <p>Aspect ratio selector (16:9 · 9:16 · 1:1 · 4:3) and a <span class="key">⛶ Fullscreen</span> button. Tap Fullscreen to enter a full-bleed canvas view that hides all UI — tap the canvas to exit. Param overlay toggle shows live metadata over the fullscreen canvas.</p>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-card-name">💾 Presets</div>
+        <p>List of saved sessions with Load and Delete per entry. <span class="key">Save current session</span> saves PROGRAM state with a name. <span class="key">Export JSON</span> and <span class="key">Import JSON</span> for backup and sharing.</p>
+      </div>
+    </div>
+
+    <h3>Fullscreen mode</h3>
+    <p>Tap <span class="ctrl">⛶ Fullscreen</span> in the Output tab to enter a full-bleed canvas that covers the entire phone screen — no topbar, no controls, no chrome. The kaleidoscope fills the display. Tap anywhere on the canvas to exit fullscreen and return to the control UI. The param overlay (if On) shows live session metadata in the top-left corner.</p>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>iOS speaker unlock</strong>
+        On iOS, a silent looping audio element is played on first tap to upgrade the Web Audio session from "ambient" (headphone-only) to "playback" (speakers + headphones). This happens automatically the first time you interact with the page.
+      </div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">
+        <strong>Audio changes are immediate — no GO required</strong>
+        Drone, mode, bed, blend, and master volume take effect immediately on mobile, the same as on desktop. Only visual parameter changes require GO to commit to PROGRAM.
+      </div>
+    </div>
+
+    <h3>Landscape phone</h3>
+    <p>On phones rotated to landscape (narrow height), the layout switches to a side-by-side arrangement: the sidebar returns as a compact vertical column on the left (52 px), the monitors stack vertically in the centre, and the control panel sits on the right (220 px). All three columns scroll independently.</p>
+  </section>
+
+
+  <!-- ── 04 Visuals Tab ──────────────────────────────────────────────────── -->
+  <section class="doc-section" id="visuals-tab"><span id="controls" style="display:block;scroll-margin-top:32px"></span>
+    <h2><span class="section-num">04</span> Visuals Tab</h2>
+    <div class="section-rule"></div>
+    <p>All visual parameters update PREVIEW only. Press <span class="ctrl">GO</span> to make any change live.</p>
+
+    <h3>Theme selector</h3>
+    <p>The <span class="ctrl">Preview Theme</span> dropdown selects which of the seven visual themes to load into PREVIEW. The default theme on load is <strong style="color:var(--txt)">Intergalactic Beings</strong> for both PREVIEW and PROGRAM. Each theme has a distinct shader, colour palette, and geometry character. See <a href="#themes" style="color:var(--teal)">Themes</a> for the full list.</p>
+
+    <h3>Motion controls</h3>
+    <div class="ctrl-grid">
+      <div class="ctrl-card"><div class="ctrl-card-name">Intensity <span class="ctrl-card-range">0 – 1</span></div><p>Fractal depth. Higher values produce more detailed, recursive geometry. Lower values produce softer, more dissolving forms. Default 0.50.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Speed <span class="ctrl-card-range">0.1× – 3×</span></div><p>Animation rate. Therapeutic presets default to 0.6×–0.8×. Performance presets may run at 1.5× or higher. Default 0.80.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Chaos <span class="ctrl-card-range">0 – 1</span></div><p>Noise modulation amplitude. High chaos = organic, lava-lamp fluidity. Low chaos = crystalline, geometric precision. Default 0.50.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Rotation <span class="ctrl-card-range">0 – 1</span></div><p>Slow rotational drift of the entire canvas. At 0, the image holds still. Default 0.50.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Zoom <span class="ctrl-card-range">near – far</span></div><p>Camera distance. <span class="key">far</span> opens a wide-field view of the fractal surface. Closer values push into the interior geometry.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Segments <span class="ctrl-card-range">2 – 24</span></div><p>Kaleidoscope symmetry count. 2 = mirror. 4 = four-fold. 8 = octagonal. Even numbers produce radial symmetry; odd numbers produce spiral offset.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Bloom <span class="ctrl-card-range">0 – 1</span></div><p>Luminance blooming around bright areas. Increases the ethereal quality of the visual. Default 1.00.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Smooth <span class="ctrl-card-range">0 – 1</span></div><p>Edge sharpness. At 1.0, edges are soft and diffuse. At 0, edges are crisp and defined. Default 0.82.</p></div>
+    </div>
+
+    <h3>Symmetry type</h3>
+    <p>The three <span class="tab-chip">Symmetry</span> buttons select the fold type applied before the segment count:</p>
+    <ul>
+      <li><strong style="color:var(--txt)">Radial</strong> — rotational symmetry around the centre. Clean and mandala-like.</li>
+      <li><strong style="color:var(--txt)">Mirror</strong> — bilateral reflection. Creates left/right symmetry.</li>
+      <li><strong style="color:var(--txt)">Kaleidoscope</strong> — the full domain-folding kaleidoscope. The most visually complex mode. Default.</li>
+    </ul>
+  </section>
+
+
+  <!-- ── 05 Audio Tab ────────────────────────────────────────────────────── -->
+  <section class="doc-section" id="audio-tab">
+    <h2><span class="section-num">05</span> Audio Tab</h2>
+    <div class="section-rule"></div>
+    <p>All audio in Ology is generated algorithmically — no sample files, no recordings. The audio engine synthesizes carrier tones, entrainment beats, and six ambient texture beds entirely in the browser.</p>
+
+    <h3>Transport</h3>
+    <p><span class="ctrl">Stop</span> clears and rebuilds the audio engine, resetting all oscillators cleanly. <span class="ctrl">Play</span> starts the drone and ambient bed. Audio never auto-starts on page load.</p>
+
+    <h3>Drone generator</h3>
+    <p>The <span class="ctrl">Drone preset</span> dropdown selects one of 13 presets. The display shows the name, carrier frequency, beat frequency, and band — for example: <span class="key">Theta · Intuition · 136.1 Hz / 6 Hz</span>. See the <a href="#drone-library" style="color:var(--teal)">Drone Library</a> for all 13 presets.</p>
+    <div class="ctrl-grid">
+      <div class="ctrl-card"><div class="ctrl-card-name">Carrier Hz</div><p>The audible base tone — what you actually hear. Adjusting the carrier changes the pitch of the drone without changing the entrainment target.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Beat Hz</div><p>The entrainment target frequency — the difference between L/R channels (binaural), the pulse rate (isochronic), or the modulation rate (monaural). The band label updates live as you move this slider.</p></div>
+    </div>
+
+    <h3>Entrainment mode</h3>
+    <div class="mode-cards">
+      <!-- Binaural + headphone advisory -->
+      <div class="mode-card-row">
+        <div class="mode-card">
+          <div class="mode-card-name">Binaural</div>
+          <div class="mode-card-tag tag-headphones">Headphones required</div>
+          <p>A different frequency reaches each ear. The brain perceives a third tone equal to the difference. Requires true stereo separation. Most documented in EEG research.</p>
+        </div>
+        <div class="advisory yellow">
+          <span class="advisory-icon">🎧</span>
+          <div class="advisory-body">
+            <strong>Headphone advisory</strong>
+            <p>Binaural requires stereo headphones for the psychoacoustic effect. On speakers or in OBS the two tones blend and the effect is not delivered. Use Isochronic or Monaural for speaker or broadcast use.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Isochronic + flash warning -->
+      <div class="mode-card-row">
+        <div class="mode-card">
+          <div class="mode-card-name">Isochronic</div>
+          <div class="mode-card-tag tag-speakers">Speakers OK</div>
+          <p>A single tone pulsed on and off at the entrainment rate. Sharp onset and offset. No headphones required. Preferred for stage speakers, OBS, and livestreams.</p>
+        </div>
+        <div class="advisory red">
+          <span class="advisory-icon">⚡</span>
+          <div class="advisory-body">
+            <strong>Flashing light risk</strong>
+            <p>Isochronic pulses at 1–40 Hz. With audio reactivity active this can produce visual luminance pulses at the same rate. Users with photosensitive epilepsy should use Binaural or Monaural instead. Inform all participants.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Monaural + speaker advisory -->
+      <div class="mode-card-row">
+        <div class="mode-card">
+          <div class="mode-card-name">Monaural</div>
+          <div class="mode-card-tag tag-speakers">Speakers OK</div>
+          <p>Two tones mixed in a single channel, creating physical amplitude modulation. A real acoustic beat — no headphones required. Strong entrainment stimulus.</p>
+        </div>
+        <div class="advisory green">
+          <span class="advisory-icon">🔊</span>
+          <div class="advisory-body">
+            <strong>Speaker friendly</strong>
+            <p>Monaural beats are created by mixing two tones before they reach the speakers, producing a physical beat in the air. Works with any playback system — speakers, OBS, broadcast, or headphones.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Texture</h3>
+    <div class="ctrl-grid">
+      <div class="ctrl-card"><div class="ctrl-card-name">Brain-tickle <span class="ctrl-card-range">0 – 1</span></div><p>Subtle harmonic overtone pulses layered over the drone. Adds texture and aliveness to the carrier tone. Default 0.20.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Slowness <span class="ctrl-card-range">0 – 1</span></div><p>An LFO that introduces a very slow undulation to the drone's timbre — a breathing quality. Higher values = slower, deeper breath cycle. Default 0.60.</p></div>
+    </div>
+
+    <h3>Ambient bed</h3>
+    <p>Six generative ambient textures synthesized entirely from oscillators and filters — no recordings used. Select one from the <span class="ctrl">Ambient Bed</span> dropdown.</p>
+    <div class="ctrl-grid">
+      <div class="ctrl-card"><div class="ctrl-card-name">Womb</div><p>Low, warm, resonant rumble. Enveloping and primal.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Waterfall</div><p>Broadband white noise shaped into flowing water.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Jungle</div><p>Dense mid-frequency texture with subtle organic modulation.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Forest</div><p>Open, airy. Sparse texture with high-frequency shimmer.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Whales</div><p>Deep low-frequency long-cycle tones. Slow and vast.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Ocean</div><p>Wave-like low-frequency swells with broadband surface texture.</p></div>
+    </div>
+    <p>The <span class="ctrl">Drone ↔ Bed</span> blend dial controls the equal-power crossfade. All the way left = pure drone. Centre = equal mix. All the way right = pure ambient bed.</p>
+
+    <h3>Loop &amp; Master</h3>
+    <div class="ctrl-grid">
+      <div class="ctrl-card"><div class="ctrl-card-name">Crossfade</div><p>Seamless looping. The drone cycles without audible restart.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Evolving</div><p>Slowly mutates the drone's timbre over time. No two moments identical.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">One-shot</div><p>Plays the drone through once and stops.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Master</div><p>Post-crossfade output volume. Default 0.80.</p></div>
+    </div>
+
+    <h3>Reactivity — Band → Visual</h3>
+    <p>This matrix routes live audio frequency analysis into the visual engine in real time. The drone audio is analysed into four bands every frame; this panel maps each band's energy to a visual parameter.</p>
+    <div class="ctrl-grid">
+      <div class="ctrl-card"><div class="ctrl-card-name">Sub → Bloom</div><p>Sub-bass energy (below ~80 Hz) drives bloom intensity. Heavy bass = more glow.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Low → Zoom</div><p>Low-mid energy (~80–400 Hz) drives camera distance. Bass pulses pull and push the view.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Mid → Chaos</div><p>Mid-frequency energy (~400 Hz–2 kHz) drives the chaos noise modulation.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">High → Color</div><p>High-frequency energy (2 kHz+) drives colour palette shift.</p></div>
+    </div>
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Reactivity only works while audio is playing</strong>
+        All four routes are gated on audio playback. If the transport is stopped, the visual falls back to its static parameter values and audio reactivity is suspended.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 06 Output Tab ───────────────────────────────────────────────────── -->
+  <section class="doc-section" id="output-tab">
+    <h2><span class="section-num">06</span> Output Tab</h2>
+    <div class="section-rule"></div>
+    <p>The Output tab controls the Output Window, the param overlay, and wireless phone pairing.</p>
+
+    <h3>Why two separate windows?</h3>
+    <p>Ology uses two separate windows. The <strong style="color:var(--txt)">Desktop App</strong> is the control surface — it generates all audio and runs the operator's UI. The <strong style="color:var(--txt)">Output Window</strong> is a pure video canvas — no audio, no UI chrome, just the full-screen kaleidoscope.</p>
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">
+        <strong>Why audio and video are separate OBS sources</strong>
+        If the Output Window also generated audio, OBS would receive two identical drone signals causing phasing artifacts and destroying binaural left/right channel separation. Keeping audio exclusively in the Desktop App preserves clean, phase-correct stereo on the OBS recording bus.
+      </div>
+    </div>
+
+    <h3>Aspect ratio</h3>
+    <p>Select the output aspect ratio before opening the Output Window. The default on load is <strong style="color:var(--txt)">16:9</strong>. The canvas viewer adapts to each selection:</p>
+    <ul>
+      <li><strong style="color:var(--txt)">16:9 · 1:1 · 4:3</strong> — canvas fits side to side within the monitor viewer.</li>
+      <li><strong style="color:var(--txt)">9:16</strong> — canvas fits top to bottom, displaying the full portrait frame without cropping.</li>
+    </ul>
+
+    <h3>Param overlay</h3>
+    <p>Toggle <span class="ctrl">On</span> / <span class="ctrl">Off</span> to show or hide a live parameter readout in the top-left corner of the Output Window. Displays theme name, drone, carrier/beat Hz, mode, bed, brain-tickle and slowness values. Colour is theme-derived and updates each frame. The overlay remains visible even when the Desktop App engine is paused — confirming the Output Window canvas is still live.</p>
+
+    <!-- Output window annotated SVG -->
+    <div class="ui-diagram">
+      <div class="ui-diagram-header">Output Window — full-bleed canvas with param overlay</div>
+      <svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono',monospace">
+        <defs>
+          <radialGradient id="ow-kal1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#7b3ff2"/>
+            <stop offset="30%" stop-color="#1a0840"/>
+            <stop offset="70%" stop-color="#0a1520"/>
+            <stop offset="100%" stop-color="#020408"/>
+          </radialGradient>
+          <radialGradient id="ow-kal2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#37e0d8"/>
+            <stop offset="40%" stop-color="#0a2a28"/>
+            <stop offset="100%" stop-color="#020408"/>
+          </radialGradient>
+          <radialGradient id="ow-kal3" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffd36e"/>
+            <stop offset="35%" stop-color="#1a1005"/>
+            <stop offset="100%" stop-color="#020408"/>
+          </radialGradient>
+          <radialGradient id="ow-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(123,63,242,.35)"/>
+            <stop offset="60%" stop-color="rgba(55,224,216,.08)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Full bleed background -->
+        <rect width="640" height="360" fill="#020408"/>
+
+        <!-- Kaleidoscope — layered radial fills -->
+        <circle cx="320" cy="180" r="200" fill="url(#ow-kal1)" opacity=".95"/>
+        <circle cx="320" cy="180" r="150" fill="url(#ow-kal2)" opacity=".7"/>
+        <circle cx="320" cy="180" r="90" fill="url(#ow-kal3)" opacity=".6"/>
+        <circle cx="320" cy="180" r="200" fill="url(#ow-glow)" opacity=".5"/>
+
+        <!-- Symmetry lines -->
+        <line x1="320" y1="0" x2="320" y2="360" stroke="rgba(123,167,212,.06)" stroke-width="1"/>
+        <line x1="0" y1="180" x2="640" y2="180" stroke="rgba(123,167,212,.06)" stroke-width="1"/>
+        <line x1="150" y1="10" x2="490" y2="350" stroke="rgba(123,167,212,.05)" stroke-width="1"/>
+        <line x1="490" y1="10" x2="150" y2="350" stroke="rgba(123,167,212,.05)" stroke-width="1"/>
+        <line x1="50" y1="90" x2="590" y2="270" stroke="rgba(255,211,110,.04)" stroke-width="1"/>
+        <line x1="590" y1="90" x2="50" y2="270" stroke="rgba(255,211,110,.04)" stroke-width="1"/>
+
+        <!-- Particle dots — static representation of audio-reactive particles -->
+        <!-- Inner ring -->
+        <circle cx="320" cy="100" r="3.5" fill="#7b3ff2" opacity=".9"/>
+        <circle cx="390" cy="128" r="2.8" fill="#37e0d8" opacity=".85"/>
+        <circle cx="412" cy="204" r="3.2" fill="#ffd36e" opacity=".8"/>
+        <circle cx="370" cy="268" r="2.5" fill="#7b3ff2" opacity=".75"/>
+        <circle cx="270" cy="268" r="3.0" fill="#37e0d8" opacity=".8"/>
+        <circle cx="228" cy="204" r="2.8" fill="#ffd36e" opacity=".85"/>
+        <circle cx="250" cy="128" r="3.2" fill="#7b3ff2" opacity=".9"/>
+        <circle cx="320" cy="100" r="3.5" fill="#c084b0" opacity=".6"/>
+        <!-- Outer ring -->
+        <circle cx="320" cy="42" r="2.5" fill="#37e0d8" opacity=".6"/>
+        <circle cx="432" cy="76" r="2.2" fill="#ffd36e" opacity=".55"/>
+        <circle cx="490" cy="180" r="2.8" fill="#7b3ff2" opacity=".6"/>
+        <circle cx="440" cy="292" r="2.2" fill="#37e0d8" opacity=".55"/>
+        <circle cx="320" cy="330" r="2.5" fill="#ffd36e" opacity=".6"/>
+        <circle cx="200" cy="292" r="2.2" fill="#7b3ff2" opacity=".55"/>
+        <circle cx="150" cy="180" r="2.8" fill="#37e0d8" opacity=".6"/>
+        <circle cx="208" cy="76" r="2.2" fill="#c084b0" opacity=".55"/>
+        <!-- Centre -->
+        <circle cx="320" cy="180" r="18" fill="none" stroke="rgba(123,167,212,.2)" stroke-width="1.5"/>
+        <circle cx="320" cy="180" r="8" fill="rgba(255,255,255,.12)"/>
+        <circle cx="320" cy="180" r="3" fill="rgba(255,255,255,.5)"/>
+
+        <!-- Param overlay — top left, theme-coloured -->
+        <rect x="0" y="0" width="230" height="72" fill="rgba(0,0,0,.45)"/>
+        <text x="12" y="18" font-size="10" font-weight="700" fill="#7b3ff2" letter-spacing=".5">Intergalactic Beings</text>
+        <text x="12" y="32" font-size="9" fill="rgba(123,63,242,.8)" letter-spacing=".3">Theta — Intuition · 136.1 Hz / 6 Hz</text>
+        <text x="12" y="44" font-size="9" fill="rgba(123,63,242,.7)" letter-spacing=".3">Binaural · Womb bed · Blend 0.35</text>
+        <text x="12" y="56" font-size="9" fill="rgba(123,63,242,.6)" letter-spacing=".3">Tickle 0.20 · Slow 0.60</text>
+        <text x="12" y="68" font-size="8" fill="rgba(123,63,242,.45)" letter-spacing=".3">Smooth 0.82 · Speed 0.80</text>
+
+        <!-- Annotation callouts -->
+        <!-- Overlay label -->
+        <line x1="230" y1="36" x2="290" y2="36" stroke="rgba(255,255,255,.35)" stroke-width=".8" stroke-dasharray="3,2"/>
+        <rect x="292" y="26" width="110" height="20" rx="4" fill="rgba(0,0,0,.6)" stroke="rgba(255,255,255,.2)" stroke-width=".7"/>
+        <text x="347" y="39" text-anchor="middle" font-size="9" fill="#e8eaf2" letter-spacing=".3">Param overlay</text>
+        <!-- Canvas label -->
+        <line x1="490" y1="310" x2="540" y2="338" stroke="rgba(255,255,255,.35)" stroke-width=".8" stroke-dasharray="3,2"/>
+        <rect x="490" y="338" width="140" height="18" rx="4" fill="rgba(0,0,0,.6)" stroke="rgba(255,255,255,.2)" stroke-width=".7"/>
+        <text x="560" y="350" text-anchor="middle" font-size="9" fill="#e8eaf2" letter-spacing=".3">Full-bleed canvas</text>
+        <!-- No chrome label -->
+        <line x1="580" y1="8" x2="580" y2="40" stroke="rgba(255,255,255,.2)" stroke-width=".8" stroke-dasharray="3,2"/>
+        <rect x="490" y="2" width="148" height="18" rx="4" fill="rgba(0,0,0,.6)" stroke="rgba(255,255,255,.2)" stroke-width=".7"/>
+        <text x="564" y="14" text-anchor="middle" font-size="9" fill="#e8eaf2" letter-spacing=".3">No UI chrome</text>
+      </svg>
+      <div class="annot-row">
+        <div class="annot"><span class="annot-dot" style="background:#7b3ff2"></span> Full-bleed kaleidoscope — no browser chrome, no controls</div>
+        <div class="annot"><span class="annot-dot" style="background:#35dfd6"></span> Param overlay — top-left, theme-coloured, toggleable</div>
+        <div class="annot"><span class="annot-dot" style="background:#ffd36e"></span> Audio-reactive particles — driven by live FFT analysis</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 07 Presets Tab ──────────────────────────────────────────────────── -->
+  <section class="doc-section" id="presets-tab">
+    <h2><span class="section-num">07</span> Presets Tab</h2>
+    <div class="section-rule"></div>
+    <p>A preset captures a complete session snapshot: all visual parameters, all audio parameters, theme, drone, mode, bed blend, reactivity routing, and loop mode together in one named file.</p>
+    <div class="ctrl-grid">
+      <div class="ctrl-card"><div class="ctrl-card-name">Save</div><p>Saves the current PROGRAM state as a named preset to local storage.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Load</div><p>Loads a preset into PREVIEW — not directly into PROGRAM. Press GO to commit it live.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Favorite ★</div><p>Pins the preset to the top of the list for quick access.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Delete</div><p>Removes the preset from local storage permanently.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Export JSON</div><p>Downloads the entire preset library as a .json file for backup or sharing.</p></div>
+      <div class="ctrl-card"><div class="ctrl-card-name">Import JSON</div><p>Loads a .json preset file into the local library without overwriting existing presets.</p></div>
+    </div>
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Always loads into PREVIEW</strong>
+        Loading a preset never disrupts the live PROGRAM output. Audition the loaded preset on the PREVIEW monitor first, then press GO when you're ready.
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <div class="divider"></div>
+
+
+  <!-- ── 09 Themes ───────────────────────────────────────────────────────── -->
+  <section class="doc-section" id="themes">
+    <h2><span class="section-num">09</span> Themes</h2>
+    <div class="section-rule"></div>
+    <p>Seven default visual themes, each pairing a distinct GLSL shader character with a default drone matched to the theme's intended state. <strong style="color:var(--txt)">Intergalactic Beings</strong> is the default theme for both PREVIEW and PROGRAM on load.</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Theme</th><th>Palette</th><th>Default drone</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intergalactic Beings ★</td>
+            <td>Violet / teal / gold</td>
+            <td><span class="band-pill band-theta">Theta</span> Intuition · 6 Hz</td>
+          </tr>
+          <tr class="tr-desc"><td colspan="3">Slow morphing entities, nebular wisps. Default load theme.</td></tr>
+          <tr>
+            <td>Supernovas</td>
+            <td>White-hot → amber → crimson</td>
+            <td><span class="band-pill band-gamma">Gamma</span> Insight · 40 Hz</td>
+          </tr>
+          <tr class="tr-desc"><td colspan="3">Radial bursts, expanding shells. High-energy performance preset.</td></tr>
+          <tr>
+            <td>Aurora Borealis</td>
+            <td>Indigo → cyan → silver</td>
+            <td><span class="band-pill band-schumann">Schumann</span> Earth Pulse · 7.83 Hz</td>
+          </tr>
+          <tr class="tr-desc"><td colspan="3">Forward tunnel flight, layered rings. Grounding and expansive.</td></tr>
+          <tr>
+            <td>Psilocybin Dreams</td>
+            <td>Magenta / lime / orange</td>
+            <td><span class="band-pill band-theta">Theta</span> Vision Quest · 4.5 Hz</td>
+          </tr>
+          <tr class="tr-desc"><td colspan="3">Organic breathing fractals, melt. Deep visualization states.</td></tr>
+          <tr>
+            <td>Microcosmos</td>
+            <td>Emerald / cobalt / pearl</td>
+            <td><span class="band-pill band-alpha">Alpha</span> Serenity · 10 Hz</td>
+          </tr>
+          <tr class="tr-desc"><td colspan="3">Cellular / mandelbulb close-ups. Calm focus and anxiety relief.</td></tr>
+          <tr>
+            <td>Quantum Fields</td>
+            <td>Electric blue / pink / black</td>
+            <td><span class="band-pill band-beta">Beta</span> Focus · 16 Hz</td>
+          </tr>
+          <tr class="tr-desc"><td colspan="3">Interference grids, probability shimmer. Concentration and productivity.</td></tr>
+          <tr>
+            <td>Torus Universes</td>
+            <td>Copper / violet / starlight</td>
+            <td><span class="band-pill band-delta">Delta</span> Deep Healing · 2 Hz</td>
+          </tr>
+          <tr class="tr-desc"><td colspan="3">Toroidal flow, recursive donuts. Deep sleep and physical recovery.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ── 10 Drone Library ────────────────────────────────────────────────── -->
+  <section class="doc-section" id="drone-library">
+    <h2><span class="section-num">10</span> Drone Library</h2>
+    <div class="section-rule"></div>
+    <p>All 13 drone presets. The carrier is the audible tone; the beat is the entrainment target. A binaural beat is the perceived difference between two pure tones — one in each ear.</p>
+
+    <h3>Brainwave entrainment drones</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Drone</th><th>Carrier</th><th>Beat</th><th>Band</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Delta — Deep Healing</td><td>~100 Hz</td><td>2 Hz</td><td><span class="band-pill band-delta">Delta</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Deep dreamless sleep, physical recovery.</td></tr>
+          <tr><td>Delta — Regeneration</td><td>~100 Hz</td><td>3 Hz</td><td><span class="band-pill band-delta">Delta</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Restorative rest.</td></tr>
+          <tr><td>Theta — Dreamgate</td><td>~120 Hz</td><td>4 Hz</td><td><span class="band-pill band-theta">Theta</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Deep meditation, REM-like imagery.</td></tr>
+          <tr><td>Theta — Vision Quest</td><td>~120 Hz</td><td>4.5 Hz</td><td><span class="band-pill band-theta">Theta</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Shamanic / visualization states.</td></tr>
+          <tr><td>Theta — Intuition</td><td>~136.1 Hz</td><td>6 Hz</td><td><span class="band-pill band-theta">Theta</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Intuition, inner journeying. Default drone for Intergalactic Beings.</td></tr>
+          <tr><td>Schumann — Earth Pulse</td><td>~136.1 Hz</td><td>7.83 Hz</td><td><span class="band-pill band-schumann">Theta/Alpha</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Grounding, calm, sense of oneness.</td></tr>
+          <tr><td>Alpha — Calm Mind</td><td>~210 Hz</td><td>8.4 Hz</td><td><span class="band-pill band-alpha">Alpha</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Pre-sleep, stress release.</td></tr>
+          <tr><td>Alpha — Serenity</td><td>~200 Hz</td><td>10 Hz</td><td><span class="band-pill band-alpha">Alpha</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Relaxed focus, flow.</td></tr>
+          <tr><td>Beta — Focus</td><td>~250 Hz</td><td>16 Hz</td><td><span class="band-pill band-beta">Beta</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Alertness, concentration.</td></tr>
+          <tr><td>Gamma — Insight</td><td>~300 Hz</td><td>40 Hz</td><td><span class="band-pill band-gamma">Gamma</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Peak cognition, heightened perception.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Solfeggio / Spiritual carrier drones</h3>
+    <p>Frequencies from the Solfeggio meditation tradition. Effects are traditional and community claims — not clinically established. Presented as experiential carriers for spiritual practice.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Drone</th><th>Carrier</th><th>Optional beat</th><th>Attribution</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Solfeggio — Transformation</td><td>528 Hz</td><td>+7.83 Hz</td><td><span class="band-pill band-solfeggio">Solfeggio</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">"Love / repair" frequency.</td></tr>
+          <tr><td>Solfeggio — Awaken Intuition</td><td>852 Hz</td><td>+6 Hz Theta</td><td><span class="band-pill band-solfeggio">Solfeggio</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Inner sight, spiritual awakening.</td></tr>
+          <tr><td>Solfeggio — Crown / Pineal</td><td>963 Hz</td><td>+7.83 Hz</td><td><span class="band-pill band-solfeggio">Solfeggio</span></td></tr>
+          <tr class="tr-desc"><td colspan="4">Higher-consciousness connection.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ── 11 Frequency Guide ──────────────────────────────────────────────── -->
+  <section class="doc-section" id="frequency-guide">
+    <h2><span class="section-num">11</span> Frequency Guide</h2>
+    <div class="section-rule"></div>
+    <p>EEG frequency bands and their corresponding meditation states. Use this table to select the right drone for an intended session outcome.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>State</th><th>Target</th><th>Band</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Anxiety relief</td><td>8–10 Hz</td><td><span class="band-pill band-alpha">Alpha</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Slow breathing. Green / cyan visual palette.</td></tr>
+          <tr><td>Grief / loss</td><td>5–7 Hz</td><td><span class="band-pill band-theta">Theta</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Violet visualizations. Extended session.</td></tr>
+          <tr><td>Love / compassion</td><td>8 Hz</td><td><span class="band-pill band-alpha">Alpha</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Heart-centered, loving-kindness intention.</td></tr>
+          <tr><td>Focus / productivity</td><td>16–20 Hz</td><td><span class="band-pill band-beta">Beta</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Geometric gold visuals. Structured environment.</td></tr>
+          <tr><td>Creativity</td><td>7 Hz</td><td><span class="band-pill band-theta">Theta</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Fractal / galaxy visuals. Free association.</td></tr>
+          <tr><td>Lucid dreaming</td><td>4–6 Hz</td><td><span class="band-pill band-theta">Theta</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Pre-sleep. Deep relaxation protocol.</td></tr>
+          <tr><td>Sleep onset</td><td>1–3 Hz</td><td><span class="band-pill band-delta">Delta</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Deep blue visuals. Dark room.</td></tr>
+          <tr><td>Peak performance</td><td>40 Hz</td><td><span class="band-pill band-gamma">Gamma</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Neural network / plasma visuals. Short bursts.</td></tr>
+          <tr><td>Mindfulness</td><td>10 Hz</td><td><span class="band-pill band-alpha">Alpha</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">Breathing mandalas. Slow movement.</td></tr>
+          <tr><td>Energy / vigor</td><td>18–22 Hz</td><td><span class="band-pill band-beta">Beta</span></td></tr>
+          <tr class="tr-desc"><td colspan="3">High-tempo, geometric visuals.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">
+        <strong>Mixed evidence — use with appropriate expectations</strong>
+        A 2023 systematic review of 14 EEG studies found inconsistent results: 5 supported the entrainment hypothesis, 8 reported contradictory results. Ology presents entrainment tones as aids to meditative intent — not guaranteed neurological interventions.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 12 Session Recipes ──────────────────────────────────────────────── -->
+  <section class="doc-section" id="sessions">
+    <h2><span class="section-num">12</span> Session Recipes</h2>
+    <div class="section-rule"></div>
+    <p>Six ready-to-use sessions. Save each as a preset after configuring. All use Binaural mode unless noted — switch to Isochronic for speakers.</p>
+    <div class="session-cards">
+      <div class="session-card">
+        <div class="session-card-title"><span class="emoji">🌊</span> Anxiety Relief</div>
+        <div class="session-row"><span class="s-key">Theme</span><span class="s-val">Microcosmos</span></div>
+        <div class="session-row"><span class="s-key">Drone</span><span class="s-val">Alpha — Serenity (10 Hz)</span></div>
+        <div class="session-row"><span class="s-key">Mode</span><span class="s-val">Binaural (headphones)</span></div>
+        <div class="session-row"><span class="s-key">Bed</span><span class="s-val">Ocean · Blend 0.35</span></div>
+        <div class="session-row"><span class="s-key">Duration</span><span class="s-val">20–40 min</span></div>
+        <div class="session-row"><span class="s-key">Notes</span><span class="s-val">Smooth 0.9 · Speed 0.6×</span></div>
+      </div>
+      <div class="session-card">
+        <div class="session-card-title"><span class="emoji">🌿</span> Creative Flow</div>
+        <div class="session-row"><span class="s-key">Theme</span><span class="s-val">Psilocybin Dreams</span></div>
+        <div class="session-row"><span class="s-key">Drone</span><span class="s-val">Theta — Vision Quest (4.5 Hz)</span></div>
+        <div class="session-row"><span class="s-key">Mode</span><span class="s-val">Isochronic (speakers OK)</span></div>
+        <div class="session-row"><span class="s-key">Bed</span><span class="s-val">Forest · Blend 0.40</span></div>
+        <div class="session-row"><span class="s-key">Duration</span><span class="s-val">30–60 min</span></div>
+        <div class="session-row"><span class="s-key">Notes</span><span class="s-val">Freewrite or sketch during</span></div>
+      </div>
+      <div class="session-card">
+        <div class="session-card-title"><span class="emoji">🌑</span> Deep Sleep</div>
+        <div class="session-row"><span class="s-key">Theme</span><span class="s-val">Torus Universes</span></div>
+        <div class="session-row"><span class="s-key">Drone</span><span class="s-val">Delta — Deep Healing (2 Hz)</span></div>
+        <div class="session-row"><span class="s-key">Mode</span><span class="s-val">Monaural (speakers OK)</span></div>
+        <div class="session-row"><span class="s-key">Bed</span><span class="s-val">Womb · Blend 0.50</span></div>
+        <div class="session-row"><span class="s-key">Duration</span><span class="s-val">45–90 min</span></div>
+        <div class="session-row"><span class="s-key">Notes</span><span class="s-val">Dark room · Speed 0.4× · Low int.</span></div>
+      </div>
+      <div class="session-card">
+        <div class="session-card-title"><span class="emoji">⚡</span> Deep Focus</div>
+        <div class="session-row"><span class="s-key">Theme</span><span class="s-val">Quantum Fields</span></div>
+        <div class="session-row"><span class="s-key">Drone</span><span class="s-val">Beta — Focus (16 Hz)</span></div>
+        <div class="session-row"><span class="s-key">Mode</span><span class="s-val">Isochronic (speakers OK)</span></div>
+        <div class="session-row"><span class="s-key">Bed</span><span class="s-val">None · Blend 0.0</span></div>
+        <div class="session-row"><span class="s-key">Duration</span><span class="s-val">25–50 min</span></div>
+        <div class="session-row"><span class="s-key">Notes</span><span class="s-val">Pomodoro blocks · High intensity</span></div>
+      </div>
+      <div class="session-card">
+        <div class="session-card-title"><span class="emoji">💜</span> Grief Processing</div>
+        <div class="session-row"><span class="s-key">Theme</span><span class="s-val">Intergalactic Beings</span></div>
+        <div class="session-row"><span class="s-key">Drone</span><span class="s-val">Theta — Intuition (6 Hz)</span></div>
+        <div class="session-row"><span class="s-key">Mode</span><span class="s-val">Binaural (headphones)</span></div>
+        <div class="session-row"><span class="s-key">Bed</span><span class="s-val">Waterfall · Blend 0.30</span></div>
+        <div class="session-row"><span class="s-key">Duration</span><span class="s-val">30–60 min</span></div>
+        <div class="session-row"><span class="s-key">Notes</span><span class="s-val">Violet palette · Journal after</span></div>
+      </div>
+      <div class="session-card">
+        <div class="session-card-title"><span class="emoji">🌐</span> Lucid Dreaming</div>
+        <div class="session-row"><span class="s-key">Theme</span><span class="s-val">Aurora Borealis</span></div>
+        <div class="session-row"><span class="s-key">Drone</span><span class="s-val">Theta — Dreamgate (4 Hz)</span></div>
+        <div class="session-row"><span class="s-key">Mode</span><span class="s-val">Binaural (headphones)</span></div>
+        <div class="session-row"><span class="s-key">Bed</span><span class="s-val">Whales · Blend 0.45</span></div>
+        <div class="session-row"><span class="s-key">Duration</span><span class="s-val">Pre-sleep · 20–30 min</span></div>
+        <div class="session-row"><span class="s-key">Notes</span><span class="s-val">Eyes closed after first 5 min</span></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 13 OBS Setup ────────────────────────────────────────────────────── -->
+  <section class="doc-section" id="obs-setup">
+    <h2><span class="section-num">13</span> OBS Setup</h2>
+    <div class="section-rule"></div>
+    <p>Ology sends video and audio to OBS as two separate sources. Video comes from the output popup window captured via Window Capture. Audio is captured directly from the browser running the control page. This separation preserves binaural stereo integrity on the OBS recording bus.</p>
+
+    <h3>Step 1 — Open the output window</h3>
+    <ol class="steps">
+      <li>In Ology, open the <span class="tab-chip">Output</span> tab in the right panel.</li>
+      <li>Select your aspect ratio (16:9 · 9:16 · 1:1 · 4:3). Default is 16:9.</li>
+      <li>Click <span class="ctrl">⛶ Open output window</span>. A popup opens and immediately requests fullscreen.</li>
+      <li>When your browser prompts <em>"Allow this page to go fullscreen?"</em> — click <strong>Allow</strong>. This only happens once.</li>
+      <li>The output canvas fills your entire screen with no address bar, no tabs, no OS chrome.</li>
+    </ol>
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Press Escape to exit fullscreen</strong>
+        The window stays open when you exit fullscreen — just the chrome reappears. Click the button again to return to fullscreen. Keep this window open throughout your session.
+      </div>
+    </div>
+
+    <h3>Step 2 — Add the video source in OBS</h3>
+    <ol class="steps">
+      <li>In OBS Studio, go to the <strong>Sources</strong> panel and click <span class="key">+</span>.</li>
+      <li>Choose <strong>Window Capture</strong>.</li>
+      <li>Name it <span class="key">Ology Video</span> and click OK.</li>
+      <li>In the <strong>Window</strong> dropdown, select the Ology output window — it appears as something like <span class="key">Opera - Ology</span>.</li>
+      <li>Check <strong>Client Area</strong> to crop out the thin OS window border.</li>
+      <li>Click OK. The Ology canvas should fill the OBS source.</li>
+    </ol>
+    <div class="callout note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">
+        <strong>Window Capture method</strong>
+        Use <strong>Windows Graphics Capture</strong> as the capture method in OBS for the cleanest result on Windows. If the source appears black, try switching to <strong>BitBlt</strong> in the Window Capture properties.
+      </div>
+    </div>
+
+    <h3>Step 3 — Add the audio source in OBS</h3>
+    <ol class="steps">
+      <li>In the Sources panel, click <span class="key">+</span> again.</li>
+      <li>Choose <strong>Application Audio Capture</strong> (Windows) or <strong>Desktop Audio</strong> (Mac).</li>
+      <li>Set it to capture audio from the browser window running the Ology control page.</li>
+      <li>Verify audio levels appear in the OBS audio mixer — you should see the drone waveform moving when audio is playing.</li>
+    </ol>
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <strong>Keep the control page open</strong>
+        The Ology control page (<span class="key">localhost:8080</span>) must stay open and running throughout the session. It is the sole audio source and writes the live visual state to the output window every frame via localStorage. Closing it stops both audio and visual updates.
+      </div>
+    </div>
+
+    <h3>The param overlay</h3>
+    <p>Toggle <span class="ctrl">On</span> in the Output tab to show a live parameter readout in the top-left corner of the output window. Displays theme name, drone, carrier/beat Hz, entrainment mode, ambient bed, and timing values. Font scales with the output window size. The overlay stays visible even when the Stage engine is paused — confirming the output canvas is still live.</p>
+  </section>
+
+
+  <!-- ── 14 Safety ───────────────────────────────────────────────────────── -->
+  <section class="doc-section" id="safety">
+    <h2><span class="section-num">14</span> Safety</h2>
+    <div class="section-rule"></div>
+
+    <div class="callout warn" style="margin-bottom:20px">
+      <span class="callout-icon">⚡</span>
+      <div class="callout-body">
+        <strong>Isochronic mode — flashing light risk</strong>
+        Isochronic entrainment pulses audio on and off at the beat frequency (1–40 Hz). With audio reactivity active this can produce corresponding visual luminance pulses at the same rate. Users with photosensitive epilepsy or light sensitivity should use Binaural or Monaural mode instead. Inform all participants before sessions that involve Isochronic mode.
+      </div>
+    </div>
+
+    <div class="safety-grid">
+      <div class="safety-item">
+        <span class="safety-icon">🔆</span>
+        <div>
+          <strong style="color:var(--txt);display:block;margin-bottom:4px;font-size:13px">Strobe limiter — on by default</strong>
+          The maximum flash rate is limited by the Smooth parameter and the drone's audio reactivity envelope. Keep Smooth above 0.7 in therapeutic contexts. Users with a history of photosensitive epilepsy should consult a physician before use.
+        </div>
+      </div>
+      <div class="safety-item">
+        <span class="safety-icon">🎧</span>
+        <div>
+          <strong style="color:var(--txt);display:block;margin-bottom:4px;font-size:13px">Headphones for Binaural only</strong>
+          Binaural mode requires stereo headphones. On speakers, the two tones blend and the intended psychoacoustic effect is not delivered. Use Isochronic or Monaural for speaker or broadcast use.
+        </div>
+      </div>
+      <div class="safety-item">
+        <span class="safety-icon">🧘</span>
+        <div>
+          <strong style="color:var(--txt);display:block;margin-bottom:4px;font-size:13px">Safe environment</strong>
+          Use Ology in a comfortable, quiet setting. Do not use while driving, operating machinery, or in any situation requiring active attention.
+        </div>
+      </div>
+      <div class="safety-item">
+        <span class="safety-icon">🌿</span>
+        <div>
+          <strong style="color:var(--txt);display:block;margin-bottom:4px;font-size:13px">Spiritual frequencies</strong>
+          The Solfeggio frequencies (396–963 Hz) and chakra attributions are spiritual tradition claims, not clinically established findings. Presented as carriers for meditation intention only.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px;margin-bottom:24px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.32);color:#fbbf24">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong style="color:#f59e0b">Not a medical device</strong>
+        Ology is not intended to diagnose, treat, cure, or prevent any condition. All frequency-to-state mappings are experiential meditation tools based on tradition and preliminary research, not clinical protocols. Consult a qualified professional for therapeutic treatment.
+      </div>
+    </div>
+
+    <h3>About the science</h3>
+    <div class="two-col" style="margin-top:0">
+      <div>
+        <p>A 2023 systematic review of 14 EEG studies on binaural beats found mixed results: 5 supported the brainwave entrainment hypothesis, 8 reported contradictory results. The review attributed the inconsistency to significant methodological heterogeneity across studies.</p>
+        <p style="font-size:11.5px;color:var(--faint);margin-top:4px">Ingendoh RM, Posny ES, Heine A. PLOS ONE 18(5), e0286023 (2023).</p>
+      </div>
+      <div>
+        <p>Richard P. Taylor's research at the University of Oregon demonstrated that fractal patterns at mid-range complexity (fractal dimension ~1.3–1.5) produce measurable physiological stress reduction via skin conductance and EEG response.</p>
+        <p style="font-size:11.5px;color:var(--faint);margin-top:4px">Taylor RP. Leonardo 39(3), 245–251 (2006). MIT Press.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <div class="divider"></div>
+  <div style="text-align:center;padding:20px 0 40px;color:var(--faint);font-size:12px;line-height:1.8">
+    <div style="display:flex;justify-content:center;margin-bottom:10px">
+      <svg viewBox="0 0 180 56" xmlns="http://www.w3.org/2000/svg" width="180" height="56">
+        <defs>
+          <radialGradient id="fb" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a1f30"/>
+            <stop offset="100%" stop-color="#0b0f1a"/>
+          </radialGradient>
+          <radialGradient id="fb-bloom" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(255,255,255,.22)"/>
+            <stop offset="55%" stop-color="rgba(192,132,176,.07)"/>
+            <stop offset="100%" stop-color="rgba(11,15,26,0)"/>
+          </radialGradient>
+          <linearGradient id="fb-wm" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#A8D8EA"/>
+            <stop offset="40%" stop-color="#E8C4D8"/>
+            <stop offset="75%" stop-color="#E8896A"/>
+            <stop offset="100%" stop-color="#C084B0"/>
+          </linearGradient>
+          <clipPath id="fb-clip"><circle cx="27" cy="28" r="25"/></clipPath>
+        </defs>
+        <circle cx="27" cy="28" r="25" fill="url(#fb)" stroke="rgba(168,117,255,.3)" stroke-width=".8"/>
+        <g clip-path="url(#fb-clip)">
+          <circle cx="37.5" cy="25.5" r="3.4" fill="#7BA7D4cc" stroke="#7BA7D4aa" stroke-width=".9"/>
+          <circle cx="32.2" cy="29.0" r="1.9" fill="#A8D8EA88" stroke="#A8D8EA" stroke-width=".5"/>
+          <circle cx="35.5" cy="22.5" r="1.8" fill="#E8896A88" stroke="#E8896A" stroke-width=".5"/>
+          <circle cx="27.5" cy="39.2" r="3.2" fill="#C084B0cc" stroke="#C084B0aa" stroke-width=".9"/>
+          <circle cx="23.5" cy="33.8" r="1.8" fill="#7BA7D488" stroke="#7BA7D4" stroke-width=".5"/>
+          <circle cx="30.2" cy="36.5" r="1.7" fill="#ffffffcc" stroke="#ffffff88" stroke-width=".5"/>
+          <circle cx="16.5" cy="38.5" r="2.9" fill="#E8896Acc" stroke="#E8896Aaa" stroke-width=".9"/>
+          <circle cx="19.5" cy="33.5" r="1.7" fill="#C084B088" stroke="#C084B0" stroke-width=".5"/>
+          <circle cx="16.8" cy="35.5" r="1.6" fill="#7BA7D488" stroke="#7BA7D4" stroke-width=".5"/>
+          <circle cx="16.5" cy="28.5" r="3.0" fill="#A8D8EAcc" stroke="#A8D8EAaa" stroke-width=".9"/>
+          <circle cx="21.5" cy="25.5" r="1.8" fill="#E8896A88" stroke="#E8896A" stroke-width=".5"/>
+          <circle cx="18.8" cy="31.5" r="1.7" fill="#C084B088" stroke="#C084B0" stroke-width=".5"/>
+          <circle cx="26.5" cy="16.8" r="3.2" fill="#7BA7D4cc" stroke="#7BA7D4aa" stroke-width=".9"/>
+          <circle cx="30.2" cy="21.5" r="1.8" fill="#ffffff88" stroke="#ffffff88" stroke-width=".5"/>
+          <circle cx="23.5" cy="19.2" r="1.7" fill="#A8D8EA88" stroke="#A8D8EA" stroke-width=".5"/>
+          <circle cx="37.5" cy="17.2" r="2.9" fill="#C084B0cc" stroke="#C084B0aa" stroke-width=".9"/>
+          <circle cx="34.5" cy="21.5" r="1.7" fill="#7BA7D488" stroke="#7BA7D4" stroke-width=".5"/>
+          <circle cx="36.2" cy="16.5" r="1.6" fill="#E8896A88" stroke="#E8896A" stroke-width=".5"/>
+          <circle cx="27" cy="28" r="22" fill="url(#fb-bloom)"/>
+          <circle cx="27" cy="28" r="3" fill="#ffffff" opacity=".7"/>
+        </g>
+        <text x="60" y="35" font-family="'Marcellus','Georgia',serif" font-size="26" letter-spacing="4" fill="url(#fb-wm)">OLOGY</text>
+      </svg>
+    </div>
+    Beta v1.5 · AIMA Productions · aima.productions<br>
+    Created by Joselito Sering · © 2026
+  </div>
+
+</div><!-- .content-inner -->
+</main>
+
+<script>
+// ── Helpers ────────────────────────────────────────────────────────────────
+function isMobile(){ return window.innerWidth <= 800; }
+function getScroller(){ return isMobile() ? null : document.getElementById('content'); }
+
+// ── Mobile nav ─────────────────────────────────────────────────────────────
+function toggleNav(){
+  document.getElementById('nav').classList.toggle('open');
+  document.getElementById('mob-overlay').classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('nav').classList.remove('open');
+  document.getElementById('mob-overlay').classList.remove('open');
+}
+
+// ── Progress bar ───────────────────────────────────────────────────────────
+const bar = document.getElementById('progress-bar');
+function updateProgress(){
+  const el = getScroller();
+  const scrolled = el ? el.scrollTop : window.scrollY;
+  const total = el
+    ? el.scrollHeight - el.clientHeight
+    : document.documentElement.scrollHeight - window.innerHeight;
+  if(total <= 0) return;
+  bar.style.transform = `scaleX(${Math.min(scrolled / total, 1)})`;
+}
+const contentEl = document.getElementById('content');
+if(contentEl) contentEl.addEventListener('scroll', updateProgress, {passive:true});
+window.addEventListener('scroll', updateProgress, {passive:true});
+
+// ── Active nav link ────────────────────────────────────────────────────────
+const sections = document.querySelectorAll('.doc-section');
+const navLinks = document.querySelectorAll('#nav a');
+
+function updateActive(){
+  const el = getScroller();
+  const scrollTop = el ? el.scrollTop : window.scrollY;
+  let current = '';
+  sections.forEach(s => {
+    // offsetTop is relative to offsetParent; for sections inside .content-inner
+    // inside #content, we need position relative to the scroll container
+    const rect = s.getBoundingClientRect();
+    const containerTop = el ? el.getBoundingClientRect().top : 0;
+    const pos = rect.top - containerTop;
+    if(pos <= 80) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if(a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+}
+if(contentEl) contentEl.addEventListener('scroll', updateActive, {passive:true});
+window.addEventListener('scroll', updateActive, {passive:true});
+
+// ── Smooth scroll nav clicks ───────────────────────────────────────────────
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const href = a.getAttribute('href');
+    const target = document.querySelector(href);
+    if(!target) return;
+
+    const el = getScroller();
+    if(el){
+      // Desktop: scroll inside #content
+      // target.offsetTop is relative to .content-inner; walk up to find offset from #content
+      let offset = 0;
+      let node = target;
+      while(node && node !== el){
+        offset += node.offsetTop;
+        node = node.offsetParent;
+      }
+      el.scrollTo({ top: Math.max(0, offset - 32), behavior: 'smooth' });
+    } else {
+      // Mobile: body/window scrolls
+      const rect = target.getBoundingClientRect();
+      window.scrollTo({ top: window.scrollY + rect.top - 56, behavior: 'smooth' });
+      closeNav();
+    }
+  });
+});
+</script>
+</body>
+</html>

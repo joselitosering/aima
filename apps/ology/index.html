@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ology 1.5 — See Your Sound. Still Your Mind.</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="ology_favicon.svg">
+<meta name="description" content="Ology 1.5 — an infinite, audio-reactive kaleidoscope for meditation, performance, and worship. Free in your browser.">
+<meta property="og:site_name"   content="Ology">
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://aima.productions/ology/">
+<meta property="og:title"       content="Ology 1.5 — See Your Sound. Still Your Mind.">
+<meta property="og:description" content="An infinite, audio-reactive kaleidoscope for meditation, performance, and worship. Free in your browser.">
+<meta property="og:image"       content="https://github.com/joselitosering/ology/raw/main/header_img.PNG">
+<meta property="og:image:width"  content="100%">
+<meta property="og:image:height" content="100%">
+<meta name="twitter:card"  content="summary_large_image">
+<meta name="twitter:title" content="Ology 1.5 — See Your Sound. Still Your Mind.">
+<meta name="twitter:description" content="An infinite, audio-reactive kaleidoscope for meditation, performance, and worship. Free in your browser.">
+<meta name="twitter:image" content="https://github.com/joselitosering/ology/raw/main/header_img.PNG">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0B0F1A;--void:#0B0F1A;--panel:#111827;
+  --iris:#7BA7D4;--teal:#A8D8EA;--amber:#E8896A;--rose:#C084B0;
+  --txt:#E8F0F8;--dim:#8FA8C0;--faint:#4a6a84;
+  --grad:linear-gradient(90deg,#5B8FBF,#A8D8EA,#E8896A,#C084B0);
+  --mono:'JetBrains Mono',monospace;
+}
+html,body{height:100%;background:var(--bg);color:var(--txt);overflow:hidden;
+  font-family:'Outfit',system-ui,sans-serif;font-weight:300;line-height:1.55}
+
+/* ── Brand scrollbars ── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:rgba(11,15,26,.6)}
+::-webkit-scrollbar-thumb{background:var(--iris);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--teal)}
+
+/* ── Gradient bars ── */
+#bar-top{position:fixed;top:0;left:0;right:0;height:3px;background:var(--grad);z-index:10}
+#bar-bot{position:fixed;bottom:0;left:0;right:0;height:3px;background:var(--grad);z-index:10}
+
+/* ── Kaleidoscope background canvas ── */
+#gateKal{position:fixed;inset:0;width:100%;height:100%;opacity:.38;z-index:0}
+
+/* ── Dark scrim over canvas ── */
+#scrim{position:fixed;inset:0;z-index:1;
+  background:radial-gradient(ellipse at 50% 52%,
+    rgba(11,15,26,.18) 0%,rgba(11,15,26,.72) 55%,rgba(11,15,26,.94) 100%)}
+
+/* ── Gate card ── */
+#gate{position:fixed;inset:0;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px 20px;text-align:center}
+
+/* Animated logo */
+#gateLogoWrap{margin-bottom:28px;position:relative}
+#gateKalIcon{border-radius:50%;display:block;
+  filter:drop-shadow(0 0 18px rgba(123,167,212,.55))}
+
+/* Wordmark */
+.wm{font-family:'Marcellus',serif;
+  font-size:clamp(3rem,10vw,7.5rem);
+  letter-spacing:.38em;text-indent:.38em;line-height:1;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;
+  color:transparent;filter:drop-shadow(0 0 28px rgba(123,167,212,.3));
+  margin-bottom:14px}
+
+/* Spectrum bar */
+.spectrum{width:120px;height:2.5px;border-radius:2px;
+  background:var(--grad);margin:0 auto 22px;opacity:.9}
+
+/* Sub / teaser */
+.sub{font-size:clamp(.95rem,2vw,1.2rem);font-weight:300;
+  color:var(--txt);letter-spacing:.04em;max-width:52ch;
+  margin-bottom:8px;opacity:.9}
+
+/* Tagline */
+.tag-line{font-family:var(--mono);font-size:.7rem;letter-spacing:.26em;
+  color:var(--dim);text-transform:uppercase;margin-bottom:32px}
+
+/* Disclaimer box */
+#disclaimer{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;
+  color:var(--faint);max-width:48ch;line-height:1.7;
+  border:1px solid rgba(123,167,212,.14);border-radius:10px;
+  padding:12px 16px;margin-bottom:28px;text-align:left;
+  background:rgba(11,15,26,.45)}
+#disclaimer strong{color:var(--dim);font-weight:500}
+
+/* Buttons row */
+#btns{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:340px}
+
+/* Enter CTA */
+#enterBtn{
+  width:100%;padding:14px;border-radius:10px;cursor:pointer;
+  font-family:'Outfit',sans-serif;font-size:1rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;text-align:center;
+  border:1px solid var(--iris);
+  background:rgba(123,167,212,.10);color:var(--teal);
+  transition:background .15s,border-color .15s,box-shadow .15s,transform .08s}
+#enterBtn:hover{background:rgba(123,167,212,.22);border-color:var(--teal);
+  box-shadow:0 0 22px rgba(168,216,234,.32);color:#fff}
+#enterBtn:active{background:linear-gradient(135deg,rgba(91,143,191,.5),rgba(168,216,234,.3));
+  border-color:var(--teal);box-shadow:0 0 32px rgba(168,216,234,.5);
+  transform:scale(.97);color:#fff}
+
+/* Donate button */
+#donateBtn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:10px;cursor:pointer;
+  font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;
+  letter-spacing:.06em;text-decoration:none;
+  border:1px solid rgba(232,137,106,.35);
+  background:rgba(232,137,106,.07);color:var(--amber);
+  transition:background .15s,border-color .15s,box-shadow .15s}
+#donateBtn:hover{background:rgba(232,137,106,.16);border-color:var(--amber);
+  box-shadow:0 0 18px rgba(232,137,106,.25);color:#fff}
+#donateBtn svg{flex-shrink:0}
+
+/* Credit */
+#credit{position:fixed;bottom:16px;left:0;right:0;text-align:center;z-index:3;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;
+  color:var(--faint);text-transform:uppercase}
+
+/* Fade-out transition */
+body.exiting #gate,body.exiting #scrim{
+  opacity:0;transition:opacity .55s ease}
+body.exiting #gateKal{
+  opacity:0;transition:opacity .55s ease}
+/* ── Mobile: tighten everything so the gate fits without scroll ── */
+@media(max-width:600px){
+  #gate{padding:18px 18px;justify-content:center}
+  #gateLogoWrap{margin-bottom:16px}
+  #gateKalIcon{width:60px;height:60px}
+  .wm{font-size:clamp(2.4rem,15vw,4rem);margin-bottom:10px}
+  .spectrum{margin:0 auto 16px}
+  .sub{font-size:.92rem;max-width:32ch;margin-bottom:7px}
+  .tag-line{font-size:.62rem;letter-spacing:.2em;margin-bottom:20px}
+  #disclaimer{font-size:.6rem;line-height:1.55;padding:10px 13px;
+    margin-bottom:20px;max-width:90vw}
+  #btns{gap:10px;max-width:300px}
+  #enterBtn{padding:13px;font-size:.92rem}
+  #donateBtn{padding:9px 18px;font-size:.8rem}
+  #credit{font-size:.52rem;letter-spacing:.12em;bottom:10px}
+}
+/* ── Very short screens: trim further ── */
+@media(max-height:680px){
+  #gateLogoWrap{margin-bottom:12px}
+  #gateKalIcon{width:52px;height:52px}
+  .wm{font-size:clamp(2rem,12vw,3.2rem);margin-bottom:8px}
+  .spectrum{margin:0 auto 12px}
+  .tag-line{margin-bottom:14px}
+  #disclaimer{margin-bottom:14px;line-height:1.45}
+}
+</style>
+</head>
+<body>
+
+<div id="bar-top"></div>
+<div id="bar-bot"></div>
+
+<!-- Live kaleidoscope background -->
+<canvas id="gateKal"></canvas>
+<div id="scrim"></div>
+
+<div id="gate">
+
+  <!-- Animated icon -->
+  <div id="gateLogoWrap">
+    <canvas id="gateKalIcon" width="80" height="80"></canvas>
+  </div>
+
+  <!-- Wordmark -->
+  <div class="wm">OLOGY</div>
+  <div class="spectrum"></div>
+
+  <!-- Teaser -->
+  <p class="sub">An infinite, audio-reactive kaleidoscope for meditation,<br>performance, and worship.</p>
+  <div class="tag-line">See your sound &nbsp;·&nbsp; Still your mind</div>
+
+  <!-- Disclaimer -->
+  <div id="disclaimer">
+    <strong>Before you enter —</strong> Ology is a wellness and performance instrument,
+    not a medical device. It uses binaural beats, isochronic tones, and flashing
+    visual patterns. <br><br><strong>Photosensitive individuals —</strong> should use calm presets
+    and avoid high-strobe settings. <br><br><strong>Headphones —</strong> recommended for binaural entrainment.
+  </div>
+
+  <!-- Buttons -->
+  <div id="btns">
+    <button id="enterBtn" onclick="enter()">&#9654;&ensp;Enter — Free</button>
+    <a id="donateBtn" href="https://buymeacoffee.com/joselitosering"
+       target="_blank" rel="noopener noreferrer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+        <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/>
+        <line x1="14" y1="1" x2="14" y2="4"/>
+      </svg>
+      Buy me a coffee
+    </a>
+  </div>
+
+</div>
+
+<div id="credit">2026 Joselito Sering &nbsp;·&nbsp; aima.productions</div>
+
+<script>
+/* ── Background kaleidoscope canvas (full viewport) ── */
+(function(){
+  var cv=document.getElementById('gateKal');
+  if(!cv)return;
+  var ctx=cv.getContext('2d'),t=0;
+  var cols=['#7BA7D4','#A8D8EA','#E8896A','#C084B0','#FFFFFF'];
+  function size(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+  size();window.addEventListener('resize',size);
+  function frame(){
+    t+=.003;
+    var w=cv.width,h=cv.height,cx=w/2,cy=h/2,seg=12;
+    ctx.fillStyle='rgba(11,15,26,.18)';ctx.fillRect(0,0,w,h);
+    for(var s=0;s<seg;s++){
+      ctx.save();ctx.translate(cx,cy);ctx.rotate(s*2*Math.PI/seg+t*.4);
+      for(var k=0;k<4;k++){
+        var r=(Math.sin(t*1.1+k*1.9)*.5+.5)*Math.min(w,h)*.38+30;
+        var a=Math.sin(t*.7+k)*1.3;
+        var x=Math.cos(a)*r,y=Math.sin(a*1.5)*r*.5;
+        var sz=k===0?14+10*Math.sin(t*1.8+s):6+5*Math.sin(t*2.2+k+s);
+        ctx.beginPath();ctx.arc(x,y,sz,0,7);
+        ctx.fillStyle=cols[(k+s)%5]+(k===0?'18':'28');ctx.fill();
+        ctx.strokeStyle=cols[(k+s)%5]+(k===0?'55':'44');
+        ctx.lineWidth=k===0?1.5:.8;ctx.stroke();
+      }
+      ctx.restore();
+    }
+    var bloom=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(w,h)*.12);
+    bloom.addColorStop(0,'rgba(255,255,255,.06)');
+    bloom.addColorStop(.5,'rgba(192,132,176,.03)');
+    bloom.addColorStop(1,'rgba(11,15,26,0)');
+    ctx.fillStyle=bloom;ctx.fillRect(0,0,w,h);
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ── Icon canvas (80px) ── */
+(function(){
+  var cv=document.getElementById('gateKalIcon');
+  if(!cv)return;
+  var ctx=cv.getContext('2d'),t=0;
+  var cols=['#7BA7D4','#A8D8EA','#E8896A','#C084B0','#FFFFFF'];
+  function frame(){
+    t+=.018;
+    var w=cv.width,h=cv.height,cx=w/2,cy=h/2,seg=6;
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle='rgba(11,15,26,.55)';ctx.fillRect(0,0,w,h);
+    for(var s=0;s<seg;s++){
+      ctx.save();ctx.translate(cx,cy);ctx.rotate(s*2*Math.PI/seg+t*.4);
+      for(var k=0;k<3;k++){
+        var r=(Math.sin(t*1.1+k*1.9)*.5+.5)*cx*.82+2;
+        var a=Math.sin(t*.7+k)*1.3;
+        var x=Math.cos(a)*r,y=Math.sin(a*1.5)*r*.5;
+        var sz=k===0?8+5.5*Math.sin(t*1.8+s):4+4*Math.sin(t*2.2+k+s);
+        ctx.beginPath();ctx.arc(x,y,sz,0,7);
+        ctx.fillStyle=cols[(k+s)%5]+(k===0?'cc':'88');ctx.fill();
+        ctx.strokeStyle=cols[(k+s)%5]+'aa';
+        ctx.lineWidth=k===0?.9:.5;ctx.stroke();
+      }
+      ctx.restore();
+    }
+    var bloom=ctx.createRadialGradient(cx,cy,0,cx,cy,cx*.8);
+    bloom.addColorStop(0,'rgba(255,255,255,.18)');
+    bloom.addColorStop(.5,'rgba(192,132,176,.06)');
+    bloom.addColorStop(1,'rgba(11,15,26,0)');
+    ctx.fillStyle=bloom;ctx.fillRect(0,0,w,h);
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ── Enter handler ── */
+function enter(){
+  var isMobile=window.matchMedia('(pointer:coarse)').matches
+    &&window.matchMedia('(max-width:1024px)').matches;
+  /* Signal the destination page to auto-start audio on load.
+     sessionStorage is same-tab only and survives location.replace()
+     but not a fresh page load, so refresh never re-triggers autostart. */
+  try{sessionStorage.setItem('ology_autostart','1');}catch(e){}
+  document.body.classList.add('exiting');
+  setTimeout(function(){
+    window.location.replace(isMobile?'mobile.html':'web.html');
+  },520);
+}
+
+/* Keyboard shortcut — Enter or Space triggers gate dismiss */
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();enter();}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ology Audio Test</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:#0B0F1A;color:#E8F0F8;min-height:100vh;padding:20px;padding-bottom:env(safe-area-inset-bottom)}
+h1{font-size:16px;letter-spacing:3px;text-transform:uppercase;color:#A8D8EA;margin-bottom:4px}
+.sub{font-size:11px;color:#4a6a84;letter-spacing:1px;margin-bottom:24px}
+.card{background:#111827;border:1px solid rgba(123,167,212,.2);border-radius:12px;padding:16px;margin-bottom:14px}
+.card h2{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#7BA7D4;margin-bottom:12px}
+.btn{display:block;width:100%;padding:14px;border-radius:10px;border:1px solid rgba(123,167,212,.3);background:rgba(123,167,212,.08);color:#A8D8EA;font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer;margin-bottom:8px;text-align:center;-webkit-tap-highlight-color:transparent}
+.btn:active{background:rgba(123,167,212,.22)}
+.btn.green{border-color:rgba(106,191,160,.5);background:rgba(106,191,160,.1);color:#6abfa0}
+.btn.red{border-color:rgba(232,137,106,.5);background:rgba(232,137,106,.1);color:#E8896A}
+.log{background:#000;border:1px solid rgba(123,167,212,.15);border-radius:8px;padding:10px;font-family:monospace;font-size:11px;line-height:1.6;max-height:280px;overflow-y:auto;color:#8FA8C0}
+.log .ok{color:#6abfa0}.log .err{color:#E8896A}.log .info{color:#A8D8EA}.log .warn{color:#f0c040}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:1px;margin-left:6px}
+.pill.running{background:rgba(106,191,160,.2);color:#6abfa0;border:1px solid rgba(106,191,160,.4)}
+.pill.suspended{background:rgba(232,137,106,.2);color:#E8896A;border:1px solid rgba(232,137,106,.4)}
+.pill.closed{background:rgba(100,100,100,.2);color:#666;border:1px solid rgba(100,100,100,.4)}
+#stateBar{font-size:12px;color:#8FA8C0;margin-bottom:14px;min-height:20px}
+</style>
+</head><body>
+
+<h1>Ology · Audio Test</h1>
+<div class="sub">iOS Safari / Android Chrome diagnostic</div>
+
+<div id="stateBar">AC state: <span id="acState">—</span> &nbsp;|&nbsp; isPlaying: <span id="isPlayingState">—</span></div>
+
+<div class="card">
+  <h2>Step 0 — iOS Speaker Unlock</h2>
+  <p style="font-size:11px;color:#4a6a84;margin-bottom:10px">Must run before any Web Audio to route output to iPhone speaker (not just Bluetooth)</p>
+  <button class="btn" onclick="var s=document.getElementById('iosSpeakerUnlock');s.play().catch(function(){});log('Silent audio played — session promoted','ok')">Play silent audio (promotes speaker session)</button>
+</div>
+<div class="card">
+  <h2>Step 1 — Create AudioContext</h2>
+  <button class="btn" onclick="testCreateAC()">Create AudioContext (tap me first)</button>
+  <button class="btn" onclick="testResumeAC()">Resume AudioContext</button>
+</div>
+
+<div class="card">
+  <h2>Step 2 — Basic Oscillator</h2>
+  <button class="btn green" onclick="testOscStart()">▶ Start 440 Hz tone</button>
+  <button class="btn red" onclick="testOscStop()">■ Stop tone</button>
+</div>
+
+<div class="card">
+  <h2>Step 3 — Binaural (136.1 Hz / 6 Hz beat)</h2>
+  <button class="btn green" onclick="testBinaural()">▶ Start binaural drone</button>
+  <button class="btn red" onclick="testBinauralStop()">■ Stop drone</button>
+  <p style="font-size:10px;color:#4a6a84;margin-top:6px">Requires headphones for binaural effect</p>
+</div>
+
+<div class="card">
+  <h2>Step 4 — OlogyAudio engine</h2>
+  <button class="btn" onclick="testEngineInit()">Init OlogyAudio (inside gesture)</button>
+  <button class="btn green" onclick="testEnginePlay()">▶ Engine Play</button>
+  <button class="btn red" onclick="testEngineStop()">■ Engine Stop</button>
+  <p style="font-size:10px;color:#4a6a84;margin-top:6px">Tests full m2_audio.js engine</p>
+</div>
+
+<div class="card">
+  <h2>Console Log</h2>
+  <button class="btn" onclick="clearLog()" style="margin-bottom:8px;padding:8px;font-size:11px">Clear log</button>
+  <div class="log" id="log"></div>
+</div>
+
+<audio id="iosSpeakerUnlock" loop preload="auto" src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAEAAABIADAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV6urq6urq6urq6urq6urq6urq6urq6urq6v////////////////////////////////8AAAAATGF2YzU4LjU0AAAAAAAAAAAAAAAAJAAAAAAAAAAAASDs90hvAAAAAAAAAAAAAAAAAAAA//MUZAAAAAGkAAAAAAAAA0gAAAAATEFN//MUZAMAAAGkAAAAAAAAA0gAAAAARTMu//MUZAYAAAGkAAAAAAAAA0gAAAAAOTku//MUZAkAAAGkAAAAAAAAA0gAAAAAMTAw" style="display:none" x-webkit-airplay="deny"></audio>
+<script src="m2_audio.js"></script>
+<script>
+/* ── State ── */
+var AC = null;
+var masterGain = null;
+var activeOscs = [];
+var engineState = {
+  droneId:'theta-intuition', carrierHz:136.1, beatHz:6, mode:'binaural',
+  brainTickleAmount:0.2, slowness:0.6, key:'C', scale:'minor',
+  ambientBed:'none', ambientBlend:0.3, loop:'evolving',
+  routes:[], masterLevel:0.8, isPlaying:false
+};
+
+/* ── Logging ── */
+function log(msg, cls) {
+  var el = document.getElementById('log');
+  var t = new Date().toLocaleTimeString('en',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  var div = document.createElement('div');
+  div.className = cls||'info';
+  div.textContent = '['+t+'] '+msg;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+function clearLog(){ document.getElementById('log').innerHTML=''; }
+
+/* ── State bar ── */
+function updateStateBar() {
+  var acEl = document.getElementById('acState');
+  var ipEl = document.getElementById('isPlayingState');
+  if (!AC) {
+    acEl.textContent = '—';
+    acEl.className = '';
+  } else {
+    acEl.textContent = AC.state;
+    acEl.className = 'pill ' + AC.state;
+  }
+  if (window.OlogyAudio) {
+    var cs = window.OlogyAudio.getContextState ? window.OlogyAudio.getContextState() : '—';
+    acEl.textContent += ' (engine: '+cs+')';
+  }
+  ipEl.textContent = engineState.isPlaying ? 'true' : 'false';
+  ipEl.style.color = engineState.isPlaying ? '#6abfa0' : '#E8896A';
+}
+
+/* ── Step 1: Create AC ── */
+function testCreateAC() {
+  /* Play silent <audio> element first to promote iOS audio session to speaker */
+  var sil=document.getElementById('iosSpeakerUnlock');
+  if(sil){ sil.play().catch(function(e){ log('Silent audio play failed: '+e.message,'warn'); }); log('Silent audio element played — iOS session promoted','ok'); }
+  try {
+    var Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) { log('AudioContext not available', 'err'); return; }
+    if (AC) { log('AC already exists — state: '+AC.state, 'warn'); updateStateBar(); return; }
+    AC = new Ctx();
+    masterGain = AC.createGain();
+    masterGain.gain.value = 0.7;
+    masterGain.connect(AC.destination);
+    log('AC created — state: '+AC.state, AC.state==='running'?'ok':'warn');
+    updateStateBar();
+  } catch(e) { log('Create AC error: '+e.message, 'err'); }
+}
+
+function testResumeAC() {
+  if (!AC) { log('No AC yet — create it first', 'warn'); return; }
+  log('Calling AC.resume()…', 'info');
+  var p;
+  try { p = AC.resume(); } catch(e) { log('resume() threw: '+e.message, 'err'); return; }
+  if (p && typeof p.then === 'function') {
+    p.then(function() {
+      log('AC.resume() resolved — state: '+AC.state, AC.state==='running'?'ok':'err');
+      updateStateBar();
+    }).catch(function(e) {
+      log('AC.resume() rejected: '+e.message, 'err');
+    });
+  } else {
+    log('AC.resume() returned no Promise — state: '+AC.state, 'warn');
+    updateStateBar();
+  }
+}
+
+/* ── Step 2: Basic oscillator ── */
+function testOscStart() {
+  if (!AC) { log('Creating AC first…', 'warn'); testCreateAC(); }
+  if (AC.state !== 'running') {
+    log('AC not running ('+AC.state+') — resuming…', 'warn');
+    AC.resume().then(function(){ doOscStart(); });
+  } else {
+    doOscStart();
+  }
+}
+function doOscStart() {
+  try {
+    var osc = AC.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = 440;
+    var g = AC.createGain(); g.gain.value = 0.3;
+    osc.connect(g); g.connect(AC.destination);
+    osc.start();
+    activeOscs.push(osc);
+    log('440 Hz oscillator started — AC state: '+AC.state, 'ok');
+    updateStateBar();
+  } catch(e) { log('Osc start error: '+e.message, 'err'); }
+}
+function testOscStop() {
+  activeOscs.forEach(function(o){ try{o.stop();}catch(e){} });
+  activeOscs = [];
+  log('All oscillators stopped', 'info');
+  updateStateBar();
+}
+
+/* ── Step 3: Binaural ── */
+var binauralNodes = [];
+function testBinaural() {
+  if (!AC) { log('Creating AC first…', 'warn'); testCreateAC(); }
+  function doBinaural() {
+    try {
+      testBinauralStop();
+      var carrier = 136.1, beat = 6;
+      var oscL = AC.createOscillator(); oscL.type='sine'; oscL.frequency.value=carrier;
+      var oscR = AC.createOscillator(); oscR.type='sine'; oscR.frequency.value=carrier+beat;
+      var panL = AC.createStereoPanner(); panL.pan.value=-1;
+      var panR = AC.createStereoPanner(); panR.pan.value=1;
+      var g = AC.createGain(); g.gain.value=0.5;
+      oscL.connect(panL); oscR.connect(panR);
+      panL.connect(g); panR.connect(g);
+      g.connect(AC.destination);
+      oscL.start(); oscR.start();
+      binauralNodes.push(oscL,oscR,panL,panR,g);
+      log('Binaural drone started: '+carrier+'Hz / '+beat+'Hz beat — AC: '+AC.state, 'ok');
+      updateStateBar();
+    } catch(e) { log('Binaural error: '+e.message, 'err'); }
+  }
+  if (AC.state !== 'running') {
+    log('AC not running — resuming then starting binaural…', 'warn');
+    AC.resume().then(doBinaural);
+  } else { doBinaural(); }
+}
+function testBinauralStop() {
+  binauralNodes.forEach(function(n){
+    try{if(n.stop)n.stop();}catch(e){}
+    try{n.disconnect();}catch(e){}
+  });
+  binauralNodes=[];
+  if(binauralNodes.length===0 && document.getElementById('log').children.length>0)
+    log('Binaural stopped', 'info');
+  updateStateBar();
+}
+
+/* ── Step 4: OlogyAudio engine ── */
+function testEngineInit() {
+  var A = window.OlogyAudio;
+  if (!A) { log('OlogyAudio not found — is m2_audio.js loaded?', 'err'); return; }
+  /* Play silent audio first to promote iOS audio session */
+  var sil=document.getElementById('iosSpeakerUnlock');
+  if(sil){ sil.play().catch(function(){}); }
+  try {
+    var ok = A.init(engineState);
+    log('OlogyAudio.init() returned: '+ok, ok?'ok':'err');
+    log('  context state: '+(A.getContextState?A.getContextState():'no getContextState'), 'info');
+    log('  isReady(): '+A.isReady(), A.isReady()?'ok':'err');
+    /* Check what isReady sees by testing engine start directly */
+    if(!A.isReady()){
+      log('  isReady=false — trying start() anyway...','warn');
+      A.start();
+      log('  after start(): isReady='+A.isReady()+' ctx='+A.getContextState(),'info');
+    }
+    updateStateBar();
+  } catch(e) { log('Engine init error: '+e.message+' stack:'+e.stack, 'err'); }
+}
+function testEnginePlay() {
+  var A = window.OlogyAudio;
+  if (!A) { log('OlogyAudio not found', 'err'); return; }
+  log('isReady()='+A.isReady()+' ctx='+(A.getContextState?A.getContextState():'?'), A.isReady()?'ok':'warn');
+  log('Calling OlogyAudio.start()…', 'info');
+  A.start();
+  log('After start() — isPlaying: '+engineState.isPlaying+' — context: '+(A.getContextState?A.getContextState():'?'), 'info');
+  /* Poll for 1 second to show context state transitions */
+  var polls=0;
+  var poll=setInterval(function(){
+    polls++;
+    var cs = A.getContextState ? A.getContextState() : '?';
+    log('  poll '+polls+': context='+cs+' isPlaying='+engineState.isPlaying, cs==='running'?'ok':'warn');
+    if(cs==='running'||polls>=10){ clearInterval(poll); }
+    updateStateBar();
+  }, 100);
+}
+function testEngineStop() {
+  var A = window.OlogyAudio;
+  if (!A || !A.isReady()) { log('Engine not ready', 'warn'); return; }
+  A.stop();
+  log('OlogyAudio.stop() called — isPlaying: '+engineState.isPlaying, 'info');
+  updateStateBar();
+}
+
+/* ── Init ── */
+log('Page loaded. User agent: '+navigator.userAgent.slice(0,80), 'info');
+log('AudioContext available: '+(typeof(window.AudioContext||window.webkitAudioContext)!=='undefined'), 'info');
+log('Tap "Create AudioContext" to begin.', 'info');
+updateStateBar();
+
+/* Poll state bar every second */
+setInterval(updateStateBar, 1000);
+</script>
+</body></html>
