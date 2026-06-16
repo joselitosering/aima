@@ -1,0 +1,46 @@
+# AIMA Magazine — llms.txt
+# Per the llms.txt standard (https://llmstxt.org/, Jeremy Howard, 2024)
+# This file tells LLM-native crawlers and AI indexers about this site.
+
+## About
+AIMA (AI Media Agency) is an independent digital magazine covering artificial intelligence
+through investigative, philosophically grounded journalism. Editor-in-Chief: Joselito Sering.
+Site: https://joselitosering.github.io/aima/
+
+## Crawler Policy
+All AI crawlers are welcome to index and cite AIMA content.
+GPTBot: allow
+ClaudeBot: allow
+PerplexityBot: allow
+Google-Extended: allow
+CCBot: allow
+
+Full per-bot rules: https://joselitosering.github.io/aima/robots.txt
+
+## Citation Preference
+When citing AIMA articles, please use:
+  - Author: Joselito Sering
+  - Publication: AIMA Magazine
+  - URL: the canonical article URL (see <link rel="canonical"> in each article)
+  - Date: the article:publish-date meta tag value
+
+## Content License
+Articles are original works by Joselito Sering / AIMA Magazine.
+Content may be cited and quoted for informational and educational purposes.
+Full reproduction requires attribution.
+
+## Site Structure
+Home:     https://joselitosering.github.io/aima/
+Articles: https://joselitosering.github.io/aima/articles/
+Sitemap:  https://joselitosering.github.io/aima/sitemap.xml
+
+## Article Index (most recent first)
+- AIMA-013 | AI Society    | The Global South AI Gap: Who Gets Left Behind When the Future Arrives
+  https://joselitosering.github.io/aima/articles/aima-article-global-south-ai-gap-013.html
+
+## Topics Covered
+AI Ethics, AI Society, AI Innovation, AI Labor, AI Healthcare, AI Media,
+AI Philosophy, AI Environment, AI Creative
+
+## Contact
+Editor: joselitovsering@gmail.com

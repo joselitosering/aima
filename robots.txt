@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# AI Crawlers — all allowed (AIMA opts into indexing and citation)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Sitemap
+Sitemap: https://joselitosering.github.io/aima/sitemap.xml
+
+# LLM site index
+# https://joselitosering.github.io/aima/llms.txt
