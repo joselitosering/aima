@@ -1,0 +1,20 @@
+{
+  "next_article_number": 14,
+  "next_article_slug": "hallucination-nation",
+  "next_article_title": "Hallucination Nation: Why AI Lies with Confidence and What It Costs Us",
+  "next_article_date": "2026-06-20",
+  "next_article_category": "AI Ethics",
+  "last_run": "2026-06-16",
+  "articles_written": [
+    {
+      "number": 13,
+      "title": "The Global South AI Gap: Who Gets Left Behind When the Future Arrives",
+      "filename": "aima-article-global-south-ai-gap-013.html",
+      "date": "2026-06-18",
+      "category": "AI Society"
+    }
+  ],
+  "google_sheets_url": "https://docs.google.com/spreadsheets/d/1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs/edit",
+  "google_sheets_id": "1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs",
+  "google_sheets_tab": "Insights"
+}
