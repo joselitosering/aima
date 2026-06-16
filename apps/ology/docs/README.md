@@ -1,4 +1,4 @@
-# Ology — Audio-Reactive Kaleidoscope · Beta v1.5
+# Ology — Audio-Reactive Kaleidoscope · Beta v1.5.1
 
 **Endless audio-reactive kaleidoscope for meditation, neuroplasticity, and live performance.**  
 Built by Joselito Sering · Published under AIMA Productions · aima.productions
@@ -64,8 +64,8 @@ ology-output/
 | M6 | Param overlay + toggle | ✅ Built · validated |
 | M7 | `window.OlogyLink` WebRTC | ✅ Built · pending LAN test |
 | M9 | Inline presets in `web.html` | ✅ Built · pending validation |
-| Mobile | `mobile.html` | ✅ Built · Beta v1.5 |
-| Help | `ology_help.html` | ✅ Built · Beta v1.5 |
+| Mobile | `mobile.html` | ✅ Built · Beta v1.5.1 |
+| Help | `ology_help.html` | ✅ Built · Beta v1.5.1 |
 
 `m4_ui.js` — remains in repo, not loaded at runtime. Cleanup deferred to v2.
 
@@ -172,8 +172,9 @@ npx tsc --noEmit contracts.ts
 
 | Version | Scope |
 |---|---|
-| **v1.5** *(current)* | `web.html` + `mobile.html` + `output.html` + help guide. Default theme: Intergalactic Beings. 9:16 portrait viewer. |
-| **v1.6** | Strobe gate (Option C — audio analysis frame gating). Bug fixes from v1.5 test pass. Cursor flicker investigation. |
+| **v1.5** | `web.html` + `mobile.html` + `output.html` + help guide. Default theme: Intergalactic Beings. 9:16 portrait viewer. |
+| **v1.5.1** *(current)* | Safe Mode toggle (audio reactivity gate via NULL_ANALYSIS frame). Engine light indicator in topbar. Param overlay color fixes. |
+| **v1.6** | Bug fixes from v1.5.1 test pass. Cursor flicker investigation. |
 | **v1.2** | Shader expansion — new GLSL themes added to M1. |
 | **v2** | Agent (Claude API) + audio line-in + visual expansion + 4K + backend auth + subscription tiers. |
 | **v3** | Print products (Odorama / prayer kits). |

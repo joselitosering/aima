@@ -21,6 +21,12 @@ body{
   font-family:'Outfit',system-ui,-apple-system,sans-serif;
   font-weight:300; overflow:hidden; line-height:1.55;
 }
+/* ── Brand scrollbars ── */
+.slide{scrollbar-width:thin;scrollbar-color:#3a5a78 rgba(6,7,13,.9)}
+.slide::-webkit-scrollbar{width:4px;height:4px}
+.slide::-webkit-scrollbar-track{background:rgba(6,7,13,.9)}
+.slide::-webkit-scrollbar-thumb{background:#3a5a78;border-radius:99px}
+.slide::-webkit-scrollbar-thumb:hover{background:#7BA7D4}
 h1,h2,h3,.display{font-family:'Marcellus','Times New Roman',serif;font-weight:400;letter-spacing:.02em}
 .mono{font-family:'JetBrains Mono',monospace}
 #deck{position:relative;height:100vh;width:100vw}
@@ -58,14 +64,6 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
 .cols{display:grid;gap:1.2rem;margin-top:1.8rem}
 .c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .c3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-/* KPI grid: 3 cols desktop/landscape, 2 cols portrait, 1 col mobile */
-.kpi-grid{display:grid;gap:.75rem;margin-top:1rem;grid-template-columns:repeat(3,1fr)}
-@media(max-width:760px) and (orientation:landscape){
-  .kpi-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:760px) and (orientation:portrait){
-  .kpi-grid{grid-template-columns:1fr}
-}
 .card{
   background:var(--panel);border:1px solid var(--line);border-radius:14px;
   padding:1.3rem 1.4rem;position:relative;
@@ -104,23 +102,12 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
 .navbtn:hover{border-color:var(--teal);color:var(--teal)}
 #count{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--dim);letter-spacing:.15em}
 #bar{position:fixed;top:0;left:0;height:2px;background:var(--grad);z-index:60;transition:width .4s ease}
-/* confidence bar — slide 4 science tiers */
-.conf-bar{height:4px;border-radius:2px;background:var(--line);margin:.55rem 0 .8rem;overflow:hidden}
-.conf-bar span{display:block;height:100%;border-radius:2px}
-.conf-full span{width:100%;background:var(--teal)}
-.conf-mid span{width:60%;background:var(--iris)}
-.conf-low span{width:28%;background:var(--rose)}
-.card .claim{font-size:.97rem;color:var(--text);line-height:1.45;margin-bottom:.5rem}
-.card .basis{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.06em}
-/* step color accents */
-.step.s-iris{border-top:2px solid var(--iris)}
-.step.s-teal{border-top:2px solid var(--teal)}
-.step.s-amber{border-top:2px solid var(--amber)}
-.step.s-rose{border-top:2px solid var(--rose)}
-.step .price{font-size:.88rem;margin:.25rem 0 .4rem}
-.step .who{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.08em;margin-bottom:.35rem}
-.step .target{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--teal);margin:.3rem 0 .2rem}
-.step .proves{font-size:.72rem;color:var(--dim);margin-top:.3rem;padding-top:.3rem;border-top:1px solid var(--line)}
+/* tables & misc */
+table{width:100%;border-collapse:collapse;margin-top:1.2rem;font-size:.88rem}
+th{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);
+  text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line)}
+td{padding:.55rem .7rem;border-bottom:1px solid rgba(139,108,255,.1);color:var(--dim);vertical-align:top}
+td:first-child{color:var(--text)}
 .big{font-family:'Marcellus',serif;font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1}
 .big small{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--dim);margin-top:.5rem;text-transform:uppercase}
 .swatches{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:1rem}
@@ -152,8 +139,6 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
 @media(max-width:760px){
   .slide{padding:5vh 6vw 14vh;justify-content:flex-start;padding-top:8vh}
   #dots{display:none}
-  .flow{flex-direction:column}
-  .step{min-width:unset;width:100%}
 }
 @media(prefers-reduced-motion:reduce){
   .slide{transition:opacity .2s} #kal{display:none} .hint{animation:none}
@@ -163,7 +148,7 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
 <body>
 <div id="bar"></div>
 <div id="deck">
-
+ 
 <!-- 01 COVER -->
 <section class="slide" data-t="Cover">
   <canvas id="kal"></canvas>
@@ -175,7 +160,7 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
   </div>
   <div class="hint">← → arrow keys, or tap the dots, to navigate</div>
 </section>
-
+ 
 <!-- 02 WHAT IS OLOGY -->
 <section class="slide" data-t="What is Ology">
   <div class="eyebrow">Δ delta · 0.5–4 Hz <span class="hz">· the foundation</span></div>
@@ -189,7 +174,7 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
   </div>
   <p class="note">Beta v1 ships free on the web (Intel Mac + iOS targets). The deck that follows treats marketing as a system: audience → channel → content → conversion → retention → evidence.</p>
 </section>
-
+ 
 <!-- 03 BRAND STORY -->
 <section class="slide" data-t="Brand Story">
   <div class="eyebrow">Δ delta <span class="hz">· origin</span></div>
@@ -205,42 +190,26 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
     <div class="card"><h3><span class="tag" style="color:var(--amber)">Mission</span>Human flourishing, at scale</h3><p>Revenue supports a core mission: NGO partnerships tackling education, enterprise, and empowerment for poverty-stricken communities in the third world. Customers aren't just buying calm — they're funding kindness.</p></div>
   </div>
 </section>
-
+ 
 <!-- 04 SCIENCE & VALIDATION -->
 <section class="slide" data-t="Science & Validation">
   <div class="eyebrow">θ theta · 4–7 Hz <span class="hz">· evidence</span></div>
   <div class="spectrum"></div>
   <h2>The science, stated <em>honestly</em></h2>
-  <div class="flow">
-    <div class="step">
-      <div class="n">Established · high confidence</div>
-      <h4>Binaural beats work</h4>
-      <div class="conf-bar conf-full"><span></span></div>
-      <p>Medium, significant effect (g ≈ 0.45) across memory, attention, anxiety, and pain — 22-study meta-analysis and RCT reviews including perioperative anxiety reduction.</p>
-      <p class="basis">García-Argibay et al., Psychological Research, 2019 · systematic reviews 2024–2025</p>
-    </div>
-    <div class="step">
-      <div class="n">Promising · active research</div>
-      <h4>Entrainment is real</h4>
-      <div class="conf-bar conf-mid"><span></span></div>
-      <p>EEG studies show frequency-following responses under specific parameters. Results vary with carrier tone and context — Ology is built to serve that research.</p>
-      <p class="basis">Scientific Reports, 2025 · EEG / eLORETA studies</p>
-    </div>
-    <div class="step">
-      <div class="n">Exploratory · Ology's frontier</div>
-      <h4>Audio-visual synchrony</h4>
-      <div class="conf-bar conf-low"><span></span></div>
-      <p>Combined audio-visual synchrony, color-mood theming, and guided narrative as neuroplastic practice. Ology is an open instrument for this research — not a finished claim.</p>
-      <p class="basis">Ology session telemetry + partner studies (planned)</p>
-    </div>
-  </div>
-  <div class="cols c3" style="margin-top:1rem">
-    <div class="card k-teal"><h3><span class="tag">Validation by adoption</span>Usage as evidence</h3><p>Installs, session length, 7/30-day retention, theme completion, and replay rate become the demand-side dataset that justifies — and funds — formal studies.</p></div>
-    <div class="card k-iris"><h3><span class="tag">Research posture</span>Open instrument</h3><p>Offer Ology to universities and clinicians as a configurable stimulus engine — exact Hz labeling already in the drone library. Co-authored studies become marketing assets.</p></div>
+  <p class="lede">Ology's credibility strategy is "steadproof": claim only what the literature supports, label the rest as exploration, and let adoption metrics validate demand. Honesty is a moat — wellness buyers are increasingly allergic to overclaiming.</p>
+  <table>
+    <tr><th>Layer</th><th>What we can say</th><th>Basis</th></tr>
+    <tr><td>Established</td><td>Binaural-beat exposure shows a medium, significant overall effect (g ≈ 0.45) across memory, attention, anxiety, and pain studies; meta-analyses and RCT reviews support anxiety reduction including perioperative settings.</td><td>22-study meta-analysis (Psychological Research, 2019); systematic reviews 2024–2025</td></tr>
+    <tr><td>Promising</td><td>EEG studies report frequency-following responses and entrainment under specific parameters; results vary with frequency, carrier tone, and context. Parameter optimization is ongoing research.</td><td>Scientific Reports (2025); EEG/eLORETA studies</td></tr>
+    <tr><td>Exploratory</td><td>Audio-visual synchrony, color-mood theming, and guided narrative as combined neuroplastic practice. Ology positions itself as an instrument for this research, not a finished claim.</td><td>Ology session telemetry + partner studies (planned)</td></tr>
+  </table>
+  <div class="cols c3" style="margin-top:1.2rem">
+    <div class="card k-teal"><h3><span class="tag">Validation by adoption</span>Usage as evidence</h3><p>Popularity metrics — installs, session length, 7/30-day retention, theme completion, replay rate per theme — become the demand-side dataset that justifies (and funds) formal studies.</p></div>
+    <div class="card k-iris"><h3><span class="tag">Research posture</span>Open instrument</h3><p>Offer Ology to universities and clinicians as a configurable stimulus engine (exact Hz labeling already in the drone library). Co-authored studies convert into marketing assets.</p></div>
     <div class="card k-amber"><h3><span class="tag">Safety & ethics</span>Trust by design</h3><p>Not a medical device; complements, never replaces, care. Photosensitivity warning and strobe limits are product features and marketing claims of responsibility.</p></div>
   </div>
 </section>
-
+ 
 <!-- 05 MARKET -->
 <section class="slide" data-t="Market">
   <div class="eyebrow">θ theta <span class="hz">· demand</span></div>
@@ -256,7 +225,7 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
     <div class="card k-teal"><h3><span class="tag">Tailwinds</span>Why now</h3><p>Mental-health demand keeps rising; corporate wellness and sleep content expand the category; VR/immersive meditation is an analyst-flagged growth vector — exactly where Ology v3 (full DJ/VJ live performance, 4K, 3D/VR) is headed. A 7-minute meditation app hit 1M downloads in 15 hours in 2025: distribution moments are real.</p></div>
   </div>
 </section>
-
+ 
 <!-- 06 AUDIENCES -->
 <section class="slide" data-t="Audiences">
   <div class="eyebrow">α alpha · 7–13 Hz <span class="hz">· who we serve</span></div>
@@ -278,7 +247,7 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
   </div>
   <p class="note">Sequencing: win A1 + A6 for volume and proof, A2 + A4 for revenue density and word-of-mouth, A3 for spectacle and virality, A5 for the evidence engine that feeds back into all marketing.</p>
 </section>
-
+ 
 <!-- 07 POSITIONING & TAGLINES -->
 <section class="slide" data-t="Taglines">
   <div class="eyebrow">α alpha <span class="hz">· voice</span></div>
@@ -294,7 +263,7 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
     <div class="tagline"><span>Mission</span>AI for humanity — tuned to your higher potential.</div>
   </div>
 </section>
-
+ 
 <!-- 08 BRAND IDENTITY -->
 <section class="slide" data-t="Brand Identity">
   <div class="eyebrow">α alpha <span class="hz">· identity system</span></div>
@@ -331,7 +300,7 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
       <ul><li>Marketing visuals are real captures from the engine — no stock psychedelia</li><li>Motion-first: every ad unit leads with live render footage</li><li>Reference imagery may be generated via Higgsfield for storyboards only</li></ul></div>
   </div>
 </section>
-
+ 
 <!-- 09 ADVERTISING PLAN -->
 <section class="slide" data-t="Advertising Plan">
   <div class="eyebrow">β beta · 13–30 Hz <span class="hz">· activation</span></div>
@@ -348,7 +317,7 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
     <div class="card k-amber"><h3><span class="tag">Budget posture</span>Earn before you spend</h3><p>Gate paid spend on organic signal: begin paid only when free-user D7 retention ≥ 20% and a theme's replay rate proves a hook worth amplifying.</p></div>
   </div>
 </section>
-
+ 
 <!-- 10 CONTENT ENGINE -->
 <section class="slide" data-t="Content Engine">
   <div class="eyebrow">β beta <span class="hz">· content</span></div>
@@ -367,102 +336,57 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
     <div class="card k-amber"><h3><span class="tag">Repurposing</span>One session, seven assets</h3><p>Each flagship session yields: podcast episode, YouTube long-form, 3 short loops, a quote card, and an email. AI generation keeps marginal cost near zero.</p></div>
   </div>
 </section>
-
+ 
 <!-- 11 MONETIZATION -->
 <section class="slide" data-t="Monetization">
   <div class="eyebrow">β beta <span class="hz">· revenue</span></div>
   <div class="spectrum"></div>
   <h2>Hybrid pricing: <em>own it or subscribe</em></h2>
   <p class="lede">Subscription fatigue is real — 40–60% of buyers want to own, not rent. The highest-performing model captures all three buyer types: ownership buyers, convenience subscribers, and power users who buy both.</p>
-  <div class="flow" style="margin-top:1.2rem">
-    <div class="step s-iris">
-      <div class="n">v1.x · Free</div>
-      <h4>The instrument</h4>
-      <p class="price">$0 — always free on the web</p>
-      <p class="who">A1 meditators · A6 entry streamers</p>
-      <p>Core kaleidoscope + drone engine in browser. ~10 soundscapes, ~5 visualizers. YouTube live Ology channel + Spotify podcast + soundtrack radio.</p>
-    </div>
-    <div class="step s-teal">
-      <div class="n">v2.x · Subscriber</div>
-      <h4>Sound &amp; senses</h4>
-      <p class="price" style="color:var(--teal)">$9.99/mo · $99.99/yr</p>
-      <p class="who">A1 devotees · A6 streamers · therapists</p>
-      <p>App store download. OBS output, theme &amp; sound packs, guided meditations, preset sync, cloud sync, mobile viewer/listener, 3DVR in-app upgrade. Therapist revenue-share access.</p>
-    </div>
-    <div class="step s-amber">
-      <div class="n">v3.x · Creator</div>
-      <h4>Command the room</h4>
-      <p class="price" style="color:var(--amber)">$14.99/mo · $149/yr · $249 lifetime</p>
-      <p class="who">A2 performers · A3 DJ/VJ · A4 venues</p>
-      <p>Full DJ/VJ suite, MIDI + DMX, video effects, record to disk, 4K, multi-output canvases. Upload creations to Subscriber Store — earn shared download revenue. Commercial &amp; venue licensing.</p>
-    </div>
-  </div>
+  <table>
+    <tr><th>Tier</th><th>Version</th><th>Price</th><th>Who</th><th>What they get</th></tr>
+    <tr><td><strong>Free</strong></td><td>v1.1</td><td>$0</td><td>A1, A6 entry</td><td>Core kaleidoscope + drone engine in browser. ~10 soundscapes, ~5 visualizers. YouTube live Ology channel + Spotify podcast + soundtrack radio.</td></tr>
+    <tr><td><strong>Subscriber</strong></td><td>v2</td><td><strong style="color:var(--teal)">$9.99/mo · $99.99/yr</strong></td><td>A1 devotees, A6 streamers, therapists</td><td>App store download. OBS output, theme &amp; sound packs, guided meditations, preset sync, cloud sync, mobile viewer/listener, 3DVR in-app upgrade. Therapist revenue-share access.</td></tr>
+    <tr><td><strong>Creator</strong></td><td>v3</td><td><strong style="color:var(--amber)">$14.99/mo · $149/yr · $249 lifetime</strong></td><td>A2, A3, A4 — performers, practitioners, venues</td><td>Full DJ/VJ suite, MIDI + DMX, video effects, record to disk, 4K, multi-output canvases. Upload creations to Subscriber Store — earn shared download revenue. Commercial &amp; venue licensing.</td></tr>
+    <tr><td><strong>Ology Product Line</strong></td><td>v2</td><td>One-time + renewables</td><td>A1 devotees, gift buyers</td><td>Three supplemental upgrades purchasable as gifts or renewables: <strong>Scentsual</strong> (scent sprays &amp; oils keyed to themes) · <strong>Urbl</strong> (tea blends) · <strong>Devotion</strong> (prayer beads &amp; incense). Each available individually or as a bundled set.</td></tr>
+  </table>
   <div class="cols c3" style="margin-top:1.2rem">
     <div class="card k-teal"><h3><span class="tag">Psychology note</span>$249 lifetime vs monthly</h3><p>Ownership buyers happily pay $249 once but refuse a recurring bill. The Creator lifetime option removes this friction entirely — and the goodwill it generates produces organic referrals that no ad spend can replicate.</p></div>
     <div class="card k-rose"><h3><span class="tag">Creator Store</span>Creators monetize; subscribers discover</h3><p>v3 Creators upload presets, visual packs, and sound beds to the Subscriber Store. Downloads split revenue between the Creator and AIMA Productions — turning your power users into a distributed content team and income stream.</p></div>
     <div class="card k-iris"><h3><span class="tag">Adjacent</span>Media revenue</h3><p>Podcast sponsorships, YouTube ads &amp; memberships, affiliate codes for creators — monetizing the marketing itself. Free tier fuels this flywheel perpetually.</p></div>
   </div>
 </section>
-
+ 
 <!-- 12 ROADMAP -->
 <section class="slide" data-t="Roadmap">
   <div class="eyebrow">γ gamma · 30–50 Hz <span class="hz">· trajectory</span></div>
   <div class="spectrum"></div>
   <h2>Roadmap as <em>marketing arc</em></h2>
   <div class="flow">
-    <div class="step"><div class="n">v1.x · Beta</div><h4>Free — The instrument</h4><p>Free web; Stage + Controller; OBS video out; bug fixes &amp; stability. ~10 soundscapes, ~5 visualizers. YouTube live + Spotify podcast launch. Story: "a new kind of meditation, born in the open."</p></div>
-    <div class="step"><div class="n">v2.x · Subscriber</div><h4>Sound &amp; senses expand</h4><p>App store launch. Mobile viewer/listener + 3DVR in-app upgrade. Fractal suite; genre music beds; guided meditations; in-app topic packages; CDN; Electron desktop. Ology Product Line ships: <strong>Scentsual</strong> (scent sprays &amp; oils), <strong>Urbl</strong> (tea blends), <strong>Devotion</strong> (prayer beads &amp; incense) — individually or bundled, one-time + renewables. Backend auth. <strong style="color:var(--teal)">$9.99/mo · $99.99/yr.</strong> Story: "your practice, all your senses."</p></div>
-    <div class="step"><div class="n">v3.x · Creator</div><h4>Full performance tool</h4><p>Complete DJ/VJ live suite: composite visual layers, video switch transitions, video effects, full audio mixer (mic/line-in, drone generator, sound beds, music banks), MIDI compatibility, DMX signal support, record to disk, 4K output, custom multi-output canvases (concerts, corporate, church, cinema). 3D/VR immersive mode. Creator uploads to Subscriber Store — shared download revenue. <strong style="color:var(--amber)">$14.99/mo · $149/yr · $249 lifetime.</strong> Story: "command the room."</p></div>
+    <div class="step"><div class="n">v1 / v1.1 · Beta</div><h4>Free — The instrument</h4><p>Free web; Stage + Controller; OBS video out; bug fixes &amp; stability. ~10 soundscapes, ~5 visualizers. YouTube live + Spotify podcast launch. Story: "a new kind of meditation, born in the open."</p></div>
+    <div class="step"><div class="n">v2 · Subscriber</div><h4>Sound &amp; senses expand</h4><p>App store launch. Mobile viewer/listener + 3DVR in-app upgrade. Fractal suite; genre music beds; guided meditations; in-app topic packages; CDN; Electron desktop. Ology Product Line ships: <strong>Scentsual</strong> (scent sprays &amp; oils), <strong>Urbl</strong> (tea blends), <strong>Devotion</strong> (prayer beads &amp; incense) — individually or bundled, one-time + renewables. Backend auth. <strong style="color:var(--teal)">$9.99/mo · $99.99/yr.</strong> Story: "your practice, all your senses."</p></div>
+    <div class="step"><div class="n">v3 · Creator</div><h4>Full performance tool</h4><p>Complete DJ/VJ live suite: composite visual layers, video switch transitions, video effects, full audio mixer (mic/line-in, drone generator, sound beds, music banks), MIDI compatibility, DMX signal support, record to disk, 4K output, custom multi-output canvases (concerts, corporate, church, cinema). 3D/VR immersive mode. Creator uploads to Subscriber Store — shared download revenue. <strong style="color:var(--amber)">$14.99/mo · $149/yr · $249 lifetime.</strong> Story: "command the room."</p></div>
   </div>
   <p class="note">Each version is a launch moment with its own PR beat, pricing event, and audience expansion — v2 unlocks A1/A2/A4 sensory revenue and the app stores; v3 opens A3 (DJ/VJ professionals, lighting engineers, venue AV teams), festival press, and venue licensing at scale.</p>
 </section>
-
+ 
 <!-- 13 KPIs -->
 <section class="slide" data-t="KPIs">
   <div class="eyebrow">γ gamma <span class="hz">· measurement</span></div>
   <div class="spectrum"></div>
   <h2>KPIs: adoption as <em>steadproof</em></h2>
   <p class="lede">"Steadproof" = steady, compounding evidence. Every claim in our marketing must trace to a metric; every metric feeds the science narrative.</p>
-  <div class="kpi-grid">
-    <div class="card k-iris">
-      <h3><span class="tag">01 · Acquire</span>First sessions</h3>
-      <p>Weekly new users; channel CAC (Phase 2+).</p>
-      <p class="target">↑ 10% w/w organic</p>
-      <p class="proves">Message-market fit</p>
-    </div>
-    <div class="card k-teal">
-      <h3><span class="tag">02 · Activate</span>The instrument grips</h3>
-      <p>% reaching 5-min session; GO presses per visit.</p>
-      <p class="target">≥ 50%</p>
-      <p class="proves">First session converts</p>
-    </div>
-    <div class="card k-teal">
-      <h3><span class="tag">03 · Retain</span>Habit forms</h3>
-      <p>D7 / D30 retention; sessions per week.</p>
-      <p class="target">D7 ≥ 20%</p>
-      <p class="proves">Habit = wellbeing value</p>
-    </div>
-    <div class="card k-rose">
-      <h3><span class="tag">04 · Resonate</span>Themes pull people back</h3>
-      <p>Theme replay rate; avg session length per theme; mood check-in delta (opt-in).</p>
-      <p class="target">Top theme replay ≥ 35%</p>
-      <p class="proves">The demand-side science</p>
-    </div>
-    <div class="card k-amber">
-      <h3><span class="tag">05 · Revenue</span>Conversion &amp; attach</h3>
-      <p>Subscriber conversion; Creator tier split; Product Line attach rate; Creator Store revenue; therapist referrals.</p>
-      <p class="target">v2: 3–5% free→paid · v3: lifetime:annual 40:60</p>
-      <p class="proves">Sustainable mission</p>
-    </div>
-    <div class="card k-iris">
-      <h3><span class="tag">06 · Refer</span>Story travels</h3>
-      <p>Live stream shares; partner referrals; podcast subscriber growth.</p>
-      <p class="target">K-factor trend ↑</p>
-      <p class="proves">Story travels on its own</p>
-    </div>
-  </div>
+  <table>
+    <tr><th>Stage</th><th>Metric</th><th>Beta target</th><th>What it proves</th></tr>
+    <tr><td>Acquire</td><td>Weekly first sessions; channel CAC (Phase 2+)</td><td>Trend ↑ 10% w/w organic</td><td>Message-market fit</td></tr>
+    <tr><td>Activate</td><td>% reaching 5-min session; GO presses per visit</td><td>≥ 50%</td><td>The instrument grips</td></tr>
+    <tr><td>Retain</td><td>D7 / D30 retention; sessions per week</td><td>D7 ≥ 20%</td><td>Habit = wellbeing value</td></tr>
+    <tr><td>Resonate</td><td>Theme replay rate; avg session length per theme; mood check-in delta (opt-in)</td><td>Top theme replay ≥ 35%</td><td>The demand-side science</td></tr>
+    <tr><td>Revenue</td><td>Subscriber conversion; Creator lifetime vs annual vs monthly split; Ology Product Line (Scentsual, Urbl, Devotion) attach rate; Creator Store download revenue; therapist referrals</td><td>v2: 3–5% free→paid; v3: lifetime:annual ratio target 40:60</td><td>Sustainable mission</td></tr>
+    <tr><td>Refer</td><td>Shares of live streams; partner referrals; podcast subscriber growth</td><td>K-factor trend ↑</td><td>Story travels on its own</td></tr>
+  </table>
 </section>
-
+ 
 <!-- 14 CHATGPT HANDOFFS -->
 <!-- 15 RESOURCES & CITATIONS -->
 <section class="slide" data-t="Resources">
@@ -481,19 +405,19 @@ p.lede{font-size:clamp(1rem,1.5vw,1.2rem);color:var(--dim);max-width:62ch;font-w
   <div class="cols c3" style="margin-top:1.2rem">
     <div class="card k-teal"><h3><span class="tag">Help Guide</span></h3><p>Full documentation, user guide, and session reference available at <a style="color:var(--teal);text-decoration:none" href="ology_help.html">ology_help.html</a>. Covers all features, themes, Hz presets, OBS setup, and the Ology Product Line.</p></div>
     <div class="card k-iris"><h3><span class="tag">Disclaimer</span></h3><p>Ology is a wellness and performance instrument, not a medical device. Flashing imagery may affect photosensitive individuals; calm presets are default. Market figures vary by analyst scope — ranges shown are directional.</p></div>
-    <div class="card k-amber"><h3><span class="tag">Imprint</span></h3><p>OLOGY · <a href="http://aima.productions" target="_blank" rel="noopener" style="color:#1C2E4A;text-decoration:none;font-weight:500">AIMA Productions</a> · Joselito Sering · Marketing Brief v1.5 · June 2026 · "See your sound. Still your mind."</p></div>
+    <div class="card k-amber"><h3><span class="tag">Imprint</span></h3><p>OLOGY · <a href="http://aima.productions" target="_blank" rel="noopener" style="color:#1C2E4A;text-decoration:none;font-weight:500">AIMA Productions</a> · Joselito Sering · Marketing Brief v1.4 · June 2026 · "See your sound. Still your mind."</p></div>
   </div>
 </section>
-
+ 
 </div>
-
+ 
 <nav id="nav">
   <button class="navbtn" onclick="go(-1)" aria-label="Previous slide">←</button>
   <div id="dots"></div>
   <span id="count"></span>
   <button class="navbtn" onclick="go(1)" aria-label="Next slide">→</button>
 </nav>
-
+ 
 <script>
 const slides=[...document.querySelectorAll('.slide')];
 const dots=document.getElementById('dots');

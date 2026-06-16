@@ -1,7 +1,7 @@
 <!DOCTYPE html><html><head><meta charset="utf-8">
 
   <!-- ── Primary identity ── -->
-  <title>Ology · v1.5 — Free Version</title>
+  <title>Ology · v1.5.1 — Free Version</title>
   <meta name="description" content="An infinite, audio-reactive kaleidoscope for meditation, performance, and worship. Binaural drones, isochronic entrainment, ambient texture beds — free in your browser. See your sound. Still your mind.">
   <meta name="author" content="Joselito Sering · AIMA Productions">
   <meta name="copyright" content="© 2026 Joselito Sering · AIMA Productions · aima.productions">
@@ -306,8 +306,9 @@ input[type=range]::-webkit-slider-thumb{box-shadow:0 0 8px rgba(123,167,212,.9),
 </style>
 <div class="topbar">
   <canvas id="logoKal" class="logo" width="28" height="28" style="border-radius:50%"></canvas>
-  <div><div class="bn" style="font-family:'Marcellus',serif;font-size:17px;letter-spacing:.38em;text-indent:.38em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 10px rgba(123,167,212,.45))">OLOGY</div><div class="bs" style="font-family:'JetBrains Mono',monospace;letter-spacing:.18em;color:var(--teal)">v1.5 · Free Version</div></div>
+  <div><div class="bn" style="font-family:'Marcellus',serif;font-size:17px;letter-spacing:.38em;text-indent:.38em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 10px rgba(123,167,212,.45))">OLOGY</div><div class="bs" style="font-family:'JetBrains Mono',monospace;letter-spacing:.18em;color:var(--teal)">v1.5.1 · Free Version</div></div>
   <div class="grow"></div>
+  <span id="safeModeIndicator" title="Safe Mode on" style="font-size:11px;color:#22c55e;opacity:.85;line-height:1">●</span>
   <button class="play-btn" id="playBtn" onclick="togglePlay()">❚❚ Running</button>
 </div>
 <div id="stageView">
@@ -348,6 +349,10 @@ input[type=range]::-webkit-slider-thumb{box-shadow:0 0 8px rgba(123,167,212,.9),
           <div class="row"><label>Segments</label><input type="range" min="2" max="24" value="8" oninput="SP('seg',this.value)"><span class="rval" id="rv_seg">8</span></div>
           <div class="row"><label>Bloom</label><input type="range" min="0" max="100" value="25" oninput="SP('bloom',this.value)"><span class="rval" id="rv_bloom">0.25</span></div>
           <div class="row"><label>Smooth</label><input type="range" min="0" max="100" value="82" oninput="SP('smooth',this.value)"><span class="rval" id="rv_smooth">0.82</span></div>
+        </div>
+        <div class="section">
+          <h4>Safe Mode</h4>
+          <button id="safeModeBtn" class="btn-g" onclick="toggleSafeMode()" style="margin-bottom:0"><span id="safeModeDot" style="color:#22c55e">●</span> <span id="safeModeLbl">On</span></button>
         </div>
         <div class="section">
           <h4>Symmetry</h4>
@@ -485,7 +490,7 @@ const THEMES=[
    sym: 0=Radial, 1=Mirror, 2=Kaleidoscope
    M1 symmetry mapping: Radial→1 seg (no fold), Mirror→2 segs, Kaleidoscope→state.seg */
 const PREV={th:0,speed:.5,chaos:.55,zoom:.30,seg:8,int:.7,intensity:.5,bloom:.25,smooth:.82,t:0,rot:.5,sym:2};
-const PROG={th:0,speed:.4,chaos:.35,zoom:.30,seg:8,int:.65,intensity:.5,bloom:.25,smooth:.82,t:0,rot:.5,sym:2};
+const PROG={th:0,speed:.4,chaos:.35,zoom:.30,seg:8,int:.65,intensity:.5,bloom:.25,smooth:.82,t:0,rot:.5,sym:2,strobeLimiterOn:true};
 /* M2 — contract-shaped AudioState (M0 v0.2.1 defaultAudioState); M2 mutates this by reference. */
 PROG.audio={droneId:'theta-intuition',carrierHz:null,beatHz:null,mode:'binaural',brainTickleAmount:0.2,slowness:0.6,key:'C',scale:'minor',ambientBed:'womb',ambientBlend:0.3,loop:'evolving',routes:[{band:'sub',param:'bloom',amount:0.5},{band:'low',param:'zoom',amount:0.3},{band:'mid',param:'chaos',amount:0.4},{band:'high',param:'colorShift',amount:0.5}],masterLevel:0.8,isPlaying:false};
 let playing=true;
@@ -678,8 +683,11 @@ function loop(now){
     const frame=window.OlogyAudio?window.OlogyAudio.getAnalysisFrame():NULL_ANALYSIS;
     /* Save frame to localStorage for output.html cross-tab sync */
     try { localStorage.setItem('ology_frame', JSON.stringify(frame)); } catch(e) {}
+    /* strobeGate=0 blacks the canvas (shader contract) — never use 0 as a gate.
+       When limiter is ON, cap analysis level to dampen audio-driven flash spikes. */
+    var gateFrame=PROG.strobeLimiterOn!==false?NULL_ANALYSIS:frame;
     if(pc)window.OlogyShaders.draw(pc,toM1State(PREV),NULL_ANALYSIS,PREV.t,1);
-    if(gc)window.OlogyShaders.draw(gc,toM1State(progState,PROG.audio),frame,progState.t,strobeGate);
+    if(gc)window.OlogyShaders.draw(gc,toM1State(progState,PROG.audio),gateFrame,progState.t,strobeGate);
   }
   requestAnimationFrame(loop);
 }
@@ -840,6 +848,17 @@ window.setTransport=function(s){
 function saveProg(){
   try { localStorage.setItem('ology_prog', JSON.stringify(PROG)); } catch(e) {}
 }
+
+window.setStrobeLimiter=function(on){
+  PROG.strobeLimiterOn=!!on;
+  try{localStorage.setItem('ology_strobe',on?'1':'0');}catch(e){}
+  var c=on?'#22c55e':'#b91c1c';
+  var dot=document.getElementById('safeModeDot');if(dot)dot.style.color=c;
+  var lbl=document.getElementById('safeModeLbl');if(lbl)lbl.textContent=on?'On':'Off';
+  var ind=document.getElementById('safeModeIndicator');if(ind)ind.style.color=c;
+  saveProg();
+};
+window.toggleSafeMode=function(){setStrobeLimiter(!PROG.strobeLimiterOn);};
 
 /* ─── GO BUTTON ───────────────────────────────────────────────────────── */
 window.executeTransition=function(){
@@ -1326,6 +1345,15 @@ document.getElementById('prevName').textContent=THEMES[PREV.th].n;
 document.getElementById('ph-prev-name').textContent=THEMES[PREV.th].n;
 document.getElementById('progName').textContent=THEMES[PROG.th].n;
 document.querySelectorAll('[data-pane]').forEach(p=>p.hidden=p.dataset.pane!=='visuals');
+/* v1.6 — init Flash Guard toggle from localStorage (default ON if key absent) */
+(function(){
+  var strOn=localStorage.getItem('ology_strobe')!=='0';
+  PROG.strobeLimiterOn=strOn;
+  var c=strOn?'#22c55e':'#b91c1c';
+  var dot=document.getElementById('safeModeDot');if(dot)dot.style.color=c;
+  var lbl=document.getElementById('safeModeLbl');if(lbl)lbl.textContent=strOn?'On':'Off';
+  var ind=document.getElementById('safeModeIndicator');if(ind)ind.style.color=c;
+})();
 
 })();
 </script>

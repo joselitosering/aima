@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>Ology · Help Guide · Beta v1.5</title>
+<title>Ology · Help Guide · Beta v1.5.1</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -322,7 +322,7 @@ nav a.active .nav-icon{opacity:1}
   <nav>
     <a href="#safety"><svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Safety</a>
   </nav>
-  <div class="nav-footer">Ology Beta v1.5 · AIMA Productions</div>
+  <div class="nav-footer">Ology Beta v1.5.1 · AIMA Productions</div>
 </aside>
 
 <!-- ── Main Content ─────────────────────────────────────────────────────── -->
@@ -330,7 +330,7 @@ nav a.active .nav-icon{opacity:1}
 <div class="content-inner">
 
   <header class="page-hero">
-    <div class="eyebrow">Ology · Help Guide · Beta v1.5</div>
+    <div class="eyebrow">Ology · Help Guide · Beta v1.5.1</div>
     <h1>Everything you need<br>to run a session.</h1>
     <p class="lead">Ology is a browser-based audio-reactive kaleidoscope for meditation, neuroplasticity, and live performance. This guide covers every control, the full drone library, OBS setup, and ready-to-use session recipes.</p>
   </header>
@@ -508,6 +508,7 @@ nav a.active .nav-icon{opacity:1}
 
     <h3>Zone A — Topbar</h3>
     <p>The topbar runs across the full width of the page and is always visible. It contains the Ology brand logo on the left and the <span class="ctrl">❚❚ Running</span> engine button on the right. The engine button pauses and resumes the visual render loop — it does not affect audio. The button shows <span class="key">Running</span> in teal when active and <span class="key">Paused</span> when stopped.</p>
+    <p>A small <strong style="color:#22c55e">●</strong> dot sits immediately left of the Running button — this is the <strong style="color:var(--txt)">Safe Mode indicator</strong>. Green (●) means Safe Mode is on and audio reactivity is suppressed. Red (●) means Safe Mode is off and full audio reactivity is active. Toggle it in the Visuals tab.</p>
 
     <h3>Zone B — Tab sidebar</h3>
     <p>The left sidebar holds the four navigation tabs. The active tab is highlighted in purple. Clicking a tab switches the control panel (Zone D) to that tab's content. The canvas (Zone C) is unaffected by tab switching — it keeps rendering regardless of which tab is open.</p>
@@ -613,7 +614,7 @@ nav a.active .nav-icon{opacity:1}
         <!-- Brand -->
         <text x="48" y="19" font-size="13" font-weight="700" font-family="serif" fill="none" stroke="url(#brandGrad)" stroke-width="0.3">OLOGY</text>
         <text x="48" y="19" font-size="13" font-weight="700" font-family="serif" fill="url(#brandGrad)">OLOGY</text>
-        <text x="48" y="33" font-size="7" fill="#A8D8EA" letter-spacing="2" font-family="monospace">v1.5 · Free Version</text>
+        <text x="48" y="33" font-size="7" fill="#A8D8EA" letter-spacing="2" font-family="monospace">v1.5.1 · Free Version</text>
         <!-- Play btn -->
         <rect x="604" y="10" width="84" height="24" rx="6" fill="none" stroke="rgba(123,167,212,.28)" stroke-width="1"/>
         <text x="646" y="25" text-anchor="middle" font-size="8" fill="#6abfa0">❚❚ Running</text>
@@ -705,7 +706,7 @@ nav a.active .nav-icon{opacity:1}
         <circle cx="24" cy="22" r="10" fill="rgba(123,167,212,.15)" stroke="rgba(123,167,212,.3)" stroke-width="1"/>
         <text x="24" y="26" text-anchor="middle" font-size="9" fill="#7BA7D4">◈</text>
         <text x="42" y="18" font-size="12" font-weight="700" fill="url(#brandGrad)">OLOGY</text>
-        <text x="42" y="31" font-size="6" fill="#A8D8EA" letter-spacing="1.5">v1.5 · FREE</text>
+        <text x="42" y="31" font-size="6" fill="#A8D8EA" letter-spacing="1.5">v1.5.1 · FREE</text>
         <rect x="238" y="10" width="70" height="24" rx="6" fill="none" stroke="rgba(106,191,160,.4)" stroke-width="1"/>
         <text x="273" y="25" text-anchor="middle" font-size="8" fill="#6abfa0">❚❚ Running</text>
         <!-- Zone 1: Canvas monitors (order:1, height ~38vh) -->
@@ -788,7 +789,7 @@ nav a.active .nav-icon{opacity:1}
     <div class="ctrl-grid">
       <div class="ctrl-card">
         <div class="ctrl-card-name">Topbar</div>
-        <p>The animated kaleidoscope logo confirms the engine is running. The <span class="key">❚❚ Running</span> button pauses and resumes rendering. Version and tier (Free / Premium) are shown in the sub-label.</p>
+        <p>The animated kaleidoscope logo confirms the engine is running. The <span class="key">❚❚ Running</span> button pauses and resumes rendering. Version and tier (Free / Premium) are shown in the sub-label. A <strong style="color:#22c55e">●</strong> dot left of the Running button shows Safe Mode status — green = on, red = off.</p>
       </div>
       <div class="ctrl-card">
         <div class="ctrl-card-name">Navigation tabs</div>
@@ -873,6 +874,27 @@ nav a.active .nav-icon{opacity:1}
       <li><strong style="color:var(--txt)">Mirror</strong> — bilateral reflection. Creates left/right symmetry.</li>
       <li><strong style="color:var(--txt)">Kaleidoscope</strong> — the full domain-folding kaleidoscope. The most visually complex mode. Default.</li>
     </ul>
+
+    <h3>Safe Mode</h3>
+    <p>The <span class="ctrl">Safe Mode</span> button at the bottom of the Visuals tab controls whether audio reactivity drives the visual engine. When Safe Mode is <strong style="color:#22c55e">On</strong>, all audio reactivity bands are suppressed — the kaleidoscope continues to animate via its internal time signal but does not respond to the audio engine. This eliminates the rapid luminance and zoom fluctuations that can trigger photosensitivity in viewers.</p>
+    <div class="ctrl-grid">
+      <div class="ctrl-card">
+        <div class="ctrl-card-name"><span style="color:#22c55e">●</span> Safe Mode On <span class="ctrl-card-range">Default</span></div>
+        <p>All audio reactivity bands are zeroed. The visual animates steadily with no audio-driven flicker, zoom jitter, or colour pulses. Recommended for all therapeutic and public-facing sessions.</p>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-card-name"><span style="color:#b91c1c">●</span> Safe Mode Off</div>
+        <p>Full audio reactivity active. Sub, low, mid, and high frequency bands modulate zoom, chaos, colour, and bloom in real time. Use for performance contexts where the visual intensity is intentional and audiences are informed.</p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <strong>Photosensitivity — Safe Mode Off</strong>
+        <p>With Safe Mode off and Isochronic entrainment active, the visual can produce luminance pulses at the entrainment frequency (1–40 Hz). This may trigger photosensitive epilepsy. Keep Safe Mode <strong>On</strong> unless the session context explicitly calls for full reactivity and all participants are informed.</p>
+      </div>
+    </div>
+    <p>Safe Mode state is saved in localStorage and persists across page loads. The indicator dot in the topbar reflects the current state at a glance — no need to open the Visuals tab to check.</p>
   </section>
 
 
@@ -1538,7 +1560,7 @@ nav a.active .nav-icon{opacity:1}
         <text x="60" y="35" font-family="'Marcellus','Georgia',serif" font-size="26" letter-spacing="4" fill="url(#fb-wm)">OLOGY</text>
       </svg>
     </div>
-    Beta v1.5 · AIMA Productions · aima.productions<br>
+    Beta v1.5.1 · AIMA Productions · aima.productions<br>
     Created by Joselito Sering · © 2026
   </div>
 

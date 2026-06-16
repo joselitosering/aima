@@ -1,14 +1,14 @@
 # OLOGY — App Blueprint & White Paper
 ### Endless audio-reactive kaleidoscope for meditation, neuroplasticity, and live performance
-**Version:** 1.5 (Beta — locked) · **Brand:** AIMA Productions · **Owner:** Joe  
-**Supersedes:** v1.3. Changes this version: **`index.html` renamed `web.html`**; **`mobile.html` introduced** as the dedicated mobile Stage; **theme renamed** `Intergalactic Beings` (was `Interdimensional Beings` in v1.4 session — reverted); **default load theme** both PREVIEW and PROGRAM set to `Intergalactic Beings` on page load; **9:16 canvas viewer portrait fix** — `display:block` + `calc(100% - 24px)` height pattern; **help guide shipped as `ology_help.html` v1.5** — responsive, mobile-safe, annotated SVG UI diagrams, Isochronic flash warning; **strobe gate parked to v1.6** (complex — audio routing bug on revert; safe to revisit clean in v1.6). **Locked as Beta v1.5.**
+**Version:** 1.5.1 (Beta) · **Brand:** AIMA Productions · **Owner:** Joe  
+**Supersedes:** v1.3. Changes this version: **`index.html` renamed `web.html`**; **`mobile.html` introduced** as the dedicated mobile Stage; **theme renamed** `Intergalactic Beings` (was `Interdimensional Beings` in v1.4 session — reverted); **default load theme** both PREVIEW and PROGRAM set to `Intergalactic Beings` on page load; **9:16 canvas viewer portrait fix** — `display:block` + `calc(100% - 24px)` height pattern; **help guide shipped as `ology_help.html` v1.5** — responsive, mobile-safe, annotated SVG UI diagrams, Isochronic flash warning; **Safe Mode (strobe gate) shipped in v1.5.1** — NULL_ANALYSIS frame substitution across all three files, topbar indicator dot, localStorage persistence. **Locked as Beta v1.5.1.**
 
 ---
 
 ## 0. Read This First
 This is the **orchestrator document**. It defines the vision, the UX, the architecture, the module contracts, and the build order. Each numbered module is its **own artifact**, edited independently so changes to one never re-emit the others.
 
-**v1.5 (Beta) changes at a glance:**
+**v1.5 / v1.5.1 (Beta) changes at a glance:**
 
 - **`web.html` is the Stage file.** `index.html` was renamed `web.html`. All references to `index.html` in previous blueprint versions now read `web.html`. `output.html` is unchanged.
 - **`mobile.html` introduced.** Dedicated mobile Stage page. Full audio + visual engine. Three-column layout on desktop/tablet; stacked column layout on phone (≤430 px). Five nav tabs: Visuals, Audio, Output, Presets, Help. Sticky GO bar at bottom on phone. iOS speaker unlock on first tap.
@@ -16,8 +16,8 @@ This is the **orchestrator document**. It defines the vision, the UX, the archit
 - **Default load theme.** Both PREVIEW (`PREV.th`) and PROGRAM (`PROG.th`) default to index `0` = `Intergalactic Beings` on page load.
 - **9:16 portrait canvas viewer.** When the Output tab AR selector is set to `9:16`, the canvas viewer switches to `display:block` with `height:calc(100% - 24px)` so the canvas fits top-to-bottom without cropping. 16:9 / 1:1 / 4:3 remain side-constrained.
 - **Help guide `ology_help.html` v1.5.** Responsive sidebar + content layout. Off-canvas slide-in nav drawer on mobile (☰ toggle). Safe-area-inset padding for iPhone notch/home bar. Two annotated SVG UI diagrams (desktop 3-col, phone portrait). Isochronic flash-sensitivity warning in Audio Tab and Safety section. All 14 sections including Session Recipes, OBS Setup, Drone Library, Frequency Guide.
-- **Strobe gate parked to v1.6.** Option C (audio analysis frame gating) was implemented and reverted due to audio breakage on mobile and output.html reactivity not correctly syncing. Scoped for a clean isolated build in v1.6.
-- **`ology_strobe` localStorage key reserved.** Key name reserved for v1.6 strobe gate implementation. Not written or read in v1.5.
+- **Safe Mode (strobe gate) shipped in v1.5.1.** NULL_ANALYSIS frame substitution — all audio reactivity bands zeroed when Safe Mode is On. Gate implemented across web.html, mobile.html, and output.html. Topbar `●` indicator dot (green=On, red=Off). State persisted in `ology_strobe` localStorage key. Default On (safe).
+- **Param overlay color fixes in v1.5.1.** Quantum Fields: bright yellow `#ffe600`. Intergalactic Beings: white with shadow. All other themes: auto-computed 88% lightness theme-tinted color. Global text-shadow restored in `#paramOverlay` CSS.
 
 **v1.3 (Beta) changes (retained):**
 - Output tab UI cleaned — resolution/fps buttons removed; Browser Source URL field removed; OBS workflow is Window/Display Capture
@@ -171,8 +171,8 @@ All beds are generative — synthesized entirely from oscillators and filters. N
 | M6 | Param overlay + toggle | ✅ Built · validated |
 | M7 | `window.OlogyLink` WebRTC | ✅ Built · pending LAN test |
 | M9 | Inline presets in `web.html` | ✅ Built · pending validation |
-| Help | `ology_help.html` | ✅ Built · Beta v1.5 |
-| Mobile | `mobile.html` | ✅ Built · Beta v1.5 |
+| Help | `ology_help.html` | ✅ Built · Beta v1.5.1 |
+| Mobile | `mobile.html` | ✅ Built · Beta v1.5.1 |
 
 `m4_ui.js` — confirmed not loaded at runtime. Remains in repo; cleanup/archive deferred to v2.
 
@@ -184,7 +184,7 @@ All beds are generative — synthesized entirely from oscillators and filters. N
 | `ology_frame` | `web.html` / `mobile.html` | `output.html` | Live AudioAnalysisFrame sync |
 | `ology_overlay` | `web.html` / `mobile.html` | `output.html` | Param overlay on/off |
 | `ology_presets_v1` | `web.html` | `web.html` | Preset library |
-| `ology_strobe` | *reserved v1.6* | *reserved v1.6* | Strobe gate state |
+| `ology_strobe` | `web.html` / `mobile.html` | `output.html` | Safe Mode gate state ('1'=on, '0'=off; absent=on) |
 
 ### 5.3 Dual AudioContext rule (FROZEN)
 `output.html` is permanently video-only. It must never instantiate an AudioContext. Two drone signals on the OBS bus cause phase interference and destroy binaural L/R separation. Audio is captured by OBS separately via Application/Desktop Audio Capture from the browser running `web.html` or `mobile.html`.
@@ -219,10 +219,10 @@ All visual parameter changes (theme, speed, chaos, zoom, segments, bloom, smooth
 
 - **Dual AudioContext:** `output.html` must never instantiate an AudioContext. Any PR touching output.html must grep for `new AudioContext` and `new webkitAudioContext` — zero hits required.
 - **`m4_ui.js` not loaded:** `web.html` must not reference `m4_ui.js`. The `patchToM1State` monkey-patch (ll.738–770) and duplicate preset block remain contained by non-loading.
-- **PREVIEW-only visual changes:** The `draw()` call for PROGRAM canvas in `web.html`/`mobile.html` must pass `frame` from `OlogyAudio.getAnalysisFrame()` (not NULL_ANALYSIS) for reactivity, and PREVIEW always gets `NULL_ANALYSIS`. Do not swap these.
+- **PREVIEW-only visual changes:** The `draw()` call for PROGRAM canvas in `web.html`/`mobile.html` passes `gateFrame` — `NULL_ANALYSIS` when Safe Mode is On, live `frame` when Off. PREVIEW always gets `NULL_ANALYSIS` (staging, never live). Do not pass live `frame` to PREVIEW.
 - **Theme id consistency:** `intergalactic-beings` is the canonical id. Any rename attempt must update THEMES array `.id`, THEME_PRESETS `.themeId`, flatToVisualState fallback, and all HTML label references in one atomic edit.
 - **localStorage sync:** `ology_prog` is written flat on every `saveProg()` call. `output.html` reads it on `storage` event and on init. Any new key added to PROG shape must be mirrored in `output.html`'s `toM1State` adapter.
-- **Strobe gate (v1.6):** `ology_strobe` key is reserved. Do not write or read it in v1.5 code. Strobe gate implementation requires isolated testing of audio routing in all three files before merge.
+- **Safe Mode gate (v1.5.1 — shipped):** `ology_strobe` key: '1'=on, '0'=off, absent=on (default). Never set `strobeGate` (5th arg to `OlogyShaders.draw`) to 0 — the shader outputs `vec4(0,0,0,1)` (full black). Gate exclusively via `NULL_ANALYSIS` frame substitution. `strobeGate` stays `1` always.
 - **Isochronic / photosensitivity:** All public-facing materials must note that Isochronic mode can produce visual luminance pulses when audio reactivity is active. Warning is present in `ology_help.html` Audio Tab and Safety sections.
 - **Safety:** strobe/flash limiter ON by default (Smooth ≥ 0.7 default); max-chaos cap; physician advisory for photosensitive users in help guide.
 - **Browser target matrix:** Chrome/Edge/Opera (primary), OBS embedded browser, mobile Safari/Chrome. Intel Iris Plus 640: `preserveDrawingBuffer:true` causes pipeline stalls — use OffscreenCanvas with `preserveDrawingBuffer:false` + `transferToImageBitmap()` blit.
@@ -231,7 +231,7 @@ All visual parameter changes (theme, speed, chaos, zoom, segments, bloom, smooth
 
 ## 9. Connected Apps
 
-| App / Service | Role in Ology v1.5 |
+| App / Service | Role in Ology v1.5.1 |
 |---|---|
 | **localStorage + JSON export/import** | Preset library (M9), session save/load, output sync |
 | **GitHub Pages** | Deployment target (`aima-productions/ology-output`) |
@@ -243,8 +243,8 @@ All visual parameter changes (theme, speed, chaos, zoom, segments, bloom, smooth
 
 ## 10. Phasing & Roadmap
 
-### 10.1 v1.5 Beta — Current locked build
-`web.html` (Desktop Stage) + `mobile.html` (Mobile Stage) + `output.html` (OBS canvas) + `ology_help.html` (Help Guide v1.5). Intergalactic Beings default theme. 9:16 portrait canvas viewer. Responsive help guide with mobile-safe layout. All 8 active modules built.
+### 10.1 v1.5.1 Beta — Current locked build
+`web.html` (Desktop Stage) + `mobile.html` (Mobile Stage) + `output.html` (OBS canvas) + `ology_help.html` (Help Guide v1.5.1). Intergalactic Beings default theme. 9:16 portrait canvas viewer. Responsive help guide with mobile-safe layout. All 8 active modules built. Safe Mode gate + param overlay color fixes shipped.
 
 **Remaining to exit beta:**
 1. M9 validation pass (save/apply/GO/favorite/delete/export/import/migration/M7-wire)
@@ -253,9 +253,10 @@ All visual parameter changes (theme, speed, chaos, zoom, segments, bloom, smooth
 4. Path fix: `<script src="/m*.js">` → `./m*.js` in `web.html` and `output.html`
 5. GitHub Pages deploy + smoke test
 
-### 10.2 v1.6 — Strobe Gate + Bug Fixes
-- **Strobe gate (Option C):** Audio analysis frame gating — pass `NULL_ANALYSIS` to PROGRAM draw when gate is active; `ology_strobe` localStorage key syncs state to `output.html`. Must be isolated and tested across all three files before merge.
-- Bug fixes from v1.5 beta test pass.
+### 10.2 v1.6 — Bug Fixes + Validation
+- Bug fixes from v1.5.1 beta test pass.
+- M9 validation pass (save/apply/GO/favorite/delete/export/import/migration/M7-wire).
+- M7 live LAN pairing test (laptop ↔ phone, real Wi-Fi).
 - Cursor flicker investigation (desktop + output at full resolution).
 
 ### 10.3 v1.2 — Shader Expansion (post-beta patch)
@@ -274,7 +275,7 @@ Agent + voice phase enables AI-authored guided journeys (grief, calm, focus) wit
 
 ---
 
-## 11. v1.5 Beta Status
+## 11. v1.5.1 Beta Status
 
 **Build status:**
 - M0 (`contracts.ts` v0.2.2): ✅ Frozen
@@ -282,11 +283,12 @@ Agent + voice phase enables AI-authored guided journeys (grief, calm, focus) wit
 - M2 (`m2_audio.js`): ✅ Built · validated (13 drones, 6 beds, 3 modes)
 - M3 (`output.html` render loop): ✅ Built · validated in-browser and OBS
 - M4 (inline UI in `web.html`): ✅ Built · live
-- M6 (param overlay + toggle): ✅ Built · validated · responsive font
+- M6 (param overlay + toggle): ✅ Built · validated · responsive font · color fixes v1.5.1
 - M7 (`window.OlogyLink`): ✅ Built · `load-preset` wired — pending LAN test
 - M9 (inline presets in `web.html`): ✅ Built — pending validation pass
-- Mobile (`mobile.html`): ✅ Built · Beta v1.5
-- Help (`ology_help.html`): ✅ Built · Beta v1.5
+- Safe Mode gate: ✅ Built · v1.5.1 · web.html + mobile.html + output.html
+- Mobile (`mobile.html`): ✅ Built · Beta v1.5.1
+- Help (`ology_help.html`): ✅ Built · Beta v1.5.1
 
 **Beta exit gates (in order):**
 1. M9 validation pass
@@ -295,7 +297,7 @@ Agent + voice phase enables AI-authored guided journeys (grief, calm, focus) wit
 4. Relative path fix (`/m*.js` → `./m*.js`)
 5. GitHub Pages deploy + smoke test
 
-**Post-beta queue:** v1.6 strobe gate + bug fixes → v1.2 shader expansion → v2.
+**Post-beta queue:** v1.6 bug fixes → v1.2 shader expansion → v2.
 
 ---
 
@@ -312,4 +314,4 @@ Agent + voice phase enables AI-authored guided journeys (grief, calm, focus) wit
 - Taylor, Richard P. "Reduction of Physiological Stress Using Fractal Art and Architecture." *Leonardo*, vol. 39, no. 3, 2006, pp. 245–251. MIT Press.
 - "What Is the Schumann Resonance Frequency: 7.83 Hz." *ScienceInsights*, scienceinsights.org/what-is-the-schumann-resonance-frequency-7-83-hz/.
 
-> **Status (v1.5 Beta):** All 8 active v1 modules built (M0–M4, M6, M7, M9) + Help Guide v1.5 + mobile.html. `web.html` is the canonical desktop Stage file. `Intergalactic Beings` is the default load theme. 9:16 portrait canvas viewer fixed. Strobe gate parked to v1.6. Remaining: M9 validation, M7 LAN test, OBS re-confirm, path fix, GitHub Pages deploy.
+> **Status (v1.5.1 Beta):** All 8 active v1 modules built (M0–M4, M6, M7, M9) + Help Guide v1.5.1 + mobile.html. Safe Mode gate shipped (NULL_ANALYSIS frame substitution, topbar indicator, localStorage). Param overlay color fixes. `web.html` is the canonical desktop Stage file. `Intergalactic Beings` is the default load theme. Remaining: M9 validation, M7 LAN test, OBS re-confirm, path fix, GitHub Pages deploy.

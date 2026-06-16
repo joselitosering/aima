@@ -244,11 +244,19 @@ function loadProgObj(s){
 window.addEventListener('storage',e=>{
   if(e.key==='ology_prog') loadProg();
   if(e.key==='ology_overlay') applyOverlayVisibility();
+  if(e.key==='ology_strobe') applyStrobeLimiter();
 });
 
 /* ─── M6 OVERLAY STATE & FUNCTIONS ──────────────────────────────────── */
 /* overlayOn: default OFF if key absent (as per M6 spec) */
 let overlayOn=(localStorage.getItem('ology_overlay')==='1');
+
+function applyStrobeLimiter(){
+  /* strobeGate=0 blacks the canvas (shader contract) — keep it at 1 always.
+     Gating is done via analysis frame capping in the render loop. */
+  PROG.strobeLimiterOn=(localStorage.getItem('ology_strobe')!=='0');
+}
+applyStrobeLimiter();
 
 /* applyOverlayVisibility — called on storage event and on init */
 function applyOverlayVisibility(){
@@ -265,7 +273,7 @@ const _creditDate=(function(){
 
 /* renderOverlay — called each frame when overlayOn.
    Layout: up to 3 lines, top-left, no box.
-     Line 1: Ology v1.5 · [Theme Name]           — always shown
+     Line 1: Ology v1.5.1 · [Theme Name]         — always shown
      Line 2: Visual params                        — always shown (output always rendering)
      Line 3: Audio params                         — only when PROG.audio.isPlaying is true
    Colour: lightest palette stop → HSL 88% lightness.
@@ -304,7 +312,9 @@ function renderOverlay(){
       .reduce((s,v,i)=>s+[0.2126,0.7152,0.0722][i]*v,0);
   }
   const overlayColor=theme.id==='quantum-fields'
-    ?'#1a3a6b'
+    ?'#ffe600'
+    :theme.id==='intergalactic-beings'
+    ?'#ffffff'
     :(function(){
         const lightestStop=theme.c.slice().sort((a,b)=>relLum(b)-relLum(a))[0];
         const [hh,sat]=hexToHsl(lightestStop);
@@ -312,7 +322,7 @@ function renderOverlay(){
       })();
 
   /* ── Line 1: always — app name + theme ── */
-  const line1='Ology v1.5 · '+theme.n;
+  const line1='Ology v1.5.1 · '+theme.n;
 
   /* ── Line 2: visual params — always shown on output (always rendering) ── */
   const speed=typeof PROG.speed==='number'?PROG.speed.toFixed(2):'—';
@@ -419,7 +429,10 @@ function loop(now){
       } catch(e) {}
     }
     try {
-      if(canvas)window.OlogyShaders.draw(canvas,toM1State(PROG,PROG.audio),frame,PROG.t,strobeGate);
+      /* strobeGate=0 blacks the canvas (shader contract) — never use 0 as a gate.
+         When limiter is ON, cap analysis level to dampen audio-driven flash spikes. */
+      var gateFrame=PROG.strobeLimiterOn!==false?NULL_ANALYSIS:frame;
+      if(canvas)window.OlogyShaders.draw(canvas,toM1State(PROG,PROG.audio),gateFrame,PROG.t,strobeGate);
     } catch(e){ console.error('[output.html] draw error:',e); }
   }
 
