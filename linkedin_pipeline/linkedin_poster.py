@@ -45,6 +45,23 @@ HASHTAG_MAP = {
     "climate":             ["#ClimateAI", "#Sustainability", "#GreenTech", "#ClimateChange"],
     "security":            ["#CyberSecurity", "#AIThreat", "#DigitalSafety", "#InfoSec"],
     "startup":             ["#Startups", "#Entrepreneurship", "#VentureCapital", "#Innovation"],
+    # Dawn-specific
+    "surveillance":        ["#SurveillanceCapitalism", "#DigitalRights", "#Privacy", "#DataJustice"],
+    "labor":               ["#FutureOfWork", "#LaborRights", "#WorkerProtection", "#AIAndLabor"],
+    "inequality":          ["#DigitalDivide", "#TechEquity", "#SocialJustice", "#EconomicInequality"],
+    "misinformation":      ["#MediaLiteracy", "#Misinformation", "#DigitalTrust", "#InformationIntegrity"],
+    "accountability":      ["#CorporateAccountability", "#AIGovernance", "#TechPolicy", "#Transparency"],
+    "feminist":            ["#WomenInTech", "#GenderEquity", "#FeministTech", "#InclusiveAI"],
+    # Kenji-specific
+    "aerospace":           ["#SpaceTech", "#Aerospace", "#SpaceExploration", "#NewSpace"],
+    "robotics":            ["#Robotics", "#Automation", "#AutonomousSystems", "#RoboticsFuture"],
+    "blockchain":          ["#Blockchain", "#Web3", "#DecentralizedTech", "#DeFi"],
+    "manufacturing":       ["#AdvancedManufacturing", "#Industry40", "#3DPrinting", "#SmartFactory"],
+    "cybernetics":         ["#Cybernetics", "#BrainComputerInterface", "#Bioengineering", "#HumanAugmentation"],
+    "space":               ["#SpaceTech", "#SpaceExploration", "#Aerospace", "#FutureOfSpace"],
+    "biotech":             ["#Biotech", "#Biotechnology", "#LifeSciences", "#SyntheticBiology"],
+    "clean energy":        ["#CleanEnergy", "#Renewables", "#EnergyTransition", "#ClimateAction"],
+    "food":                ["#FoodTech", "#Agritech", "#FutureOfFood", "#SustainableFood"],
 }
 
 
@@ -115,6 +132,15 @@ def generate_hashtags(html_content, title, description):
             result.append(tag)
 
     return " ".join(result)
+
+
+def extract_persona(html_content):
+    """Return 'dawn', 'kenji', or None from article:persona meta tag."""
+    m = re.search(
+        r'<meta\s+name=["\']article:persona["\']\s+content=["\'](.*?)["\']',
+        html_content, re.IGNORECASE
+    )
+    return m.group(1).strip().lower() if m else None
 
 
 def extract_og_image(html_content):
@@ -227,15 +253,39 @@ def post_to_linkedin(article):
     else:
         print(f"  No og:image found — posting without image.")
 
-    # -- Build commentary (always includes article link) ----------------------
-    hashtags = generate_hashtags(article["content"], title, description)
-    commentary = (
-        f"📖 {title}\n\n"
-        f"{description}\n\n"
-        f"Read the full article: {source_url}\n\n"
-        f"{hashtags}\n\n"
-        f"Follow AIMA: {AIMA_COMPANY_PAGE}"
-    )
+    # -- Build commentary (persona-aware tone) --------------------------------
+    persona   = extract_persona(article["content"])
+    hashtags  = generate_hashtags(article["content"], title, description)
+
+    if persona == "dawn":
+        # Sharp, provocative, ends with a question
+        commentary = (
+            f"📖 {title}\n\n"
+            f"{description}\n\n"
+            f"Who benefits from this — and who never got asked?\n\n"
+            f"Read the full piece: {source_url}\n\n"
+            f"{hashtags}\n\n"
+            f"Follow AIMA: {AIMA_COMPANY_PAGE}"
+        )
+    elif persona == "kenji":
+        # Enthusiastic, grounded, ends with what becomes possible
+        commentary = (
+            f"🚀 {title}\n\n"
+            f"{description}\n\n"
+            f"The frontier is closer than the headlines suggest.\n\n"
+            f"Read the full piece: {source_url}\n\n"
+            f"{hashtags}\n\n"
+            f"Follow AIMA: {AIMA_COMPANY_PAGE}"
+        )
+    else:
+        # Default (Joselito / no persona tag)
+        commentary = (
+            f"📖 {title}\n\n"
+            f"{description}\n\n"
+            f"Read the full article: {source_url}\n\n"
+            f"{hashtags}\n\n"
+            f"Follow AIMA: {AIMA_COMPANY_PAGE}"
+        )
 
     # -- Build post body -------------------------------------------------------
     if asset_urn:
