@@ -67,11 +67,29 @@ Use the Higgsfield `generate_image` tool.
 Image prompt formula:
 > "Cinematic dark atmospheric [core topic concept], deep space or urban noir mood, cyan and orange accent lighting, ultra-widescreen composition, photorealistic, 8K, editorial magazine style"
 
-Target dimensions: 1920×1080 landscape. Save the returned image URL — you will use it as `article:header-image`.
+Target dimensions: 1920×1080 landscape.
+
+**CRITICAL — Download and host the image in the repo:**
+Higgsfield's CDN blocks unauthenticated crawlers (LinkedIn, Twitter, Google). The raw Higgsfield URL MUST NOT be used for `og:image`, `twitter:image`, or JSON-LD. Instead:
+
+1. Use Desktop Commander PowerShell to download the image:
+```powershell
+New-Item -ItemType Directory -Path "D:\Apps\DevOps\Github\aima\img\articles" -Force
+Invoke-WebRequest -Uri "[Higgsfield URL]" -OutFile "D:\Apps\DevOps\Github\aima\img\articles\aima-[num]-[short-slug].png"
+```
+2. Use the GitHub Pages URL for all social/crawler tags:
+   `https://joselitosering.github.io/aima/img/articles/aima-[num]-[short-slug].png`
+3. Keep the original Higgsfield URL ONLY in `<meta name="article:header-image">` — this is read by the article JS to set the hero background in the browser.
+
+Tag | URL to use
+`article:header-image` | Higgsfield CDN URL (browser display, authenticated)
+`og:image` | GitHub Pages `/img/articles/` URL (social crawlers)
+`twitter:image` | GitHub Pages `/img/articles/` URL
+JSON-LD `image.url` | GitHub Pages `/img/articles/` URL
 
 If Higgsfield is unavailable, use an Unsplash URL in this format:
 `https://images.unsplash.com/photo-[id]?auto=format&fit=crop&w=1920&q=80`
-Choose a real, relevant photo.
+Unsplash URLs are publicly accessible — no download needed. Use the same URL in all tags.
 
 ---
 
