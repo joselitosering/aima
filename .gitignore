@@ -21,3 +21,4 @@ Thumbs.db
 
 # Logs
 *.log
+linkedin_pipeline/.env
