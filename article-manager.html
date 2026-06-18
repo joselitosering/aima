@@ -3,408 +3,774 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIMA Article Management Dashboard</title>
+<title>AIMA · Article Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@300;400;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg:#0a0a0f; --surface:#13131a; --card:#1a1a24; --border:#2a2a3a;
-  --cyan:#00d4ff; --orange:#ff7a00; --green:#00c97a; --gold:#f5c518;
-  --red:#ff4466; --purple:#9b59f5; --text:#e8e8f0; --muted:#888899;
-  --joselito:#00d4ff; --dawn:#9b59f5; --kenji:#f5c518;
+  --cyan: #00D9F5;
+  --orange: #FF5E20;
+  --gold: #C8A84B;
+  --dark: #060810;
+  --surface: #0d1120;
+  --surface2: #141928;
+  --border: rgba(0,217,245,0.12);
+  --text: #e8eaf0;
+  --muted: #6b7a99;
+  --green: #00f59b;
+  --red: #ff4455;
+  --purple: #9b59f5;
+  --yellow: #f5c518;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
-.shell{display:flex;min-height:100vh;}
-.sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
-.logo{padding:22px 20px 14px;font-size:22px;font-weight:800;letter-spacing:2px;color:var(--cyan);border-bottom:1px solid var(--border);}
-.logo span{color:var(--orange);}
-.nav{padding:10px 0;flex:1;}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:500;border-left:3px solid transparent;transition:all .15s;}
-.nav-item:hover{color:var(--text);background:rgba(255,255,255,.04);}
-.nav-item.active{color:var(--cyan);border-left-color:var(--cyan);background:rgba(0,212,255,.06);}
-.nav-icon{font-size:15px;width:20px;text-align:center;}
-.nav-section{padding:14px 20px 4px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
-.legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;}
-.main{flex:1;overflow-x:hidden;}
-.topbar{padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface);position:sticky;top:0;z-index:10;}
-.page-title{font-size:18px;font-weight:700;}
-.topbar-actions{display:flex;gap:8px;align-items:center;}
-.content{padding:24px 28px;}
-.page{display:none;}.page.active{display:block;}
 
-/* Buttons */
-.btn{padding:7px 14px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s;}
-.btn:hover{opacity:.85;}
-.btn-cyan{background:var(--cyan);color:#000;}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
-.btn-orange{background:var(--orange);color:#fff;}
-.btn-green{background:var(--green);color:#000;}
-.btn-red{background:var(--red);color:#fff;}
-.btn-ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border);}
-.btn-sm{padding:5px 10px;font-size:11px;}
-.btn:disabled{opacity:.4;cursor:not-allowed;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Cards & grid */
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;}
-.card-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
-.kpi-value{font-size:30px;font-weight:800;line-height:1;}
-.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-/* Badges */
-.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
-.badge-cyan{background:rgba(0,212,255,.15);color:var(--cyan);}
-.badge-orange{background:rgba(255,122,0,.15);color:var(--orange);}
-.badge-green{background:rgba(0,201,122,.15);color:var(--green);}
-.badge-gold{background:rgba(245,197,24,.15);color:var(--gold);}
-.badge-purple{background:rgba(155,89,245,.15);color:var(--purple);}
-.badge-red{background:rgba(255,68,102,.15);color:var(--red);}
-.badge-muted{background:rgba(136,136,153,.15);color:var(--muted);}
+/* Scan line overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,217,245,0.012) 2px, rgba(0,217,245,0.012) 4px);
+  pointer-events: none; z-index: 9999;
+}
 
-/* Table */
-.table-wrap{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;font-size:12px;}
-th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--border);}
-td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(255,255,255,.02);}
+/* ── HEADER ── */
+header {
+  background: rgba(6,8,16,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { font-family: 'Anton', sans-serif; font-size: 22px; letter-spacing: 0.04em; }
+.logo .ai { color: #fff; }
+.logo .ma { color: var(--cyan); }
+.logo-sub { font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 1px; font-family: 'Courier Prime', monospace; }
+.header-badge {
+  background: linear-gradient(135deg, var(--cyan), #0088aa);
+  color: #000; font-size: 10px; font-family: 'Courier Prime', monospace;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px; font-weight: 700;
+  animation: pulse-badge 3s ease-in-out infinite;
+}
+@keyframes pulse-badge { 0%,100%{opacity:1} 50%{opacity:0.7} }
 
-/* Calendar list */
-.cal-row{display:grid;grid-template-columns:100px 46px 90px 1fr 200px 120px 90px 80px;gap:10px;align-items:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;}
-.cal-row:hover{background:rgba(255,255,255,.02);}
-.cal-row.header{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;background:rgba(255,255,255,.02);border-radius:6px 6px 0 0;}
-.cal-row.joselito-row{border-left:2px solid var(--joselito);}
-.cal-row.dawn-row{border-left:2px solid var(--dawn);}
-.cal-row.kenji-row{border-left:2px solid var(--kenji);}
-.cal-row.published-row{opacity:.7;}
-.cal-title-edit{background:transparent;border:none;color:var(--text);font-size:12px;font-family:inherit;width:100%;border-bottom:1px dashed transparent;padding:2px 0;transition:border-color .15s;}
-.cal-title-edit:focus{outline:none;border-bottom-color:var(--cyan);}
-.cal-title-edit.dirty{border-bottom-color:var(--orange);}
-.cal-date-edit{background:transparent;border:1px solid transparent;color:var(--muted);font-size:11px;font-family:inherit;padding:2px 4px;border-radius:4px;width:100%;}
-.cal-date-edit:focus{outline:none;border-color:var(--cyan);color:var(--text);}
-.tone-edit{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);font-size:11px;font-family:inherit;padding:3px 6px;border-radius:4px;width:100%;}
-.tone-edit:focus{outline:none;border-color:var(--cyan);}
+/* ── LAYOUT ── */
+.shell { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 64px); }
 
-/* Unsaved changes bar */
-#save-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(255,122,0,.12);border-top:1px solid var(--orange);padding:10px 28px;display:none;align-items:center;justify-content:space-between;z-index:100;}
-#save-bar.visible{display:flex;}
-.save-bar-msg{font-size:13px;color:var(--orange);font-weight:600;}
+/* ── SIDEBAR ── */
+nav {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: sticky; top: 64px; height: calc(100vh - 64px);
+  overflow-y: auto;
+  display: flex; flex-direction: column;
+}
 
-/* Month calendar */
-.cal-month-header{font-size:15px;font-weight:700;margin-bottom:10px;}
-.cal-month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px;}
-.cal-day-label{text-align:center;font-size:10px;color:var(--muted);font-weight:700;padding:4px 0;}
-.cal-cell{min-height:68px;border-radius:6px;padding:5px 7px;border:1px solid var(--border);background:var(--surface);font-size:10px;cursor:default;position:relative;}
-.cal-cell.empty{background:transparent;border-color:transparent;}
-.cal-cell.today{box-shadow:0 0 0 2px var(--orange);}
-.cal-cell.joselito-cell{border-color:var(--joselito);background:rgba(0,212,255,.05);}
-.cal-cell.dawn-cell{border-color:var(--dawn);background:rgba(155,89,245,.05);}
-.cal-cell.kenji-cell{border-color:var(--kenji);background:rgba(245,197,24,.05);}
-.cal-date-num{font-weight:700;font-size:12px;color:var(--muted);margin-bottom:3px;}
-.cal-cell.joselito-cell .cal-date-num,.cal-cell.dawn-cell .cal-date-num,.cal-cell.kenji-cell .cal-date-num{color:var(--text);}
-.cal-event-title{font-size:9px;line-height:1.3;color:var(--text);}
-.cal-event-persona{font-size:9px;margin-top:2px;}
+.pipeline-bar {
+  margin: 16px; padding: 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 8px;
+}
+.pipeline-label { font-size: 9px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Courier Prime', monospace; margin-bottom: 6px; }
+.pipeline-count { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--cyan); line-height: 1; }
+.pipeline-sub { font-size: 10px; color: var(--muted); margin-top: 4px; }
+.pipeline-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+.pipeline-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--orange)); border-radius: 2px; transition: width 0.6s ease; }
 
-/* Suggestion cards */
-.suggestion-card{border-left:3px solid var(--cyan);background:rgba(0,212,255,.04);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:12px;}
-.suggestion-card.warn{border-color:var(--orange);background:rgba(255,122,0,.04);}
-.suggestion-card.good{border-color:var(--green);background:rgba(0,201,122,.04);}
-.suggestion-card.idea{border-color:var(--purple);background:rgba(155,89,245,.04);}
-.suggestion-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:5px;}
-.suggestion-text{font-size:13px;line-height:1.6;}
+.nav-section { padding: 0 16px 8px; margin-top: 16px; }
+.nav-label { font-size: 9px; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; font-family: 'Courier Prime', monospace; padding: 0 8px 8px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; font-weight: 400; color: var(--muted);
+  transition: all 0.2s; border: 1px solid transparent; margin-bottom: 2px;
+}
+.nav-item:hover { background: rgba(0,217,245,0.06); color: var(--text); }
+.nav-item.active { background: rgba(0,217,245,0.1); color: var(--cyan); border-color: rgba(0,217,245,0.2); }
+.nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
 
-/* Upload */
-.upload-zone{border:2px dashed var(--border);border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:16px;}
-.upload-zone:hover{border-color:var(--cyan);background:rgba(0,212,255,.03);}
-.upload-icon{font-size:32px;margin-bottom:8px;}
-.upload-label{font-size:13px;color:var(--muted);}
-.upload-label strong{color:var(--cyan);}
-input[type=file]{display:none;}
+.writers-legend {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid var(--border);
+}
+.writers-label { font-size: 9px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Courier Prime', monospace; margin-bottom: 10px; }
+.writer-item { display: flex; align-items: center; gap: 8px; color: var(--muted); margin-bottom: 7px; font-size: 11px; }
+.w-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-/* Chart */
-.chart-wrap{position:relative;height:200px;}
+/* ── MAIN ── */
+main { padding: 28px; overflow-y: auto; }
 
-/* Misc */
-.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.section-title{font-size:15px;font-weight:700;}
-.divider{height:1px;background:var(--border);margin:20px 0;}
-.empty-state{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;}
-.empty-icon{font-size:36px;margin-bottom:10px;}
-.progress-bar{height:5px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:5px;}
-.progress-fill{height:100%;border-radius:3px;transition:width .4s;}
-code{background:rgba(255,255,255,.07);padding:1px 5px;border-radius:3px;font-size:11px;}
-.aima-link-stat{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+/* ── PAGES / PANELS ── */
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+.panel-title {
+  font-family: 'Anton', sans-serif; font-size: 28px;
+  text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px;
+}
+.panel-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+
+/* ── STAT CARDS ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px;
+}
+.stat-card .label { font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Courier Prime', monospace; }
+.stat-card .value { font-family: 'Anton', sans-serif; font-size: 32px; margin: 6px 0 2px; }
+.stat-card .trend { font-size: 11px; color: var(--muted); }
+.stat-card.cyan .value  { color: var(--cyan);   }
+.stat-card.orange .value{ color: var(--orange);  }
+.stat-card.gold .value  { color: var(--gold);    }
+.stat-card.green .value { color: var(--green);   }
+
+/* ── SECTION BLOCK ── */
+.section-block {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px; margin-bottom: 20px;
+}
+.section-head {
+  font-family: 'Anton', sans-serif; font-size: 13px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--cyan); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── CARD / CARD-TITLE (used by JS renderers) ── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.card-title { font-size: 9px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Courier Prime', monospace; margin-bottom: 6px; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 8px; cursor: pointer;
+  font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 600;
+  border: none; transition: all 0.2s; text-decoration: none;
+}
+.btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+.btn-primary { background: linear-gradient(135deg, var(--cyan), #0088aa); color: #000; }
+.btn-orange  { background: linear-gradient(135deg, var(--orange), #cc4400); color: #fff; }
+.btn-green   { background: linear-gradient(135deg, var(--green), #00aa66); color: #000; }
+.btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+.btn-ghost { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text); }
+.btn-ghost:hover { border-color: rgba(0,217,245,0.3); }
+.btn-sm { padding: 5px 10px; font-size: 11px; }
+
+/* ── ALERT ── */
+.alert {
+  padding: 12px 16px; border-radius: 8px; margin-bottom: 16px;
+  font-size: 12px; display: flex; align-items: flex-start; gap: 10px;
+  border: 1px solid; line-height: 1.6;
+}
+.alert-info    { background: rgba(0,217,245,0.07);  border-color: rgba(0,217,245,0.2);  color: var(--cyan);   }
+.alert-warn    { background: rgba(200,168,75,0.07); border-color: rgba(200,168,75,0.2); color: var(--gold);   }
+.alert-success { background: rgba(0,245,155,0.07);  border-color: rgba(0,245,155,0.2);  color: var(--green);  }
+.alert-danger  { background: rgba(255,68,85,0.07);  border-color: rgba(255,68,85,0.2);  color: var(--red);    }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-block; padding: 2px 7px; border-radius: 20px;
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; font-family: 'Courier Prime', monospace;
+}
+.badge-cyan   { background: rgba(0,217,245,0.15);  color: var(--cyan);   }
+.badge-orange { background: rgba(255,94,32,0.15);  color: var(--orange); }
+.badge-green  { background: rgba(0,245,155,0.15);  color: var(--green);  }
+.badge-gold   { background: rgba(200,168,75,0.15); color: var(--gold);   }
+.badge-purple { background: rgba(155,89,245,0.15); color: var(--purple); }
+.badge-red    { background: rgba(255,68,85,0.15);  color: var(--red);    }
+.badge-muted  { background: rgba(107,122,153,0.2); color: var(--muted);  }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th {
+  padding: 9px 12px; text-align: left;
+  font-size: 9px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  font-family: 'Courier Prime', monospace;
+  border-bottom: 1px solid var(--border);
+}
+td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,217,245,0.02); }
+
+/* ── CALENDAR LIST ── */
+.cal-row {
+  display: grid;
+  grid-template-columns: 100px 46px 90px 1fr 200px 120px 60px 90px;
+  gap: 8px; align-items: center;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 12px; transition: background 0.15s;
+}
+.cal-row:hover { background: rgba(0,217,245,0.02); }
+.cal-row.header {
+  font-size: 9px; color: var(--muted); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  font-family: 'Courier Prime', monospace;
+  background: rgba(255,255,255,0.02);
+  border-radius: 6px 6px 0 0;
+}
+.cal-row.joselito-row { border-left: 2px solid var(--cyan);   }
+.cal-row.dawn-row     { border-left: 2px solid var(--purple); }
+.cal-row.kenji-row    { border-left: 2px solid var(--yellow); }
+.cal-row.published-row { opacity: 0.55; }
+
+.cal-title-edit {
+  background: transparent; border: none; color: var(--text); font-size: 12px;
+  font-family: 'DM Sans', sans-serif; width: 100%;
+  border-bottom: 1px dashed transparent; padding: 2px 0;
+  transition: border-color 0.15s;
+}
+.cal-title-edit:focus { outline: none; border-bottom-color: var(--cyan); }
+.cal-title-edit.dirty { border-bottom-color: var(--orange); }
+.cal-date-edit {
+  background: transparent; border: 1px solid transparent;
+  color: var(--muted); font-size: 11px; font-family: 'Courier Prime', monospace;
+  padding: 2px 4px; border-radius: 4px; width: 100%;
+}
+.cal-date-edit:focus { outline: none; border-color: var(--cyan); color: var(--text); }
+.tone-edit {
+  background: rgba(0,217,245,0.04); border: 1px solid var(--border);
+  color: var(--text); font-size: 11px; font-family: 'DM Sans', sans-serif;
+  padding: 3px 6px; border-radius: 4px; width: 100%;
+}
+.tone-edit:focus { outline: none; border-color: var(--cyan); }
+
+/* ── MONTH CALENDAR ── */
+.cal-month-header { font-family: 'Anton', sans-serif; font-size: 16px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
+.cal-month-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 6px; }
+.cal-day-label {
+  text-align: center; font-size: 9px; color: var(--muted); font-weight: 700;
+  padding: 4px 0; font-family: 'Courier Prime', monospace; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.cal-cell {
+  min-height: 68px; border-radius: 6px; padding: 5px 7px;
+  border: 1px solid var(--border); background: var(--surface); font-size: 10px;
+  cursor: default; position: relative; transition: border-color 0.15s;
+}
+.cal-cell.empty   { background: transparent; border-color: transparent; }
+.cal-cell.today   { box-shadow: 0 0 0 2px var(--orange); }
+.cal-cell.joselito-cell { border-color: rgba(0,217,245,0.4);  background: rgba(0,217,245,0.04); }
+.cal-cell.dawn-cell     { border-color: rgba(155,89,245,0.4); background: rgba(155,89,245,0.04); }
+.cal-cell.kenji-cell    { border-color: rgba(245,197,24,0.4); background: rgba(245,197,24,0.04); }
+.cal-date-num { font-weight: 700; font-size: 12px; color: var(--muted); margin-bottom: 3px; font-family: 'Courier Prime', monospace; }
+.cal-cell.joselito-cell .cal-date-num,
+.cal-cell.dawn-cell .cal-date-num,
+.cal-cell.kenji-cell .cal-date-num { color: var(--text); }
+.cal-event-title { font-size: 9px; line-height: 1.3; color: var(--text); }
+.cal-event-persona { font-size: 9px; margin-top: 2px; font-family: 'Courier Prime', monospace; }
+
+/* ── SUGGESTION CARDS ── */
+.suggestion-card { border-left: 3px solid var(--cyan); background: rgba(0,217,245,0.04); border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 12px; }
+.suggestion-card.warn { border-color: var(--orange); background: rgba(255,94,32,0.04); }
+.suggestion-card.good { border-color: var(--green);  background: rgba(0,245,155,0.04); }
+.suggestion-card.idea { border-color: var(--purple); background: rgba(155,89,245,0.04); }
+.suggestion-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 5px; font-family: 'Courier Prime', monospace; }
+.suggestion-text  { font-size: 13px; line-height: 1.6; }
+
+/* ── UPLOAD ZONE ── */
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: 10px; padding: 28px;
+  text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 12px;
+}
+.upload-zone:hover { border-color: var(--cyan); background: rgba(0,217,245,0.03); }
+.upload-icon { font-size: 28px; margin-bottom: 8px; }
+.upload-label { font-size: 12px; color: var(--muted); font-family: 'Courier Prime', monospace; }
+.upload-label strong { color: var(--cyan); }
+input[type=file] { display: none; }
+
+/* ── MISC ── */
+.chart-wrap { position: relative; height: 200px; }
+.progress-bar  { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; margin-top: 5px; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+.aima-link-stat { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.divider { height: 1px; background: var(--border); margin: 20px 0; }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 13px; }
+.empty-icon { font-size: 36px; margin-bottom: 10px; }
+.search-input {
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text); padding: 7px 12px; border-radius: 8px;
+  font-size: 12px; font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.2s;
+}
+.search-input:focus { outline: none; border-color: var(--cyan); }
+code {
+  background: rgba(0,217,245,0.1); padding: 1px 5px; border-radius: 3px;
+  font-size: 11px; font-family: 'Courier Prime', monospace; color: var(--cyan);
+}
+
+/* ── SAVE BAR ── */
+#save-bar {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(255,94,32,0.1); border-top: 1px solid var(--orange);
+  padding: 12px 28px; align-items: center; justify-content: space-between;
+  z-index: 200; backdrop-filter: blur(10px);
+}
+#save-bar.visible { display: flex; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px) {
+  .shell { grid-template-columns: 1fr; }
+  nav { position: relative; height: auto; top: 0; }
+}
 </style>
 </head>
 <body>
 
-<div class="shell">
-<nav class="sidebar">
-  <div class="logo">AI<span>MA</span></div>
-  <div class="nav">
-    <div class="nav-section">Dashboard</div>
-    <div class="nav-item active" onclick="showPage('overview')"><span class="nav-icon">📊</span><span>Overview</span></div>
-    <div class="nav-section">Content</div>
-    <div class="nav-item" onclick="showPage('calendar')"><span class="nav-icon">📅</span><span>Calendar</span></div>
-    <div class="nav-item" onclick="showPage('posts')"><span class="nav-icon">📝</span><span>Post Log</span></div>
-    <div class="nav-section">Intelligence</div>
-    <div class="nav-item" onclick="showPage('analytics')"><span class="nav-icon">📈</span><span>Analytics</span></div>
-    <div class="nav-item" onclick="showPage('performance')"><span class="nav-icon">🏆</span><span>Performance</span></div>
-    <div class="nav-item" onclick="showPage('suggestions')"><span class="nav-icon">💡</span><span>Suggestions</span></div>
-    <div class="nav-section">Setup</div>
-    <div class="nav-item" onclick="showPage('data')"><span class="nav-icon">🗄️</span><span>Load Data</span></div>
+<header>
+  <div>
+    <div class="logo"><span class="ai">AI</span><span class="ma">MA</span></div>
+    <div class="logo-sub">Article Manager · 2026</div>
   </div>
-  <div style="padding:14px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)">
-    <div style="margin-bottom:6px;font-weight:700;color:var(--text)">Writers</div>
-    <div style="margin-bottom:4px"><span class="legend-dot" style="background:var(--joselito)"></span>Joselito</div>
-    <div style="margin-bottom:4px"><span class="legend-dot" style="background:var(--dawn)"></span>Dawn Ginhaua</div>
-    <div><span class="legend-dot" style="background:var(--kenji)"></span>Kenji Nakamoto</div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <span id="last-updated" style="font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">No data loaded</span>
+    <button class="btn btn-outline btn-sm" onclick="showPage('data')">⬆ Load Data</button>
+    <div class="header-badge">✍ Publishing Pipeline</div>
+  </div>
+</header>
+
+<!-- Kept for JS compatibility -->
+<span id="topbar-title" style="display:none">Overview</span>
+
+<div class="shell">
+
+<!-- ── SIDEBAR ── -->
+<nav>
+  <div class="pipeline-bar">
+    <div class="pipeline-label">Editorial Pipeline</div>
+    <div class="pipeline-count" id="pipe-count">— / 38</div>
+    <div class="pipeline-track"><div class="pipeline-fill" id="pipeline-fill" style="width:0%"></div></div>
+    <div class="pipeline-sub" id="pipe-sub">loading…</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Dashboard</div>
+    <div class="nav-item active" onclick="showPage('overview')"><span class="icon">📡</span>Overview</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Content</div>
+    <div class="nav-item" onclick="showPage('calendar')"><span class="icon">📅</span>Calendar</div>
+    <div class="nav-item" onclick="showPage('posts')"><span class="icon">📋</span>Post Log</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Intelligence</div>
+    <div class="nav-item" onclick="showPage('analytics')"><span class="icon">📊</span>Analytics</div>
+    <div class="nav-item" onclick="showPage('performance')"><span class="icon">🏆</span>Performance</div>
+    <div class="nav-item" onclick="showPage('suggestions')"><span class="icon">💡</span>Suggestions</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Setup</div>
+    <div class="nav-item" onclick="showPage('data')"><span class="icon">🗄</span>Load Data</div>
+  </div>
+
+  <div class="writers-legend">
+    <div class="writers-label">Writers</div>
+    <div class="writer-item"><span class="w-dot" style="background:var(--cyan)"></span>Joselito</div>
+    <div class="writer-item"><span class="w-dot" style="background:var(--purple)"></span>Dawn Ginhaua</div>
+    <div class="writer-item"><span class="w-dot" style="background:var(--yellow)"></span>Kenji Nakamoto</div>
   </div>
 </nav>
 
-<div class="main">
-  <div class="topbar">
-    <div class="page-title" id="topbar-title">Overview</div>
-    <div class="topbar-actions">
-      <span style="font-size:11px;color:var(--muted)" id="last-updated">No data loaded</span>
-      <button class="btn btn-outline btn-sm" onclick="showPage('data')">⬆ Load Data</button>
+<!-- ── MAIN ── -->
+<main>
+
+<!-- ══ OVERVIEW ══ -->
+<div class="page active" id="page-overview">
+  <div class="panel-title">Campaign <span style="color:var(--cyan)">Overview</span></div>
+  <div class="panel-sub">AIMA Article Pipeline · Performance at a glance</div>
+
+  <div class="card-grid">
+    <div class="stat-card cyan">
+      <div class="label">Total Posts</div>
+      <div class="value" id="kpi-total-posts">—</div>
+      <div class="trend">all writers</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="label">Avg Impressions</div>
+      <div class="value" id="kpi-avg-imp">—</div>
+      <div class="trend">per post</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="label">Avg CTR</div>
+      <div class="value" id="kpi-avg-ctr">—</div>
+      <div class="trend">click-through rate</div>
+    </div>
+    <div class="stat-card green">
+      <div class="label">Articles Remaining</div>
+      <div class="value" id="kpi-remaining">—</div>
+      <div class="trend">in calendar</div>
     </div>
   </div>
 
-  <div class="content">
-
-    <!-- ══ OVERVIEW ══ -->
-    <div class="page active" id="page-overview">
-      <div class="grid-4">
-        <div class="card"><div class="card-title">Total Posts</div><div class="kpi-value" id="kpi-total-posts">—</div><div class="kpi-sub">all writers</div></div>
-        <div class="card"><div class="card-title">Avg Impressions</div><div class="kpi-value" id="kpi-avg-imp">—</div><div class="kpi-sub">per post</div></div>
-        <div class="card"><div class="card-title">Avg CTR</div><div class="kpi-value" id="kpi-avg-ctr">—</div><div class="kpi-sub">click-through rate</div></div>
-        <div class="card"><div class="card-title">Articles Remaining</div><div class="kpi-value" id="kpi-remaining">—</div><div class="kpi-sub">in calendar</div></div>
-      </div>
-      <div class="grid-2">
-        <div class="card"><div class="card-title">Impressions Over Time</div><div class="chart-wrap"><canvas id="chart-impressions"></canvas></div></div>
-        <div class="card"><div class="card-title">Avg Impressions by Writer</div><div class="chart-wrap"><canvas id="chart-persona"></canvas></div></div>
-      </div>
-      <div class="grid-3">
-        <div class="card"><div class="card-title">Top Post</div><div id="top-post-title" style="font-size:13px;font-weight:600;line-height:1.4;margin-bottom:6px">—</div><div id="top-post-stats" style="font-size:11px;color:var(--muted)">—</div></div>
-        <div class="card"><div class="card-title">Next Scheduled</div><div id="next-post-title" style="font-size:13px;font-weight:600;line-height:1.4;margin-bottom:6px">—</div><div id="next-post-meta" style="font-size:11px;color:var(--muted)">—</div></div>
-        <div class="card"><div class="card-title">This Week's Insight</div><div id="overview-suggestion" style="font-size:12px;line-height:1.6">Load analytics to see insights.</div></div>
-      </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div class="section-block">
+      <div class="section-head">Impressions Over Time</div>
+      <div class="chart-wrap"><canvas id="chart-impressions"></canvas></div>
     </div>
+    <div class="section-block">
+      <div class="section-head">Avg Impressions by Writer</div>
+      <div class="chart-wrap"><canvas id="chart-persona"></canvas></div>
+    </div>
+  </div>
 
-    <!-- aima-traffic merged into Analytics + Performance -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px">
+    <div class="section-block">
+      <div class="section-head">Top Post</div>
+      <div id="top-post-title" style="font-size:13px;font-weight:600;line-height:1.5;margin-bottom:6px">—</div>
+      <div id="top-post-stats" style="font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">—</div>
+    </div>
+    <div class="section-block">
+      <div class="section-head">Next Scheduled</div>
+      <div id="next-post-title" style="font-size:13px;font-weight:600;line-height:1.5;margin-bottom:6px">—</div>
+      <div id="next-post-meta" style="font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">—</div>
+    </div>
+    <div class="section-block">
+      <div class="section-head">This Week's Insight</div>
+      <div id="overview-suggestion" style="font-size:12px;line-height:1.7;color:var(--muted)">Load analytics to see insights.</div>
+    </div>
+  </div>
+</div>
 
-    <!-- ══ CALENDAR ══ -->
-    <div class="page" id="page-calendar">
-      <div class="section-head">
-        <div class="section-title">Editorial Calendar <span id="dirty-indicator" style="font-size:12px;color:var(--orange);display:none;margin-left:8px">● Unsaved changes</span></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-outline btn-sm" onclick="toggleCalView()">⇄ Toggle View</button>
-          <button class="btn btn-ghost btn-sm" onclick="discardChanges()" id="btn-discard" style="display:none">✕ Discard</button>
-          <button class="btn btn-green btn-sm" onclick="saveCalendar()" id="btn-save" disabled>💾 Save &amp; Export</button>
+<!-- ══ CALENDAR ══ -->
+<div class="page" id="page-calendar">
+  <div class="panel-title">Editorial <span style="color:var(--cyan)">Calendar</span></div>
+  <div class="panel-sub">
+    Edit titles, dates, or tone inline. Changes turn orange until saved.
+    <strong style="color:var(--text)">Save &amp; Export</strong> downloads an updated <code>aima-editorial-calendar.md</code> — replace your local file to sync the automation.
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center">
+    <button class="btn btn-outline btn-sm" onclick="toggleCalView()">⇄ Toggle View</button>
+    <button class="btn btn-ghost btn-sm" onclick="discardChanges()" id="btn-discard" style="display:none">✕ Discard</button>
+    <button class="btn btn-green btn-sm" onclick="saveCalendar()" id="btn-save" disabled>💾 Save &amp; Export</button>
+    <span id="dirty-indicator" style="display:none;color:var(--orange);font-size:12px;font-family:'Courier Prime',monospace;margin-left:4px">● Unsaved changes</span>
+    <span style="margin-left:auto;font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">
+      <span style="color:var(--cyan)">━</span> Joselito &nbsp;
+      <span style="color:var(--purple)">━</span> Dawn &nbsp;
+      <span style="color:var(--yellow)">━</span> Kenji
+    </span>
+  </div>
+
+  <div id="cal-list-view">
+    <div class="section-block" style="padding:0;overflow:hidden">
+      <div class="cal-row header">
+        <div>Date</div><div>#</div><div>Writer</div><div>Title</div>
+        <div>Tone / Mood Note</div><div>Category</div><div>Read</div><div>Status</div>
+      </div>
+      <div id="cal-list-body"></div>
+    </div>
+  </div>
+
+  <div id="cal-month-view" style="display:none">
+    <div id="cal-month-container"></div>
+  </div>
+</div>
+
+<!-- ══ POST LOG ══ -->
+<div class="page" id="page-posts">
+  <div class="panel-title">Post <span style="color:var(--cyan)">Log</span></div>
+  <div class="panel-sub">All published articles across all writers</div>
+
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
+    <input type="text" id="post-search" placeholder="Search…" oninput="renderPostLog()" class="search-input" style="width:200px">
+    <select id="post-filter-persona" onchange="renderPostLog()" class="search-input">
+      <option value="">All writers</option>
+      <option value="joselito">Joselito</option>
+      <option value="dawn">Dawn</option>
+      <option value="kenji">Kenji</option>
+    </select>
+  </div>
+
+  <div class="section-block" style="padding:0;overflow:hidden">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Posted</th><th>Writer</th><th>Title</th><th>Post ID</th><th>Analytics</th></tr></thead>
+        <tbody id="post-log-tbody"></tbody>
+      </table>
+    </div>
+    <div id="post-log-empty" class="empty-state"><div class="empty-icon">📭</div>Load <strong>post_log.json</strong> on the Data page.</div>
+  </div>
+</div>
+
+<!-- ══ ANALYTICS ══ -->
+<div class="page" id="page-analytics">
+  <div class="panel-title">Content <span style="color:var(--cyan)">Analytics</span></div>
+  <div class="panel-sub">Post performance metrics · Impressions, clicks, engagement</div>
+
+  <div class="card-grid">
+    <div class="stat-card cyan">
+      <div class="label">Total Impressions</div>
+      <div class="value" id="kpi-total-imp">—</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="label">Total Clicks</div>
+      <div class="value" id="kpi-total-clicks">—</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="label">Total Likes</div>
+      <div class="value" id="kpi-total-likes">—</div>
+    </div>
+    <div class="stat-card green">
+      <div class="label">Avg Engagement</div>
+      <div class="value" id="kpi-avg-eng">—</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div class="section-block">
+      <div class="section-head">CTR by Post</div>
+      <div class="chart-wrap"><canvas id="chart-ctr"></canvas></div>
+    </div>
+    <div class="section-block">
+      <div class="section-head">Engagement Breakdown</div>
+      <div class="chart-wrap"><canvas id="chart-engagement"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-block" style="padding:0;overflow:hidden;margin-bottom:32px">
+    <div style="padding:14px 20px;border-bottom:1px solid var(--border)">
+      <span style="font-family:'Anton',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:0.04em">All Analytics Records</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Title</th><th>Writer</th><th>Posted</th><th>Impressions</th><th>Clicks</th><th>Likes</th><th>Comments</th><th>Shares</th><th>CTR</th><th>Engagement</th></tr></thead>
+        <tbody id="analytics-tbody"></tbody>
+      </table>
+    </div>
+    <div id="analytics-empty" class="empty-state"><div class="empty-icon">📊</div>Load <strong>post_analytics.csv</strong> on the Data page.</div>
+  </div>
+
+  <!-- aima.productions traffic -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div>
+      <div class="panel-title" style="font-size:20px">aima.productions <span style="color:var(--cyan)">Traffic</span></div>
+      <div style="font-size:12px;color:var(--muted)">Tracks clicks to <strong style="color:var(--cyan)">http://aima.productions</strong> from LinkedIn posts. Export GA4 → Acquisition → Traffic acquisition.</div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('file-ga4b').click()" style="flex-shrink:0;margin-left:16px">⬆ Load GA4 Export</button>
+  </div>
+
+  <div class="card-grid">
+    <div class="stat-card cyan">
+      <div class="label">Total Site Clicks</div>
+      <div class="value" id="kpi-site-clicks">—</div>
+      <div class="trend">from all sources</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="label">LinkedIn Referrals</div>
+      <div class="value" id="kpi-li-referrals">—</div>
+      <div class="trend">from posts</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="label">Top Article Source</div>
+      <div class="value" id="kpi-top-source" style="font-size:16px;line-height:1.3">—</div>
+      <div class="trend">most referrals</div>
+    </div>
+    <div class="stat-card green">
+      <div class="label">Avg Session Duration</div>
+      <div class="value" id="kpi-session-dur">—</div>
+      <div class="trend">seconds</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="section-block">
+      <div class="section-head">Traffic from LinkedIn Posts</div>
+      <div id="aima-traffic-list">
+        <div class="empty-state" style="padding:24px">
+          <div class="empty-icon">🌐</div>
+          <div>Load a GA4 export CSV to see LinkedIn referral traffic to aima.productions.</div>
         </div>
       </div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:16px">
-        Edit titles, dates, or tone inline. Changes turn orange until saved.
-        <strong style="color:var(--text)">Save &amp; Export</strong> downloads an updated <code>aima-editorial-calendar.md</code> — replace your local file to sync with the automation.
-        <br><span style="color:var(--joselito)">━</span> Joselito &nbsp; <span style="color:var(--dawn)">━</span> Dawn Ginhaua &nbsp; <span style="color:var(--kenji)">━</span> Kenji Nakamoto
+    </div>
+    <div class="section-block">
+      <div class="section-head">Manual Entry — Link Clicks</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Track manually if GA4 isn't connected.</div>
+      <div id="manual-stats-list"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <input id="manual-date" type="date" class="search-input" style="flex:1;min-width:120px">
+        <input id="manual-source" placeholder="Source (e.g. Post #013)" class="search-input" style="flex:2;min-width:140px">
+        <input id="manual-clicks" type="number" placeholder="Clicks" class="search-input" style="width:80px">
+        <button class="btn btn-primary btn-sm" onclick="addManualStat()">Add</button>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div id="cal-list-view">
-        <div class="card" style="padding:0;overflow:hidden">
-          <div class="cal-row header">
-            <div>Date</div><div>#</div><div>Writer</div><div>Title</div><div>Tone / Mood Note</div><div>Category</div><div>Read</div><div>Status</div>
+<!-- ══ PERFORMANCE ══ -->
+<div class="page" id="page-performance">
+  <div class="panel-title">Performance <span style="color:var(--cyan)">Insights</span></div>
+  <div class="panel-sub">Writer breakdowns · Category trends · Top posts · Site performance</div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px" id="perf-persona-cards"></div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div class="section-block">
+      <div class="section-head">Best Performing Categories</div>
+      <div id="perf-categories" style="margin-top:4px"></div>
+    </div>
+    <div class="section-block">
+      <div class="section-head">What Drives Reactions &amp; Reposts</div>
+      <div id="perf-patterns" style="margin-top:4px;font-size:12px;line-height:1.9;color:var(--muted)">Load analytics to see patterns.</div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-head">Top 5 Posts by Impressions</div>
+    <div id="perf-top5" style="margin-top:4px"></div>
+  </div>
+
+  <!-- aima.productions performance -->
+  <div style="margin-top:32px">
+    <div class="panel-title" style="font-size:20px;margin-bottom:4px">aima.productions <span style="color:var(--cyan)">Site Performance</span></div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:20px">LinkedIn-to-site conversion · Top referral posts · Tracking status</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div class="section-block">
+        <div class="section-head">LinkedIn → Site Conversion</div>
+        <div id="perf-li-conversion" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 data to see how LinkedIn posts convert to site visits.</div>
+      </div>
+      <div class="section-block">
+        <div class="section-head">Best Click-Through Posts</div>
+        <div id="perf-best-cta" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 + analytics CSV to rank posts by site referrals.</div>
+      </div>
+      <div class="section-block">
+        <div class="section-head">Tracking Pixels Active</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+            <span style="font-size:12px">GA4 <code>G-VCTF4DKBD5</code></span>
           </div>
-          <div id="cal-list-body"></div>
-        </div>
-      </div>
-
-      <div id="cal-month-view" style="display:none">
-        <div id="cal-month-container"></div>
-      </div>
-    </div>
-
-    <!-- ══ POST LOG ══ -->
-    <div class="page" id="page-posts">
-      <div class="section-head">
-        <div class="section-title">Post Log</div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <input type="text" id="post-search" placeholder="Search…" oninput="renderPostLog()"
-            style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 11px;border-radius:6px;font-size:12px;width:200px">
-          <select id="post-filter-persona" onchange="renderPostLog()"
-            style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 11px;border-radius:6px;font-size:12px">
-            <option value="">All writers</option>
-            <option value="joselito">Joselito</option>
-            <option value="dawn">Dawn</option>
-            <option value="kenji">Kenji</option>
-          </select>
-        </div>
-      </div>
-      <div class="card" style="padding:0;overflow:hidden">
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Posted</th><th>Writer</th><th>Title</th><th>Post ID</th><th>Analytics</th></tr></thead>
-            <tbody id="post-log-tbody"></tbody>
-          </table>
-        </div>
-        <div id="post-log-empty" class="empty-state"><div class="empty-icon">📭</div>Load <strong>post_log.json</strong> on the Data page.</div>
-      </div>
-    </div>
-
-    <!-- ══ ANALYTICS ══ -->
-    <div class="page" id="page-analytics">
-      <div class="grid-4">
-        <div class="card"><div class="card-title">Total Impressions</div><div class="kpi-value" id="kpi-total-imp">—</div></div>
-        <div class="card"><div class="card-title">Total Clicks</div><div class="kpi-value" id="kpi-total-clicks">—</div></div>
-        <div class="card"><div class="card-title">Total Likes</div><div class="kpi-value" id="kpi-total-likes">—</div></div>
-        <div class="card"><div class="card-title">Avg Engagement</div><div class="kpi-value" id="kpi-avg-eng">—</div></div>
-      </div>
-      <div class="grid-2">
-        <div class="card"><div class="card-title">CTR by Post</div><div class="chart-wrap"><canvas id="chart-ctr"></canvas></div></div>
-        <div class="card"><div class="card-title">Engagement Breakdown</div><div class="chart-wrap"><canvas id="chart-engagement"></canvas></div></div>
-      </div>
-      <div class="card" style="padding:0;overflow:hidden">
-        <div style="padding:14px 18px;border-bottom:1px solid var(--border)"><span style="font-size:14px;font-weight:700">All Analytics Records</span></div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Title</th><th>Writer</th><th>Posted</th><th>Impressions</th><th>Clicks</th><th>Likes</th><th>Comments</th><th>Shares</th><th>CTR</th><th>Engagement</th></tr></thead>
-            <tbody id="analytics-tbody"></tbody>
-          </table>
-        </div>
-        <div id="analytics-empty" class="empty-state"><div class="empty-icon">📊</div>Load <strong>post_analytics.csv</strong> on the Data page.</div>
-      </div>
-
-      <!-- aima.productions traffic (integrated) -->
-      <div class="section-head" style="margin-top:28px">
-        <div class="section-title" style="font-size:15px">aima.productions Link Traffic</div>
-        <button class="btn btn-outline btn-sm" onclick="document.getElementById('file-ga4b').click()">⬆ Load GA4 Export</button>
-      </div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">
-        Tracks clicks to <strong style="color:var(--cyan)">http://aima.productions</strong> from LinkedIn posts.
-        Export from GA4 → Reports → Acquisition → Traffic acquisition, filter by source/medium = linkedin.
-      </div>
-      <div class="grid-4">
-        <div class="card"><div class="card-title">Total Site Clicks</div><div class="kpi-value" id="kpi-site-clicks">—</div><div class="kpi-sub">from all sources</div></div>
-        <div class="card"><div class="card-title">LinkedIn Referrals</div><div class="kpi-value" id="kpi-li-referrals">—</div><div class="kpi-sub">from posts</div></div>
-        <div class="card"><div class="card-title">Top Article Source</div><div class="kpi-value" style="font-size:14px;line-height:1.4" id="kpi-top-source">—</div><div class="kpi-sub">most referrals</div></div>
-        <div class="card"><div class="card-title">Avg Session Duration</div><div class="kpi-value" id="kpi-session-dur">—</div><div class="kpi-sub">seconds</div></div>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-title">Traffic from LinkedIn Posts</div>
-          <div id="aima-traffic-list">
-            <div class="empty-state" style="padding:24px">
-              <div class="empty-icon">🌐</div>
-              <div>Load a GA4 export CSV to see LinkedIn referral traffic to aima.productions.</div>
-            </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+            <span style="font-size:12px">Meta Pixel <code style="color:var(--gold)">941204972168187</code></span>
           </div>
-        </div>
-        <div class="card">
-          <div class="card-title">Manual Entry — Link Clicks</div>
-          <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Track manually if GA4 isn't connected.</div>
-          <div id="manual-stats-list"></div>
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-            <input id="manual-date" type="date" style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:12px;flex:1;min-width:120px">
-            <input id="manual-source" placeholder="Source (e.g. Post #013)" style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:12px;flex:2;min-width:140px">
-            <input id="manual-clicks" type="number" placeholder="Clicks" style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:12px;width:80px">
-            <button class="btn btn-cyan btn-sm" onclick="addManualStat()">Add</button>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+            <span style="font-size:12px">TikTok Pixel <code style="color:var(--purple)">D7NFLLRC77UB8JB2C5N0</code></span>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- ══ PERFORMANCE ══ -->
-    <div class="page" id="page-performance">
-      <div class="section-head"><div class="section-title">Performance Insights</div></div>
-      <div class="grid-3" id="perf-persona-cards"></div>
-      <div class="grid-2">
-        <div class="card"><div class="card-title">Best Performing Categories</div><div id="perf-categories" style="margin-top:8px"></div></div>
-        <div class="card"><div class="card-title">What Drives Reactions &amp; Reposts</div><div id="perf-patterns" style="margin-top:8px;font-size:12px;line-height:1.9">Load analytics to see patterns.</div></div>
-      </div>
-      <div class="card"><div class="card-title">Top 5 Posts by Impressions</div><div id="perf-top5" style="margin-top:8px"></div></div>
+<!-- ══ SUGGESTIONS ══ -->
+<div class="page" id="page-suggestions">
+  <div class="panel-title">Weekly <span style="color:var(--cyan)">Suggestions</span></div>
+  <div class="panel-sub">Generated from analytics · Learns what earns reactions and reposts · Surfaces targeted improvements each week</div>
 
-      <!-- aima.productions performance (integrated) -->
-      <div class="section-head" style="margin-top:28px">
-        <div class="section-title" style="font-size:15px">aima.productions Site Performance</div>
-      </div>
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-title">LinkedIn → Site Conversion</div>
-          <div id="perf-li-conversion" style="margin-top:8px;font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 data to see how LinkedIn posts convert to site visits.</div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+    <button class="btn btn-outline btn-sm" onclick="renderSuggestions()">↻ Refresh</button>
+  </div>
+  <div id="suggestions-container">
+    <div class="empty-state"><div class="empty-icon">💡</div>Load analytics data to generate suggestions.</div>
+  </div>
+</div>
+
+<!-- ══ LOAD DATA ══ -->
+<div class="page" id="page-data">
+  <div class="panel-title">Load <span style="color:var(--cyan)">Data</span></div>
+  <div class="panel-sub">Upload your data files to populate the dashboard · Stored in session memory only — nothing leaves your machine</div>
+
+  <div class="alert alert-info">
+    📂 <div>Drop files from <code>D:\Apps\DevOps\Github\aima\linkedin_pipeline\</code> into the zones below. Data auto-fetches on GitHub Pages; upload manually on <code>file://</code>.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+    <div>
+      <div style="font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;font-family:'Courier Prime',monospace;margin-bottom:8px">Post Log (post_log.json)</div>
+      <label for="file-postlog">
+        <div class="upload-zone" id="zone-postlog">
+          <div class="upload-icon">📋</div>
+          <div class="upload-label"><strong>Click to upload</strong><br>linkedin_pipeline/post_log.json</div>
         </div>
-        <div class="card">
-          <div class="card-title">Best Click-Through Posts</div>
-          <div id="perf-best-cta" style="margin-top:8px;font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 + analytics CSV to rank posts by site referrals.</div>
+      </label>
+      <input type="file" id="file-postlog" accept=".json" onchange="loadPostLog(event)">
+      <div id="status-postlog" style="font-size:11px;color:var(--muted);margin-top:4px;font-family:'Courier Prime',monospace"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;font-family:'Courier Prime',monospace;margin-bottom:8px">Analytics (post_analytics.csv)</div>
+      <label for="file-analytics">
+        <div class="upload-zone" id="zone-analytics">
+          <div class="upload-icon">📈</div>
+          <div class="upload-label"><strong>Click to upload</strong><br>linkedin_pipeline/post_analytics.csv</div>
         </div>
-        <div class="card">
-          <div class="card-title">Tracking Pixels Active</div>
-          <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span><span style="font-size:12px">GA4 <code style="color:var(--cyan);font-size:10px">G-VCTF4DKBD5</code></span></div>
-            <div style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span><span style="font-size:12px">Meta Pixel <code style="color:var(--gold);font-size:10px">941204972168187</code></span></div>
-            <div style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block"></span><span style="font-size:12px">TikTok Pixel <code style="color:var(--purple);font-size:10px">D7NFLLRC77UB8JB2C5N0</code></span></div>
-          </div>
+      </label>
+      <input type="file" id="file-analytics" accept=".csv" onchange="loadAnalytics(event)">
+      <div id="status-analytics" style="font-size:11px;color:var(--muted);margin-top:4px;font-family:'Courier Prime',monospace"></div>
+    </div>
+    <div>
+      <div style="font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;font-family:'Courier Prime',monospace;margin-bottom:8px">GA4 Traffic (optional)</div>
+      <label for="file-ga4b">
+        <div class="upload-zone" id="zone-ga4">
+          <div class="upload-icon">🌐</div>
+          <div class="upload-label"><strong>Click to upload</strong><br>GA4 CSV export</div>
         </div>
+      </label>
+      <input type="file" id="file-ga4b" accept=".csv" onchange="loadGA4(event)">
+      <div id="status-ga4" style="font-size:11px;color:var(--muted);margin-top:4px;font-family:'Courier Prime',monospace"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+    <div class="section-block" style="display:flex;align-items:center;gap:14px;padding:20px">
+      <span style="font-size:24px">📋</span>
+      <div>
+        <div style="font-size:13px;font-weight:600">Post Log</div>
+        <div id="data-status-postlog" style="font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">Not loaded</div>
       </div>
     </div>
-
-    <!-- ══ SUGGESTIONS ══ -->
-    <div class="page" id="page-suggestions">
-      <div class="section-head">
-        <div class="section-title">Weekly Improvement Suggestions</div>
-        <button class="btn btn-cyan btn-sm" onclick="renderSuggestions()">↻ Refresh</button>
-      </div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:18px">Generated from your analytics data every week. Learns what earns reactions and reposts, then surfaces targeted improvements.</div>
-      <div id="suggestions-container"><div class="empty-state"><div class="empty-icon">💡</div>Load analytics data to generate suggestions.</div></div>
-    </div>
-
-    <!-- ══ LOAD DATA ══ -->
-    <div class="page" id="page-data">
-      <div class="section-title" style="margin-bottom:18px">Load Your Data Files</div>
-      <div class="grid-3">
-        <div>
-          <div class="card-title" style="margin-bottom:8px">Post Log (post_log.json)</div>
-          <label for="file-postlog"><div class="upload-zone" id="zone-postlog"><div class="upload-icon">📋</div><div class="upload-label"><strong>Click to upload</strong><br>linkedin_pipeline/post_log.json</div></div></label>
-          <input type="file" id="file-postlog" accept=".json" onchange="loadPostLog(event)">
-          <div id="status-postlog" style="font-size:11px;color:var(--muted);margin-top:4px"></div>
-        </div>
-        <div>
-          <div class="card-title" style="margin-bottom:8px">Analytics (post_analytics.csv)</div>
-          <label for="file-analytics"><div class="upload-zone" id="zone-analytics"><div class="upload-icon">📈</div><div class="upload-label"><strong>Click to upload</strong><br>linkedin_pipeline/post_analytics.csv</div></div></label>
-          <input type="file" id="file-analytics" accept=".csv" onchange="loadAnalytics(event)">
-          <div id="status-analytics" style="font-size:11px;color:var(--muted);margin-top:4px"></div>
-        </div>
-        <div>
-          <div class="card-title" style="margin-bottom:8px">GA4 Traffic (optional)</div>
-          <label for="file-ga4b"><div class="upload-zone" id="zone-ga4"><div class="upload-icon">🌐</div><div class="upload-label"><strong>Click to upload</strong><br>GA4 CSV export</div></div></label>
-          <input type="file" id="file-ga4b" accept=".csv" onchange="loadGA4(event)">
-          <div id="status-ga4" style="font-size:11px;color:var(--muted);margin-top:4px"></div>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div class="grid-3">
-        <div class="card" style="display:flex;align-items:center;gap:12px"><span style="font-size:22px">📋</span><div><div style="font-size:13px;font-weight:600">Post Log</div><div id="data-status-postlog" style="font-size:11px;color:var(--muted)">Not loaded</div></div></div>
-        <div class="card" style="display:flex;align-items:center;gap:12px"><span style="font-size:22px">📈</span><div><div style="font-size:13px;font-weight:600">Analytics CSV</div><div id="data-status-analytics" style="font-size:11px;color:var(--muted)">Not loaded</div></div></div>
-        <div class="card" style="display:flex;align-items:center;gap:12px"><span style="font-size:22px">📅</span><div><div style="font-size:13px;font-weight:600">Editorial Calendar</div><div style="font-size:11px;color:var(--green)">Built-in (001–038) ✓</div></div></div>
-      </div>
-      <div class="divider"></div>
-      <div style="font-size:12px;color:var(--muted);line-height:2">
-        <strong style="color:var(--text)">File locations:</strong><br>
-        Post log: <code>D:\Apps\DevOps\Github\aima\linkedin_pipeline\post_log.json</code><br>
-        Analytics: <code>D:\Apps\DevOps\Github\aima\linkedin_pipeline\post_analytics.csv</code><br>
-        GA4 export: Google Analytics → Reports → Export as CSV<br><br>
-        Data lives in browser memory for this session only.
+    <div class="section-block" style="display:flex;align-items:center;gap:14px;padding:20px">
+      <span style="font-size:24px">📈</span>
+      <div>
+        <div style="font-size:13px;font-weight:600">Analytics CSV</div>
+        <div id="data-status-analytics" style="font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">Not loaded</div>
       </div>
     </div>
+    <div class="section-block" style="display:flex;align-items:center;gap:14px;padding:20px">
+      <span style="font-size:24px">📅</span>
+      <div>
+        <div style="font-size:13px;font-weight:600">Editorial Calendar</div>
+        <div style="font-size:11px;color:var(--green);font-family:'Courier Prime',monospace">Built-in (001–038) ✓</div>
+      </div>
+    </div>
+  </div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
-</div><!-- /shell -->
+  <div class="divider"></div>
+
+  <div style="font-size:12px;color:var(--muted);line-height:2;font-family:'Courier Prime',monospace">
+    <strong style="color:var(--text);font-family:'DM Sans',sans-serif">File locations:</strong><br>
+    Post log: <code>D:\Apps\DevOps\Github\aima\linkedin_pipeline\post_log.json</code><br>
+    Analytics: <code>D:\Apps\DevOps\Github\aima\linkedin_pipeline\post_analytics.csv</code><br>
+    GA4 export: Google Analytics → Reports → Export as CSV<br><br>
+    Data lives in browser memory for this session only.
+  </div>
+</div>
+
+</main>
+</div>
 
 <!-- Unsaved changes bar -->
 <div id="save-bar">
-  <span class="save-bar-msg">⚠ You have unsaved calendar changes</span>
+  <span style="font-size:13px;color:var(--orange);font-weight:600;font-family:'Courier Prime',monospace">⚠ You have unsaved calendar changes</span>
   <div style="display:flex;gap:8px">
     <button class="btn btn-ghost btn-sm" onclick="discardChanges()">Discard</button>
     <button class="btn btn-orange btn-sm" onclick="saveCalendar()">💾 Save &amp; Export</button>
@@ -424,7 +790,7 @@ let isDirty = false;
 let charts = {};
 
 const PERSONAS = {
-  joselito:{ label:'Joselito', badge:'badge-cyan',   color:'#00d4ff', rowClass:'joselito-row', cellClass:'joselito-cell' },
+  joselito:{ label:'Joselito', badge:'badge-cyan',   color:'#00D9F5', rowClass:'joselito-row', cellClass:'joselito-cell' },
   dawn:    { label:'Dawn',     badge:'badge-purple', color:'#9b59f5', rowClass:'dawn-row',     cellClass:'dawn-cell'     },
   kenji:   { label:'Kenji',    badge:'badge-gold',   color:'#f5c518', rowClass:'kenji-row',    cellClass:'kenji-cell'    },
 };
@@ -440,9 +806,7 @@ const CAT_BADGES = {
   'Trending':'badge-muted',
 };
 
-// ── Full calendar: 001-012 (published) + 013-038 (Joselito) + interleaved Dawn/Kenji ──
 const CALENDAR = [
-  // Published articles 001–013
   { num:1,  date:'2026-03-21', title:'The Future of Creative Production in the Age of AI',                                  cat:'Innovation',          read:8,  persona:'joselito', published:true,  tone:'' },
   { num:2,  date:'2026-03-21', title:'The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget',        cat:'Production Blueprint', read:14, persona:'joselito', published:true,  tone:'' },
   { num:3,  date:'2026-03-23', title:'Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide',                  cat:'Automation',           read:12, persona:'joselito', published:true,  tone:'' },
@@ -456,7 +820,6 @@ const CALENDAR = [
   { num:11, date:'2026-06-01', title:'The Token Bill: How AI Overspending Is Rewriting the Future of Work',               cat:'Industry Analysis',    read:11, persona:'joselito', published:true,  tone:'' },
   { num:12, date:'2026-06-04', title:'The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both', cat:'AI Ethics',           read:19, persona:'joselito', published:true,  tone:'' },
   { num:13, date:'2026-06-18', title:'The Global South AI Gap: Who Gets Left Behind When the Future Arrives',              cat:'AI Society',           read:12, persona:'joselito', published:true,  tone:'' },
-  // Joselito scheduled 014–038
   { num:14, date:'2026-06-20', title:'Hallucination Nation: Why AI Lies with Confidence and What It Costs Us',             cat:'AI Ethics',            read:11, persona:'joselito', published:false, tone:'' },
   { num:15, date:'2026-06-22', title:'Machines That Compose: What AI Music Reveals About Human Creativity',               cat:'AI Creative',          read:9,  persona:'joselito', published:false, tone:'' },
   { num:16, date:'2026-06-24', title:'The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor',   cat:'AI Society',           read:12, persona:'joselito', published:false, tone:'' },
@@ -482,7 +845,6 @@ const CALENDAR = [
   { num:36, date:'2026-08-03', title:'Who Controls the Stack? The AI Supply Chain Behind the Revolution',                cat:'AI Business',          read:12, persona:'joselito', published:false, tone:'' },
   { num:37, date:'2026-08-05', title:'Philanthropy 3.0: How AI Agents Could Transform Charitable Giving',                cat:'AI Society',           read:11, persona:'joselito', published:false, tone:'' },
   { num:38, date:'2026-08-07', title:'The Creative Director Is Not Dead: Human Vision in an AI Production World',        cat:'AI Creative',          read:9,  persona:'joselito', published:false, tone:'' },
-  // Dawn & Kenji trending slots (off-days, interleaved)
   { num:'D1', date:'2026-06-19', title:'TBD — Trending Topic (Dawn)',   cat:'Trending', read:8, persona:'dawn',  published:false, tone:'Sharp, provocative — challenge a corporate assumption. End with a question no one wants to answer.' },
   { num:'K1', date:'2026-06-21', title:'TBD — Trending Topic (Kenji)',  cat:'Trending', read:8, persona:'kenji', published:false, tone:'Optimistic deep-dive — one emerging technology, grounded in what it makes possible for real people.' },
   { num:'D2', date:'2026-06-23', title:'TBD — Trending Topic (Dawn)',   cat:'Trending', read:8, persona:'dawn',  published:false, tone:'' },
@@ -511,13 +873,25 @@ const CALENDAR = [
 ].sort((a,b) => a.date > b.date ? 1 : -1);
 
 // ═══════════════════════════════════════════
+// PIPELINE BAR
+// ═══════════════════════════════════════════
+function updatePipelineBar() {
+  const published = CALENDAR.filter(c => c.published).length;
+  const total = CALENDAR.length;
+  const pct = Math.round(published / total * 100);
+  document.getElementById('pipe-count').textContent = `${published} / ${total}`;
+  document.getElementById('pipeline-fill').style.width = pct + '%';
+  document.getElementById('pipe-sub').textContent = `${total - published} articles in queue · ${pct}% complete`;
+}
+
+// ═══════════════════════════════════════════
 // NAVIGATION
 // ═══════════════════════════════════════════
 const PAGE_TITLES = {
   overview:'Overview',
-  calendar:'Editorial Calendar',posts:'Post Log',
-  analytics:'Analytics',performance:'Performance',
-  suggestions:'Weekly Suggestions',data:'Load Data'
+  calendar:'Editorial Calendar', posts:'Post Log',
+  analytics:'Analytics', performance:'Performance',
+  suggestions:'Weekly Suggestions', data:'Load Data'
 };
 
 function showPage(id) {
@@ -565,7 +939,6 @@ function discardChanges() {
 }
 
 function saveCalendar() {
-  // Download updated markdown
   const sorted = [...CALENDAR].sort((a,b)=>a.date>b.date?1:-1);
   let md = `# AIMA Editorial Calendar\n**Updated ${new Date().toLocaleDateString()} — Articles 001–038 + Co-writer Slots**\n\n`;
   md += `## Joselito Sering (Editor-in-Chief)\n\n`;
@@ -583,7 +956,6 @@ function saveCalendar() {
   sorted.filter(c=>c.persona==='kenji').forEach(c=>{
     md += `| ${c.num} | ${c.date} | ${c.title} | ${c.tone||''} |\n`;
   });
-
   const blob = new Blob([md], {type:'text/markdown'});
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = 'aima-editorial-calendar-updated.md'; a.click();
@@ -591,16 +963,13 @@ function saveCalendar() {
   alert('Calendar exported! Replace D:\\Apps\\DevOps\\Github\\aima\\articles\\aima-editorial-calendar.md with this file to sync the automation.');
 }
 
-// Warn on page unload
 window.addEventListener('beforeunload', e => {
   if (isDirty) { e.preventDefault(); e.returnValue = ''; }
 });
 
 // ═══════════════════════════════════════════
-// DATA LOADING — auto-fetch from GitHub Pages
+// DATA LOADING
 // ═══════════════════════════════════════════
-
-// Relative paths work on GitHub Pages; fall back gracefully on file://
 const DATA_BASE = './linkedin_pipeline/';
 
 function setStatus(elId, msg, color) {
@@ -640,7 +1009,6 @@ async function autoLoadAnalytics() {
   }
 }
 
-// Manual upload fallbacks (still work if auto-fetch fails)
 function loadPostLog(event) {
   const file = event.target.files[0]; if (!file) return;
   const r = new FileReader();
@@ -685,8 +1053,8 @@ function loadGA4(event) {
   r.readAsText(file);
 }
 
-// Auto-fetch on page load
 document.addEventListener('DOMContentLoaded', () => {
+  updatePipelineBar();
   autoLoadPostLog();
   autoLoadAnalytics();
 });
@@ -746,7 +1114,7 @@ function drawImpressionsChart(){
   charts.impressions=new Chart(ctx,{type:'line',data:{
     labels:sorted.map(r=>(r.posted_at||'').slice(0,10)),
     datasets:[{label:'Impressions',data:sorted.map(r=>+r.impressions||0),
-      borderColor:'#00d4ff',backgroundColor:'rgba(0,212,255,.08)',tension:0.4,fill:true,pointRadius:4,pointBackgroundColor:'#00d4ff'}]
+      borderColor:'#00D9F5',backgroundColor:'rgba(0,217,245,0.08)',tension:0.4,fill:true,pointRadius:4,pointBackgroundColor:'#00D9F5'}]
   },options:chartOpts()});
 }
 
@@ -758,15 +1126,15 @@ function drawPersonaChart(){
   charts.persona=new Chart(ctx,{type:'bar',data:{
     labels:['Joselito','Dawn','Kenji'],
     datasets:[{label:'Avg Impressions',data:ps.map(p=>{const r=analyticsData.filter(x=>x.persona===p);return r.length?Math.round(avg(r.map(x=>+x.impressions||0))):0;}),
-      backgroundColor:['rgba(0,212,255,.7)','rgba(155,89,245,.7)','rgba(245,197,24,.7)'],borderRadius:6,borderWidth:0}]
+      backgroundColor:['rgba(0,217,245,0.7)','rgba(155,89,245,0.7)','rgba(245,197,24,0.7)'],borderRadius:6,borderWidth:0}]
   },options:chartOpts()});
 }
 
 function chartOpts(){
   return{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{display:false}},
-    scales:{x:{ticks:{color:'#888899',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'}},
-            y:{ticks:{color:'#888899',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'}}}};
+    scales:{x:{ticks:{color:'#6b7a99',font:{size:10}},grid:{color:'rgba(0,217,245,0.04)'}},
+            y:{ticks:{color:'#6b7a99',font:{size:10}},grid:{color:'rgba(0,217,245,0.04)'}}}};
 }
 
 // ═══════════════════════════════════════════
@@ -786,7 +1154,7 @@ function toggleCalView(){
 function renderCalList(){
   const today = new Date().toISOString().split('T')[0];
   const sorted = [...CALENDAR].sort((a,b)=>a.date>b.date?1:-1);
-  const html = sorted.map((item,idx)=>{
+  const html = sorted.map((item)=>{
     const per = PERSONAS[item.persona]||PERSONAS.joselito;
     const status = item.published ? `<span class="badge badge-green">Published</span>`
       : item.date<today ? `<span class="badge badge-orange">Overdue</span>`
@@ -796,7 +1164,7 @@ function renderCalList(){
     return `<div class="cal-row ${per.rowClass}${item.published?' published-row':''}">
       <div><input class="cal-date-edit" value="${item.date}"
         onchange="CALENDAR[${realIdx}].date=this.value;markDirty()" /></div>
-      <div style="color:var(--muted);font-weight:700;font-size:11px">${numDisplay}</div>
+      <div style="color:var(--muted);font-weight:700;font-size:11px;font-family:'Courier Prime',monospace">${numDisplay}</div>
       <div><span class="badge ${per.badge}">${per.label}</span></div>
       <div><input class="cal-title-edit" value="${escHtml(item.title)}"
         oninput="CALENDAR[${realIdx}].title=this.value;this.classList.add('dirty');markDirty()"
@@ -805,7 +1173,7 @@ function renderCalList(){
         value="${escHtml(item.tone||'')}"
         oninput="CALENDAR[${realIdx}].tone=this.value;markDirty()" /></div>
       <div><span class="badge ${CAT_BADGES[item.cat]||'badge-muted'}" style="font-size:9px">${item.cat}</span></div>
-      <div style="color:var(--muted)">${item.read}m</div>
+      <div style="color:var(--muted);font-family:'Courier Prime',monospace;font-size:11px">${item.read}m</div>
       <div>${status}</div>
     </div>`;
   }).join('');
@@ -832,7 +1200,6 @@ function renderCalMonth(){
       if(!items.length){
         html+=`<div class="cal-cell${isToday?' today':''}"><div class="cal-date-num">${d}</div></div>`;
       } else {
-        // Multiple items possible on same day (shouldn't normally happen but safe)
         const item=items[0];
         const per=PERSONAS[item.persona]||PERSONAS.joselito;
         html+=`<div class="cal-cell ${per.cellClass}${isToday?' today':''}">
@@ -859,10 +1226,10 @@ function renderPostLog(){
   document.getElementById('post-log-tbody').innerHTML=filtered.map(p=>{
     const per=PERSONAS[p.persona]||PERSONAS.joselito;
     return `<tr>
-      <td style="color:var(--muted);font-size:11px">${(p.posted_at||'').slice(0,10)}</td>
+      <td style="color:var(--muted);font-size:11px;font-family:'Courier Prime',monospace">${(p.posted_at||'').slice(0,10)}</td>
       <td><span class="badge ${per.badge}">${per.label}</span></td>
       <td style="max-width:360px;line-height:1.4">${p.title||p.article||'—'}</td>
-      <td style="font-size:10px;color:var(--muted);font-family:monospace">${(p.post_id||'').slice(-22)}</td>
+      <td style="font-size:10px;color:var(--muted);font-family:'Courier Prime',monospace">${(p.post_id||'').slice(-22)}</td>
       <td>${p.analytics_collected?'<span class="badge badge-green">Collected</span>':'<span class="badge badge-muted">Pending</span>'}</td>
     </tr>`;
   }).join('');
@@ -885,11 +1252,14 @@ function renderAnalytics(){
       return `<tr>
         <td style="max-width:280px;line-height:1.4;font-size:11px">${r.title||r.article||'—'}</td>
         <td><span class="badge ${per.badge}">${per.label}</span></td>
-        <td style="font-size:11px;color:var(--muted)">${(r.posted_at||'').slice(0,10)}</td>
-        <td style="font-weight:700;color:var(--cyan)">${(+r.impressions||0).toLocaleString()}</td>
-        <td>${+r.clicks||0}</td><td>${+r.likes||0}</td><td>${+r.comments||0}</td><td>${+r.shares||0}</td>
-        <td style="color:var(--orange)">${((+r.ctr||0)*100).toFixed(2)}%</td>
-        <td style="color:var(--green)">${((+r.engagement_rate||0)*100).toFixed(2)}%</td>
+        <td style="font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">${(r.posted_at||'').slice(0,10)}</td>
+        <td style="font-weight:700;color:var(--cyan);font-family:'Courier Prime',monospace">${(+r.impressions||0).toLocaleString()}</td>
+        <td style="font-family:'Courier Prime',monospace">${+r.clicks||0}</td>
+        <td style="font-family:'Courier Prime',monospace">${+r.likes||0}</td>
+        <td style="font-family:'Courier Prime',monospace">${+r.comments||0}</td>
+        <td style="font-family:'Courier Prime',monospace">${+r.shares||0}</td>
+        <td style="color:var(--orange);font-family:'Courier Prime',monospace">${((+r.ctr||0)*100).toFixed(2)}%</td>
+        <td style="color:var(--green);font-family:'Courier Prime',monospace">${((+r.engagement_rate||0)*100).toFixed(2)}%</td>
       </tr>`;
     }).join('');
   drawCTRChart(); drawEngagementChart();
@@ -903,7 +1273,7 @@ function drawCTRChart(){
   charts.ctr=new Chart(ctx,{type:'bar',data:{
     labels:sorted.map(r=>'#'+(r.article||'').match(/\d+/)?.[0]||'?'),
     datasets:[{label:'CTR %',data:sorted.map(r=>+((+r.ctr||0)*100).toFixed(2)),
-      backgroundColor:sorted.map(r=>r.persona==='dawn'?'rgba(155,89,245,.7)':r.persona==='kenji'?'rgba(245,197,24,.7)':'rgba(0,212,255,.7)'),
+      backgroundColor:sorted.map(r=>r.persona==='dawn'?'rgba(155,89,245,0.7)':r.persona==='kenji'?'rgba(245,197,24,0.7)':'rgba(0,217,245,0.7)'),
       borderRadius:5,borderWidth:0}]
   },options:{...chartOpts(),scales:{...chartOpts().scales,y:{...chartOpts().scales.y,ticks:{...chartOpts().scales.y.ticks,callback:v=>v+'%'}}}}});
 }
@@ -914,8 +1284,8 @@ function drawEngagementChart(){
   charts.engagement=new Chart(ctx,{type:'doughnut',data:{
     labels:['Likes','Comments','Shares','Clicks'],
     datasets:[{data:[sum(analyticsData.map(r=>+r.likes||0)),sum(analyticsData.map(r=>+r.comments||0)),sum(analyticsData.map(r=>+r.shares||0)),sum(analyticsData.map(r=>+r.clicks||0))],
-      backgroundColor:['rgba(0,212,255,.8)','rgba(155,89,245,.8)','rgba(245,197,24,.8)','rgba(255,122,0,.8)'],borderWidth:0}]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#e8e8f0',font:{size:11}}}}}});
+      backgroundColor:['rgba(0,217,245,0.8)','rgba(155,89,245,0.8)','rgba(245,197,24,0.8)','rgba(255,94,32,0.8)'],borderWidth:0}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#e8eaf0',font:{size:11}}}}}});
 }
 
 // ═══════════════════════════════════════════
@@ -926,15 +1296,21 @@ function renderPerformance(){
     const rows=analyticsData.filter(r=>r.persona===p);
     const pc=postLog.filter(x=>x.persona===p).length;
     const per=PERSONAS[p];
-    return `<div class="card">
+    return `<div class="section-block" style="padding:20px">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <span style="width:10px;height:10px;border-radius:50%;background:${per.color};display:inline-block"></span>
-        <span style="font-weight:700;font-size:14px">${per.label}</span>
+        <span style="font-weight:600;font-size:14px">${per.label}</span>
         <span class="badge ${per.badge}" style="margin-left:auto">${pc} post${pc!==1?'s':''}</span>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div><div class="card-title">Avg Impressions</div><div style="font-size:22px;font-weight:800">${rows.length?Math.round(avg(rows.map(r=>+r.impressions||0))).toLocaleString():'—'}</div></div>
-        <div><div class="card-title">Avg CTR</div><div style="font-size:22px;font-weight:800">${rows.length?(avg(rows.map(r=>+r.ctr||0))*100).toFixed(1)+'%':'—'}</div></div>
+        <div>
+          <div class="card-title">Avg Impressions</div>
+          <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--cyan)">${rows.length?Math.round(avg(rows.map(r=>+r.impressions||0))).toLocaleString():'—'}</div>
+        </div>
+        <div>
+          <div class="card-title">Avg CTR</div>
+          <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--orange)">${rows.length?(avg(rows.map(r=>+r.ctr||0))*100).toFixed(1)+'%':'—'}</div>
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -949,16 +1325,15 @@ function renderPerformance(){
   const sortedCats=Object.entries(catPerf).map(([c,v])=>({c,a:Math.round(avg(v)),n:v.length})).sort((a,b)=>b.a-a.a);
   const maxA=sortedCats[0]?.a||1;
   document.getElementById('perf-categories').innerHTML=sortedCats.length
-    ?sortedCats.map(c=>`<div style="margin-bottom:10px">
-        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">
+    ?sortedCats.map(c=>`<div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
           <span><span class="badge ${CAT_BADGES[c.c]||'badge-muted'}">${c.c}</span></span>
-          <span style="color:var(--muted)">${c.a.toLocaleString()} avg · ${c.n}</span>
+          <span style="color:var(--muted);font-family:'Courier Prime',monospace;font-size:11px">${c.a.toLocaleString()} avg · ${c.n}</span>
         </div>
         <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(c.a/maxA*100)}%;background:var(--cyan)"></div></div>
       </div>`).join('')
     :'<div style="color:var(--muted);font-size:12px">Load analytics to see category performance.</div>';
 
-  // Reaction/repost patterns
   const patterns=[];
   const dayImps={};
   analyticsData.forEach(r=>{ if(!r.posted_at) return; const d=new Date(r.posted_at).toLocaleString('default',{weekday:'long'}); if(!dayImps[d]) dayImps[d]=[]; dayImps[d].push(+r.impressions||0); });
@@ -970,27 +1345,27 @@ function renderPerformance(){
   if(topReact) patterns.push(`❤️ Most reactions: <strong>"${(topReact.title||topReact.article).slice(0,50)}…"</strong> — ${(+topReact.likes||0)+(+topReact.comments||0)} total`);
   const avgCtr2=avg(analyticsData.map(r=>+r.ctr||0));
   patterns.push(`🖱️ Average CTR: <strong>${(avgCtr2*100).toFixed(2)}%</strong> (LinkedIn benchmark ~0.5%)`);
-  document.getElementById('perf-patterns').innerHTML=patterns.length?patterns.map(p=>`<div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)">${p}</div>`).join(''):'Not enough data yet.';
+  document.getElementById('perf-patterns').innerHTML=patterns.length?patterns.map(p=>`<div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04)">${p}</div>`).join(''):'Not enough data yet.';
 
   document.getElementById('perf-top5').innerHTML=[...analyticsData].sort((a,b)=>(+b.impressions||0)-(+a.impressions||0)).slice(0,5).map((r,i)=>{
     const per=PERSONAS[r.persona]||PERSONAS.joselito;
-    return `<div style="display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)">
-      <span style="font-size:20px;font-weight:800;color:var(--border);width:28px;text-align:center">${i+1}</span>
+    return `<div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+      <span style="font-family:'Anton',sans-serif;font-size:22px;color:var(--border);width:28px;text-align:center">${i+1}</span>
       <div style="flex:1">
         <div style="font-size:12px;font-weight:600;line-height:1.4">${r.title||r.article}</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:3px">
+        <div style="font-size:10px;color:var(--muted);margin-top:3px;font-family:'Courier Prime',monospace">
           <span class="badge ${per.badge}">${per.label}</span>
           · ${(+r.impressions||0).toLocaleString()} imp · ${((+r.ctr||0)*100).toFixed(1)}% CTR · ${+r.likes||0} likes · ${+r.shares||0} reposts
         </div>
       </div>
-      <div style="font-size:18px;font-weight:800;color:var(--cyan)">${(+r.impressions||0).toLocaleString()}</div>
+      <div style="font-family:'Anton',sans-serif;font-size:20px;color:var(--cyan)">${(+r.impressions||0).toLocaleString()}</div>
     </div>`;
   }).join('')||'<div style="color:var(--muted);font-size:12px">Load analytics data.</div>';
   renderPerformanceTraffic();
 }
 
 // ═══════════════════════════════════════════
-// AIMA.PRODUCTIONS TRAFFIC (Analytics page)
+// AIMA.PRODUCTIONS TRAFFIC
 // ═══════════════════════════════════════════
 function renderTrafficSection(){
   renderManualStats();
@@ -1006,13 +1381,10 @@ function renderTrafficSection(){
   document.getElementById('aima-traffic-list').innerHTML=ga4Data.slice(0,15).map(r=>`
     <div class="aima-link-stat">
       <div style="font-size:12px;flex:1">${r['Page path']||r['Page title']||r.source||'—'}</div>
-      <div style="font-size:12px;color:var(--cyan);font-weight:700;margin-left:12px">${(+(r.sessions||r['Sessions']||0)).toLocaleString()} sessions</div>
+      <div style="font-size:12px;color:var(--cyan);font-weight:700;margin-left:12px;font-family:'Courier Prime',monospace">${(+(r.sessions||r['Sessions']||0)).toLocaleString()} sessions</div>
     </div>`).join('');
 }
 
-// ═══════════════════════════════════════════
-// AIMA.PRODUCTIONS TRAFFIC (Performance page)
-// ═══════════════════════════════════════════
 function renderPerformanceTraffic(){
   if(!ga4Data.length) return;
   const liRows=ga4Data.filter(r=>{ const src=(r['Session source']||r.source||r['Source']||'').toLowerCase(); return src.includes('linkedin'); });
@@ -1020,15 +1392,15 @@ function renderPerformanceTraffic(){
   const totalSessions=sum(ga4Data.map(r=>+(r.sessions||r['Sessions']||r['Active users']||0)));
   const pct=totalSessions?Math.round(liTotal/totalSessions*100):0;
   const conv=document.getElementById('perf-li-conversion');
-  if(conv) conv.innerHTML=`<div style="font-size:28px;font-weight:900;color:var(--cyan)">${pct}%</div>
-    <div style="font-size:12px;color:var(--muted)">${liTotal.toLocaleString()} of ${totalSessions.toLocaleString()} total sessions came from LinkedIn</div>`;
+  if(conv) conv.innerHTML=`<div style="font-family:'Anton',sans-serif;font-size:36px;color:var(--cyan)">${pct}%</div>
+    <div style="font-size:12px;color:var(--muted);font-family:'Courier Prime',monospace">${liTotal.toLocaleString()} of ${totalSessions.toLocaleString()} total sessions from LinkedIn</div>`;
   const best=document.getElementById('perf-best-cta');
   if(best){
     const sorted=[...liRows].sort((a,b)=>+(b.sessions||b['Sessions']||0)-(+(a.sessions||a['Sessions']||0)));
     best.innerHTML=sorted.slice(0,5).map((r,i)=>`
-      <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px">
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px">
         <span style="color:var(--text)">${i+1}. ${r['Page path']||r['Page title']||'—'}</span>
-        <span style="color:var(--cyan);font-weight:700">${(+(r.sessions||r['Sessions']||0)).toLocaleString()}</span>
+        <span style="color:var(--cyan);font-weight:700;font-family:'Courier Prime',monospace">${(+(r.sessions||r['Sessions']||0)).toLocaleString()}</span>
       </div>`).join('')||'<div style="color:var(--muted);font-size:12px">No LinkedIn referral rows found.</div>';
   }
 }
@@ -1050,8 +1422,11 @@ function renderManualStats(){
   document.getElementById('manual-stats-list').innerHTML=manualStats.length
     ?[...manualStats].reverse().slice(0,8).map(s=>`
       <div class="aima-link-stat">
-        <div><div style="font-size:12px;font-weight:600">${s.source}</div><div style="font-size:10px;color:var(--muted)">${s.date}</div></div>
-        <div style="font-size:14px;font-weight:700;color:var(--cyan)">${s.clicks} clicks</div>
+        <div>
+          <div style="font-size:12px;font-weight:600">${s.source}</div>
+          <div style="font-size:10px;color:var(--muted);font-family:'Courier Prime',monospace">${s.date}</div>
+        </div>
+        <div style="font-family:'Anton',sans-serif;font-size:18px;color:var(--cyan)">${s.clicks}</div>
       </div>`).join('')
     :'<div style="color:var(--muted);font-size:12px;padding:8px 0">No entries yet.</div>';
 }
@@ -1104,9 +1479,9 @@ function renderSuggestions(){
   const suggestions=buildSuggestions();
   if(!suggestions.length){ container.innerHTML='<div class="empty-state"><div class="empty-icon">💡</div><div>Load analytics data to generate suggestions.</div></div>'; return; }
   const weekStr=(()=>{const n=new Date(),s=new Date(n);s.setDate(n.getDate()-n.getDay()+1);const e=new Date(s);e.setDate(s.getDate()+6);return `Week of ${s.toLocaleDateString('default',{month:'short',day:'numeric'})} – ${e.toLocaleDateString('default',{month:'short',day:'numeric',year:'numeric'})}`;})();
-  container.innerHTML=`<div style="font-size:12px;color:var(--muted);margin-bottom:14px">For: <strong style="color:var(--text)">${weekStr}</strong> · ${analyticsData.length} analytics record${analyticsData.length!==1?'s':''}</div>`
+  container.innerHTML=`<div style="font-size:12px;color:var(--muted);margin-bottom:14px;font-family:'Courier Prime',monospace">For: <strong style="color:var(--text)">${weekStr}</strong> · ${analyticsData.length} analytics record${analyticsData.length!==1?'s':''}</div>`
     +suggestions.map(s=>`<div class="suggestion-card ${s.type==='warn'?'warn':s.type==='good'?'good':s.type==='idea'?'idea':''}"><div class="suggestion-label">${s.label}</div><div class="suggestion-text">${s.text}</div></div>`).join('')
-    +`<div style="margin-top:16px;padding:14px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid var(--border);font-size:11px;color:var(--muted)">💡 Suggestions sharpen as you accumulate more posts. More data = more precise recommendations.</div>`;
+    +`<div style="margin-top:16px;padding:14px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border);font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">💡 Suggestions sharpen as you accumulate more posts. More data = more precise recommendations.</div>`;
 }
 
 // ═══════════════════════════════════════════
@@ -1120,6 +1495,7 @@ function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 // INIT
 // ═══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
+  updatePipelineBar();
   renderOverview();
   renderCalendar();
   renderManualStats();
