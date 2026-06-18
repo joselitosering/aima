@@ -1,23 +1,23 @@
-tree 2a5d59735e4cca82b64685ee7faf437459797de1
-parent 07504d63f4ba9ded03fc223170914b953a7285ce
-author Space Monkey <121143587+joselitosering@users.noreply.github.com> 1774646404 -0700
-committer GitHub <noreply@github.com> 1774646404 -0700
+tree eed642e3cf4ad0b2b844f7a46499982f3d9bc57a
+parent c62a519d861ceefa6130dd606362a78cff9b35ea
+author Space Monkey <121143587+joselitosering@users.noreply.github.com> 1778638326 -0700
+committer GitHub <noreply@github.com> 1778638326 -0700
 gpgsig -----BEGIN PGP SIGNATURE-----
  
- wsFcBAABCAAQBQJpxvSFCRC1aQ7uu5UhlAAAc9MQAKJ65slRSoPl3FQogAi3Acrt
- gGtGc5QY0kpfvP8A2mbfJwj9te575JPtP1UXlF+7H3eTRaQPegQc5RctMO5MbODq
- yPe36zu5gF0yU2BQ46iZ0mzvfZ3yTMCzI3df0rvSnbYdNwhCSaoXjPQyGeAOSN/U
- OlwnnKqRM8nVzvOor5dXKJAxMD7aYsV8u0mPsbKxhkrvKdoVoXSj005MrPLbbnWS
- wOsKob7F7u1xEph3liBqo7OrK9Y4zn5mp2ZOUXUTotg2OSCqzdvgk6EsE5DPdsid
- 4dFq8zE7q7wdlCINMEt4UBsNlFZZ32MKCYFx/Onam5tFUDe5HPrIqClP02otwXF5
- 45ylRKSpvPQvmbRCFXrYoAUF0ulAMNAEZFlGkIlPq4PnaIBggcNudXOqpzIy4XkK
- 4TiFtOiGu6dDY+wNg99ZyNCFgWmfpX5o+ZuLLCBLuh8CKiMslc21hDsauqtEqbcn
- 9pve196wOsg3s9GMd2Ywf76YQa393JY1gPmCvxZh/RDdLiPoUXsognYsuFltfjDa
- oGs46rmXNV9eTibFDKVHPVIdUw0iJ5afE97p/nQpET/C2FsVnRpT1pFECDpGIedC
- zeVxdONL4+X8sr8PbaZxQqchcV7uMeFe0CeC/EvzxGu4UuHBJfUwZm0hjsV/29t5
- QJ71VJxvKFvdseWw6jBU
- =rBqM
+ wsFcBAABCAAQBQJqA932CRC1aQ7uu5UhlAAA6z8QAAX4iLkMVQdelFgKgNtrDI6x
+ RmraLPJcYbiF8jF0SpK1Hr26exFZAzY3+IrkyRC7YGw0RQX1fkF1c8YEKglM/kyv
+ /ejpHhdLGkc3uhrQCvLqNgwFi1h2qZSZtIPZJcfQ/th/nw9e3AlrUcJYUF406uBg
+ vRGGiebrGHobHkHPj0yyG5fr9NjCLDDRuLM0HM+zyDeIJlO4D/djfUhdzQahroM+
+ WAv5JgYnZq4Klvj9U8I5HUUVntMy/fAjmekY7f7oHAwq+fJoHqE4WVO2Pj7iHffz
+ DspOesJhpmmukMSSAJRNZtrn34Yq/63R+Ym5iD6tiCz9fF7qAcj35YPjrKinLPJl
+ dNmMAwiUjo3vbYqJaOqHXXqmqAw/9QbQfB9mazo8aKOVG4UlG4dWb0MqksGHkfTl
+ 0LYQtZmvoMp6a7AtKcICyA+M1C4rEj00YgywsGsJBiObwh7tQpmntgXpldb45Lev
+ sI5EJOYGbgRqN/Ruo68eNUk5tQWRk/65jMa+invrNzkyyvQqeQtAPWhkDeTbWW13
+ gXLrfhkk97Ae33GUml7ZAV1HXzM0mfAqQQWCC4WB43233koZRHg95V6n9iZcM7d+
+ K4+1F8C8d9Gyi1Kv4NsYz49wg5vjDJyf4H4WmT34zWCUl/nK2fR0xxFTv2uWmJUR
+ 9iZiIwUSZ/+gOJtonjl1
+ =taO5
  -----END PGP SIGNATURE-----
  
 
-Update pain.html
+Rename aima-article-ai-in-medicine.htm to aima-article-ai-in-medicine.html
