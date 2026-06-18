@@ -6,5 +6,106 @@
     "persona": "joselito",
     "posted_at": "2026-06-18T12:10:06",
     "analytics_collected": false
+  },
+  {
+    "post_id": "urn:li:share:7467419831055708163",
+    "article": "aima-article-token-bill-011.html",
+    "title": "The Token Bill: How AI Overspending Is Rewriting the Rules of Tech",
+    "persona": "joselito",
+    "posted_at": "2026-06-01T10:30:00",
+    "analytics_collected": false
+  },
+  {
+    "post_id": "urn:li:share:7462638084791320576",
+    "article": "aima-article-anthropomorphization-trap-010.html",
+    "title": "The Anthropomorphization Trap: What Happened When We Started Talking to Machines",
+    "persona": "joselito",
+    "posted_at": "2026-05-20T10:30:00",
+    "analytics_collected": false
+  },
+  {
+    "post_id": "urn:li:share:7461827804377260032",
+    "article": "aima-article-future-of-media-009.html",
+    "title": "After the Curtain Falls: Media, Learning, and the AI Disruption",
+    "persona": "joselito",
+    "posted_at": "2026-05-16T10:30:00",
+    "analytics_collected": false
+  },
+  {
+    "post_id": "urn:li:share:7460154618765828097",
+    "article": "aima-article-ai-in-medicine-008.html",
+    "title": "The Healing Machine: AI and the Future of Medicine",
+    "persona": "joselito",
+    "posted_at": "2026-05-12T10:30:00",
+    "analytics_collected": false
+  },
+  {
+    "post_id": "urn:li:share:7455112974899515392",
+    "article": "aima-article-ethics-and-ai-006.html",
+    "title": "The Algorithm and the Soul: Ethics, AI, and the Future We Choose",
+    "persona": "joselito",
+    "posted_at": "2026-04-28T10:30:00",
+    "analytics_collected": false
+  },
+  {
+    "post_id": "urn:li:share:7452249159287578624",
+    "article": "aima-article-ai-workforce-005.html",
+    "title": "Displaced, Disrupted, and Determined: AI and the American Workforce",
+    "persona": "joselito",
+    "posted_at": "2026-04-20T10:30:00",
+    "analytics_collected": false
+  },
+  {
+    "post_id": "urn:li:share:7452083622045515776",
+    "article": "aima-article-boycott-or-bigotry-004.html",
+    "title": "Boycott or Bigotry: The Backlash Against AI and What It Really Means",
+    "persona": "joselito",
+    "posted_at": "2026-03-23T10:30:00",
+    "analytics_collected": false
+  },
+  {
+    "post_id": null,
+    "article": "aima-articles-rogue-ai-agents-007.html",
+    "title": "When Agents Go Rogue: Is AI Programming Its Own Survival?",
+    "persona": "joselito",
+    "posted_at": "2026-05-05T10:30:00",
+    "analytics_collected": false,
+    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+  },
+  {
+    "post_id": null,
+    "article": "aima-article-algorithm-of-atrocity-012.html",
+    "title": "The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both",
+    "persona": "joselito",
+    "posted_at": "2026-06-04T10:30:00",
+    "analytics_collected": false,
+    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+  },
+  {
+    "post_id": null,
+    "article": "aima-article-future-of-creative-production-001.html",
+    "title": "The Future of Creative Production in the Age of AI",
+    "persona": "joselito",
+    "posted_at": "2026-03-21T10:30:00",
+    "analytics_collected": false,
+    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+  },
+  {
+    "post_id": null,
+    "article": "aima-article-5k-music-video-blueprint-002.html",
+    "title": "The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget",
+    "persona": "joselito",
+    "posted_at": "2026-03-21T10:30:00",
+    "analytics_collected": false,
+    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+  },
+  {
+    "post_id": null,
+    "article": "aima-article-n8n-content-pipeline-003.html",
+    "title": "Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide",
+    "persona": "joselito",
+    "posted_at": "2026-03-23T10:30:00",
+    "analytics_collected": false,
+    "note": "post_id unknown — backfill manually if LinkedIn URL found"
   }
 ]
