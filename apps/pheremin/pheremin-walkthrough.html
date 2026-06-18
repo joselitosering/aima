@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHEREMIN 1.5 — Walkthrough Overlay</title>
+<style>
+  /* ─── Base Reset ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d0a14;
+    font-family: 'Courier New', monospace;
+    color: #e0d6f0;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ─── Walkthrough Overlay ─── */
+  #wt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: all;
+    /* full-page blur via backdrop-filter */
+    backdrop-filter: blur(6px) brightness(0.35);
+    -webkit-backdrop-filter: blur(6px) brightness(0.35);
+    background: rgba(10, 6, 20, 0.55);
+    transition: opacity 0.4s ease;
+  }
+
+  /* The "spotlight" cutout — a CSS clip-path hole punched via SVG mask */
+  #wt-spotlight {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+    /* will be set by JS */
+  }
+
+  /* Spotlight highlight box drawn as a separate non-blurring layer */
+  #wt-highlight {
+    position: fixed;
+    z-index: 10001;
+    pointer-events: none;
+    border: 2px solid rgba(160, 100, 255, 0.9);
+    border-radius: 6px;
+    box-shadow:
+      0 0 0 4000px rgba(8, 4, 18, 0.72),
+      0 0 24px 6px rgba(160, 100, 255, 0.45),
+      inset 0 0 20px rgba(160, 100, 255, 0.1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* backdrop-filter only on the unblurred region */
+    backdrop-filter: blur(0px) brightness(1.15);
+    -webkit-backdrop-filter: blur(0px) brightness(1.15);
+  }
+
+  /* ─── Callout Popup ─── */
+  .wt-callout {
+    position: fixed;
+    z-index: 10003;
+    background: rgba(18, 10, 32, 0.97);
+    border: 1px solid rgba(160, 100, 255, 0.6);
+    border-radius: 10px;
+    padding: 18px 20px 16px;
+    max-width: 320px;
+    min-width: 260px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.7), 0 0 20px rgba(160,100,255,0.2);
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .wt-callout.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .wt-callout-tag {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(160,100,255,0.7);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  .wt-callout-step {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(200,160,255,0.5);
+    float: right;
+    margin-top: -20px;
+    margin-bottom: 6px;
+  }
+
+  .wt-callout h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .wt-callout p {
+    font-size: 12px;
+    line-height: 1.65;
+    color: rgba(220,210,240,0.82);
+    margin-bottom: 10px;
+  }
+
+  .wt-callout ul {
+    list-style: none;
+    margin-bottom: 14px;
+  }
+  .wt-callout ul li {
+    font-size: 11px;
+    color: rgba(200,180,240,0.75);
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .wt-callout ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: rgba(160,100,255,0.9);
+    font-size: 14px;
+    top: 1px;
+  }
+
+  /* Arrow connector */
+  .wt-callout::before {
+    content: '';
+    position: absolute;
+    width: 0; height: 0;
+    border: 8px solid transparent;
+  }
+  .wt-callout.arrow-top::before {
+    bottom: 100%;
+    left: 32px;
+    border-bottom-color: rgba(160,100,255,0.6);
+    border-top: none;
+    margin-bottom: -1px;
+  }
+  .wt-callout.arrow-bottom::before {
+    top: 100%;
+    left: 32px;
+    border-top-color: rgba(160,100,255,0.6);
+    border-bottom: none;
+    margin-top: -1px;
+  }
+  .wt-callout.arrow-left::before {
+    right: 100%;
+    top: 20px;
+    border-right-color: rgba(160,100,255,0.6);
+    border-left: none;
+    margin-right: -1px;
+  }
+  .wt-callout.arrow-right::before {
+    left: 100%;
+    top: 20px;
+    border-left-color: rgba(160,100,255,0.6);
+    border-right: none;
+    margin-left: -1px;
+  }
+
+  /* ─── Navigation controls ─── */
+  #wt-nav {
+    position: fixed;
+    z-index: 10004;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(14, 8, 26, 0.92);
+    border: 1px solid rgba(160,100,255,0.35);
+    border-radius: 40px;
+    padding: 10px 22px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  }
+
+  #wt-nav button {
+    background: none;
+    border: 1px solid rgba(160,100,255,0.5);
+    color: rgba(200,160,255,0.9);
+    border-radius: 24px;
+    padding: 6px 18px;
+    font-family: inherit;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  #wt-nav button:hover {
+    background: rgba(160,100,255,0.2);
+    border-color: rgba(200,140,255,0.8);
+    color: #fff;
+  }
+  #wt-nav button:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+  #wt-nav button#wt-next {
+    background: rgba(130,60,230,0.25);
+    border-color: rgba(160,100,255,0.8);
+    color: #e8d6ff;
+  }
+  #wt-nav button#wt-next:hover {
+    background: rgba(130,60,230,0.5);
+  }
+
+  .wt-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .wt-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(160,100,255,0.25);
+    border: 1px solid rgba(160,100,255,0.4);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .wt-dot.active {
+    background: rgba(160,100,255,0.9);
+    box-shadow: 0 0 6px rgba(160,100,255,0.6);
+    transform: scale(1.3);
+  }
+
+  /* ─── Close button ─── */
+  #wt-close {
+    position: fixed;
+    z-index: 10005;
+    top: 18px;
+    right: 22px;
+    width: 34px;
+    height: 34px;
+    background: rgba(18,10,32,0.9);
+    border: 1px solid rgba(160,100,255,0.4);
+    border-radius: 50%;
+    color: rgba(200,160,255,0.8);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  #wt-close:hover {
+    background: rgba(130,60,230,0.4);
+    border-color: rgba(200,140,255,0.9);
+    color: #fff;
+  }
+
+  /* ─── Fade-out animation ─── */
+  #wt-overlay.fade-out,
+  #wt-highlight.fade-out,
+  #wt-nav.fade-out,
+  #wt-close.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .wt-callout.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  /* ─── Intro screen ─── */
+  #wt-intro {
+    position: fixed;
+    z-index: 10010;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    pointer-events: all;
+  }
+  #wt-intro .intro-label {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(160,100,255,0.65);
+  }
+  #wt-intro h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+  }
+  #wt-intro p {
+    font-size: 13px;
+    color: rgba(200,180,240,0.7);
+    text-align: center;
+    max-width: 380px;
+    line-height: 1.65;
+  }
+  #wt-begin {
+    margin-top: 12px;
+    background: rgba(130,60,230,0.3);
+    border: 1px solid rgba(160,100,255,0.8);
+    color: #e8d6ff;
+    border-radius: 30px;
+    padding: 12px 36px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  #wt-begin:hover {
+    background: rgba(130,60,230,0.55);
+    box-shadow: 0 0 20px rgba(160,100,255,0.4);
+  }
+  #wt-skip-intro {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(160,100,255,0.45);
+    cursor: pointer;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    font-family: inherit;
+    transition: color 0.2s;
+  }
+  #wt-skip-intro:hover { color: rgba(160,100,255,0.8); }
+
+  /* hide intro after dismissal */
+  #wt-intro.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     THE OVERLAY SYSTEM
+     ═══════════════════════════════════════════════ -->
+<div id="wt-overlay"></div>
+<div id="wt-highlight"></div>
+
+<!-- Close button -->
+<button id="wt-close" title="Close walkthrough">✕</button>
+
+<!-- Callout cards (one per step, hidden by default) -->
+<div class="wt-callout" id="callout-0">
+  <div class="wt-callout-tag">Step 1 of 5</div>
+  <h3>SOUND</h3>
+  <p>Configure your instrument before playing.</p>
+  <ul>
+    <li>Press <strong>START ENGINE</strong> to activate camera access</li>
+    <li>Choose a <strong>Scale</strong> (e.g. Pentatonic Minor)</li>
+    <li>Select a <strong>Root</strong> note (e.g. C)</li>
+    <li>Pick a <strong>Wave Type</strong> — sawtooth, square, triangle, or sine</li>
+  </ul>
+</div>
+
+<div class="wt-callout" id="callout-1">
+  <div class="wt-callout-tag">Step 2 of 5</div>
+  <h3>CANVAS</h3>
+  <p>Your hands and face are your instrument.</p>
+  <ul>
+    <li><strong>Gesture nodes</strong> track your hand skeleton in real time</li>
+    <li><strong>Pinch</strong> — touch thumb to finger to trigger notes</li>
+    <li>Move your hand along the <strong>X axis</strong> to change pitch</li>
+    <li>Move along the <strong>Y axis</strong> to sweep the filter</li>
+    <li><strong>Keys</strong> overlay shows the current scale mapping</li>
+  </ul>
+</div>
+
+<div class="wt-callout" id="callout-2">
+  <div class="wt-callout-tag">Step 3 of 5</div>
+  <h3>METERS</h3>
+  <p>Live readouts of your sound and performance.</p>
+  <ul>
+    <li><strong>Analysis</strong> — waveform + spectrum visualiser</li>
+    <li><strong>Modulators</strong> — mouth, smile & brow expression knobs; cutoff & tilt-bend sliders</li>
+    <li><strong>Channels</strong> — CH-1 LIVE, CH-2 IDLE, CH-3 CHORD status</li>
+  </ul>
+</div>
+
+<div class="wt-callout" id="callout-3">
+  <div class="wt-callout-tag">Step 4 of 5</div>
+  <h3>TOGGLES</h3>
+  <p>Control what gets rendered over the camera feed.</p>
+  <ul>
+    <li><strong>Ghost</strong> — faint body outline behind the canvas</li>
+    <li><strong>Skeleton</strong> — draw the full hand/body rig</li>
+    <li><strong>Face Filter</strong> — enable facial expression tracking overlay</li>
+  </ul>
+</div>
+
+<div class="wt-callout" id="callout-4">
+  <div class="wt-callout-tag">Step 5 of 5</div>
+  <h3>START</h3>
+  <p>Sign on with a gesture.</p>
+  <ul>
+    <li>Point your finger at the <strong>START</strong> button on screen</li>
+    <li>Hold briefly to activate — the engine will go <strong>LIVE</strong></li>
+    <li>You're now playing PHEREMIN</li>
+  </ul>
+</div>
+
+<!-- Navigation bar -->
+<div id="wt-nav">
+  <button id="wt-prev" disabled>← PREV</button>
+  <div class="wt-dots">
+    <div class="wt-dot active" data-step="0"></div>
+    <div class="wt-dot" data-step="1"></div>
+    <div class="wt-dot" data-step="2"></div>
+    <div class="wt-dot" data-step="3"></div>
+    <div class="wt-dot" data-step="4"></div>
+  </div>
+  <button id="wt-next">NEXT →</button>
+</div>
+
+<!-- Intro screen -->
+<div id="wt-intro">
+  <div class="intro-label">PHEREMIN 1.5 · AIMA PRODUCTIONS</div>
+  <h2>Welcome to<br>PHEREMIN</h2>
+  <p>A gesture-driven theremin synthesizer. This 5-step walkthrough will guide you through the controls.</p>
+  <button id="wt-begin">BEGIN TOUR</button>
+  <button id="wt-skip-intro">Skip</button>
+</div>
+
+<script>
+  // ─────────────────────────────────────────────────────────────────────────
+  // STEP DEFINITIONS
+  // Each step: id of callout, highlight region, callout arrow direction,
+  // callout placement anchor, and callout offset from highlight box.
+  //
+  // Regions are defined as percentages of viewport so they work at
+  // any resolution. The coordinates below are tuned to the PHEREMIN UI
+  // as visible in the screenshot (1440×720 layout proportions).
+  //
+  //  Region format: { left%, top%, right%, bottom% }  (0–100 of viewport)
+  // ─────────────────────────────────────────────────────────────────────────
+
+  const STEPS = [
+    {
+      id: 'callout-0',
+      label: 'SOUND',
+      // Control bar: START button + Scale + Root + Wave type
+      region: { lp: 2, tp: 10, rp: 70, bp: 21 },
+      arrow: 'arrow-top',
+      popAnchor: 'below-left',
+    },
+    {
+      id: 'callout-1',
+      label: 'CANVAS',
+      // Video canvas area
+      region: { lp: 2, tp: 22, rp: 66, bp: 72 },
+      arrow: 'arrow-right',
+      popAnchor: 'left',
+    },
+    {
+      id: 'callout-2',
+      label: 'METERS',
+      // Telemetry rack (Analysis + Modulators + Channels)
+      region: { lp: 66, tp: 18, rp: 83, bp: 72 },
+      arrow: 'arrow-left',
+      popAnchor: 'right',
+    },
+    {
+      id: 'callout-3',
+      label: 'TOGGLES',
+      // Ghost + Skeleton + Face Filter toggles (top right)
+      region: { lp: 60, tp: 10, rp: 83, bp: 21 },
+      arrow: 'arrow-top',
+      popAnchor: 'below-right',
+    },
+    {
+      id: 'callout-4',
+      label: 'START',
+      // START / STOP button
+      region: { lp: 2, tp: 10, rp: 9, bp: 21 },
+      arrow: 'arrow-top',
+      popAnchor: 'below-left',
+    },
+  ];
+
+  let currentStep = -1; // -1 = intro visible
+  const overlay   = document.getElementById('wt-overlay');
+  const highlight = document.getElementById('wt-highlight');
+  const navBar    = document.getElementById('wt-nav');
+  const prevBtn   = document.getElementById('wt-prev');
+  const nextBtn   = document.getElementById('wt-next');
+  const closeBtn  = document.getElementById('wt-close');
+  const intro     = document.getElementById('wt-intro');
+  const dots      = document.querySelectorAll('.wt-dot');
+  const callouts  = STEPS.map(s => document.getElementById(s.id));
+
+  // ── helpers ───────────────────────────────────────────────────────────
+  function vw(pct) { return window.innerWidth  * pct / 100; }
+  function vh(pct) { return window.innerHeight * pct / 100; }
+
+  function regionPx(r) {
+    return {
+      left:   vw(r.lp),
+      top:    vh(r.tp),
+      right:  vw(r.rp),
+      bottom: vh(r.bp),
+      width:  vw(r.rp - r.lp),
+      height: vh(r.bp - r.tp),
+    };
+  }
+
+  function positionHighlight(px) {
+    const pad = 8;
+    highlight.style.left   = (px.left   - pad) + 'px';
+    highlight.style.top    = (px.top    - pad) + 'px';
+    highlight.style.width  = (px.width  + pad * 2) + 'px';
+    highlight.style.height = (px.height + pad * 2) + 'px';
+  }
+
+  function positionCallout(callout, step, px) {
+    const pad = 18;
+    const w   = callout.offsetWidth  || 280;
+    const h   = callout.offsetHeight || 200;
+
+    // Remove old arrow classes
+    callout.classList.remove('arrow-top','arrow-bottom','arrow-left','arrow-right');
+    callout.classList.add(step.arrow);
+
+    const anchor = step.popAnchor;
+    let left, top;
+
+    if (anchor === 'below-left') {
+      left = px.left - 8;
+      top  = px.bottom + pad + 16;
+    } else if (anchor === 'below-right') {
+      left = px.right - w + 8;
+      top  = px.bottom + pad + 16;
+    } else if (anchor === 'above-left') {
+      left = px.left - 8;
+      top  = px.top - h - pad - 16;
+    } else if (anchor === 'above-right') {
+      left = px.right - w + 8;
+      top  = px.top - h - pad - 16;
+    } else if (anchor === 'right') {
+      // callout sits to the LEFT of the highlight
+      left = px.left - w - pad - 16;
+      top  = px.top;
+    } else if (anchor === 'left') {
+      // callout sits to the RIGHT of the highlight
+      left = px.right + pad + 16;
+      top  = px.top;
+    } else {
+      left = px.left;
+      top  = px.bottom + pad;
+    }
+
+    // Clamp to viewport
+    const vWidth  = window.innerWidth;
+    const vHeight = window.innerHeight;
+    left = Math.max(12, Math.min(left, vWidth  - w - 12));
+    top  = Math.max(12, Math.min(top,  vHeight - h - 80));
+
+    callout.style.left = left + 'px';
+    callout.style.top  = top  + 'px';
+  }
+
+  // ── show a step ───────────────────────────────────────────────────────
+  function showStep(n) {
+    // Hide all callouts
+    callouts.forEach(c => {
+      c.classList.remove('active');
+    });
+
+    // Update dots
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === n);
+    });
+
+    // Update nav buttons
+    prevBtn.disabled = (n === 0);
+    nextBtn.textContent = (n === STEPS.length - 1) ? 'FINISH ✓' : 'NEXT →';
+
+    const step    = STEPS[n];
+    const callout = callouts[n];
+    const px      = regionPx(step.region);
+
+    positionHighlight(px);
+
+    // Short delay so highlight transition is visible before callout appears
+    setTimeout(() => {
+      positionCallout(callout, step, px);
+      callout.classList.add('active');
+    }, 220);
+
+    currentStep = n;
+  }
+
+  // ── close the walkthrough ─────────────────────────────────────────────
+  function closeWalkthrough() {
+    [overlay, highlight, navBar, closeBtn].forEach(el => el.classList.add('fade-out'));
+    callouts.forEach(c => c.classList.add('fade-out'));
+    setTimeout(() => {
+      [overlay, highlight, navBar, closeBtn, ...callouts].forEach(el => {
+        el.style.display = 'none';
+      });
+    }, 520);
+  }
+
+  // ── events ────────────────────────────────────────────────────────────
+  document.getElementById('wt-begin').addEventListener('click', () => {
+    intro.classList.add('hidden');
+    highlight.style.opacity = '1';
+    navBar.style.opacity    = '1';
+    closeBtn.style.opacity  = '1';
+    setTimeout(() => showStep(0), 400);
+  });
+
+  document.getElementById('wt-skip-intro').addEventListener('click', closeWalkthrough);
+  closeBtn.addEventListener('click', closeWalkthrough);
+
+  nextBtn.addEventListener('click', () => {
+    if (currentStep < STEPS.length - 1) {
+      showStep(currentStep + 1);
+    } else {
+      closeWalkthrough();
+    }
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentStep > 0) showStep(currentStep - 1);
+  });
+
+  dots.forEach((d, i) => {
+    d.addEventListener('click', () => {
+      if (currentStep >= 0) showStep(i);
+    });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (currentStep < 0) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextBtn.click();
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prevBtn.click();
+    if (e.key === 'Escape') closeBtn.click();
+  });
+
+  // Re-position on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (currentStep >= 0) showStep(currentStep);
+    }, 120);
+  });
+
+  // Initially hide highlight / nav until intro dismissed
+  highlight.style.opacity = '0';
+  navBar.style.opacity    = '0';
+  closeBtn.style.opacity  = '0';
+</script>
+</body>
+</html>

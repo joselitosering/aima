@@ -1,0 +1,111 @@
+2026-06-18 10:53:17,476 [INFO] ==================================================
+2026-06-18 10:53:17,477 [INFO] Pipeline started at 2026-06-18 10:53:17
+2026-06-18 10:53:17,477 [INFO] Scanning articles folder...
+2026-06-18 10:53:19,135 [INFO] Found 13 new article(s). Posting to LinkedIn...
+2026-06-18 10:53:19,136 [INFO]   Posting: aima-article-5k-music-video-blueprint-002.html
+2026-06-18 10:53:19,329 [ERROR]   Failed: aima-article-5k-music-video-blueprint-002.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:19,329 [INFO]   Posting: aima-article-ai-in-medicine-008.html
+2026-06-18 10:53:19,614 [ERROR]   Failed: aima-article-ai-in-medicine-008.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:19,615 [INFO]   Posting: aima-article-ai-workforce-005.html
+2026-06-18 10:53:19,769 [ERROR]   Failed: aima-article-ai-workforce-005.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:19,769 [INFO]   Posting: aima-article-algorithm-of-atrocity-012.html
+2026-06-18 10:53:20,148 [ERROR]   Failed: aima-article-algorithm-of-atrocity-012.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:20,149 [INFO]   Posting: aima-article-anthropomorphization-trap-010.html
+2026-06-18 10:53:20,295 [ERROR]   Failed: aima-article-anthropomorphization-trap-010.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:20,295 [INFO]   Posting: aima-article-boycott-or-bigotry-004.html
+2026-06-18 10:53:20,589 [ERROR]   Failed: aima-article-boycott-or-bigotry-004.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:20,589 [INFO]   Posting: aima-article-ethics-and-ai-006.html
+2026-06-18 10:53:20,949 [ERROR]   Failed: aima-article-ethics-and-ai-006.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:20,950 [INFO]   Posting: aima-article-future-of-creative-production-001.html
+2026-06-18 10:53:21,111 [ERROR]   Failed: aima-article-future-of-creative-production-001.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:21,112 [INFO]   Posting: aima-article-future-of-media-009.html
+2026-06-18 10:53:21,259 [ERROR]   Failed: aima-article-future-of-media-009.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:21,259 [INFO]   Posting: aima-article-global-south-ai-gap-013.html
+2026-06-18 10:53:21,590 [ERROR]   Failed: aima-article-global-south-ai-gap-013.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:21,590 [INFO]   Posting: aima-article-n8n-content-pipeline-003.html
+2026-06-18 10:53:21,732 [ERROR]   Failed: aima-article-n8n-content-pipeline-003.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:21,733 [INFO]   Posting: aima-article-token-bill-011.html
+2026-06-18 10:53:21,867 [ERROR]   Failed: aima-article-token-bill-011.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:21,867 [INFO]   Posting: aima-articles-rogue-ai-agents-007.html
+2026-06-18 10:53:22,007 [ERROR]   Failed: aima-articles-rogue-ai-agents-007.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:53:22,007 [INFO] Done. 0/13 posted successfully.
+2026-06-18 10:54:02,303 [INFO] ==================================================
+2026-06-18 10:54:02,304 [INFO] Pipeline started at 2026-06-18 10:54:02
+2026-06-18 10:54:02,304 [INFO] Scanning articles folder...
+2026-06-18 10:54:02,320 [INFO] Found 13 new article(s). Posting to LinkedIn...
+2026-06-18 10:54:02,320 [INFO]   Posting: aima-article-5k-music-video-blueprint-002.html
+2026-06-18 10:54:02,736 [ERROR]   Failed: aima-article-5k-music-video-blueprint-002.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:02,736 [INFO]   Posting: aima-article-ai-in-medicine-008.html
+2026-06-18 10:54:03,000 [ERROR]   Failed: aima-article-ai-in-medicine-008.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:03,000 [INFO]   Posting: aima-article-ai-workforce-005.html
+2026-06-18 10:54:03,142 [ERROR]   Failed: aima-article-ai-workforce-005.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:03,143 [INFO]   Posting: aima-article-algorithm-of-atrocity-012.html
+2026-06-18 10:54:03,280 [ERROR]   Failed: aima-article-algorithm-of-atrocity-012.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:03,280 [INFO]   Posting: aima-article-anthropomorphization-trap-010.html
+2026-06-18 10:54:03,834 [ERROR]   Failed: aima-article-anthropomorphization-trap-010.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:03,835 [INFO]   Posting: aima-article-boycott-or-bigotry-004.html
+2026-06-18 10:54:04,179 [ERROR]   Failed: aima-article-boycott-or-bigotry-004.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:04,179 [INFO]   Posting: aima-article-ethics-and-ai-006.html
+2026-06-18 10:54:04,519 [ERROR]   Failed: aima-article-ethics-and-ai-006.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:04,519 [INFO]   Posting: aima-article-future-of-creative-production-001.html
+2026-06-18 10:54:04,656 [ERROR]   Failed: aima-article-future-of-creative-production-001.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:04,656 [INFO]   Posting: aima-article-future-of-media-009.html
+2026-06-18 10:54:04,951 [ERROR]   Failed: aima-article-future-of-media-009.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:04,951 [INFO]   Posting: aima-article-global-south-ai-gap-013.html
+2026-06-18 10:54:05,234 [ERROR]   Failed: aima-article-global-south-ai-gap-013.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:05,234 [INFO]   Posting: aima-article-n8n-content-pipeline-003.html
+2026-06-18 10:54:05,511 [ERROR]   Failed: aima-article-n8n-content-pipeline-003.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:05,511 [INFO]   Posting: aima-article-token-bill-011.html
+2026-06-18 10:54:05,777 [ERROR]   Failed: aima-article-token-bill-011.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:05,777 [INFO]   Posting: aima-articles-rogue-ai-agents-007.html
+2026-06-18 10:54:06,172 [ERROR]   Failed: aima-articles-rogue-ai-agents-007.html — HTTP Error 400: Bad Request
+2026-06-18 10:54:06,172 [INFO] Done. 0/13 posted successfully.
+2026-06-18 10:54:41,084 [INFO] ==================================================
+2026-06-18 10:54:41,085 [INFO] Pipeline started at 2026-06-18 10:54:41
+2026-06-18 10:54:41,086 [INFO] Scanning articles folder...
+2026-06-18 10:54:41,099 [INFO] Found 13 new article(s). Posting to LinkedIn...
+2026-06-18 10:54:41,099 [INFO]   Posting: aima-article-5k-music-video-blueprint-002.html
+2026-06-18 10:54:41,293 [ERROR]   Failed: aima-article-5k-music-video-blueprint-002.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:41,293 [INFO]   Posting: aima-article-ai-in-medicine-008.html
+2026-06-18 10:54:41,570 [ERROR]   Failed: aima-article-ai-in-medicine-008.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:41,571 [INFO]   Posting: aima-article-ai-workforce-005.html
+2026-06-18 10:54:41,734 [ERROR]   Failed: aima-article-ai-workforce-005.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:41,734 [INFO]   Posting: aima-article-algorithm-of-atrocity-012.html
+2026-06-18 10:54:42,016 [ERROR]   Failed: aima-article-algorithm-of-atrocity-012.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:42,016 [INFO]   Posting: aima-article-anthropomorphization-trap-010.html
+2026-06-18 10:54:42,499 [ERROR]   Failed: aima-article-anthropomorphization-trap-010.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:42,499 [INFO]   Posting: aima-article-boycott-or-bigotry-004.html
+2026-06-18 10:54:42,777 [ERROR]   Failed: aima-article-boycott-or-bigotry-004.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:42,777 [INFO]   Posting: aima-article-ethics-and-ai-006.html
+2026-06-18 10:54:42,942 [ERROR]   Failed: aima-article-ethics-and-ai-006.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:42,942 [INFO]   Posting: aima-article-future-of-creative-production-001.html
+2026-06-18 10:54:43,457 [ERROR]   Failed: aima-article-future-of-creative-production-001.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:43,457 [INFO]   Posting: aima-article-future-of-media-009.html
+2026-06-18 10:54:43,614 [ERROR]   Failed: aima-article-future-of-media-009.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:43,614 [INFO]   Posting: aima-article-global-south-ai-gap-013.html
+2026-06-18 10:54:43,770 [ERROR]   Failed: aima-article-global-south-ai-gap-013.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:43,770 [INFO]   Posting: aima-article-n8n-content-pipeline-003.html
+2026-06-18 10:54:43,948 [ERROR]   Failed: aima-article-n8n-content-pipeline-003.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:43,948 [INFO]   Posting: aima-article-token-bill-011.html
+2026-06-18 10:54:44,094 [ERROR]   Failed: aima-article-token-bill-011.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:44,094 [INFO]   Posting: aima-articles-rogue-ai-agents-007.html
+2026-06-18 10:54:44,439 [ERROR]   Failed: aima-articles-rogue-ai-agents-007.html — HTTP Error 426: Upgrade Required
+2026-06-18 10:54:44,439 [INFO] Done. 0/13 posted successfully.
+2026-06-18 10:55:38,277 [INFO] ==================================================
+2026-06-18 10:55:38,277 [INFO] Pipeline started at 2026-06-18 10:55:38
+2026-06-18 10:55:38,277 [INFO] Scanning articles folder...
+2026-06-18 10:55:38,292 [INFO] Found 13 new article(s). Posting to LinkedIn...
+2026-06-18 10:55:38,292 [INFO]   Posting: aima-article-5k-music-video-blueprint-002.html
+2026-06-18 10:55:38,820 [INFO]   Posting: aima-article-ai-in-medicine-008.html
+2026-06-18 10:55:39,288 [INFO]   Posting: aima-article-ai-workforce-005.html
+2026-06-18 10:55:39,786 [INFO]   Posting: aima-article-algorithm-of-atrocity-012.html
+2026-06-18 10:55:40,306 [INFO]   Posting: aima-article-anthropomorphization-trap-010.html
+2026-06-18 10:55:40,919 [INFO]   Posting: aima-article-boycott-or-bigotry-004.html
+2026-06-18 10:55:41,850 [INFO]   Posting: aima-article-ethics-and-ai-006.html
+2026-06-18 10:55:42,403 [INFO]   Posting: aima-article-future-of-creative-production-001.html
+2026-06-18 10:55:42,921 [INFO]   Posting: aima-article-future-of-media-009.html
+2026-06-18 10:55:43,432 [INFO]   Posting: aima-article-global-south-ai-gap-013.html
+2026-06-18 10:55:43,987 [INFO]   Posting: aima-article-n8n-content-pipeline-003.html
+2026-06-18 10:55:44,740 [INFO]   Posting: aima-article-token-bill-011.html
+2026-06-18 10:55:45,065 [INFO]   Posting: aima-articles-rogue-ai-agents-007.html
+2026-06-18 10:55:45,421 [INFO] Done. 13/13 posted successfully.
