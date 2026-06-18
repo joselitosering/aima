@@ -167,8 +167,34 @@ def collect_pending_analytics(verbose=True):
         save_post_log(log)
         if verbose:
             print(f"  Analytics collected for {collected} post(s). Saved to post_analytics.csv.")
+        _git_push_data()
 
     return collected
+
+
+def _git_push_data():
+    """Commit and push post_log.json + post_analytics.csv so GitHub Pages serves fresh data."""
+    import subprocess
+    repo_root = Path(__file__).parent.parent
+    files = [
+        str(Path(__file__).parent / "post_log.json"),
+        str(Path(__file__).parent / "post_analytics.csv"),
+    ]
+    try:
+        subprocess.run(["git", "add"] + files, cwd=repo_root, check=True, capture_output=True)
+        result = subprocess.run(
+            ["git", "diff", "--cached", "--quiet"], cwd=repo_root, capture_output=True
+        )
+        if result.returncode == 0:
+            return  # nothing staged
+        subprocess.run(
+            ["git", "commit", "-m", "data: update analytics"],
+            cwd=repo_root, check=True, capture_output=True
+        )
+        subprocess.run(["git", "push", "origin", "main"], cwd=repo_root, check=True, capture_output=True)
+        print("  git push OK: analytics data updated on GitHub")
+    except Exception as e:
+        print(f"  git push failed (non-fatal): {e}")
 
 
 def print_summary():
