@@ -263,6 +263,8 @@ Invoke-RestMethod -Uri "https://script.google.com/macros/s/AKfycbxWATw6f8Lrqgd3S
 
 Confirm `"success": true` in the response, then update the state file.
 
+**LinkedIn hashtags are generated automatically** from the article's `article:category` meta tag and keywords in the title/description. The pipeline maps these to audience-targeted hashtags plus the `#AIMA` and `#AIForGood` brand anchors. No manual hashtag selection needed.
+
 Record the following data in the completion summary so it is ready for logging when requested:
 
 | Field | Value |

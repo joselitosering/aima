@@ -15,8 +15,37 @@ load_dotenv()
 ACCESS_TOKEN = os.getenv("LINKEDIN_ACCESS_TOKEN", "").strip()
 MEMBER_ID    = os.getenv("LINKEDIN_MEMBER_ID", "").strip()
 
-LINKEDIN_API       = "https://api.linkedin.com/v2/ugcPosts"
+LINKEDIN_API        = "https://api.linkedin.com/v2/ugcPosts"
 LINKEDIN_ASSETS_API = "https://api.linkedin.com/v2/assets?action=registerUpload"
+AIMA_COMPANY_PAGE   = "https://www.linkedin.com/company/aimaproductions"
+
+# Hashtag library — brand anchors + audience/topic tags per keyword
+BRAND_TAGS = ["#AIMA", "#AIForGood"]
+
+HASHTAG_MAP = {
+    # Categories
+    "ai society":          ["#AISociety", "#TechForGood", "#DigitalInclusion", "#FutureOfWork"],
+    "ai ethics":           ["#AIEthics", "#ResponsibleAI", "#TechEthics", "#HumanCenteredAI"],
+    "ai healthcare":       ["#HealthTech", "#AIinHealthcare", "#MedicalAI", "#DigitalHealth"],
+    "medicine":            ["#HealthTech", "#AIinHealthcare", "#MedicalAI", "#DigitalHealth"],
+    "creative":            ["#CreativeTech", "#AIArt", "#ContentCreators", "#DigitalCreativity"],
+    "media":               ["#MediaIndustry", "#DigitalMedia", "#ContentStrategy", "#Journalism"],
+    "policy":              ["#AIPolicy", "#TechPolicy", "#DigitalGovernance", "#Regulation"],
+    "workforce":           ["#FutureOfWork", "#AIWorkforce", "#JobMarket", "#CareerDevelopment"],
+    "education":           ["#EdTech", "#AIinEducation", "#LearningAndDevelopment", "#SkillsGap"],
+    "finance":             ["#FinTech", "#AIinFinance", "#WealthManagement", "#InvestmentTech"],
+    "philanthropy":        ["#SocialImpact", "#Philanthropy", "#GenerationalWealth", "#ImpactInvesting"],
+    "global south":        ["#GlobalSouth", "#DigitalEquity", "#EmergingMarkets", "#TechInclusion"],
+    "philippines":         ["#Philippines", "#PhilippinesTech", "#SEAsia", "#AseanTech"],
+    "music":               ["#MusicIndustry", "#MusicTech", "#IndependentArtist", "#AIMusic"],
+    "video":               ["#VideoProduction", "#FilmIndustry", "#ContentCreation", "#Filmmaking"],
+    "agent":               ["#AIAgents", "#Automation", "#GenAI", "#LLM"],
+    "hallucination":       ["#AIEthics", "#ResponsibleAI", "#MachineLearning", "#GenAI"],
+    "bias":                ["#AIBias", "#FairAI", "#AlgorithmicFairness", "#DEI"],
+    "climate":             ["#ClimateAI", "#Sustainability", "#GreenTech", "#ClimateChange"],
+    "security":            ["#CyberSecurity", "#AIThreat", "#DigitalSafety", "#InfoSec"],
+    "startup":             ["#Startups", "#Entrepreneurship", "#VentureCapital", "#Innovation"],
+}
 
 
 # ── Metadata extraction ──────────────────────────────────────────────────────
@@ -47,6 +76,45 @@ def extract_metadata(html_content, filename, html_url):
         source_url = "https://github.com/joselitosering/aima"
 
     return title, description[:700], source_url
+
+
+def generate_hashtags(html_content, title, description):
+    """
+    Build a hashtag list from article content:
+    - Matches category meta tag and title/description keywords against HASHTAG_MAP
+    - Appends BRAND_TAGS
+    - Returns max 10 unique hashtags as a single string
+    """
+    # Pull article category from meta tag
+    cat_m = re.search(
+        r'<meta\s+name=["\']article:category["\']\s+content=["\'](.*?)["\']',
+        html_content, re.IGNORECASE
+    )
+    category = cat_m.group(1).strip().lower() if cat_m else ""
+
+    # Combine all text to scan for keyword matches
+    searchable = f"{category} {title} {description}".lower()
+
+    matched = []
+    for keyword, tags in HASHTAG_MAP.items():
+        if keyword in searchable:
+            matched.extend(tags)
+
+    # Deduplicate, keeping order; cap topic tags at 8 then append brand anchors
+    seen = set()
+    result = []
+    for tag in matched:
+        if tag not in seen:
+            seen.add(tag)
+            result.append(tag)
+        if len(result) >= 8:
+            break
+
+    for tag in BRAND_TAGS:
+        if tag not in seen:
+            result.append(tag)
+
+    return " ".join(result)
 
 
 def extract_og_image(html_content):
@@ -160,11 +228,13 @@ def post_to_linkedin(article):
         print(f"  No og:image found — posting without image.")
 
     # -- Build commentary (always includes article link) ----------------------
+    hashtags = generate_hashtags(article["content"], title, description)
     commentary = (
         f"📖 {title}\n\n"
         f"{description}\n\n"
         f"Read the full article: {source_url}\n\n"
-        f"#AIMA #AI #Philippines #Philanthropy #GenerationalWealth #AIForGood"
+        f"{hashtags}\n\n"
+        f"Follow AIMA: {AIMA_COMPANY_PAGE}"
     )
 
     # -- Build post body -------------------------------------------------------
