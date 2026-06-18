@@ -109,3 +109,25 @@
 2026-06-18 10:55:44,740 [INFO]   Posting: aima-article-token-bill-011.html
 2026-06-18 10:55:45,065 [INFO]   Posting: aima-articles-rogue-ai-agents-007.html
 2026-06-18 10:55:45,421 [INFO] Done. 13/13 posted successfully.
+2026-06-18 11:30:09,115 [INFO] ==================================================
+2026-06-18 11:30:09,116 [INFO] Pipeline started at 2026-06-18 11:30:09
+2026-06-18 11:30:09,116 [INFO] Scanning articles folder...
+2026-06-18 11:30:09,599 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-18 11:30:09,599 [INFO]   Posting: aima-article-global-south-ai-gap-013.html
+2026-06-18 11:30:10,264 [INFO] Done. 1/1 posted successfully.
+2026-06-18 11:45:55,351 [INFO] ==================================================
+2026-06-18 11:45:55,351 [INFO] Pipeline started at 2026-06-18 11:45:55
+2026-06-18 11:45:55,351 [INFO] Scanning articles folder...
+2026-06-18 11:45:55,353 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-18 11:45:55,353 [INFO]   Posting: aima-article-global-south-ai-gap-013.html
+2026-06-18 11:45:55,354 [INFO]   Checking og:image: https://joselitosering.github.io/aima/img/articles/aima-013-global-south-ai-gap.png
+2026-06-18 11:45:55,690 [INFO]   og:image live (0s elapsed): https://joselitosering.github.io/aima/img/articles/aima-013-global-south-ai-gap.png
+2026-06-18 11:45:56,249 [INFO] Done. 1/1 posted successfully.
+2026-06-18 12:10:04,534 [INFO] ==================================================
+2026-06-18 12:10:04,535 [INFO] Pipeline started at 2026-06-18 12:10:04
+2026-06-18 12:10:04,535 [INFO] Scanning articles folder...
+2026-06-18 12:10:04,537 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-18 12:10:04,538 [INFO]   Posting: aima-article-global-south-ai-gap-013.html
+2026-06-18 12:10:04,538 [INFO]   Checking og:image: https://joselitosering.github.io/aima/img/articles/aima-013-global-south-ai-gap.jpg
+2026-06-18 12:10:05,006 [INFO]   og:image live (0s elapsed): https://joselitosering.github.io/aima/img/articles/aima-013-global-south-ai-gap.jpg
+2026-06-18 12:10:06,470 [INFO] Done. 1/1 posted successfully.
