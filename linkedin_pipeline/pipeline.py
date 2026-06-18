@@ -1,13 +1,26 @@
 """
 pipeline.py — Fetches new AIMA articles and posts them to LinkedIn.
 Run manually: python pipeline.py
+
+On each run:
+  1. Collects analytics for any posts that are 48h+ old (non-blocking)
+  2. Deploy-guard: verifies og:image URL is live before posting
+  3. Posts new articles via direct LinkedIn image upload (Option B)
+  4. Logs post IDs to post_log.json for later analytics collection
 """
 
 import sys
+import re
+import time
+import json
 import logging
-from datetime import datetime
+import urllib.request
+import urllib.error
+from datetime import datetime, timezone
+from pathlib import Path
 from github_fetcher import get_new_articles, mark_as_posted
-from linkedin_poster import post_to_linkedin
+from linkedin_poster import post_to_linkedin, extract_metadata, extract_persona
+from analytics_collector import collect_pending_analytics
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,37 +32,14 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-
-def run():
-    log.info("=" * 50)
-    log.info(f"Pipeline started at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
-    try:
-        log.info("Scanning articles folder...")
-        articles, posted = get_new_articles()
-
-        if not articles:
-            log.info("No new articles found. Nothing to post.")
-            return
-
-        log.info(f"Found {len(articles)} new article(s). Posting to LinkedIn...")
-        success_count = 0
-
-        for article in articles:
-            log.info(f"  Posting: {article['name']}")
-            try:
-                post_to_linkedin(article)
-                mark_as_posted(article["name"], posted)
-                success_count += 1
-            except Exception as e:
-                log.error(f"  Failed: {article['name']} — {e}")
-
-        log.info(f"Done. {success_count}/{len(articles)} posted successfully.")
-
-    except Exception as e:
-        log.error(f"Pipeline error: {e}")
-        sys.exit(1)
+IMAGE_WAIT_LIMIT     = 120   # seconds — max wait for og:image to go live
+IMAGE_RETRY_INTERVAL = 30    # seconds between checks
+POST_LOG             = Path(__file__).parent / "post_log.json"
 
 
-if __name__ == "__main__":
-    run()
+# ── Post log helpers ──────────────────────────────────────────────────────────
+
+def load_post_log():
+    if POST_LOG.exists():
+        with open(POST_LOG, encoding="utf-8") as f:
+      
