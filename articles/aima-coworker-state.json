@@ -1,22 +1,33 @@
 {
   "next_article_number": 14,
-  "next_persona": "dawn",
+  "next_track": "joselito",
   "next_article_date": "2026-06-20",
-  "topic_queue": [],
-  "personas": {
-    "dawn": {
-      "full_name": "Dawn Ginhaua",
-      "profile_file": "articles/personas/dawn-ginhaua.md",
-      "post_count": 0,
-      "last_topic": null
-    },
-    "kenji": {
-      "full_name": "Kenji Nakamoto",
-      "profile_file": "articles/personas/kenji-nakamoto.md",
-      "post_count": 0,
-      "last_topic": null
+
+  "joselito": {
+    "next_calendar_index": 1,
+    "post_count": 13,
+    "last_topic": "The Global South AI Gap: Who Gets Left Behind When the Future Arrives"
+  },
+
+  "trending": {
+    "next_persona": "dawn",
+    "topic_queue": [],
+    "personas": {
+      "dawn": {
+        "full_name": "Dawn Ginhaua",
+        "profile_file": "articles/personas/dawn-ginhaua.md",
+        "post_count": 0,
+        "last_topic": null
+      },
+      "kenji": {
+        "full_name": "Kenji Nakamoto",
+        "profile_file": "articles/personas/kenji-nakamoto.md",
+        "post_count": 0,
+        "last_topic": null
+      }
     }
   },
+
   "last_run": "2026-06-18",
   "articles_written": [
     {
@@ -25,9 +36,11 @@
       "filename": "aima-article-global-south-ai-gap-013.html",
       "date": "2026-06-18",
       "category": "AI Society",
-      "persona": "joselito"
+      "author": "Joselito Sering",
+      "track": "joselito"
     }
   ],
+
   "google_sheets_url": "https://docs.google.com/spreadsheets/d/1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs/edit",
   "google_sheets_id": "1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs",
   "google_sheets_tab": "Insights",
