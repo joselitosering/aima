@@ -90,13 +90,12 @@
     "analytics_collected": false
   },
   {
-    "post_id": null,
+    "post_id": "urn:li:share:7473819395870314496",
     "article": "aima-article-5k-music-video-blueprint-002.html",
     "title": "The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget",
     "persona": "joselito",
-    "posted_at": "2026-03-21T10:30:00",
-    "analytics_collected": false,
-    "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
+    "posted_at": "2026-06-19T19:30:02",
+    "analytics_collected": false
   },
   {
     "post_id": null,
