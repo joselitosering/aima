@@ -841,6 +841,7 @@ const LINKEDIN_URLS_BUILTIN = {
   '11': 'https://www.linkedin.com/feed/update/urn%3Ali%3Aactivity%3A7467419831055708163/',
   '12': 'https://www.linkedin.com/feed/update/urn%3Ali%3Aactivity%3A7468456066649903104/',
   '13': 'https://www.linkedin.com/feed/update/urn%3Ali%3Aactivity%3A7473451995576549376/',
+  'D1': 'https://www.linkedin.com/feed/update/urn%3Ali%3Aactivity%3A7473833855087452160/',
 };
 // localStorage manually-saved URLs take precedence over built-ins.
 let linkedinUrls = Object.assign({}, LINKEDIN_URLS_BUILTIN, JSON.parse(localStorage.getItem('aima_linkedin_urls') || '{}'));
@@ -904,7 +905,7 @@ const CALENDAR = [
   { num:36, date:'2026-08-03', title:'Who Controls the Stack? The AI Supply Chain Behind the Revolution',                cat:'AI Business',          read:12, persona:'joselito', published:false, tone:'' },
   { num:37, date:'2026-08-05', title:'Philanthropy 3.0: How AI Agents Could Transform Charitable Giving',                cat:'AI Society',           read:11, persona:'joselito', published:false, tone:'' },
   { num:38, date:'2026-08-07', title:'The Creative Director Is Not Dead: Human Vision in an AI Production World',        cat:'AI Creative',          read:9,  persona:'joselito', published:false, tone:'' },
-  { num:'D1', date:'2026-06-19', title:'TBD — Trending Topic (Dawn)',   cat:'Trending', read:8, persona:'dawn',  published:false, tone:'Sharp, provocative — challenge a corporate assumption. End with a question no one wants to answer.' },
+  { num:'D1', date:'2026-06-19', title:'Your AI Ethics Board Is a Press Release', cat:'AI Ethics', read:8, persona:'dawn', published:true,  tone:'Sharp, provocative — challenge a corporate assumption. End with a question no one wants to answer.' },
   { num:'K1', date:'2026-06-21', title:'TBD — Trending Topic (Kenji)',  cat:'Trending', read:8, persona:'kenji', published:false, tone:'Optimistic deep-dive — one emerging technology, grounded in what it makes possible for real people.' },
   { num:'D2', date:'2026-06-23', title:'TBD — Trending Topic (Dawn)',   cat:'Trending', read:8, persona:'dawn',  published:false, tone:'' },
   { num:'K2', date:'2026-06-25', title:'TBD — Trending Topic (Kenji)',  cat:'Trending', read:8, persona:'kenji', published:false, tone:'' },

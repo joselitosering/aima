@@ -87,7 +87,7 @@ Buckminster Fuller · Carl Sagan · Joseph Campbell · Christopher Hitchens · A
 
 One Twain-caliber sentence per article: wry, precise, slightly devastating. Single sentence. Not repeated.
 
-### Topics Already Covered (Articles 001–012)
+### Topics Already Covered (Articles 001–013 + Guest D1)
 | Article | Topic |
 |---------|-------|
 | 001 | AI creative production workflows (general) |
@@ -102,6 +102,8 @@ One Twain-caliber sentence per article: wry, precise, slightly devastating. Sing
 | 010 | The anthropomorphization trap |
 | 011 | AI energy and carbon costs |
 | 012 | AI in military / surveillance / atrocity |
+| 013 | Global South AI inequality — infrastructure, bias, access gap |
+| D1 (Dawn) | Corporate AI ethics theater — ethics boards as PR, accountability gap |
 
 **Do not repeat these angles.** Build on them if relevant (e.g., go deeper on a sub-topic), but always with a new angle and new research.
 
@@ -177,4 +179,20 @@ TOC sidebar links must match actual H2 `id` attributes in the article body.
 
 ---
 
-*Last updated: June 16, 2026*
+---
+
+## Guest Writer Calendar (D-series: Dawn · K-series: Kenji)
+
+| # | Date | Author | Title | Category | File |
+|---|------|--------|-------|----------|------|
+| D1 | Jun 19, 2026 | Dawn Ginhaua | Your AI Ethics Board Is a Press Release | AI Ethics | aima-article-ethics-theater-014.html |
+| K1 | Jun 21, 2026 | Kenji | TBD — Trending Topic | Trending | — |
+| D2 | Jun 23, 2026 | Dawn Ginhaua | TBD — Trending Topic | Trending | — |
+| K2 | Jun 25, 2026 | Kenji | TBD — Trending Topic | Trending | — |
+| D3 | Jun 27, 2026 | Dawn Ginhaua | TBD — Trending Topic | Trending | — |
+
+Guest articles use article number in filename (D1 used slot 014). The article-manager.html CALENDAR tracks them by D/K series number.
+
+---
+
+*Last updated: June 19, 2026 — Added 013, D1 to topics covered. Added Guest Writer Calendar.*
