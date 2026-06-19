@@ -213,7 +213,7 @@ tr:hover td { background: rgba(0,217,245,0.02); }
 /* ── CALENDAR LIST ── */
 .cal-row {
   display: grid;
-  grid-template-columns: 100px 46px 90px 1fr 200px 120px 60px 90px;
+  grid-template-columns: 100px 46px 90px 1fr 200px 120px 60px 90px 56px;
   gap: 8px; align-items: center;
   padding: 8px 14px;
   border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -315,6 +315,37 @@ code {
   background: rgba(0,217,245,0.1); padding: 1px 5px; border-radius: 3px;
   font-size: 11px; font-family: 'Courier Prime', monospace; color: var(--cyan);
 }
+
+/* ── LINKEDIN + HEAT ── */
+.li-link-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 5px; font-size: 11px;
+  font-weight: 700; font-family: 'Courier Prime', monospace;
+  background: rgba(0,119,181,0.15); color: #4fa3d1; border: 1px solid rgba(0,119,181,0.35);
+  text-decoration: none; cursor: pointer; transition: all 0.15s; line-height: 1;
+}
+.li-link-btn:hover { background: rgba(0,119,181,0.35); color: #7fc3e8; }
+.li-link-empty {
+  background: rgba(255,255,255,0.04) !important;
+  color: var(--muted) !important; border-color: var(--border) !important;
+  font-size: 15px !important;
+}
+.li-link-empty:hover { border-color: rgba(0,119,181,0.35) !important; color: #4fa3d1 !important; background: rgba(0,119,181,0.1) !important; }
+.li-edit-btn {
+  background: transparent; border: none; cursor: pointer;
+  color: var(--muted); font-size: 11px; padding: 2px 1px; line-height: 1;
+  opacity: 0; transition: opacity 0.15s; flex-shrink: 0;
+}
+.cal-row:hover .li-edit-btn { opacity: 1; }
+.cal-li-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 15px; height: 15px; border-radius: 3px; font-size: 9px;
+  font-weight: 700; font-family: 'Courier Prime', monospace; line-height: 1;
+  background: rgba(0,119,181,0.25); color: #4fa3d1; text-decoration: none;
+  border: 1px solid rgba(0,119,181,0.4); flex-shrink: 0;
+}
+.cal-li-icon:hover { background: rgba(0,119,181,0.45); }
+.heat-chip { font-size: 11px; vertical-align: middle; line-height: 1; flex-shrink: 0; }
 
 /* ── SAVE BAR ── */
 #save-bar {
@@ -472,7 +503,7 @@ code {
     <div class="section-block" style="padding:0;overflow:hidden">
       <div class="cal-row header">
         <div>Date</div><div>#</div><div>Writer</div><div>Title</div>
-        <div>Tone / Mood Note</div><div>Category</div><div>Read</div><div>Status</div>
+        <div>Tone / Mood Note</div><div>Category</div><div>Read</div><div>Status</div><div>🔗 LI</div>
       </div>
       <div id="cal-list-body"></div>
     </div>
@@ -785,6 +816,7 @@ let postLog = [];
 let analyticsData = [];
 let ga4Data = [];
 let manualStats = JSON.parse(localStorage.getItem('aima_manual_stats') || '[]');
+let linkedinUrls = JSON.parse(localStorage.getItem('aima_linkedin_urls') || '{}');
 let calListView = true;
 let isDirty = false;
 let charts = {};
@@ -871,6 +903,60 @@ const CALENDAR = [
   { num:'K12',date:'2026-08-04', title:'TBD — Trending Topic (Kenji)',  cat:'Trending', read:8, persona:'kenji', published:false, tone:'' },
   { num:'D13',date:'2026-08-06', title:'TBD — Trending Topic (Dawn)',   cat:'Trending', read:8, persona:'dawn',  published:false, tone:'' },
 ].sort((a,b) => a.date > b.date ? 1 : -1);
+
+// ═══════════════════════════════════════════
+// LINKEDIN URLS
+// ═══════════════════════════════════════════
+function getLinkedinUrl(num) { return linkedinUrls[String(num)] || ''; }
+function saveLinkedinUrl(num, url) {
+  linkedinUrls[String(num)] = url.trim();
+  localStorage.setItem('aima_linkedin_urls', JSON.stringify(linkedinUrls));
+}
+function promptLinkedinUrl(num, title) {
+  const cur = getLinkedinUrl(num);
+  const url = prompt('LinkedIn post URL for:\n"' + title + '"\n', cur);
+  if (url === null) return;
+  saveLinkedinUrl(num, url);
+  renderCalendar();
+}
+
+// ═══════════════════════════════════════════
+// HEAT SCORING
+// ═══════════════════════════════════════════
+function getArticleHeat(item) {
+  if (!analyticsData.length) return null;
+  const num = typeof item.num === 'number' ? String(item.num).padStart(3, '0') : null;
+  if (!num) return null;
+  const match = analyticsData.find(r => r.article && r.article.includes(num));
+  if (!match) return null;
+  const allImps = analyticsData.map(r => +r.impressions || 0).filter(x => x > 0);
+  if (!allImps.length) return null;
+  const maxImp = Math.max(...allImps);
+  const minImp = Math.min(...allImps);
+  const imp = +match.impressions || 0;
+  if (maxImp === minImp) return 0.5;
+  return Math.max(0, Math.min(1, (imp - minImp) / (maxImp - minImp)));
+}
+
+function heatStyle(score) {
+  if (score === null || score === undefined) return { rowBg: '', chip: '', cellStyle: '' };
+  if (score < 0.2) return { rowBg: '', chip: '', cellStyle: '' };
+  if (score < 0.4) return {
+    rowBg: 'background:rgba(200,168,75,0.06)',
+    chip: '<span class="heat-chip" title="Warm performer">🌡️</span>',
+    cellStyle: 'border-color:rgba(200,168,75,0.45);box-shadow:0 0 5px rgba(200,168,75,0.12);'
+  };
+  if (score < 0.65) return {
+    rowBg: 'background:rgba(255,94,32,0.09)',
+    chip: '<span class="heat-chip" title="Hot article">🔥</span>',
+    cellStyle: 'border-color:rgba(255,94,32,0.6);box-shadow:0 0 7px rgba(255,94,32,0.2);'
+  };
+  return {
+    rowBg: 'background:rgba(255,68,85,0.13)',
+    chip: '<span class="heat-chip" title="Top performer — highest attention">🔥🔥</span>',
+    cellStyle: 'border-color:rgba(255,68,85,0.75);box-shadow:0 0 10px rgba(255,68,85,0.25),inset 0 0 10px rgba(255,68,85,0.06);'
+  };
+}
 
 // ═══════════════════════════════════════════
 // PIPELINE BAR
@@ -1161,7 +1247,19 @@ function renderCalList(){
       : `<span class="badge badge-muted">Scheduled</span>`;
     const numDisplay = typeof item.num==='number' ? String(item.num).padStart(3,'0') : item.num;
     const realIdx = CALENDAR.indexOf(item);
-    return `<div class="cal-row ${per.rowClass}${item.published?' published-row':''}">
+    // Heat
+    const heat = getArticleHeat(item);
+    const hs = heatStyle(heat);
+    // LinkedIn
+    const url = getLinkedinUrl(item.num);
+    const shortTitle = escHtml(item.title.slice(0, 50));
+    const liCol = url
+      ? `<div style="display:flex;align-items:center;gap:3px">
+           <a href="${escHtml(url)}" target="_blank" rel="noopener" class="li-link-btn" title="${escHtml(url)}">in</a>
+           <button class="li-edit-btn" onclick="promptLinkedinUrl(${JSON.stringify(item.num)},${JSON.stringify(item.title.slice(0,50))})" title="Edit LinkedIn URL">✎</button>
+         </div>`
+      : `<div><button class="li-link-btn li-link-empty" onclick="promptLinkedinUrl(${JSON.stringify(item.num)},${JSON.stringify(item.title.slice(0,50))})" title="Add LinkedIn post URL">+</button></div>`;
+    return `<div class="cal-row ${per.rowClass}${item.published?' published-row':''}" ${hs.rowBg ? `style="${hs.rowBg}"` : ''}>
       <div><input class="cal-date-edit" value="${item.date}"
         onchange="CALENDAR[${realIdx}].date=this.value;markDirty()" /></div>
       <div style="color:var(--muted);font-weight:700;font-size:11px;font-family:'Courier Prime',monospace">${numDisplay}</div>
@@ -1174,7 +1272,8 @@ function renderCalList(){
         oninput="CALENDAR[${realIdx}].tone=this.value;markDirty()" /></div>
       <div><span class="badge ${CAT_BADGES[item.cat]||'badge-muted'}" style="font-size:9px">${item.cat}</span></div>
       <div style="color:var(--muted);font-family:'Courier Prime',monospace;font-size:11px">${item.read}m</div>
-      <div>${status}</div>
+      <div style="display:flex;align-items:center;gap:4px">${status}${hs.chip}</div>
+      ${liCol}
     </div>`;
   }).join('');
   document.getElementById('cal-list-body').innerHTML = html;
@@ -1202,9 +1301,20 @@ function renderCalMonth(){
       } else {
         const item=items[0];
         const per=PERSONAS[item.persona]||PERSONAS.joselito;
-        html+=`<div class="cal-cell ${per.cellClass}${isToday?' today':''}">
-          <div class="cal-date-num">${d}</div>
-          <div class="cal-event-title">${item.title.split(':')[0].slice(0,32)}${item.title.length>32?'…':''}</div>
+        // Heat
+        const heat=getArticleHeat(item);
+        const hs=heatStyle(heat);
+        const heatInline=hs.cellStyle?`style="${hs.cellStyle}"`:'';
+        // LinkedIn
+        const url=getLinkedinUrl(item.num);
+        const liIcon=url?`<a href="${escHtml(url)}" target="_blank" rel="noopener" class="cal-li-icon" title="Open LinkedIn post">in</a>`:'';
+        const titleSnip=item.title.split(':')[0].slice(0,30)+(item.title.length>30?'…':'');
+        html+=`<div class="cal-cell ${per.cellClass}${isToday?' today':''}" ${heatInline}>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+            <div class="cal-date-num" style="margin-bottom:0">${d}</div>
+            <div style="display:flex;align-items:center;gap:3px">${hs.chip||''}${liIcon}</div>
+          </div>
+          <div class="cal-event-title">${titleSnip}</div>
           <div class="cal-event-persona" style="color:${per.color}">${per.label}</div>
         </div>`;
       }
