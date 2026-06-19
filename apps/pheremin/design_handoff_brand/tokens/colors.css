@@ -1,0 +1,79 @@
+/* ============================================================
+   PHEREMIN — COLOR TOKENS
+   Sampled from the live interface + landing page.
+   A near-black violet "void" stage lit by neon fuchsia, violet,
+   and cyan, with a red/rose signal accent for live performance.
+   ============================================================ */
+:root {
+  /* ---- Void / base surfaces (cool near-black violets) ---- */
+  --void-900: #060410;   /* absolute backdrop behind everything */
+  --void-800: #0a0712;   /* page background */
+  --void-700: #0d0a16;   /* stage / app shell */
+  --void-600: #120c20;   /* raised panel */
+  --void-500: #170f26;   /* panel inner / inputs */
+  --void-400: #1e152f;   /* hovered surface */
+
+  /* ---- Neon brand spectrum ---- */
+  --fuchsia-300: #f5b8ff;
+  --fuchsia-400: #e879f9;  /* PRIMARY — wordmark, active glow */
+  --fuchsia-500: #d633e6;
+  --fuchsia-600: #b21fc4;
+
+  --violet-300: #c8a8ff;
+  --violet-400: #a064ff;   /* SECONDARY — knobs, callouts, focus */
+  --violet-500: #8b3df0;
+  --violet-600: #6d28d9;
+
+  --cyan-400: #22d3ee;     /* TERTIARY — version tag, eye nodes, info */
+  --cyan-500: #0bb6d6;
+
+  /* ---- Signal (live / record / hand-skeleton) ---- */
+  --signal-400: #ff4d4d;   /* hand nodes, LIVE pulse */
+  --signal-500: #ef3b3b;
+  --signal-rose: #f43f5e;
+  --stop-700: #7f1d1d;     /* STOP button fill */
+  --stop-600: #a32626;
+
+  /* ---- Text on void ---- */
+  --text-bright: #ffffff;
+  --text-1: #e6dcf5;       /* primary readable lavender-white */
+  --text-2: #b7a9d4;       /* secondary labels */
+  --text-3: #7d6fa0;       /* muted, axis labels */
+  --text-4: #51466b;       /* faint / disabled */
+
+  /* ---- Lines & borders ---- */
+  --line-1: rgba(160,100,255,0.14);   /* hairline panel border */
+  --line-2: rgba(160,100,255,0.32);   /* emphasized border */
+  --line-3: rgba(232,121,249,0.55);   /* active / focus border */
+  --grid-line: rgba(180,150,230,0.08); /* canvas key grid */
+
+  /* ============================================================
+     SEMANTIC ALIASES — prefer these in components
+     ============================================================ */
+  --bg-page: var(--void-800);
+  --bg-stage: var(--void-700);
+  --surface-panel: var(--void-600);
+  --surface-input: var(--void-500);
+  --surface-hover: var(--void-400);
+
+  --accent: var(--fuchsia-400);
+  --accent-strong: var(--fuchsia-500);
+  --accent-2: var(--violet-400);
+  --accent-info: var(--cyan-400);
+  --accent-live: var(--signal-400);
+
+  --text-body: var(--text-1);
+  --text-label: var(--text-2);
+  --text-muted: var(--text-3);
+  --text-faint: var(--text-4);
+
+  --border-panel: var(--line-1);
+  --border-strong: var(--line-2);
+  --border-focus: var(--line-3);
+
+  /* ---- Signature glows (box/text-shadow recipes) ---- */
+  --glow-fuchsia: 0 0 16px rgba(232,121,249,0.55), 0 0 38px rgba(214,51,230,0.30);
+  --glow-violet: 0 0 14px rgba(160,100,255,0.50), 0 0 30px rgba(139,61,240,0.28);
+  --glow-cyan: 0 0 12px rgba(34,211,238,0.55);
+  --glow-signal: 0 0 14px rgba(255,77,77,0.6), 0 0 30px rgba(239,59,59,0.3);
+}

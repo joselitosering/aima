@@ -920,6 +920,34 @@ function promptLinkedinUrl(num, title) {
   renderCalendar();
 }
 
+/**
+ * Derives LinkedIn post URLs from post_log.json entries.
+ * post_log already has `post_id` (urn:li:share:XXXX) and `article`
+ * (e.g. "aima-article-global-south-ai-gap-013.html").
+ * We extract the article number and build the feed URL — no manual entry needed.
+ * Only fills gaps; never overwrites a manually saved URL.
+ */
+function autoPopulateLinkedinUrls() {
+  let changed = false;
+  postLog.forEach(entry => {
+    const postId = entry.post_id;
+    if (!postId) return;
+    // Extract article number from filename like "aima-article-...-013.html"
+    const articleFile = entry.article || '';
+    const numMatch = articleFile.match(/-(\d{3})\.html$/i);
+    if (!numMatch) return;
+    const num = parseInt(numMatch[1], 10);
+    // Only fill if not already set manually
+    if (getLinkedinUrl(num)) return;
+    const url = `https://www.linkedin.com/feed/update/${postId}/`;
+    linkedinUrls[String(num)] = url;
+    changed = true;
+  });
+  if (changed) {
+    localStorage.setItem('aima_linkedin_urls', JSON.stringify(linkedinUrls));
+  }
+}
+
 // ═══════════════════════════════════════════
 // HEAT SCORING
 // ═══════════════════════════════════════════
@@ -1073,6 +1101,7 @@ async function autoLoadPostLog() {
     const z = document.getElementById('zone-postlog');
     if (z) z.style.borderColor = 'var(--green)';
     document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    autoPopulateLinkedinUrls();
     renderPostLog(); renderOverview();
   } catch {
     setStatus('status-postlog', 'Auto-fetch unavailable — upload manually', 'var(--muted)');
@@ -1106,6 +1135,7 @@ function loadPostLog(event) {
       const z = document.getElementById('zone-postlog');
       if (z) z.style.borderColor = 'var(--green)';
       document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+      autoPopulateLinkedinUrls();
       renderPostLog(); renderOverview();
     } catch { setStatus('status-postlog', '✗ Invalid JSON', 'var(--red)'); }
   };

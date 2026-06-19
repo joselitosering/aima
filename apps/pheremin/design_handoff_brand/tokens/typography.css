@@ -1,0 +1,45 @@
+/* ============================================================
+   PHEREMIN — TYPOGRAPHY TOKENS
+   Three families, all on Google Fonts (the live build's real set):
+   · Shadows Into Light — thin hand-drawn script; the pheremin wordmark rendered as long-exposure light-writing.
+   · Outfit       — geometric sans. UI chrome, buttons, section labels.
+   · JetBrains Mono — telemetry, axis labels, walkthrough body, readouts.
+   · Marcellus    — editorial serif accent for marketing / quotes.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Marcellus&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --font-script: 'Shadows Into Light', 'Brush Script MT', cursive; /* the wordmark — long-exposure light-writing */
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-serif: 'Marcellus', Georgia, serif;
+
+  /* Weights */
+  --w-light: 300;   /* @kind other */
+  --w-regular: 400; /* @kind other */
+  --w-medium: 500;  /* @kind other */
+  --w-semibold: 600;/* @kind other */
+  --w-bold: 700;    /* @kind other */
+
+  /* Type scale (px) — UI runs tight & small; display goes large */
+  --fs-micro: 9px;    /* axis ticks, version chips */
+  --fs-label: 11px;   /* uppercase section labels */
+  --fs-tag: 12px;     /* callout body */
+  --fs-body: 14px;    /* default body */
+  --fs-readout: 16px; /* knob / channel readouts */
+  --fs-h3: 20px;
+  --fs-h2: 28px;
+  --fs-h1: 40px;
+  --fs-display: 64px; /* hero wordmark */
+
+  /* Line heights */
+  --lh-tight: 1.1;  /* @kind other */
+  --lh-snug: 1.35;  /* @kind other */
+  --lh-body: 1.6;   /* @kind other */
+
+  /* Letter spacing — the brand leans on wide, uppercase mono labels */
+  --ls-label: 0.18em; /* @kind other */
+  --ls-wide: 0.3em; /* @kind other */
+  --ls-wordmark: 0.04em;/* @kind other */
+  --ls-normal: 0;       /* @kind other */
+}

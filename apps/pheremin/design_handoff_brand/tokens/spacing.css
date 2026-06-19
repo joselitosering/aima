@@ -1,0 +1,43 @@
+/* ============================================================
+   PHEREMIN — SPACING, RADII, SHADOWS, MOTION
+   ============================================================ */
+:root {
+  /* Spacing scale (4px base) */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radii — panels are softly rounded; chips/inputs a touch tighter */
+  --radius-xs: 4px;
+  --radius-sm: 6px;     /* inputs, toggles, callouts inner */
+  --radius-md: 10px;    /* callout cards, buttons */
+  --radius-lg: 14px;    /* panels, back button */
+  --radius-pill: 999px; /* nav bar, switch tracks */
+
+  /* Elevation — deep, soft drop shadows on a black stage */
+  --shadow-panel: 0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(180,150,230,0.04);
+  --shadow-pop: 0 8px 40px rgba(0,0,0,0.7), 0 0 20px rgba(160,100,255,0.20);
+  --shadow-nav: 0 4px 24px rgba(0,0,0,0.6);
+
+  /* Spotlight ring used by the walkthrough (huge spread = dim everything else) */
+  --spotlight-scrim: 0 0 0 4000px rgba(8,4,18,0.74);
+
+  /* Motion — calm eases, no bounce. Highlight glides; callouts fade-rise. */
+  --ease-glide: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);  /* @kind other */
+  --dur-fast: 0.2s;  /* @kind other */
+  --dur-base: 0.35s; /* @kind other */
+  --dur-slow: 0.5s;  /* @kind other */
+
+  /* Layout */
+  --stage-max: 1600px; /* @kind other */
+  --stage-aspect: 16 / 9; /* @kind other */
+}
