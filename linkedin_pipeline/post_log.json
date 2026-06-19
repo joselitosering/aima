@@ -70,7 +70,7 @@
     "persona": "joselito",
     "posted_at": "2026-05-05T10:30:00",
     "analytics_collected": false,
-    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+    "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
   },
   {
     "post_id": null,
@@ -79,16 +79,15 @@
     "persona": "joselito",
     "posted_at": "2026-06-04T10:30:00",
     "analytics_collected": false,
-    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+    "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
   },
   {
-    "post_id": null,
+    "post_id": "urn:li:share:7473803142543863808",
     "article": "aima-article-future-of-creative-production-001.html",
     "title": "The Future of Creative Production in the Age of AI",
     "persona": "joselito",
-    "posted_at": "2026-03-21T10:30:00",
-    "analytics_collected": false,
-    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+    "posted_at": "2026-06-19T18:25:27",
+    "analytics_collected": false
   },
   {
     "post_id": null,
@@ -97,7 +96,7 @@
     "persona": "joselito",
     "posted_at": "2026-03-21T10:30:00",
     "analytics_collected": false,
-    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+    "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
   },
   {
     "post_id": null,
@@ -106,6 +105,6 @@
     "persona": "joselito",
     "posted_at": "2026-03-23T10:30:00",
     "analytics_collected": false,
-    "note": "post_id unknown — backfill manually if LinkedIn URL found"
+    "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
   }
 ]
