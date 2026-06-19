@@ -113,5 +113,13 @@
     "posted_at": "2026-03-23T10:30:00",
     "analytics_collected": false,
     "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
+  },
+  {
+    "post_id": "urn:li:share:7473830374456860672",
+    "article": "aima-article-ethics-theater-d1.html",
+    "title": "Your AI Ethics Board Is a Press Release &mdash; AIMA Magazine",
+    "persona": "dawn",
+    "posted_at": "2026-06-19T20:13:40",
+    "analytics_collected": false
   }
 ]
