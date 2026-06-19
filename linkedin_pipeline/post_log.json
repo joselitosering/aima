@@ -106,13 +106,12 @@
     "analytics_collected": false
   },
   {
-    "post_id": null,
+    "post_id": "urn:li:share:7473834498938314752",
     "article": "aima-article-n8n-content-pipeline-003.html",
     "title": "Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide",
     "persona": "joselito",
-    "posted_at": "2026-03-23T10:30:00",
-    "analytics_collected": false,
-    "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
+    "posted_at": "2026-06-19T20:30:03",
+    "analytics_collected": false
   },
   {
     "post_id": "urn:li:share:7473830374456860672",
