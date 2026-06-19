@@ -44,7 +44,7 @@
 2. **Write** — save article HTML to `D:\Apps\DevOps\Github\aima\articles\` locally
 3. **Push to GitHub** — `git add`, `git commit`, `git push`
 4. **Wait 2 minutes** — GitHub Pages rebuilds; confirm article URL is live
-5. **Update GS** — submit URL to Google Search Console (Request Indexing)
+5. **Update GS** — pipeline calls Google Sheets App Script automatically (logs article to the AIMA sheet that powers `aima.productions/insights.html`). URL in `articles/aima-coworker-secrets.json`.
 6. **Post to LinkedIn** — run `python pipeline.py --article [path]` from `linkedin_pipeline\`
 7. **Update this file** — move article to LAST PUBLISHED, advance NEXT UP, update article-manager.html
 
