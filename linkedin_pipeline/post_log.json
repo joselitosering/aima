@@ -80,13 +80,12 @@
     "analytics_collected": false
   },
   {
-    "post_id": null,
+    "post_id": "urn:li:share:7473849595018625025",
     "article": "aima-articles-rogue-ai-agents-007.html",
     "title": "When Agents Go Rogue: Is AI Programming Its Own Survival?",
     "persona": "joselito",
-    "posted_at": "2026-05-05T10:30:00",
-    "analytics_collected": false,
-    "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
+    "posted_at": "2026-06-19T21:30:03",
+    "analytics_collected": false
   },
   {
     "post_id": null,
