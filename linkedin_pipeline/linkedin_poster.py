@@ -1,10 +1,12 @@
 """
-linkedin_poster.py — Posts an AIMA article to LinkedIn (personal profile).
+linkedin_poster.py — Posts an AIMA article to the AIMA LinkedIn company page.
 
-Option B: Direct image upload via LinkedIn Assets API.
-- Uploads the cover image directly to LinkedIn (bypasses OG scraping / caching).
-- Posts as shareMediaCategory: "IMAGE" with article URL in commentary.
-- Guarantees the cover image is always visible, regardless of OG cache state.
+Posts as urn:li:organization:{ORG_ID} so all three writers (Joselito, Dawn,
+Kenji) share a single branded channel. Persona attribution is written into
+the post commentary. Cover image is uploaded directly via LinkedIn Assets API
+to guarantee the visual is always shown.
+
+Requires scopes: w_organization_social
 """
 
 import os, json, re, urllib.request, urllib.error, mimetypes
@@ -13,17 +15,24 @@ from dotenv import load_dotenv
 load_dotenv()
 
 ACCESS_TOKEN = os.getenv("LINKEDIN_ACCESS_TOKEN", "").strip()
-MEMBER_ID    = os.getenv("LINKEDIN_MEMBER_ID", "").strip()
+MEMBER_ID    = os.getenv("LINKEDIN_MEMBER_ID", "").strip()   # kept for image upload owner fallback
+ORG_ID       = os.getenv("LINKEDIN_ORG_ID", "").strip()
 
 LINKEDIN_API        = "https://api.linkedin.com/v2/ugcPosts"
 LINKEDIN_ASSETS_API = "https://api.linkedin.com/v2/assets?action=registerUpload"
 AIMA_COMPANY_PAGE   = "https://www.linkedin.com/company/aimaproductions"
 
+# Persona display names for bylines (update as writers create LinkedIn profiles)
+PERSONA_BYLINES = {
+    "joselito": "Joselito Sering · Editor-in-Chief, AIMA",
+    "dawn":     "Dawn · Contributing Writer, AIMA",
+    "kenji":    "Kenji · Contributing Writer, AIMA",
+}
+
 # Hashtag library — brand anchors + audience/topic tags per keyword
 BRAND_TAGS = ["#AIMA", "#AIForGood"]
 
 HASHTAG_MAP = {
-    # Categories
     "ai society":          ["#AISociety", "#TechForGood", "#DigitalInclusion", "#FutureOfWork"],
     "ai ethics":           ["#AIEthics", "#ResponsibleAI", "#TechEthics", "#HumanCenteredAI"],
     "ai healthcare":       ["#HealthTech", "#AIinHealthcare", "#MedicalAI", "#DigitalHealth"],
@@ -45,14 +54,12 @@ HASHTAG_MAP = {
     "climate":             ["#ClimateAI", "#Sustainability", "#GreenTech", "#ClimateChange"],
     "security":            ["#CyberSecurity", "#AIThreat", "#DigitalSafety", "#InfoSec"],
     "startup":             ["#Startups", "#Entrepreneurship", "#VentureCapital", "#Innovation"],
-    # Dawn-specific
     "surveillance":        ["#SurveillanceCapitalism", "#DigitalRights", "#Privacy", "#DataJustice"],
     "labor":               ["#FutureOfWork", "#LaborRights", "#WorkerProtection", "#AIAndLabor"],
     "inequality":          ["#DigitalDivide", "#TechEquity", "#SocialJustice", "#EconomicInequality"],
     "misinformation":      ["#MediaLiteracy", "#Misinformation", "#DigitalTrust", "#InformationIntegrity"],
     "accountability":      ["#CorporateAccountability", "#AIGovernance", "#TechPolicy", "#Transparency"],
     "feminist":            ["#WomenInTech", "#GenderEquity", "#FeministTech", "#InclusiveAI"],
-    # Kenji-specific
     "aerospace":           ["#SpaceTech", "#Aerospace", "#SpaceExploration", "#NewSpace"],
     "robotics":            ["#Robotics", "#Automation", "#AutonomousSystems", "#RoboticsFuture"],
     "blockchain":          ["#Blockchain", "#Web3", "#DecentralizedTech", "#DeFi"],
@@ -96,20 +103,11 @@ def extract_metadata(html_content, filename, html_url):
 
 
 def generate_hashtags(html_content, title, description):
-    """
-    Build a hashtag list from article content:
-    - Matches category meta tag and title/description keywords against HASHTAG_MAP
-    - Appends BRAND_TAGS
-    - Returns max 10 unique hashtags as a single string
-    """
-    # Pull article category from meta tag
     cat_m = re.search(
         r'<meta\s+name=["\']article:category["\']\s+content=["\'](.*?)["\']',
         html_content, re.IGNORECASE
     )
     category = cat_m.group(1).strip().lower() if cat_m else ""
-
-    # Combine all text to scan for keyword matches
     searchable = f"{category} {title} {description}".lower()
 
     matched = []
@@ -117,25 +115,20 @@ def generate_hashtags(html_content, title, description):
         if keyword in searchable:
             matched.extend(tags)
 
-    # Deduplicate, keeping order; cap topic tags at 8 then append brand anchors
-    seen = set()
-    result = []
+    seen = set(); result = []
     for tag in matched:
         if tag not in seen:
-            seen.add(tag)
-            result.append(tag)
+            seen.add(tag); result.append(tag)
         if len(result) >= 8:
             break
-
     for tag in BRAND_TAGS:
         if tag not in seen:
             result.append(tag)
-
     return " ".join(result)
 
 
 def extract_persona(html_content):
-    """Return 'dawn', 'kenji', or None from article:persona meta tag."""
+    """Return 'dawn', 'kenji', 'joselito', or None from article:persona meta tag."""
     m = re.search(
         r'<meta\s+name=["\']article:persona["\']\s+content=["\'](.*?)["\']',
         html_content, re.IGNORECASE
@@ -144,7 +137,6 @@ def extract_persona(html_content):
 
 
 def extract_og_image(html_content):
-    """Return the og:image URL from article HTML, or None."""
     m = re.search(
         r'<meta\s+property=["\']og:image["\']\s+content=["\'](.*?)["\']',
         html_content, re.IGNORECASE
@@ -157,22 +149,17 @@ def extract_og_image(html_content):
     return m.group(1).strip() if m else None
 
 
-# ── LinkedIn image upload (Option B) ────────────────────────────────────────
+# ── LinkedIn image upload ────────────────────────────────────────────────────
 
 def _register_upload():
-    """
-    Step 1: Register an image upload with LinkedIn.
-    Returns (upload_url, asset_urn).
-    """
+    """Register an image upload. Owner is the AIMA company page."""
+    owner = f"urn:li:organization:{ORG_ID}" if ORG_ID else f"urn:li:person:{MEMBER_ID}"
     body = {
         "registerUploadRequest": {
             "recipes": ["urn:li:digitalmediaRecipe:feedshare-image"],
-            "owner": f"urn:li:person:{MEMBER_ID}",
+            "owner": owner,
             "serviceRelationships": [
-                {
-                    "relationshipType": "OWNER",
-                    "identifier": "urn:li:userGeneratedContent"
-                }
+                {"relationshipType": "OWNER", "identifier": "urn:li:userGeneratedContent"}
             ]
         }
     }
@@ -185,129 +172,108 @@ def _register_upload():
     with urllib.request.urlopen(req) as resp:
         result = json.loads(resp.read())
 
-    upload_mechanism = result["value"]["uploadMechanism"]
-    http_request = upload_mechanism.get(
+    http_req   = result["value"]["uploadMechanism"].get(
         "com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest", {}
     )
-    upload_url = http_request["uploadUrl"]
+    upload_url = http_req["uploadUrl"]
     asset_urn  = result["value"]["asset"]
     return upload_url, asset_urn
 
 
 def _upload_image_bytes(upload_url, image_bytes, content_type="image/jpeg"):
-    """
-    Step 2: PUT image bytes to LinkedIn's upload URL.
-    """
     req = urllib.request.Request(upload_url, data=image_bytes, method="PUT")
     req.add_header("Authorization", f"Bearer {ACCESS_TOKEN}")
     req.add_header("Content-Type",  content_type)
     with urllib.request.urlopen(req) as resp:
-        # 201 Created — no body expected
         return resp.status
 
 
 def upload_cover_image(image_url):
-    """
-    Download the cover image from image_url, upload it to LinkedIn,
-    and return the LinkedIn asset URN.
-    Raises on any failure.
-    """
     print(f"  Downloading cover image: {image_url}")
     image_req = urllib.request.Request(image_url)
     image_req.add_header("User-Agent", "AIMA-Pipeline/1.0")
     with urllib.request.urlopen(image_req, timeout=30) as resp:
-        image_bytes = resp.read()
+        image_bytes  = resp.read()
         content_type = resp.headers.get("Content-Type", "image/jpeg").split(";")[0].strip()
 
     print(f"  Registering LinkedIn image upload ({len(image_bytes)//1024}KB, {content_type})...")
     upload_url, asset_urn = _register_upload()
-
     print(f"  Uploading image to LinkedIn...")
     status = _upload_image_bytes(upload_url, image_bytes, content_type)
     print(f"  Upload complete (HTTP {status}). Asset: {asset_urn}")
     return asset_urn
 
 
-# ── Post to LinkedIn ─────────────────────────────────────────────────────────
+
+# ── Post to LinkedIn company page ────────────────────────────────────────────
 
 def post_to_linkedin(article):
     if not ACCESS_TOKEN:
         raise ValueError("LINKEDIN_ACCESS_TOKEN not set — run linkedin_auth.py first.")
-    if not MEMBER_ID:
-        raise ValueError("LINKEDIN_MEMBER_ID not set — run linkedin_auth.py first.")
+    if not ORG_ID:
+        raise ValueError("LINKEDIN_ORG_ID not set — add it to .env (numeric company page ID).")
 
     title, description, source_url = extract_metadata(
         article["content"], article["name"], article["html_url"]
     )
 
-    # -- Try Option B: direct image upload -----------------------------------
-    image_url  = extract_og_image(article["content"])
-    asset_urn  = None
+    # -- Upload cover image --------------------------------------------------
+    image_url = extract_og_image(article["content"])
+    asset_urn = None
 
     if image_url:
         try:
             asset_urn = upload_cover_image(image_url)
         except Exception as e:
-            print(f"  WARNING: Image upload failed ({e}). Falling back to ARTICLE post (no image guarantee).")
-            asset_urn = None
+            print(f"  WARNING: Image upload failed ({e}). Falling back to ARTICLE post.")
     else:
-        print(f"  No og:image found — posting without image.")
+        print("  No og:image found — posting without image.")
 
-    # -- Build commentary (persona-aware tone) --------------------------------
-    persona   = extract_persona(article["content"])
-    hashtags  = generate_hashtags(article["content"], title, description)
+    # -- Build commentary with persona byline --------------------------------
+    persona  = extract_persona(article["content"])
+    byline   = PERSONA_BYLINES.get(persona or "joselito", PERSONA_BYLINES["joselito"])
+    hashtags = generate_hashtags(article["content"], title, description)
 
     if persona == "dawn":
-        # Sharp, provocative, ends with a question
         commentary = (
             f"📖 {title}\n\n"
             f"{description}\n\n"
             f"Who benefits from this — and who never got asked?\n\n"
             f"Read the full piece: {source_url}\n\n"
             f"{hashtags}\n\n"
-            f"Follow AIMA: {AIMA_COMPANY_PAGE}"
+            f"By {byline}"
         )
     elif persona == "kenji":
-        # Enthusiastic, grounded, ends with what becomes possible
         commentary = (
             f"🚀 {title}\n\n"
             f"{description}\n\n"
             f"The frontier is closer than the headlines suggest.\n\n"
             f"Read the full piece: {source_url}\n\n"
             f"{hashtags}\n\n"
-            f"Follow AIMA: {AIMA_COMPANY_PAGE}"
+            f"By {byline}"
         )
     else:
-        # Default (Joselito / no persona tag)
         commentary = (
             f"📖 {title}\n\n"
             f"{description}\n\n"
             f"Read the full article: {source_url}\n\n"
             f"{hashtags}\n\n"
-            f"Follow AIMA: {AIMA_COMPANY_PAGE}"
+            f"By {byline}"
         )
 
-    # -- Build post body -------------------------------------------------------
+    # -- Build post payload --------------------------------------------------
+    author_urn = f"urn:li:organization:{ORG_ID}"
+
     if asset_urn:
-        # Option B: IMAGE post with uploaded asset
-        media_obj = {
-            "status": "READY",
-            "media":  asset_urn,
-            "title":  {"text": title[:200]}
-        }
+        media_obj            = {"status": "READY", "media": asset_urn, "title": {"text": title[:200]}}
         share_media_category = "IMAGE"
     else:
-        # Fallback: ARTICLE post (relies on OG scraping)
-        media_obj = {
-            "status":      "READY",
-            "originalUrl": source_url,
-            "title":       {"text": title},
-            "description": {"text": description}
-        }
+        media_obj            = {"status": "READY", "originalUrl": source_url,
+                                "title": {"text": title}, "description": {"text": description}}
         share_media_category = "ARTICLE"
 
     body = {
-        "author": f"urn:li:person:{MEMBER_ID}",
+        "author": author_urn,
         "lifecycleState": "PUBLISHED",
         "specificContent": {
             "com.linkedin.ugc.ShareContent": {
@@ -331,8 +297,8 @@ def post_to_linkedin(article):
         with urllib.request.urlopen(req) as resp:
             result  = json.loads(resp.read())
             post_id = result.get("id", "unknown")
-            print(f"  Posted: '{title}' | ID: {post_id} | Mode: {share_media_category}")
-            return post_id          # caller logs this to post_log.json
+            print(f"  Posted to AIMA page: '{title}' | ID: {post_id} | Mode: {share_media_category} | By: {byline}")
+            return post_id
     except urllib.error.HTTPError as e:
         error_body = e.read().decode()
         print(f"  LinkedIn API error {e.code}: {error_body}")

@@ -1,6 +1,13 @@
 """
 linkedin_auth.py - One-time LinkedIn OAuth flow.
 Run: python linkedin_auth.py
+
+Scopes requested:
+  openid profile email    — OIDC identity (member name/ID)
+  w_member_social         — post on member's behalf (kept as fallback)
+  w_organization_social   — post on AIMA company page
+  rw_organization_admin   — org analytics (organizationalEntityShareStatistics)
+  r_member_postAnalytics  — personal post analytics (memberCreatorPostAnalytics)
 """
 
 import os, json, re, webbrowser, urllib.parse, urllib.request
@@ -12,7 +19,7 @@ load_dotenv()
 CLIENT_ID     = os.getenv("LINKEDIN_CLIENT_ID")
 CLIENT_SECRET = os.getenv("LINKEDIN_CLIENT_SECRET")
 REDIRECT_URI  = os.getenv("LINKEDIN_REDIRECT_URI", "http://localhost:8080/callback")
-SCOPES        = "openid profile email w_member_social"
+SCOPES        = "openid profile email w_member_social w_organization_social rw_organization_admin"
 AUTH_URL      = "https://www.linkedin.com/oauth/v2/authorization"
 TOKEN_URL     = "https://www.linkedin.com/oauth/v2/accessToken"
 USERINFO_URL  = "https://api.linkedin.com/v2/userinfo"
@@ -70,7 +77,6 @@ def main():
     with urllib.request.urlopen(req2) as r:
         userinfo = json.loads(r.read())
 
-    # 'sub' is the member ID e.g. "abc123"
     member_id = userinfo.get("sub", "")
     name = userinfo.get("name", "")
 
@@ -78,6 +84,7 @@ def main():
     print(f"  Name      : {name}")
     print(f"  Member ID : {member_id}")
     print(f"  Expires   : {expires//86400} days")
+    print(f"  Scopes    : {tok.get('scope', SCOPES)}")
 
     with open("tokens.json", "w") as f:
         json.dump({**tok, "member_id": member_id, "userinfo": userinfo}, f, indent=2)
@@ -91,7 +98,8 @@ def main():
         env += f"\nLINKEDIN_MEMBER_ID={member_id}\n"
     open(".env", "w").write(env)
 
-    print("\n.env updated. Now run: python pipeline.py")
+    print("\n.env updated with new token.")
+    print("NEXT STEP: run `python pipeline.py` — articles will now post to the AIMA company page.")
 
 if __name__ == "__main__":
     main()

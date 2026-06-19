@@ -2,8 +2,10 @@
 analytics_collector.py — Collects LinkedIn post statistics 48h after posting.
 
 Reads post_log.json for pending posts, fetches engagement data from the
-LinkedIn shareStatistics API, and appends results to post_analytics.csv.
+LinkedIn organizationalEntityShareStatistics API (company page), and appends
+results to post_analytics.csv.
 
+Requires scopes: rw_organization_admin
 Run automatically by pipeline.py, or manually: python analytics_collector.py
 """
 
@@ -15,7 +17,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 ACCESS_TOKEN           = os.getenv("LINKEDIN_ACCESS_TOKEN", "").strip()
+ORG_ID                 = os.getenv("LINKEDIN_ORG_ID", "").strip()
 COLLECTION_DELAY_HOURS = 48   # wait this long before pulling stats
+LINKEDIN_VERSION       = "202506"   # bump quarterly
 
 POST_LOG      = Path(__file__).parent / "post_log.json"
 ANALYTICS_CSV = Path(__file__).parent / "post_analytics.csv"
@@ -47,19 +51,33 @@ def ensure_csv_headers():
             csv.writer(f).writerow(CSV_HEADERS)
 
 
-# ── LinkedIn statistics API ───────────────────────────────────────────────────
+# ── LinkedIn Organization Share Statistics API ────────────────────────────────
 
-def fetch_share_statistics(post_id):
+def fetch_org_share_statistics(post_id):
     """
-    Fetch engagement stats for a post via LinkedIn shareStatistics API.
+    Fetch engagement stats for a company-page post via organizationalEntityShareStatistics.
     post_id: e.g. urn:li:share:7473451995576549376
     Returns a stats dict, or None on failure.
+
+    Requires: rw_organization_admin scope + LINKEDIN_ORG_ID in .env
     """
-    encoded_id = urllib.parse.quote(post_id, safe="")
-    url = f"https://api.linkedin.com/v2/shareStatistics?q=shares&shares[0]={encoded_id}"
+    if not ORG_ID:
+        print("    ERROR: LINKEDIN_ORG_ID not set in .env")
+        return None
+
+    org_urn   = f"urn:li:organization:{ORG_ID}"
+    share_urn = post_id  # already in urn:li:share:XXX format from post_log.json
+
+    params = urllib.parse.urlencode({
+        "q":                    "organizationalEntity",
+        "organizationalEntity": org_urn,
+        "shares[0]":            share_urn,
+    })
+    url = f"https://api.linkedin.com/rest/organizationalEntityShareStatistics?{params}"
 
     req = urllib.request.Request(url)
     req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
+    req.add_header("LinkedIn-Version",          LINKEDIN_VERSION)
     req.add_header("X-Restli-Protocol-Version", "2.0.0")
 
     try:
@@ -67,26 +85,30 @@ def fetch_share_statistics(post_id):
             data     = json.loads(resp.read())
             elements = data.get("elements", [])
             if not elements:
+                print(f"    No elements returned — post may not be on the company page, or has 0 activity.")
                 return None
             stats = elements[0].get("totalShareStatistics", {})
+            impressions = stats.get("impressionCount", 0)
+            clicks      = stats.get("clickCount", 0)
             return {
-                "impressions":     stats.get("impressionCount", 0),
-                "clicks":          stats.get("clickCount", 0),
+                "impressions":     impressions,
+                "clicks":          clicks,
                 "likes":           stats.get("likeCount", 0),
                 "comments":        stats.get("commentCount", 0),
                 "shares":          stats.get("shareCount", 0),
                 "engagement_rate": round(stats.get("engagement", 0.0), 4),
+                "unique_impressions": stats.get("uniqueImpressionsCount", 0),
             }
     except urllib.error.HTTPError as e:
         body = e.read().decode()
-        print(f"    Stats API error {e.code}: {body[:200]}")
-        if e.code in (403, 404):
+        print(f"    Stats API error {e.code}: {body[:300]}")
+        if e.code == 403:
             print(
-                "    NOTE: LinkedIn's shareStatistics API requires the 'r_member_social' scope,\n"
-                "    which is restricted to LinkedIn Marketing API partners. Programmatic\n"
-                "    analytics for personal posts is not available with a standard app.\n"
-                "    Use LinkedIn Creator Analytics dashboard to view stats manually."
+                "    403 Forbidden — token may be missing 'rw_organization_admin' scope.\n"
+                "    Re-run linkedin_auth.py to get a new token with org scopes."
             )
+        elif e.code == 404:
+            print("    404 — share URN not found on org page. Post may have been made from personal profile.")
         return None
     except Exception as e:
         print(f"    Stats fetch failed: {e}")
@@ -97,15 +119,15 @@ def fetch_share_statistics(post_id):
 
 def collect_pending_analytics(verbose=True):
     """
-    Iterate post_log.json. For posts that are >48h old and not yet collected,
-    fetch stats and append a row to post_analytics.csv.
+    Iterate post_log.json. For posts >48h old and not yet collected,
+    fetch org share stats and append a row to post_analytics.csv.
     """
     log = load_post_log()
     if not log:
         return 0
 
     ensure_csv_headers()
-    now      = datetime.now(timezone.utc)
+    now       = datetime.now(timezone.utc)
     collected = 0
 
     for entry in log:
@@ -117,7 +139,6 @@ def collect_pending_analytics(verbose=True):
         except Exception:
             continue
 
-        # Skip entries with no post_id (backfill placeholders)
         if not entry.get("post_id"):
             if verbose:
                 print(f"  Skipping '{entry.get('title','')[:60]}' — no post_id yet")
@@ -133,15 +154,15 @@ def collect_pending_analytics(verbose=True):
         if verbose:
             print(f"  Collecting analytics: '{entry['title'][:60]}' ({age_hours:.0f}h old)")
 
-        stats = fetch_share_statistics(entry["post_id"])
+        stats = fetch_org_share_statistics(entry["post_id"])
         if stats is None:
             if verbose:
                 print("    No data returned — will retry next run.")
             continue
 
-        impressions = stats["impressions"]
-        clicks      = stats["clicks"]
-        ctr         = round(clicks / impressions, 4) if impressions > 0 else 0.0
+        impressions  = stats["impressions"]
+        clicks       = stats["clicks"]
+        ctr          = round(clicks / impressions, 4) if impressions > 0 else 0.0
         collected_at = now.strftime("%Y-%m-%dT%H:%M:%S")
 
         row = [
@@ -167,7 +188,7 @@ def collect_pending_analytics(verbose=True):
             print(
                 f"    ✓ Impressions: {impressions:,} | Clicks: {clicks:,} | "
                 f"Likes: {stats['likes']} | Comments: {stats['comments']} | "
-                f"CTR: {ctr:.1%} | Engagement: {stats['engagement_rate']:.2%}"
+                f"Shares: {stats['shares']} | CTR: {ctr:.1%} | Eng: {stats['engagement_rate']:.2%}"
             )
 
         entry["analytics_collected"] = True
@@ -183,7 +204,7 @@ def collect_pending_analytics(verbose=True):
 
 
 def _git_push_data():
-    """Commit and push post_log.json + post_analytics.csv so GitHub Pages serves fresh data."""
+    """Commit and push post_log.json + post_analytics.csv to GitHub Pages."""
     import subprocess
     repo_root = Path(__file__).parent.parent
     files = [
@@ -215,8 +236,7 @@ def print_summary():
 
     rows = []
     with open(ANALYTICS_CSV, newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        rows = list(reader)
+        rows = list(csv.DictReader(f))
 
     if not rows:
         print("No analytics data yet.")
@@ -239,25 +259,10 @@ def print_summary():
     avg_ctr = sum(float(r.get("ctr", 0)) for r in rows) / len(rows)
     avg_imp = sum(int(r.get("impressions", 0)) for r in rows) / len(rows)
     print(f"\n  Averages: {avg_imp:,.0f} impressions | {avg_ctr:.1%} CTR")
-
-    by_persona = {}
-    for row in rows:
-        p = row.get("persona", "unknown")
-        if p not in by_persona:
-            by_persona[p] = {"imp": [], "ctr": []}
-        by_persona[p]["imp"].append(int(row.get("impressions", 0)))
-        by_persona[p]["ctr"].append(float(row.get("ctr", 0)))
-
-    print("\n  By persona:")
-    for persona, data in sorted(by_persona.items()):
-        avg_p_imp = sum(data["imp"]) / len(data["imp"])
-        avg_p_ctr = sum(data["ctr"]) / len(data["ctr"])
-        print(f"    {persona:10s}: {avg_p_imp:,.0f} avg impressions | {avg_p_ctr:.1%} avg CTR ({len(data['imp'])} posts)")
-
     print(f"{'='*60}\n")
 
 
 if __name__ == "__main__":
-    print("Collecting LinkedIn post analytics...")
+    print("Collecting LinkedIn post analytics (AIMA company page)...")
     n = collect_pending_analytics(verbose=True)
     print_summary()
