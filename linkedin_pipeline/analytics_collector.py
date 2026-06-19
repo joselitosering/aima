@@ -79,10 +79,14 @@ def fetch_share_statistics(post_id):
             }
     except urllib.error.HTTPError as e:
         body = e.read().decode()
-        print(f"    Stats API error {e.code}: {body}")
-        # 403 usually means missing r_member_social scope — log and skip
-        if e.code == 403:
-            print("    → Missing r_member_social OAuth scope. Re-run linkedin_auth.py to add it.")
+        print(f"    Stats API error {e.code}: {body[:200]}")
+        if e.code in (403, 404):
+            print(
+                "    NOTE: LinkedIn's shareStatistics API requires the 'r_member_social' scope,\n"
+                "    which is restricted to LinkedIn Marketing API partners. Programmatic\n"
+                "    analytics for personal posts is not available with a standard app.\n"
+                "    Use LinkedIn Creator Analytics dashboard to view stats manually."
+            )
         return None
     except Exception as e:
         print(f"    Stats fetch failed: {e}")
@@ -111,6 +115,12 @@ def collect_pending_analytics(verbose=True):
         try:
             posted_at = datetime.fromisoformat(entry["posted_at"]).replace(tzinfo=timezone.utc)
         except Exception:
+            continue
+
+        # Skip entries with no post_id (backfill placeholders)
+        if not entry.get("post_id"):
+            if verbose:
+                print(f"  Skipping '{entry.get('title','')[:60]}' — no post_id yet")
             continue
 
         age_hours = (now - posted_at).total_seconds() / 3600
