@@ -89,6 +89,13 @@ def extract_metadata(html_content, filename, html_url):
                            html_content, re.IGNORECASE)
     source_url = can_m.group(1).strip() if can_m else html_url
 
+    # LinkedIn posts always link to the production domain
+    source_url = re.sub(
+        r'https?://joselitosering\.github\.io/aima/',
+        'https://aima.productions/',
+        source_url
+    )
+
     if desc_m:
         description = desc_m.group(1).strip()
     else:
