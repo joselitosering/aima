@@ -88,13 +88,12 @@
     "analytics_collected": false
   },
   {
-    "post_id": null,
+    "post_id": "urn:li:share:7473864692680110081",
     "article": "aima-article-algorithm-of-atrocity-012.html",
     "title": "The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both",
     "persona": "joselito",
-    "posted_at": "2026-06-04T10:30:00",
-    "analytics_collected": false,
-    "note": "post_id unknown \u2014 backfill manually if LinkedIn URL found"
+    "posted_at": "2026-06-19T22:30:02",
+    "analytics_collected": false
   },
   {
     "post_id": "urn:li:share:7473803142543863808",
