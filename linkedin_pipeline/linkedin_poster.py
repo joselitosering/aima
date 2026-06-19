@@ -25,7 +25,7 @@ AIMA_COMPANY_PAGE   = "https://www.linkedin.com/company/aimaproductions"
 # Persona display names for bylines (update as writers create LinkedIn profiles)
 PERSONA_BYLINES = {
     "joselito": "Joselito Sering · Editor-in-Chief, AIMA",
-    "dawn":     "Dawn · Contributing Writer, AIMA",
+    "dawn":     "Dawn Ginhaua · Cultural Critic & Educator, AIMA",
     "kenji":    "Kenji · Contributing Writer, AIMA",
 }
 
