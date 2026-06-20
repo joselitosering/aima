@@ -127,6 +127,9 @@ main { padding: 28px; overflow-y: auto; }
 
 /* ── STAT CARDS ── */
 .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 16px; margin-bottom: 24px; }
+.card-grid-8 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+@media (max-width: 900px) { .card-grid-8 { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 480px) { .card-grid-8 { grid-template-columns: 1fr; } }
 .stat-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 12px; padding: 20px;
@@ -440,7 +443,7 @@ code {
   <div class="panel-title">Campaign <span style="color:var(--cyan)">Overview</span></div>
   <div class="panel-sub">AIMA Article Pipeline · Performance at a glance</div>
 
-  <div class="card-grid">
+  <div class="card-grid-8">
     <div class="stat-card cyan">
       <div class="label">Total Posts</div>
       <div class="value" id="kpi-total-posts">—</div>
@@ -481,7 +484,7 @@ code {
       <div class="value" id="kpi-top-category" style="font-size:18px;line-height:1.2">—</div>
       <div class="trend">most impressions</div>
     </div>
-  </div>
+  </div><!-- end card-grid-8 -->
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
     <div class="section-block">
