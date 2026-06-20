@@ -18,7 +18,7 @@
 | 11 | 2026-06-01 | The Token Bill: How AI Overspending Is Rewriting the Future of Work | Industry Analysis | 11 min |  |
 | 12 | 2026-06-04 | The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both | AI Ethics | 19 min |  |
 | 13 | 2026-06-18 | The Global South AI Gap: Who Gets Left Behind When the Future Arrives | AI Society | 12 min |  |
-| 14 | 2026-06-20 | Hallucination Nation: Why AI Lies with Confidence and What It Costs Us | AI Ethics | 11 min |  |
+| 14 | 2026-06-20 | Hallucination Nation: Why AI Lies with Confidence and What It Costs Us | Media & Society | 11 min | more Hitchens, intellectually raw and complete with a driving point about humanity |
 | 15 | 2026-06-22 | Machines That Compose: What AI Music Reveals About Human Creativity | AI Creative | 9 min |  |
 | 16 | 2026-06-24 | The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor | AI Society | 12 min |  |
 | 17 | 2026-06-26 | Power Hungry: The Carbon Ledger of the AI Compute Boom | AI Environment | 10 min |  |
