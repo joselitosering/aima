@@ -695,86 +695,99 @@ code {
 
 <!-- ══ PERFORMANCE ══ -->
 <div class="page" id="page-performance">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
 
-    <!-- LEFT: Content Performance -->
-    <div style="min-width:0">
+  <!-- Row 1: titles -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-bottom:16px">
+    <div>
       <div class="panel-title">Content <span style="color:var(--cyan)">Performance</span></div>
-      <div class="panel-sub" style="margin-bottom:16px">Writer breakdowns · Category trends · Top posts</div>
+      <div class="panel-sub">Writer breakdowns · Category trends · Top posts</div>
+    </div>
+    <div>
+      <div class="panel-title">aima.productions <span style="color:var(--cyan)">Site Performance</span></div>
+      <div class="panel-sub">LinkedIn-to-site conversion · Top referral posts · Tracking status</div>
+    </div>
+  </div>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px" id="perf-persona-cards"></div>
+  <!-- Row 2: persona cards | site conversion + pixels -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 28px;align-items:start;margin-bottom:16px">
+    <div style="min-width:0">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" id="perf-persona-cards"></div>
+    </div>
+    <div style="min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="section-block" style="padding:20px;margin-bottom:0">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <span style="width:10px;height:10px;border-radius:50%;background:var(--cyan);display:inline-block"></span>
+          <span style="font-weight:600;font-size:14px">Site Conversion</span>
+        </div>
+        <div id="perf-li-conversion" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <div class="card-title">LI Sessions</div>
+            <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--cyan)" id="perf-li-conv-sessions">—</div>
+            <div style="font-size:11px;color:var(--muted)">from posts</div>
+          </div>
+          <div>
+            <div class="card-title">Conversion</div>
+            <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--orange)" id="perf-li-conv-pct">—%</div>
+            <div style="font-size:11px;color:var(--muted)">of total sessions</div>
+          </div>
+        </div>
+      </div>
+      <div class="section-block" style="padding:20px;margin-bottom:0">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span>
+          <span style="font-weight:600;font-size:14px">Tracking Pixels</span>
+          <span class="badge badge-green" style="margin-left:auto">3 active</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+            <span style="font-size:12px">GA4 <code>G-VCTF4DKBD5</code></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+            <span style="font-size:12px">Meta Pixel <code style="color:var(--gold)">941204972168187</code></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+            <span style="font-size:12px">TikTok Pixel <code style="color:var(--purple)">D7NFLLRC77UB8JB2C5N0</code></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <div class="section-block" style="margin-bottom:16px">
+  <!-- Row 3: top 5 | best click-through -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 28px;align-items:start;margin-bottom:16px">
+    <div style="min-width:0">
+      <div class="section-block" style="margin-bottom:0">
         <div class="section-head">Top 5 Posts by Impressions</div>
         <div id="perf-top5" style="margin-top:4px"></div>
       </div>
-
-      <div class="section-block" style="margin-bottom:16px">
-        <div class="section-head">Best Performing Categories</div>
-        <div id="perf-categories" style="margin-top:4px"></div>
-      </div>
-
-      <div class="section-block">
-        <div class="section-head">What Drives Reactions &amp; Reposts</div>
-        <div id="perf-patterns" style="margin-top:4px;font-size:12px;line-height:1.9;color:var(--muted)">Load analytics to see patterns.</div>
-      </div>
     </div>
-
-    <!-- RIGHT: Site Performance -->
     <div style="min-width:0">
-      <div class="panel-title">aima.productions <span style="color:var(--cyan)">Site Performance</span></div>
-      <div class="panel-sub" style="margin-bottom:16px">LinkedIn-to-site conversion · Top referral posts · Tracking status</div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-        <div class="section-block" style="padding:20px;margin-bottom:0">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-            <span style="width:10px;height:10px;border-radius:50%;background:var(--cyan);display:inline-block"></span>
-            <span style="font-weight:600;font-size:14px">Site Conversion</span>
-          </div>
-          <div id="perf-li-conversion" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <div>
-              <div class="card-title">LI Sessions</div>
-              <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--cyan)" id="perf-li-conv-sessions">—</div>
-              <div style="font-size:11px;color:var(--muted)">from posts</div>
-            </div>
-            <div>
-              <div class="card-title">Conversion</div>
-              <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--orange)" id="perf-li-conv-pct">—%</div>
-              <div style="font-size:11px;color:var(--muted)">of total sessions</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block" style="padding:20px;margin-bottom:0">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-            <span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span>
-            <span style="font-weight:600;font-size:14px">Tracking Pixels</span>
-            <span class="badge badge-green" style="margin-left:auto">3 active</span>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;align-items:center;gap:10px">
-              <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
-              <span style="font-size:12px">GA4 <code>G-VCTF4DKBD5</code></span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
-              <span style="font-size:12px">Meta Pixel <code style="color:var(--gold)">941204972168187</code></span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
-              <span style="font-size:12px">TikTok Pixel <code style="color:var(--purple)">D7NFLLRC77UB8JB2C5N0</code></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-block">
+      <div class="section-block" style="margin-bottom:0">
         <div class="section-head">Best Click-Through Posts</div>
         <div id="perf-best-cta" style="margin-top:4px">Load GA4 + analytics CSV to rank posts by site referrals.</div>
       </div>
     </div>
-
   </div>
+
+  <!-- Row 4: categories | patterns -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 28px;align-items:start">
+    <div style="min-width:0">
+      <div class="section-block" style="margin-bottom:0">
+        <div class="section-head">Best Performing Categories</div>
+        <div id="perf-categories" style="margin-top:4px"></div>
+      </div>
+    </div>
+    <div style="min-width:0">
+      <div class="section-block" style="margin-bottom:0">
+        <div class="section-head">What Drives Reactions &amp; Reposts</div>
+        <div id="perf-patterns" style="margin-top:4px;font-size:12px;line-height:1.9;color:var(--muted)">Load analytics to see patterns.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ══ SUGGESTIONS ══ -->
