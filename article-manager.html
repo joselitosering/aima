@@ -1064,8 +1064,33 @@ function showPage(id) {
 // ═══════════════════════════════════════════
 // DIRTY STATE / SAVE
 // ═══════════════════════════════════════════
+function persistCalendar() {
+  localStorage.setItem('aima_calendar', JSON.stringify(CALENDAR));
+}
+
+function restoreCalendar() {
+  const saved = localStorage.getItem('aima_calendar');
+  if (!saved) return;
+  try {
+    const parsed = JSON.parse(saved);
+    // Merge saved fields into CALENDAR by matching num+persona
+    parsed.forEach(savedItem => {
+      const match = CALENDAR.find(c => c.num === savedItem.num && c.persona === savedItem.persona);
+      if (match) {
+        match.title = savedItem.title;
+        match.date  = savedItem.date;
+        match.cat   = savedItem.cat;
+        match.tone  = savedItem.tone;
+        match.read  = savedItem.read;
+        match.published = savedItem.published;
+      }
+    });
+  } catch(e) { console.warn('Could not restore calendar:', e); }
+}
+
 function markDirty() {
   isDirty = true;
+  persistCalendar();
   document.getElementById('dirty-indicator').style.display = '';
   document.getElementById('btn-save').disabled = false;
   document.getElementById('btn-discard').style.display = '';
@@ -1074,6 +1099,7 @@ function markDirty() {
 
 function clearDirty() {
   isDirty = false;
+  persistCalendar();
   document.getElementById('dirty-indicator').style.display = 'none';
   document.getElementById('btn-save').disabled = true;
   document.getElementById('btn-discard').style.display = 'none';
@@ -1082,8 +1108,8 @@ function clearDirty() {
 
 function discardChanges() {
   if (!confirm('Discard all unsaved changes to the calendar?')) return;
-  clearDirty();
-  renderCalendar();
+  localStorage.removeItem('aima_calendar');
+  location.reload();
 }
 
 function buildCalendarMd() {
@@ -1307,6 +1333,7 @@ function loadGA4(event) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  restoreCalendar();
   updateTokenStatus();
   updatePipelineBar();
   autoLoadPostLog();
