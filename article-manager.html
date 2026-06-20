@@ -1282,6 +1282,21 @@ async function autoLoadAnalytics() {
   }
 }
 
+async function autoLoadGA4() {
+  try {
+    const res = await fetch(DATA_BASE + 'ga4_traffic.csv?_=' + Date.now());
+    if (!res.ok) throw new Error(res.status);
+    ga4Data = parseCSV(await res.text());
+    setStatus('status-ga4', `✓ ${ga4Data.length} articles auto-loaded`, 'var(--green)');
+    const z = document.getElementById('zone-ga4');
+    if (z) z.style.borderColor = 'var(--green)';
+    renderTrafficSection();
+    renderPerformanceTraffic();
+  } catch {
+    setStatus('status-ga4', 'Auto-fetch unavailable — upload manually', 'var(--muted)');
+  }
+}
+
 function loadPostLog(event) {
   const file = event.target.files[0]; if (!file) return;
   const r = new FileReader();
@@ -1344,6 +1359,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updatePipelineBar();
   autoLoadPostLog();
   autoLoadAnalytics();
+  autoLoadGA4();
   // Inject category datalist for editable cat cells
   const dl = document.createElement('datalist');
   dl.id = 'cat-datalist';
@@ -1810,38 +1826,50 @@ function renderPerformance(){
 function renderTrafficSection(){
   renderManualStats();
   if(!ga4Data.length) return;
-  const totalSessions=sum(ga4Data.map(r=>+(r.sessions||r['Sessions']||r['Active users']||0)));
+  // Support both our ga4_traffic.csv format and manual GA4 export format
+  const _sess  = r => +(r.sessions||r['Sessions']||r['Active users']||0);
+  const _liSess= r => +(r.linkedin_sessions!=null ? r.linkedin_sessions : (r['Session source']||r.source||r['Source']||'').toLowerCase().includes('linkedin') ? _sess(r) : 0);
+  const _path  = r => r.page_path||r['Page path']||r['Page title']||r.source||'—';
+  const _dur   = r => +(r.avg_engagement_seconds||r['Average session duration']||r['Avg. session duration']||0);
+
+  const totalSessions=sum(ga4Data.map(_sess));
   document.getElementById('kpi-site-clicks').textContent = totalSessions.toLocaleString()||'—';
-  const liRows=ga4Data.filter(r=>{ const src=(r['Session source']||r.source||r['Source']||'').toLowerCase(); return src.includes('linkedin'); });
-  document.getElementById('kpi-li-referrals').textContent = sum(liRows.map(r=>+(r.sessions||r['Sessions']||0))).toLocaleString()||'0';
-  const topSrc=[...ga4Data].sort((a,b)=>+(b.sessions||b['Sessions']||0)-(+(a.sessions||a['Sessions']||0)))[0];
-  if(topSrc) document.getElementById('kpi-top-source').textContent = topSrc['Page path']||topSrc['Page title']||'—';
-  const avgDur=avg(ga4Data.map(r=>+(r['Average session duration']||r['Avg. session duration']||0)));
+  const totalLI=sum(ga4Data.map(_liSess));
+  document.getElementById('kpi-li-referrals').textContent = totalLI.toLocaleString()||'0';
+  const topSrc=[...ga4Data].sort((a,b)=>_sess(b)-_sess(a))[0];
+  if(topSrc) document.getElementById('kpi-top-source').textContent = _path(topSrc);
+  const avgDur=avg(ga4Data.map(_dur));
   document.getElementById('kpi-session-dur').textContent = avgDur?Math.round(avgDur)+'s':'—';
-  document.getElementById('aima-traffic-list').innerHTML=ga4Data.slice(0,15).map(r=>`
+  document.getElementById('aima-traffic-list').innerHTML=[...ga4Data].sort((a,b)=>_sess(b)-_sess(a)).slice(0,15).map(r=>`
     <div class="aima-link-stat">
-      <div style="font-size:12px;flex:1">${r['Page path']||r['Page title']||r.source||'—'}</div>
-      <div style="font-size:12px;color:var(--cyan);font-weight:700;margin-left:12px;font-family:'Courier Prime',monospace">${(+(r.sessions||r['Sessions']||0)).toLocaleString()} sessions</div>
+      <div style="font-size:12px;flex:1">${_path(r)}</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-shrink:0;margin-left:12px">
+        ${_liSess(r)>0?`<span style="font-size:10px;color:var(--cyan);font-family:'Courier Prime',monospace">LI:${_liSess(r)}</span>`:''}
+        <span style="font-size:12px;color:var(--cyan);font-weight:700;font-family:'Courier Prime',monospace">${_sess(r).toLocaleString()} sessions</span>
+      </div>
     </div>`).join('');
 }
 
 function renderPerformanceTraffic(){
   if(!ga4Data.length) return;
-  const liRows=ga4Data.filter(r=>{ const src=(r['Session source']||r.source||r['Source']||'').toLowerCase(); return src.includes('linkedin'); });
-  const liTotal=sum(liRows.map(r=>+(r.sessions||r['Sessions']||0)));
-  const totalSessions=sum(ga4Data.map(r=>+(r.sessions||r['Sessions']||r['Active users']||0)));
+  const _sess  = r => +(r.sessions||r['Sessions']||r['Active users']||0);
+  const _liSess= r => +(r.linkedin_sessions!=null ? r.linkedin_sessions : (r['Session source']||r.source||r['Source']||'').toLowerCase().includes('linkedin') ? _sess(r) : 0);
+  const _path  = r => r.page_path||r['Page path']||r['Page title']||r.source||'—';
+
+  const totalSessions=sum(ga4Data.map(_sess));
+  const liTotal=sum(ga4Data.map(_liSess));
   const pct=totalSessions?Math.round(liTotal/totalSessions*100):0;
   const conv=document.getElementById('perf-li-conversion');
   if(conv) conv.innerHTML=`<div style="font-family:'Anton',sans-serif;font-size:36px;color:var(--cyan)">${pct}%</div>
     <div style="font-size:12px;color:var(--muted);font-family:'Courier Prime',monospace">${liTotal.toLocaleString()} of ${totalSessions.toLocaleString()} total sessions from LinkedIn</div>`;
   const best=document.getElementById('perf-best-cta');
   if(best){
-    const sorted=[...liRows].sort((a,b)=>+(b.sessions||b['Sessions']||0)-(+(a.sessions||a['Sessions']||0)));
+    const sorted=[...ga4Data].filter(r=>_liSess(r)>0).sort((a,b)=>_liSess(b)-_liSess(a));
     best.innerHTML=sorted.slice(0,5).map((r,i)=>`
       <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px">
-        <span style="color:var(--text)">${i+1}. ${r['Page path']||r['Page title']||'—'}</span>
-        <span style="color:var(--cyan);font-weight:700;font-family:'Courier Prime',monospace">${(+(r.sessions||r['Sessions']||0)).toLocaleString()}</span>
-      </div>`).join('')||'<div style="color:var(--muted);font-size:12px">No LinkedIn referral rows found.</div>';
+        <span style="color:var(--text)">${i+1}. ${_path(r)}</span>
+        <span style="color:var(--cyan);font-weight:700;font-family:'Courier Prime',monospace">${_liSess(r).toLocaleString()} LI sessions</span>
+      </div>`).join('')||'<div style="color:var(--muted);font-size:12px">No LinkedIn referral data found.</div>';
   }
 }
 
