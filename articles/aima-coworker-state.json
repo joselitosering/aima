@@ -1,12 +1,12 @@
 {
-  "next_article_number": 14,
+  "next_article_number": 16,
   "next_track": "joselito",
-  "next_article_date": "2026-06-20",
+  "next_article_date": "2026-06-24",
 
   "joselito": {
-    "next_calendar_index": 1,
-    "post_count": 13,
-    "last_topic": "The Global South AI Gap: Who Gets Left Behind When the Future Arrives"
+    "next_calendar_index": 3,
+    "post_count": 15,
+    "last_topic": "Machines That Compose: What AI Music Reveals About Human Creativity"
   },
 
   "trending": {
@@ -28,7 +28,7 @@
     }
   },
 
-  "last_run": "2026-06-18",
+  "last_run": "2026-06-20",
   "articles_written": [
     {
       "number": 13,
@@ -38,6 +38,16 @@
       "category": "AI Society",
       "author": "Joselito Sering",
       "track": "joselito"
+    },
+    {
+      "number": 15,
+      "title": "Machines That Compose: What AI Music Reveals About Human Creativity",
+      "filename": "aima-article-machines-that-compose-015.html",
+      "date": "2026-06-20",
+      "category": "AI Creative",
+      "author": "Joselito Sering",
+      "track": "joselito",
+      "note": "Article 014 (Hallucination Nation) skipped — not yet written. Write 014 before publishing 016."
     }
   ],
 
