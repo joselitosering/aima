@@ -1772,10 +1772,12 @@ function renderPerformance(){
         <div>
           <div class="card-title">Avg Impressions</div>
           <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--cyan)">${rows.length?Math.round(avg(rows.map(r=>+r.impressions||0))).toLocaleString():'—'}</div>
+          <div style="font-size:11px;color:var(--muted)">per post</div>
         </div>
         <div>
           <div class="card-title">Avg CTR</div>
           <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--orange)">${rows.length?(avg(rows.map(r=>+r.ctr||0))*100).toFixed(1)+'%':'—'}</div>
+          <div style="font-size:11px;color:var(--muted)">click-through</div>
         </div>
       </div>
     </div>`;
