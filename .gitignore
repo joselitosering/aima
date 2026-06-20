@@ -22,3 +22,5 @@ Thumbs.db
 # Logs
 *.log
 linkedin_pipeline/.env
+
+linkedin_pipeline/aima-analytics-92f4d1344f7a.json
