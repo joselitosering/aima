@@ -24,6 +24,23 @@
 
 ---
 
+## article-manager.html Dashboard — Current State (as of June 20, 2026)
+
+- **GA4 auto-load:** `ga4_traffic.csv` fetched on load via `autoLoadGA4()` — no manual upload needed
+- **Analytics page:** Two-pane layout — Content Analytics (left) · Site Traffic (right)
+- **Performance page:** Flat row grid — each row aligns left/right independently
+  - Row 1: titles
+  - Row 2: persona cards | Site Conversion + Tracking Pixels
+  - Row 3: Top 5 Posts | Best Click-Through Posts
+  - Row 4: Best Performing Categories | What Drives Reactions & Reposts
+- **Overview page:** 8 KPI cards in `card-grid-8` (4-2-1 responsive)
+  - Row 1: Total Posts · Avg Impressions · LI Profile Traffic · Company Page Reach
+  - Row 2: Avg CTR · Articles Remaining · Top Writer · Top Category
+- **Security:** `aima-analytics-92f4d1344f7a.json` removed from git history — keep in `.gitignore`
+- **Manual Entry section:** Removed from Analytics right pane
+
+---
+
 ## AIMA Article Pipeline — Current State
 
 - **Next article:** #014 — "Hallucination Nation: Why AI Lies with Confidence and What It Costs Us"
