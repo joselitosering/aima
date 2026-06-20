@@ -502,10 +502,9 @@ code {
 
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center">
     <button class="btn btn-outline btn-sm" onclick="toggleCalView()">⇄ Toggle View</button>
-    <button class="btn btn-ghost btn-sm" onclick="discardChanges()" id="btn-discard" style="display:none">✕ Discard</button>
+    <button class="btn btn-ghost btn-sm" onclick="discardChanges()" id="btn-discard" style="display:none">↩ Undo</button>
     <button class="btn btn-green btn-sm" onclick="saveCalendar()" id="btn-save" disabled>💾 Save to GitHub</button>
     <button class="btn btn-ghost btn-sm" onclick="showTokenModal()" style="font-size:10px">⚙ GitHub Token</button>
-    <button class="btn btn-ghost btn-sm" onclick="testToken()" style="font-size:10px">🧪 Test Token</button>
     <span id="gh-token-status" style="font-size:11px;font-family:'Courier Prime',monospace;color:var(--muted)">🔑 No token</span>
     <span id="dirty-indicator" style="display:none;color:var(--orange);font-size:12px;font-family:'Courier Prime',monospace;margin-left:4px">● Unsaved changes</span>
     <span style="margin-left:auto;font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">
@@ -819,7 +818,7 @@ code {
 <div id="save-bar">
   <span style="font-size:13px;color:var(--orange);font-weight:600;font-family:'Courier Prime',monospace">⚠ You have unsaved calendar changes</span>
   <div style="display:flex;gap:8px">
-    <button class="btn btn-ghost btn-sm" onclick="discardChanges()">Discard</button>
+    <button class="btn btn-ghost btn-sm" onclick="discardChanges()">↩ Undo</button>
     <button class="btn btn-orange btn-sm" onclick="saveCalendar()">💾 Save to GitHub</button>
   </div>
 </div>
@@ -1064,6 +1063,19 @@ function showPage(id) {
 // ═══════════════════════════════════════════
 // DIRTY STATE / SAVE
 // ═══════════════════════════════════════════
+// ── Undo stack ──────────────────────────────────────────────
+let undoStack = [];
+let _undoDebounceTimer = null;
+
+function snapshotForUndo() {
+  // Debounce: only push a snapshot if 1.5s have passed since last keystroke
+  clearTimeout(_undoDebounceTimer);
+  _undoDebounceTimer = setTimeout(() => {
+    undoStack.push(JSON.stringify(CALENDAR));
+    if (undoStack.length > 50) undoStack.shift(); // cap at 50 steps
+  }, 1500);
+}
+
 function persistCalendar() {
   localStorage.setItem('aima_calendar', JSON.stringify(CALENDAR));
 }
@@ -1073,15 +1085,14 @@ function restoreCalendar() {
   if (!saved) return;
   try {
     const parsed = JSON.parse(saved);
-    // Merge saved fields into CALENDAR by matching num+persona
     parsed.forEach(savedItem => {
       const match = CALENDAR.find(c => c.num === savedItem.num && c.persona === savedItem.persona);
       if (match) {
-        match.title = savedItem.title;
-        match.date  = savedItem.date;
-        match.cat   = savedItem.cat;
-        match.tone  = savedItem.tone;
-        match.read  = savedItem.read;
+        match.title     = savedItem.title;
+        match.date      = savedItem.date;
+        match.cat       = savedItem.cat;
+        match.tone      = savedItem.tone;
+        match.read      = savedItem.read;
         match.published = savedItem.published;
       }
     });
@@ -1089,6 +1100,7 @@ function restoreCalendar() {
 }
 
 function markDirty() {
+  snapshotForUndo();
   isDirty = true;
   persistCalendar();
   document.getElementById('dirty-indicator').style.display = '';
@@ -1107,9 +1119,22 @@ function clearDirty() {
 }
 
 function discardChanges() {
-  if (!confirm('Discard all unsaved changes to the calendar?')) return;
-  localStorage.removeItem('aima_calendar');
-  location.reload();
+  if (undoStack.length === 0) return;
+  const prev = JSON.parse(undoStack.pop());
+  prev.forEach(savedItem => {
+    const match = CALENDAR.find(c => c.num === savedItem.num && c.persona === savedItem.persona);
+    if (match) {
+      match.title     = savedItem.title;
+      match.date      = savedItem.date;
+      match.cat       = savedItem.cat;
+      match.tone      = savedItem.tone;
+      match.read      = savedItem.read;
+      match.published = savedItem.published;
+    }
+  });
+  persistCalendar();
+  renderCalendar();
+  if (undoStack.length === 0) clearDirty();
 }
 
 function buildCalendarMd() {
