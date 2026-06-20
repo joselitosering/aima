@@ -725,32 +725,41 @@ code {
       <div class="panel-title">aima.productions <span style="color:var(--cyan)">Site Performance</span></div>
       <div class="panel-sub" style="margin-bottom:16px">LinkedIn-to-site conversion · Top referral posts · Tracking status</div>
 
-      <div class="section-block" style="margin-bottom:16px">
-        <div class="section-head">LinkedIn → Site Conversion</div>
-        <div id="perf-li-conversion" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 data to see how LinkedIn posts convert to site visits.</div>
-      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div class="section-block" style="padding:20px;margin-bottom:0">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <span style="width:10px;height:10px;border-radius:50%;background:var(--cyan);display:inline-block"></span>
+            <span style="font-weight:600;font-size:14px">Site Conversion</span>
+          </div>
+          <div id="perf-li-conversion" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 data to see how LinkedIn posts convert to site visits.</div>
+        </div>
 
-      <div class="section-block" style="margin-bottom:16px">
-        <div class="section-head">Best Click-Through Posts</div>
-        <div id="perf-best-cta" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 + analytics CSV to rank posts by site referrals.</div>
+        <div class="section-block" style="padding:20px;margin-bottom:0">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span>
+            <span style="font-weight:600;font-size:14px">Tracking Pixels</span>
+            <span class="badge badge-green" style="margin-left:auto">3 active</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+              <span style="font-size:12px">GA4 <code>G-VCTF4DKBD5</code></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+              <span style="font-size:12px">Meta Pixel <code style="color:var(--gold)">941204972168187</code></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
+              <span style="font-size:12px">TikTok Pixel <code style="color:var(--purple)">D7NFLLRC77UB8JB2C5N0</code></span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="section-block">
-        <div class="section-head">Tracking Pixels Active</div>
-        <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
-          <div style="display:flex;align-items:center;gap:10px">
-            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
-            <span style="font-size:12px">GA4 <code>G-VCTF4DKBD5</code></span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
-            <span style="font-size:12px">Meta Pixel <code style="color:var(--gold)">941204972168187</code></span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0"></span>
-            <span style="font-size:12px">TikTok Pixel <code style="color:var(--purple)">D7NFLLRC77UB8JB2C5N0</code></span>
-          </div>
-        </div>
+        <div class="section-head">Best Click-Through Posts</div>
+        <div id="perf-best-cta" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 + analytics CSV to rank posts by site referrals.</div>
       </div>
     </div>
 
