@@ -1125,9 +1125,10 @@ async function saveCalendar() {
   const btn = document.getElementById('btn-save');
   btn.textContent = '⏳ Saving…'; btn.disabled = true;
   try {
+    const authHeader = `Bearer ${token}`;
     // Get current SHA
     const getRes = await fetch(`${API}?ref=${BRANCH}`, {
-      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' }
+      headers: { Authorization: authHeader, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
     });
     if (!getRes.ok) throw new Error(`GitHub GET failed: ${getRes.status} ${await getRes.text()}`);
     const getJson = await getRes.json();
@@ -1136,7 +1137,7 @@ async function saveCalendar() {
     const content = btoa(unescape(encodeURIComponent(md)));
     const putRes = await fetch(API, {
       method: 'PUT',
-      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      headers: { Authorization: authHeader, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: 'chore: update editorial calendar via article-manager', content, sha, branch: BRANCH })
     });
     if (!putRes.ok) throw new Error(`GitHub PUT failed: ${putRes.status} ${await putRes.text()}`);
@@ -1152,12 +1153,20 @@ async function saveCalendar() {
 
 function showTokenModal() {
   const current = localStorage.getItem('aima_gh_token') || '';
-  const tok = prompt('Paste your GitHub Personal Access Token (repo scope):\nIt will be stored in localStorage — never sent anywhere except GitHub API.', current ? '••••••••' + current.slice(-4) : '');
-  if (tok === null) return;
-  if (tok && !tok.startsWith('•')) {
-    localStorage.setItem('aima_gh_token', tok.trim());
+  const msg = current
+    ? `Current token: ${current}\n\nPaste a new token to replace it, or click Cancel to keep it.\nClick OK with the field cleared to delete it.`
+    : 'Paste your GitHub Personal Access Token (classic, repo scope).\nStarts with ghp_ — stored only in this browser.';
+  const tok = prompt(msg, current);
+  if (tok === null) return; // cancelled
+  const trimmed = tok.trim();
+  if (trimmed === '') {
+    localStorage.removeItem('aima_gh_token');
     updateTokenStatus();
-    alert('Token saved.');
+    alert('Token cleared.');
+  } else {
+    localStorage.setItem('aima_gh_token', trimmed);
+    updateTokenStatus();
+    alert('Token saved: ' + trimmed.slice(0,8) + '…');
   }
 }
 
