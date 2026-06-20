@@ -1424,12 +1424,14 @@ function toggleCalView(){
 function renderCalList(){
   const today = new Date().toISOString().split('T')[0];
   const sorted = [...CALENDAR].sort((a,b)=>a.date>b.date?1:-1);
+  // Assign sequential IDs by date order across all personas
+  const seqIdMap = new Map(sorted.map((item, i) => [item, String(i+1).padStart(3,'0')]));
   const html = sorted.map((item)=>{
     const per = PERSONAS[item.persona]||PERSONAS.joselito;
     const status = item.published ? `<span class="badge badge-green">Published</span>`
       : item.date<today ? `<span class="badge badge-orange">Overdue</span>`
       : `<span class="badge badge-muted">Scheduled</span>`;
-    const numDisplay = typeof item.num==='number' ? String(item.num).padStart(3,'0') : item.num;
+    const numDisplay = seqIdMap.get(item);
     const realIdx = CALENDAR.indexOf(item);
     // Heat
     const heat = getArticleHeat(item);
