@@ -5,7 +5,7 @@
 
 | # | Date | Title | Category | Read | Tone Note |
 |---|------|-------|----------|------|-----------|
-| 1 | 2026-03-21 | The Future of Creative Production in the Age of AI | Innovation | 8 min |  |
+| 1 | 2026-03-21 | The Future of Creative Production in the Age of AI | Innovation | 8 min | test |
 | 2 | 2026-03-21 | The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget | Production Blueprint | 14 min | test |
 | 3 | 2026-03-23 | Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide | Automation | 12 min | test |
 | 4 | 2026-03-23 | Boycott or Bigotry? The Backlash Against AI Artists and Why History Says You're Wrong | AI Ethics | 14 min |  |
