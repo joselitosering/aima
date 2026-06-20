@@ -5,11 +5,11 @@
 
 | # | Date | Title | Category | Read | Tone Note |
 |---|------|-------|----------|------|-----------|
-| 1 | 2026-03-21 | The Future of Creative Production in the Age of AI | Innovation | 8 min | test |
+| 1 | 2026-03-21 | The Future of Creative Production in the Age of AI | Innovation | 8 min |  |
 | 2 | 2026-03-21 | The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget | Production Blueprint | 14 min |  |
 | 3 | 2026-03-23 | Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide | Automation | 12 min |  |
 | 4 | 2026-03-23 | Boycott or Bigotry? The Backlash Against AI Artists and Why History Says You're Wrong | AI Ethics | 14 min |  |
-| 5 | 2026-04-20 | Displaced, Disrupted, and Determined: AI and the US Workforce in 2026–2027 | AI & Society | 18 min |  |
+| 5 | 2026-04-20 | Displaced, Disrupted, and Determined: AI and the US Workforce in 2026–2027 | AI & Society | 18 min | test |
 | 6 | 2026-04-28 | The Algorithm and the Soul: Ethics, AI, and the Future We Choose | AI Ethics | 14 min |  |
 | 7 | 2026-05-05 | When Agents Go Rogue: Is AI Programming Its Own Survival? | AI Ethics | 9 min |  |
 | 8 | 2026-05-12 | The Healing Machine: AI and the Future of Medicine | Health & AI | 18 min |  |
