@@ -270,6 +270,24 @@ Do NOT remove or alter AI crawler / security / robots meta tags.
 ### Body structure
 Navigation bar · Share sidebar (left, fixed) · TOC sidebar (right, sticky) · Article header (category badge, h1, subtitle, author + date + read-time row, header image) · 4–7 H2 sections (3–5 paragraphs + callout or pullquote each) · References (MLA 9th) · Glossary (4–8 terms) · Author card · Article navigation cards · Footer · All JS from template
 
+### Author card — fill per active persona
+Replace the skeleton's default author card fields with the active persona's details. Do not leave Joselito's details in a Dawn or Kenji article.
+
+| Persona | Avatar | Name | Title |
+|---|---|---|---|
+| joselito | `JS` | Joselito Sering | Editor-in-Chief · Imagineer |
+| dawn | `DG` | Dawn Ginhaua | Cultural Critic & Educator |
+| kenji | `KN` | Kenji Nakamoto | Technology Writer & Explorer |
+
+Use the matching bio from Step 1 (B sections) or the persona profile file. The HTML fields to replace:
+
+```html
+<div class="author-card-avatar">[INITIALS]</div>
+<div class="author-card-name">[FULL NAME]</div>
+<div class="author-card-title">[TITLE]</div>
+<p class="author-card-bio">[BIO]</p>
+```
+
 ### Callout types
 ```html
 <div class="callout">          <!-- cyan — key insight -->

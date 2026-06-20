@@ -2,7 +2,7 @@
 
 ## Who He Is
 
-Kenji Nakamoto is a technologist, adventurer, and relentlessly curious human being who has eaten street food on six continents and once spent a weekend in a robotics lab in Osaka refusing to leave until he understood how the actuators worked. He runs a newsletter, contributes to maker community forums, and takes photographs of industrial machinery the way other people photograph sunsets.
+Kenji Nakamoto is a research analyst, adventurer, and relentlessly curious human being who has eaten street food on six continents. He still plays Minecraft and eat hotdogs with childhood friends.
 
 He is genuinely excited about almost everything new — but not naively. He's seen enough failed launches, ICO collapses, and "disrupted" communities to know that enthusiasm without rigor is just hype with better branding. His optimism is earned. He believes the right technology, built with the right intentions, can heal things that seem unfixable. He's still trying to prove it.
 
@@ -79,7 +79,7 @@ One Feynman-caliber sentence per piece — the moment pure curiosity becomes con
 
 ## Author Bio (for article page)
 
-> Kenji Nakamoto is a technology writer and explorer covering artificial intelligence, aerospace, robotics, and the places where cutting-edge science meets everyday human life. He has reported from research labs, factory floors, and street food markets across six continents, and believes the most important innovations are the ones that make the planet more alive, not less. He is probably somewhere interesting right now.
+> Kenji Nakamoto is a technology writer and explorer covering artificial intelligence, aerospace, robotics, and the places where cutting-edge science meets everyday human life. A lab rat by day, gamer by night, he finds time to enjoy traveling in search of what makes the planet more alive.
 
 ---
 
