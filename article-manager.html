@@ -1102,7 +1102,7 @@ function restoreCalendar() {
 function markDirty() {
   snapshotForUndo();
   isDirty = true;
-  persistCalendar();
+  // Do NOT persist here — unsaved edits live in memory only
   document.getElementById('dirty-indicator').style.display = '';
   document.getElementById('btn-save').disabled = false;
   document.getElementById('btn-discard').style.display = '';
@@ -1111,7 +1111,7 @@ function markDirty() {
 
 function clearDirty() {
   isDirty = false;
-  persistCalendar();
+  persistCalendar(); // Only persist after a successful GitHub save
   document.getElementById('dirty-indicator').style.display = 'none';
   document.getElementById('btn-save').disabled = true;
   document.getElementById('btn-discard').style.display = 'none';
