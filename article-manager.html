@@ -461,6 +461,26 @@ code {
       <div class="value" id="kpi-remaining">—</div>
       <div class="trend">in calendar</div>
     </div>
+    <div class="stat-card cyan">
+      <div class="label">LI Profile Traffic</div>
+      <div class="value" id="kpi-li-profile-traffic">—</div>
+      <div class="trend">site sessions</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="label">Company Page Reach</div>
+      <div class="value" id="kpi-company-reach">—</div>
+      <div class="trend">total impressions</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="label">Top Writer</div>
+      <div class="value" id="kpi-top-writer" style="font-size:18px;line-height:1.2">—</div>
+      <div class="trend">most engagement</div>
+    </div>
+    <div class="stat-card green">
+      <div class="label">Top Category</div>
+      <div class="value" id="kpi-top-category" style="font-size:18px;line-height:1.2">—</div>
+      <div class="trend">most impressions</div>
+    </div>
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
@@ -1526,6 +1546,31 @@ function renderOverview() {
       document.getElementById('top-post-stats').textContent = `${(+top.impressions||0).toLocaleString()} impressions · ${(+top.clicks||0)} clicks · ${((+top.ctr||0)*100).toFixed(1)}% CTR`;
     }
     document.getElementById('overview-suggestion').textContent = buildSuggestions()[0]?.text?.replace(/<[^>]+>/g,'')||'Keep posting.';
+
+    // Company page reach = total impressions across all posts
+    document.getElementById('kpi-company-reach').textContent = sum(analyticsData.map(r=>+r.impressions||0)).toLocaleString();
+
+    // Top writer by avg engagement rate
+    const topWriter = ['joselito','dawn','kenji']
+      .map(p=>{ const rows=analyticsData.filter(r=>r.persona===p); return {p, eng: rows.length?avg(rows.map(r=>+r.engagement_rate||0)):0}; })
+      .sort((a,b)=>b.eng-a.eng)[0];
+    if(topWriter) document.getElementById('kpi-top-writer').textContent = PERSONAS[topWriter.p]?.label||topWriter.p;
+
+    // Top category by avg impressions
+    const catPerf={};
+    analyticsData.forEach(r=>{
+      const cal=CALENDAR.find(c=>r.article&&r.article.includes(String(c.num).padStart(3,'0')));
+      const cat=cal?.cat||'Unknown';
+      if(!catPerf[cat]) catPerf[cat]=[];
+      catPerf[cat].push(+r.impressions||0);
+    });
+    const topCat=Object.entries(catPerf).map(([c,v])=>({c,a:avg(v)})).sort((a,b)=>b.a-a.a)[0];
+    if(topCat) document.getElementById('kpi-top-category').textContent = topCat.c;
+  }
+
+  // LinkedIn profile traffic = total linkedin_sessions from GA4
+  if(ga4Data.length) {
+    document.getElementById('kpi-li-profile-traffic').textContent = sum(ga4Data.map(r=>+(r.linkedin_sessions||0))).toLocaleString();
   }
 
   const next = [...CALENDAR].filter(c=>c.date>today&&!c.published).sort((a,b)=>a.date>b.date?1:-1)[0];
