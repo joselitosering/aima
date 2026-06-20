@@ -503,7 +503,9 @@ code {
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center">
     <button class="btn btn-outline btn-sm" onclick="toggleCalView()">⇄ Toggle View</button>
     <button class="btn btn-ghost btn-sm" onclick="discardChanges()" id="btn-discard" style="display:none">✕ Discard</button>
-    <button class="btn btn-green btn-sm" onclick="saveCalendar()" id="btn-save" disabled>💾 Save &amp; Export</button>
+    <button class="btn btn-green btn-sm" onclick="saveCalendar()" id="btn-save" disabled>💾 Save to GitHub</button>
+    <button class="btn btn-ghost btn-sm" onclick="showTokenModal()" style="font-size:10px">⚙ GitHub Token</button>
+    <span id="gh-token-status" style="font-size:11px;font-family:'Courier Prime',monospace;color:var(--muted)">🔑 No token</span>
     <span id="dirty-indicator" style="display:none;color:var(--orange);font-size:12px;font-family:'Courier Prime',monospace;margin-left:4px">● Unsaved changes</span>
     <span style="margin-left:auto;font-size:11px;color:var(--muted);font-family:'Courier Prime',monospace">
       <span style="color:var(--cyan)">━</span> Joselito &nbsp;
@@ -817,7 +819,7 @@ code {
   <span style="font-size:13px;color:var(--orange);font-weight:600;font-family:'Courier Prime',monospace">⚠ You have unsaved calendar changes</span>
   <div style="display:flex;gap:8px">
     <button class="btn btn-ghost btn-sm" onclick="discardChanges()">Discard</button>
-    <button class="btn btn-orange btn-sm" onclick="saveCalendar()">💾 Save &amp; Export</button>
+    <button class="btn btn-orange btn-sm" onclick="saveCalendar()">💾 Save to GitHub</button>
   </div>
 </div>
 
@@ -1083,7 +1085,7 @@ function discardChanges() {
   renderCalendar();
 }
 
-function saveCalendar() {
+function buildCalendarMd() {
   const sorted = [...CALENDAR].sort((a,b)=>a.date>b.date?1:-1);
   let md = `# AIMA Editorial Calendar\n**Updated ${new Date().toLocaleDateString()} — Articles 001–038 + Co-writer Slots**\n\n`;
   md += `## Joselito Sering (Editor-in-Chief)\n\n`;
@@ -1092,20 +1094,81 @@ function saveCalendar() {
     md += `| ${c.num} | ${c.date} | ${c.title} | ${c.cat} | ${c.read} min | ${c.tone||''} |\n`;
   });
   md += `\n## Dawn Ginhaua (Co-Writer — Trending)\n\n`;
-  md += `| Slot | Date | Title | Tone Note |\n|------|------|-------|----------|\n`;
+  md += `| Slot | Date | Title | Category | Read | Tone Note |\n|------|------|-------|----------|------|-----------|\n`;
   sorted.filter(c=>c.persona==='dawn').forEach(c=>{
-    md += `| ${c.num} | ${c.date} | ${c.title} | ${c.tone||''} |\n`;
+    md += `| ${c.num} | ${c.date} | ${c.title} | ${c.cat||''} | ${c.read} min | ${c.tone||''} |\n`;
   });
   md += `\n## Kenji Nakamoto (Co-Writer — Trending)\n\n`;
-  md += `| Slot | Date | Title | Tone Note |\n|------|------|-------|----------|\n`;
+  md += `| Slot | Date | Title | Category | Read | Tone Note |\n|------|------|-------|----------|------|-----------|\n`;
   sorted.filter(c=>c.persona==='kenji').forEach(c=>{
-    md += `| ${c.num} | ${c.date} | ${c.title} | ${c.tone||''} |\n`;
+    md += `| ${c.num} | ${c.date} | ${c.title} | ${c.cat||''} | ${c.read} min | ${c.tone||''} |\n`;
   });
-  const blob = new Blob([md], {type:'text/markdown'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = 'aima-editorial-calendar-updated.md'; a.click();
-  clearDirty();
-  alert('Calendar exported! Replace D:\\Apps\\DevOps\\Github\\aima\\articles\\aima-editorial-calendar.md with this file to sync the automation.');
+  return md;
+}
+
+async function saveCalendar() {
+  const md = buildCalendarMd();
+  const token = localStorage.getItem('aima_gh_token') || '';
+  if (!token) {
+    // Fallback: download file
+    const blob = new Blob([md], {type:'text/markdown'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'aima-editorial-calendar-updated.md'; a.click();
+    alert('No GitHub token set. File downloaded instead.\n\nTo enable direct GitHub saves, click "⚙ GitHub Token" and paste your token.');
+    clearDirty();
+    return;
+  }
+  const REPO  = 'joselitosering/aima';
+  const BRANCH = 'main';
+  const PATH  = 'articles/aima-editorial-calendar.md';
+  const API   = `https://api.github.com/repos/${REPO}/contents/${PATH}`;
+  const btn = document.getElementById('btn-save');
+  btn.textContent = '⏳ Saving…'; btn.disabled = true;
+  try {
+    // Get current SHA
+    const getRes = await fetch(`${API}?ref=${BRANCH}`, {
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' }
+    });
+    if (!getRes.ok) throw new Error(`GitHub GET failed: ${getRes.status} ${await getRes.text()}`);
+    const getJson = await getRes.json();
+    const sha = getJson.sha;
+    // Push updated content
+    const content = btoa(unescape(encodeURIComponent(md)));
+    const putRes = await fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'chore: update editorial calendar via article-manager', content, sha, branch: BRANCH })
+    });
+    if (!putRes.ok) throw new Error(`GitHub PUT failed: ${putRes.status} ${await putRes.text()}`);
+    clearDirty();
+    btn.textContent = '✓ Saved to GitHub';
+    setTimeout(() => { btn.textContent = '💾 Save to GitHub'; }, 3000);
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = '💾 Save to GitHub';
+    alert('GitHub save failed:\n' + err.message);
+  }
+}
+
+function showTokenModal() {
+  const current = localStorage.getItem('aima_gh_token') || '';
+  const tok = prompt('Paste your GitHub Personal Access Token (repo scope):\nIt will be stored in localStorage — never sent anywhere except GitHub API.', current ? '••••••••' + current.slice(-4) : '');
+  if (tok === null) return;
+  if (tok && !tok.startsWith('•')) {
+    localStorage.setItem('aima_gh_token', tok.trim());
+    updateTokenStatus();
+    alert('Token saved.');
+  }
+}
+
+function updateTokenStatus() {
+  const el = document.getElementById('gh-token-status');
+  if (!el) return;
+  const tok = localStorage.getItem('aima_gh_token') || '';
+  el.textContent = tok ? '🔑 Token set' : '🔑 No token';
+  el.style.color = tok ? 'var(--cyan)' : 'var(--muted)';
+  const saveBtn = document.getElementById('btn-save');
+  if (saveBtn) saveBtn.textContent = tok ? '💾 Save to GitHub' : '💾 Save &amp; Export';
 }
 
 window.addEventListener('beforeunload', e => {
@@ -1212,6 +1275,7 @@ function loadGA4(event) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  updateTokenStatus();
   updatePipelineBar();
   autoLoadPostLog();
   autoLoadAnalytics();

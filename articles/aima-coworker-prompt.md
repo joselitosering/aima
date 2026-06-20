@@ -61,7 +61,10 @@ Also note:
 
 ### A1 — Get the Topic from Calendar
 
-Read `D:\Apps\DevOps\Github\aima\articles\aima-editorial-calendar.md`.
+Fetch the live editorial calendar from GitHub:
+`https://raw.githubusercontent.com/joselitosering/aima/main/articles/aima-editorial-calendar.md`
+
+This is the authoritative source — always fetch it fresh, do not use a cached or local copy.
 
 Use `joselito.next_calendar_index` from the state file to find the correct row in the **Article Calendar** table (0-indexed, where article 013 = index 0). The row at `next_calendar_index` gives you:
 - Title
