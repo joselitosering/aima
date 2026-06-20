@@ -413,6 +413,7 @@ code {
   </div>
   <div class="nav-section">
     <div class="nav-label">Content</div>
+    <div class="nav-item" onclick="showPage('writers')"><span class="icon">✍️</span>Writers</div>
     <div class="nav-item" onclick="showPage('calendar')"><span class="icon">📅</span>Calendar</div>
     <div class="nav-item" onclick="showPage('posts')"><span class="icon">📋</span>Post Log</div>
   </div>
@@ -512,6 +513,85 @@ code {
       <div class="section-head">This Week's Insight</div>
       <div id="overview-suggestion" style="font-size:12px;line-height:1.7;color:var(--muted)">Load analytics to see insights.</div>
     </div>
+  </div>
+</div>
+
+<!-- ══ WRITERS ══ -->
+<div class="page" id="page-writers">
+  <div class="panel-title">Writers <span style="color:var(--cyan)">&amp; Personas</span></div>
+  <div class="panel-sub">Author profiles · Voice settings · Article tags</div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+
+    <!-- Joselito -->
+    <div class="section-block" style="padding:24px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+        <div style="position:relative;flex-shrink:0">
+          <div id="avatar-joselito" onclick="document.getElementById('photo-upload-joselito').click()" style="width:72px;height:72px;border-radius:50%;background:rgba(0,217,245,0.12);border:2px solid #00D9F5;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:28px;color:#00D9F5;cursor:pointer;overflow:hidden"></div>
+          <input type="file" id="photo-upload-joselito" accept="image/*" style="display:none" onchange="uploadWriterPhoto('joselito',this)">
+          <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer" onclick="document.getElementById('photo-upload-joselito').click()">📷</div>
+        </div>
+        <div>
+          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Joselito</div>
+          <div style="margin-top:4px"><span class="badge badge-cyan">Primary Author</span></div>
+        </div>
+      </div>
+      <div class="card-title" style="margin-bottom:4px">Bio</div>
+      <div id="bio-joselito" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('joselito')">Founder of AIMA. Writes about AI intersecting with creativity, society, and human experience.</div>
+      <div class="card-title" style="margin-bottom:8px">Article Tags</div>
+      <div id="tags-joselito" style="display:flex;flex-wrap:wrap;gap:6px;min-height:28px;margin-bottom:10px"></div>
+      <div style="display:flex;gap:8px">
+        <input id="tag-input-joselito" class="search-input" placeholder="Add tag and press Enter…" style="flex:1;font-size:11px" onkeydown="if(event.key==='Enter')addWriterTag('joselito')">
+        <button class="btn btn-outline btn-sm" onclick="addWriterTag('joselito')">+</button>
+      </div>
+    </div>
+
+    <!-- Dawn -->
+    <div class="section-block" style="padding:24px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+        <div style="position:relative;flex-shrink:0">
+          <div id="avatar-dawn" onclick="document.getElementById('photo-upload-dawn').click()" style="width:72px;height:72px;border-radius:50%;background:rgba(155,89,245,0.12);border:2px solid #9b59f5;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:28px;color:#9b59f5;cursor:pointer;overflow:hidden"></div>
+          <input type="file" id="photo-upload-dawn" accept="image/*" style="display:none" onchange="uploadWriterPhoto('dawn',this)">
+          <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer" onclick="document.getElementById('photo-upload-dawn').click()">📷</div>
+        </div>
+        <div>
+          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Dawn</div>
+          <div style="margin-top:4px"><span class="badge badge-purple">Contributing Author</span></div>
+        </div>
+      </div>
+      <div class="card-title" style="margin-bottom:4px">Bio</div>
+      <div id="bio-dawn" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('dawn')">Explores AI ethics, healthcare, and the human dimensions of emerging technology.</div>
+      <div class="card-title" style="margin-bottom:8px">Article Tags</div>
+      <div id="tags-dawn" style="display:flex;flex-wrap:wrap;gap:6px;min-height:28px;margin-bottom:10px"></div>
+      <div style="display:flex;gap:8px">
+        <input id="tag-input-dawn" class="search-input" placeholder="Add tag and press Enter…" style="flex:1;font-size:11px" onkeydown="if(event.key==='Enter')addWriterTag('dawn')">
+        <button class="btn btn-outline btn-sm" onclick="addWriterTag('dawn')">+</button>
+      </div>
+    </div>
+
+    <!-- Kenji -->
+    <div class="section-block" style="padding:24px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+        <div style="position:relative;flex-shrink:0">
+          <div id="avatar-kenji" onclick="document.getElementById('photo-upload-kenji').click()" style="width:72px;height:72px;border-radius:50%;background:rgba(245,197,24,0.12);border:2px solid #f5c518;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:28px;color:#f5c518;cursor:pointer;overflow:hidden"></div>
+          <input type="file" id="photo-upload-kenji" accept="image/*" style="display:none" onchange="uploadWriterPhoto('kenji',this)">
+          <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer" onclick="document.getElementById('photo-upload-kenji').click()">📷</div>
+        </div>
+        <div>
+          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Kenji</div>
+          <div style="margin-top:4px"><span class="badge badge-gold">Contributing Author</span></div>
+        </div>
+      </div>
+      <div class="card-title" style="margin-bottom:4px">Bio</div>
+      <div id="bio-kenji" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('kenji')">Covers AI in business, automation, labor markets, and the economics of the future.</div>
+      <div class="card-title" style="margin-bottom:8px">Article Tags</div>
+      <div id="tags-kenji" style="display:flex;flex-wrap:wrap;gap:6px;min-height:28px;margin-bottom:10px"></div>
+      <div style="display:flex;gap:8px">
+        <input id="tag-input-kenji" class="search-input" placeholder="Add tag and press Enter…" style="flex:1;font-size:11px" onkeydown="if(event.key==='Enter')addWriterTag('kenji')">
+        <button class="btn btn-outline btn-sm" onclick="addWriterTag('kenji')">+</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1422,6 +1502,7 @@ document.addEventListener('DOMContentLoaded', () => {
   autoLoadPostLog();
   autoLoadAnalytics();
   autoLoadGA4();
+  loadWriterData();
   // Inject category datalist for editable cat cells
   const dl = document.createElement('datalist');
   dl.id = 'cat-datalist';
@@ -1975,6 +2056,98 @@ function renderPerformanceTraffic(){
       </div>`;
     }).join('')||'<div style="color:var(--muted);font-size:12px">No LinkedIn referral data found.</div>';
   }
+}
+
+// ═══════════════════════════════════════════
+// WRITERS PAGE
+// ═══════════════════════════════════════════
+const WRITER_KEYS = ['joselito','dawn','kenji'];
+const WRITER_INITIALS = {joselito:'J', dawn:'D', kenji:'K'};
+const WRITER_BADGE = {joselito:'badge-cyan', dawn:'badge-purple', kenji:'badge-gold'};
+
+function loadWriterData() {
+  const saved = JSON.parse(localStorage.getItem('aima_writers')||'{}');
+  WRITER_KEYS.forEach(p => {
+    const d = saved[p]||{};
+    // Bio
+    const bioEl = document.getElementById('bio-'+p);
+    if(bioEl && d.bio) bioEl.textContent = d.bio;
+    // Photo
+    if(d.photo) {
+      const av = document.getElementById('avatar-'+p);
+      if(av) { av.style.backgroundImage=`url(${d.photo})`; av.style.backgroundSize='cover'; av.textContent=''; }
+    } else {
+      const av = document.getElementById('avatar-'+p);
+      if(av && !av.textContent) av.textContent = WRITER_INITIALS[p];
+    }
+    // Tags
+    renderWriterTags(p, d.tags||[]);
+  });
+  // Ensure initials shown if no photo
+  WRITER_KEYS.forEach(p => {
+    const av = document.getElementById('avatar-'+p);
+    if(av && !av.style.backgroundImage && !av.textContent) av.textContent = WRITER_INITIALS[p];
+  });
+}
+
+function getWriterStore() {
+  return JSON.parse(localStorage.getItem('aima_writers')||'{}');
+}
+
+function saveWriterData(p) {
+  const store = getWriterStore();
+  if(!store[p]) store[p]={};
+  const bioEl = document.getElementById('bio-'+p);
+  if(bioEl) store[p].bio = bioEl.textContent.trim();
+  localStorage.setItem('aima_writers', JSON.stringify(store));
+}
+
+function addWriterTag(p) {
+  const input = document.getElementById('tag-input-'+p);
+  const tag = (input.value||'').trim().replace(/^#/,'');
+  if(!tag) return;
+  const store = getWriterStore();
+  if(!store[p]) store[p]={};
+  if(!store[p].tags) store[p].tags=[];
+  if(!store[p].tags.includes(tag)) {
+    store[p].tags.push(tag);
+    localStorage.setItem('aima_writers', JSON.stringify(store));
+    renderWriterTags(p, store[p].tags);
+  }
+  input.value='';
+}
+
+function removeWriterTag(p, tag) {
+  const store = getWriterStore();
+  if(!store[p]||!store[p].tags) return;
+  store[p].tags = store[p].tags.filter(t=>t!==tag);
+  localStorage.setItem('aima_writers', JSON.stringify(store));
+  renderWriterTags(p, store[p].tags);
+}
+
+function renderWriterTags(p, tags) {
+  const el = document.getElementById('tags-'+p);
+  if(!el) return;
+  el.innerHTML = (tags||[]).map(t=>`
+    <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(0,217,245,0.08);border:1px solid rgba(0,217,245,0.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:'Courier Prime',monospace;color:var(--cyan)">
+      #${t}
+      <span onclick="removeWriterTag('${p}','${t}')" style="cursor:pointer;color:var(--muted);font-size:13px;line-height:1;margin-left:2px">&times;</span>
+    </span>`).join('');
+}
+
+function uploadWriterPhoto(p, input) {
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const data = e.target.result;
+    const av = document.getElementById('avatar-'+p);
+    if(av) { av.style.backgroundImage=`url(${data})`; av.style.backgroundSize='cover'; av.textContent=''; }
+    const store = getWriterStore();
+    if(!store[p]) store[p]={};
+    store[p].photo = data;
+    localStorage.setItem('aima_writers', JSON.stringify(store));
+  };
+  reader.readAsDataURL(file);
 }
 
 function addManualStat(){
