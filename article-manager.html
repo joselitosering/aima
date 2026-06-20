@@ -1178,9 +1178,10 @@ async function saveCalendar() {
   btn.textContent = '⏳ Saving…'; btn.disabled = true;
   try {
     const authHeader = `Bearer ${token}`;
-    // Get current SHA
-    const getRes = await fetch(`${API}?ref=${BRANCH}`, {
-      headers: { Authorization: authHeader, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
+    // Get current SHA — cache: 'no-store' ensures we always get the live SHA
+    const getRes = await fetch(`${API}?ref=${BRANCH}&_=${Date.now()}`, {
+      headers: { Authorization: authHeader, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
+      cache: 'no-store'
     });
     if (!getRes.ok) throw new Error(`GitHub GET failed: ${getRes.status} ${await getRes.text()}`);
     const getJson = await getRes.json();
