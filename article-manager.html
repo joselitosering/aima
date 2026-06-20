@@ -430,7 +430,7 @@ code {
 
   <div class="writers-legend">
     <div class="writers-label">Writers</div>
-    <div class="writer-item"><span class="w-dot" style="background:var(--cyan)"></span>Joselito</div>
+    <div class="writer-item"><span class="w-dot" style="background:var(--cyan)"></span>Joselito Sering</div>
     <div class="writer-item"><span class="w-dot" style="background:var(--purple)"></span>Dawn Ginhaua</div>
     <div class="writer-item"><span class="w-dot" style="background:var(--yellow)"></span>Kenji Nakamoto</div>
   </div>
@@ -520,8 +520,8 @@ code {
 <div class="page" id="page-writers">
   <div class="panel-title">Writers <span style="color:var(--cyan)">&amp; Personas</span></div>
   <div class="panel-sub">Author profiles · Voice settings · Article tags</div>
-
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+  <div id="writers-restore" style="margin-bottom:16px"></div>
+  <div id="writers-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
 
     <!-- Joselito -->
     <div class="section-block" style="padding:24px">
@@ -532,12 +532,12 @@ code {
           <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer" onclick="document.getElementById('photo-upload-joselito').click()">📷</div>
         </div>
         <div>
-          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Joselito</div>
-          <div style="margin-top:4px"><span class="badge badge-cyan">Primary Author</span></div>
+          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Joselito Sering</div>
+          <div style="margin-top:4px"><span class="badge badge-cyan">Editor-In-Chief &amp; Founder</span></div>
         </div>
       </div>
       <div class="card-title" style="margin-bottom:4px">Bio</div>
-      <div id="bio-joselito" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('joselito')">Founder of AIMA. Writes about AI intersecting with creativity, society, and human experience.</div>
+      <div id="bio-joselito" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('joselito')">Joselito Sering is the founder and editor-in-chief of AIMA, writing at the crossroads of artificial intelligence, creativity, and the human experience. A lifelong builder and technologist, he believes AI's most important story has yet to be written: the one where it becomes a tool for human kindness, artistic freedom, and generational wealth for communities that have been left behind. He is building a philanthropic legacy rooted in the Philippines, and explores how AI agents can amplify — not replace — the creative and scientific work that makes us more alive.</div>
       <div class="card-title" style="margin-bottom:8px">Article Tags</div>
       <div id="tags-joselito" style="display:flex;flex-wrap:wrap;gap:6px;min-height:28px;margin-bottom:10px"></div>
       <div style="display:flex;gap:8px">
@@ -555,12 +555,12 @@ code {
           <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer" onclick="document.getElementById('photo-upload-dawn').click()">📷</div>
         </div>
         <div>
-          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Dawn</div>
-          <div style="margin-top:4px"><span class="badge badge-purple">Contributing Author</span></div>
+          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Dawn Ginhaua</div>
+          <div style="margin-top:4px"><span class="badge badge-purple">Cultural Critic &amp; Educator</span></div>
         </div>
       </div>
       <div class="card-title" style="margin-bottom:4px">Bio</div>
-      <div id="bio-dawn" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('dawn')">Explores AI ethics, healthcare, and the human dimensions of emerging technology.</div>
+      <div id="bio-dawn" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('dawn')">Dawn Ginhaua is a cultural critic, educator, and essayist writing at the intersection of technology, power, and the communities technology claims to serve. She teaches media studies and critical theory, and has been known to assign readings that make students uncomfortable in productive ways. She believes the most important question to ask about any new technology is: who benefits, who pays, and who never got asked.</div>
       <div class="card-title" style="margin-bottom:8px">Article Tags</div>
       <div id="tags-dawn" style="display:flex;flex-wrap:wrap;gap:6px;min-height:28px;margin-bottom:10px"></div>
       <div style="display:flex;gap:8px">
@@ -578,12 +578,12 @@ code {
           <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer" onclick="document.getElementById('photo-upload-kenji').click()">📷</div>
         </div>
         <div>
-          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Kenji</div>
-          <div style="margin-top:4px"><span class="badge badge-gold">Contributing Author</span></div>
+          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">Kenji Nakamoto</div>
+          <div style="margin-top:4px"><span class="badge badge-gold">Technology Writer &amp; Explorer</span></div>
         </div>
       </div>
       <div class="card-title" style="margin-bottom:4px">Bio</div>
-      <div id="bio-kenji" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('kenji')">Covers AI in business, automation, labor markets, and the economics of the future.</div>
+      <div id="bio-kenji" contenteditable="true" spellcheck="false" style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;padding:8px;border:1px solid transparent;border-radius:6px;outline:none;min-height:52px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';saveWriterData('kenji')">Kenji Nakamoto is a technology writer and explorer covering artificial intelligence, aerospace, robotics, and the places where cutting-edge science meets everyday human life. He has reported from research labs, factory floors, and street food markets across six continents, and believes the most important innovations are the ones that make the planet more alive, not less. He is probably somewhere interesting right now.</div>
       <div class="card-title" style="margin-bottom:8px">Article Tags</div>
       <div id="tags-kenji" style="display:flex;flex-wrap:wrap;gap:6px;min-height:28px;margin-bottom:10px"></div>
       <div style="display:flex;gap:8px">
@@ -1502,7 +1502,7 @@ document.addEventListener('DOMContentLoaded', () => {
   autoLoadPostLog();
   autoLoadAnalytics();
   autoLoadGA4();
-  loadWriterData();
+  renderWritersPage();
   // Inject category datalist for editable cat cells
   const dl = document.createElement('datalist');
   dl.id = 'cat-datalist';
@@ -2061,45 +2061,125 @@ function renderPerformanceTraffic(){
 // ═══════════════════════════════════════════
 // WRITERS PAGE
 // ═══════════════════════════════════════════
-const WRITER_KEYS = ['joselito','dawn','kenji'];
-const WRITER_INITIALS = {joselito:'J', dawn:'D', kenji:'K'};
-const WRITER_BADGE = {joselito:'badge-cyan', dawn:'badge-purple', kenji:'badge-gold'};
+const WRITERS_DATA = [
+  {
+    key:'joselito', name:'Joselito Sering', role:'Editor-In-Chief & Founder',
+    initials:'JS', color:'#00D9F5', colorBg:'rgba(0,217,245,0.12)', badgeClass:'badge-cyan',
+    defaultTags:['AI-creativity','human-experience','society','philanthropy','generational-wealth','AI-agents','creative-production','financial-freedom','aima-productions'],
+    bio:[
+      'Joselito Sering is the founder and editor-in-chief of AIMA, a practitioner-turned-publisher who writes about artificial intelligence the way a craftsman writes about tools — with deep respect for what they can do, and clear eyes about what they cannot replace.',
+      'He didn\'t arrive here from a newsroom or an academic department. He arrived from the work itself: building content pipelines, producing music videos on shoestring budgets, and discovering — almost by accident — that AI agents could do in hours what once took teams and weeks. That discovery changed everything he thought he knew about who gets to create.',
+      'He is building toward something larger than a publication. A foundation. A legacy. A way of using the wealth that AI makes possible to fund the communities — particularly in the Philippines — that mainstream technology tends to overlook. He believes that generational wealth is not about accumulation. It is about what you leave behind that keeps giving.',
+      'He keeps a playlist for every article. He still edits by hand.',
+    ],
+    voiceTone:[
+      {label:'Personal and grounded', desc:'writes from lived experience; "I tried this" carries more weight than "experts say"'},
+      {label:'Optimistic but unromantic', desc:'believes in the tools without believing the hype; wonder comes with an honest accounting'},
+      {label:'Practical and visionary at once', desc:'can explain a workflow step-by-step and still make you feel you\'re building something that matters'},
+      {label:'Direct and warm', desc:'no hedging, no jargon walls; writes like he\'s telling a smart friend about something that actually works'},
+      {label:'Mission-forward', desc:'the "why" is never far from the surface; technology is always in service of something human'},
+    ],
+    avoid:'Passive constructions, empty superlatives, AI-as-magic framing, any sentence that could appear in a VC pitch deck without irony, conclusions that don\'t point somewhere real.',
+    dna:'José Rizal (the pen as instrument of liberation), Marshall McLuhan (the medium reshapes the one who uses it), Steve Jobs (technology at the intersection of liberal arts and science), Gene Roddenberry (utopian libertarianism and secular governance), Christopher Hitchens (scathing intellectual and unapologetically direct), Carl Sagan (science and humanity are intertwined), Buckminster Fuller (design as a love letter to the future).',
+    topicsPrimary:['AI agents and creative production automation','Content pipeline tools and AI workflows for small teams','Generational wealth strategies enabled by technology','Philanthropy and AI: giving with greater reach and precision','The creator economy in the age of autonomous agents','AI at the intersection of art, music, and film production'],
+    topicsSecondary:['Filipino technology, diaspora entrepreneurship, and creative economy','Financial independence frameworks for creators and solopreneurs','Spiritual dimensions of purposeful work and legacy-building','Digital transformation for one-person and micro teams','AI ethics as seen from the practitioner\'s seat, not the policy floor'],
+    sequence:[
+      {label:'The moment of contact', desc:'a specific breakthrough, tool discovery, or creative problem that forced a new way of thinking'},
+      {label:'The mechanism, demystified', desc:'how it actually works; practical enough to replicate, honest about what it costs and requires'},
+      {label:'The economic unlock', desc:'what becomes possible, what costs collapse, what doors open for people who couldn\'t afford them before'},
+      {label:'The human imperative', desc:'who benefits most, and why that matters beyond the individual win'},
+      {label:'The call to build', desc:'end with a concrete first step; leave the reader with something to do, not just something to think about'},
+    ],
+    linkedinStyle:'Direct, practical, ends with possibility. Writes like someone who just figured something out and wants to share it before the moment passes. One exclamation point maximum — earned, not decorative.',
+    hashtags:{
+      primary:['#AIAgents','#CreativeProduction','#ContentAutomation','#GenerationalWealth','#CreatorEconomy'],
+      secondary:['#Philanthropy','#Ancestry','#Solopreneur','#AITools','#FinancialFreedom'],
+      tertiary:['#DigitalTransformation','#MusicProduction','#AIWorkflow','#FutureOfWork'],
+      brand:['#AIMA','#AIForGood','#aimaproductions'],
+    },
+  },
+  {
+    key:'dawn', name:'Dawn Ginhaua', role:'Cultural Critic & Educator',
+    initials:'DG', color:'#9b59f5', colorBg:'rgba(155,89,245,0.12)', badgeClass:'badge-purple',
+    defaultTags:['AI-ethics','policy','accountability','labor','surveillance','inequality','corporate-capture','misinformation','digital-rights'],
+    bio:[
+      'Dawn Ginhaua is a cultural critic, educator, and essayist. She teaches at a small liberal arts college and runs a community reading group that meets in the back room of a bookshop that smells like coffee and old paper. She has opinions about everything and the receipts to back them up. Her students adore her. Corporations find her inconvenient. She considers that a reasonable scorecard.',
+      'She writes about technology the way a doctor reads a patient chart — with clinical attention and zero sentimentality. She believes AI is neither savior nor apocalypse, but a mirror that reflects exactly who built it and who got left out of the room.',
+      'She loves her friends, her garden, jazz, painters who argue about color theory, and any cheese that\'s been aged longer than six months.',
+    ],
+    voiceTone:[
+      {label:'Academic but human', desc:'cites her sources and still sounds like a person'},
+      {label:'Sharp and dry', desc:'wit deployed as precision instrument, not performance'},
+      {label:'Genuinely funny', desc:'the kind of funny that makes you snort, then feel slightly implicated'},
+      {label:'Structurally rigorous', desc:'argument builds like a legal brief, lands like a gut punch'},
+      {label:'Never smug', desc:'skeptical, not superior; she includes herself in the critique'},
+      {label:'Morally serious', desc:'names injustice by name; doesn\'t soften edges to avoid discomfort'},
+    ],
+    avoid:'Breathless enthusiasm, tech-bro framing, "disruption" as a positive term, corporate jargon used without irony, solutions that don\'t name who pays for them.',
+    dna:'bell hooks (love as political act), Naomi Klein (follow the money), David Graeber (bureaucracy as violence), Hannah Arendt (banality of complicity), Ursula K. Le Guin (the future is already here, unevenly), James Baldwin (clarity as courage), Rebecca Solnit (hope as discipline), Terry Pratchett (the joke that tells the truth).',
+    topicsPrimary:['AI ethics and accountability','Algorithmic bias, surveillance capitalism, data colonialism','Labor displacement, gig economy, automation\'s human cost','Corporate capture of public institutions (education, health, democracy)','Government overreach, digital rights, privacy','Misinformation ecosystems, media literacy','Feminist and postcolonial critiques of tech'],
+    topicsSecondary:['Arts funding and creative labor in the AI age','Community resilience and mutual aid','Climate justice intersecting with tech policy','Education systems under stress'],
+    sequence:[
+      {label:'Opening provocation', desc:'a fact, image, or contradiction that doesn\'t resolve cleanly'},
+      {label:'The thing nobody\'s saying out loud', desc:'name the subtext the polite conversation avoids'},
+      {label:'Evidence with teeth', desc:'data and citations that don\'t let the powerful off the hook'},
+      {label:'The structural argument', desc:'why this isn\'t an accident or an edge case'},
+      {label:'The honest question', desc:'end with the discomfort the reader now has to carry'},
+    ],
+    linkedinStyle:'Precise, slightly provocative, ends with an open question. Doesn\'t use exclamation marks. Uses exactly the right word.',
+    hashtags:{
+      primary:['#AIEthics','#TechPolicy','#ResponsibleAI','#DigitalRights','#AlgorithmicAccountability'],
+      secondary:['#CriticalTheory','#MediaLiteracy','#FutureOfWork','#SurveillanceCapitalism','#DataJustice'],
+      tertiary:[],
+      brand:['#AIMA','#AIForGood'],
+    },
+  },
+  {
+    key:'kenji', name:'Kenji Nakamoto', role:'Technology Writer & Explorer',
+    initials:'KN', color:'#f5c518', colorBg:'rgba(245,197,24,0.12)', badgeClass:'badge-gold',
+    defaultTags:['aerospace','robotics','biotech','climate-tech','manufacturing','AI-applications','space','maker-culture'],
+    bio:[
+      'Kenji Nakamoto is a research analyst, adventurer, and relentlessly curious human being who has eaten street food on six continents. He still plays Minecraft and eats hotdogs with childhood friends.',
+      'He is genuinely excited about almost everything new — but not naively. He\'s seen enough failed launches, ICO collapses, and "disrupted" communities to know that enthusiasm without rigor is just hype with better branding. His optimism is earned. He believes the right technology, built with the right intentions, can heal things that seem unfixable. He\'s still trying to prove it.',
+      'He is happiest on a long-haul flight with a new research paper, a window seat, and something spicy.',
+    ],
+    voiceTone:[
+      {label:'Genuinely enthused', desc:'he means it every time; the excitement is never performed'},
+      {label:'Conversational and kinetic', desc:'sentences move, paragraphs have momentum'},
+      {label:'Rigorously curious', desc:'goes deep on how things actually work, not just what they promise'},
+      {label:'Warm and inclusive', desc:'wants to bring the reader along, not impress them'},
+      {label:'Grounded optimism', desc:'every piece of wonder comes with honest acknowledgment of what could go wrong'},
+      {label:'Sensory and specific', desc:'describes textures, smells, sounds; technology lives in the world'},
+    ],
+    avoid:'Cynicism for its own sake, insider jargon without translation, breathless hype with no mechanics, "this changes everything" without showing the change.',
+    dna:'Richard Feynman (joy of figuring things out), Kevin Kelly (technology as the seventh kingdom of life), Tim Berners-Lee (the web belongs to everyone), Hayao Miyazaki (technology and nature are not enemies), David Attenborough (the planet is a character, not a backdrop), Carl Sagan (scale as wonder), Nikola Tesla (vision that didn\'t fit the era), Buckminster Fuller (design as love letter to the future).',
+    topicsPrimary:['Artificial intelligence: applications, breakthroughs, real-world deployments','Aerospace and space exploration (commercial and national programs)','Robotics and autonomous systems','Blockchain, decentralized systems, web3 (with honest accounting)','3D printing, advanced manufacturing, materials science','Cybernetics, brain-computer interfaces, bioengineering','Climate tech, clean energy, sustainable systems'],
+    topicsSecondary:['Maker culture, open-source hardware and software','Food science and technology (fermentation, lab-grown, precision agriculture)','Travel and the geography of innovation','Animal cognition and interspecies technology','Urban design, smart cities, infrastructure futures'],
+    sequence:[
+      {label:'The moment of contact', desc:'a specific scene: a lab, a launch, a meal, a discovery that made him look up from his screen'},
+      {label:'The mechanism', desc:'how does this actually work? plain language + one physical analogy'},
+      {label:'The frontier', desc:'where is this heading, who is pushing it, what\'s the adjacent possible'},
+      {label:'The honest reckoning', desc:'what could go wrong, who might be left behind, what needs watching'},
+      {label:'The invitation', desc:'end with what the reader could do, explore, build, or care about next'},
+    ],
+    linkedinStyle:'Energetic, grounded, ends with what\'s possible. One exclamation point maximum per post, deployed wisely. Makes the reader feel like they just got a tip from a friend who knows things.',
+    hashtags:{
+      primary:['#DeepTech','#Innovation','#FutureTech','#Robotics','#ArtificialIntelligence'],
+      secondary:['#SpaceTech','#Blockchain','#CleanEnergy','#Biotech','#MakerCulture','#3DPrinting'],
+      tertiary:['#Sustainability','#SmartCities','#OpenSource','#CreativeTech'],
+      brand:['#AIMA','#AIForGood'],
+    },
+  },
+];
 
-function loadWriterData() {
-  const saved = JSON.parse(localStorage.getItem('aima_writers')||'{}');
-  WRITER_KEYS.forEach(p => {
-    const d = saved[p]||{};
-    // Bio
-    const bioEl = document.getElementById('bio-'+p);
-    if(bioEl && d.bio) bioEl.textContent = d.bio;
-    // Photo
-    if(d.photo) {
-      const av = document.getElementById('avatar-'+p);
-      if(av) { av.style.backgroundImage=`url(${d.photo})`; av.style.backgroundSize='cover'; av.textContent=''; }
-    } else {
-      const av = document.getElementById('avatar-'+p);
-      if(av && !av.textContent) av.textContent = WRITER_INITIALS[p];
-    }
-    // Tags
-    renderWriterTags(p, d.tags||[]);
-  });
-  // Ensure initials shown if no photo
-  WRITER_KEYS.forEach(p => {
-    const av = document.getElementById('avatar-'+p);
-    if(av && !av.style.backgroundImage && !av.textContent) av.textContent = WRITER_INITIALS[p];
-  });
-}
+const WRITER_MD_FILES = {
+  joselito: 'articles/personas/joselito-sering.md',
+  dawn:     'articles/personas/dawn-ginhaua.md',
+  kenji:    'articles/personas/kenji-nakamoto.md',
+};
 
 function getWriterStore() {
   return JSON.parse(localStorage.getItem('aima_writers')||'{}');
-}
-
-function saveWriterData(p) {
-  const store = getWriterStore();
-  if(!store[p]) store[p]={};
-  const bioEl = document.getElementById('bio-'+p);
-  if(bioEl) store[p].bio = bioEl.textContent.trim();
-  localStorage.setItem('aima_writers', JSON.stringify(store));
 }
 
 function addWriterTag(p) {
@@ -2128,11 +2208,278 @@ function removeWriterTag(p, tag) {
 function renderWriterTags(p, tags) {
   const el = document.getElementById('tags-'+p);
   if(!el) return;
-  el.innerHTML = (tags||[]).map(t=>`
-    <span style="display:inline-flex;align-items:center;gap:4px;background:rgba(0,217,245,0.08);border:1px solid rgba(0,217,245,0.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:'Courier Prime',monospace;color:var(--cyan)">
-      #${t}
-      <span onclick="removeWriterTag('${p}','${t}')" style="cursor:pointer;color:var(--muted);font-size:13px;line-height:1;margin-left:2px">&times;</span>
-    </span>`).join('');
+  el.innerHTML = (tags||[]).map(t=>
+    `<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(0,217,245,0.08);border:1px solid rgba(0,217,245,0.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:'Courier Prime',monospace;color:var(--cyan)">#${t}<span onclick="removeWriterTag('${p}','${t}')" style="cursor:pointer;color:var(--muted);font-size:13px;line-height:1;margin-left:2px">&times;</span></span>`
+  ).join('');
+}
+
+async function saveWriterTagsToMd(p) {
+  const store = getWriterStore();
+  const tags = (store[p]||{}).tags||[];
+  const mdPath = WRITER_MD_FILES[p];
+  const token = localStorage.getItem('aima_gh_token')||'';
+  const tagLine = tags.length ? tags.map(t=>`\`${t}\``).join(' ') : '_No tags yet._';
+
+  if(!token) {
+    alert('No GitHub token set. Click "⚙ GitHub Token" on the Calendar page to set one.');
+    return;
+  }
+
+  const btn = document.getElementById('save-tags-btn-'+p);
+  const origText = btn.textContent;
+  btn.textContent = '⏳…'; btn.disabled = true;
+
+  try {
+    const REPO = 'joselitosering/aima';
+    const BRANCH = 'main';
+    const API = `https://api.github.com/repos/${REPO}/contents/${mdPath}`;
+    const authHeader = `Bearer ${token}`;
+
+    const getRes = await fetch(`${API}?ref=${BRANCH}&_=${Date.now()}`, {
+      headers: { Authorization: authHeader, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
+      cache: 'no-store'
+    });
+    if(!getRes.ok) throw new Error(`GitHub GET failed: ${getRes.status}`);
+    const getJson = await getRes.json();
+    const sha = getJson.sha;
+    let currentMd = decodeURIComponent(escape(atob(getJson.content.replace(/\n/g,''))));
+
+    // Update existing Article Tags section or append it
+    if(currentMd.includes('## Article Tags')) {
+      currentMd = currentMd.replace(/## Article Tags[\s\S]*?(?=\n## |\n---|\s*$)/, `## Article Tags\n\n${tagLine}\n`);
+    } else {
+      currentMd = currentMd.trimEnd() + `\n\n## Article Tags\n\n${tagLine}\n`;
+    }
+
+    // Update LinkedIn Hashtag Affinities section if hashtags were edited
+    const hEdits = (store[p]||{}).hashtags;
+    if(hEdits && currentMd.includes('## LinkedIn Hashtag Affinities')) {
+      const liLines = [
+        (hEdits.primary||[]).length   ? `Primary: ${hEdits.primary.map(t=>`\`${t}\``).join(' ')}`   : '',
+        (hEdits.secondary||[]).length ? `Secondary: ${hEdits.secondary.map(t=>`\`${t}\``).join(' ')}` : '',
+        (hEdits.tertiary||[]).length  ? `Tertiary: ${hEdits.tertiary.map(t=>`\`${t}\``).join(' ')}`  : '',
+        (hEdits.brand||[]).length     ? `Brand: ${hEdits.brand.map(t=>`\`${t}\``).join(' ')}`        : '',
+      ].filter(Boolean).join('\n');
+      currentMd = currentMd.replace(/## LinkedIn Hashtag Affinities[\s\S]*?(?=\n## |\n---|\s*$)/, `## LinkedIn Hashtag Affinities\n\n${liLines}\n`);
+    }
+
+    const content = btoa(unescape(encodeURIComponent(currentMd)));
+    const putRes = await fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: authHeader, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `chore: update article tags for ${p} via article-manager`, content, sha, branch: BRANCH })
+    });
+    if(!putRes.ok) throw new Error(`GitHub PUT failed: ${putRes.status}`);
+    btn.textContent = '✓ Saved';
+    setTimeout(()=>{ btn.textContent = origText; btn.disabled = false; }, 3000);
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = origText;
+    alert('Save failed:\n' + err.message);
+  }
+}
+
+async function syncTagsFromMd(p) {
+  // Fetch tags already saved in the persona MD and load them into localStorage
+  const mdPath = WRITER_MD_FILES[p];
+  const url = `https://raw.githubusercontent.com/joselitosering/aima/main/${mdPath}?_=${Date.now()}`;
+  try {
+    const res = await fetch(url, { cache: 'no-store' });
+    if(!res.ok) return;
+    const md = await res.text();
+    const match = md.match(/## Article Tags\s*\n+([\s\S]*?)(?=\n## |\n---|\s*$)/);
+    if(!match) return;
+    const tags = [...match[1].matchAll(/`([^`]+)`/g)].map(m=>m[1].replace(/^#/,'')).filter(Boolean);
+    if(!tags.length) return;
+    const store = getWriterStore();
+    if(!store[p]) store[p]={};
+    // Merge MD tags with any locally-added unsaved tags
+    const local = store[p].tags||[];
+    const merged = [...new Set([...tags, ...local])];
+    store[p].tags = merged;
+    localStorage.setItem('aima_writers', JSON.stringify(store));
+    renderWriterTags(p, merged);
+  } catch(e) { /* silent — no token needed, raw GitHub is public */ }
+}
+
+function deleteWriterHashtag(p, cat, tag) {
+  const store = getWriterStore();
+  if(!store[p]) store[p]={};
+  const w = WRITERS_DATA.find(x=>x.key===p);
+  if(!store[p].hashtags) {
+    store[p].hashtags = {
+      primary:   [...(w.hashtags.primary||[])],
+      secondary: [...(w.hashtags.secondary||[])],
+      tertiary:  [...(w.hashtags.tertiary||[])],
+      brand:     [...(w.hashtags.brand||[])],
+    };
+  }
+  store[p].hashtags[cat] = (store[p].hashtags[cat]||[]).filter(t=>t!==tag);
+  localStorage.setItem('aima_writers', JSON.stringify(store));
+  renderWriterHashtags(p);
+}
+
+function renderWriterHashtags(p) {
+  const el = document.getElementById('hashtags-'+p);
+  if(!el) return;
+  const store = getWriterStore();
+  const d = store[p]||{};
+  const w = WRITERS_DATA.find(x=>x.key===p);
+  const hs = d.hashtags || w.hashtags;
+  const hp = (h, col, bg, cat) =>
+    `<span style="display:inline-flex;align-items:center;gap:3px;background:${bg};border:1px solid ${col}44;border-radius:20px;padding:2px 8px;font-size:10px;font-family:'Courier Prime',monospace;color:${col};margin:2px 2px 2px 0">${h}<span onclick="deleteWriterHashtag('${p}','${cat}','${h}')" style="cursor:pointer;color:var(--muted);font-size:13px;line-height:1">&times;</span></span>`;
+  el.innerHTML = [
+    ...(hs.primary||[]).map(h=>hp(h, w.color, w.colorBg, 'primary')),
+    ...(hs.secondary||[]).map(h=>hp(h,'var(--muted)','rgba(255,255,255,0.03)','secondary')),
+    ...(hs.tertiary||[]).map(h=>hp(h,'var(--muted)','rgba(255,255,255,0.03)','tertiary')),
+    ...(hs.brand||[]).map(h=>hp(h,'var(--cyan)','rgba(0,217,245,0.06)','brand')),
+  ].join('');
+}
+
+function deleteWriter(p) {
+  if(!confirm(`Remove this writer card from the page?`)) return;
+  const hidden = JSON.parse(localStorage.getItem('aima_hidden_writers')||'[]');
+  if(!hidden.includes(p)) { hidden.push(p); localStorage.setItem('aima_hidden_writers', JSON.stringify(hidden)); }
+  renderWritersPage();
+}
+
+function restoreWriters() {
+  localStorage.removeItem('aima_hidden_writers');
+  renderWritersPage();
+}
+
+function renderWritersPage() {
+  const grid = document.getElementById('writers-grid');
+  if(!grid) return;
+  const saved = getWriterStore();
+  const hidden = JSON.parse(localStorage.getItem('aima_hidden_writers')||'[]');
+  const divider = `<div style="border-top:1px solid var(--border);margin:14px 0"></div>`;
+
+  const restoreEl = document.getElementById('writers-restore');
+  if(restoreEl) restoreEl.innerHTML = hidden.length
+    ? `<button class="btn btn-ghost btn-sm" onclick="restoreWriters()">↩ Restore removed writers (${hidden.length})</button>`
+    : '';
+
+  // Per-writer rankings from analytics data
+  const _wkeys = ['joselito','dawn','kenji'];
+  const _wstats = {};
+  _wkeys.forEach(p => {
+    const rows = analyticsData.filter(r => r.persona === p);
+    _wstats[p] = {
+      count: rows.length,
+      avgImp: rows.length ? Math.round(avg(rows.map(r => +r.impressions||0))) : 0,
+      avgCtr: rows.length ? avg(rows.map(r => +r.ctr||0)) : 0,
+      avgEng: rows.length ? avg(rows.map(r => +r.engagement_rate||0)) : 0,
+    };
+  });
+  const _rankOrder = _wkeys.filter(p => _wstats[p].count > 0)
+    .sort((a,b) => _wstats[b].avgImp - _wstats[a].avgImp);
+
+  grid.innerHTML = WRITERS_DATA.filter(w => !hidden.includes(w.key)).map(w => {
+    const d = saved[w.key]||{};
+    const _ri = _rankOrder.indexOf(w.key);
+    const rankMedal = ['🥇','🥈','🥉'][_ri] || '';
+    const isCertified = _ri === 0 && _rankOrder.length > 0;
+    const wstats = _wstats[w.key] || {count:0,avgImp:0,avgCtr:0,avgEng:0};
+    const photo = d.photo||null;
+    const avStyle = photo
+      ? `width:72px;height:72px;border-radius:50%;background-image:url(${photo});background-size:cover;background-position:center;cursor:pointer;overflow:hidden`
+      : `width:72px;height:72px;border-radius:50%;background:${w.colorBg};border:2px solid ${w.color};display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:24px;color:${w.color};cursor:pointer;overflow:hidden`;
+    const avText = photo ? '' : w.initials;
+
+    const bioPara = w.bio.map(p=>`<p style="margin:0 0 10px 0">${p}</p>`).join('');
+
+    const voiceHTML = w.voiceTone.map(v=>
+      `<li style="margin-bottom:5px;font-size:11px"><strong style="color:var(--text)">${v.label}</strong><span style="color:var(--muted)"> — ${v.desc}</span></li>`
+    ).join('');
+
+    const pill = (t,col,bg) =>
+      `<span style="display:inline-block;background:${bg};border:1px solid ${col}33;border-radius:4px;padding:2px 7px;font-size:10px;color:${col};margin:2px 2px 2px 0;line-height:1.5">${t}</span>`;
+
+    const topicsPrimHTML  = w.topicsPrimary.map(t=>pill(t, w.color, w.colorBg)).join('');
+    const topicsSecHTML   = w.topicsSecondary.map(t=>pill(t,'var(--muted)','rgba(255,255,255,0.04)')).join('');
+
+    const seqHTML = w.sequence.map((s,i)=>
+      `<div style="display:flex;gap:10px;margin-bottom:8px;align-items:flex-start">
+        <span style="flex-shrink:0;width:18px;height:18px;border-radius:50%;background:${w.colorBg};border:1px solid ${w.color}55;display:flex;align-items:center;justify-content:center;font-size:10px;color:${w.color};font-family:'Courier Prime',monospace;font-weight:bold;margin-top:1px">${i+1}</span>
+        <div style="font-size:11px;line-height:1.5"><strong style="color:var(--text)">${s.label}</strong><span style="color:var(--muted)"> — ${s.desc}</span></div>
+      </div>`
+    ).join('');
+
+    const hStore = d.hashtags || w.hashtags;
+    const hpill = (h, col, bg, cat) =>
+      `<span style="display:inline-flex;align-items:center;gap:3px;background:${bg};border:1px solid ${col}44;border-radius:20px;padding:2px 8px 2px 8px;font-size:10px;font-family:'Courier Prime',monospace;color:${col};margin:2px 2px 2px 0">${h}<span onclick="deleteWriterHashtag('${w.key}','${cat}','${h}')" style="cursor:pointer;color:var(--muted);font-size:13px;line-height:1">&times;</span></span>`;
+
+    const hashHTML = [
+      ...(hStore.primary||[]).map(h=>hpill(h, w.color, w.colorBg, 'primary')),
+      ...(hStore.secondary||[]).map(h=>hpill(h,'var(--muted)','rgba(255,255,255,0.03)','secondary')),
+      ...(hStore.tertiary||[]).map(h=>hpill(h,'var(--muted)','rgba(255,255,255,0.03)','tertiary')),
+      ...(hStore.brand||[]).map(h=>hpill(h,'var(--cyan)','rgba(0,217,245,0.06)','brand')),
+    ].join('');
+
+    const writerTags = (d.tags != null) ? d.tags : (w.defaultTags||[]);
+    const tagsHTML = writerTags.map(t=>
+      `<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(0,217,245,0.08);border:1px solid rgba(0,217,245,0.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:'Courier Prime',monospace;color:var(--cyan)">#${t}<span onclick="removeWriterTag('${w.key}','${t}')" style="cursor:pointer;color:var(--muted);font-size:13px;line-height:1;margin-left:2px">&times;</span></span>`
+    ).join('');
+
+    return `<div class="section-block" style="padding:24px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+        <div style="position:relative;flex-shrink:0">
+          <div id="avatar-${w.key}" onclick="document.getElementById('photo-upload-${w.key}').click()" style="${avStyle}">${avText}</div>
+          <input type="file" id="photo-upload-${w.key}" accept="image/*" style="display:none" onchange="uploadWriterPhoto('${w.key}',this)">
+          <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer" onclick="document.getElementById('photo-upload-${w.key}').click()">📷</div>
+        </div>
+        <div style="flex:1">
+          <div style="font-family:'Anton',sans-serif;font-size:22px;line-height:1.1">${w.name}${rankMedal ? ` <span style="font-size:18px;vertical-align:middle">${rankMedal}</span>` : ''}</div>
+          <div style="margin-top:4px"><span class="badge ${w.badgeClass}">${w.role}</span></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:5px;font-size:10px;font-family:'Courier Prime',monospace;color:var(--muted)">
+            ${wstats.count ? `<span>${wstats.avgImp.toLocaleString()} avg imp</span><span>·</span><span>${(wstats.avgCtr*100).toFixed(1)}% CTR</span><span>·</span><span>${(wstats.avgEng*100).toFixed(2)}% eng</span><span>·</span><span>${wstats.count} posts</span>` : '<span style="font-style:italic">No analytics yet</span>'}
+          </div>
+        </div>
+        <button onclick="deleteWriter('${w.key}')" title="Remove card" style="flex-shrink:0;align-self:flex-start;background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:4px 6px;border-radius:4px;line-height:1" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--muted)'">✕</button>
+      </div>
+
+      ${isCertified ? `<div style="background:linear-gradient(135deg,rgba(245,197,24,0.12),rgba(245,197,24,0.04));border:1px solid rgba(245,197,24,0.3);border-radius:8px;padding:11px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px"><span style="font-size:28px;flex-shrink:0">🏆</span><div style="flex:1"><div style="font-family:'Anton',sans-serif;font-size:11px;color:#f5c518;letter-spacing:1px;text-transform:uppercase;line-height:1.3">Top Performer</div><div style="font-size:10px;color:var(--muted);margin-top:3px;font-family:'Courier Prime',monospace">${wstats.avgImp.toLocaleString()} avg impressions · ${wstats.count} posts published</div></div><div style="text-align:right;flex-shrink:0"><div style="font-size:9px;color:var(--muted);font-family:'Courier Prime',monospace;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Best CTR</div><div style="font-size:14px;font-family:'Courier Prime',monospace;color:#f5c518;font-weight:bold">${(wstats.avgCtr*100).toFixed(1)}%</div></div></div>` : ''}
+      <div class="card-title" style="margin-bottom:8px">Who They Are</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.7">${bioPara}</div>
+      ${divider}
+
+      <div class="card-title" style="margin-bottom:8px">Voice &amp; Tone</div>
+      <ul style="list-style:none;padding:0;margin:0 0 8px 0">${voiceHTML}</ul>
+      <div style="font-size:11px;line-height:1.6;margin-bottom:4px"><span style="color:var(--text);font-weight:600">Avoid:</span> <span style="color:var(--orange)">${w.avoid}</span></div>
+      ${divider}
+
+      <div class="card-title" style="margin-bottom:6px">Intellectual DNA</div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.6;font-style:italic">${w.dna}</div>
+      ${divider}
+
+      <div class="card-title" style="margin-bottom:8px">Topics</div>
+      <div style="font-size:10px;color:var(--muted);font-family:'Courier Prime',monospace;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Primary</div>
+      <div style="margin-bottom:8px">${topicsPrimHTML}</div>
+      <div style="font-size:10px;color:var(--muted);font-family:'Courier Prime',monospace;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Secondary</div>
+      <div>${topicsSecHTML}</div>
+      ${divider}
+
+      <div class="card-title" style="margin-bottom:10px">Writing Sequence</div>
+      ${seqHTML}
+      ${divider}
+
+      <div class="card-title" style="margin-bottom:6px">LinkedIn Style</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:10px">${w.linkedinStyle}</div>
+      <div id="hashtags-${w.key}">${hashHTML}</div>
+      ${divider}
+      <div class="card-title" style="margin-bottom:8px">Article Tags</div>
+      <div id="tags-${w.key}" style="display:flex;flex-wrap:wrap;gap:6px;min-height:28px;margin-bottom:10px">${tagsHTML}</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <input id="tag-input-${w.key}" class="search-input" placeholder="Add tag and press Enter…" style="flex:1;min-width:120px;font-size:11px" onkeydown="if(event.key==='Enter')addWriterTag('${w.key}')">
+        <button class="btn btn-outline btn-sm" onclick="addWriterTag('${w.key}')">+ Add</button>
+        <button class="btn btn-green btn-sm" id="save-tags-btn-${w.key}" onclick="saveWriterTagsToMd('${w.key}')">💾 Save to MD</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Async: load tags already saved in persona MD files and merge into display
+  WRITERS_DATA.filter(w => !hidden.includes(w.key)).forEach(w => syncTagsFromMd(w.key));
 }
 
 function uploadWriterPhoto(p, input) {
