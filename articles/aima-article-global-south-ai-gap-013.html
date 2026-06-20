@@ -60,15 +60,9 @@ ttq.page();
 <meta name="article:header-image" content="https://d8j0ntlcm91z4.cloudfront.net/user_36MQcEUxIQpwGb05N2qQDbQLpZ3/hf_20260616_092947_d77cafa0-fb28-4e23-8820-9aa56ca5ebaa.png"/>
 
 <!-- Prev / Next article -->
-<<<<<<< HEAD
 <meta name="article:prev-url"   content="https://aima.productions/articles/aima-article-algorithm-of-atrocity-012.html"/>
 <meta name="article:prev-title" content="The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both"/>
 <meta name="article:next-url"   content="https://aima.productions/articles/aima-article-ethics-theater-014.html"/>
-=======
-<meta name="article:prev-url"   content="/articles/aima-article-algorithm-of-atrocity-012.html"/>
-<meta name="article:prev-title" content="The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both"/>
-<meta name="article:next-url"   content="/articles/aima-article-ethics-theater-014.html"/>
->>>>>>> f860ebcbd7228e7033de2baf97f29debeea16c20
 <meta name="article:next-title" content="Your AI Ethics Board Is a Press Release"/>
 
 <title id="pageTitle">The Global South AI Gap: Who Gets Left Behind When the Future Arrives — AIMA Magazine</title>
@@ -875,9 +869,7 @@ The disparity in access to computational hardware — servers, GPUs, data center
 <div class="author-card-title">Editor-in-Chief · Imagineer</div>
 <p class="author-card-bio">Joselito Sering is a creative technologist exploring the intersection of entertainment, education, and engineering. Based in San Francisco, he focuses on leveraging AI agents to create artistic and scientific works in service of humanity.</p>
 <div class="author-card-links">
-<a href="https://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼</a>
-<a href="https://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧</a>
-<a href="http://buymeacoffee.com/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">☕</a>
+<a href="https://www.buymeacoffee.com/aimaproductions"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=aimaproductions&button_colour=00d9f5&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="Buy me a coffee" style="height:40px;" /></a>
 </div>
 </div>
 </div>
@@ -962,4 +954,15 @@ var _tl=document.querySelectorAll('.toc-link');var _ts=[];
 _tl.forEach(function(a){var h=a.getAttribute('href');if(h&&h.startsWith('#'))_ts.push(h.substring(1));});
 window.addEventListener('scroll',function(){var sp=window.scrollY+120;var cur='';_ts.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=sp)cur=id;});_tl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});},{passive:true});
 // ══ MOBILE MENU ══════════════════════════════════════════
-function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.cl
+function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
+// ══ BACK TO TOP ══════════════════════════════════════════
+var _bt=document.getElementById('back-to-top');
+window.addEventListener('scroll',function(){if(_bt)_bt.classList.toggle('show',window.scrollY>400);},{passive:true});
+if(_bt)_bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+// ══ FADE-IN ══════════════════════════════════════════════
+(function(){var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(el){ob.observe(el);});})();
+setTimeout(function(){document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});},800);
+</script>
+</body>
+</html>

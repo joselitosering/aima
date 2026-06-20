@@ -17,15 +17,9 @@
 <meta name="article:header-image" content="https://images.unsplash.com/photo-1771876002358-e870981466d8?w=1920&auto=format&fit=crop"/>
 
 <!-- Prev / Next article -->
-<<<<<<< HEAD
 <meta name="article:prev-url"   content="https://aima.productions/articles/aima-article-anthropomorphization-trap-010.html"/>
 <meta name="article:prev-title" content="The Anthropomorphization Trap"/>
 <meta name="article:next-url"   content="https://aima.productions/articles/aima-article-algorithm-of-atrocity-012.html"/>
-=======
-<meta name="article:prev-url"   content="../articles/aima-article-anthropomorphization-trap-010.html"/>
-<meta name="article:prev-title" content="The Anthropomorphization Trap: What Happened When I Fell for My AI"/>
-<meta name="article:next-url"   content="../article/aima-article-algorithm-of-atrocity-012.html"/>
->>>>>>> f860ebcbd7228e7033de2baf97f29debeea16c20
 <meta name="article:next-title" content="The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both"/>
 
 <title id="pageTitle">The Token Bill: How AI Overspending Is Rewriting the Future of Work — AIMA Magazine</title>
@@ -969,9 +963,7 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 <div class="author-card-title">Editor-in-Chief · Imagineer</div>
 <p class="author-card-bio">Joselito Sering is a creative technologist exploring the intersection of entertainment, education, and engineering. Based in San Francisco, he focuses on leveraging AI agents to create artistic and scientific works in service of humanity.</p>
 <div class="author-card-links">
-<a href="https://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼</a>
-<a href="https://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧</a>
-<a href="http://buymeacoffee.com/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">☕</a>
+<a href="https://www.buymeacoffee.com/aimaproductions"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=aimaproductions&button_colour=00d9f5&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="Buy me a coffee" style="height:40px;" /></a>
 </div>
 </div>
 </div>
@@ -1058,4 +1050,15 @@ var _tl=document.querySelectorAll('.toc-link');var _ts=[];
 _tl.forEach(function(a){var h=a.getAttribute('href');if(h&&h.startsWith('#'))_ts.push(h.substring(1));});
 window.addEventListener('scroll',function(){var sp=window.scrollY+120;var cur='';_ts.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=sp)cur=id;});_tl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});},{passive:true});
 // ══ MOBILE MENU ══════════════════════════════════════════
-function tog
+function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
+// ══ BACK TO TOP ══════════════════════════════════════════
+var _bt=document.getElementById('back-to-top');
+window.addEventListener('scroll',function(){if(_bt)_bt.classList.toggle('show',window.scrollY>400);},{passive:true});
+if(_bt)_bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+// ══ FADE-IN ══════════════════════════════════════════════
+(function(){var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(el){ob.observe(el);});})();
+setTimeout(function(){document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});},800);
+</script>
+</body>
+</html>

@@ -30,11 +30,7 @@
 
 <meta name="article:prev-url"     content="/articles/aima-article-token-bill-011.html"/>
 <meta name="article:prev-title"   content="The Token Bill: What AI Really Costs the Planet"/>
-<<<<<<< HEAD
 <meta name="article:next-url"     content="https://aima.productions/articles/aima-article-global-south-ai-gap-013.html"/>
-=======
-<meta name="article:next-url"     content="/articles/aima-article-global-south-ai-gap-013.html"/>
->>>>>>> f860ebcbd7228e7033de2baf97f29debeea16c20
 <meta name="article:next-title"   content="The Global South AI Gap: Who Gets Left Behind When the Future Arrives"/>
 
 <title id="pageTitle">The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both &mdash; AIMA Magazine</title>
@@ -52,7 +48,6 @@
 <meta name="twitter:description" content="From Gaza to Xinjiang, AI is not a neutral tool. It identifies, tracks, and kills. The companies providing the technology know what it does. So do the ones who refused."/>
 <meta name="twitter:image"       content="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=1920"/>
 <meta property="og:url"         content="https://aima.productions/articles/aima-article-algorithm-of-atrocity-012.html"/>
-<<<<<<< HEAD
 
 <!-- ── Open Graph Article Extensions (AEO / social graph) ───── -->
 <meta property="og:site_name"           content="AIMA Magazine"/>
@@ -75,11 +70,6 @@
 -->
 <meta name="creator"   content="Joselito Sering"/>
 <meta name="publisher" content="AIMA Magazine"/>
-
-<link rel="canonical" href="https://aima.productions/articles/aima-article-algorithm-of-atrocity-012.html"/>
-=======
-<link rel="canonical"           href="https://joselitosering.github.io/aima/articles/aima-article-algorithm-of-atrocity-012.html"/>
->>>>>>> f860ebcbd7228e7033de2baf97f29debeea16c20
 
 <script type="application/ld+json">
 {
@@ -864,9 +854,7 @@ Lethal Autonomous Weapons Systems (LAWS)
 <div class="author-card-title">Editor-in-Chief · Imagineer</div>
 <p class="author-card-bio">Joselito Sering is a creative technologist exploring the intersection of entertainment, education, and engineering. Based in San Francisco, he focuses on leveraging AI agents to create artistic and scientific works in service of humanity.</p>
 <div class="author-card-links">
-<a href="https://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼</a>
-<a href="https://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧</a>
-<a href="http://buymeacoffee.com/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">☕</a>
+<a href="https://www.buymeacoffee.com/aimaproductions"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=aimaproductions&button_colour=00d9f5&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="Buy me a coffee" style="height:40px;" /></a>
 </div>
 </div>
 </div>
@@ -884,7 +872,6 @@ Lethal Autonomous Weapons Systems (LAWS)
 <span class="print-author-hook" style="display:none">Joselito Sering</span>
 <span class="print-url-hook" style="display:none">aima.productions</span>
 
-</article>
 
 <!-- ══ ARTICLE NAV CARDS ════════════════════════════════════ -->
 <nav class="article-nav-section" id="article-nav">
@@ -953,4 +940,15 @@ var _tl=document.querySelectorAll('.toc-link');var _ts=[];
 _tl.forEach(function(a){var h=a.getAttribute('href');if(h&&h.startsWith('#'))_ts.push(h.substring(1));});
 window.addEventListener('scroll',function(){var sp=window.scrollY+120;var cur='';_ts.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=sp)cur=id;});_tl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});},{passive:true});
 // ══ MOBILE MENU ══════════════════════════════════════════
-function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');
+function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
+// ══ BACK TO TOP ══════════════════════════════════════════
+var _bt=document.getElementById('back-to-top');
+window.addEventListener('scroll',function(){if(_bt)_bt.classList.toggle('show',window.scrollY>400);},{passive:true});
+if(_bt)_bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+// ══ FADE-IN ══════════════════════════════════════════════
+(function(){var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(el){ob.observe(el);});})();
+setTimeout(function(){document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});},800);
+</script>
+</body>
+</html>
