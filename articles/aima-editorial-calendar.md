@@ -5,9 +5,9 @@
 
 | # | Date | Title | Category | Read | Tone Note |
 |---|------|-------|----------|------|-----------|
-| 1 | 2026-03-21 | The Future of Creative Production in the Age of AI | Innovation | 8 min | test |
-| 2 | 2026-03-21 | The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget | Production Blueprint | 14 min | test |
-| 3 | 2026-03-23 | Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide | Automation | 12 min | test |
+| 1 | 2026-03-21 | The Future of Creative Production in the Age of AI | Innovation | 8 min |  |
+| 2 | 2026-03-21 | The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget | Production Blueprint | 14 min |  |
+| 3 | 2026-03-23 | Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide | Automation | 12 min |  |
 | 4 | 2026-03-23 | Boycott or Bigotry? The Backlash Against AI Artists and Why History Says You're Wrong | AI Ethics | 14 min |  |
 | 5 | 2026-04-20 | Displaced, Disrupted, and Determined: AI and the US Workforce in 2026–2027 | AI & Society | 18 min |  |
 | 6 | 2026-04-28 | The Algorithm and the Soul: Ethics, AI, and the Future We Choose | AI Ethics | 14 min |  |
