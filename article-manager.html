@@ -770,7 +770,7 @@ code {
 
       <div class="section-block">
         <div class="section-head">Best Click-Through Posts</div>
-        <div id="perf-best-cta" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 + analytics CSV to rank posts by site referrals.</div>
+        <div id="perf-best-cta" style="margin-top:4px">Load GA4 + analytics CSV to rank posts by site referrals.</div>
       </div>
     </div>
 
@@ -1953,11 +1953,25 @@ function renderPerformanceTraffic(){
   const best=document.getElementById('perf-best-cta');
   if(best){
     const sorted=[...ga4Data].filter(r=>_liSess(r)>0).sort((a,b)=>_liSess(b)-_liSess(a));
-    best.innerHTML=sorted.slice(0,5).map((r,i)=>`
-      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px">
-        <span style="color:var(--text)">${i+1}. ${_path(r)}</span>
-        <span style="color:var(--cyan);font-weight:700;font-family:'Courier Prime',monospace">${_liSess(r).toLocaleString()} LI sessions</span>
-      </div>`).join('')||'<div style="color:var(--muted);font-size:12px">No LinkedIn referral data found.</div>';
+    best.innerHTML=sorted.slice(0,5).map((r,i)=>{
+      const slug=(r.article_slug||_path(r).split('/').pop().replace('.html',''));
+      const aRow=analyticsData.find(a=>a.article&&a.article.replace('.html','')=== slug);
+      const pRow=postLog.find(p=>p.article&&p.article.replace('.html','')=== slug);
+      const title=aRow?.title||pRow?.title||slug;
+      const persona=aRow?.persona||pRow?.persona||'joselito';
+      const per=PERSONAS[persona]||PERSONAS.joselito;
+      return `<div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+        <span style="font-family:'Anton',sans-serif;font-size:22px;color:var(--border);width:28px;text-align:center">${i+1}</span>
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:600;line-height:1.4">${title}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:3px;font-family:'Courier Prime',monospace">
+            <span class="badge ${per.badge}">${per.label}</span>
+            · ${_liSess(r).toLocaleString()} LI sessions · ${_sess(r).toLocaleString()} total
+          </div>
+        </div>
+        <div style="font-family:'Anton',sans-serif;font-size:20px;color:var(--cyan)">${_liSess(r).toLocaleString()}</div>
+      </div>`;
+    }).join('')||'<div style="color:var(--muted);font-size:12px">No LinkedIn referral data found.</div>';
   }
 }
 
