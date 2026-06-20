@@ -672,40 +672,46 @@ code {
 
 <!-- ══ PERFORMANCE ══ -->
 <div class="page" id="page-performance">
-  <div class="panel-title">Performance <span style="color:var(--cyan)">Insights</span></div>
-  <div class="panel-sub">Writer breakdowns · Category trends · Top posts · Site performance</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px" id="perf-persona-cards"></div>
+    <!-- LEFT: Content Performance -->
+    <div style="min-width:0">
+      <div class="panel-title">Content <span style="color:var(--cyan)">Performance</span></div>
+      <div class="panel-sub" style="margin-bottom:16px">Writer breakdowns · Category trends · Top posts</div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-    <div class="section-block">
-      <div class="section-head">Best Performing Categories</div>
-      <div id="perf-categories" style="margin-top:4px"></div>
-    </div>
-    <div class="section-block">
-      <div class="section-head">What Drives Reactions &amp; Reposts</div>
-      <div id="perf-patterns" style="margin-top:4px;font-size:12px;line-height:1.9;color:var(--muted)">Load analytics to see patterns.</div>
-    </div>
-  </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px" id="perf-persona-cards"></div>
 
-  <div class="section-block">
-    <div class="section-head">Top 5 Posts by Impressions</div>
-    <div id="perf-top5" style="margin-top:4px"></div>
-  </div>
+      <div class="section-block" style="margin-bottom:16px">
+        <div class="section-head">Best Performing Categories</div>
+        <div id="perf-categories" style="margin-top:4px"></div>
+      </div>
 
-  <!-- aima.productions performance -->
-  <div style="margin-top:32px">
-    <div class="panel-title" style="font-size:20px;margin-bottom:4px">aima.productions <span style="color:var(--cyan)">Site Performance</span></div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:20px">LinkedIn-to-site conversion · Top referral posts · Tracking status</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div class="section-block" style="margin-bottom:16px">
+        <div class="section-head">What Drives Reactions &amp; Reposts</div>
+        <div id="perf-patterns" style="margin-top:4px;font-size:12px;line-height:1.9;color:var(--muted)">Load analytics to see patterns.</div>
+      </div>
+
       <div class="section-block">
+        <div class="section-head">Top 5 Posts by Impressions</div>
+        <div id="perf-top5" style="margin-top:4px"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Site Performance -->
+    <div style="min-width:0">
+      <div class="panel-title">aima.productions <span style="color:var(--cyan)">Site Performance</span></div>
+      <div class="panel-sub" style="margin-bottom:16px">LinkedIn-to-site conversion · Top referral posts · Tracking status</div>
+
+      <div class="section-block" style="margin-bottom:16px">
         <div class="section-head">LinkedIn → Site Conversion</div>
         <div id="perf-li-conversion" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 data to see how LinkedIn posts convert to site visits.</div>
       </div>
-      <div class="section-block">
+
+      <div class="section-block" style="margin-bottom:16px">
         <div class="section-head">Best Click-Through Posts</div>
         <div id="perf-best-cta" style="font-size:12px;line-height:1.9;color:var(--muted)">Load GA4 + analytics CSV to rank posts by site referrals.</div>
       </div>
+
       <div class="section-block">
         <div class="section-head">Tracking Pixels Active</div>
         <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
@@ -724,6 +730,7 @@ code {
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
