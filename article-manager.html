@@ -1213,6 +1213,15 @@ document.addEventListener('DOMContentLoaded', () => {
   updatePipelineBar();
   autoLoadPostLog();
   autoLoadAnalytics();
+  // Inject category datalist for editable cat cells
+  const dl = document.createElement('datalist');
+  dl.id = 'cat-datalist';
+  Object.keys(CAT_BADGES).forEach(cat => {
+    const opt = document.createElement('option');
+    opt.value = cat;
+    dl.appendChild(opt);
+  });
+  document.body.appendChild(dl);
 });
 
 // ─────────────────────────────────────────────
@@ -1448,7 +1457,9 @@ function renderCalList(){
       <div><input class="tone-edit" placeholder="${per.label==='Joselito'?'e.g. more Hitchens edge':'Tone / mood directive'}"
         value="${escHtml(item.tone||'')}"
         oninput="CALENDAR[${realIdx}].tone=this.value;markDirty()" /></div>
-      <div><span class="badge ${CAT_BADGES[item.cat]||'badge-muted'}" style="font-size:9px">${item.cat}</span></div>
+      <div><input class="tone-edit cat-edit" list="cat-datalist" value="${escHtml(item.cat)}"
+          oninput="CALENDAR[${realIdx}].cat=this.value;markDirty()"
+          style="width:128px;font-size:10px" /></div>
       <div style="color:var(--muted);font-family:'Courier Prime',monospace;font-size:11px">${item.read}m</div>
       <div style="display:flex;align-items:center;gap:4px">${status}${hs.chip}</div>
       ${heatCol}
