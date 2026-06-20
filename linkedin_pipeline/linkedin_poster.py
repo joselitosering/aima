@@ -156,6 +156,36 @@ def extract_og_image(html_content):
     return m.group(1).strip() if m else None
 
 
+
+def extract_hook(html_content, max_sentences=2, max_chars=420):
+    """
+    Pull the first 1-2 sentences of the article lead paragraph.
+    These are the arresting opening facts the writer crafted as the hook.
+    Skips short nav/UI paragraphs (< 120 chars).
+    """
+    clean = re.sub(r'<(script|style|nav|header)[^>]*>.*?</\1>', '',
+                   html_content, flags=re.DOTALL | re.IGNORECASE)
+    paragraphs = re.findall(r'<p[^>]*>(.*?)</p>', clean,
+                            re.DOTALL | re.IGNORECASE)
+    for p in paragraphs:
+        text = re.sub(r'<[^>]+>', '', p).strip()
+        text = re.sub(r'&#?\w+;', ' ', text)
+        text = re.sub(r'\s+', ' ', text).strip()
+        if len(text) < 120:
+            continue
+        # Split on sentence boundaries, keep first N sentences up to max_chars
+        parts = re.split(r'(?<=[.!?])\s+(?=[A-Z\u201c\u2018\u0022])', text)
+        hook = ''
+        for s in parts[:max_sentences]:
+            candidate = (hook + ' ' + s).strip() if hook else s
+            if len(candidate) <= max_chars:
+                hook = candidate
+            else:
+                break
+        if hook:
+            return hook
+    return None
+
 # ── LinkedIn image upload ────────────────────────────────────────────────────
 
 def _register_upload():
@@ -241,32 +271,26 @@ def post_to_linkedin(article):
     byline   = PERSONA_BYLINES.get(persona or "joselito", PERSONA_BYLINES["joselito"])
     hashtags = generate_hashtags(article["content"], title, description)
 
+    hook = extract_hook(article["content"])
+    body = hook if hook and len(hook) > 80 else description
+
     if persona == "dawn":
-        commentary = (
-            f"📖 {title}\n\n"
-            f"{description}\n\n"
-            f"Who benefits from this — and who never got asked?\n\n"
-            f"Read the full piece: {source_url}\n\n"
-            f"{hashtags}\n\n"
-            f"By {byline}"
-        )
+        body_para = f"{body} Who benefits from this — and who never got asked?"
+        cta       = f"Read the full cultural analysis: {source_url}"
     elif persona == "kenji":
-        commentary = (
-            f"🚀 {title}\n\n"
-            f"{description}\n\n"
-            f"The frontier is closer than the headlines suggest.\n\n"
-            f"Read the full piece: {source_url}\n\n"
-            f"{hashtags}\n\n"
-            f"By {byline}"
-        )
+        body_para = f"{body} The frontier is closer than the headlines suggest."
+        cta       = f"Full breakdown: {source_url}"
     else:
-        commentary = (
-            f"📖 {title}\n\n"
-            f"{description}\n\n"
-            f"Read the full article: {source_url}\n\n"
-            f"{hashtags}\n\n"
-            f"By {byline}"
-        )
+        body_para = f"{body} The data, the sources, and the full argument are at the link."
+        cta       = f"Read the full investigation: {source_url}"
+
+    commentary = (
+        f"\U0001F4D6 {title}\n\n"
+        f"{body_para}\n\n"
+        f"{cta}\n\n"
+        f"{hashtags}\n\n"
+        f"By {byline}"
+    )
 
     # -- Build post payload --------------------------------------------------
     author_urn = f"urn:li:organization:{ORG_ID}"
@@ -276,37 +300,4 @@ def post_to_linkedin(article):
         share_media_category = "IMAGE"
     else:
         media_obj            = {"status": "READY", "originalUrl": source_url,
-                                "title": {"text": title}, "description": {"text": description}}
-        share_media_category = "ARTICLE"
-
-    body = {
-        "author": author_urn,
-        "lifecycleState": "PUBLISHED",
-        "specificContent": {
-            "com.linkedin.ugc.ShareContent": {
-                "shareCommentary":    {"text": commentary},
-                "shareMediaCategory": share_media_category,
-                "media": [media_obj]
-            }
-        },
-        "visibility": {
-            "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
-        }
-    }
-
-    payload = json.dumps(body).encode("utf-8")
-    req = urllib.request.Request(LINKEDIN_API, data=payload, method="POST")
-    req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
-    req.add_header("Content-Type",              "application/json")
-    req.add_header("X-Restli-Protocol-Version", "2.0.0")
-
-    try:
-        with urllib.request.urlopen(req) as resp:
-            result  = json.loads(resp.read())
-            post_id = result.get("id", "unknown")
-            print(f"  Posted to AIMA page: '{title}' | ID: {post_id} | Mode: {share_media_category} | By: {byline}")
-            return post_id
-    except urllib.error.HTTPError as e:
-        error_body = e.read().decode()
-        print(f"  LinkedIn API error {e.code}: {error_body}")
-        raise
+                                "title": {"text": title}, "description": {"text

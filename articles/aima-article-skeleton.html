@@ -49,10 +49,10 @@ FILL-IN CHECKLIST:
 <meta name="article:read-time"    content="[NUMBER only, e.g. 11]"/>
 <meta name="article:category"     content="[Category string]"/>
 <meta name="article:header-image" content="[Higgsfield or Unsplash URL]"/>
-<meta name="article:prev-url"     content="./aima-article-[prev-slug]-[prev-num].html"/>
+<meta name="article:prev-url"     content="https://aima.productions/articles/aima-article-[prev-slug]-[prev-num].html"/>
 <meta name="article:prev-title"   content="[Previous article full title]"/>
-<meta name="article:next-url"     content=""/>
-<meta name="article:next-title"   content=""/>
+<meta name="article:next-url"     content="https://aima.productions/articles/aima-article-[next-slug]-[next-num].html"/>
+<meta name="article:next-title"   content="[Next article full title]"/>
 
 <title id="pageTitle">[FULL TITLE] — AIMA Magazine</title>
 <meta name="description" content="[SEO description — same as article:description]"/>
@@ -63,7 +63,7 @@ FILL-IN CHECKLIST:
 <meta property="og:title"       content="[FULL TITLE]"/>
 <meta property="og:description" content="[SEO description]"/>
 <meta property="og:image"       content="[header image URL]"/>
-<meta property="og:url"         content="https://joselitosering.github.io/aima/articles/aima-article-[slug]-[num].html"/>
+<meta property="og:url"         content="https://aima.productions/articles/aima-article-[slug]-[num].html"/>
 
 <!-- ── Twitter Card ─────────────────────────────────────────── -->
 <meta name="twitter:card"        content="summary_large_image"/>
@@ -309,9 +309,9 @@ a:hover{opacity:0.8;}
 .references-section,.glossary-section{max-width:860px;margin:0 auto;padding:60px 32px;}
 .references-section{border-top:1px solid var(--border2);}
 .section-heading{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.03em;color:#fff;margin-bottom:32px;}
-.reference-list{list-style:none;display:flex;flex-direction:column;gap:20px;}
-.reference-item{padding:20px 24px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);font-size:14px;line-height:1.75;color:var(--muted);position:relative;padding-left:56px;}
-.reference-item::before{content:attr(data-number);position:absolute;left:20px;top:20px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--cyan);}
+.reference-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.reference-item{padding:12px 0 12px 52px;border-bottom:1px solid var(--border2);font-size:14px;line-height:1.75;color:var(--muted);position:relative;}
+.reference-item::before{content:attr(data-number);position:absolute;left:0;top:13px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--cyan);}
 .ref-authors{color:var(--text);font-weight:500;}
 .ref-title{font-style:italic;color:var(--text);}
 .ref-link{color:var(--cyan);word-break:break-all;font-size:12px;}
@@ -363,8 +363,8 @@ a:hover{opacity:0.8;}
 .nav-card-icon{font-size:22px;color:var(--cyan);line-height:1;display:block;}
 .nav-card-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
 .nav-card-title{font-family:'Anton',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:#fff;line-height:1.2;}
-@media(max-width:768px){.article-nav-section{padding:48px 28px;}.article-nav-grid{grid-template-columns:1fr 1fr;}.nav-card.all-articles{grid-column:1/-1;order:3;}}
-@media(max-width:480px){.article-nav-grid{grid-template-columns:1fr;}.nav-card.next{text-align:left;}}
+@media(max-width:768px){.article-nav-section{padding:48px 28px;}.nav-card.all-articles{grid-column:1/-1;}}
+@media(max-width:480px){}
 
 /* ══ FOOTER ══════════════════════════════════════════════════ */
 footer{background:var(--surface);border-top:1px solid var(--border2);padding:64px 0 0;}
@@ -393,6 +393,17 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 @media(max-width:768px){.article-header{height:50vh;min-height:400px;}.header-content{bottom:40px;}.article-meta{padding:24px 20px;gap:20px;}.article-body{padding:40px 20px 80px;}.article-title{font-size:clamp(32px,8vw,48px);}.pullquote-text{font-size:20px;}.references-section,.glossary-section{padding:40px 20px;}.author-services-section{padding:0 20px;}}
 @media(max-width:768px){.fade-in{opacity:1!important;transform:none!important;}}
 @media(prefers-reduced-motion:reduce){.fade-in{opacity:1!important;transform:none!important;transition:none!important;}}
+
+/* ══ STAT GRID ══════════════════════════════════════════ */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0;}
+@media(max-width:700px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:400px){.stat-grid{grid-template-columns:1fr;}}
+.stat-card{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:24px 16px;text-align:center;}
+.stat-number{font-family:'Anton',sans-serif;font-size:38px;color:var(--cyan);line-height:1;letter-spacing:.02em;}
+.stat-number.orange{color:var(--orange);}
+.stat-number.gold{color:var(--gold);}
+.stat-number.green{color:var(--green);}
+.stat-label{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;}
 </style>
 </head>
 <body>
@@ -455,6 +466,9 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 <a href="#section-[slug-3]" class="toc-link">[Section 3 Title]</a>
 <a href="#section-[slug-4]" class="toc-link">[Section 4 Title]</a>
 <a href="#section-[slug-5]" class="toc-link">[Section 5 Title]</a>
+<!-- Fixed entries — always present -->
+<a href="#references" class="toc-link">References</a>
+<a href="#glossary" class="toc-link">Glossary</a>
 </nav>
 </div>
 </div>
@@ -538,25 +552,73 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 </div>
 
 <!-- ═══ REFERENCES ════════════════════════════════════════════ -->
-<section class="references-section">
+<!--
+  MLA 9th EDITION — JOURNALIST FORMAT
+  ─────────────────────────────────────────────────────────────
+  TYPE 1 · Web article WITH author
+    Last, First. "Title." Publication, DD Mon. YYYY, URL.
+
+  TYPE 2 · Web article NO author (lead with title)
+    "Title." Website Name, DD Mon. YYYY, URL.
+
+  TYPE 3 · Academic paper / conference proceeding
+    Last, First, et al. "Title." Journal / Conference, Publisher, Year, pp. X–X, URL.
+
+  TYPE 4 · Book (print — no URL)
+    Last, First. Book Title. Publisher, Year.
+
+  TYPE 5 · Organization / institutional report or document
+    Organization Name. "Report or Document Title." Publisher, DD Mon. YYYY, URL.
+
+  RULES
+  • Article/web-page titles → <span class="ref-title">"Quoted Title."</span>
+  • Book/journal/document titles → <span class="ref-title">Italic Title.</span> (no quotes)
+  • Publication / journal name → <em>Name</em>
+  • Authors → <span class="ref-authors">Last, First[, et al.]</span>
+    Omit entirely if no byline — lead with ref-title instead.
+  • Date format: DD Mon. YYYY  (e.g. 14 Feb. 2026)
+  • 8+ sources required per article.
+  ─────────────────────────────────────────────────────────────
+-->
+<section class="references-section" id="references">
 <h2 class="section-heading">References</h2>
 <ol class="reference-list">
-<!-- MLA 9th format: Lastname, Firstname. "Title." Publication, Publisher, Date. URL -->
 <li class="reference-item" data-number="[1]">
 <span class="ref-authors">Lastname, Firstname.</span>
-<span class="ref-title">"Article Title."</span>
-<em>Publication Name</em>, Publisher, DD Mon. YYYY.
+<span class="ref-title">"Web Article With Author."</span>
+<em>Publication Name</em>, DD Mon. YYYY,
 <a href="[URL]" class="ref-link" target="_blank" rel="noopener noreferrer">[URL]</a>
 </li>
-<!-- repeat for 8+ sources -->
+<li class="reference-item" data-number="[2]">
+<span class="ref-title">"Web Article No Author — Lead With Title."</span>
+<em>Website Name</em>, DD Mon. YYYY,
+<a href="[URL]" class="ref-link" target="_blank" rel="noopener noreferrer">[URL]</a>
+</li>
+<li class="reference-item" data-number="[3]">
+<span class="ref-authors">Lastname, Firstname, et al.</span>
+<span class="ref-title">"Academic Paper or Conference Proceeding."</span>
+<em>Journal or Conference Name</em>, Publisher, Year, pp. X–X,
+<a href="[URL]" class="ref-link" target="_blank" rel="noopener noreferrer">[URL]</a>
+</li>
+<li class="reference-item" data-number="[4]">
+<span class="ref-authors">Lastname, Firstname.</span>
+<span class="ref-title">Book Title — No URL, Print Source.</span>
+<em>Publisher</em>, Year.
+</li>
+<li class="reference-item" data-number="[5]">
+<span class="ref-authors">Organization Name.</span>
+<span class="ref-title">"Institutional Report or Document."</span>
+<em>Publisher / Imprint</em>, DD Mon. YYYY,
+<a href="[URL]" class="ref-link" target="_blank" rel="noopener noreferrer">[URL]</a>
+</li>
 </ol>
 <div class="copyright-notice">
-<strong>Copyright Acknowledgements:</strong> [List institutions and publications cited, MLA note, URL verification date.]
+<strong>Copyright Acknowledgements:</strong> [List institutions and publications cited. All sources cited per MLA 9th edition. URLs verified as accessible as of [Month YYYY].]
 </div>
 </section>
 
 <!-- ═══ GLOSSARY ══════════════════════════════════════════════ -->
-<section class="glossary-section">
+<section class="glossary-section" id="glossary">
 <h2 class="section-heading">Glossary</h2>
 <div class="glossary-list">
 <div class="glossary-item" id="glossary-[word]">
@@ -578,11 +640,12 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 <div class="author-card-avatar">JS</div>
 <div class="author-card-content">
 <div class="author-card-name">Joselito Sering</div>
-<div class="author-card-title">Editor-in-Chief · Creative Technologist</div>
-<p class="author-card-bio">Joselito Sering is a creative technologist exploring the intersection of artificial intelligence, media production, and generational wealth creation. Based in San Francisco and building toward philanthropic impact in the Philippines, he focuses on leveraging AI agents to create artistic and scientific works in service of human kindness.</p>
+<div class="author-card-title">Editor-in-Chief · Imagineer</div>
+<p class="author-card-bio">Joselito Sering is a creative technologist exploring the intersection of entertainment, education, and engineering. Based in San Francisco, he focuses on leveraging AI agents to create artistic and scientific works in service of humanity.</p>
 <div class="author-card-links">
-<a href="https://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
-<a href="https://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧 Portfolio</a>
+<a href="https://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼</a>
+<a href="https://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧</a>
+<a href="http://buymeacoffee.com/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">☕</a>
 </div>
 </div>
 </div>
@@ -598,7 +661,7 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 <!-- ═══ PRINT HOOKS (always hidden on screen) ════════════════ -->
 <span class="print-category-hook" id="printCategoryHook" style="display:none">[CATEGORY]</span>
 <span class="print-author-hook" style="display:none">Joselito Sering</span>
-<span class="print-url-hook" style="display:none">joselitosering.github.io/aima</span>
+<span class="print-url-hook" style="display:none">aima.productions</span>
 
 </article>
 
@@ -608,7 +671,7 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 <span class="article-nav-label">Continue Reading</span>
 <div class="article-nav-grid">
 <a id="art-prev-card" href="#" class="nav-card prev hidden"><span class="nav-card-icon">←</span><div class="nav-card-label">Previous Article</div><div class="nav-card-title" id="art-prev-title"></div></a>
-<a href="https://joselitosering.github.io/aima/insights.html" class="nav-card all-articles"><span class="nav-card-icon">⊞</span><div class="nav-card-label">All Articles</div><div class="nav-card-title">Browse the Magazine</div></a>
+<a href="https://aima.productions/insights.html" class="nav-card all-articles"><span class="nav-card-icon">⊞</span><div class="nav-card-label">All Articles</div><div class="nav-card-title">Browse the Magazine</div></a>
 <a id="art-next-card" href="#" class="nav-card next hidden"><span class="nav-card-icon">→</span><div class="nav-card-label">Next Article</div><div class="nav-card-title" id="art-next-title"></div></a>
 </div>
 </div>
@@ -628,7 +691,7 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 <div><div class="fl-head">Company</div><ul class="fl-list"><li><a href="../index.html#about">About Us</a></li><li><a href="../index.html#process">Our Process</a></li><li><a href="../index.html#work">Portfolio</a></li><li><a href="../gallery.html">Gallery</a></li><li><a href="../insights.html">Insights</a></li><li><a href="../careers.html">Careers</a></li></ul></div>
 <div><div class="fl-head">Legal</div><ul class="fl-list"><li><a href="../index.html#tos">Terms of Service</a></li><li><a href="../index.html#privacy">Privacy Policy</a></li><li><a href="../index.html#refund">Refund Policy</a></li><li><a href="../index.html#licensing">Licensing FAQ</a></li><li><a href="../index.html#cookies">Cookie Settings</a></li></ul></div>
 </div>
-<div class="footer-bottom"><p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p><span>v12.0 · aima.media</span></div>
+<div class="footer-bottom"><p>© 2026 AIMA · AI Media Agency</p><span>v12.9 · aima.productions</span></div>
 </div>
 </footer>
 
@@ -647,6 +710,7 @@ var prevCard=document.getElementById('art-prev-card');
 var nextCard=document.getElementById('art-next-card');
 if(prevCard&&prevUrl){prevCard.href=prevUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=prevTitle;}
 if(nextCard&&nextUrl){nextCard.href=nextUrl;nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent=nextTitle;}
+else if(nextCard){nextCard.href='https://aima.productions/insights.html';nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent='Coming Soon';}
 });
 // ══ SHARE SIDEBAR ═════════════════════════════════════════
 (function(){
@@ -660,7 +724,6 @@ var btn=document.getElementById('copyLinkBtn');
 if(btn){btn.addEventListener('click',function(){var raw=window.location.href;var done=function(){var orig=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(raw).then(done).catch(function(){fb(raw,done);});}else{fb(raw,done);}});};
 function fb(t,cb){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
 })();
-// ══ SIDEBAR VISIBILITY ════════════════════════════════════
 var _sh=document.getElementById('share-sidebar');var _tc=document.getElementById('toc-sidebar');
 window.addEventListener('scroll',function(){var s=window.scrollY>300;if(_sh)_sh.classList.toggle('visible',s);if(_tc)_tc.classList.toggle('visible',s);},{passive:true});
 // ══ TOC ACTIVE LINK ══════════════════════════════════════

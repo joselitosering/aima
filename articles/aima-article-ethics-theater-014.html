@@ -40,12 +40,33 @@
 <meta property="og:image"       content="https://images.unsplash.com/photo-1560472355-536de3962603?w=1920"/>
 <meta property="og:url"         content="https://joselitosering.github.io/aima/articles/aima-article-ethics-theater-014.html"/>
 
+<!-- ── Open Graph Article Extensions (AEO / social graph) ───── -->
+<meta property="og:site_name"           content="AIMA Magazine"/>
+<meta property="og:locale"              content="en_US"/>
+<meta property="article:author"         content="Joselito Sering"/>
+<meta property="article:published_time" content="2026-06-19T00:00:00Z"/>
+<meta property="article:modified_time"  content="2026-06-19T00:00:00Z"/>
+<meta property="article:section"        content="AI Ethics"/>
+
 <meta name="twitter:card"        content="summary_large_image"/>
 <meta name="twitter:title"       content="Your AI Ethics Board Is a Press Release"/>
 <meta name="twitter:description" content="After a decade of AI ethics initiatives at the largest tech companies in the world, not one published ethics board has ever blocked a product from shipping. Not one."/>
 <meta name="twitter:image"       content="https://images.unsplash.com/photo-1560472355-536de3962603?w=1920"/>
 
 <link rel="canonical" href="https://joselitosering.github.io/aima/articles/aima-article-ethics-theater-014.html"/>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+
+<!-- ── AI Crawler Signals ───────────────────────────────────────── -->
+<!--
+  Googlebot / Google-Extended: index, follow — opt-in to AI training
+  GPTBot (OpenAI): allow — see /llms.txt at repo root
+  ClaudeBot (Anthropic): allow — see /llms.txt at repo root
+  PerplexityBot: allow — see /llms.txt at repo root
+  CCBot (Common Crawl / AI training sets): allow
+  Full per-bot rules live in robots.txt at repo root.
+-->
+<meta name="creator"   content="Joselito Sering"/>
+<meta name="publisher" content="AIMA Magazine"/>
 
 <script type="application/ld+json">
 {
@@ -70,14 +91,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
 
+<link rel="stylesheet" href="/aima/docs/print.css" media="print"/>
+
+
+<!-- ── Security ──────────────────────────────────────────────────── -->
+<meta name="referrer"                          content="strict-origin-when-cross-origin"/>
+<meta http-equiv="X-Content-Type-Options"      content="nosniff"/>
+<meta http-equiv="Permissions-Policy"          content="camera=(), microphone=(), geolocation=(), interest-cohort=()"/>
+
 <style>
+/* ══ BRAND TOKENS ════════════════════════════════════════════ */
 :root {
-  --bg:#060810; --surface:#0B0E1C; --surface2:#10142A; --surface3:#161B36;
-  --cyan:#00D9F5; --orange:#FF5E20; --gold:#C8A84B; --gold-lt:#EDD483;
-  --green:#2DCA73; --purple:#A259FF; --text:#DFE6F5; --muted:#7A8BAA;
-  --border:rgba(0,217,245,0.12); --border2:rgba(255,255,255,0.06);
-  --glow-c:rgba(0,217,245,0.20); --glow-o:rgba(255,94,32,0.15);
-  --radius:6px; --mono:'Courier Prime',monospace; --nav-h:72px;
+--bg:#060810;--surface:#0B0E1C;--surface2:#10142A;--surface3:#161B36;
+--cyan:#00D9F5;--orange:#FF5E20;--gold:#C8A84B;--gold-lt:#EDD483;
+--green:#2DCA73;--purple:#A259FF;--text:#DFE6F5;--muted:#7A8BAA;
+--border:rgba(0,217,245,0.12);--border2:rgba(255,255,255,0.06);
+--glow-c:rgba(0,217,245,0.20);--glow-o:rgba(255,94,32,0.15);
+--radius:6px;--mono:'Courier Prime',monospace;--nav-h:72px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;font-size:16px;}
@@ -85,13 +115,14 @@ html{scroll-behavior:smooth;font-size:16px;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65;padding-top:var(--nav-h);}
 a{color:var(--cyan);text-decoration:none;transition:opacity 0.2s;}
 a:hover{opacity:0.8;}
-::-webkit-scrollbar{width:5px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px;}
+
+/* ══ FADE-IN ══════════════════════════════════════════════════ */
 .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
 .fade-in.visible{opacity:1;transform:translateY(0);}
-.delay-1{transition-delay:.1s;}.delay-2{transition-delay:.2s;}
-.delay-3{transition-delay:.3s;}.delay-4{transition-delay:.45s;}
+.delay-1{transition-delay:.1s;}.delay-2{transition-delay:.2s;}.delay-3{transition-delay:.3s;}.delay-4{transition-delay:.45s;}
+
+/* ══ NAV ══════════════════════════════════════════════════════ */
 #nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;background:rgba(6,8,16,0.60);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,217,245,0.10);}
 .container{max-width:1180px;margin:0 auto;padding:0 32px;}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;}
@@ -120,6 +151,8 @@ a:hover{opacity:0.8;}
 .mobile-menu .m-legal a{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;}
 @media(max-width:900px){.nav-links{display:none;}}
 @media(max-width:640px){.nav-cta{display:none;}.nav-burger{display:flex;}}
+
+/* ══ SHARE SIDEBAR ═══════════════════════════════════════════ */
 #share-sidebar{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:8px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
 #share-sidebar.visible{opacity:1;visibility:visible;}
 .share-fab{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);transition:border-color .2s,color .2s,background .2s,transform .2s;text-decoration:none;}
@@ -128,6 +161,8 @@ a:hover{opacity:0.8;}
 .share-fab.copy-btn{padding:0;background:none;border:1px solid var(--border2);}
 .share-sidebar-label{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:4px;}
 @media(max-width:1280px){#share-sidebar{display:none;}}
+
+/* ══ TOC SIDEBAR ═════════════════════════════════════════════ */
 #toc-sidebar{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:150;width:200px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
 #toc-sidebar.visible{opacity:1;visibility:visible;}
 .toc-panel{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:16px;}
@@ -137,73 +172,94 @@ a:hover{opacity:0.8;}
 .toc-link:hover{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;opacity:1;}
 .toc-link.active{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;}
 @media(max-width:1400px){#toc-sidebar{display:none;}}
+
+/* ══ ARTICLE LAYOUT ══════════════════════════════════════════ */
 .article-wrapper{min-height:100vh;background:var(--bg);}
 .article-header{position:relative;width:100%;height:72vh;min-height:520px;overflow:hidden;background:var(--bg);}
 .article-header::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,8,16,0.10) 0%,transparent 30%,rgba(6,8,16,0.60) 75%,var(--bg) 100%);z-index:2;}
 .header-media{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0.75;filter:brightness(0.75) saturate(1.1);transform:scale(1.03);transition:transform 8s ease-out;}
 .article-header:hover .header-media{transform:scale(1.0);}
-.header-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(6,8,16,0.80) 0%,rgba(6,8,16,0.30) 55%,transparent 80%),radial-gradient(ellipse 70% 55% at 20% 60%,rgba(162,89,255,0.18),transparent 65%),radial-gradient(ellipse 45% 40% at 78% 35%,rgba(0,217,245,0.10),transparent 65%);}
+.header-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(6,8,16,0.72) 0%,rgba(6,8,16,0.20) 55%,transparent 80%),radial-gradient(ellipse 70% 55% at 20% 60%,rgba(255,94,32,0.22),transparent 65%),radial-gradient(ellipse 45% 40% at 78% 35%,rgba(0,217,245,0.12),transparent 65%);}
 .header-content{position:absolute;bottom:80px;left:0;right:0;z-index:3;padding:0 32px;}
 .article-category{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,94,32,0.30);border-radius:2px;padding:6px 14px;margin-bottom:24px;background:rgba(255,94,32,0.07);}
-.article-title{font-family:'Anton',sans-serif;font-size:clamp(38px,6vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;color:#fff;max-width:1200px;margin:0 auto;text-shadow:0 4px 20px rgba(0,0,0,0.6);}
-.article-title .highlight{color:var(--orange);}
-.article-title .accent{color:var(--cyan);}
-.article-meta{display:flex;align-items:center;gap:28px;padding:32px;flex-wrap:wrap;border-bottom:1px solid var(--border2);background:var(--surface);max-width:1100px;margin:0 auto;}
+.article-title{font-family:'Anton',sans-serif;font-size:clamp(42px,7vw,88px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;color:#fff;max-width:1200px;margin:0 auto;text-shadow:0 4px 20px rgba(0,0,0,0.6);}
+.article-title .highlight{color:var(--cyan);}.article-title .highlight-orange{color:var(--orange);}
+.article-meta{max-width:860px;margin:0 auto;padding:40px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap;border-bottom:1px solid var(--border2);}
 .meta-author{display:flex;align-items:center;gap:14px;}
-.author-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:16px;color:var(--bg);flex-shrink:0;}
-.author-name{font-weight:600;font-size:15px;color:#fff;}
-.author-role{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.author-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:18px;color:var(--bg);}
+.author-info{display:flex;flex-direction:column;gap:2px;}
+.author-name{font-weight:600;font-size:15px;color:var(--text);}
+.author-role{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
 .meta-divider{width:1px;height:32px;background:var(--border2);}
-.meta-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.meta-value{font-size:14px;font-weight:500;color:var(--text);}
-.article-body{padding:64px 0 80px;}
-.article-content{max-width:860px;margin:0 auto;padding:0 32px;font-size:17px;line-height:1.8;color:var(--text);}
-.article-lead{font-size:21px;line-height:1.65;font-weight:400;color:#fff;margin-bottom:40px;border-left:3px solid var(--purple);padding-left:28px;}
-.article-content p{margin-bottom:28px;}
-.article-content h2{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,44px);text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin:64px 0 28px;line-height:1.05;}
-.article-content h2 .accent{color:var(--cyan);}
-.article-content h2 .highlight{color:var(--orange);}
-.article-content h3{font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase;letter-spacing:0.04em;color:var(--gold);margin:44px 0 20px;}
+.meta-item{display:flex;flex-direction:column;gap:2px;}
+.meta-label{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+.meta-value{font-size:14px;color:var(--text);}
+.article-body{max-width:860px;margin:0 auto;padding:60px 32px 100px;}
+
+/* ══ ARTICLE CONTENT ═════════════════════════════════════════ */
+.article-content h2{font-family:'Anton',sans-serif;font-size:clamp(26px,3.5vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin:56px 0 20px;line-height:1.0;}
+.article-content h3{font-family:'Anton',sans-serif;font-size:clamp(18px,2.5vw,24px);text-transform:uppercase;letter-spacing:0.03em;color:var(--text);margin:40px 0 16px;}
+.article-content .accent{color:var(--cyan);}
+.article-content p{font-size:16px;line-height:1.85;color:var(--text);margin-bottom:24px;}
+.article-lead{font-size:19px;line-height:1.8;color:var(--text);margin-bottom:40px;font-weight:300;border-left:3px solid var(--cyan);padding-left:24px;}
+.article-content em{color:var(--gold-lt);font-style:italic;}
 .article-content strong{color:#fff;font-weight:600;}
-.article-content em{font-style:italic;color:var(--gold-lt);}
-.callout{display:flex;gap:20px;padding:28px;background:rgba(0,217,245,0.04);border:1px solid rgba(0,217,245,0.15);border-radius:var(--radius);margin:40px 0;}
-.callout.warning{background:rgba(255,94,32,0.05);border-color:rgba(255,94,32,0.20);}
-.callout.gold{background:rgba(200,168,75,0.06);border-color:rgba(200,168,75,0.20);}
-.callout.purple{background:rgba(162,89,255,0.05);border-color:rgba(162,89,255,0.20);}
-.callout-icon{font-size:26px;flex-shrink:0;line-height:1;}
-.callout-title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;}
-.callout.warning .callout-title{color:var(--orange);}
-.callout.gold .callout-title{color:var(--gold);}
-.callout.purple .callout-title{color:var(--purple);}
-.callout-content{font-size:15px;line-height:1.75;color:var(--muted);}
-.pullquote{text-align:center;padding:60px 40px;margin:56px -20px;position:relative;}
-.pullquote::before,.pullquote::after{content:'';position:absolute;left:50%;transform:translateX(-50%);width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);}
-.pullquote::before{top:0;}.pullquote::after{bottom:0;}
-.pullquote-text{font-family:'Anton',sans-serif;font-size:clamp(22px,3.5vw,34px);line-height:1.2;letter-spacing:0.01em;text-transform:uppercase;color:#fff;margin-bottom:20px;}
+.glossary-term{color:var(--cyan);border-bottom:1px dashed rgba(0,217,245,0.4);padding-bottom:1px;cursor:help;}
+.glossary-term:hover{opacity:1;border-bottom-color:var(--cyan);}
+
+/* ══ CALLOUTS ════════════════════════════════════════════════ */
+.callout{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:var(--radius);padding:24px 28px;margin:36px 0;display:flex;gap:16px;align-items:flex-start;}
+.callout.warning{border-left-color:var(--orange);background:rgba(255,94,32,0.04);}
+.callout.success{border-left-color:var(--green);background:rgba(45,202,115,0.04);}
+.callout.gold{border-left-color:var(--gold);background:rgba(200,168,75,0.05);}
+.callout-icon{font-size:22px;flex-shrink:0;line-height:1.4;}
+.callout-title{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.callout-content{font-size:14px;line-height:1.75;color:var(--text);}
+
+/* ══ PULLQUOTE ═══════════════════════════════════════════════ */
+.pullquote{border-left:3px solid var(--orange);padding:28px 32px;margin:48px 0;background:linear-gradient(135deg,rgba(255,94,32,0.04),transparent);border-radius:0 var(--radius) var(--radius) 0;}
+.pullquote-text{font-family:'Anton',sans-serif;font-size:clamp(22px,2.8vw,32px);text-transform:uppercase;letter-spacing:0.02em;line-height:1.15;color:#fff;margin-bottom:16px;}
 .pullquote-attribution{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
-.article-footer{background:linear-gradient(135deg,var(--surface2),var(--surface3));border:1px solid var(--border);border-radius:8px;padding:56px;text-align:center;margin-top:80px;}
-.footer-cta-title{font-family:'Anton',sans-serif;font-size:clamp(26px,4vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin-bottom:16px;}
+
+/* ══ ARTICLE FOOTER CTA ══════════════════════════════════════ */
+.article-footer{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:40px;margin-top:60px;text-align:center;}
+.footer-cta-title{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin-bottom:12px;line-height:1.1;}
 .footer-cta-title .highlight{color:var(--cyan);}
-.footer-cta-text{font-size:16px;line-height:1.7;color:var(--muted);max-width:560px;margin:0 auto 32px;}
+.footer-cta-text{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:28px;}
 .footer-cta-button{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;background:var(--cyan);color:var(--bg);padding:16px 40px;border-radius:var(--radius);transition:box-shadow .2s,opacity .2s;}
 .footer-cta-button:hover{box-shadow:0 0 30px var(--glow-c);opacity:0.9;}
-.references-section{max-width:860px;margin:0 auto;padding:60px 32px;border-top:1px solid var(--border2);}
+
+/* ══ REFERENCES & GLOSSARY ═══════════════════════════════════ */
+.references-section,.glossary-section{max-width:860px;margin:0 auto;padding:60px 32px;}
+.references-section{border-top:1px solid var(--border2);}
 .section-heading{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.03em;color:#fff;margin-bottom:32px;}
-.reference-list{list-style:none;display:flex;flex-direction:column;gap:20px;}
-.reference-item{padding:20px 24px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);font-size:14px;line-height:1.75;color:var(--muted);position:relative;padding-left:56px;}
-.reference-item::before{content:attr(data-number);position:absolute;left:20px;top:20px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--cyan);}
+.reference-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.reference-item{padding:12px 0 12px 52px;border-bottom:1px solid var(--border2);font-size:14px;line-height:1.75;color:var(--muted);position:relative;}
+.reference-item::before{content:attr(data-number);position:absolute;left:0;top:13px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--cyan);}
 .ref-authors{color:var(--text);font-weight:500;}
 .ref-title{font-style:italic;color:var(--text);}
 .ref-link{color:var(--cyan);word-break:break-all;font-size:12px;}
+.ref-link:hover{opacity:0.8;}
+.glossary-section{border-top:1px solid var(--border2);}
+.glossary-list{display:flex;flex-direction:column;gap:24px;}
+.glossary-item{padding:24px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);}
+.glossary-term-title{font-family:'Anton',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;color:var(--cyan);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.back-link{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border2);border-radius:3px;padding:4px 10px;transition:color .2s,border-color .2s;}
+.back-link:hover{color:var(--cyan);border-color:var(--border);}
+.glossary-definition{font-size:14px;line-height:1.75;color:var(--muted);}
+.copyright-notice{background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;margin-top:40px;font-size:13px;line-height:1.7;color:var(--muted);}
+.copyright-notice strong{color:var(--text);font-weight:600;}
+
+/* ══ AUTHOR + SERVICES ═══════════════════════════════════════ */
 .author-services-section{max-width:860px;margin:0 auto 80px;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
 @media(max-width:900px){.author-services-section{grid-template-columns:1fr;}}
 .about-author-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;}
 .author-section-header{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border2);}
 .author-card{display:flex;gap:20px;align-items:flex-start;}
-.author-card-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:28px;color:var(--bg);flex-shrink:0;}
+.author-card-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:28px;color:var(--bg);flex-shrink:0;}
 .author-card-content{flex:1;}
 .author-card-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:0.02em;text-transform:uppercase;color:#fff;margin-bottom:4px;}
-.author-card-title{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);margin-bottom:16px;}
+.author-card-title{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;}
 .author-card-bio{font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:16px;}
 .author-card-links{display:flex;gap:12px;flex-wrap:wrap;}
 .author-link{font-size:13px;color:var(--muted);padding:6px 12px;border:1px solid var(--border2);border-radius:var(--radius);transition:all 0.2s;text-decoration:none;}
@@ -215,6 +271,8 @@ a:hover{opacity:0.8;}
 .services-card-text{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:28px;}
 .services-card-button{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;background:var(--cyan);color:var(--bg);padding:16px 40px;border-radius:var(--radius);transition:all 0.25s;border:none;text-decoration:none;text-align:center;}
 .services-card-button:hover{box-shadow:0 0 30px var(--glow-c);opacity:0.9;transform:translateY(-2px);}
+
+/* ══ ARTICLE NAV CARDS ═══════════════════════════════════════ */
 .article-nav-section{padding:64px;background:var(--surface);border-top:1px solid var(--border2);}
 .article-nav-inner{max-width:1180px;margin:0 auto;}
 .article-nav-label{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:block;}
@@ -229,8 +287,10 @@ a:hover{opacity:0.8;}
 .nav-card-icon{font-size:22px;color:var(--cyan);line-height:1;display:block;}
 .nav-card-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
 .nav-card-title{font-family:'Anton',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:#fff;line-height:1.2;}
-@media(max-width:768px){.article-nav-section{padding:48px 28px;}.article-nav-grid{grid-template-columns:1fr 1fr;}.nav-card.all-articles{grid-column:1/-1;order:3;}}
-@media(max-width:480px){.article-nav-grid{grid-template-columns:1fr;}.nav-card.next{text-align:left;}}
+@media(max-width:768px){.article-nav-section{padding:48px 28px;}.nav-card.all-articles{grid-column:1/-1;}}
+@media(max-width:480px){}
+
+/* ══ FOOTER ══════════════════════════════════════════════════ */
 footer{background:var(--surface);border-top:1px solid var(--border2);padding:64px 0 0;}
 .footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px;}
 @media(max-width:780px){.footer-top{grid-template-columns:1fr 1fr;}}
@@ -243,8 +303,7 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 .fb-tagline{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:20px;max-width:280px;}
 .back-to-top{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:9px 16px;transition:border-color .2s,color .2s,box-shadow .2s;cursor:pointer;}
 .back-to-top:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 14px var(--glow-c);}
-.back-to-top .arr{font-size:14px;transition:transform .2s;}
-.back-to-top:hover .arr{transform:translateY(-3px);}
+.back-to-top .arr{font-size:14px;transition:transform .2s;}.back-to-top:hover .arr{transform:translateY(-3px);}
 .fl-head{font-size:14px;font-weight:600;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.06em;}
 .fl-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
 .fl-list a{font-size:13px;color:var(--muted);transition:color .2s;text-decoration:none;}
@@ -254,80 +313,80 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 #back-to-top{position:fixed;bottom:32px;right:32px;z-index:100;width:50px;height:50px;background:var(--cyan);color:var(--bg);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(0,217,245,0.3);}
 #back-to-top:hover{background:#fff;color:var(--cyan);box-shadow:0 6px 20px rgba(0,217,245,0.5);transform:translateY(-3px);}
 #back-to-top.show{opacity:1;visibility:visible;}
-.article-content ul{margin:0 0 24px 24px;display:flex;flex-direction:column;gap:10px;color:var(--text);font-size:16px;line-height:1.75;}
-.article-content li{padding-left:4px;}
-@media(max-width:768px){#back-to-top{bottom:20px;right:20px;width:44px;height:44px;font-size:20px;}.article-header{height:50vh;min-height:400px;}.header-content{bottom:40px;}.article-meta{padding:24px 20px;gap:20px;}.article-body{padding:40px 20px 80px;}.article-title{font-size:clamp(30px,8vw,46px);}.pullquote-text{font-size:20px;}.references-section{padding:40px 20px;}.author-services-section{padding:0 20px;}.pullquote{padding:40px 20px;margin:40px 0;}}
-@media (max-width: 768px) { .fade-in { opacity: 1 !important; transform: none !important; } }
-@media (prefers-reduced-motion: reduce) { .fade-in { opacity: 1 !important; transform: none !important; transition: none !important; } }
+@media(max-width:768px){#back-to-top{bottom:20px;right:20px;width:44px;height:44px;font-size:20px;}}
+@media(max-width:768px){.article-header{height:50vh;min-height:400px;}.header-content{bottom:40px;}.article-meta{padding:24px 20px;gap:20px;}.article-body{padding:40px 20px 80px;}.article-title{font-size:clamp(32px,8vw,48px);}.pullquote-text{font-size:20px;}.references-section,.glossary-section{padding:40px 20px;}.author-services-section{padding:0 20px;}}
+@media(max-width:768px){.fade-in{opacity:1!important;transform:none!important;}}
+@media(prefers-reduced-motion:reduce){.fade-in{opacity:1!important;transform:none!important;transition:none!important;}}
+
+/* ══ STAT GRID ══════════════════════════════════════════ */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0;}
+@media(max-width:700px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:400px){.stat-grid{grid-template-columns:1fr;}}
+.stat-card{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:24px 16px;text-align:center;}
+.stat-number{font-family:'Anton',sans-serif;font-size:38px;color:var(--cyan);line-height:1;letter-spacing:.02em;}
+.stat-number.orange{color:var(--orange);}
+.stat-number.gold{color:var(--gold);}
+.stat-number.green{color:var(--green);}
+.stat-label{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;}
+
+/* ══ ARTICLE-SPECIFIC ═══════════════════════════════════ */
+.article-title .accent{color:var(--cyan);}
+.callout.purple{background:rgba(162,89,255,0.05);border-color:rgba(162,89,255,0.20);}
+.callout.purple .callout-title{color:var(--purple);}
+.pullquote::before,.pullquote::after{content:'';position:absolute;left:50%;transform:translateX(-50%);width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+.pullquote::before{top:0;}.pullquote::after{bottom:0;}
 </style>
 </head>
 <body>
 
+<!-- ══ MOBILE MENU ══════════════════════════════════════════ -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="http://joselitosering.github.io/aima/index.html#home"     onclick="closeMobile()">Home</a>
-  <a href="http://joselitosering.github.io/aima/index.html#services" onclick="closeMobile()">Services</a>
-  <a href="http://joselitosering.github.io/aima/index.html#rates"    onclick="closeMobile()">Rates</a>
-  <a href="http://joselitosering.github.io/aima/index.html#work"     onclick="closeMobile()">Work</a>
-  <a href="http://joselitosering.github.io/aima/index.html#process"  onclick="closeMobile()">Process</a>
-  <a href="http://joselitosering.github.io/aima/index.html#about"    onclick="closeMobile()">About</a>
-  <a href="http://joselitosering.github.io/aima/insights.html"       onclick="closeMobile()">Insights</a>
-  <a href="http://joselitosering.github.io/aima/gallery.html"        onclick="closeMobile()">Gallery</a>
-  <a href="http://joselitosering.github.io/aima/index.html#contact"  class="m-cta" onclick="closeMobile()">Get a Quote</a>
-  <div class="m-legal">
-    <a href="http://joselitosering.github.io/aima/index.html#tos"       onclick="closeMobile()">Terms</a>
-    <a href="http://joselitosering.github.io/aima/index.html#privacy"   onclick="closeMobile()">Privacy</a>
-    <a href="http://joselitosering.github.io/aima/index.html#refund"    onclick="closeMobile()">Refunds</a>
-    <a href="http://joselitosering.github.io/aima/index.html#licensing" onclick="closeMobile()">Licensing</a>
-    <a href="http://joselitosering.github.io/aima/index.html#cookies"   onclick="closeMobile()">Cookies</a>
-  </div>
+<a href="../index.html#home"     onclick="closeMobile()">Home</a>
+<a href="../index.html#services" onclick="closeMobile()">Services</a>
+<a href="../index.html#rates"    onclick="closeMobile()">Rates</a>
+<a href="../index.html#work"     onclick="closeMobile()">Work</a>
+<a href="../index.html#process"  onclick="closeMobile()">Process</a>
+<a href="../index.html#about"    onclick="closeMobile()">About</a>
+<a href="../insights.html"       onclick="closeMobile()">Insights</a>
+<a href="../gallery.html"        onclick="closeMobile()">Gallery</a>
+<a href="../index.html#contact"  class="m-cta" onclick="closeMobile()">Get a Quote</a>
+<div class="m-legal">
+<a href="../index.html#tos">Terms</a><a href="../index.html#privacy">Privacy</a>
+<a href="../index.html#refund">Refunds</a><a href="../index.html#licensing">Licensing</a>
+<a href="../index.html#cookies">Cookies</a>
+</div>
 </div>
 
+<!-- ══ NAV ═════════════════════════════════════════════════ -->
 <nav id="nav">
-  <div class="container nav-inner">
-    <a href="http://joselitosering.github.io/aima/index.html" class="nav-logo">
-      <div class="pulse"></div>
-      <span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="http://joselitosering.github.io/aima/index.html#home">Home</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#services">Services</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#rates">Rates</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#work">Work</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#process">Process</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#about">About</a></li>
-      <li><a href="http://joselitosering.github.io/aima/insights.html" class="active">Insights</a></li>
-      <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
-    </ul>
-    <a href="http://joselitosering.github.io/aima/index.html#contact" class="nav-cta">Get a Quote</a>
-    <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+<div class="container nav-inner">
+<a href="../index.html" class="nav-logo"><div class="pulse"></div><span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span></a>
+<ul class="nav-links" id="navLinks">
+<li><a href="../index.html#home">Home</a></li>
+<li><a href="../index.html#services">Services</a></li>
+<li><a href="../index.html#rates">Rates</a></li>
+<li><a href="../index.html#work">Work</a></li>
+<li><a href="../index.html#process">Process</a></li>
+<li><a href="../index.html#about">About</a></li>
+<li><a href="../insights.html" class="active">Insights</a></li>
+<li><a href="../gallery.html">Gallery</a></li>
+</ul>
+<a href="../index.html#contact" class="nav-cta">Get a Quote</a>
+<button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
 </nav>
 
+<!-- ══ SHARE SIDEBAR ════════════════════════════════════════ -->
 <div id="share-sidebar">
-  <div class="share-sidebar-label">Share</div>
-  <a class="share-fab" title="Share on Facebook" data-share="facebook"
-     href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-  </a>
-  <a class="share-fab" title="Share on X / Twitter" data-share="twitter"
-     href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M4 20L20 4"/></svg>
-  </a>
-  <a class="share-fab" title="Share on LinkedIn" data-share="linkedin"
-     href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-  </a>
-  <a class="share-fab" title="Email this article" data-share="email"
-     href="mailto:?subject=PAGE_TITLE&body=PAGE_URL" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-  </a>
-  <button class="share-fab copy-btn" title="Copy link" id="copyLinkBtn" aria-label="Copy link">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-  </button>
+<div class="share-sidebar-label">Share</div>
+<a class="share-fab" data-share="facebook" href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+<a class="share-fab" data-share="twitter" href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+<a class="share-fab" data-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+<a class="share-fab" data-share="email" href="mailto:?subject=PAGE_TITLE&body=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+<button class="share-fab copy-btn" id="copyLinkBtn" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
 </div>
 
+<!-- ══ TOC SIDEBAR — update hrefs to match actual H2 ids ═══ -->
 <div id="toc-sidebar">
   <div class="toc-panel">
     <span class="toc-panel-label">Contents</span>
@@ -337,7 +396,9 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
       <a href="#section-architecture"   class="toc-link">The Architecture</a>
       <a href="#section-accountability" class="toc-link">What Accountability Looks Like</a>
       <a href="#section-question"       class="toc-link">The Question</a>
-    </nav>
+    <a href="#references" class="toc-link">References</a>
+<a href="#glossary" class="toc-link">Glossary</a>
+</nav>
   </div>
 </div>
 
@@ -472,35 +533,9 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
     </main>
   </div>
 
-</article>
 
-<!-- Author & Services -->
-<div class="author-services-section">
-  <div class="about-author-card">
-    <div class="author-section-header">About the Author</div>
-    <div class="author-card">
-      <div class="author-card-avatar">DG</div>
-      <div class="author-card-content">
-        <div class="author-card-name">Dawn Ginhaua</div>
-        <div class="author-card-title">Cultural Critic &amp; Educator &mdash; AIMA</div>
-        <p class="author-card-bio">Dawn Ginhaua writes on AI ethics, algorithmic power, and the structures that make harm legible &mdash; or invisible. Her work draws on critical theory, labor economics, and the long tradition of writers who refused to mistake a press release for a position.</p>
-        <div class="author-card-links">
-          <a href="https://www.linkedin.com/company/aimaproductions" class="author-link" target="_blank" rel="noopener">AIMA on LinkedIn</a>
-          <a href="http://joselitosering.github.io/aima/insights.html" class="author-link">More Articles</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="explore-services-card">
-    <div class="services-card-header">AIMA Services</div>
-    <div class="services-card-title">AI Strategy That <span class="highlight">Holds Up</span></div>
-    <p class="services-card-text">Content, analysis, and editorial that treats your audience as intelligent adults. No hype. No theater.</p>
-    <a href="http://joselitosering.github.io/aima/index.html#services" class="services-card-button">Explore Services</a>
-  </div>
-</div>
 
-<!-- References -->
-<section class="references-section fade-in">
+<section class="references-section fade-in" id="references">
   <h2 class="section-heading">References</h2>
   <ol class="reference-list">
     <li class="reference-item" data-number="1">
@@ -530,202 +565,163 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
   </ol>
 </section>
 
-<!-- Article Navigation -->
-<section class="article-nav-section">
-  <div class="article-nav-inner">
-    <span class="article-nav-label">Continue Reading</span>
-    <div class="article-nav-grid">
-      <a href="./aima-article-global-south-ai-gap-013.html" class="nav-card prev">
-        <span class="nav-card-icon">&#x2190;</span>
-        <span class="nav-card-label">Previous Article</span>
-        <span class="nav-card-title">The Global South AI Gap</span>
-      </a>
-      <a href="http://joselitosering.github.io/aima/insights.html" class="nav-card all-articles">
-        <span class="nav-card-icon">&#x2630;</span>
-        <span class="nav-card-label">All</span>
-        <span class="nav-card-title">Insights</span>
-      </a>
-      <div class="nav-card hidden"></div>
+<section class="glossary-section fade-in" id="glossary">
+  <h2 class="section-heading">Glossary</h2>
+  <div class="glossary-list">
+
+    <div class="glossary-item" id="glossary-ethics-theater">
+      <div class="glossary-term-title">
+        Ethics Theater
+        <span class="glossary-term-tag">Corporate Governance</span>
+      </div>
+      <div class="glossary-definition">The institutional practice of establishing AI ethics boards, committees, or responsible-AI initiatives whose structure grants only advisory authority — the power to recommend, but not to block. Ethics theater absorbs activist pressure, signals seriousness to regulators, and protects product decisions from external interference while producing no binding constraints on what gets built or deployed. Distinguishable from sincere governance failure by the consistent absence of any record of a product being halted as a direct consequence of the board's recommendation.</div>
     </div>
+
+    <div class="glossary-item" id="glossary-advisory-authority">
+      <div class="glossary-term-title">
+        Advisory Authority
+        <span class="glossary-term-tag">Institutional Design</span>
+      </div>
+      <div class="glossary-definition">Decision-making power limited to issuing recommendations that the receiving party has no legal or structural obligation to act upon. In corporate AI governance, advisory authority is the dominant model for ethics boards: members may publish principles, raise concerns, and call for restraint, but cannot compel a product delay, a dataset audit, or a deployment rollback. Advisory authority without a binding escalation path produces documentation rather than accountability.</div>
+    </div>
+
+    <div class="glossary-item" id="glossary-constitutional-ai">
+      <div class="glossary-term-title">
+        Constitutional AI
+        <span class="glossary-term-tag">AI Alignment</span>
+      </div>
+      <div class="glossary-definition">An alignment methodology developed by Anthropic that encodes a set of behavioral principles — a "constitution" — directly into the model training process via reinforcement learning from AI feedback (RLAIF). Rather than appending governance to a deployed model as external policy, Constitutional AI embeds constraints into the model's learned behavior, producing auditable outputs that reflect the principles at inference time. Cited in this article as a structural counterexample to governance theater: the constraint is operational, not advisory.</div>
+    </div>
+
+    <div class="glossary-item" id="glossary-eu-ai-act">
+      <div class="glossary-term-title">
+        EU AI Act
+        <span class="glossary-term-tag">Regulation</span>
+      </div>
+      <div class="glossary-definition">Regulation (EU) 2024/1689 of the European Parliament and Council, entered into force August 2024. The EU AI Act is the first comprehensive binding legal framework for artificial intelligence systems globally. It classifies AI applications by risk tier — unacceptable, high, limited, and minimal — and imposes mandatory conformity assessments, technical documentation, and human oversight requirements on high-risk systems. Violations carry penalties of up to 6% of global annual revenue. The Act emerged from a legislative process that AI companies with active ethics boards lobbied against — making it the clearest available contrast between governance documents and governance obligations.</div>
+    </div>
+
+    <div class="glossary-item" id="glossary-algorithmic-amplification">
+      <div class="glossary-term-title">
+        Algorithmic Amplification
+        <span class="glossary-term-tag">Platform Mechanics</span>
+      </div>
+      <div class="glossary-definition">The systematic tendency of recommendation and feed-ranking algorithms to increase the reach, frequency, and salience of content that maximizes engagement metrics — time-on-platform, click-through, emotional reaction — regardless of accuracy, psychological impact, or public interest value. Academic literature has linked amplification mechanics to the radicalization of political content and elevated rates of eating disorders and anxiety in adolescent users. Algorithmic amplification is the core product mechanism that Meta's Oversight Board — the most structurally serious corporate AI ethics initiative in the industry — was explicitly designed to have no jurisdiction over.</div>
+    </div>
+
   </div>
 </section>
 
 <!-- Footer -->
+
+<!-- ═══ AUTHOR + SERVICES ════════════════════════════════════ -->
+<section class="author-services-section">
+<div class="about-author-card">
+<div class="author-section-header">About The Author</div>
+<div class="author-card">
+<div class="author-card-avatar">JS</div>
+<div class="author-card-content">
+<div class="author-card-name">Joselito Sering</div>
+<div class="author-card-title">Editor-in-Chief · Imagineer</div>
+<p class="author-card-bio">Joselito Sering is a creative technologist exploring the intersection of entertainment, education, and engineering. Based in San Francisco, he focuses on leveraging AI agents to create artistic and scientific works in service of humanity.</p>
+<div class="author-card-links">
+<a href="https://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼</a>
+<a href="https://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧</a>
+<a href="http://buymeacoffee.com/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">☕</a>
+</div>
+</div>
+</div>
+</div>
+<div class="explore-services-card">
+<div class="services-card-header">Explore Our Services</div>
+<h3 class="services-card-title">AI Built for <span class="highlight">Human Creativity</span></h3>
+<p class="services-card-text">Cinema-grade AI-powered production, media automation, and content systems — built for creators who believe the future should work for everyone.</p>
+<a href="../index.html#services" class="services-card-button">View Our Services</a>
+</div>
+</section>
+
+<!-- ═══ PRINT HOOKS (always hidden on screen) ════════════════ -->
+<span class="print-category-hook" id="printCategoryHook" style="display:none">[CATEGORY]</span>
+<span class="print-author-hook" style="display:none">Joselito Sering</span>
+<span class="print-url-hook" style="display:none">aima.productions</span>
+
+</article>
+
+<!-- ══ ARTICLE NAV CARDS ════════════════════════════════════ -->
+<nav class="article-nav-section" id="article-nav">
+<div class="article-nav-inner">
+<span class="article-nav-label">Continue Reading</span>
+<div class="article-nav-grid">
+<a id="art-prev-card" href="#" class="nav-card prev hidden"><span class="nav-card-icon">←</span><div class="nav-card-label">Previous Article</div><div class="nav-card-title" id="art-prev-title"></div></a>
+<a href="https://aima.productions/insights.html" class="nav-card all-articles"><span class="nav-card-icon">⊞</span><div class="nav-card-label">All Articles</div><div class="nav-card-title">Browse the Magazine</div></a>
+<a id="art-next-card" href="#" class="nav-card next hidden"><span class="nav-card-icon">→</span><div class="nav-card-label">Next Article</div><div class="nav-card-title" id="art-next-title"></div></a>
+</div>
+</div>
+</nav>
+
+<!-- ══ FOOTER ═══════════════════════════════════════════════ -->
 <footer>
-  <div class="container">
-    <div class="footer-top">
-      <div>
-        <div class="fb-logo-wrap">
-          <div class="pulse-ft"></div>
-          <div class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></div>
-        </div>
-        <div class="fb-sub">Artificial Intelligence in Media &amp; Arts</div>
-        <p class="fb-tagline">Cutting through hype to ask what AI actually means for the people it affects.</p>
-        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-          <span class="arr">&#x2191;</span> Back to Top
-        </button>
-      </div>
-      <div>
-        <div class="fl-head">Explore</div>
-        <ul class="fl-list">
-          <li><a href="http://joselitosering.github.io/aima/insights.html">All Articles</a></li>
-          <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#services">Services</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#about">About</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="fl-head">Topics</div>
-        <ul class="fl-list">
-          <li><a href="#">AI Ethics</a></li>
-          <li><a href="#">Surveillance</a></li>
-          <li><a href="#">Policy &amp; Governance</a></li>
-          <li><a href="#">Labor &amp; Automation</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="fl-head">Connect</div>
-        <ul class="fl-list">
-          <li><a href="https://www.linkedin.com/company/aimaproductions" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#contact">Contact</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#tos">Terms</a></li>
-          <li><a href="http://joselitosering.github.io/aima/index.html#privacy">Privacy</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 AIMA &mdash; Artificial Intelligence in Media &amp; Arts. All rights reserved.</p>
-      <span>Article 014 &mdash; AI Ethics</span>
-    </div>
-  </div>
+<div class="container">
+<div class="footer-top">
+<div>
+<div class="fb-logo-wrap"><div class="pulse-ft"></div><span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span></div>
+<div class="fb-sub">AI Media Agency</div>
+<p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+<button class="back-to-top" onclick="document.getElementById('article-top').scrollIntoView({behavior:'smooth'})"><span class="arr">↑</span> Back to Top</button>
+</div>
+<div><div class="fl-head">Services</div><ul class="fl-list"><li><a href="../index.html#services">Music Video</a></li><li><a href="../index.html#services">Corporate Explainer</a></li><li><a href="../index.html#services">TV Commercial</a></li><li><a href="../index.html#rates">Social Media Packages</a></li><li><a href="../index.html#rates">Monthly Retainers</a></li><li><a href="../index.html#rates">AI Automation Pipeline</a></li></ul></div>
+<div><div class="fl-head">Company</div><ul class="fl-list"><li><a href="../index.html#about">About Us</a></li><li><a href="../index.html#process">Our Process</a></li><li><a href="../index.html#work">Portfolio</a></li><li><a href="../gallery.html">Gallery</a></li><li><a href="../insights.html">Insights</a></li><li><a href="../careers.html">Careers</a></li></ul></div>
+<div><div class="fl-head">Legal</div><ul class="fl-list"><li><a href="../index.html#tos">Terms of Service</a></li><li><a href="../index.html#privacy">Privacy Policy</a></li><li><a href="../index.html#refund">Refund Policy</a></li><li><a href="../index.html#licensing">Licensing FAQ</a></li><li><a href="../index.html#cookies">Cookie Settings</a></li></ul></div>
+</div>
+<div class="footer-bottom"><p>© 2026 AIMA · AI Media Agency</p><span>v12.9 · aima.productions</span></div>
+</div>
 </footer>
 
 <script>
-// ══ HEADER IMAGE ════════════════════════════════════════
-(function () {
-  var img = document.querySelector('meta[name="article:header-image"]');
-  var el  = document.getElementById('headerImage');
-  if (img && el) el.style.backgroundImage = 'url(' + img.content + ')';
-  setTimeout(function () {
-    if (el) el.style.transform = 'scale(1.0)';
-  }, 100);
-})();
-
-// ══ SHARE LINKS ══════════════════════════════════════════
-(function () {
-  var url   = encodeURIComponent(window.location.href);
-  var title = encodeURIComponent(document.title);
-  document.querySelectorAll('a[data-share]').forEach(function (a) {
-    a.href = a.href.replace('PAGE_URL', url).replace('PAGE_TITLE', title);
-    a.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (a.dataset.share === 'email') {
-        window.location.href = a.href;
-      } else {
-        window.open(a.href, 'share-' + a.dataset.share, 'width=600,height=460,noopener');
-      }
-    });
-  });
-
-  var btn = document.getElementById('copyLinkBtn');
-  if (btn) {
-    btn.addEventListener('click', function () {
-      var raw  = window.location.href;
-      var done = function () {
-        var origSvg = btn.innerHTML;
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';
-        btn.style.color = 'var(--green)'; btn.style.borderColor = 'var(--green)';
-        setTimeout(function () { btn.innerHTML = origSvg; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(raw).then(done).catch(function () { fallback(raw, done); });
-      } else { fallback(raw, done); }
-    });
-  }
-  function fallback(text, cb) {
-    var ta = document.createElement('textarea');
-    ta.value = text; ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); cb(); } catch (e) {}
-    document.body.removeChild(ta);
-  }
-})();
-
-// ══ SHARE & TOC SIDEBAR VISIBILITY ═══════════════════════
-var _share = document.getElementById('share-sidebar');
-var _toc   = document.getElementById('toc-sidebar');
-window.addEventListener('scroll', function () {
-  var show = window.scrollY > 300;
-  if (_share) _share.classList.toggle('visible', show);
-  if (_toc)   _toc.classList.toggle('visible', show);
-}, { passive: true });
-
-// ══ TOC ACTIVE LINK ══════════════════════════════════════
-var _tocLinks = document.querySelectorAll('.toc-link');
-var _tocSections = [];
-_tocLinks.forEach(function (a) {
-  var href = a.getAttribute('href');
-  if (href && href.startsWith('#')) _tocSections.push(href.substring(1));
+// ══ HEADER IMAGE from meta tag ════════════════════════════
+document.addEventListener('DOMContentLoaded',function(){
+var meta=document.querySelector('meta[name="article:header-image"]');
+var el=document.getElementById('headerImage');
+if(meta&&el){var url=meta.getAttribute('content');el.style.backgroundImage='linear-gradient(135deg,rgba(255,94,32,0.28),rgba(0,217,245,0.10)),url(\''+url+'\')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';}
+// PREV/NEXT NAV
+var prevUrl=(document.querySelector('meta[name="article:prev-url"]')||{}).content||'';
+var prevTitle=(document.querySelector('meta[name="article:prev-title"]')||{}).content||'';
+var nextUrl=(document.querySelector('meta[name="article:next-url"]')||{}).content||'';
+var nextTitle=(document.querySelector('meta[name="article:next-title"]')||{}).content||'';
+var prevCard=document.getElementById('art-prev-card');
+var nextCard=document.getElementById('art-next-card');
+if(prevCard&&prevUrl){prevCard.href=prevUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=prevTitle;}
+if(nextCard&&nextUrl){nextCard.href=nextUrl;nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent=nextTitle;}
+else if(nextCard){nextCard.href='https://aima.productions/insights.html';nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent='Coming Soon';}
 });
-window.addEventListener('scroll', function () {
-  var scrollPos = window.scrollY + 120;
-  var current   = '';
-  _tocSections.forEach(function (id) {
-    var el = document.getElementById(id);
-    if (el && el.offsetTop <= scrollPos) current = id;
-  });
-  _tocLinks.forEach(function (a) {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
-}, { passive: true });
-
-// ══ MOBILE MENU ══════════════════════════════════════════
-function toggleMobile() {
-  var menu   = document.getElementById('mobileMenu');
-  var burger = document.getElementById('navBurger');
-  if (!menu || !burger) return;
-  menu.classList.toggle('open');
-  burger.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-}
-function closeMobile() {
-  var menu   = document.getElementById('mobileMenu');
-  var burger = document.getElementById('navBurger');
-  if (menu)   menu.classList.remove('open');
-  if (burger) burger.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// ══ FLOATING BACK TO TOP ═════════════════════════════════
-var _btt = document.getElementById('back-to-top');
-window.addEventListener('scroll', function () {
-  if (_btt) _btt.classList.toggle('show', window.scrollY > 400);
-}, { passive: true });
-if (_btt) _btt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-
-// ══ NAV SCROLL DARKEN ════════════════════════════════════
-var _nav = document.getElementById('nav');
-window.addEventListener('scroll', function () {
-  if (_nav) _nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-
-// ══ FADE-IN OBSERVER + 800ms FALLBACK ════════════════════
-(function () {
-  var fadeEls = document.querySelectorAll('.fade-in');
-  if ('IntersectionObserver' in window) {
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
-    }, { threshold: 0.08 });
-    fadeEls.forEach(function (el) { obs.observe(el); });
-  } else {
-    fadeEls.forEach(function (el) { el.classList.add('visible'); });
-  }
-  setTimeout(function () {
-    fadeEls.forEach(function (el) { el.classList.add('visible'); });
-  }, 800);
+// ══ SHARE SIDEBAR ═════════════════════════════════════════
+(function(){
+var url=encodeURIComponent(window.location.href);
+var title=encodeURIComponent(document.title);
+document.querySelectorAll('a[data-share]').forEach(function(a){
+a.href=a.href.replace('PAGE_URL',url).replace('PAGE_TITLE',title);
+a.addEventListener('click',function(e){e.preventDefault();if(a.dataset.share==='email'){window.location.href=a.href;}else{window.open(a.href,'share-'+a.dataset.share,'width=600,height=460,noopener');}});
+});
+var btn=document.getElementById('copyLinkBtn');
+if(btn){btn.addEventListener('click',function(){var raw=window.location.href;var done=function(){var orig=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(raw).then(done).catch(function(){fb(raw,done);});}else{fb(raw,done);}});};
+function fb(t,cb){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
 })();
+var _sh=document.getElementById('share-sidebar');var _tc=document.getElementById('toc-sidebar');
+window.addEventListener('scroll',function(){var s=window.scrollY>300;if(_sh)_sh.classList.toggle('visible',s);if(_tc)_tc.classList.toggle('visible',s);},{passive:true});
+// ══ TOC ACTIVE LINK ══════════════════════════════════════
+var _tl=document.querySelectorAll('.toc-link');var _ts=[];
+_tl.forEach(function(a){var h=a.getAttribute('href');if(h&&h.startsWith('#'))_ts.push(h.substring(1));});
+window.addEventListener('scroll',function(){var sp=window.scrollY+120;var cur='';_ts.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=sp)cur=id;});_tl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});},{passive:true});
+// ══ MOBILE MENU ══════════════════════════════════════════
+function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
+// ══ BACK TO TOP ══════════════════════════════════════════
+var _bt=document.getElementById('back-to-top');
+window.addEventListener('scroll',function(){if(_bt)_bt.classList.toggle('show',window.scrollY>400);},{passive:true});
+if(_bt)_bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+// ══ FADE-IN ══════════════════════════════════════════════
+(function(){var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(el){ob.observe(el);});})();
+setTimeout(function(){document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});},800);
 </script>
 </body>
 </html>

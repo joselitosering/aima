@@ -27,7 +27,7 @@
 
 <meta name="article:prev-url"     content="https://aima.productions/articles/aima-article-token-bill-011.html"/>
 <meta name="article:prev-title"   content="The Token Bill: What AI Really Costs the Planet"/>
-<meta name="article:next-url"     content="./aima-article-global-south-ai-gap-013.html"/>
+<meta name="article:next-url"     content="https://aima.productions/articles/aima-article-global-south-ai-gap-013.html"/>
 <meta name="article:next-title"   content="The Global South AI Gap: Who Gets Left Behind When the Future Arrives"/>
 
 <title id="pageTitle">The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both &mdash; AIMA Magazine</title>
@@ -45,7 +45,28 @@
 <meta name="twitter:description" content="From Gaza to Xinjiang, AI is not a neutral tool. It identifies, tracks, and kills. The companies providing the technology know what it does. So do the ones who refused."/>
 <meta name="twitter:image"       content="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=1920"/>
 <meta property="og:url"         content="https://aima.productions/articles/aima-article-algorithm-of-atrocity-012.html"/>
+
+<!-- ── Open Graph Article Extensions (AEO / social graph) ───── -->
+<meta property="og:site_name"           content="AIMA Magazine"/>
+<meta property="og:locale"              content="en_US"/>
+<meta property="article:author"         content="Joselito Sering"/>
+<meta property="article:published_time" content="2026-06-04T00:00:00Z"/>
+<meta property="article:modified_time"  content="2026-06-04T00:00:00Z"/>
+<meta property="article:section"        content="AI Ethics"/>
 <link rel="canonical"           href="https://aima.productions/articles/aima-article-algorithm-of-atrocity-012.html"/>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+
+<!-- ── AI Crawler Signals ───────────────────────────────────────── -->
+<!--
+  Googlebot / Google-Extended: index, follow — opt-in to AI training
+  GPTBot (OpenAI): allow — see /llms.txt at repo root
+  ClaudeBot (Anthropic): allow — see /llms.txt at repo root
+  PerplexityBot: allow — see /llms.txt at repo root
+  CCBot (Common Crawl / AI training sets): allow
+  Full per-bot rules live in robots.txt at repo root.
+-->
+<meta name="creator"   content="Joselito Sering"/>
+<meta name="publisher" content="AIMA Magazine"/>
 
 <link rel="canonical" href="https://aima.productions/articles/aima-article-algorithm-of-atrocity-012.html"/>
 
@@ -72,14 +93,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
 
+<link rel="stylesheet" href="/aima/docs/print.css" media="print"/>
+
+
+<!-- ── Security ──────────────────────────────────────────────────── -->
+<meta name="referrer"                          content="strict-origin-when-cross-origin"/>
+<meta http-equiv="X-Content-Type-Options"      content="nosniff"/>
+<meta http-equiv="Permissions-Policy"          content="camera=(), microphone=(), geolocation=(), interest-cohort=()"/>
+
 <style>
+/* ══ BRAND TOKENS ════════════════════════════════════════════ */
 :root {
-  --bg:#060810; --surface:#0B0E1C; --surface2:#10142A; --surface3:#161B36;
-  --cyan:#00D9F5; --orange:#FF5E20; --gold:#C8A84B; --gold-lt:#EDD483;
-  --green:#2DCA73; --purple:#A259FF; --text:#DFE6F5; --muted:#7A8BAA;
-  --border:rgba(0,217,245,0.12); --border2:rgba(255,255,255,0.06);
-  --glow-c:rgba(0,217,245,0.20); --glow-o:rgba(255,94,32,0.15);
-  --radius:6px; --mono:'Courier Prime',monospace; --nav-h:72px;
+--bg:#060810;--surface:#0B0E1C;--surface2:#10142A;--surface3:#161B36;
+--cyan:#00D9F5;--orange:#FF5E20;--gold:#C8A84B;--gold-lt:#EDD483;
+--green:#2DCA73;--purple:#A259FF;--text:#DFE6F5;--muted:#7A8BAA;
+--border:rgba(0,217,245,0.12);--border2:rgba(255,255,255,0.06);
+--glow-c:rgba(0,217,245,0.20);--glow-o:rgba(255,94,32,0.15);
+--radius:6px;--mono:'Courier Prime',monospace;--nav-h:72px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;font-size:16px;}
@@ -87,13 +117,14 @@ html{scroll-behavior:smooth;font-size:16px;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65;padding-top:var(--nav-h);}
 a{color:var(--cyan);text-decoration:none;transition:opacity 0.2s;}
 a:hover{opacity:0.8;}
-::-webkit-scrollbar{width:5px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px;}
+
+/* ══ FADE-IN ══════════════════════════════════════════════════ */
 .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
 .fade-in.visible{opacity:1;transform:translateY(0);}
-.delay-1{transition-delay:.1s;}.delay-2{transition-delay:.2s;}
-.delay-3{transition-delay:.3s;}.delay-4{transition-delay:.45s;}
+.delay-1{transition-delay:.1s;}.delay-2{transition-delay:.2s;}.delay-3{transition-delay:.3s;}.delay-4{transition-delay:.45s;}
+
+/* ══ NAV ══════════════════════════════════════════════════════ */
 #nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;background:rgba(6,8,16,0.60);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,217,245,0.10);}
 .container{max-width:1180px;margin:0 auto;padding:0 32px;}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;}
@@ -122,6 +153,8 @@ a:hover{opacity:0.8;}
 .mobile-menu .m-legal a{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;}
 @media(max-width:900px){.nav-links{display:none;}}
 @media(max-width:640px){.nav-cta{display:none;}.nav-burger{display:flex;}}
+
+/* ══ SHARE SIDEBAR ═══════════════════════════════════════════ */
 #share-sidebar{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:8px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
 #share-sidebar.visible{opacity:1;visibility:visible;}
 .share-fab{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);transition:border-color .2s,color .2s,background .2s,transform .2s;text-decoration:none;}
@@ -130,6 +163,8 @@ a:hover{opacity:0.8;}
 .share-fab.copy-btn{padding:0;background:none;border:1px solid var(--border2);}
 .share-sidebar-label{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:4px;}
 @media(max-width:1280px){#share-sidebar{display:none;}}
+
+/* ══ TOC SIDEBAR ═════════════════════════════════════════════ */
 #toc-sidebar{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:150;width:200px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
 #toc-sidebar.visible{opacity:1;visibility:visible;}
 .toc-panel{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:16px;}
@@ -139,78 +174,74 @@ a:hover{opacity:0.8;}
 .toc-link:hover{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;opacity:1;}
 .toc-link.active{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;}
 @media(max-width:1400px){#toc-sidebar{display:none;}}
+
+/* ══ ARTICLE LAYOUT ══════════════════════════════════════════ */
 .article-wrapper{min-height:100vh;background:var(--bg);}
 .article-header{position:relative;width:100%;height:72vh;min-height:520px;overflow:hidden;background:var(--bg);}
 .article-header::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,8,16,0.10) 0%,transparent 30%,rgba(6,8,16,0.60) 75%,var(--bg) 100%);z-index:2;}
 .header-media{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0.75;filter:brightness(0.75) saturate(1.1);transform:scale(1.03);transition:transform 8s ease-out;}
 .article-header:hover .header-media{transform:scale(1.0);}
-.header-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(6,8,16,0.80) 0%,rgba(6,8,16,0.30) 55%,transparent 80%),radial-gradient(ellipse 70% 55% at 20% 60%,rgba(255,94,32,0.18),transparent 65%),radial-gradient(ellipse 45% 40% at 78% 35%,rgba(0,217,245,0.10),transparent 65%);}
+.header-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(6,8,16,0.72) 0%,rgba(6,8,16,0.20) 55%,transparent 80%),radial-gradient(ellipse 70% 55% at 20% 60%,rgba(255,94,32,0.22),transparent 65%),radial-gradient(ellipse 45% 40% at 78% 35%,rgba(0,217,245,0.12),transparent 65%);}
 .header-content{position:absolute;bottom:80px;left:0;right:0;z-index:3;padding:0 32px;}
 .article-category{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,94,32,0.30);border-radius:2px;padding:6px 14px;margin-bottom:24px;background:rgba(255,94,32,0.07);}
-.article-title{font-family:'Anton',sans-serif;font-size:clamp(38px,6vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;color:#fff;max-width:1200px;margin:0 auto;text-shadow:0 4px 20px rgba(0,0,0,0.6);}
-.article-title .highlight{color:var(--orange);}
-.article-title .accent{color:var(--cyan);}
-.article-meta{display:flex;align-items:center;gap:28px;padding:32px;flex-wrap:wrap;border-bottom:1px solid var(--border2);background:var(--surface);max-width:1100px;margin:0 auto;}
+.article-title{font-family:'Anton',sans-serif;font-size:clamp(42px,7vw,88px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;color:#fff;max-width:1200px;margin:0 auto;text-shadow:0 4px 20px rgba(0,0,0,0.6);}
+.article-title .highlight{color:var(--cyan);}.article-title .highlight-orange{color:var(--orange);}
+.article-meta{max-width:860px;margin:0 auto;padding:40px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap;border-bottom:1px solid var(--border2);}
 .meta-author{display:flex;align-items:center;gap:14px;}
-.author-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:16px;color:var(--bg);flex-shrink:0;}
-.author-name{font-weight:600;font-size:15px;color:#fff;}
-.author-role{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.author-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:18px;color:var(--bg);}
+.author-info{display:flex;flex-direction:column;gap:2px;}
+.author-name{font-weight:600;font-size:15px;color:var(--text);}
+.author-role{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
 .meta-divider{width:1px;height:32px;background:var(--border2);}
-.meta-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.meta-value{font-size:14px;font-weight:500;color:var(--text);}
-.article-body{padding:64px 0 80px;}
-.article-content{max-width:860px;margin:0 auto;padding:0 32px;font-size:17px;line-height:1.8;color:var(--text);}
-.article-lead{font-size:21px;line-height:1.65;font-weight:400;color:#fff;margin-bottom:40px;border-left:3px solid var(--orange);padding-left:28px;}
-.article-content p{margin-bottom:28px;}
-.article-content h2{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,44px);text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin:64px 0 28px;line-height:1.05;}
-.article-content h2 .accent{color:var(--cyan);}
-.article-content h2 .highlight{color:var(--orange);}
-.article-content h3{font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase;letter-spacing:0.04em;color:var(--gold);margin:44px 0 20px;}
+.meta-item{display:flex;flex-direction:column;gap:2px;}
+.meta-label{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+.meta-value{font-size:14px;color:var(--text);}
+.article-body{max-width:860px;margin:0 auto;padding:60px 32px 100px;}
+
+/* ══ ARTICLE CONTENT ═════════════════════════════════════════ */
+.article-content h2{font-family:'Anton',sans-serif;font-size:clamp(26px,3.5vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin:56px 0 20px;line-height:1.0;}
+.article-content h3{font-family:'Anton',sans-serif;font-size:clamp(18px,2.5vw,24px);text-transform:uppercase;letter-spacing:0.03em;color:var(--text);margin:40px 0 16px;}
+.article-content .accent{color:var(--cyan);}
+.article-content p{font-size:16px;line-height:1.85;color:var(--text);margin-bottom:24px;}
+.article-lead{font-size:19px;line-height:1.8;color:var(--text);margin-bottom:40px;font-weight:300;border-left:3px solid var(--cyan);padding-left:24px;}
+.article-content em{color:var(--gold-lt);font-style:italic;}
 .article-content strong{color:#fff;font-weight:600;}
-.article-content em{font-style:italic;color:var(--gold-lt);}
-.glossary-term{color:var(--cyan);border-bottom:1px dashed rgba(0,217,245,0.4);cursor:help;}
-.glossary-term:hover{opacity:0.8;}
-.callout{display:flex;gap:20px;padding:28px;background:rgba(0,217,245,0.04);border:1px solid rgba(0,217,245,0.15);border-radius:var(--radius);margin:40px 0;}
-.callout.warning{background:rgba(255,94,32,0.05);border-color:rgba(255,94,32,0.20);}
-.callout.gold{background:rgba(200,168,75,0.06);border-color:rgba(200,168,75,0.20);}
-.callout.red{background:rgba(200,50,50,0.06);border-color:rgba(200,50,50,0.25);}
-.callout-icon{font-size:26px;flex-shrink:0;line-height:1;}
-.callout-title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;}
-.callout.warning .callout-title{color:var(--orange);}
-.callout.gold .callout-title{color:var(--gold);}
-.callout.red .callout-title{color:#FF6B6B;}
-.callout-content{font-size:15px;line-height:1.75;color:var(--muted);}
-.pullquote{text-align:center;padding:60px 40px;margin:56px -20px;position:relative;}
-.pullquote::before,.pullquote::after{content:'';position:absolute;left:50%;transform:translateX(-50%);width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--orange),transparent);}
-.pullquote::before{top:0;}.pullquote::after{bottom:0;}
-.pullquote-text{font-family:'Anton',sans-serif;font-size:clamp(22px,3.5vw,34px);line-height:1.2;letter-spacing:0.01em;text-transform:uppercase;color:#fff;margin-bottom:20px;}
+.glossary-term{color:var(--cyan);border-bottom:1px dashed rgba(0,217,245,0.4);padding-bottom:1px;cursor:help;}
+.glossary-term:hover{opacity:1;border-bottom-color:var(--cyan);}
+
+/* ══ CALLOUTS ════════════════════════════════════════════════ */
+.callout{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:var(--radius);padding:24px 28px;margin:36px 0;display:flex;gap:16px;align-items:flex-start;}
+.callout.warning{border-left-color:var(--orange);background:rgba(255,94,32,0.04);}
+.callout.success{border-left-color:var(--green);background:rgba(45,202,115,0.04);}
+.callout.gold{border-left-color:var(--gold);background:rgba(200,168,75,0.05);}
+.callout-icon{font-size:22px;flex-shrink:0;line-height:1.4;}
+.callout-title{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.callout-content{font-size:14px;line-height:1.75;color:var(--text);}
+
+/* ══ PULLQUOTE ═══════════════════════════════════════════════ */
+.pullquote{border-left:3px solid var(--orange);padding:28px 32px;margin:48px 0;background:linear-gradient(135deg,rgba(255,94,32,0.04),transparent);border-radius:0 var(--radius) var(--radius) 0;}
+.pullquote-text{font-family:'Anton',sans-serif;font-size:clamp(22px,2.8vw,32px);text-transform:uppercase;letter-spacing:0.02em;line-height:1.15;color:#fff;margin-bottom:16px;}
 .pullquote-attribution{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
-.company-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin:36px 0;}
-.company-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;transition:border-color .2s;}
-.company-card.accused{border-left:3px solid var(--orange);}
-.company-card.refused{border-left:3px solid var(--green);}
-.company-card.neutral{border-left:3px solid var(--muted);}
-.company-card-name{font-family:'Anton',sans-serif;font-size:18px;text-transform:uppercase;letter-spacing:.04em;color:#fff;margin-bottom:6px;}
-.company-card-tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;}
-.company-card.accused .company-card-tag{color:var(--orange);}
-.company-card.refused .company-card-tag{color:var(--green);}
-.company-card.neutral .company-card-tag{color:var(--muted);}
-.company-card-desc{font-size:14px;line-height:1.7;color:var(--muted);}
-.article-footer{background:linear-gradient(135deg,var(--surface2),var(--surface3));border:1px solid var(--border);border-radius:8px;padding:56px;text-align:center;margin-top:80px;}
-.footer-cta-title{font-family:'Anton',sans-serif;font-size:clamp(26px,4vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin-bottom:16px;}
+
+/* ══ ARTICLE FOOTER CTA ══════════════════════════════════════ */
+.article-footer{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:40px;margin-top:60px;text-align:center;}
+.footer-cta-title{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin-bottom:12px;line-height:1.1;}
 .footer-cta-title .highlight{color:var(--cyan);}
-.footer-cta-text{font-size:16px;line-height:1.7;color:var(--muted);max-width:560px;margin:0 auto 32px;}
+.footer-cta-text{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:28px;}
 .footer-cta-button{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;background:var(--cyan);color:var(--bg);padding:16px 40px;border-radius:var(--radius);transition:box-shadow .2s,opacity .2s;}
 .footer-cta-button:hover{box-shadow:0 0 30px var(--glow-c);opacity:0.9;}
+
+/* ══ REFERENCES & GLOSSARY ═══════════════════════════════════ */
 .references-section,.glossary-section{max-width:860px;margin:0 auto;padding:60px 32px;}
 .references-section{border-top:1px solid var(--border2);}
 .section-heading{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.03em;color:#fff;margin-bottom:32px;}
-.reference-list{list-style:none;display:flex;flex-direction:column;gap:20px;}
-.reference-item{padding:20px 24px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);font-size:14px;line-height:1.75;color:var(--muted);position:relative;padding-left:56px;}
-.reference-item::before{content:attr(data-number);position:absolute;left:20px;top:20px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--cyan);}
+.reference-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.reference-item{padding:12px 0 12px 52px;border-bottom:1px solid var(--border2);font-size:14px;line-height:1.75;color:var(--muted);position:relative;}
+.reference-item::before{content:attr(data-number);position:absolute;left:0;top:13px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--cyan);}
 .ref-authors{color:var(--text);font-weight:500;}
 .ref-title{font-style:italic;color:var(--text);}
 .ref-link{color:var(--cyan);word-break:break-all;font-size:12px;}
+.ref-link:hover{opacity:0.8;}
 .glossary-section{border-top:1px solid var(--border2);}
 .glossary-list{display:flex;flex-direction:column;gap:24px;}
 .glossary-item{padding:24px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);}
@@ -220,6 +251,8 @@ a:hover{opacity:0.8;}
 .glossary-definition{font-size:14px;line-height:1.75;color:var(--muted);}
 .copyright-notice{background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;margin-top:40px;font-size:13px;line-height:1.7;color:var(--muted);}
 .copyright-notice strong{color:var(--text);font-weight:600;}
+
+/* ══ AUTHOR + SERVICES ═══════════════════════════════════════ */
 .author-services-section{max-width:860px;margin:0 auto 80px;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
 @media(max-width:900px){.author-services-section{grid-template-columns:1fr;}}
 .about-author-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;}
@@ -240,6 +273,8 @@ a:hover{opacity:0.8;}
 .services-card-text{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:28px;}
 .services-card-button{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;background:var(--cyan);color:var(--bg);padding:16px 40px;border-radius:var(--radius);transition:all 0.25s;border:none;text-decoration:none;text-align:center;}
 .services-card-button:hover{box-shadow:0 0 30px var(--glow-c);opacity:0.9;transform:translateY(-2px);}
+
+/* ══ ARTICLE NAV CARDS ═══════════════════════════════════════ */
 .article-nav-section{padding:64px;background:var(--surface);border-top:1px solid var(--border2);}
 .article-nav-inner{max-width:1180px;margin:0 auto;}
 .article-nav-label{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:block;}
@@ -250,12 +285,14 @@ a:hover{opacity:0.8;}
 .nav-card:hover::after{opacity:1;}
 .nav-card.next{text-align:right;}
 .nav-card.all-articles{align-items:center;justify-content:center;text-align:center;min-width:120px;}
-.nav-card.hidden{visibility:hidden;pointer-events:none;}
+.nav-card.hidden{display:none;}
 .nav-card-icon{font-size:22px;color:var(--cyan);line-height:1;display:block;}
 .nav-card-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
 .nav-card-title{font-family:'Anton',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:#fff;line-height:1.2;}
-@media(max-width:768px){.article-nav-section{padding:48px 28px;}.article-nav-grid{grid-template-columns:1fr 1fr;}.nav-card.all-articles{grid-column:1/-1;order:3;}}
-@media(max-width:480px){.article-nav-grid{grid-template-columns:1fr;}.nav-card.next{text-align:left;}}
+@media(max-width:768px){.article-nav-section{padding:48px 28px;}.nav-card.all-articles{grid-column:1/-1;}}
+@media(max-width:480px){}
+
+/* ══ FOOTER ══════════════════════════════════════════════════ */
 footer{background:var(--surface);border-top:1px solid var(--border2);padding:64px 0 0;}
 .footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px;}
 @media(max-width:780px){.footer-top{grid-template-columns:1fr 1fr;}}
@@ -268,8 +305,7 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 .fb-tagline{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:20px;max-width:280px;}
 .back-to-top{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:9px 16px;transition:border-color .2s,color .2s,box-shadow .2s;cursor:pointer;}
 .back-to-top:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 14px var(--glow-c);}
-.back-to-top .arr{font-size:14px;transition:transform .2s;}
-.back-to-top:hover .arr{transform:translateY(-3px);}
+.back-to-top .arr{font-size:14px;transition:transform .2s;}.back-to-top:hover .arr{transform:translateY(-3px);}
 .fl-head{font-size:14px;font-weight:600;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.06em;}
 .fl-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
 .fl-list a{font-size:13px;color:var(--muted);transition:color .2s;text-decoration:none;}
@@ -279,80 +315,80 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 #back-to-top{position:fixed;bottom:32px;right:32px;z-index:100;width:50px;height:50px;background:var(--cyan);color:var(--bg);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(0,217,245,0.3);}
 #back-to-top:hover{background:#fff;color:var(--cyan);box-shadow:0 6px 20px rgba(0,217,245,0.5);transform:translateY(-3px);}
 #back-to-top.show{opacity:1;visibility:visible;}
-.article-content ul{margin:0 0 24px 24px;display:flex;flex-direction:column;gap:10px;color:var(--text);font-size:16px;line-height:1.75;}
-.article-content li{padding-left:4px;}
-@media(max-width:768px){#back-to-top{bottom:20px;right:20px;width:44px;height:44px;font-size:20px;}.article-header{height:50vh;min-height:400px;}.header-content{bottom:40px;}.article-meta{padding:24px 20px;gap:20px;}.article-body{padding:40px 20px 80px;}.article-title{font-size:clamp(30px,8vw,46px);}.pullquote-text{font-size:20px;}.references-section,.glossary-section{padding:40px 20px;}.author-services-section{padding:0 20px;}.company-grid{grid-template-columns:1fr;}.pullquote{padding:40px 20px;margin:40px 0;}}
-@media (max-width: 768px) { .fade-in { opacity: 1 !important; transform: none !important; } }
-@media (prefers-reduced-motion: reduce) { .fade-in { opacity: 1 !important; transform: none !important; transition: none !important; } }
+@media(max-width:768px){#back-to-top{bottom:20px;right:20px;width:44px;height:44px;font-size:20px;}}
+@media(max-width:768px){.article-header{height:50vh;min-height:400px;}.header-content{bottom:40px;}.article-meta{padding:24px 20px;gap:20px;}.article-body{padding:40px 20px 80px;}.article-title{font-size:clamp(32px,8vw,48px);}.pullquote-text{font-size:20px;}.references-section,.glossary-section{padding:40px 20px;}.author-services-section{padding:0 20px;}}
+@media(max-width:768px){.fade-in{opacity:1!important;transform:none!important;}}
+@media(prefers-reduced-motion:reduce){.fade-in{opacity:1!important;transform:none!important;transition:none!important;}}
+
+/* ══ STAT GRID ══════════════════════════════════════════ */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0;}
+@media(max-width:700px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:400px){.stat-grid{grid-template-columns:1fr;}}
+.stat-card{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:24px 16px;text-align:center;}
+.stat-number{font-family:'Anton',sans-serif;font-size:38px;color:var(--cyan);line-height:1;letter-spacing:.02em;}
+.stat-number.orange{color:var(--orange);}
+.stat-number.gold{color:var(--gold);}
+.stat-number.green{color:var(--green);}
+.stat-label{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;}
+
+/* ══ ARTICLE-SPECIFIC ═══════════════════════════════════ */
+.article-title .accent{color:var(--cyan);}
+.callout.red{background:rgba(200,50,50,0.06);border-color:rgba(200,50,50,0.25);}
+.callout.red .callout-title{color:#FF6B6B;}
+.pullquote::before,.pullquote::after{content:'';position:absolute;left:50%;transform:translateX(-50%);width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--orange),transparent);}
+.pullquote::before{top:0;}.pullquote::after{bottom:0;}
 </style>
 </head>
 <body>
 
+<!-- ══ MOBILE MENU ══════════════════════════════════════════ -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="http://joselitosering.github.io/aima/index.html#home"     onclick="closeMobile()">Home</a>
-  <a href="http://joselitosering.github.io/aima/index.html#services" onclick="closeMobile()">Services</a>
-  <a href="http://joselitosering.github.io/aima/index.html#rates"    onclick="closeMobile()">Rates</a>
-  <a href="http://joselitosering.github.io/aima/index.html#work"     onclick="closeMobile()">Work</a>
-  <a href="http://joselitosering.github.io/aima/index.html#process"  onclick="closeMobile()">Process</a>
-  <a href="http://joselitosering.github.io/aima/index.html#about"    onclick="closeMobile()">About</a>
-  <a href="http://joselitosering.github.io/aima/insights.html"       onclick="closeMobile()">Insights</a>
-  <a href="http://joselitosering.github.io/aima/gallery.html"        onclick="closeMobile()">Gallery</a>
-  <a href="http://joselitosering.github.io/aima/index.html#contact"  class="m-cta" onclick="closeMobile()">Get a Quote</a>
-  <div class="m-legal">
-    <a href="http://joselitosering.github.io/aima/index.html#tos"       onclick="closeMobile()">Terms</a>
-    <a href="http://joselitosering.github.io/aima/index.html#privacy"   onclick="closeMobile()">Privacy</a>
-    <a href="http://joselitosering.github.io/aima/index.html#refund"    onclick="closeMobile()">Refunds</a>
-    <a href="http://joselitosering.github.io/aima/index.html#licensing" onclick="closeMobile()">Licensing</a>
-    <a href="http://joselitosering.github.io/aima/index.html#cookies"   onclick="closeMobile()">Cookies</a>
-  </div>
+<a href="../index.html#home"     onclick="closeMobile()">Home</a>
+<a href="../index.html#services" onclick="closeMobile()">Services</a>
+<a href="../index.html#rates"    onclick="closeMobile()">Rates</a>
+<a href="../index.html#work"     onclick="closeMobile()">Work</a>
+<a href="../index.html#process"  onclick="closeMobile()">Process</a>
+<a href="../index.html#about"    onclick="closeMobile()">About</a>
+<a href="../insights.html"       onclick="closeMobile()">Insights</a>
+<a href="../gallery.html"        onclick="closeMobile()">Gallery</a>
+<a href="../index.html#contact"  class="m-cta" onclick="closeMobile()">Get a Quote</a>
+<div class="m-legal">
+<a href="../index.html#tos">Terms</a><a href="../index.html#privacy">Privacy</a>
+<a href="../index.html#refund">Refunds</a><a href="../index.html#licensing">Licensing</a>
+<a href="../index.html#cookies">Cookies</a>
+</div>
 </div>
 
+<!-- ══ NAV ═════════════════════════════════════════════════ -->
 <nav id="nav">
-  <div class="container nav-inner">
-    <a href="http://joselitosering.github.io/aima/index.html" class="nav-logo">
-      <div class="pulse"></div>
-      <span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="http://joselitosering.github.io/aima/index.html#home">Home</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#services">Services</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#rates">Rates</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#work">Work</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#process">Process</a></li>
-      <li><a href="http://joselitosering.github.io/aima/index.html#about">About</a></li>
-      <li><a href="http://joselitosering.github.io/aima/insights.html" class="active">Insights</a></li>
-      <li><a href="http://joselitosering.github.io/aima/gallery.html">Gallery</a></li>
-    </ul>
-    <a href="http://joselitosering.github.io/aima/index.html#contact" class="nav-cta">Get a Quote</a>
-    <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+<div class="container nav-inner">
+<a href="../index.html" class="nav-logo"><div class="pulse"></div><span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span></a>
+<ul class="nav-links" id="navLinks">
+<li><a href="../index.html#home">Home</a></li>
+<li><a href="../index.html#services">Services</a></li>
+<li><a href="../index.html#rates">Rates</a></li>
+<li><a href="../index.html#work">Work</a></li>
+<li><a href="../index.html#process">Process</a></li>
+<li><a href="../index.html#about">About</a></li>
+<li><a href="../insights.html" class="active">Insights</a></li>
+<li><a href="../gallery.html">Gallery</a></li>
+</ul>
+<a href="../index.html#contact" class="nav-cta">Get a Quote</a>
+<button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
 </nav>
 
+<!-- ══ SHARE SIDEBAR ════════════════════════════════════════ -->
 <div id="share-sidebar">
-  <div class="share-sidebar-label">Share</div>
-  <a class="share-fab" title="Share on Facebook" data-share="facebook"
-     href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-  </a>
-  <a class="share-fab" title="Share on X / Twitter" data-share="twitter"
-     href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M4 20L20 4"/></svg>
-  </a>
-  <a class="share-fab" title="Share on LinkedIn" data-share="linkedin"
-     href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-  </a>
-  <a class="share-fab" title="Email this article" data-share="email"
-     href="mailto:?subject=PAGE_TITLE&body=PAGE_URL" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-  </a>
-  <button class="share-fab copy-btn" title="Copy link" id="copyLinkBtn" aria-label="Copy link">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-  </button>
+<div class="share-sidebar-label">Share</div>
+<a class="share-fab" data-share="facebook" href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+<a class="share-fab" data-share="twitter" href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+<a class="share-fab" data-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+<a class="share-fab" data-share="email" href="mailto:?subject=PAGE_TITLE&body=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+<button class="share-fab copy-btn" id="copyLinkBtn" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
 </div>
 
+<!-- ══ TOC SIDEBAR — update hrefs to match actual H2 ids ═══ -->
 <div id="toc-sidebar">
   <div class="toc-panel">
     <span class="toc-panel-label">Contents</span>
@@ -366,7 +402,9 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
       <a href="#section-alternatives" class="toc-link">Alternatives</a>
       <a href="#section-debate"       class="toc-link">The Debate</a>
       <a href="#section-direction"    class="toc-link">Where It Goes</a>
-    </nav>
+    <a href="#references" class="toc-link">References</a>
+<a href="#glossary" class="toc-link">Glossary</a>
+</nav>
   </div>
 </div>
 
@@ -640,476 +678,273 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
         <a href="http://joselitosering.github.io/aima/index.html#contact" class="footer-cta-button">Start a Conversation</a>
       </div>
 
-    </main>
-  </div>
-
-<!-- ══ ARTICLE NAV CARDS ══════════════════════════════════ -->
 
 
+</main>
+</div>
+
+<!-- ═══ REFERENCES ════════════════════════════════════════════ -->
 <section class="references-section" id="references">
-      <div class="references-inner">
-        <h2 class="section-heading">References</h2>
-        <ol class="reference-list">
+<h2 class="section-heading">References</h2>
+<ol class="reference-list">
+<li class="reference-item" data-number="[1]">
+<span class="ref-authors">Abraham, Yuval, and Yuval Avivi.</span>
+<span class="ref-title">"'Lavender': The AI Machine Directing Israel's Bombing Spree in Gaza."</span>
+<em>+972 Magazine</em>, 3 Apr. 2024,
+<a href="https://www.972mag.com/lavender-ai-israeli-army-gaza/" class="ref-link" target="_blank" rel="noopener noreferrer">www.972mag.com/lavender-ai-israeli-army-gaza/</a>
+</li>
+<li class="reference-item" data-number="[2]">
+<span class="ref-authors">Al-Shabaka: The Palestinian Policy Network.</span>
+<span class="ref-title">"AI for War: The Global Reckoning Begins."</span>
+<em>Al-Shabaka</em>, 12 Nov. 2025,
+<a href="https://al-shabaka.org/briefs/ai-for-war/" class="ref-link" target="_blank" rel="noopener noreferrer">al-shabaka.org/briefs/ai-for-war/</a>
+</li>
+<li class="reference-item" data-number="[3]">
+<span class="ref-authors">Access Now.</span>
+<span class="ref-title">"Big Tech and the Risk of Genocide in Gaza: Google, Amazon, and Project Nimbus."</span>
+<em>Access Now</em>, 11 Oct. 2024,
+<a href="https://www.accessnow.org/big-tech-risk-of-genocide-gaza-google-amazon-nimbus/" class="ref-link" target="_blank" rel="noopener noreferrer">www.accessnow.org/big-tech-risk-of-genocide-gaza-google-amazon-nimbus/</a>
+</li>
+<li class="reference-item" data-number="[4]">
+<span class="ref-authors">Amnesty International.</span>
+<span class="ref-title">"Myanmar: Facebook's Systems Promoted Violence Against Rohingya; Meta Owes Reparations."</span>
+<em>Amnesty International</em>, 29 Sept. 2022,
+<a href="https://www.amnesty.org/en/latest/news/2022/09/myanmar-facebooks-systems-promoted-violence-against-rohingya-meta-owes-reparations-new-report/" class="ref-link" target="_blank" rel="noopener noreferrer">www.amnesty.org</a>
+</li>
+<li class="reference-item" data-number="[5]">
+<span class="ref-authors">Australian Strategic Policy Institute (ASPI).</span>
+<span class="ref-title">"Mapping China's Tech Giants: AI and Surveillance Export."</span>
+<em>ASPI</em>, 2019, updated 2025,
+<a href="https://chinatechmap.aspi.org.au/" class="ref-link" target="_blank" rel="noopener noreferrer">chinatechmap.aspi.org.au</a>
+</li>
+<li class="reference-item" data-number="[6]">
+<span class="ref-authors">Black, Edwin.</span>
+<span class="ref-title">IBM and the Holocaust: The Strategic Alliance Between Nazi Germany and America's Most Powerful Corporation.</span>
+<em>Crown Books</em>, 2001.
+</li>
+<li class="reference-item" data-number="[7]">
+<span class="ref-authors">Congressional Research Service.</span>
+<span class="ref-title">"Pentagon–Anthropic Dispute over Autonomous Weapon Systems."</span>
+<em>Congress.gov</em>, 21 Apr. 2026,
+<a href="https://www.congress.gov/crs-product/IN12669" class="ref-link" target="_blank" rel="noopener noreferrer">www.congress.gov/crs-product/IN12669</a>
+</li>
+<li class="reference-item" data-number="[8]">
+<span class="ref-title">"Google Engineer Dismissed After Raising Concerns About Project Nimbus Work."</span>
+<em>Computer Weekly</em>, May 2026,
+<a href="https://www.computerweekly.com/news/366622954/Google-engineer-dismissed-after-raising-concerns-about-Project-Nimbus-work" class="ref-link" target="_blank" rel="noopener noreferrer">www.computerweekly.com</a>
+</li>
+<li class="reference-item" data-number="[9]">
+<span class="ref-title">"Palantir Wins $480M Army Maven Smart System Contract."</span>
+<em>DefenseScoop</em>, 30 May 2024,
+<a href="https://defensescoop.com/2024/05/30/palantir-army-maven-smart-system-480-million/" class="ref-link" target="_blank" rel="noopener noreferrer">defensescoop.com/2024/05/30/palantir-army-maven-smart-system-480-million/</a>
+</li>
+<li class="reference-item" data-number="[10]">
+<span class="ref-title">"'Where's Daddy?': Israeli AI Targets Palestinians at Home, Killing Families."</span>
+<em>Democracy Now!</em>, 5 Apr. 2024,
+<a href="https://www.democracynow.org/2024/4/5/lavender_wheres_daddy_gaza_ai_bombing" class="ref-link" target="_blank" rel="noopener noreferrer">www.democracynow.org</a>
+</li>
+<li class="reference-item" data-number="[11]">
+<span class="ref-title">"Dahua and Hikvision Win Over $1 Billion in Xinjiang Projects."</span>
+<em>IPVM Research</em>, 23 Apr. 2018,
+<a href="https://ipvm.com/reports/xinjiang-dahua-hikvision" class="ref-link" target="_blank" rel="noopener noreferrer">ipvm.com/reports/xinjiang-dahua-hikvision</a>
+</li>
+<li class="reference-item" data-number="[12]">
+<span class="ref-authors">Lieber Institute at West Point.</span>
+<span class="ref-title">"Habsora, Lavender, and the Law of Armed Conflict: AI Targeting in Gaza."</span>
+<em>Articles of War</em>, Sept. 2024,
+<a href="https://lieber.westpoint.edu/habsora-lavender-law-of-armed-conflict/" class="ref-link" target="_blank" rel="noopener noreferrer">lieber.westpoint.edu</a>
+</li>
+<li class="reference-item" data-number="[13]">
+<span class="ref-title">"The Genocide Will Be Automated."</span>
+<em>MERIP (Middle East Research and Information Project)</em>, Oct. 2024,
+<a href="https://merip.org/2024/10/the-genocide-will-be-automated/" class="ref-link" target="_blank" rel="noopener noreferrer">merip.org/2024/10/the-genocide-will-be-automated/</a>
+</li>
+<li class="reference-item" data-number="[14]">
+<span class="ref-title">"Trump Bans Anthropic From Defense Contracts; OpenAI Announces Pentagon Deal."</span>
+<em>NPR</em>, 27 Feb. 2026,
+<a href="https://www.npr.org/2026/02/27/nx-s1-5729118/trump-anthropic" class="ref-link" target="_blank" rel="noopener noreferrer">www.npr.org</a>
+</li>
+<li class="reference-item" data-number="[15]">
+<span class="ref-authors">OpenAI.</span>
+<span class="ref-title">"Our Agreement with the Department of Defense."</span>
+<em>OpenAI Blog</em>, Feb. 2026,
+<a href="https://openai.com/index/openai-dod/" class="ref-link" target="_blank" rel="noopener noreferrer">openai.com/index/openai-dod/</a>
+</li>
+<li class="reference-item" data-number="[16]">
+<span class="ref-authors">Systemic Justice / Harvard Law.</span>
+<span class="ref-title">"Facebook's Role in Myanmar Genocide: Legal Analysis."</span>
+2021,
+<a href="https://systemicjustice.ngo/cases/myanmar/" class="ref-link" target="_blank" rel="noopener noreferrer">systemicjustice.ngo/cases/myanmar/</a>
+</li>
+<li class="reference-item" data-number="[17]">
+<span class="ref-title">"It's Official: The Pentagon Has Labeled Anthropic a 'Supply-Chain Risk to National Security.'"</span>
+<em>TechCrunch</em>, 5 Mar. 2026,
+<a href="https://techcrunch.com/2026/03/05/its-official-the-pentagon-has-labeled-anthropic-a-supply-chain-risk/" class="ref-link" target="_blank" rel="noopener noreferrer">techcrunch.com</a>
+</li>
+<li class="reference-item" data-number="[18]">
+<span class="ref-title">"DeepMind Researchers Vote to Unionize Over AI Ethics Concerns."</span>
+<em>The Next Web</em>, May 2026,
+<a href="https://thenextweb.com/news/deepmind-researchers-vote-unionize-ai-ethics" class="ref-link" target="_blank" rel="noopener noreferrer">thenextweb.com</a>
+</li>
+</ol>
+<div class="copyright-notice">
+<strong>Copyright Acknowledgements:</strong> This article references publicly available reporting, company disclosures, and research from +972 Magazine, Amnesty International, the Australian Strategic Policy Institute, the Congressional Research Service, DefenseScoop, Democracy Now!, IPVM, the Lieber Institute at West Point, MERIP, NPR, OpenAI, Systemic Justice, TechCrunch, The Next Web, and Computer Weekly. All sources cited per MLA 9th edition. URLs verified as accessible as of June 4, 2026.
+</div>
+</section>
 
-          <li class="reference-item" data-number="[1]">
-            <span class="ref-authors">Abraham, Yuval, and Yuval Avivi.</span>
-            &ldquo;<span class="ref-title">&lsquo;Lavender&rsquo;: The AI Machine Directing Israel&rsquo;s Bombing Spree in Gaza.</span>&rdquo;
-            <em>+972 Magazine</em>, 3 Apr. 2024.
-            <a href="https://www.972mag.com/lavender-ai-israeli-army-gaza/" class="ref-link" target="_blank" rel="noopener">www.972mag.com/lavender-ai-israeli-army-gaza/</a>
-          </li>
-
-          <li class="reference-item" data-number="[2]">
-            <span class="ref-authors">Al-Shabaka: The Palestinian Policy Network.</span>
-            &ldquo;<span class="ref-title">AI for War: The Global Reckoning Begins.</span>&rdquo;
-            <em>Al-Shabaka</em>, 12 Nov. 2025.
-            <a href="https://al-shabaka.org/briefs/ai-for-war/" class="ref-link" target="_blank" rel="noopener">al-shabaka.org/briefs/ai-for-war/</a>
-          </li>
-
-          <li class="reference-item" data-number="[3]">
-            <span class="ref-authors">Access Now.</span>
-            &ldquo;<span class="ref-title">Big Tech and the Risk of Genocide in Gaza: Google, Amazon, and Project Nimbus.</span>&rdquo;
-            <em>Access Now</em>, 11 Oct. 2024.
-            <a href="https://www.accessnow.org/big-tech-risk-of-genocide-gaza-google-amazon-nimbus/" class="ref-link" target="_blank" rel="noopener">www.accessnow.org/big-tech-risk-of-genocide-gaza</a>
-          </li>
-
-          <li class="reference-item" data-number="[4]">
-            <span class="ref-authors">Amnesty International.</span>
-            &ldquo;<span class="ref-title">Myanmar: Facebook&rsquo;s Systems Promoted Violence Against Rohingya; Meta Owes Reparations.</span>&rdquo;
-            <em>Amnesty International</em>, 29 Sept. 2022.
-            <a href="https://www.amnesty.org/en/latest/news/2022/09/myanmar-facebooks-systems-promoted-violence-against-rohingya-meta-owes-reparations-new-report/" class="ref-link" target="_blank" rel="noopener">www.amnesty.org</a>
-          </li>
-
-          <li class="reference-item" data-number="[5]">
-            <span class="ref-authors">Australian Strategic Policy Institute (ASPI).</span>
-            &ldquo;<span class="ref-title">Mapping China&rsquo;s Tech Giants: AI and Surveillance Export.</span>&rdquo;
-            <em>ASPI</em>, 2019, updated 2025.
-            <a href="https://chinatechmap.aspi.org.au/" class="ref-link" target="_blank" rel="noopener">chinatechmap.aspi.org.au</a>
-          </li>
-
-          <li class="reference-item" data-number="[6]">
-            <span class="ref-authors">Black, Edwin.</span>
-            <span class="ref-title"><em>IBM and the Holocaust: The Strategic Alliance Between Nazi Germany and America&rsquo;s Most Powerful Corporation.</em></span>
-            Crown Books, 2001.
-          </li>
-
-          <li class="reference-item" data-number="[7]">
-            <span class="ref-authors">Congressional Research Service.</span>
-            &ldquo;<span class="ref-title">Pentagon&ndash;Anthropic Dispute over Autonomous Weapon Systems.</span>&rdquo;
-            <em>Congress.gov</em>, 21 Apr. 2026.
-            <a href="https://www.congress.gov/crs-product/IN12669" class="ref-link" target="_blank" rel="noopener">www.congress.gov/crs-product/IN12669</a>
-          </li>
-
-          <li class="reference-item" data-number="[8]">
-            <span class="ref-authors"><em>Computer Weekly.</em></span>
-            &ldquo;<span class="ref-title">Google Engineer Dismissed After Raising Concerns About Project Nimbus Work.</span>&rdquo;
-            May 2026.
-            <a href="https://www.computerweekly.com/news/366622954/Google-engineer-dismissed-after-raising-concerns-about-Project-Nimbus-work" class="ref-link" target="_blank" rel="noopener">www.computerweekly.com</a>
-          </li>
-
-          <li class="reference-item" data-number="[9]">
-            <span class="ref-authors">DefenseScoop.</span>
-            &ldquo;<span class="ref-title">Palantir Wins $480M Army Maven Smart System Contract.</span>&rdquo;
-            30 May 2024.
-            <a href="https://defensescoop.com/2024/05/30/palantir-army-maven-smart-system-480-million/" class="ref-link" target="_blank" rel="noopener">defensescoop.com/2024/05/30/palantir-army-maven-smart-system-480-million/</a>
-          </li>
-
-          <li class="reference-item" data-number="[10]">
-            <span class="ref-authors">Democracy Now!</span>
-            &ldquo;<span class="ref-title">&lsquo;Where&rsquo;s Daddy?&rsquo;: Israeli AI Targets Palestinians at Home, Killing Families.</span>&rdquo;
-            5 Apr. 2024.
-            <a href="https://www.democracynow.org/2024/4/5/lavender_wheres_daddy_gaza_ai_bombing" class="ref-link" target="_blank" rel="noopener">www.democracynow.org</a>
-          </li>
-
-          <li class="reference-item" data-number="[11]">
-            <span class="ref-authors">IPVM Research.</span>
-            &ldquo;<span class="ref-title">Dahua and Hikvision Win Over $1 Billion in Xinjiang Projects.</span>&rdquo;
-            23 Apr. 2018.
-            <a href="https://ipvm.com/reports/xinjiang-dahua-hikvision" class="ref-link" target="_blank" rel="noopener">ipvm.com/reports/xinjiang-dahua-hikvision</a>
-          </li>
-
-          <li class="reference-item" data-number="[12]">
-            <span class="ref-authors">Lieber Institute at West Point.</span>
-            &ldquo;<span class="ref-title">Habsora, Lavender, and the Law of Armed Conflict: AI Targeting in Gaza.</span>&rdquo;
-            <em>Articles of War</em>, Sept. 2024.
-            <a href="https://lieber.westpoint.edu/habsora-lavender-law-of-armed-conflict/" class="ref-link" target="_blank" rel="noopener">lieber.westpoint.edu</a>
-          </li>
-
-          <li class="reference-item" data-number="[13]">
-            <span class="ref-authors">MERIP (Middle East Research and Information Project).</span>
-            &ldquo;<span class="ref-title">The Genocide Will Be Automated.</span>&rdquo;
-            <em>MERIP</em>, Oct. 2024.
-            <a href="https://merip.org/2024/10/the-genocide-will-be-automated/" class="ref-link" target="_blank" rel="noopener">merip.org/2024/10/the-genocide-will-be-automated/</a>
-          </li>
-
-          <li class="reference-item" data-number="[14]">
-            <span class="ref-authors">NPR.</span>
-            &ldquo;<span class="ref-title">Trump Bans Anthropic From Defense Contracts; OpenAI Announces Pentagon Deal.</span>&rdquo;
-            27 Feb. 2026.
-            <a href="https://www.npr.org/2026/02/27/nx-s1-5729118/trump-anthropic" class="ref-link" target="_blank" rel="noopener">www.npr.org</a>
-          </li>
-
-          <li class="reference-item" data-number="[15]">
-            <span class="ref-authors">OpenAI.</span>
-            &ldquo;<span class="ref-title">Our Agreement with the Department of Defense.</span>&rdquo;
-            <em>OpenAI Blog</em>, Feb. 2026.
-            <a href="https://openai.com/index/openai-dod/" class="ref-link" target="_blank" rel="noopener">openai.com/index/openai-dod/</a>
-          </li>
-
-          <li class="reference-item" data-number="[16]">
-            <span class="ref-authors">Systemic Justice / Harvard Law.</span>
-            &ldquo;<span class="ref-title">Facebook&rsquo;s Role in Myanmar Genocide: Legal Analysis.</span>&rdquo;
-            2021.
-            <a href="https://systemicjustice.ngo/cases/myanmar/" class="ref-link" target="_blank" rel="noopener">systemicjustice.ngo/cases/myanmar/</a>
-          </li>
-
-          <li class="reference-item" data-number="[17]">
-            <span class="ref-authors">TechCrunch.</span>
-            &ldquo;<span class="ref-title">It&rsquo;s Official: The Pentagon Has Labeled Anthropic a &lsquo;Supply-Chain Risk to National Security.&rsquo;</span>&rdquo;
-            5 Mar. 2026.
-            <a href="https://techcrunch.com/2026/03/05/its-official-the-pentagon-has-labeled-anthropic-a-supply-chain-risk/" class="ref-link" target="_blank" rel="noopener">techcrunch.com</a>
-          </li>
-
-          <li class="reference-item" data-number="[18]">
-            <span class="ref-authors"><em>The Next Web.</em></span>
-            &ldquo;<span class="ref-title">DeepMind Researchers Vote to Unionize Over AI Ethics Concerns.</span>&rdquo;
-            May 2026.
-            <a href="https://thenextweb.com/news/deepmind-researchers-vote-unionize-ai-ethics" class="ref-link" target="_blank" rel="noopener">thenextweb.com</a>
-          </li>
-
-        </ol>
-          <div class="copyright-notice">
-            <strong>Copyright Acknowledgements:</strong> This article references publicly available reporting, company disclosures, and research from +972 Magazine, Amnesty International, the Australian Strategic Policy Institute, the Congressional Research Service, DefenseScoop, Democracy Now, IPVM, the Lieber Institute at West Point, MERIP, NPR, OpenAI, Systemic Justice, TechCrunch, The Next Web, and Computer Weekly. All external sources are cited in accordance with MLA 9th edition guidelines. No copyrighted material has been reproduced without proper attribution. All URLs were verified as accessible as of June 4, 2026.
-          </div>
-      </div>
-    </section>
-
+<!-- ═══ GLOSSARY ══════════════════════════════════════════════ -->
 <section class="glossary-section" id="glossary">
-      <div class="glossary-inner">
-        <h2 class="section-heading">Glossary</h2>
-        <div class="glossary-list">
+<h2 class="section-heading">Glossary</h2>
+<div class="glossary-list">
+<div class="glossary-item" id="glossary-lavender">
+<div class="glossary-term-title">
+Lavender
+<a href="#mention-lavender" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">An AI targeting system developed by Israeli Military Intelligence Unit 8200. Lavender cross-references databases of known Hamas and Islamic Jihad operatives against a population dataset to generate a ranked list of individuals flagged for lethal targeting. The system marked approximately 37,000 Palestinians as assassination candidates during the early months of the Gaza campaign, with an acknowledged internal error rate of approximately 10 percent. Human review per target was reported at roughly 20 seconds. Reported publicly by <em>+972 Magazine</em> in April 2024.</p>
+</div>
+<div class="glossary-item" id="glossary-cloud-computing">
+<div class="glossary-term-title">
+Cloud Computing
+<a href="#mention-cloud-computing" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">The delivery of computing services — including servers, storage, databases, networking, and software — over the internet from remote data centers owned by third-party providers. In the context of this article, cloud infrastructure provided by Google Cloud, Amazon Web Services, and Microsoft Azure has been documented as integral to Israeli military intelligence and surveillance operations, providing the storage capacity, machine learning infrastructure, and processing power that enables AI-powered targeting at scale.</p>
+</div>
+<div class="glossary-item" id="glossary-facial-recognition">
+<div class="glossary-term-title">
+Facial Recognition
+<a href="#mention-facial-recognition" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">A biometric technology that identifies or verifies individuals by analyzing geometric features of their faces against a database of stored images. In Xinjiang, systems developed by Hikvision, Dahua, SenseTime, and Megvii were installed across 1,000+ mosques and throughout public infrastructure to enable automated identification and tracking of Uyghur and Muslim minority populations. The same technology has been exported to over 18 countries, primarily through Chinese state-backed infrastructure agreements.</p>
+</div>
+<div class="glossary-item" id="glossary-recommendation-algorithm">
+<div class="glossary-term-title">
+Recommendation Algorithm
+<a href="#mention-recommendation-algorithm" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">A machine learning system that determines what content users see on a platform based on predicted engagement. Meta's recommendation algorithms were documented by the UN fact-finding mission (2018) and Amnesty International (2022) as having actively amplified anti-Rohingya content in Myanmar from at least 2012, promoting incitement to violence to users most likely to engage with it. In contexts where a platform dominates information access — as Facebook did in Myanmar — recommendation amplification of hate content has been directly linked to real-world violence.</p>
+</div>
+<div class="glossary-item" id="glossary-laws">
+<div class="glossary-term-title">
+Lethal Autonomous Weapons Systems (LAWS)
+<a href="#mention-laws" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">Weapons platforms that can select and engage targets without meaningful human control over individual lethal decisions. The International Committee of the Red Cross and a majority of UN member states have called for binding international regulation of LAWS. As of 2026, no such treaty exists. The US, Russia, China, Israel, South Korea, and Australia have all resisted binding constraints. Anduril Industries' Fury autonomous fighter jet and Barracuda autonomous submarine are among the most advanced LAWS programs in development by a private company.</p>
+</div>
+</div>
+</section>
 
-          <div class="glossary-item" id="glossary-lavender">
-            <div class="glossary-term-title">
-              Lavender
-              <a href="#mention-lavender" class="back-link">&uarr; Back to text</a>
-            </div>
-            <p class="glossary-definition">An AI targeting system developed by Israeli Military Intelligence Unit 8200. Lavender cross-references databases of known Hamas and Islamic Jihad operatives against a population dataset to generate a ranked list of individuals flagged for lethal targeting. The system marked approximately 37,000 Palestinians as assassination candidates during the early months of the Gaza campaign, with an acknowledged internal error rate of approximately 10 percent. Human review per target was reported at roughly 20 seconds. Reported publicly by <em>+972 Magazine</em> in April 2024.</p>
-          </div>
+</article>
 
-          <div class="glossary-item" id="glossary-cloud">
-            <div class="glossary-term-title">
-              Cloud Computing
-            </div>
-            <p class="glossary-definition">The delivery of computing services &mdash; including servers, storage, databases, networking, and software &mdash; over the internet from remote data centers owned by third-party providers. In the context of this article, cloud infrastructure provided by Google Cloud, Amazon Web Services, and Microsoft Azure has been documented as integral to Israeli military intelligence and surveillance operations, providing the storage capacity, machine learning infrastructure, and processing power that enables AI-powered targeting at scale.</p>
-          </div>
-
-          <div class="glossary-item" id="glossary-facial-recognition">
-            <div class="glossary-term-title">
-              Facial Recognition
-            </div>
-            <p class="glossary-definition">A biometric technology that identifies or verifies individuals by analyzing geometric features of their faces against a database of stored images. In Xinjiang, systems developed by Hikvision, Dahua, SenseTime, and Megvii were installed across 1,000+ mosques and throughout public infrastructure to enable automated identification and tracking of Uyghur and Muslim minority populations. The same technology has been exported to over 18 countries, primarily through Chinese state-backed infrastructure agreements.</p>
-          </div>
-
-          <div class="glossary-item" id="glossary-recommendation-algorithm">
-            <div class="glossary-term-title">
-              Recommendation Algorithm
-            </div>
-            <p class="glossary-definition">A machine learning system that determines what content users see on a platform based on predicted engagement. Meta&rsquo;s recommendation algorithms were documented by the UN fact-finding mission (2018) and Amnesty International (2022) as having actively amplified anti-Rohingya content in Myanmar from at least 2012, promoting incitement to violence to users most likely to engage with it. In contexts where a platform dominates information access &mdash; as Facebook did in Myanmar &mdash; recommendation amplification of hate content has been directly linked to real-world violence.</p>
-          </div>
-
-          <div class="glossary-item" id="glossary-laws">
-            <div class="glossary-term-title">
-              Lethal Autonomous Weapons Systems (LAWS)
-            </div>
-            <p class="glossary-definition">Weapons platforms that can select and engage targets without meaningful human control over individual lethal decisions. The International Committee of the Red Cross and a majority of UN member states have called for binding international regulation of LAWS. As of 2026, no such treaty exists. The US, Russia, China, Israel, South Korea, and Australia have all resisted binding constraints. Anduril Industries&rsquo; Fury autonomous fighter jet and Barracuda autonomous submarine are among the most advanced LAWS programs in development by a private company.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
+<!-- ═══ AUTHOR + SERVICES ════════════════════════════════════ -->
 <section class="author-services-section">
-      <div class="about-author-card">
-        <div class="author-section-header">About The Author</div>
-        <div class="author-card">
-          <div class="author-card-avatar">JS</div>
-          <div class="author-card-content">
-            <div class="author-card-name">Joselito Sering</div>
-            <div class="author-card-title">Editor-in-Chief &middot; Creative Technologist</div>
-            <p class="author-card-bio">Joselito Sering is the founder of AIMA &mdash; AI Media Agency, a cinema-grade AI-native production company under Monkey Matters LLC in San Francisco. He writes at the intersection of artificial intelligence, creative production, media ethics, and the technology decisions that shape human futures.</p>
-            <div class="author-card-links">
-              <a href="https://www.linkedin.com/in/joselitosering/" class="author-link" target="_blank" rel="noopener noreferrer">&#x1F4BC; LinkedIn</a>
-              <a href="https://joselitosering.github.io/aima/" class="author-link" target="_blank" rel="noopener noreferrer">&#x1F527; Portfolio</a>
-              <a href="https://www.blockchain.com/btc/address/333avr5LEQBkft7p9YC3Hi4PCEwvZt8bnM" class="author-link" target="_blank" rel="noopener noreferrer">&#x20BF; Tip Jar</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="explore-services-card">
-        <div class="services-card-header">Explore Our Services</div>
-        <h3 class="services-card-title">Ready to Transform Your <span class="highlight">Production Workflow?</span></h3>
-        <p class="services-card-text">Discover how AI-powered creative production can help you achieve professional results at a fraction of traditional costs.</p>
-        <a href="https://aima.productions/index.html#services" class="services-card-button">View Our Services</a>
-      </div>
-    </section>
+<div class="about-author-card">
+<div class="author-section-header">About The Author</div>
+<div class="author-card">
+<div class="author-card-avatar">JS</div>
+<div class="author-card-content">
+<div class="author-card-name">Joselito Sering</div>
+<div class="author-card-title">Editor-in-Chief · Imagineer</div>
+<p class="author-card-bio">Joselito Sering is a creative technologist exploring the intersection of entertainment, education, and engineering. Based in San Francisco, he focuses on leveraging AI agents to create artistic and scientific works in service of humanity.</p>
+<div class="author-card-links">
+<a href="https://linkedin.com/in/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">💼</a>
+<a href="https://joselitosering.github.io/portfolio" class="author-link" target="_blank" rel="noopener noreferrer">🔧</a>
+<a href="http://buymeacoffee.com/joselitosering" class="author-link" target="_blank" rel="noopener noreferrer">☕</a>
+</div>
+</div>
+</div>
+</div>
+<div class="explore-services-card">
+<div class="services-card-header">Explore Our Services</div>
+<h3 class="services-card-title">AI Built for <span class="highlight">Human Creativity</span></h3>
+<p class="services-card-text">Cinema-grade AI-powered production, media automation, and content systems — built for creators who believe the future should work for everyone.</p>
+<a href="../index.html#services" class="services-card-button">View Our Services</a>
+</div>
+</section>
 
+<!-- ═══ PRINT HOOKS (always hidden on screen) ════════════════ -->
+<span class="print-category-hook" id="printCategoryHook" style="display:none">[CATEGORY]</span>
+<span class="print-author-hook" style="display:none">Joselito Sering</span>
+<span class="print-url-hook" style="display:none">aima.productions</span>
+
+</article>
+
+<!-- ══ ARTICLE NAV CARDS ════════════════════════════════════ -->
 <nav class="article-nav-section" id="article-nav">
-  <div class="article-nav-inner">
-    <span class="article-nav-label">Continue Reading</span>
-    <div class="article-nav-grid">
-
-      <a id="art-prev-card" href="#" class="nav-card prev hidden">
-        <span class="nav-card-icon">&#x2190;</span>
-        <div class="nav-card-label">Previous Article</div>
-        <div class="nav-card-title" id="art-prev-title">Previous Article</div>
-      </a>
-
-      <a href="https://aima.productions/insights.html" class="nav-card all-articles">
-        <span class="nav-card-icon">&#x229E;</span>
-        <div class="nav-card-label">All Articles</div>
-        <div class="nav-card-title">Browse the Magazine</div>
-      </a>
-
-      <a id="art-next-card" href="#" class="nav-card next hidden">
-        <span class="nav-card-icon">&#x2192;</span>
-        <div class="nav-card-label">Next Article</div>
-        <div class="nav-card-title" id="art-next-title">Next Article</div>
-      </a>
-
-    </div>
-  </div>
+<div class="article-nav-inner">
+<span class="article-nav-label">Continue Reading</span>
+<div class="article-nav-grid">
+<a id="art-prev-card" href="#" class="nav-card prev hidden"><span class="nav-card-icon">←</span><div class="nav-card-label">Previous Article</div><div class="nav-card-title" id="art-prev-title"></div></a>
+<a href="https://aima.productions/insights.html" class="nav-card all-articles"><span class="nav-card-icon">⊞</span><div class="nav-card-label">All Articles</div><div class="nav-card-title">Browse the Magazine</div></a>
+<a id="art-next-card" href="#" class="nav-card next hidden"><span class="nav-card-icon">→</span><div class="nav-card-label">Next Article</div><div class="nav-card-title" id="art-next-title"></div></a>
+</div>
+</div>
 </nav>
 
+<!-- ══ FOOTER ═══════════════════════════════════════════════ -->
 <footer>
-  <div class="container">
-    <div class="footer-top">
-
-      <div class="fl-col">
-        <div class="fb-logo-wrap">
-          <div class="pulse-ft"></div>
-          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
-        </div>
-        <div class="fb-sub">AI Media Agency</div>
-        <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production &middot; San Francisco, CA &middot; Remote Worldwide.</p>
-        <button class="back-to-top" onclick="document.getElementById('article-top').scrollIntoView({behavior:'smooth'})">
-          <span class="arr">&#x2191;</span> Back to Top
-        </button>
-      </div>
-
-      <div class="fl-col">
-        <div class="fl-head">Services</div>
-        <ul class="fl-list">
-          <li><a href="https://aima.productions/index.html#services">Music Video</a></li>
-          <li><a href="https://aima.productions/index.html#services">Corporate Explainer</a></li>
-          <li><a href="https://aima.productions/index.html#services">TV Commercial</a></li>
-          <li><a href="https://aima.productions/index.html#rates">Social Media Packages</a></li>
-          <li><a href="https://aima.productions/index.html#rates">Monthly Retainers</a></li>
-          <li><a href="https://aima.productions/index.html#rates">AI Automation Pipeline</a></li>
-        </ul>
-      </div>
-
-      <div class="fl-col">
-        <div class="fl-head">Company</div>
-        <ul class="fl-list">
-          <li><a href="https://aima.productions/index.html#about">About Us</a></li>
-          <li><a href="https://aima.productions/index.html#process">Our Process</a></li>
-          <li><a href="https://aima.productions/index.html#work">Portfolio</a></li>
-          <li><a href="https://aima.productions/gallery.html">Gallery</a></li>
-          <li><a href="https://aima.productions/insights.html">Insights</a></li>
-          <li><a href="https://aima.productions/careers.html">Careers</a></li>
-          <li><a href="https://aima.productions/index.html#contact">Get a Quote</a></li>
-        </ul>
-      </div>
-
-      <div class="fl-col">
-        <div class="fl-head">Legal</div>
-        <ul class="fl-list">
-          <li><a href="https://aima.productions/index.html#tos">Terms of Service</a></li>
-          <li><a href="https://aima.productions/index.html#privacy">Privacy Policy</a></li>
-          <li><a href="https://aima.productions/index.html#refund">Refund Policy</a></li>
-          <li><a href="https://aima.productions/index.html#licensing">Licensing FAQ</a></li>
-          <li><a href="https://aima.productions/index.html#cookies">Cookie Settings</a></li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; 2026 AIMA &middot; AI Media Agency &middot; A Monkey Matters LLC Production &middot; Wyoming LLC</p>
-      <span>v12.0 &middot; aima.productions</span>
-    </div>
-  </div>
+<div class="container">
+<div class="footer-top">
+<div>
+<div class="fb-logo-wrap"><div class="pulse-ft"></div><span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span></div>
+<div class="fb-sub">AI Media Agency</div>
+<p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+<button class="back-to-top" onclick="document.getElementById('article-top').scrollIntoView({behavior:'smooth'})"><span class="arr">↑</span> Back to Top</button>
+</div>
+<div><div class="fl-head">Services</div><ul class="fl-list"><li><a href="../index.html#services">Music Video</a></li><li><a href="../index.html#services">Corporate Explainer</a></li><li><a href="../index.html#services">TV Commercial</a></li><li><a href="../index.html#rates">Social Media Packages</a></li><li><a href="../index.html#rates">Monthly Retainers</a></li><li><a href="../index.html#rates">AI Automation Pipeline</a></li></ul></div>
+<div><div class="fl-head">Company</div><ul class="fl-list"><li><a href="../index.html#about">About Us</a></li><li><a href="../index.html#process">Our Process</a></li><li><a href="../index.html#work">Portfolio</a></li><li><a href="../gallery.html">Gallery</a></li><li><a href="../insights.html">Insights</a></li><li><a href="../careers.html">Careers</a></li></ul></div>
+<div><div class="fl-head">Legal</div><ul class="fl-list"><li><a href="../index.html#tos">Terms of Service</a></li><li><a href="../index.html#privacy">Privacy Policy</a></li><li><a href="../index.html#refund">Refund Policy</a></li><li><a href="../index.html#licensing">Licensing FAQ</a></li><li><a href="../index.html#cookies">Cookie Settings</a></li></ul></div>
+</div>
+<div class="footer-bottom"><p>© 2026 AIMA · AI Media Agency</p><span>v12.9 · aima.productions</span></div>
+</div>
 </footer>
 
 <script>
 // ══ HEADER IMAGE from meta tag ════════════════════════════
-document.addEventListener('DOMContentLoaded', function () {
-  var meta = document.querySelector('meta[name="article:header-image"]');
-  var el   = document.getElementById('headerImage');
-  if (meta && el) {
-    var url = meta.getAttribute('content');
-    el.style.backgroundImage    = "linear-gradient(135deg,rgba(0,217,245,0.18),rgba(162,89,255,0.10)),url('" + url + "')";
-    el.style.backgroundSize     = 'cover';
-    el.style.backgroundPosition = 'center';
-  }
-
-  // ── PREV / NEXT ARTICLE NAV ───────────────────────────
-  var prevUrl   = (document.querySelector('meta[name="article:prev-url"]')   || {}).content || '';
-  var prevTitle = (document.querySelector('meta[name="article:prev-title"]') || {}).content || '';
-  var nextUrl   = (document.querySelector('meta[name="article:next-url"]')   || {}).content || '';
-  var nextTitle = (document.querySelector('meta[name="article:next-title"]') || {}).content || '';
-
-  var prevCard  = document.getElementById('art-prev-card');
-  var prevLabel = document.getElementById('art-prev-title');
-  var nextCard  = document.getElementById('art-next-card');
-  var nextLabel = document.getElementById('art-next-title');
-
-  if (prevCard && prevUrl) {
-    prevCard.href = prevUrl;
-    prevCard.classList.remove('hidden');
-    if (prevLabel) prevLabel.textContent = prevTitle;
-  }
-  if (nextCard && nextUrl) {
-    nextCard.href = nextUrl;
-    nextCard.classList.remove('hidden');
-    if (nextLabel) nextLabel.textContent = nextTitle;
-  }
+document.addEventListener('DOMContentLoaded',function(){
+var meta=document.querySelector('meta[name="article:header-image"]');
+var el=document.getElementById('headerImage');
+if(meta&&el){var url=meta.getAttribute('content');el.style.backgroundImage='linear-gradient(135deg,rgba(255,94,32,0.28),rgba(0,217,245,0.10)),url(\''+url+'\')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';}
+// PREV/NEXT NAV
+var prevUrl=(document.querySelector('meta[name="article:prev-url"]')||{}).content||'';
+var prevTitle=(document.querySelector('meta[name="article:prev-title"]')||{}).content||'';
+var nextUrl=(document.querySelector('meta[name="article:next-url"]')||{}).content||'';
+var nextTitle=(document.querySelector('meta[name="article:next-title"]')||{}).content||'';
+var prevCard=document.getElementById('art-prev-card');
+var nextCard=document.getElementById('art-next-card');
+if(prevCard&&prevUrl){prevCard.href=prevUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=prevTitle;}
+if(nextCard&&nextUrl){nextCard.href=nextUrl;nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent=nextTitle;}
+var _grid=document.querySelector('.article-nav-grid');
+if(_grid){var _hp=prevCard&&!prevCard.classList.contains('hidden');var _hn=nextCard&&!nextCard.classList.contains('hidden');if(_hp&&!_hn)_grid.style.gridTemplateColumns='1fr auto';else if(!_hp&&_hn)_grid.style.gridTemplateColumns='auto 1fr';else if(!_hp&&!_hn)_grid.style.gridTemplateColumns='auto';}
 });
-
-// ══ SHARE SIDEBAR — locked standard ══════════════════════
-(function () {
-  var url   = encodeURIComponent(window.location.href);
-  var title = encodeURIComponent(document.title);
-
-  document.querySelectorAll('a[data-share]').forEach(function (a) {
-    a.href = a.href
-      .replace('PAGE_URL',   url)
-      .replace('PAGE_TITLE', title);
-
-    a.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (a.dataset.share === 'email') {
-        window.location.href = a.href;
-      } else {
-        window.open(a.href, 'share-' + a.dataset.share, 'width=600,height=460,noopener');
-      }
-    });
-  });
-
-  // Copy Link
-  var btn = document.getElementById('copyLinkBtn');
-  if (btn) {
-    btn.addEventListener('click', function () {
-      var raw  = window.location.href;
-      var done = function () {
-        var origSvg = btn.innerHTML;
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';
-        btn.style.color = 'var(--green)'; btn.style.borderColor = 'var(--green)';
-        setTimeout(function () { btn.innerHTML = origSvg; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(raw).then(done).catch(function () { fallback(raw, done); });
-      } else { fallback(raw, done); }
-    });
-  }
-
-  function fallback(text, cb) {
-    var ta = document.createElement('textarea');
-    ta.value = text; ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); cb(); } catch (e) {}
-    document.body.removeChild(ta);
-  }
+// ══ SHARE SIDEBAR ═════════════════════════════════════════
+(function(){
+var url=encodeURIComponent(window.location.href);
+var title=encodeURIComponent(document.title);
+document.querySelectorAll('a[data-share]').forEach(function(a){
+a.href=a.href.replace('PAGE_URL',url).replace('PAGE_TITLE',title);
+a.addEventListener('click',function(e){e.preventDefault();if(a.dataset.share==='email'){window.location.href=a.href;}else{window.open(a.href,'share-'+a.dataset.share,'width=600,height=460,noopener');}});
+});
+var btn=document.getElementById('copyLinkBtn');
+if(btn){btn.addEventListener('click',function(){var raw=window.location.href;var done=function(){var orig=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(raw).then(done).catch(function(){fb(raw,done);});}else{fb(raw,done);}});};
+function fb(t,cb){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
 })();
-
-// ══ SHARE & TOC SIDEBAR VISIBILITY ═══════════════════════
-var _share = document.getElementById('share-sidebar');
-var _toc   = document.getElementById('toc-sidebar');
-window.addEventListener('scroll', function () {
-  var show = window.scrollY > 300;
-  if (_share) _share.classList.toggle('visible', show);
-  if (_toc)   _toc.classList.toggle('visible', show);
-}, { passive: true });
-
+var _sh=document.getElementById('share-sidebar');var _tc=document.getElementById('toc-sidebar');
+window.addEventListener('scroll',function(){var s=window.scrollY>300;if(_sh)_sh.classList.toggle('visible',s);if(_tc)_tc.classList.toggle('visible',s);},{passive:true});
 // ══ TOC ACTIVE LINK ══════════════════════════════════════
-var _tocLinks = document.querySelectorAll('.toc-link');
-var _tocSections = [];
-_tocLinks.forEach(function (a) {
-  var href = a.getAttribute('href');
-  if (href && href.startsWith('#')) _tocSections.push(href.substring(1));
-});
-window.addEventListener('scroll', function () {
-  var scrollPos = window.scrollY + 120;
-  var current   = '';
-  _tocSections.forEach(function (id) {
-    var el = document.getElementById(id);
-    if (el && el.offsetTop <= scrollPos) current = id;
-  });
-  _tocLinks.forEach(function (a) {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-  });
-}, { passive: true });
-
+var _tl=document.querySelectorAll('.toc-link');var _ts=[];
+_tl.forEach(function(a){var h=a.getAttribute('href');if(h&&h.startsWith('#'))_ts.push(h.substring(1));});
+window.addEventListener('scroll',function(){var sp=window.scrollY+120;var cur='';_ts.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=sp)cur=id;});_tl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});},{passive:true});
 // ══ MOBILE MENU ══════════════════════════════════════════
-function toggleMobile() {
-  var menu   = document.getElementById('mobileMenu');
-  var burger = document.getElementById('navBurger');
-  if (!menu || !burger) return;
-  menu.classList.toggle('open');
-  burger.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-}
-function closeMobile() {
-  var menu   = document.getElementById('mobileMenu');
-  var burger = document.getElementById('navBurger');
-  if (menu)   menu.classList.remove('open');
-  if (burger) burger.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// ══ FLOATING BACK TO TOP ═════════════════════════════════
-var _btt = document.getElementById('back-to-top');
-window.addEventListener('scroll', function () {
-  if (_btt) _btt.classList.toggle('show', window.scrollY > 400);
-}, { passive: true });
-if (_btt) _btt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-
-// ══ NAV SCROLL DARKEN ════════════════════════════════════
-var _nav = document.getElementById('nav');
-window.addEventListener('scroll', function () {
-  if (_nav) _nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-
-// ══ FADE-IN OBSERVER + 800ms FALLBACK ════════════════════
-(function () {
-  var fadeEls = document.querySelectorAll('.fade-in');
-  if ('IntersectionObserver' in window) {
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
-    }, { threshold: 0.08 });
-    fadeEls.forEach(function (el) { obs.observe(el); });
-  } else {
-    fadeEls.forEach(function (el) { el.classList.add('visible'); });
-  }
-  setTimeout(function () {
-    fadeEls.forEach(function (el) { el.classList.add('visible'); });
-  }, 800);
-})();
-
-// ══ GLOSSARY TERM SCROLL ═════════════════════════════════
-document.querySelectorAll('a.glossary-term').forEach(function (link) {
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
-    var target = document.getElementById(link.getAttribute('href').replace('#',''));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      target.classList.add('highlight-pulse');
-      setTimeout(function () { target.classList.remove('highlight-pulse'); }, 1800);
-    }
-  });
-});
+function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
+// ══ BACK TO TOP ══════════════════════════════════════════
+var _bt=document.getElementById('back-to-top');
+window.addEventListener('scroll',function(){if(_bt)_bt.classList.toggle('show',window.scrollY>400);},{passive:true});
+if(_bt)_bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+// ══ FADE-IN ══════════════════════════════════════════════
+(function(){var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(el){ob.observe(el);});})();
+setTimeout(function(){document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});},800);
 </script>
 </body>
 </html>

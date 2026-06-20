@@ -131,3 +131,39 @@
 2026-06-18 12:10:04,538 [INFO]   Checking og:image: https://joselitosering.github.io/aima/img/articles/aima-013-global-south-ai-gap.jpg
 2026-06-18 12:10:05,006 [INFO]   og:image live (0s elapsed): https://joselitosering.github.io/aima/img/articles/aima-013-global-south-ai-gap.jpg
 2026-06-18 12:10:06,470 [INFO] Done. 1/1 posted successfully.
+2026-06-19 13:13:35,455 [INFO] ==================================================
+2026-06-19 13:13:35,455 [INFO] Pipeline started at 2026-06-19 13:13:35
+2026-06-19 13:13:35,455 [INFO] Checking for pending post analytics...
+2026-06-19 13:13:38,004 [INFO]   No analytics ready to collect yet.
+2026-06-19 13:13:38,004 [INFO] Scanning articles folder...
+2026-06-19 13:13:38,006 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-19 13:13:38,007 [INFO]   Posting: aima-article-ethics-theater-d1.html
+2026-06-19 13:13:38,007 [INFO]   Checking og:image: https://images.unsplash.com/photo-1560472355-536de3962603?w=1920
+2026-06-19 13:13:38,159 [INFO]   og:image live (0s elapsed): https://images.unsplash.com/photo-1560472355-536de3962603?w=1920
+2026-06-19 13:13:43,084 [INFO]   git push OK: data: log post aima-article-ethics-theater-d1.html
+2026-06-19 13:13:43,084 [INFO]   Logged to post_log.json for analytics.
+2026-06-19 13:13:43,085 [INFO] Done. 1/1 posted successfully.
+2026-06-19 13:22:20,346 [INFO] ==================================================
+2026-06-19 13:22:20,347 [INFO] Pipeline started at 2026-06-19 13:22:20
+2026-06-19 13:22:20,347 [INFO] Checking for pending post analytics...
+2026-06-19 13:22:22,405 [INFO]   No analytics ready to collect yet.
+2026-06-19 13:22:22,405 [INFO] Scanning articles folder...
+2026-06-19 13:22:22,407 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-19 13:22:22,408 [INFO]   Posting: aima-article-ethics-theater-d1.html
+2026-06-19 13:22:22,408 [INFO]   Checking og:image: https://images.unsplash.com/photo-1560472355-536de3962603?w=1920
+2026-06-19 13:22:22,507 [INFO]   og:image live (0s elapsed): https://images.unsplash.com/photo-1560472355-536de3962603?w=1920
+2026-06-19 13:22:26,905 [INFO]   git push OK: data: log post aima-article-ethics-theater-d1.html
+2026-06-19 13:22:26,905 [INFO]   Logged to post_log.json for analytics.
+2026-06-19 13:22:26,905 [INFO] Done. 1/1 posted successfully.
+2026-06-19 13:27:25,527 [INFO] ==================================================
+2026-06-19 13:27:25,527 [INFO] Pipeline started at 2026-06-19 13:27:25
+2026-06-19 13:27:25,527 [INFO] Checking for pending post analytics...
+2026-06-19 13:27:28,013 [INFO]   No analytics ready to collect yet.
+2026-06-19 13:27:28,013 [INFO] Scanning articles folder...
+2026-06-19 13:27:28,248 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-19 13:27:28,248 [INFO]   Posting: aima-article-ethics-theater-014.html
+2026-06-19 13:27:28,249 [INFO]   Checking og:image: https://images.unsplash.com/photo-1560472355-536de3962603?w=1920
+2026-06-19 13:27:28,366 [INFO]   og:image live (0s elapsed): https://images.unsplash.com/photo-1560472355-536de3962603?w=1920
+2026-06-19 13:27:32,294 [INFO]   git push OK: data: log post aima-article-ethics-theater-014.html
+2026-06-19 13:27:32,294 [INFO]   Logged to post_log.json for analytics.
+2026-06-19 13:27:32,294 [INFO] Done. 1/1 posted successfully.
