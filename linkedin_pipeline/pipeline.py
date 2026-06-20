@@ -19,7 +19,7 @@ import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 from github_fetcher import get_new_articles, mark_as_posted
-from linkedin_poster import post_to_linkedin, extract_metadata, extract_persona
+from linkedin_poster import post_to_linkedin, reshare_to_personal, extract_metadata, extract_persona
 from analytics_collector import collect_pending_analytics
 from gs_logger import log_to_google_sheets
 
@@ -47,17 +47,20 @@ def load_post_log():
     return []
 
 
-def log_post(post_id, article, title, persona):
+def log_post(post_id, article, title, persona, reshare_id=None):
     """Append a newly published post to post_log.json for later analytics."""
     entries = load_post_log()
-    entries.append({
+    entry = {
         "post_id":             post_id,
         "article":             article,
         "title":               title,
         "persona":             persona or "joselito",
         "posted_at":           datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S"),
         "analytics_collected": False,
-    })
+    }
+    if reshare_id:
+        entry["reshare_id"] = reshare_id
+    entries.append(entry)
     with open(POST_LOG, "w", encoding="utf-8") as f:
         json.dump(entries, f, indent=2)
     _git_push("post_log.json", f"data: log post {article}")
@@ -178,7 +181,12 @@ def run():
                     article["content"], article["name"], article.get("html_url", "")
                 )
                 persona = extract_persona(article["content"])
-                log_post(post_id, article["name"], title, persona)
+                # Reshare company page post to Joselito's personal profile
+                reshare_id = reshare_to_personal(post_id, title)
+                if reshare_id:
+                    log.info(f"  Personal reshare: {reshare_id}")
+
+                log_post(post_id, article["name"], title, persona, reshare_id)
                 log.info(f"  Logged to post_log.json for analytics.")
 
                 success_count += 1

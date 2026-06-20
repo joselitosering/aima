@@ -273,6 +273,7 @@ def post_to_linkedin(article):
 
     hook = extract_hook(article["content"])
     body = hook if hook and len(hook) > 80 else description
+    body = body[:500]   # cap to prevent oversized commentary
 
     if persona == "dawn":
         body_para = f"{body} Who benefits from this — and who never got asked?"
@@ -291,6 +292,7 @@ def post_to_linkedin(article):
         f"{hashtags}\n\n"
         f"By {byline}"
     )
+    commentary = commentary[:3900]  # LinkedIn hard limit is 4000
 
     # -- Build post payload --------------------------------------------------
     author_urn = f"urn:li:organization:{ORG_ID}"
@@ -300,4 +302,116 @@ def post_to_linkedin(article):
         share_media_category = "IMAGE"
     else:
         media_obj            = {"status": "READY", "originalUrl": source_url,
-                                "title": {"text": title}, "description": {"text
+                                "title":       {"text": title},
+                                "description": {"text": description[:700]}}
+        share_media_category = "ARTICLE"
+
+    body = {
+        "author": author_urn,
+        "lifecycleState": "PUBLISHED",
+        "specificContent": {
+            "com.linkedin.ugc.ShareContent": {
+                "shareCommentary":    {"text": commentary},
+                "shareMediaCategory": share_media_category,
+                "media": [media_obj]
+            }
+        },
+        "visibility": {
+            "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
+        }
+    }
+
+    payload = json.dumps(body).encode("utf-8")
+    req = urllib.request.Request(LINKEDIN_API, data=payload, method="POST")
+    req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
+    req.add_header("Content-Type",              "application/json")
+    req.add_header("X-Restli-Protocol-Version", "2.0.0")
+
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            result  = json.loads(resp.read())
+            ugc_id  = result.get("id", "")
+            print(f"  Posted to company page | UGC ID: {ugc_id} | Mode: {share_media_category}")
+            share_urn = _resolve_share_urn(ugc_id)
+            return share_urn or ugc_id
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode()
+        print(f"  LinkedIn API error {e.code}: {error_body}")
+        raise
+
+
+def _resolve_share_urn(ugc_id):
+    """
+    Fetch the most recent org post via /rest/posts to get the urn:li:share: URN.
+    Needed for resharing since ugcPosts returns urn:li:ugcPost: IDs.
+    """
+    import time, urllib.parse
+    time.sleep(2)
+    org_urn = urllib.parse.quote(f"urn:li:organization:{ORG_ID}", safe="")
+    url = (
+        f"https://api.linkedin.com/rest/posts"
+        f"?q=author&author={org_urn}&count=3&sortBy=LAST_MODIFIED"
+    )
+    req = urllib.request.Request(url)
+    req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
+    req.add_header("LinkedIn-Version",          "202506")
+    req.add_header("X-Restli-Protocol-Version", "2.0.0")
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data     = json.loads(resp.read())
+            elements = data.get("elements", [])
+            if elements:
+                share_urn = elements[0].get("id", "")
+                print(f"  Resolved share URN: {share_urn}")
+                return share_urn
+    except Exception as e:
+        print(f"  Warning: could not resolve share URN ({e})")
+    return None
+
+
+def reshare_to_personal(share_urn, title):
+    """
+    Reshare a company page post to Joselito's personal profile.
+    Requires w_member_social scope. Returns the personal reshare URN.
+    """
+    if not MEMBER_ID:
+        print("  WARNING: LINKEDIN_MEMBER_ID not set -- skipping personal reshare.")
+        return None
+
+    body = {
+        "author":         f"urn:li:person:{MEMBER_ID}",
+        "commentary":     f"New from the AIMA team — {title}",
+        "lifecycleState": "PUBLISHED",
+        "visibility":     "PUBLIC",
+        "distribution": {
+            "feedDistribution":               "MAIN_FEED",
+            "thirdPartyDistributionChannels": []
+        },
+        "reshareContext": {
+            "parent": share_urn
+        }
+    }
+
+    payload = json.dumps(body).encode("utf-8")
+    url     = "https://api.linkedin.com/rest/posts"
+    req     = urllib.request.Request(url, data=payload, method="POST")
+    req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
+    req.add_header("Content-Type",              "application/json")
+    req.add_header("LinkedIn-Version",          "202506")
+    req.add_header("X-Restli-Protocol-Version", "2.0.0")
+
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            reshare_id = resp.headers.get("x-restli-id", "")
+            if not reshare_id:
+                result     = json.loads(resp.read() or b"{}")
+                reshare_id = result.get("id", "")
+            print(f"  Reshared to personal profile: {reshare_id}")
+            return reshare_id
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode()
+        print(f"  Personal reshare failed {e.code}: {error_body[:300]}")
+        return None
+    except Exception as e:
+        print(f"  Personal reshare error: {e}")
+        return None

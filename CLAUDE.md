@@ -3,24 +3,18 @@
 ## Pending Actions
 
 ### LinkedIn Marketing API — Development Tier Approval
-- **Status:** Application submitted June 19, 2026
-- **Check by:** June 24, 2026 (mid-week)
-- **Reminder scheduled:** Cowork task `linkedin-api-approval-check` fires Wed June 24 at 9 AM PDT
-- **On approval:**
-  1. Edit `linkedin_pipeline/linkedin_auth.py` → change `SCOPES` to include `r_member_social`:
-     ```
-     SCOPES = "openid profile email w_member_social r_member_social"
-     ```
-  2. Re-run `python linkedin_pipeline/linkedin_auth.py` to refresh the token
-  3. Update `analytics_collector.py` → replace deprecated `v2/shareStatistics` endpoint with current LinkedIn REST API format (`/rest/socialMediaPostStatistics`)
-  4. Test analytics collection: `python linkedin_pipeline/analytics_collector.py`
+- **Status:** APPROVED June 20, 2026 (Advertising API, app id 253440006)
+- **SCOPES updated:** `r_member_social` added to `linkedin_pipeline/linkedin_auth.py`
+- **NEXT STEP:** Run `python linkedin_pipeline/linkedin_auth.py` to get a new token with `r_member_social`
+- Then test: `python linkedin_pipeline/analytics_collector.py`
+- **analytics_collector.py is ready** — already uses `/rest/socialMediaPostStatistics`, no code changes needed after token refresh
 
 ---
 
 ## LinkedIn Pipeline — Current State (as of June 19, 2026)
 
 - **Posting:** Working. Uses `w_member_social` scope via UGC Posts API with direct image upload.
-- **Analytics:** Blocked — LinkedIn `shareStatistics` API deprecated + missing `r_member_social` scope.
+- **Analytics:** API path exhausted — `organizationalEntityShareStatistics` only returns org-level aggregate (1 element); `shares[0]` filter returns 400 (unsupported); `r_member_social` not included in Advertising API approval. **Use `xls_import.py`** to import from LinkedIn Analytics XLS export. Apply for Marketing Developer Platform separately to get `r_member_social`.
 - **Backfill posts scheduled today:**
   - 12:30 PM — Article 002 ($5K Music Video Blueprint)
   - 1:30 PM  — Article 003 (n8n Content Pipeline)

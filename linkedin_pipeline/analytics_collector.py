@@ -5,7 +5,7 @@ Reads post_log.json for pending posts, fetches engagement data from the
 LinkedIn organizationalEntityShareStatistics API (company page), and appends
 results to post_analytics.csv.
 
-Requires scopes: rw_organization_admin
+Requires scopes: rw_organization_admin, r_organization_social
 Run automatically by pipeline.py, or manually: python analytics_collector.py
 """
 
@@ -53,20 +53,99 @@ def ensure_csv_headers():
 
 # ── LinkedIn Organization Share Statistics API ────────────────────────────────
 
+_ORG_STATS_CACHE = None  # loaded once per run
+
+def _load_all_org_stats():
+    """
+    Fetch ALL organizationalEntityShareStatistics for the company page in one pass
+    (paginated). Returns dict keyed by share/ugcPost URN → stats dict.
+    LinkedIn does not support per-share filtering via shares[0] on this endpoint.
+    """
+    global _ORG_STATS_CACHE
+    if _ORG_STATS_CACHE is not None:
+        return _ORG_STATS_CACHE
+
+    if not ORG_ID:
+        print("    ERROR: LINKEDIN_ORG_ID not set in .env")
+        _ORG_STATS_CACHE = {}
+        return _ORG_STATS_CACHE
+
+    org_urn = f"urn:li:organization:{ORG_ID}"
+    result  = {}
+    start   = 0
+    count   = 50
+
+    while True:
+        params = urllib.parse.urlencode({
+            "q":                    "organizationalEntity",
+            "organizationalEntity": org_urn,
+            "count":                count,
+            "start":                start,
+        })
+        url = f"https://api.linkedin.com/rest/organizationalEntityShareStatistics?{params}"
+        req = urllib.request.Request(url)
+        req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
+        req.add_header("LinkedIn-Version",          LINKEDIN_VERSION)
+        req.add_header("X-Restli-Protocol-Version", "2.0.0")
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data     = json.loads(resp.read())
+                elements = data.get("elements", [])
+                for el in elements:
+                    urn   = el.get("share") or el.get("ugcPost") or ""
+                    stats = el.get("totalShareStatistics", {})
+                    imp   = stats.get("impressionCount", 0)
+                    clk   = stats.get("clickCount", 0)
+                    result[urn] = {
+                        "impressions":     imp,
+                        "clicks":          clk,
+                        "likes":           stats.get("likeCount", 0),
+                        "comments":        stats.get("commentCount", 0),
+                        "shares":          stats.get("shareCount", 0),
+                        "engagement_rate": round(stats.get("engagement", 0.0), 4),
+                        "unique_impressions": stats.get("uniqueImpressionsCount", 0),
+                    }
+                paging = data.get("paging", {})
+                total  = paging.get("total", 0)
+                if start + count >= total or not elements:
+                    break
+                start += count
+        except urllib.error.HTTPError as e:
+            body = e.read().decode()
+            print(f"    Org stats fetch error {e.code}: {body[:300]}")
+            break
+        except Exception as e:
+            print(f"    Org stats fetch failed: {e}")
+            break
+
+    _ORG_STATS_CACHE = result
+    print(f"  Org stats loaded: {len(result)} posts found on company page")
+    if result:
+        for urn in list(result.keys())[:3]:
+            print(f"    Sample URN: {urn}")
+    return result
+
+
 def fetch_org_share_statistics(post_id):
     """
-    Fetch engagement stats for a company-page post via organizationalEntityShareStatistics.
-    post_id: e.g. urn:li:share:7473451995576549376
-    Returns a stats dict, or None on failure.
-
-    Requires: rw_organization_admin scope + LINKEDIN_ORG_ID in .env
+    Per-post stats via socialMediaPostStatistics.
+    Requires r_member_social scope — not yet approved.
+    Returns None (skips gracefully) until that scope is available.
+    Use xls_import.py to import data from LinkedIn Analytics XLS export instead.
     """
+    # r_member_social not approved yet — skip API call to avoid noise
+    print(f"    API analytics not available (r_member_social pending). Use xls_import.py.")
+    return None
+
+
+def _fetch_org_share_statistics_UNUSED(post_id):
+    """KEPT FOR REFERENCE — shares[0] param not supported by LinkedIn REST API."""
     if not ORG_ID:
         print("    ERROR: LINKEDIN_ORG_ID not set in .env")
         return None
 
     org_urn   = f"urn:li:organization:{ORG_ID}"
-    share_urn = post_id  # already in urn:li:share:XXX format from post_log.json
+    share_urn = post_id
 
     params = urllib.parse.urlencode({
         "q":                    "organizationalEntity",
@@ -85,7 +164,6 @@ def fetch_org_share_statistics(post_id):
             data     = json.loads(resp.read())
             elements = data.get("elements", [])
             if not elements:
-                print(f"    No elements returned — post may not be on the company page, or has 0 activity.")
                 return None
             stats = elements[0].get("totalShareStatistics", {})
             impressions = stats.get("impressionCount", 0)

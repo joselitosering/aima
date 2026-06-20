@@ -6,8 +6,9 @@ Scopes requested:
   openid profile email    — OIDC identity (member name/ID)
   w_member_social         — post on member's behalf (kept as fallback)
   w_organization_social   — post on AIMA company page
-  rw_organization_admin   — org analytics (organizationalEntityShareStatistics)
-  r_member_postAnalytics  — personal post analytics (memberCreatorPostAnalytics)
+  r_organization_social   — read org posts, comments, reactions, engagement data (per-post stats)
+  rw_organization_admin   — org admin (posting to company page)
+  r_organization_admin    — read org pages + reporting (follower, visitor, content analytics)
 """
 
 import os, json, re, webbrowser, urllib.parse, urllib.request
@@ -19,7 +20,7 @@ load_dotenv()
 CLIENT_ID     = os.getenv("LINKEDIN_CLIENT_ID")
 CLIENT_SECRET = os.getenv("LINKEDIN_CLIENT_SECRET")
 REDIRECT_URI  = os.getenv("LINKEDIN_REDIRECT_URI", "http://localhost:8080/callback")
-SCOPES        = "openid profile email w_member_social w_organization_social rw_organization_admin"
+SCOPES        = "openid profile email w_member_social w_organization_social r_organization_social rw_organization_admin r_organization_admin"
 AUTH_URL      = "https://www.linkedin.com/oauth/v2/authorization"
 TOKEN_URL     = "https://www.linkedin.com/oauth/v2/accessToken"
 USERINFO_URL  = "https://api.linkedin.com/v2/userinfo"

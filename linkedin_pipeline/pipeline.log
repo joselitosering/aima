@@ -167,3 +167,26 @@
 2026-06-19 13:27:32,294 [INFO]   git push OK: data: log post aima-article-ethics-theater-014.html
 2026-06-19 13:27:32,294 [INFO]   Logged to post_log.json for analytics.
 2026-06-19 13:27:32,294 [INFO] Done. 1/1 posted successfully.
+2026-06-20 12:01:15,256 [INFO] ==================================================
+2026-06-20 12:01:15,256 [INFO] Pipeline started at 2026-06-20 12:01:15
+2026-06-20 12:01:15,257 [INFO] Checking for pending post analytics...
+2026-06-20 12:01:15,258 [INFO]   No analytics ready to collect yet.
+2026-06-20 12:01:15,258 [INFO] Scanning articles folder...
+2026-06-20 12:01:15,396 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-20 12:01:15,396 [INFO]   Posting: aima-article-rogue-ai-agents-007.html
+2026-06-20 12:01:15,397 [INFO]   Checking og:image: https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1920
+2026-06-20 12:01:15,538 [INFO]   og:image live (0s elapsed): https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1920
+2026-06-20 12:01:20,940 [ERROR]   Failed: aima-article-rogue-ai-agents-007.html — HTTP Error 400: Bad Request
+2026-06-20 12:01:20,946 [INFO] Done. 0/1 posted successfully.
+2026-06-20 12:03:24,471 [INFO] ==================================================
+2026-06-20 12:03:24,471 [INFO] Pipeline started at 2026-06-20 12:03:24
+2026-06-20 12:03:24,471 [INFO] Checking for pending post analytics...
+2026-06-20 12:03:24,473 [INFO]   No analytics ready to collect yet.
+2026-06-20 12:03:24,473 [INFO] Scanning articles folder...
+2026-06-20 12:03:24,475 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-20 12:03:24,475 [INFO]   Posting: aima-article-rogue-ai-agents-007.html
+2026-06-20 12:03:24,476 [INFO]   Checking og:image: https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1920
+2026-06-20 12:03:24,630 [INFO]   og:image live (0s elapsed): https://images.unsplash.com/photo-1555255707-c07966088b7b?w=1920
+2026-06-20 12:03:34,385 [WARNING]   git push failed (non-fatal): Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1.
+2026-06-20 12:03:34,385 [INFO]   Logged to post_log.json for analytics.
+2026-06-20 12:03:34,385 [INFO] Done. 1/1 posted successfully.
