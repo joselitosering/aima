@@ -1238,7 +1238,7 @@ function restoreCalendar() {
         match.cat       = savedItem.cat;
         match.tone      = savedItem.tone;
         match.read      = savedItem.read;
-        match.published = savedItem.published;
+        // published is managed by syncPublished() from post_log — not from localStorage
       }
     });
   } catch(e) { console.warn('Could not restore calendar:', e); }
