@@ -11,16 +11,25 @@
 
 ---
 
-## LinkedIn Pipeline — Current State (as of June 19, 2026)
+## LinkedIn Pipeline — Current State (as of June 21, 2026)
 
-- **Posting:** Working. Uses `w_member_social` scope via UGC Posts API with direct image upload.
-- **Analytics:** API path exhausted — `organizationalEntityShareStatistics` only returns org-level aggregate (1 element); `shares[0]` filter returns 400 (unsupported); `r_member_social` not included in Advertising API approval. **Use `xls_import.py`** to import from LinkedIn Analytics XLS export. Apply for Marketing Developer Platform separately to get `r_member_social`.
-- **Backfill posts scheduled today:**
-  - 12:30 PM — Article 002 ($5K Music Video Blueprint)
-  - 1:30 PM  — Article 003 (n8n Content Pipeline)
-  - 2:30 PM  — Article 007 (Rogue AI Agents)
-  - 3:30 PM  — Article 012 (Algorithm of Atrocity)
-- **Already posted:** Article 001 (Future of Creative Production) — `urn:li:share:7473803142543863808`
+### APPROVED POST-PUBLISH WORKFLOW
+After every article is written, pushed, and live on GitHub Pages:
+1. `git push` — publishes article to `joselitosering.github.io/aima`
+2. `python linkedin_pipeline/pipeline.py` — runs the full sequence automatically:
+   - Posts to **AIMA company page** with cover image + article hook + hashtags + **persona byline** (name credit)
+   - Immediately **reshares to Joselito's personal profile** with persona-tailored intro + **TL;DR** + CTA
+   - Logs post IDs to `post_log.json` for 48h analytics collection
+   - Google Sheets logging is also triggered inside the pipeline (Step 8 can be skipped manually if pipeline runs)
+
+This workflow was tested and approved June 21, 2026.
+
+### Technical State
+- **Company page posting:** Working. `linkedin_poster.py` posts as `urn:li:organization:{ORG_ID}` with direct image upload via Assets API. Byline appears at end of commentary.
+- **Personal reshare:** Working. `reshare_to_personal()` uses `/rest/posts` with `reshareContext`. Commentary built by `build_personal_commentary()` — persona-aware hook + TL;DR + CTA.
+- **Scopes required:** `w_organization_social` (company page) + `w_member_social` (personal reshare)
+- **Analytics:** Approved for `r_member_social` June 20, 2026. Needs token refresh: `python linkedin_pipeline/linkedin_auth.py`. Then test: `python linkedin_pipeline/analytics_collector.py`
+- **Analytics fallback:** `xls_import.py` to import from LinkedIn Analytics XLS export until token refreshed.
 
 ---
 
@@ -43,7 +52,8 @@
 
 ## AIMA Article Pipeline — Current State
 
-- **Next article:** #014 — "Hallucination Nation: Why AI Lies with Confidence and What It Costs Us"
-- **Scheduled:** June 20, 2026 at 6 AM (Cowork task: `aima-article-coworker`)
-- **Track:** Joselito Sering (editorial calendar, index 1)
+- **Last article written:** #016 — "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor" (June 21, 2026)
+- **Next article:** #017 — Track: trending — Author: Dawn Ginhaua
+- **Scheduled:** Daily via Cowork task `aima-article-coworker`
 - **State file:** `articles/aima-coworker-state.json`
+- **Note:** Article #014 (Hallucination Nation) was skipped in sequence — write it before publishing article #016 if strict numbering matters.

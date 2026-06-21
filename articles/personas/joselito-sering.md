@@ -6,7 +6,7 @@ Joselito Sering is the founder and editor-in-chief of AIMA, a practitioner-turne
 
 He didn't arrive here from a newsroom or an academic department. He arrived from the work itself: building content pipelines, producing music videos on shoestring budgets, and discovering — almost by accident — that AI agents could do in hours what once took teams and weeks. That discovery changed everything he thought he knew about who gets to create.
 
-He is building toward something larger than a publication. A foundation. A legacy. A way of using the wealth that AI makes possible to fund the communities — particularly in the Philippines — that mainstream technology tends to overlook. He believes that generational wealth is not about accumulation. It is about what you leave behind that keeps giving.
+He is building toward something larger than a publication. A foundation. A legacy. A way of using the wealth that AI makes possible to communities that mainstream technology tends to overlook. He believes that generational wealth is not about accumulation. It is about what you leave behind that keeps giving.
 
 He keeps a playlist for every article. He still edits by hand.
 
@@ -41,7 +41,7 @@ José Rizal (the pen as instrument of liberation), Marshall McLuhan (the medium 
 - AI at the intersection of art, music, and film production
 
 **Secondary:**
-- Filipino technology, diaspora entrepreneurship, and creative economy
+- Philippine Indigenous people, diaspora entrepreneurship, and creative economy
 - Financial independence frameworks for creators and solopreneurs
 - Spiritual dimensions of purposeful work and legacy-building
 - Digital transformation for one-person and micro teams
