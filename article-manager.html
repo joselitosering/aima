@@ -1404,6 +1404,15 @@ async function autoLoadPostLog() {
     if (z) z.style.borderColor = 'var(--green)';
     document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
     autoPopulateLinkedinUrls();
+    // Sync published status from post_log entries
+    (function syncPublished(){
+      const posted = new Set(
+        postLog.map(e => { const m = e.article && e.article.match(/-(\d+)\.html$/); return m ? parseInt(m[1]) : null; }).filter(n => n !== null)
+      );
+      let changed = false;
+      CALENDAR.forEach(item => { if (!item.published && posted.has(item.num)) { item.published = true; changed = true; } });
+      if (changed) renderCalendar();
+    })();
     renderPostLog(); renderOverview();
   } catch {
     setStatus('status-postlog', 'Auto-fetch unavailable — upload manually', 'var(--muted)');
