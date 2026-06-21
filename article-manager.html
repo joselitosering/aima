@@ -2008,7 +2008,16 @@ function renderTrafficSection(){
   const totalLI=sum(ga4Data.map(_liSess));
   document.getElementById('kpi-li-referrals').textContent = totalLI.toLocaleString()||'0';
   const topSrc=[...ga4Data].sort((a,b)=>_sess(b)-_sess(a))[0];
-  if(topSrc) document.getElementById('kpi-top-source').textContent = _path(topSrc);
+  if(topSrc){
+    const slug=topSrc.article_slug||'';
+    const logEntry=postLog.find(p=>(p.article||'').replace('.html','')===slug||(p.article||'')===slug+'.html');
+    const title=logEntry?logEntry.title:_path(topSrc);
+    const authorKey=logEntry?logEntry.persona:'';
+    const authorName=authorKey?((WRITERS_DATA.find(w=>w.key===authorKey)||{}).name||authorKey):'';
+    const kpiEl=document.getElementById('kpi-top-source');
+    kpiEl.innerHTML=`<div style="font-size:12px;line-height:1.3;margin-bottom:4px">${title}</div>`
+      +(authorName?`<div style="font-size:10px;color:var(--cyan);font-family:'Courier Prime',monospace;letter-spacing:0.08em">${authorName}</div>`:'');
+  }
   const avgDur=avg(ga4Data.map(_dur));
   document.getElementById('kpi-session-dur').textContent = avgDur?Math.round(avgDur)+'s':'—';
   document.getElementById('aima-traffic-list').innerHTML=[...ga4Data].sort((a,b)=>_sess(b)-_sess(a)).slice(0,15).map(r=>`
