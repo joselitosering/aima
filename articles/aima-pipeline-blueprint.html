@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIMA Pipeline — Blueprint</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#070c1a;font-family:'Courier New',Courier,monospace;color:#b0d4f0;overflow:hidden;height:100vh;width:100vw}
+.wrap{position:relative;width:100vw;height:100vh;overflow:hidden}
+.toolbar{position:absolute;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;background:rgba(7,12,26,.96);border-bottom:1px solid #0d2040;padding:8px 20px}
+.t-left h1{font-size:11px;letter-spacing:4px;color:#00d9f5;text-transform:uppercase}
+.t-left p{font-size:8px;color:#1a3050;letter-spacing:2px;margin-top:2px}
+.t-right{display:flex;gap:6px;align-items:center}
+.btn{background:transparent;border:1px solid #0d2040;color:#2a5070;padding:3px 10px;font-family:monospace;font-size:10px;cursor:pointer;letter-spacing:1px;transition:all .15s}
+.btn:hover{border-color:#00d9f5;color:#00d9f5}
+.t-hint{font-size:8px;color:#1a3050;letter-spacing:2px}
+.panel{position:absolute;bottom:20px;right:20px;z-index:30;background:rgba(7,12,26,.97);border:1px solid #0d2040;padding:14px 18px;width:270px;min-height:100px}
+.panel-corner{position:absolute;width:8px;height:8px;border-color:#0d3060;border-style:solid}
+.panel-corner.tl{top:-1px;left:-1px;border-width:1px 0 0 1px}
+.panel-corner.tr{top:-1px;right:-1px;border-width:1px 1px 0 0}
+.panel-corner.bl{bottom:-1px;left:-1px;border-width:0 0 1px 1px}
+.panel-corner.br{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
+.p-type{font-size:7px;letter-spacing:4px;color:#1a3050;margin-bottom:4px}
+.p-name{font-size:13px;color:#00d9f5;font-weight:bold;margin-bottom:6px;letter-spacing:1px}
+.p-tech{font-size:9px;color:#2a5070;line-height:1.6}
+.p-plain{font-size:9px;color:#3ae890;font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid #0d2040;line-height:1.5}
+.p-hint{font-size:8px;color:#0d2030;letter-spacing:2px;margin-top:6px}
+.legend{position:absolute;bottom:20px;left:20px;z-index:30;background:rgba(7,12,26,.95);border:1px solid #0d2040;padding:12px 16px}
+.l-title{font-size:7px;letter-spacing:4px;color:#1a3050;margin-bottom:8px}
+.li{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:8px;color:#2a5070;letter-spacing:1px}
+.lc{width:16px;height:1.5px}
+.coord{position:absolute;top:46px;right:20px;z-index:25;font-size:8px;color:#0d2030;letter-spacing:2px;font-family:monospace}
+svg{display:block;cursor:crosshair;transform-origin:0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="toolbar">
+  <div class="t-left">
+    <h1>AIMA · ARTICLE PIPELINE</h1>
+    <p>SYSTEM ARCHITECTURE · SERIAL + PARALLEL DATAFLOW · REV 1.1.0 · 2026-06-20</p>
+  </div>
+  <div class="t-right">
+    <span class="t-hint">HOVER NODE FOR DETAIL</span>
+    <button class="btn" onclick="zoomOut()">－</button>
+    <button class="btn" onclick="resetView()">⌂ RESET</button>
+    <button class="btn" onclick="zoomIn()">＋</button>
+  </div>
+</div>
+
+<div class="coord" id="coord">X:0 Y:0</div>
+
+<svg id="svg" xmlns="http://www.w3.org/2000/svg" width="980" height="1060" viewBox="0 0 980 1060"
+  style="margin-top:42px">
+<defs>
+  <!-- Arrowheads -->
+  <marker id="a-c" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+    <polygon points="0,0 6,2.5 0,5" fill="#00d9f5" opacity=".8"/>
+  </marker>
+  <marker id="a-h" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+    <polygon points="0,0 6,2.5 0,5" fill="#f5a623" opacity=".8"/>
+  </marker>
+  <marker id="a-g" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+    <polygon points="0,0 6,2.5 0,5" fill="#00f088" opacity=".8"/>
+  </marker>
+  <marker id="a-p" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+    <polygon points="0,0 6,2.5 0,5" fill="#9966ff" opacity=".8"/>
+  </marker>
+  <marker id="a-r" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+    <polygon points="0,0 6,2.5 0,5" fill="#ff6644" opacity=".8"/>
+  </marker>
+  <marker id="a-d" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+    <polygon points="0,0 6,2.5 0,5" fill="#3a6090" opacity=".7"/>
+  </marker>
+  <!-- Blueprint grid -->
+  <pattern id="grid-sm" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M20,0 L0,0 0,20" fill="none" stroke="#0c1428" stroke-width=".5"/>
+  </pattern>
+  <pattern id="grid-lg" width="100" height="100" patternUnits="userSpaceOnUse">
+    <rect width="100" height="100" fill="url(#grid-sm)"/>
+    <path d="M100,0 L0,0 0,100" fill="none" stroke="#0e1830" stroke-width="1"/>
+  </pattern>
+  <!-- Node fills -->
+  <linearGradient id="fill-c" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#002830" stop-opacity=".9"/>
+    <stop offset="1" stop-color="#001820" stop-opacity=".9"/>
+  </linearGradient>
+  <linearGradient id="fill-h" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#281800" stop-opacity=".9"/>
+    <stop offset="1" stop-color="#180e00" stop-opacity=".9"/>
+  </linearGradient>
+  <linearGradient id="fill-g" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#002818" stop-opacity=".9"/>
+    <stop offset="1" stop-color="#001810" stop-opacity=".9"/>
+  </linearGradient>
+  <linearGradient id="fill-p" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#180830" stop-opacity=".9"/>
+    <stop offset="1" stop-color="#0c0420" stop-opacity=".9"/>
+  </linearGradient>
+  <linearGradient id="fill-r" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#280800" stop-opacity=".9"/>
+    <stop offset="1" stop-color="#180400" stop-opacity=".9"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect width="980" height="1060" fill="#070c1a"/>
+<rect width="980" height="1060" fill="url(#grid-lg)"/>
+
+<!-- Horizontal reference lines (blueprint style) -->
+<line x1="0" y1="130" x2="980" y2="130" stroke="#0d1e36" stroke-width=".5" stroke-dasharray="2,18"/>
+<line x1="0" y1="330" x2="980" y2="330" stroke="#0d1e36" stroke-width=".5" stroke-dasharray="2,18"/>
+<line x1="0" y1="530" x2="980" y2="530" stroke="#0d1e36" stroke-width=".5" stroke-dasharray="2,18"/>
+<line x1="0" y1="720" x2="980" y2="720" stroke="#0d1e36" stroke-width=".5" stroke-dasharray="2,18"/>
+<line x1="0" y1="900" x2="980" y2="900" stroke="#0d1e36" stroke-width=".5" stroke-dasharray="2,18"/>
+
+<!-- Vertical swimlane markers -->
+<line x1="400" y1="440" x2="400" y2="730" stroke="#0d1e36" stroke-width=".5" stroke-dasharray="2,18"/>
+
+<!-- ════ PHASE LABELS ════ -->
+<text x="16" y="44" fill="#102040" font-size="7" font-family="monospace" letter-spacing="3">SUBSYS-01 // IDEATION</text>
+<text x="16" y="148" fill="#102040" font-size="7" font-family="monospace" letter-spacing="3">SUBSYS-02 // CONTENT GENERATION</text>
+<text x="16" y="348" fill="#102040" font-size="7" font-family="monospace" letter-spacing="3">SUBSYS-03 // PUBLISH [FORK: PARALLEL]</text>
+<text x="16" y="740" fill="#102040" font-size="7" font-family="monospace" letter-spacing="3">SUBSYS-04 // ANALYTICS + FEEDBACK</text>
+<text x="16" y="920" fill="#102040" font-size="7" font-family="monospace" letter-spacing="3">SUBSYS-05 // OPTIMIZE + AGILE LOOP</text>
+
+<!-- ════════════════════════════════════════
+     CONNECTIONS — all orthogonal routing
+     Port squares drawn at each endpoint
+     ════════════════════════════════════════ -->
+
+<!-- P1 horizontal chain -->
+<!-- Calendar → Trigger -->
+<line x1="196" y1="66" x2="284" y2="66" stroke="#f5a623" stroke-width="1.2" opacity=".6" marker-end="url(#a-h)"/>
+<rect x="193" y="63" width="4" height="4" fill="#f5a623" opacity=".7"/>
+<!-- Trigger → Persona -->
+<line x1="540" y1="66" x2="614" y2="66" stroke="#f5a623" stroke-width="1.2" opacity=".6" marker-end="url(#a-h)"/>
+<rect x="537" y="63" width="4" height="4" fill="#f5a623" opacity=".7"/>
+
+<!-- Trigger bottom → Research -->
+<line x1="410" y1="92" x2="410" y2="155" stroke="#00d9f5" stroke-width="1.2" opacity=".6" marker-end="url(#a-c)"/>
+<rect x="407" y="89" width="4" height="4" fill="#00d9f5" opacity=".7"/>
+<text x="415" y="127" fill="#0d3050" font-size="7" font-family="monospace">TOPIC·ID</text>
+
+<!-- Research → Draft -->
+<line x1="410" y1="205" x2="410" y2="235" stroke="#00d9f5" stroke-width="1.2" opacity=".6" marker-end="url(#a-c)"/>
+<rect x="407" y="202" width="4" height="4" fill="#00d9f5" opacity=".7"/>
+<text x="415" y="223" fill="#0d3050" font-size="7" font-family="monospace">BRIEF·JSON</text>
+
+<!-- Draft → QA -->
+<line x1="410" y1="285" x2="410" y2="304" stroke="#f5a623" stroke-width="1.2" opacity=".5" marker-end="url(#a-h)"/>
+<rect x="407" y="282" width="4" height="4" fill="#f5a623" opacity=".7"/>
+<text x="415" y="298" fill="#0d3050" font-size="7" font-family="monospace">HTML·DRAFT</text>
+
+<!-- QA → Git (YES) -->
+<line x1="410" y1="354" x2="410" y2="388" stroke="#00f088" stroke-width="1.5" opacity=".6" marker-end="url(#a-g)"/>
+<rect x="407" y="351" width="4" height="4" fill="#00f088" opacity=".7"/>
+<text x="415" y="374" fill="#00f088" font-size="7" font-family="monospace" opacity=".7">YES</text>
+
+<!-- QA NO loop back (revise) -->
+<path d="M480,328 H700 V210 H550" stroke="#f5a623" stroke-width="1" fill="none" opacity=".35" stroke-dasharray="4,3" marker-end="url(#a-h)"/>
+<text x="706" y="270" fill="#f5a623" font-size="7" font-family="monospace" opacity=".6">NO·REVISE</text>
+
+<!-- Git → fork point -->
+<line x1="410" y1="438" x2="410" y2="460" stroke="#00f088" stroke-width="1.2" opacity=".6"/>
+<rect x="407" y="435" width="4" height="4" fill="#00f088" opacity=".7"/>
+
+<!-- Fork bar -->
+<line x1="160" y1="460" x2="780" y2="460" stroke="#3a6090" stroke-width="1.5" opacity=".7"/>
+<rect x="407" y="457" width="4" height="4" fill="#3a6090"/>
+<text x="352" y="455" fill="#1a4060" font-size="7" font-family="monospace" letter-spacing="2">FORK</text>
+<circle cx="160" cy="460" r="3" fill="#3a6090"/>
+<circle cx="780" cy="460" r="3" fill="#3a6090"/>
+
+<!-- Fork → GH Pages (left) -->
+<line x1="160" y1="460" x2="160" y2="480" stroke="#00f088" stroke-width="1.2" opacity=".6" marker-end="url(#a-g)"/>
+<!-- Fork → LinkedIn (right) -->
+<line x1="780" y1="460" x2="780" y2="480" stroke="#00d9f5" stroke-width="1.2" opacity=".6" marker-end="url(#a-c)"/>
+
+<!-- GH Pages → final join (runs down left edge) -->
+<path d="M160,530 V720 H370" stroke="#00f088" stroke-width="1" fill="none" opacity=".4" stroke-dasharray="5,4" marker-end="url(#a-g)"/>
+<text x="166" y="628" fill="#003018" font-size="7" font-family="monospace">STATIC·HTML</text>
+
+<!-- LI → inner parallel header -->
+<line x1="780" y1="532" x2="780" y2="558" stroke="#00d9f5" stroke-width="1.2" opacity=".5"/>
+
+<!-- Inner parallel bar -->
+<line x1="550" y1="558" x2="950" y2="558" stroke="#3a6090" stroke-width="1.2" opacity=".6"/>
+<circle cx="550" cy="558" r="3" fill="#3a6090"/>
+<circle cx="780" cy="558" r="3" fill="#3a6090"/>
+<circle cx="950" cy="558" r="3" fill="#3a6090"/>
+<text x="672" y="553" fill="#1a4060" font-size="7" font-family="monospace" letter-spacing="2">PARALLEL</text>
+
+<!-- Parallel → sub-nodes -->
+<line x1="550" y1="558" x2="550" y2="578" stroke="#00d9f5" stroke-width="1" opacity=".5" marker-end="url(#a-c)"/>
+<line x1="780" y1="558" x2="780" y2="578" stroke="#00d9f5" stroke-width="1" opacity=".5" marker-end="url(#a-c)"/>
+<line x1="950" y1="558" x2="950" y2="578" stroke="#00d9f5" stroke-width="1" opacity=".5" marker-end="url(#a-c)"/>
+
+<!-- Sub-nodes → inner join -->
+<line x1="550" y1="618" x2="550" y2="640" stroke="#00d9f5" stroke-width="1" opacity=".5"/>
+<line x1="780" y1="618" x2="780" y2="640" stroke="#00d9f5" stroke-width="1" opacity=".5"/>
+<line x1="950" y1="618" x2="950" y2="640" stroke="#00d9f5" stroke-width="1" opacity=".5"/>
+<line x1="550" y1="640" x2="950" y2="640" stroke="#3a6090" stroke-width="1.2" opacity=".6"/>
+<circle cx="550" cy="640" r="3" fill="#3a6090"/>
+<circle cx="780" cy="640" r="3" fill="#3a6090"/>
+<circle cx="950" cy="640" r="3" fill="#3a6090"/>
+<text x="692" y="635" fill="#1a4060" font-size="7" font-family="monospace" letter-spacing="2">JOIN</text>
+
+<!-- Join → Image Upload -->
+<line x1="780" y1="640" x2="780" y2="658" stroke="#00d9f5" stroke-width="1.2" opacity=".5" marker-end="url(#a-c)"/>
+<text x="786" y="652" fill="#0d3050" font-size="7" font-family="monospace">ASSET·URN</text>
+
+<!-- Image → UGC Post -->
+<line x1="780" y1="700" x2="780" y2="718" stroke="#00f088" stroke-width="1.2" opacity=".5" marker-end="url(#a-g)"/>
+<text x="786" y="712" fill="#0d3050" font-size="7" font-family="monospace">POST·PKG</text>
+
+<!-- UGC → final join -->
+<line x1="780" y1="768" x2="780" y2="790" stroke="#00f088" stroke-width="1.2" opacity=".5"/>
+
+<!-- Final join bar -->
+<line x1="370" y1="790" x2="820" y2="790" stroke="#3a6090" stroke-width="1.5" opacity=".7"/>
+<circle cx="410" cy="790" r="3" fill="#00f088"/>
+<circle cx="780" cy="790" r="3" fill="#3a6090"/>
+<text x="450" y="785" fill="#1a4060" font-size="7" font-family="monospace" letter-spacing="2">JOIN</text>
+
+<!-- Join → Post Output -->
+<line x1="410" y1="790" x2="410" y2="808" stroke="#00f088" stroke-width="1.5" opacity=".7" marker-end="url(#a-g)"/>
+
+<!-- Post Output → analytics fork -->
+<line x1="410" y1="862" x2="410" y2="880" stroke="#9966ff" stroke-width="1.2" opacity=".5"/>
+<rect x="407" y="859" width="4" height="4" fill="#9966ff" opacity=".7"/>
+
+<!-- Analytics fork bar -->
+<line x1="190" y1="880" x2="680" y2="880" stroke="#3a6090" stroke-width="1.2" opacity=".6"/>
+<circle cx="410" cy="880" r="3" fill="#3a6090"/>
+<circle cx="190" cy="880" r="3" fill="#3a6090"/>
+<circle cx="680" cy="880" r="3" fill="#3a6090"/>
+<text x="348" y="875" fill="#1a4060" font-size="7" font-family="monospace" letter-spacing="2">PARALLEL</text>
+
+<!-- Fork → analytics sub-nodes -->
+<line x1="190" y1="880" x2="190" y2="898" stroke="#9966ff" stroke-width="1" opacity=".5" marker-end="url(#a-p)"/>
+<line x1="680" y1="880" x2="680" y2="898" stroke="#9966ff" stroke-width="1" opacity=".5" marker-end="url(#a-p)"/>
+
+<!-- Analytics sub-nodes → join -->
+<line x1="190" y1="944" x2="190" y2="964" stroke="#9966ff" stroke-width="1" opacity=".5"/>
+<line x1="680" y1="944" x2="680" y2="964" stroke="#9966ff" stroke-width="1" opacity=".5"/>
+<line x1="190" y1="964" x2="680" y2="964" stroke="#3a6090" stroke-width="1.2" opacity=".6"/>
+<circle cx="190" cy="964" r="3" fill="#3a6090"/>
+<circle cx="410" cy="964" r="3" fill="#3a6090"/>
+<circle cx="680" cy="964" r="3" fill="#3a6090"/>
+<text x="350" y="959" fill="#1a4060" font-size="7" font-family="monospace" letter-spacing="2">JOIN</text>
+<line x1="410" y1="964" x2="410" y2="982" stroke="#9966ff" stroke-width="1.5" opacity=".5" marker-end="url(#a-p)"/>
+
+<!-- Dashboard → Optimize -->
+<line x1="410" y1="1034" x2="410" y2="1042" stroke="#ff6644" stroke-width="1.2" opacity=".5" marker-end="url(#a-r)"/>
+
+<!-- Agile loop back -->
+<path d="M290,1068 H60 V66 H34" stroke="#ff6644" stroke-width="1.2" fill="none" opacity=".3" stroke-dasharray="5,4" marker-end="url(#a-r)"/>
+<text x="30" y="580" fill="#301008" font-size="7" font-family="monospace" letter-spacing="2" transform="rotate(-90,30,580)">AGILE·LOOP·BACK·TO·SUBSYS-01</text>
+
+<!-- ════════════════════════════════════════
+     NODES
+     ════════════════════════════════════════ -->
+
+<!-- ─ chamfered rect helper: corner cut = 5px ─ -->
+<!-- All nodes defined as path with 5px corner cuts -->
+
+<!-- SUBSYS-01: IDEATION -->
+
+<!-- Calendar (human) -->
+<g class="nd" data-t="HUMAN DECISION" data-n="EDITORIAL CALENDAR" data-tech="Google Sheets · aima-coworker-state.json\nFields: id, title, topic, persona, category, mood, date, tone" data-plain="We decide what to write, who writes it, and when — saved to a state file so the AI knows its job">
+  <path d="M32,44 H191 L196,49 V87 L191,92 H32 L27,87 V49 Z" fill="url(#fill-h)" stroke="#f5a623" stroke-width="1.2"/>
+  <rect x="27" y="44" width="5" height="5" fill="#f5a623" opacity=".5"/>
+  <rect x="191" y="83" width="5" height="5" fill="#f5a623" opacity=".2"/>
+  <text x="111" y="64" text-anchor="middle" fill="#f5a623" font-size="9" font-family="monospace" letter-spacing="2">EDITORIAL</text>
+  <text x="111" y="77" text-anchor="middle" fill="#f5a623" font-size="9" font-family="monospace" letter-spacing="2">CALENDAR</text>
+  <text x="111" y="88" text-anchor="middle" fill="#6a4010" font-size="7" font-family="monospace">Google Sheets · state.json</text>
+</g>
+
+<!-- Trigger (auto) -->
+<g class="nd" data-t="AUTOMATED" data-n="COWORK TRIGGER" data-tech="aima-article-coworker scheduled task\nFires at 6AM · reads state.json params\nInitializes AI agent with topic context" data-plain="The alarm goes off — AI wakes up and starts the whole process automatically">
+  <path d="M285,44 H535 L540,49 V87 L535,92 H285 L280,87 V49 Z" fill="url(#fill-c)" stroke="#00d9f5" stroke-width="1.2"/>
+  <rect x="280" y="44" width="5" height="5" fill="#00d9f5" opacity=".5"/>
+  <rect x="535" y="83" width="5" height="5" fill="#00d9f5" opacity=".2"/>
+  <text x="410" y="64" text-anchor="middle" fill="#00d9f5" font-size="9" font-family="monospace" letter-spacing="2">COWORK TRIGGER</text>
+  <text x="410" y="77" text-anchor="middle" fill="#00d9f5" font-size="9" font-family="monospace" letter-spacing="2">aima-article-coworker</text>
+  <text x="410" y="88" text-anchor="middle" fill="#0a4050" font-size="7" font-family="monospace">SCHED · 06:00 · state.json → agent init</text>
+</g>
+
+<!-- Persona (human) -->
+<g class="nd" data-t="HUMAN DECISION" data-n="WRITER PERSONA" data-tech="Personas: joselito · dawn · kenji\nDrives: article:persona meta tag\nbmac button_colour · author photo path\nvoice model prompt" data-plain="Choose the writer — each has their own style, color, and personality that shapes the whole article">
+  <path d="M615,44 H805 L810,49 V87 L805,92 H615 L610,87 V49 Z" fill="url(#fill-h)" stroke="#f5a623" stroke-width="1.2"/>
+  <rect x="610" y="44" width="5" height="5" fill="#f5a623" opacity=".5"/>
+  <rect x="805" y="83" width="5" height="5" fill="#f5a623" opacity=".2"/>
+  <text x="710" y="64" text-anchor="middle" fill="#f5a623" font-size="9" font-family="monospace" letter-spacing="2">WRITER PERSONA</text>
+  <text x="710" y="77" text-anchor="middle" fill="#f5a623" font-size="9" font-family="monospace" letter-spacing="2">joselito · dawn · kenji</text>
+  <text x="710" y="88" text-anchor="middle" fill="#6a4010" font-size="7" font-family="monospace">voice model · brand color · photo</text>
+</g>
+
+<!-- SUBSYS-02: GENERATION -->
+
+<!-- Research (auto) -->
+<g class="nd" data-t="AUTOMATED [∥ WEB·SEARCH + AI·SYNTHESIS]" data-n="TOPIC RESEARCH" data-tech="WebSearch tool + AI synthesis run in parallel\nOutputs: citations · key arguments · structure brief\nSources verified · date-current" data-plain="Two helpers work at the same time — one reads the internet, one makes sense of it — then combine their notes">
+  <path d="M190,155 H620 L625,160 V199 L620,204 H190 L185,199 V160 Z" fill="url(#fill-c)" stroke="#00d9f5" stroke-width="1.2"/>
+  <rect x="185" y="155" width="5" height="5" fill="#00d9f5" opacity=".5"/>
+  <rect x="620" y="195" width="5" height="5" fill="#00d9f5" opacity=".2"/>
+  <!-- Parallel indicator bars inside node -->
+  <line x1="220" y1="175" x2="220" y2="195" stroke="#00d9f5" stroke-width="1" opacity=".3"/>
+  <line x1="224" y1="175" x2="224" y2="195" stroke="#00d9f5" stroke-width="1" opacity=".3"/>
+  <text x="410" y="173" text-anchor="middle" fill="#00d9f5" font-size="9" font-family="monospace" letter-spacing="2">TOPIC RESEARCH</text>
+  <text x="410" y="186" text-anchor="middle" fill="#00d9f5" font-size="8" font-family="monospace" letter-spacing="1">∥ WEB·SEARCH + AI·SYNTHESIS</text>
+  <text x="410" y="199" text-anchor="middle" fill="#0a4050" font-size="7" font-family="monospace">→ citations · key arguments · structure brief</text>
+</g>
+
+<!-- Draft (auto) -->
+<g class="nd" data-t="AUTOMATED" data-n="AI ARTICLE DRAFT" data-tech="Fills skeleton.html template\nMeta tags: id · title · author · persona · category\nheader-image · prev/next nav · GAS url\nSections: hook · body · cta · author card" data-plain="AI fills in the article template — title, content, author section, navigation — like a writer with a very smart outline">
+  <path d="M170,235 H640 L645,240 V279 L640,284 H170 L165,279 V240 Z" fill="url(#fill-c)" stroke="#00d9f5" stroke-width="1.2"/>
+  <rect x="165" y="235" width="5" height="5" fill="#00d9f5" opacity=".5"/>
+  <rect x="640" y="275" width="5" height="5" fill="#00d9f5" opacity=".2"/>
+  <text x="410" y="254" text-anchor="middle" fill="#00d9f5" font-size="9" font-family="monospace" letter-spacing="2">AI ARTICLE DRAFT</text>
+  <text x="410" y="267" text-anchor="middle" fill="#00d9f5" font-size="8" font-family="monospace" letter-spacing="1">skeleton.html → full article HTML</text>
+  <text x="410" y="280" text-anchor="middle" fill="#0a4050" font-size="7" font-family="monospace">meta · sections · persona voice · BMAC · author avatar</text>
+</g>
+
+<!-- QA Gate (diamond) -->
+<g class="nd" data-t="HUMAN DECISION" data-n="QUALITY GATE" data-tech="Human review checklist:\n· article:id sequence correct\n· meta tag completeness\n· persona match\n· BMAC button color\n· author avatar loads\n· prev/next nav links" data-plain="A human checks everything looks right before publishing — catches mistakes before the world sees them">
+  <polygon points="410,304 490,329 410,354 330,329" fill="url(#fill-h)" stroke="#f5a623" stroke-width="1.2"/>
+  <text x="410" y="326" text-anchor="middle" fill="#f5a623" font-size="9" font-family="monospace" letter-spacing="2">QUALITY</text>
+  <text x="410" y="339" text-anchor="middle" fill="#f5a623" font-size="9" font-family="monospace" letter-spacing="2">GATE</text>
+</g>
+
+<!-- SUBSYS-03: PUBLISH -->
+
+<!-- Git Commit (auto) -->
+<g class="nd" data-t="AUTOMATED" data-n="GIT COMMIT + PUSH" data-tech="git commit -m 'Article NNN: [title]'\ngit push origin main\nGitHub Pages auto-deploys within ~60s\nTarget: aima.productions/articles/[slug]-[id].html" data-plain="Save the article and upload it — GitHub automatically puts it live on the website within one minute">
+  <path d="M185,388 H625 L630,393 V432 L625,437 H185 L180,432 V393 Z" fill="url(#fill-g)" stroke="#00f088" stroke-width="1.2"/>
+  <rect x="180" y="388" width="5" height="5" fill="#00f088" opacity=".5"/>
+  <rect x="625" y="428" width="5" height="5" fill="#00f088" opacity=".2"/>
+  <text x="410" y="408" text-anchor="middle" fill="#00f088" font-size="9" font-family="monospace" letter-spacing="2">GIT COMMIT + PUSH</text>
+  <text x="410" y="421" text-anchor="middle" fill="#00f088" font-size="8" font-family="monospace" letter-spacing="1">→ GitHub Pages → aima.productions</text>
+  <text x="410" y="433" text-anchor="middle" fill="#0a3018" font-size="7" font-family="monospace">deploy latency ~60s · CDN cached</text>
+</g>
+
+<!-- LEFT BRANCH: GitHub Pages -->
+<g class="nd" data-t="LIVE // PUBLISHED" data-n="GITHUB PAGES" data-tech="Static HTML served via GitHub Pages CDN\naima.productions/articles/[slug]-[id].html\nGAS nav: fetches live order from Google Sheets\napplyNav() updates prev/next dynamically" data-plain="The article is now on the internet — anyone can read it, search engines can find it, and the navigation updates automatically">
+  <path d="M56,480 H256 L261,485 V524 L256,529 H56 L51,524 V485 Z" fill="url(#fill-g)" stroke="#00f088" stroke-width="1.5"/>
+  <rect x="51" y="480" width="5" height="5" fill="#00f088" opacity=".6"/>
+  <rect x="256" y="520" width="5" height="5" fill="#00f088" opacity=".3"/>
+  <!-- Live indicator dot -->
+  <circle cx="70" cy="504" r="3" fill="#00f088" opacity=".8"/>
+  <text x="165" y="499" text-anchor="middle" fill="#00f088" font-size="9" font-family="monospace" letter-spacing="2">GITHUB PAGES</text>
+  <text x="165" y="513" text-anchor="middle" fill="#00f088" font-size="8" font-family="monospace">✓ LIVE · CDN</text>
+  <text x="165" y="524" text-anchor="middle" fill="#0a3018" font-size="7" font-family="monospace">aima.productions · GAS nav sync</text>
+</g>
+
+<!-- RIGHT BRANCH: LinkedIn Pipeline -->
+<g class="nd" data-t="AUTOMATED" data-n="LINKEDIN PIPELINE" data-tech="pipeline.py entry point\nPersona voice model selected\nw_member_social OAuth scope\nReads state.json for article context" data-plain="A robot writer picks up the article and prepares to share it on LinkedIn with the right writer's voice">
+  <path d="M560,480 H960 L965,485 V524 L960,529 H560 L555,524 V485 Z" fill="url(#fill-c)" stroke="#00d9f5" stroke-width="1.2"/>
+  <rect x="555" y="480" width="5" height="5" fill="#00d9f5" opacity=".5"/>
+  <rect x="960" y="520" width="5" height="5" fill="#00d9f5" opacity=".2"/>
+  <text x="760" y="499" text-anchor="middle" fill="#00d9f5" font-size="9" font-family="monospace" letter-spacing="2">LINKEDIN PIPELINE</text>
+  <text x="760" y="513" text-anchor="middle" fill="#00d9f5" font-size="8" font-family="monospace" letter-spacing="1">pipeline.py · persona voice model</text>
+  <text x="760" y="524" text-anchor="middle" fill="#0a4050" font-size="7" font-family="monospace">w_member_social · state.json context</text>
+</g>
+
+<!-- LI Parallel sub-steps -->
+<!-- Fetch HTML -->
+<g class="nd" data-t="AUTOMATED [PARALLEL]" data-n="FETCH ARTICLE HTML" data-tech="github_fetcher.py\nFetches raw HTML from GitHub API\nParses meta tags: title · persona · category · id\nRuns in parallel with hook extraction" data-plain="Grab the article we just published from the website">
+  <path d="M470,578 H624 L629,583 V612 L624,617 H470 L465,612 V583 Z" fill="url(#fill-c)" stroke="#00d9f5" stroke-width="1" stroke-dasharray="5,3"/>
+  <rect x="465" y="578" width="4" height="4" fill="#00d9f5" opacity=".4"/>
+  <text x="548" y="596" text-anchor="middle" fill="#00d9f5" font-size="8" font-family="monospace" letter-spacing="1">FETCH HTML</text>
+  <text x="548" y="609" text-anchor="middle" fill="#0a4050" font-size="7" font-family="monospace">github_fetcher.py</text>
+</g>
+
+<!-- Extract Hook -->
+<g class="nd" data-t="AUTOMATED [PARALLEL]" data-n="EXTRACT HOOK (NLP)" data-tech="extract_hook()\nNLP extraction of opening hook sentence\nUsed as first line of LinkedIn post\nRuns in parallel with fetch + commentary" data-plain="Find the most exciting opening sentence from the article to grab attention on LinkedIn">
+  <path d="M698,578 H854 L859,583 V612 L854,617 H698 L693,612 V583 Z" fill="url(#fill-c)" stroke="#00d9f5" stroke-width="1" stroke-dasharray="5,3"/>
+  <rect x="693" y="578" width="4" height="4" fill="#00d9f5" opacity=".4"/>
+  <text x="776" y="596" text-anchor="middle" fill="#00d9f5" font-size="8" font-family="monospace" letter-spacing="1">EXTRACT HOOK</text>
+  <text x="776" y="609" text-anchor="middle" fill="#0a4050" font-size="7" font-family="monospace">extract_hook() · NLP</text>
+</g>
+
+<!-- Persona Commentary -->
+<g class="nd" data-t="AUTOMATED [PARALLEL]" data-n="PERSONA COMMENTARY" data-tech="build_personal_commentary()\nPersona-specific voice prompt\nGenerates LinkedIn-native commentary\nMirrors writer's tone and intellectual style" data-plain="The AI writes the writer's personal take on the article — their opinion, in their voice">
+  <path d="M872,578 H966 L971,583 V612 L966,617 H872 L867,612 V583 Z" fill="url(#fill-c)" stroke="#00d9f5" stroke-width="1" stroke-dasharray="5,3"/>
+  <rect x="867" y="578" width="4" height="4" fill="#00d9f5" opacity=".4"/>
+  <text x="920" y="596" text-anchor="middle" fill="#00d9f5" font-size="8" font-family="monospace" letter-spacing="1">COMMENTARY</text>
+  <text x="920" y="609" text-anchor="middle" fill="#0a4050" font-size="7" font-family="monospace">persona voice</text>
+</g>
+
+<!-- Image Upload -->
+<g class="nd" data-t="AUTOMATED" data-n="DIRECT IMAGE UPLOAD" data-tech="LinkedIn direct upload endpoint\nReturns asset: urn:li:digitalmediaAsset\nAttached to ugcPost.specificContent\nHeader image from article meta tag" data-plain="Upload the article's header image to LinkedIn so it shows up nicely in the post">
+  <path d="M600,658 H954 L959,663 V694 L954,699 H600 L595,694 V663 Z" fill="url(#fill-c)" stroke="#00d9f5" stroke-width="1.2"/>
+  <rect x="595" y="658" width="4" height="4" fill="#00d9f5" opacity=".4"/>
+  <text x="778" y="676" text-anchor="middle" fill="#00d9f5" font-size="8" font-family="monospace" letter-spacing="1">DIRECT IMAGE UPLOAD</text>
+  <text x="778" y="689" text-anchor="middle" fill="#0a4050" font-size="7" font-family="monospace">→ urn:li:digitalmediaAsset · header image</text>
+</g>
+
+<!-- UGC Post API -->
+<g class="nd" data-t="AUTOMATED → LIVE" data-n="UGC POSTS API" data-tech="linkedin_poster.py\nPOST /ugcPosts · w_member_social scope\nPayload: hook + commentary + asset urn\nRecords urn:li:share in post_log.json" data-plain="Send everything to LinkedIn and hit Post — the article appears on the writer's LinkedIn feed">
+  <path d="M570,718 H964 L969,723 V762 L964,767 H570 L565,762 V723 Z" fill="url(#fill-g)" stroke="#00f088" stroke-width="1.3"/>
+  <rect x="565" y="718" width="4" height="4" fill="#00f088" opacity=".5"/>
+  <circle cx="585" cy="740" r="3" fill="#00f088" opacity=".8"/>
+  <text x="768" y="738" text-anchor="middle" fill="#00f088" font-size="9" font-family="monospace" letter-spacing="2">UGC POSTS API</text>
+  <text x="768" y="751" text-anchor="middle" fill="#00f088" font-size="8" font-family="monospace">POST /ugcPosts · w_member_social</text>
+  <text x="768" y="762" text-anchor="middle" fill="#0a3018" font-size="7" font-family="monospace">hook + commentary + image · → urn:li:share</text>
+</g>
+
+<!-- POST OUTPUT -->
+<g class="nd" data-t="LIVE // PUBLISHED" data-n="✓ POST OUTPUT" data-tech="STATE: Article live on aima.productions\n+ LinkedIn post published\nurn:li:share recorded in post_log.json\nCalendar status → PUBLISHED" data-plain="Done! The article is on the website AND on LinkedIn — both live for the world to see">
+  <path d="M190,808 H620 L625,813 V856 L620,861 H190 L185,856 V813 Z" fill="url(#fill-g)" stroke="#00f088" stroke-width="2"/>
+  <rect x="185" y="808" width="5" height="5" fill="#00f088" opacity=".7"/>
+  <rect x="620" y="852" width="5" height="5" fill="#00f088" opacity=".4"/>
+  <!-- Live pulse circles -->
+  <circle cx="210" cy="832" r="5" fill="none" stroke="#00f088" stroke-width="1" opacity=".5"/>
+  <circle cx="210" cy="832" r="2.5" fill="#00f088" opacity=".9"/>
+  <text x="415" y="831" text-anchor="middle" fill="#00f088" font-size="11" font-family="monospace" letter-spacing="4">✓  POST OUTPUT</text>
+  <text x="415" y="847" text-anchor="middle" fill="#00f088" font-size="8" font-family="monospace" letter-spacing="1">aima.productions · linkedin.com · LIVE</text>
+  <text x="415" y="858" text-anchor="middle" fill="#0a3018" font-size="7" font-family="monospace">urn:li:share recorded · calendar status → PUBLISHED</text>
+</g>
+
+<!-- SUBSYS-04: ANALYTICS -->
+
+<!-- post_log.json (data, parallel) -->
+<g class="nd" data-t="DATA [PARALLEL]" data-n="POST LOG JSON" data-tech="post_log.json\nFields: article · post_id · persona · posted_at\nDrives syncPublished() in article-manager.html\nCalendar published status auto-sync on load" data-plain="Save a receipt — when it was posted, who wrote it, what LinkedIn ID it got">
+  <path d="M65,898 H310 L315,903 V938 L310,943 H65 L60,938 V903 Z" fill="url(#fill-p)" stroke="#9966ff" stroke-width="1" stroke-dasharray="5,3"/>
+  <rect x="60" y="898" width="4" height="4" fill="#9966ff" opacity=".4"/>
+  <text x="190" y="917" text-anchor="middle" fill="#9966ff" font-size="8" font-family="monospace" letter-spacing="1">POST LOG JSON</text>
+  <text x="190" y="930" text-anchor="middle" fill="#5a4080" font-size="7" font-family="monospace">post_log.json · syncPublished()</text>
+  <text x="190" y="941" text-anchor="middle" fill="#3a2060" font-size="7" font-family="monospace">post_id · persona · posted_at</text>
+</g>
+
+<!-- GA4 + LI Analytics (data, parallel) -->
+<g class="nd" data-t="DATA [PARALLEL]" data-n="GA4 + LINKEDIN ANALYTICS" data-tech="GA4: page_view · coffee_click · scroll_depth\n→ ga4_traffic.csv\nLinkedIn: impressions · CTR · reactions · reposts\n→ post_analytics.csv\nXLS import or r_member_social API" data-plain="Count who read the article, who clicked donate, who liked the LinkedIn post">
+  <path d="M455,898 H765 L770,903 V938 L765,943 H455 L450,938 V903 Z" fill="url(#fill-p)" stroke="#9966ff" stroke-width="1" stroke-dasharray="5,3"/>
+  <rect x="450" y="898" width="4" height="4" fill="#9966ff" opacity=".4"/>
+  <text x="612" y="917" text-anchor="middle" fill="#9966ff" font-size="8" font-family="monospace" letter-spacing="1">GA4 + LINKEDIN ANALYTICS</text>
+  <text x="612" y="930" text-anchor="middle" fill="#5a4080" font-size="7" font-family="monospace">ga4_traffic.csv · post_analytics.csv</text>
+  <text x="612" y="941" text-anchor="middle" fill="#3a2060" font-size="7" font-family="monospace">impressions · CTR · reactions · scroll_depth</text>
+</g>
+
+<!-- SUBSYS-05: OPTIMIZE -->
+
+<!-- Dashboard (data) -->
+<g class="nd" data-t="DATA // ANALYTICS" data-n="DASHBOARD / KPIs" data-tech="article-manager.html\nauto-loads ga4_traffic.csv on load\nsyncPublished() from post_log.json\nheat score · writer cards · top categories\ncoffee_click rankings · 8-KPI overview" data-plain="One screen showing all the numbers — what worked best, who donated, what to write next">
+  <path d="M185,982 H625 L630,987 V1028 L625,1033 H185 L180,1028 V987 Z" fill="url(#fill-p)" stroke="#9966ff" stroke-width="1.2"/>
+  <rect x="180" y="982" width="4" height="4" fill="#9966ff" opacity=".4"/>
+  <rect x="625" y="1024" width="4" height="4" fill="#9966ff" opacity=".2"/>
+  <text x="410" y="1001" text-anchor="middle" fill="#9966ff" font-size="9" font-family="monospace" letter-spacing="2">DASHBOARD / KPIs</text>
+  <text x="410" y="1014" text-anchor="middle" fill="#9966ff" font-size="8" font-family="monospace" letter-spacing="1">article-manager.html</text>
+  <text x="410" y="1027" text-anchor="middle" fill="#3a2060" font-size="7" font-family="monospace">heat score · writer cards · coffee rankings · 8-KPI view</text>
+</g>
+
+<!-- Optimize (loop) -->
+<g class="nd" data-t="OPTIMIZE // AGILE ITERATE" data-n="OPTIMIZE + ITERATE" data-tech="Retrospective analysis:\n· top persona · category · tone · read-time\nActions:\n· re-prioritize editorial calendar\n· tune persona voice prompts\n· evolve skeleton.html template\n· version stamp git tag" data-plain="Look at what worked, adjust the plan, and start again from the top — like a team meeting after a sprint">
+  <path d="M185,1042 H625 L630,1047 V1075 L625,1080 H185 L180,1075 V1047 Z" fill="url(#fill-r)" stroke="#ff6644" stroke-width="1.2"/>
+  <rect x="180" y="1042" width="4" height="4" fill="#ff6644" opacity=".4"/>
+  <rect x="625" y="1071" width="4" height="4" fill="#ff6644" opacity=".2"/>
+  <text x="410" y="1061" text-anchor="middle" fill="#ff6644" font-size="9" font-family="monospace" letter-spacing="2">OPTIMIZE + ITERATE  ↺</text>
+  <text x="410" y="1074" text-anchor="middle" fill="#602010" font-size="7" font-family="monospace">retrospective · calendar reprioritize · persona tune · version stamp</text>
+</g>
+
+</svg>
+
+<!-- Info panel -->
+<div class="panel" id="panel">
+  <div class="panel-corner tl"></div>
+  <div class="panel-corner tr"></div>
+  <div class="panel-corner bl"></div>
+  <div class="panel-corner br"></div>
+  <div class="p-type" id="p-type">// NODE DETAIL</div>
+  <div class="p-name" id="p-name">HOVER ANY NODE</div>
+  <div class="p-tech" id="p-tech">Click or hover a node to see\ntechnical specs and plain-language\nexplanation here.</div>
+  <div class="p-plain" id="p-plain"></div>
+  <div class="p-hint" id="p-hint">// SCROLL OR PINCH TO ZOOM</div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="l-title">// SIGNAL LEGEND</div>
+  <div class="li"><div class="lc" style="background:#f5a623"></div>HUMAN DECISION</div>
+  <div class="li"><div class="lc" style="background:#00d9f5"></div>AUTOMATED PROCESS</div>
+  <div class="li"><div class="lc" style="background:#00f088"></div>LIVE / PUBLISHED</div>
+  <div class="li"><div class="lc" style="background:#9966ff"></div>ANALYTICS / DATA</div>
+  <div class="li"><div class="lc" style="background:#ff6644"></div>OPTIMIZE / ITERATE</div>
+  <div class="li"><div class="lc" style="background:#3a6090;height:1px;border-top:1px dashed #3a6090"></div>PARALLEL SUB-STEP</div>
+</div>
+
+</div>
+
+<script>
+const svg = document.getElementById('svg');
+const pType = document.getElementById('p-type');
+const pName = document.getElementById('p-name');
+const pTech = document.getElementById('p-tech');
+const pPlain = document.getElementById('p-plain');
+const pHint = document.getElementById('p-hint');
+const coord = document.getElementById('coord');
+
+// Node hover
+document.querySelectorAll('.nd').forEach(n => {
+  n.style.cursor = 'crosshair';
+  n.addEventListener('mouseenter', () => {
+    pType.textContent = '// ' + (n.dataset.t || '');
+    pName.textContent = n.dataset.n || '';
+    pTech.textContent = (n.dataset.tech || '').replace(/\\n/g, '\n');
+    pPlain.textContent = n.dataset.plain || '';
+    pHint.textContent = '';
+    // Highlight
+    n.querySelectorAll('path,polygon').forEach(el => {
+      el.style.filter = 'brightness(1.4)';
+    });
+  });
+  n.addEventListener('mouseleave', () => {
+    n.querySelectorAll('path,polygon').forEach(el => {
+      el.style.filter = '';
+    });
+    pHint.textContent = '// HOVER NODE FOR DETAIL';
+  });
+});
+
+// Pan & zoom
+let scale = 1, tx = 0, ty = 0, dragging = false, sx, sy;
+
+function applyT() {
+  svg.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+}
+
+const wrap = document.querySelector('.wrap');
+wrap.addEventListener('mousedown', e => {
+  if (e.target.closest('.nd')) return;
+  dragging = true; sx = e.clientX - tx; sy = e.clientY - ty;
+  svg.style.cursor = 'grabbing';
+});
+window.addEventListener('mouseup', () => { dragging = false; svg.style.cursor = 'crosshair'; });
+window.addEventListener('mousemove', e => {
+  if (dragging) { tx = e.clientX - sx; ty = e.clientY - sy; applyT(); }
+  coord.textContent = 'X:' + Math.round((e.clientX - tx)/scale) + ' Y:' + Math.round((e.clientY - ty - 42)/scale);
+});
+wrap.addEventListener('wheel', e => {
+  e.preventDefault();
+  const d = e.deltaY > 0 ? 0.92 : 1.08;
+  const ox = e.clientX, oy = e.clientY;
+  const nscale = Math.min(3, Math.max(0.25, scale * d));
+  tx = ox - (ox - tx) * (nscale / scale);
+  ty = oy - (oy - ty) * (nscale / scale);
+  scale = nscale;
+  applyT();
+}, {passive: false});
+
+function zoomIn() { scale = Math.min(3, scale * 1.2); applyT(); }
+function zoomOut() { scale = Math.max(0.25, scale / 1.2); applyT(); }
+function resetView() {
+  // Fit diagram to window
+  const ww = window.innerWidth, wh = window.innerHeight - 42;
+  const dw = 980, dh = 1060;
+  scale = Math.min(ww / dw, wh / dh) * 0.92;
+  tx = (ww - dw * scale) / 2;
+  ty = (wh - dh * scale) / 2;
+  applyT();
+}
+
+// Auto-fit on load
+window.addEventListener('load', () => { setTimeout(resetView, 50); });
+</script>
+</body>
+</html>
