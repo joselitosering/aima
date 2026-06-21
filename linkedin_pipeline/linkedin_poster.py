@@ -79,10 +79,18 @@ def extract_metadata(html_content, filename, html_url):
     title   = title_m.group(1).strip() if title_m else \
               filename.replace(".html","").replace("-"," ").title()
 
-    desc_m = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']',
+    # Use quote-specific patterns so apostrophes in content don't truncate early.
+    # Try name= first (most common), then reversed attribute order.
+    desc_m = re.search(r'<meta\s+name=["\']description["\']\s+content="([^"]*)"',
                        html_content, re.IGNORECASE)
     if not desc_m:
-        desc_m = re.search(r'<meta\s+content=["\'](.*?)["\']\s+name=["\']description["\']',
+        desc_m = re.search(r"<meta\s+name=[\"']description[\"']\s+content='([^']*)'",
+                           html_content, re.IGNORECASE)
+    if not desc_m:
+        desc_m = re.search(r'<meta\s+content="([^"]*)"\s+name=["\']description["\']',
+                           html_content, re.IGNORECASE)
+    if not desc_m:
+        desc_m = re.search(r"<meta\s+content='([^']*)'\s+name=[\"']description[\"']",
                            html_content, re.IGNORECASE)
 
     can_m      = re.search(r'<link\s+rel=["\']canonical["\']\s+href=["\'](.*?)["\']',
@@ -160,13 +168,20 @@ def extract_og_image(html_content):
 def extract_hook(html_content, max_sentences=2, max_chars=420):
     """
     Pull the first 1-2 sentences of the article lead paragraph.
-    These are the arresting opening facts the writer crafted as the hook.
-    Skips short nav/UI paragraphs (< 120 chars).
+    Targets <p class="article-lead"> first (guaranteed hook), then falls back
+    to the first general <p> with > 120 chars.
+    Skips script, style, nav, header, footer, and aside blocks first.
     """
-    clean = re.sub(r'<(script|style|nav|header)[^>]*>.*?</\1>', '',
+    clean = re.sub(r'<(script|style|nav|header|footer|aside)[^>]*>.*?</\1>', '',
                    html_content, flags=re.DOTALL | re.IGNORECASE)
-    paragraphs = re.findall(r'<p[^>]*>(.*?)</p>', clean,
-                            re.DOTALL | re.IGNORECASE)
+
+    # Prefer the explicit article-lead paragraph over generic scanning
+    lead_m = re.search(
+        r'<p[^>]*class=["\'][^"\']*article-lead[^"\']*["\'][^>]*>(.*?)</p>',
+        clean, re.DOTALL | re.IGNORECASE
+    )
+    paragraphs = ([lead_m.group(1)] if lead_m else []) + \
+                 re.findall(r'<p[^>]*>(.*?)</p>', clean, re.DOTALL | re.IGNORECASE)
     for p in paragraphs:
         text = re.sub(r'<[^>]+>', '', p).strip()
         text = re.sub(r'&#?\w+;', ' ', text)
@@ -369,18 +384,103 @@ def _resolve_share_urn(ugc_id):
     return None
 
 
-def reshare_to_personal(share_urn, title):
+def build_personal_commentary(title, description, source_url, persona="joselito"):
+    """
+    Build a compelling personal reshare commentary with intro + TLDR + CTA.
+    Persona-aware: Joselito writes as an editor/imagineer; Dawn as a critic;
+    Kenji as an optimistic technologist.
+    """
+    if persona == "dawn":
+        intro = (
+            f"I've been sitting with this one.\n\n"
+            f"{description[:280]}"
+        )
+        tldr  = "TL;DR — The institutions calling this 'ethical AI' are the ones designing the systems that aren't."
+        cta   = f"Read the full take: {source_url}"
+        tags  = "#AIEthics #ResponsibleAI #TechAccountability #AIMA"
+    elif persona == "kenji":
+        intro = (
+            f"This is the story nobody's telling about what's actually possible.\n\n"
+            f"{description[:280]}"
+        )
+        tldr  = "TL;DR — The technology is further along than the headlines admit, and closer to real people's lives than the hype suggests."
+        cta   = f"Full breakdown: {source_url}"
+        tags  = "#EmergingTech #Innovation #AIOptimism #AIMA"
+    else:
+        # Joselito — editor-in-chief, creative technologist, imagineer
+        hook  = _personal_hook(title)
+        intro = f"{hook}\n\n{description[:260]}"
+        tldr  = _personal_tldr(title)
+        cta   = f"Worth the read if you work in music, media, or AI — or if a song has ever moved you in a way you couldn't explain.\n\n👉 {source_url}"
+        tags  = "#AIMusic #CreativeAI #HumanCreativity #GenerativeAI #MusicIndustry #AIMA"
+
+    # strip any non-BMP characters that break Windows cp1252 console output
+    import re as _re
+    commentary = f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
+    commentary = _re.sub(r'[^\x20-\uffff]', '', commentary)
+    return commentary
+
+    return f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
+
+
+def _personal_hook(title):
+    """Return an opening hook line keyed to the article topic."""
+    t = title.lower()
+    if "music" in t or "compos" in t:
+        return (
+            "Last year I heard a song that made me feel something. "
+            "I found out afterward no human wrote it.\n"
+            "That moment sent me to my desk to write this piece."
+        )
+    if "hallucin" in t:
+        return "Every time I hear 'AI said so,' I think about this."
+    if "global south" in t or "gap" in t:
+        return "The people building the future are not the ones most affected by it."
+    if "agent" in t or "rogue" in t:
+        return "I've spent months watching AI systems make decisions nobody authorized."
+    if "creative" in t or "production" in t:
+        return "I built a music video for $5,000 that used to cost $200,000. Here's what that actually means."
+    return "I wrote this because I couldn't stop thinking about it."
+
+
+def _personal_tldr(title):
+    """Return a TLDR line keyed to the article topic."""
+    t = title.lower()
+    if "music" in t or "compos" in t:
+        return (
+            "TL;DR — AI can learn the shape of longing. "
+            "It cannot know what longing cost. "
+            "That gap — between statistical technique and lived intention — "
+            "is the only thing separating a generative model from a composer. "
+            "And it turns out to be the only thing that ever mattered about music."
+        )
+    if "hallucin" in t:
+        return (
+            "TL;DR — AI doesn't lie. It confabulates with total confidence. "
+            "The difference is more dangerous than it sounds."
+        )
+    if "global south" in t:
+        return (
+            "TL;DR — The AI revolution is being built on the assumption that "
+            "everyone starts from the same place. They don't."
+        )
+    return "TL;DR — The data, the argument, and the implications are in the link."
+
+
+def reshare_to_personal(share_urn, title, commentary=None):
     """
     Reshare a company page post to Joselito's personal profile.
     Requires w_member_social scope. Returns the personal reshare URN.
+    Pass commentary= to override the default generic text.
     """
     if not MEMBER_ID:
         print("  WARNING: LINKEDIN_MEMBER_ID not set -- skipping personal reshare.")
         return None
 
+    text = commentary if commentary else f"New from the AIMA team — {title}"
     body = {
         "author":         f"urn:li:person:{MEMBER_ID}",
-        "commentary":     f"New from the AIMA team — {title}",
+        "commentary":     text[:3000],
         "lifecycleState": "PUBLISHED",
         "visibility":     "PUBLIC",
         "distribution": {

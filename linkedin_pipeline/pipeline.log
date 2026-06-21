@@ -190,3 +190,16 @@
 2026-06-20 12:03:34,385 [WARNING]   git push failed (non-fatal): Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1.
 2026-06-20 12:03:34,385 [INFO]   Logged to post_log.json for analytics.
 2026-06-20 12:03:34,385 [INFO] Done. 1/1 posted successfully.
+2026-06-20 16:50:58,869 [INFO] ==================================================
+2026-06-20 16:50:58,872 [INFO] Pipeline started at 2026-06-20 16:50:58
+2026-06-20 16:50:58,872 [INFO] Checking for pending post analytics...
+2026-06-20 16:50:58,881 [INFO]   No analytics ready to collect yet.
+2026-06-20 16:50:58,881 [INFO] Scanning articles folder...
+2026-06-20 16:50:58,883 [INFO] Found 1 new article(s). Posting to LinkedIn...
+2026-06-20 16:50:58,883 [INFO]   Posting: aima-article-machines-that-compose-015.html
+2026-06-20 16:50:58,884 [INFO]   Checking og:image: https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=1920&q=80
+2026-06-20 16:50:59,283 [INFO]   og:image live (0s elapsed): https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=1920&q=80
+2026-06-20 16:51:08,646 [INFO]   Personal reshare: urn:li:share:7474247496148340736
+2026-06-20 16:51:17,411 [INFO]   git push OK: data: log post aima-article-machines-that-compose-015.html
+2026-06-20 16:51:17,411 [INFO]   Logged to post_log.json for analytics.
+2026-06-20 16:51:17,411 [INFO] Done. 1/1 posted successfully.

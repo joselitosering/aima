@@ -719,7 +719,7 @@ var prevCard=document.getElementById('art-prev-card');
 var nextCard=document.getElementById('art-next-card');
 if(prevCard&&prevUrl){prevCard.href=prevUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=prevTitle;}
 if(nextCard&&nextUrl){nextCard.href=nextUrl;nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent=nextTitle;}
-else if(nextCard){nextCard.href='https://aima.productions/insights.html';nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent='Coming Soon';}
+else if(nextCard){nextCard.removeAttribute('href');nextCard.classList.remove('hidden');nextCard.style.cursor='default';nextCard.style.opacity='0.5';nextCard.style.pointerEvents='none';document.getElementById('art-next-title').textContent='Coming Soon';}
 });
 // ══ SHARE SIDEBAR ═════════════════════════════════════════
 (function(){

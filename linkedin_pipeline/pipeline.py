@@ -19,7 +19,7 @@ import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 from github_fetcher import get_new_articles, mark_as_posted
-from linkedin_poster import post_to_linkedin, reshare_to_personal, extract_metadata, extract_persona
+from linkedin_poster import post_to_linkedin, reshare_to_personal, extract_metadata, extract_persona, build_personal_commentary
 from analytics_collector import collect_pending_analytics
 from gs_logger import log_to_google_sheets
 
@@ -182,7 +182,11 @@ def run():
                 )
                 persona = extract_persona(article["content"])
                 # Reshare company page post to Joselito's personal profile
-                reshare_id = reshare_to_personal(post_id, title)
+                _, description, source_url = extract_metadata(
+                    article["content"], article["name"], article.get("html_url", "")
+                )
+                personal_commentary = build_personal_commentary(title, description, source_url, persona or "joselito")
+                reshare_id = reshare_to_personal(post_id, title, commentary=personal_commentary)
                 if reshare_id:
                     log.info(f"  Personal reshare: {reshare_id}")
 
