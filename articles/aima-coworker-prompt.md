@@ -458,14 +458,17 @@ Next Article URL: (empty)
 
 ---
 
-## LINKEDIN COMPANY PAGE (FUTURE UPGRADE)
+## LINKEDIN POST-PUBLISH WORKFLOW (APPROVED)
 
-When company page API access is granted, add to `.env`:
+After `git push` makes the article live, run:
 ```
-LINKEDIN_POST_AS=company
-LINKEDIN_ORG_URN=urn:li:organization:[numeric-id]
+python linkedin_pipeline/pipeline.py
 ```
-No other pipeline changes needed.
+This automatically:
+1. Posts to AIMA **company page** — cover image + hook + hashtags + persona byline (name credit)
+2. **Reshares to Joselito's personal profile** — persona-tailored intro + TL;DR + CTA
+
+No manual steps. Approved workflow as of June 21, 2026.
 
 ---
 

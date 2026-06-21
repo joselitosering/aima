@@ -436,6 +436,15 @@ def _personal_hook(title):
         return "Every time I hear 'AI said so,' I think about this."
     if "global south" in t or "gap" in t:
         return "The people building the future are not the ones most affected by it."
+    if "digital nomad" in t or "nomad economy" in t or "ai labor" in t:
+        return (
+            "There are two kinds of people working in the global AI economy right now.\n"
+            "One earns $124,000 a year from a beach in Bali.\n"
+            "The other earns $1.50 an hour to make sure the AI doesn't say anything horrifying.\n"
+            "Both of them are part of the same machine."
+        )
+    if "arbitrage" in t or "labor" in t or "workforce" in t:
+        return "The economics of who does the invisible work — and who gets paid for the visible result — haven't changed. Only the job titles have."
     if "agent" in t or "rogue" in t:
         return "I've spent months watching AI systems make decisions nobody authorized."
     if "creative" in t or "production" in t:
@@ -464,6 +473,16 @@ def _personal_tldr(title):
             "TL;DR — The AI revolution is being built on the assumption that "
             "everyone starts from the same place. They don't."
         )
+    if "digital nomad" in t or "nomad economy" in t or "ai labor" in t:
+        return (
+            "TL;DR — The same technology that was supposed to eliminate global inequality "
+            "has invented more sophisticated names for the same old arrangement: "
+            "the poor do the invisible work, and the rich own the visible product. "
+            "43 million nomads, $940B in economic value, and a Nairobi data labeler earning $1.50/hr — "
+            "all part of the same economy."
+        )
+    if "arbitrage" in t or "labor" in t:
+        return "TL;DR — Someone is always doing the work that makes the AI look autonomous. Follow the money to find out who."
     return "TL;DR — The data, the argument, and the implications are in the link."
 
 
