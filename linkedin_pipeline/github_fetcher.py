@@ -48,7 +48,7 @@ def get_new_articles():
     posted = load_posted_log()
     new_articles = []
 
-    for filepath in sorted(folder.glob("*.html")):
+    for filepath in sorted(folder.glob("aima-article-*.html")):
         name = filepath.name
         if name in SKIP_FILES:
             continue

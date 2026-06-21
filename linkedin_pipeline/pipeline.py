@@ -21,7 +21,6 @@ from pathlib import Path
 from github_fetcher import get_new_articles, mark_as_posted
 from linkedin_poster import post_to_linkedin, reshare_to_personal, extract_metadata, extract_persona, build_personal_commentary
 from analytics_collector import collect_pending_analytics
-from gs_logger import log_to_google_sheets
 
 logging.basicConfig(
     level=logging.INFO,
@@ -168,9 +167,6 @@ def run():
                 wait_for_image(image_url, article["name"])
             else:
                 log.warning(f"  No og:image found in {article['name']} — skipping image check.")
-
-            # Log to Google Sheets (powers aima.productions/insights.html)
-            log_to_google_sheets(article["name"])
 
             try:
                 post_id = post_to_linkedin(article)
