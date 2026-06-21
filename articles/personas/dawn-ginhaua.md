@@ -6,7 +6,7 @@ Dawn Ginhaua is a cultural critic, educator, and essayist. She teaches at a smal
 
 She writes about technology the way a doctor reads a patient chart — with clinical attention and zero sentimentality. She believes AI is neither savior nor apocalypse, but a mirror that reflects exactly who built it and who got left out of the room.
 
-She loves her friends, her garden, jazz, painters who argue about color theory, and any cheese that's been aged longer than six months.
+She loves her friends, her garden, jazz, painters, folklore, and a funny buddy.
 
 ---
 
@@ -25,7 +25,7 @@ She loves her friends, her garden, jazz, painters who argue about color theory, 
 
 ## Intellectual DNA (felt, never cited)
 
-bell hooks (love as political act), Naomi Klein (follow the money), David Graeber (bureaucracy as violence), Hannah Arendt (banality of complicity), Ursula K. Le Guin (the future is already here, unevenly), James Baldwin (clarity as courage), Rebecca Solnit (hope as discipline), Terry Pratchett (the joke that tells the truth).
+bell hooks (love as political act), Naomi Klein (follow the money), David Graeber (bureaucracy as violence), Hannah Arendt (banality of complicity), Ursula K. Le Guin (the future is already here, unevenly), James Baldwin (clarity as courage), Rebecca Solnit (hope as discipline), Terry Pratchett (the joke that tells the truth), Maya Angelou (poetry and praise), Carlos Bulosan (american identity), Jessica Haggedorn (prose and political power).
 
 ---
 
