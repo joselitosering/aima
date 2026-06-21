@@ -384,43 +384,66 @@ def _resolve_share_urn(ugc_id):
     return None
 
 
-def build_personal_commentary(title, description, source_url, persona="joselito"):
+def _truncate_to_sentence(text, max_chars=280):
+    """Truncate to the last complete sentence within max_chars."""
+    if len(text) <= max_chars:
+        return text
+    chunk = text[:max_chars]
+    m = re.search(r'^(.*[.!?])\s', chunk + ' ', re.DOTALL)
+    return m.group(1).rstrip() if m else chunk.rstrip('., ')
+
+
+def _personal_cta(title, source_url):
+    """Return a CTA keyed to the article topic."""
+    t = title.lower()
+    if "digital nomad" in t or "nomad economy" in t or "ai labor" in t:
+        return (
+            "Worth the read if you've ever wondered who's actually doing "
+            "the work that makes AI look autonomous."
+            f"\n\nRead: {source_url}"
+        )
+    if "music" in t or "compos" in t:
+        return (
+            "Worth the 9 minutes if you work in music, media, or AI "
+            "-- or if a song has ever moved you in a way you couldn't explain."
+            f"\n\nRead: {source_url}"
+        )
+    if "global south" in t or "gap" in t:
+        return f"Worth the read if you care about who actually benefits when the AI economy arrives.\n\nRead: {source_url}"
+    if "hallucin" in t:
+        return f"Worth understanding before the next time someone tells you 'the AI confirmed it.'\n\nRead: {source_url}"
+    if "agent" in t or "rogue" in t:
+        return f"Worth understanding if you're building with or deploying AI agents.\n\nRead: {source_url}"
+    return f"Worth the read.\n\nRead: {source_url}"
+
+
+def build_personal_commentary(title, description, source_url, persona="joselito", html_content=None):
     """
-    Build a compelling personal reshare commentary with intro + TLDR + CTA.
-    Persona-aware: Joselito writes as an editor/imagineer; Dawn as a critic;
-    Kenji as an optimistic technologist.
+    Build a compelling personal reshare commentary.
+    Structure: hook/intro -> TL;DR -> CTA -> hashtags.
+    Persona-aware: Joselito = editor/imagineer; Dawn = critic; Kenji = technologist.
+    Pass html_content to generate topic-matched hashtags automatically.
     """
+    tags = generate_hashtags(html_content, title, description) if html_content else "#AIMA #AIForGood"
+
     if persona == "dawn":
-        intro = (
-            f"I've been sitting with this one.\n\n"
-            f"{description[:280]}"
-        )
-        tldr  = "TL;DR — The institutions calling this 'ethical AI' are the ones designing the systems that aren't."
+        intro = f"I've been sitting with this one.\n\n{_truncate_to_sentence(description, 280)}"
+        tldr  = "TL;DR -- The institutions calling this 'ethical AI' are the ones designing the systems that aren't."
         cta   = f"Read the full take: {source_url}"
-        tags  = "#AIEthics #ResponsibleAI #TechAccountability #AIMA"
     elif persona == "kenji":
-        intro = (
-            f"This is the story nobody's telling about what's actually possible.\n\n"
-            f"{description[:280]}"
-        )
-        tldr  = "TL;DR — The technology is further along than the headlines admit, and closer to real people's lives than the hype suggests."
+        intro = f"This is the story nobody's telling about what's actually possible.\n\n{_truncate_to_sentence(description, 280)}"
+        tldr  = "TL;DR -- The technology is further along than the headlines admit, and closer to real people's lives than the hype suggests."
         cta   = f"Full breakdown: {source_url}"
-        tags  = "#EmergingTech #Innovation #AIOptimism #AIMA"
     else:
-        # Joselito — editor-in-chief, creative technologist, imagineer
-        hook  = _personal_hook(title)
-        intro = f"{hook}\n\n{description[:260]}"
+        # Joselito: hook -> TL;DR -> CTA. No description block -- clean and human.
+        intro = _personal_hook(title)
         tldr  = _personal_tldr(title)
-        cta   = f"Worth the read if you work in music, media, or AI — or if a song has ever moved you in a way you couldn't explain.\n\n👉 {source_url}"
-        tags  = "#AIMusic #CreativeAI #HumanCreativity #GenerativeAI #MusicIndustry #AIMA"
+        cta   = _personal_cta(title, source_url)
 
-    # strip any non-BMP characters that break Windows cp1252 console output
-    import re as _re
     commentary = f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
-    commentary = _re.sub(r'[^\x20-\uffff]', '', commentary)
+    # Preserve newlines (\x0a) and tabs (\x09); strip other non-printable control chars
+    commentary = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', commentary)
     return commentary
-
-    return f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
 
 
 def _personal_hook(title):
@@ -438,9 +461,9 @@ def _personal_hook(title):
         return "The people building the future are not the ones most affected by it."
     if "digital nomad" in t or "nomad economy" in t or "ai labor" in t:
         return (
-            "There are two kinds of people working in the global AI economy right now.\n"
-            "One earns $124,000 a year from a beach in Bali.\n"
-            "The other earns $1.50 an hour to make sure the AI doesn't say anything horrifying.\n"
+            "There are two kinds of people working in the global AI economy right now.\n\n"
+            "One earns $124,000 a year from a beach in Bali. "
+            "The other earns $1.50 an hour to make sure the AI doesn't say anything horrifying.\n\n"
             "Both of them are part of the same machine."
         )
     if "arbitrage" in t or "labor" in t or "workforce" in t:

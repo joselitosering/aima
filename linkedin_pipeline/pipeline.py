@@ -185,7 +185,7 @@ def run():
                 _, description, source_url = extract_metadata(
                     article["content"], article["name"], article.get("html_url", "")
                 )
-                personal_commentary = build_personal_commentary(title, description, source_url, persona or "joselito")
+                personal_commentary = build_personal_commentary(title, description, source_url, persona or "joselito", html_content=article["content"])
                 reshare_id = reshare_to_personal(post_id, title, commentary=personal_commentary)
                 if reshare_id:
                     log.info(f"  Personal reshare: {reshare_id}")
