@@ -711,15 +711,20 @@ var meta=document.querySelector('meta[name="article:header-image"]');
 var el=document.getElementById('headerImage');
 if(meta&&el){var url=meta.getAttribute('content');el.style.backgroundImage='linear-gradient(135deg,rgba(255,94,32,0.28),rgba(0,217,245,0.10)),url(\''+url+'\')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';}
 // PREV/NEXT NAV
-var prevUrl=(document.querySelector('meta[name="article:prev-url"]')||{}).content||'';
-var prevTitle=(document.querySelector('meta[name="article:prev-title"]')||{}).content||'';
-var nextUrl=(document.querySelector('meta[name="article:next-url"]')||{}).content||'';
-var nextTitle=(document.querySelector('meta[name="article:next-title"]')||{}).content||'';
+var _pUrl=(document.querySelector('meta[name="article:prev-url"]')||{}).content||'';
+var _pTitle=(document.querySelector('meta[name="article:prev-title"]')||{}).content||'';
+var _nUrl=(document.querySelector('meta[name="article:next-url"]')||{}).content||'';
+var _nTitle=(document.querySelector('meta[name="article:next-title"]')||{}).content||'';
 var prevCard=document.getElementById('art-prev-card');
 var nextCard=document.getElementById('art-next-card');
-if(prevCard&&prevUrl){prevCard.href=prevUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=prevTitle;}
-if(nextCard&&nextUrl){nextCard.href=nextUrl;nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent=nextTitle;}
-else if(nextCard){nextCard.removeAttribute('href');nextCard.classList.remove('hidden');nextCard.style.cursor='default';nextCard.style.opacity='0.5';nextCard.style.pointerEvents='none';document.getElementById('art-next-title').textContent='Coming Soon';}
+function applyNav(pUrl,pTitle,nUrl,nTitle){
+if(prevCard&&pUrl){prevCard.href=pUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=pTitle;}
+if(nextCard){if(nUrl){nextCard.href=nUrl;nextCard.classList.remove('hidden');nextCard.style.cursor='';nextCard.style.opacity='';nextCard.style.pointerEvents='';document.getElementById('art-next-title').textContent=nTitle;}
+else{nextCard.removeAttribute('href');nextCard.classList.remove('hidden');nextCard.style.cursor='default';nextCard.style.opacity='0.5';nextCard.style.pointerEvents='none';document.getElementById('art-next-title').textContent='Coming Soon';}}
+}
+applyNav(_pUrl,_pTitle,_nUrl,_nTitle);
+var _curId=parseInt((document.querySelector('meta[name="article:id"]')||{}).content||'0');
+if(_curId){fetch('https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec?action=all',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(data){if(!data.articles)return;var arts=data.articles.slice().sort(function(a,b){return parseInt(a.id)-parseInt(b.id);});var i=arts.findIndex(function(a){return parseInt(a.id)===_curId;});if(i<0)return;var prev=i>0?arts[i-1]:null;var next=i<arts.length-1?arts[i+1]:null;applyNav(prev?prev.url:'',prev?prev.title:'',next?next.url:'',next?next.title:'');}).catch(function(){});}
 });
 // ══ SHARE SIDEBAR ═════════════════════════════════════════
 (function(){

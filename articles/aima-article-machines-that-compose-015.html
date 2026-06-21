@@ -35,10 +35,10 @@
 <meta name="article:read-time"    content="9"/>
 <meta name="article:category"     content="AI Creative"/>
 <meta name="article:header-image" content="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=1920&q=80"/>
-<meta name="article:prev-url"     content="https://aima.productions/articles/aima-article-hallucination-nation-014.html"/>
-<meta name="article:prev-title"   content="Hallucination Nation: Why AI Lies with Confidence and What It Costs Us"/>
-<meta name="article:next-url"     content="https://aima.productions/articles/aima-article-digital-nomad-economy-016.html"/>
-<meta name="article:next-title"   content="The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor"/>
+<meta name="article:prev-url"     content="https://aima.productions/articles/aima-article-ethics-theater-014.html"/>
+<meta name="article:prev-title"   content="Your AI Ethics Board Is a Press Release"/>
+<meta name="article:next-url"     content=""/>
+<meta name="article:next-title"   content=""/>
 
 <title id="pageTitle">Machines That Compose: What AI Music Reveals About Human Creativity — AIMA Magazine</title>
 <meta name="description" content="AI can generate a radio-ready song in 30 seconds. But can it understand why a lyric should be whispered? AIMA explores what the machine music revolution reveals — and doesn't — about human creativity."/>
@@ -799,7 +799,7 @@ var prevCard=document.getElementById('art-prev-card');
 var nextCard=document.getElementById('art-next-card');
 if(prevCard&&prevUrl){prevCard.href=prevUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=prevTitle;}
 if(nextCard&&nextUrl){nextCard.href=nextUrl;nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent=nextTitle;}
-else if(nextCard){nextCard.href='https://aima.productions/insights.html';nextCard.classList.remove('hidden');document.getElementById('art-next-title').textContent='Coming Soon';}
+else if(nextCard){nextCard.removeAttribute('href');nextCard.classList.remove('hidden');nextCard.style.cursor='default';nextCard.style.opacity='0.5';nextCard.style.pointerEvents='none';document.getElementById('art-next-title').textContent='Coming Soon';}
 });
 // ══ SHARE SIDEBAR ═════════════════════════════════════════
 (function(){
