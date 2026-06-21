@@ -219,7 +219,7 @@ tr:hover td { background: rgba(0,217,245,0.02); }
 /* ── CALENDAR LIST ── */
 .cal-row {
   display: grid;
-  grid-template-columns: 100px 46px 90px 1fr 200px 120px 60px 90px 72px;
+  grid-template-columns: 96px 36px 84px 1fr 148px 100px 148px 36px 84px 52px;
   gap: 8px; align-items: center;
   padding: 8px 14px;
   border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -258,6 +258,17 @@ tr:hover td { background: rgba(0,217,245,0.02); }
   padding: 3px 6px; border-radius: 4px; width: 100%;
 }
 .tone-edit:focus { outline: none; border-color: var(--cyan); }
+.author-select {
+  appearance: none; -webkit-appearance: none;
+  background: rgba(0,217,245,0.08); border: 1px solid var(--border);
+  color: var(--cyan); font-size: 11px; font-family: 'DM Sans', sans-serif;
+  font-weight: 600; padding: 3px 20px 3px 8px; border-radius: 10px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238B92A5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 6px center;
+}
+.author-select.badge-purple { background-color: rgba(155,89,245,0.12); color: #9b59f5; }
+.author-select.badge-gold   { background-color: rgba(245,197,24,0.12);  color: #f5c518; }
+.author-select:focus { outline: none; border-color: var(--cyan); }
 
 /* ── MONTH CALENDAR ── */
 .cal-month-header { font-family: 'Anton', sans-serif; font-size: 16px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
@@ -359,7 +370,7 @@ code {
   transition: color 0.15s, border-color 0.15s;
 }
 .cal-title-link:hover { color: #4fa3d1; border-bottom-color: #4fa3d1; }
-.heat-bar-wrap { width: 100%; }
+.heat-bar-wrap { width: 100%; min-width: 0; }
 .heat-bar-track { height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-top: 3px; }
 .heat-bar-fill  { height: 100%; border-radius: 3px; }
 
@@ -622,7 +633,7 @@ code {
     <div class="section-block" style="padding:0;overflow:hidden">
       <div class="cal-row header">
         <div>Date</div><div>#</div><div>Writer</div><div>Title</div>
-        <div>Tone / Mood Note</div><div>Category</div><div>Read</div><div>Status</div><div>Heat</div>
+        <div>Tone / Mood Note</div><div>Category</div><div>Tags</div><div>Read</div><div>Status</div><div>Heat</div>
       </div>
       <div id="cal-list-body"></div>
     </div>
@@ -998,9 +1009,9 @@ let isDirty = false;
 let charts = {};
 
 const PERSONAS = {
-  joselito:{ label:'Joselito', badge:'badge-cyan',   color:'#00D9F5', rowClass:'joselito-row', cellClass:'joselito-cell' },
-  dawn:    { label:'Dawn',     badge:'badge-purple', color:'#9b59f5', rowClass:'dawn-row',     cellClass:'dawn-cell'     },
-  kenji:   { label:'Kenji',    badge:'badge-gold',   color:'#f5c518', rowClass:'kenji-row',    cellClass:'kenji-cell'    },
+  joselito:{ label:'Joselito', badge:'badge-cyan',   color:'#00D9F5', rowClass:'joselito-row', cellClass:'joselito-cell', hashtags:['#AICreativity','#FutureOfWork','#ArtificialIntelligence','#AITools','#CreativeAI'] },
+  dawn:    { label:'Dawn',     badge:'badge-purple', color:'#9b59f5', rowClass:'dawn-row',     cellClass:'dawn-cell',     hashtags:['#AIEthics','#TechPolicy','#ResponsibleAI','#DigitalRights','#AIRegulation'] },
+  kenji:   { label:'Kenji',    badge:'badge-gold',   color:'#f5c518', rowClass:'kenji-row',    cellClass:'kenji-cell',    hashtags:['#AITrends','#Innovation','#TechNews','#EmergingTech','#AIResearch'] },
 };
 
 const CAT_BADGES = {
@@ -1028,8 +1039,8 @@ const CALENDAR = [
   { num:11, date:'2026-06-01', title:'The Token Bill: How AI Overspending Is Rewriting the Future of Work',               cat:'Industry Analysis',    read:11, persona:'joselito', published:true,  tone:'' },
   { num:12, date:'2026-06-04', title:'The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both', cat:'AI Ethics',           read:19, persona:'joselito', published:true,  tone:'' },
   { num:13, date:'2026-06-18', title:'The Global South AI Gap: Who Gets Left Behind When the Future Arrives',              cat:'AI Society',           read:12, persona:'joselito', published:true,  tone:'' },
-  { num:14, date:'2026-06-20', title:'Hallucination Nation: Why AI Lies with Confidence and What It Costs Us',             cat:'AI Ethics',            read:11, persona:'joselito', published:false, tone:'' },
-  { num:15, date:'2026-06-20', title:'Machines That Compose: What AI Music Reveals About Human Creativity',               cat:'AI Creative',          read:9,  persona:'joselito', published:true,  tone:'' },
+  { num:14, date:'2026-06-20', title:'Hallucination Nation: Why AI Lies with Confidence and What It Costs Us',             cat:'AI Ethics',            read:11, persona:'joselito', published:true,  tone:'' },
+  { num:15, date:'2026-06-20', title:'Machines That Compose: What AI Music Reveals About Human Creativity',               cat:'AI Creative',          read:9,  persona:'joselito', published:false, tone:'' },
   { num:16, date:'2026-06-24', title:'The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor',   cat:'AI Society',           read:12, persona:'joselito', published:false, tone:'' },
   { num:17, date:'2026-06-26', title:'Power Hungry: The Carbon Ledger of the AI Compute Boom',                             cat:'AI Environment',       read:10, persona:'joselito', published:false, tone:'' },
   { num:18, date:'2026-06-28', title:'Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026',                cat:'AI Healthcare',        read:13, persona:'joselito', published:false, tone:'' },
@@ -1231,13 +1242,15 @@ function restoreCalendar() {
   try {
     const parsed = JSON.parse(saved);
     parsed.forEach(savedItem => {
-      const match = CALENDAR.find(c => c.num === savedItem.num && c.persona === savedItem.persona);
+      const match = CALENDAR.find(c => c.num === savedItem.num);
       if (match) {
         match.title     = savedItem.title;
         match.date      = savedItem.date;
         match.cat       = savedItem.cat;
         match.tone      = savedItem.tone;
         match.read      = savedItem.read;
+        match.persona   = savedItem.persona;
+        match.hashtags  = savedItem.hashtags;
         // published is managed by syncPublished() from post_log — not from localStorage
       }
     });
@@ -1267,7 +1280,7 @@ function discardChanges() {
   if (undoStack.length === 0) return;
   const prev = JSON.parse(undoStack.pop());
   prev.forEach(savedItem => {
-    const match = CALENDAR.find(c => c.num === savedItem.num && c.persona === savedItem.persona);
+    const match = CALENDAR.find(c => c.num === savedItem.num);
     if (match) {
       match.title     = savedItem.title;
       match.date      = savedItem.date;
@@ -1275,6 +1288,8 @@ function discardChanges() {
       match.tone      = savedItem.tone;
       match.read      = savedItem.read;
       match.published = savedItem.published;
+      match.persona   = savedItem.persona;
+      match.hashtags  = savedItem.hashtags;
     }
   });
   persistCalendar();
@@ -1798,20 +1813,39 @@ function renderCalList(){
       <div><input class="cal-date-edit" value="${item.date}"
         onchange="CALENDAR[${realIdx}].date=this.value;markDirty()" /></div>
       <div style="color:var(--muted);font-weight:700;font-size:11px;font-family:'Courier Prime',monospace">${numDisplay}</div>
-      <div><span class="badge ${per.badge}">${per.label}</span></div>
+      <div>
+        <select class="author-select ${per.badge}" onchange="changeAuthor(${realIdx}, this.value)">
+          ${Object.entries(PERSONAS).map(([k,v])=>`<option value="${k}"${item.persona===k?' selected':''}>${v.label}</option>`).join('')}
+        </select>
+      </div>
       ${titleCol}
       <div><input class="tone-edit" placeholder="${per.label==='Joselito'?'e.g. more Hitchens edge':'Tone / mood directive'}"
         value="${escHtml(item.tone||'')}"
         oninput="CALENDAR[${realIdx}].tone=this.value;markDirty()" /></div>
       <div><input class="tone-edit cat-edit" list="cat-datalist" value="${escHtml(item.cat)}"
           oninput="CALENDAR[${realIdx}].cat=this.value;markDirty()"
-          style="width:128px;font-size:10px" /></div>
+          style="font-size:10px" /></div>
+      <div><input class="tone-edit hashtag-edit" placeholder="#hashtags"
+          value="${escHtml((item.hashtags||PERSONAS[item.persona]?.hashtags||[]).join(' '))}"
+          oninput="CALENDAR[${realIdx}].hashtags=this.value.split(/\s+/).filter(Boolean);markDirty()"
+          style="font-size:10px;color:var(--cyan)" /></div>
       <div style="color:var(--muted);font-family:'Courier Prime',monospace;font-size:11px">${item.read}m</div>
       <div style="display:flex;align-items:center;gap:4px">${status}${hs.chip}</div>
       ${heatCol}
     </div>`;
   }).join('');
   document.getElementById('cal-list-body').innerHTML = html;
+}
+
+function changeAuthor(realIdx, newPersona) {
+  if (!PERSONAS[newPersona]) return;
+  const per = PERSONAS[newPersona];
+  CALENDAR[realIdx].persona   = newPersona;
+  CALENDAR[realIdx].tone      = '';                        // clear mood/tone — let coworker pick up persona default
+  CALENDAR[realIdx].cat       = '';                        // clear category — let coworker pick up persona default
+  CALENDAR[realIdx].hashtags  = [...per.hashtags];         // seed with persona defaults
+  markDirty();
+  renderCalList();   // full re-render to update rowClass, badge, placeholder text
 }
 
 function renderCalMonth(){
@@ -1966,6 +2000,13 @@ function renderPerformance(){
           <div style="font-family:'Anton',sans-serif;font-size:26px;color:var(--orange)">${rows.length?(avg(rows.map(r=>+r.ctr||0))*100).toFixed(1)+'%':'—'}</div>
           <div style="font-size:11px;color:var(--muted)">click-through</div>
         </div>
+      </div>
+      <div style="margin-top:14px">
+        <div class="card-title" style="margin-bottom:6px">Default Hashtags</div>
+        <input class="tone-edit hashtag-edit" style="width:100%;font-size:10px;color:var(--cyan)"
+          value="${escHtml(per.hashtags.join(' '))}"
+          placeholder="#tag1 #tag2 #tag3"
+          oninput="PERSONAS['${p}'].hashtags=this.value.split(/\s+/).filter(Boolean)" />
       </div>
     </div>`;
   }).join('');
