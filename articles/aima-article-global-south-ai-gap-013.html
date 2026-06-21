@@ -961,10 +961,10 @@ _tl.forEach(function(a){var h=a.getAttribute('href');if(h&&h.startsWith('#'))_ts
 window.addEventListener('scroll',function(){var sp=window.scrollY+120;var cur='';_ts.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=sp)cur=id;});_tl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});},{passive:true});
 // ══ MOBILE MENU ══════════════════════════════════════════
 function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
-function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove'open');if(b)b.classList.remove('open');document.body.style.overflow='';}
+function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
 // ══ AUTHOR PHOTO ═════════════════════════════════════════════════════════
 (function(){
-var persona=(document.querySelector('meta[name="article:persona"]'))||{}).content||'joselito';
+var persona=(document.querySelector('meta[name="article:persona"]')||{}).content||'joselito';
 var imgSrc='../img/author-'+persona+'.png';
 var _authorColors={joselito:'00D9F5',dawn:'9B59F5',kenji:'F5C518'};
 var _btnColor=_authorColors[persona]||'00D9F5';
