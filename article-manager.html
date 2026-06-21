@@ -973,6 +973,7 @@ code {
 let postLog = [];
 let analyticsData = [];
 let ga4Data = [];
+let coffeeData = {}; // persona -> click count
 let manualStats = JSON.parse(localStorage.getItem('aima_manual_stats') || '[]');
 
 // Known LinkedIn post URLs derived from post_log.json (post_id → feed/update URL).
@@ -1440,6 +1441,23 @@ async function autoLoadGA4() {
   }
 }
 
+async function autoLoadCoffeeClicks() {
+  try {
+    const res = await fetch(DATA_BASE + 'coffee_clicks.csv?_=' + Date.now());
+    if (!res.ok) throw new Error(res.status);
+    const rows = parseCSV(await res.text());
+    coffeeData = {};
+    rows.forEach(r => {
+      const p = (r.persona||'').trim();
+      const c = +(r.clicks||0);
+      if (p) coffeeData[p] = (coffeeData[p]||0) + c;
+    });
+    renderWritersPage();
+  } catch {
+    // file not present yet — silent
+  }
+}
+
 function loadPostLog(event) {
   const file = event.target.files[0]; if (!file) return;
   const r = new FileReader();
@@ -1503,6 +1521,7 @@ document.addEventListener('DOMContentLoaded', () => {
   autoLoadPostLog();
   autoLoadAnalytics();
   autoLoadGA4();
+  autoLoadCoffeeClicks();
   renderWritersPage();
   // Inject category datalist for editable cat cells
   const dl = document.createElement('datalist');
@@ -2452,6 +2471,25 @@ function renderWritersPage() {
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:5px;font-size:10px;font-family:'Courier Prime',monospace;color:var(--muted)">
             ${wstats.count ? `<span>${wstats.avgImp.toLocaleString()} avg imp</span><span>·</span><span>${(wstats.avgCtr*100).toFixed(1)}% CTR</span><span>·</span><span>${(wstats.avgEng*100).toFixed(2)}% eng</span><span>·</span><span>${wstats.count} posts</span>` : '<span style="font-style:italic">No analytics yet</span>'}
           </div>
+          ${(()=>{
+            const totalClicks=Object.values(coffeeData).reduce((a,b)=>a+b,0);
+            const myClicks=coffeeData[w.key]||0;
+            const pct=totalClicks?Math.round(myClicks/totalClicks*100):0;
+            return totalClicks>0
+              ? `<div style="margin-top:6px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:10px;font-family:'Courier Prime',monospace;color:var(--muted)">
+                    <span>☕</span>
+                    <span style="color:${w.color};font-weight:700">${pct}%</span>
+                    <span>of donations</span>
+                    <span>·</span>
+                    <span>${myClicks} clicks</span>
+                  </div>
+                  <div style="margin-top:4px;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden">
+                    <div style="height:100%;width:${pct}%;background:${w.color};border-radius:2px;transition:width .4s"></div>
+                  </div>
+                </div>`
+              : '';
+          })()}
         </div>
       </div>
       <div onclick="toggleWriterCard('${w.key}')" style="display:flex;align-items:center;gap:10px;cursor:pointer;margin:12px 0 4px;color:var(--muted);user-select:none;transition:color .15s" onmouseover="this.style.color='${w.color}';this.querySelector('.wtoggle-line').style.background='${w.color}40'" onmouseout="this.style.color='var(--muted)';this.querySelector('.wtoggle-line').style.background='var(--border)'">
