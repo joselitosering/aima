@@ -2585,7 +2585,9 @@ function addManualStat(){
 }
 
 function renderManualStats(){
-  document.getElementById('manual-stats-list').innerHTML=manualStats.length
+  const el=document.getElementById('manual-stats-list');
+  if(!el) return;
+  el.innerHTML=manualStats.length
     ?[...manualStats].reverse().slice(0,8).map(s=>`
       <div class="aima-link-stat">
         <div>
