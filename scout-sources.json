@@ -1,0 +1,1385 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "updated": "2026-06-22",
+    "purpose": "Scout agent research library — RSS feeds and APIs checked before web search each run",
+    "usage": "Scout reads this file at run start. For each source: fetch RSS feed or call API, filter by topic_tags matching the article brief, pass summaries to Quill's research brief.",
+    "env_file": "agents/.env",
+    "notes": [
+      "Sources marked requires_key:true need an env var set in agents/.env",
+      "All rate_limit values are free-tier limits",
+      "Sources are roughly ordered: no-key first, key-required last within each section"
+    ]
+  },
+
+  "rss_feeds": [
+    {
+      "id": "nasa",
+      "name": "NASA Breaking News",
+      "url": "https://www.nasa.gov/rss/dyn/breaking_news.rss",
+      "topic_tags": ["space", "science", "technology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Official NASA missions, discoveries, and announcements"
+    },
+    {
+      "id": "esa",
+      "name": "ESA Space Science",
+      "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Science",
+      "topic_tags": ["space", "science"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "European Space Agency — missions and scientific research"
+    },
+    {
+      "id": "space_com",
+      "name": "Space.com",
+      "url": "https://www.space.com/feeds/all",
+      "topic_tags": ["space", "astronomy", "science"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Space exploration, astronomy, and skywatching"
+    },
+    {
+      "id": "science_daily",
+      "name": "ScienceDaily",
+      "url": "https://www.sciencedaily.com/rss/all.xml",
+      "topic_tags": ["science", "technology", "society", "ai", "robotics"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Latest research news across hundreds of disciplines. Topic-specific feeds also available."
+    },
+    {
+      "id": "nature_news",
+      "name": "Nature News",
+      "url": "https://www.nature.com/nature.rss",
+      "topic_tags": ["science", "research"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Breaking news from Nature journal. Full articles may require subscription; summaries are free."
+    },
+    {
+      "id": "phys_org",
+      "name": "Phys.org",
+      "url": "https://phys.org/rss-feed/",
+      "topic_tags": ["science", "technology", "ai", "space", "robotics"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "General science and technology news — very broad coverage"
+    },
+    {
+      "id": "scientific_american",
+      "name": "Scientific American",
+      "url": "https://rss.sciam.com/ScientificAmerican-Global",
+      "topic_tags": ["science", "technology", "society", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Science explained for general audiences. Some articles behind metered paywall."
+    },
+    {
+      "id": "eurekalert",
+      "name": "EurekAlert!",
+      "url": "https://www.eurekalert.org/rss.xml",
+      "topic_tags": ["science", "research", "technology", "ai", "medicine", "anthropology", "psychology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "AAAS science press releases — primary-source research announcements. Subject feeds available."
+    },
+    {
+      "id": "mit_tech_review",
+      "name": "MIT Technology Review",
+      "url": "https://www.technologyreview.com/feed/",
+      "topic_tags": ["technology", "ai", "society", "biotechnology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "AI, biotech, computing, and their social impact. Metered paywall after a few articles."
+    },
+    {
+      "id": "wired",
+      "name": "Wired",
+      "url": "https://www.wired.com/feed/rss",
+      "topic_tags": ["technology", "culture", "science", "ai", "society"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Deep dives on tech, science, and society. Limited free articles."
+    },
+    {
+      "id": "ars_technica",
+      "name": "Ars Technica",
+      "url": "https://feeds.arstechnica.com/arstechnica/index",
+      "topic_tags": ["technology", "science", "ai", "policy", "space"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "In-depth tech, science, and digital policy. Full articles free."
+    },
+    {
+      "id": "techcrunch",
+      "name": "TechCrunch",
+      "url": "https://techcrunch.com/feed/",
+      "topic_tags": ["technology", "startups", "fintech", "ai", "blockchain"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Startup news, VC, fintech, AI, blockchain"
+    },
+    {
+      "id": "the_verge",
+      "name": "The Verge",
+      "url": "https://www.theverge.com/rss/index.xml",
+      "topic_tags": ["technology", "science", "culture", "ai", "space"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Consumer tech, AI, space, media"
+    },
+    {
+      "id": "ieee_spectrum",
+      "name": "IEEE Spectrum",
+      "url": "https://spectrum.ieee.org/feeds/all",
+      "topic_tags": ["technology", "engineering", "robotics", "ai", "energy"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Robotics, AI, energy, computing. Topic feeds also available."
+    },
+    {
+      "id": "venturebeat_ai",
+      "name": "VentureBeat AI",
+      "url": "https://venturebeat.com/category/ai/feed/",
+      "topic_tags": ["ai", "machine_learning", "generative_media"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Dedicated AI and machine learning news"
+    },
+    {
+      "id": "robohub",
+      "name": "Robohub",
+      "url": "https://robohub.org/feed/",
+      "topic_tags": ["robotics", "ai", "technology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Robotics research, events, and editorial perspectives"
+    },
+    {
+      "id": "coindesk",
+      "name": "CoinDesk",
+      "url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+      "topic_tags": ["blockchain", "crypto", "fintech", "economy"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Leading cryptocurrency and blockchain news"
+    },
+    {
+      "id": "finextra",
+      "name": "Finextra",
+      "url": "https://www.finextra.com/rss/headlines.aspx",
+      "topic_tags": ["fintech", "banking", "economy", "technology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Financial technology and banking innovation"
+    },
+    {
+      "id": "openai_blog",
+      "name": "OpenAI Blog",
+      "url": "https://openai.com/blog/rss.xml",
+      "topic_tags": ["ai", "generative_media", "technology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Official posts on GPT, DALL·E, Sora, and research"
+    },
+    {
+      "id": "stability_ai",
+      "name": "Stability AI Blog",
+      "url": "https://stability.ai/blog?format=rss",
+      "topic_tags": ["ai", "generative_media", "technology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Updates on Stable Diffusion and open generative AI models"
+    },
+    {
+      "id": "creative_bloq",
+      "name": "Creative Bloq",
+      "url": "https://www.creativebloq.com/feed",
+      "topic_tags": ["generative_media", "art", "design", "ai"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Digital art, design tools, AI art news"
+    },
+    {
+      "id": "the_conversation",
+      "name": "The Conversation (Global)",
+      "url": "https://theconversation.com/global/rss",
+      "topic_tags": ["science", "society", "economy", "global_affairs", "ai", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Academic-authored journalism. CC-licensed — free to republish. Topic feeds available."
+    },
+    {
+      "id": "aeon",
+      "name": "Aeon",
+      "url": "https://aeon.co/feed.rss",
+      "topic_tags": ["science", "society", "philosophy", "humanity", "technology", "psychology", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "In-depth essays on science, culture, and ideas. All articles free."
+    },
+    {
+      "id": "bbc_future",
+      "name": "BBC Future",
+      "url": "https://www.bbc.com/future/feed.rss",
+      "topic_tags": ["science", "technology", "humanity", "society"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Long-form reporting on science, tech, and society"
+    },
+    {
+      "id": "un_news",
+      "name": "UN News",
+      "url": "https://news.un.org/feed/subscribe/en/news/all/rss.xml",
+      "topic_tags": ["global_affairs", "humanity", "society", "economy"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "United Nations global news and humanitarian stories"
+    },
+    {
+      "id": "al_jazeera",
+      "name": "Al Jazeera English",
+      "url": "https://www.aljazeera.com/xml/rss/all.xml",
+      "topic_tags": ["global_affairs", "society", "economy", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "International news and analysis from a non-Western editorial lens"
+    },
+    {
+      "id": "the_intercept",
+      "name": "The Intercept",
+      "url": "https://theintercept.com/feed/?lang=en",
+      "topic_tags": ["global_affairs", "society", "technology", "policy"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Adversarial journalism on politics, tech, and rights"
+    },
+    {
+      "id": "project_syndicate",
+      "name": "Project Syndicate",
+      "url": "https://www.project-syndicate.org/rss",
+      "topic_tags": ["economy", "global_affairs", "society", "technology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Commentary by world leaders and economists. Summaries free; full text paywalled."
+    },
+    {
+      "id": "plos_one",
+      "name": "PLOS ONE",
+      "url": "https://journals.plos.org/plosone/feed/atom",
+      "topic_tags": ["science", "research", "ai", "biotechnology", "medicine", "anthropology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Multi-disciplinary peer-reviewed journal — full open access. Anthropology subject feed: ?subject=Anthropology"
+    },
+    {
+      "id": "arxiv_cs_ai",
+      "name": "arXiv — CS.AI",
+      "url": "https://rss.arxiv.org/rss/cs.AI",
+      "topic_tags": ["ai", "machine_learning", "research"],
+      "requires_key": false,
+      "rate_limit": "1 req/3 sec",
+      "notes": "Latest AI preprints before peer review. Change topic slug for other fields (cs.RO, cs.LG, econ, etc.)"
+    },
+    {
+      "id": "arxiv_cs_ro",
+      "name": "arXiv — CS.RO (Robotics)",
+      "url": "https://rss.arxiv.org/rss/cs.RO",
+      "topic_tags": ["robotics", "ai", "research"],
+      "requires_key": false,
+      "rate_limit": "1 req/3 sec",
+      "notes": "Latest robotics preprints"
+    },
+    {
+      "id": "arxiv_econ",
+      "name": "arXiv — Economics",
+      "url": "https://rss.arxiv.org/rss/econ",
+      "topic_tags": ["economy", "research"],
+      "requires_key": false,
+      "rate_limit": "1 req/3 sec",
+      "notes": "Latest economics preprints and working papers"
+    },
+
+    { "_section": "FINANCE & MARKETS" },
+
+    {
+      "id": "reuters_markets",
+      "name": "Reuters Market News",
+      "url": "https://www.reuters.com/arc/outboundfeeds/v3/rss/marketNews/",
+      "topic_tags": ["finance", "markets", "economy", "global_affairs"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Breaking market news. Business feed: /businessNews/"
+    },
+    {
+      "id": "marketwatch",
+      "name": "MarketWatch",
+      "url": "https://www.marketwatch.com/rss/topstories",
+      "topic_tags": ["finance", "markets", "economy"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Top stories, market pulse, economy and politics. Sector-specific feeds available."
+    },
+    {
+      "id": "cnbc_markets",
+      "name": "CNBC Markets",
+      "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html",
+      "topic_tags": ["finance", "markets", "technology", "economy"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Top business, tech, and market headlines. Markets-specific feed: /id/10000664/..."
+    },
+    {
+      "id": "bloomberg_markets",
+      "name": "Bloomberg Markets",
+      "url": "https://feeds.bloomberg.com/markets/news.rss",
+      "topic_tags": ["finance", "markets", "economy", "global_affairs"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Global markets news. Headlines free; full articles behind Bloomberg paywall."
+    },
+    {
+      "id": "yahoo_finance",
+      "name": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/news/rssindex",
+      "topic_tags": ["finance", "markets", "economy", "technology"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Latest stories, stock market, economy. Category feeds: /news/markets/rss"
+    },
+    {
+      "id": "seeking_alpha",
+      "name": "Seeking Alpha",
+      "url": "https://seekingalpha.com/feed.xml",
+      "topic_tags": ["finance", "markets", "algorithmic_trading"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "News, analysis, and earnings reports. May require free account."
+    },
+    {
+      "id": "investopedia",
+      "name": "Investopedia",
+      "url": "https://www.investopedia.com/feedbuilder/feed/getfeed?feedname=rss",
+      "topic_tags": ["finance", "technical_analysis", "markets"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Market news and technical analysis explanations — good for definitional/educational angle"
+    },
+    {
+      "id": "fxstreet",
+      "name": "FXStreet",
+      "url": "https://www.fxstreet.com/rss",
+      "topic_tags": ["forex", "technical_analysis", "crypto", "markets"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Forex news, technical analysis, cryptocurrency"
+    },
+    {
+      "id": "dailyfx",
+      "name": "DailyFX",
+      "url": "https://www.dailyfx.com/feeds/all",
+      "topic_tags": ["forex", "commodities", "technical_analysis", "markets"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Real-time forex and commodity news with technical analysis"
+    },
+    {
+      "id": "benzinga",
+      "name": "Benzinga",
+      "url": "https://www.benzinga.com/feed/",
+      "topic_tags": ["finance", "markets", "algorithmic_trading"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Real-time financial news and analysis — good for breaking market alerts"
+    },
+    {
+      "id": "zerohedge",
+      "name": "ZeroHedge",
+      "url": "https://www.zerohedge.com/fullrss2.xml",
+      "topic_tags": ["finance", "economy", "global_affairs"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Wide-ranging financial and geopolitical commentary — contrarian/alternative perspective"
+    },
+    {
+      "id": "forexlive",
+      "name": "ForexLive",
+      "url": "https://www.forexlive.com/feed/",
+      "topic_tags": ["forex", "markets", "technical_analysis"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Forex trading news and real-time market commentary"
+    },
+    {
+      "id": "stockcharts_ta",
+      "name": "StockCharts ChartWatchers",
+      "url": "https://stockcharts.com/articles/chartwatchers/feed/",
+      "topic_tags": ["technical_analysis", "markets", "algorithmic_trading"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Technical analysis articles, chart patterns, trading signals"
+    },
+    {
+      "id": "ta_stocks_commodities",
+      "name": "Technical Analysis of Stocks & Commodities",
+      "url": "https://traders.com/index.php/sample-articles?format=feed&type=rss",
+      "topic_tags": ["technical_analysis", "markets", "commodities", "algorithmic_trading"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Articles from the leading TA magazine. Some articles are samples only."
+    },
+    {
+      "id": "financial_times",
+      "name": "Financial Times",
+      "url": "https://www.ft.com/rss/world",
+      "topic_tags": ["finance", "economy", "global_affairs", "markets"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Headlines and summaries free; full articles behind FT paywall. Other section feeds available."
+    },
+
+    { "_section": "ART & VISUAL CULTURE" },
+
+    {
+      "id": "artsy",
+      "name": "Artsy",
+      "url": "https://www.artsy.net/rss/news",
+      "topic_tags": ["art", "culture", "markets"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Contemporary art news, market trends, and exhibitions"
+    },
+    {
+      "id": "hyperallergic",
+      "name": "Hyperallergic",
+      "url": "https://hyperallergic.com/feed/",
+      "topic_tags": ["art", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Art criticism, exhibitions, and cultural commentary — strong editorial voice"
+    },
+    {
+      "id": "colossal",
+      "name": "Colossal",
+      "url": "https://www.thisiscolossal.com/feed/",
+      "topic_tags": ["art", "design", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Art, design, and visual culture — discovery-focused, image-rich"
+    },
+    {
+      "id": "juxtapoz",
+      "name": "Juxtapoz",
+      "url": "https://www.juxtapoz.com/feed/",
+      "topic_tags": ["art", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Underground and contemporary art — counterculture perspective"
+    },
+    {
+      "id": "the_art_newspaper",
+      "name": "The Art Newspaper",
+      "url": "https://www.theartnewspaper.com/rss.xml",
+      "topic_tags": ["art", "culture", "markets"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "International art news and exhibition reviews. Headlines and summaries free."
+    },
+
+    { "_section": "MUSIC" },
+
+    {
+      "id": "pitchfork",
+      "name": "Pitchfork",
+      "url": "https://pitchfork.com/feed/",
+      "topic_tags": ["music", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Music news, reviews, and features — authoritative indie/alternative music coverage"
+    },
+    {
+      "id": "nme",
+      "name": "NME",
+      "url": "https://www.nme.com/feed",
+      "topic_tags": ["music", "film", "tv", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Music, film, TV, and pop culture news — UK-centric"
+    },
+    {
+      "id": "billboard",
+      "name": "Billboard",
+      "url": "https://www.billboard.com/feed/",
+      "topic_tags": ["music", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Music charts, industry business, and news — the definitive music industry trade"
+    },
+    {
+      "id": "stereogum",
+      "name": "Stereogum",
+      "url": "https://www.stereogum.com/feed/",
+      "topic_tags": ["music", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "New music, reviews, and features — indie and alternative focus"
+    },
+    {
+      "id": "rolling_stone",
+      "name": "Rolling Stone",
+      "url": "https://www.rollingstone.com/music/music-news/feed/",
+      "topic_tags": ["music", "film", "tv", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Music, movies, TV, and politics. Additional feeds: /movies/feed, /tv/feed. Some articles metered."
+    },
+
+    { "_section": "FILM, TV & ENTERTAINMENT" },
+
+    {
+      "id": "variety",
+      "name": "Variety",
+      "url": "https://variety.com/feed/",
+      "topic_tags": ["film", "tv", "theater", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Entertainment industry news, box office, and reviews — leading trade publication. Some articles metered."
+    },
+    {
+      "id": "hollywood_reporter",
+      "name": "The Hollywood Reporter",
+      "url": "https://feeds.feedburner.com/thr/news",
+      "topic_tags": ["film", "tv", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Film, TV, and entertainment business. Some articles metered."
+    },
+    {
+      "id": "indiewire",
+      "name": "IndieWire",
+      "url": "https://www.indiewire.com/feed/",
+      "topic_tags": ["film", "tv", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Independent film and TV news, reviews, and awards coverage — full access"
+    },
+    {
+      "id": "deadline",
+      "name": "Deadline",
+      "url": "https://deadline.com/feed/",
+      "topic_tags": ["film", "tv", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Breaking Hollywood and entertainment news — real-time industry alerts"
+    },
+    {
+      "id": "screen_rant",
+      "name": "Screen Rant",
+      "url": "https://screenrant.com/feed/",
+      "topic_tags": ["film", "tv", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Film and TV news, analysis, and streaming coverage"
+    },
+
+    { "_section": "THEATER" },
+
+    {
+      "id": "playbill",
+      "name": "Playbill",
+      "url": "https://www.playbill.com/rss",
+      "topic_tags": ["theater", "culture", "art"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Broadway and theater news, casting, and openings"
+    },
+    {
+      "id": "theatermania",
+      "name": "TheaterMania",
+      "url": "https://www.theatermania.com/feeds/latest-news.xml",
+      "topic_tags": ["theater", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Theater reviews, news, and listings — broader than Broadway"
+    },
+
+    { "_section": "CULTURE & LIFESTYLE" },
+
+    {
+      "id": "bbc_culture",
+      "name": "BBC Culture",
+      "url": "https://www.bbc.com/culture/feed.rss",
+      "topic_tags": ["culture", "art", "film", "tv", "music"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Arts and culture features and reviews — global, authoritative perspective"
+    },
+    {
+      "id": "guardian_culture",
+      "name": "The Guardian Culture",
+      "url": "https://www.theguardian.com/culture/rss",
+      "topic_tags": ["culture", "art", "music", "film", "travel"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Arts, culture, and entertainment. Sub-feeds: /film/rss, /music/rss, /stage/rss, /travel/rss"
+    },
+    {
+      "id": "nyt_arts",
+      "name": "New York Times Arts",
+      "url": "https://rss.nytimes.com/services/xml/rss/nyt/Arts.xml",
+      "topic_tags": ["art", "culture", "music", "film", "theater"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "NYT arts, culture, and lifestyle. Full text behind NYT paywall after free limit."
+    },
+    {
+      "id": "open_culture",
+      "name": "Open Culture",
+      "url": "https://www.openculture.com/feed",
+      "topic_tags": ["culture", "art", "music", "film"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Free cultural and educational media — curated links to free books, films, courses, art"
+    },
+    {
+      "id": "highsnobiety",
+      "name": "Highsnobiety",
+      "url": "https://www.highsnobiety.com/feed/",
+      "topic_tags": ["culture", "luxury", "fashion", "music", "art"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Streetwear, high fashion, music, art, culture — youth luxury and style"
+    },
+    {
+      "id": "dazed",
+      "name": "Dazed",
+      "url": "https://www.dazeddigital.com/rss",
+      "topic_tags": ["culture", "fashion", "art", "music"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Youth culture, art, music, and fashion — avant-garde perspective"
+    },
+
+    { "_section": "TRAVEL & LUXURY" },
+
+    {
+      "id": "atlas_obscura",
+      "name": "Atlas Obscura",
+      "url": "https://www.atlasobscura.com/feeds/latest",
+      "topic_tags": ["travel", "culture", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Hidden places, travel stories, and wonders of the world — unusual and discovery-focused"
+    },
+    {
+      "id": "conde_nast_traveler",
+      "name": "Condé Nast Traveler",
+      "url": "https://www.cntraveler.com/feed/rss",
+      "topic_tags": ["travel", "luxury"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Luxury travel, hotels, and destinations — high-end editorial"
+    },
+    {
+      "id": "travel_leisure",
+      "name": "Travel + Leisure",
+      "url": "https://www.travelandleisure.com/feed",
+      "topic_tags": ["travel", "luxury"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Travel news, destinations, and tips"
+    },
+    {
+      "id": "lonely_planet",
+      "name": "Lonely Planet",
+      "url": "https://www.lonelyplanet.com/news/rss.xml",
+      "topic_tags": ["travel", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Travel news, guides, and inspiration — accessible, global scope"
+    },
+    {
+      "id": "the_points_guy",
+      "name": "The Points Guy",
+      "url": "https://thepointsguy.com/feed/",
+      "topic_tags": ["travel", "luxury", "finance"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Points, miles, travel news, and luxury travel hacks"
+    },
+    {
+      "id": "robb_report",
+      "name": "Robb Report",
+      "url": "https://robbreport.com/feed/",
+      "topic_tags": ["luxury", "travel", "culture", "design"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Luxury cars, yachts, watches, travel, and design — ultra-high-end lifestyle"
+    },
+
+    { "_section": "WORLD LITERATURE" },
+
+    {
+      "id": "words_without_borders",
+      "name": "Words Without Borders",
+      "url": "https://wordswithoutborders.org/feed/",
+      "topic_tags": ["literature", "culture", "global_affairs", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "International literature in translation — primary source for non-Anglophone writing"
+    },
+    {
+      "id": "lithub",
+      "name": "Literary Hub",
+      "url": "https://lithub.com/feed/",
+      "topic_tags": ["literature", "culture", "society"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "World literature, publishing, and literary culture — broad editorial coverage"
+    },
+    {
+      "id": "guardian_books",
+      "name": "The Guardian Books",
+      "url": "https://www.theguardian.com/books/rss",
+      "topic_tags": ["literature", "culture", "society"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Book reviews, author interviews, and literary news — already a sub-feed of Guardian"
+    },
+    {
+      "id": "world_literature_today",
+      "name": "World Literature Today",
+      "url": "https://www.worldliteraturetoday.org/feed",
+      "topic_tags": ["literature", "culture", "global_affairs"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Essays, reviews, and news on international writing — University of Oklahoma press"
+    },
+
+    { "_section": "PHILOSOPHY" },
+
+    {
+      "id": "daily_nous",
+      "name": "Daily Nous",
+      "url": "https://dailynous.com/feed/",
+      "topic_tags": ["philosophy", "society", "ai"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "News and opinion for the philosophy profession — covers AI ethics, academic philosophy"
+    },
+    {
+      "id": "apa_blog",
+      "name": "APA Blog",
+      "url": "https://blog.apaonline.org/feed/",
+      "topic_tags": ["philosophy", "society", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "American Philosophical Association — philosophy news, interviews, and teaching resources"
+    },
+
+    { "_section": "PSYCHOLOGY" },
+
+    {
+      "id": "bps_digest",
+      "name": "BPS Research Digest",
+      "url": "https://digest.bps.org.uk/feed/",
+      "topic_tags": ["psychology", "science", "research"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "British Psychological Society — rigorous summaries of new psychology research"
+    },
+    {
+      "id": "psychology_today",
+      "name": "Psychology Today",
+      "url": "https://www.psychologytoday.com/us/feed",
+      "topic_tags": ["psychology", "society", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Popular psychology, therapy, and wellness — accessible to general audiences"
+    },
+    {
+      "id": "aps_observer",
+      "name": "APS Observer",
+      "url": "https://www.psychologicalscience.org/observer/feed",
+      "topic_tags": ["psychology", "science", "research"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Association for Psychological Science — research news and professional commentary"
+    },
+    {
+      "id": "sciencedaily_mind",
+      "name": "ScienceDaily – Mind & Brain",
+      "url": "https://www.sciencedaily.com/rss/mind_brain.xml",
+      "topic_tags": ["psychology", "neuroscience", "science", "research"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Dedicated psychology and cognitive science feed from ScienceDaily (narrower than general feed)"
+    },
+
+    { "_section": "SOCIOLOGY" },
+
+    {
+      "id": "the_society_pages",
+      "name": "The Society Pages",
+      "url": "https://thesocietypages.org/feed/",
+      "topic_tags": ["sociology", "society", "culture"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Sociological perspectives on current events — practitioner-written, public-facing"
+    },
+    {
+      "id": "contexts_magazine",
+      "name": "Contexts Magazine",
+      "url": "https://contexts.org/feed/",
+      "topic_tags": ["sociology", "society", "culture", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Public-facing sociology from the American Sociological Association — peer-reviewed but accessible"
+    },
+    {
+      "id": "everyday_sociology",
+      "name": "Everyday Sociology Blog",
+      "url": "https://www.everydaysociologyblog.com/feed/",
+      "topic_tags": ["sociology", "society"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Accessible sociology commentary and analysis — good for grounding abstract concepts"
+    },
+
+    { "_section": "ANTHROPOLOGY & INDIGENOUS" },
+
+    {
+      "id": "sapiens",
+      "name": "SAPIENS",
+      "url": "https://www.sapiens.org/feed/",
+      "topic_tags": ["anthropology", "culture", "society", "humanity", "science"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Public anthropology magazine — cultural, biological, and archaeological anthropology"
+    },
+    {
+      "id": "anthrodendum",
+      "name": "Anthrodendum",
+      "url": "https://anthrodendum.org/feed/",
+      "topic_tags": ["anthropology", "culture", "society"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Cultural anthropology blog (formerly Savage Minds) — academic but accessible"
+    },
+    {
+      "id": "eurekalert_anthro",
+      "name": "EurekAlert! – Anthropology/Archaeology",
+      "url": "https://www.eurekalert.org/rss/archaeology_anthropology.xml",
+      "topic_tags": ["anthropology", "science", "research"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Press releases on anthropology, archaeology, and human origins — primary-source research announcements"
+    },
+    {
+      "id": "leakey_foundation",
+      "name": "The Leakey Foundation",
+      "url": "https://leakeyfoundation.org/feed/",
+      "topic_tags": ["anthropology", "science", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Human evolution and primate research — biological anthropology focus"
+    },
+    {
+      "id": "cultural_survival",
+      "name": "Cultural Survival",
+      "url": "https://www.culturalsurvival.org/rss.xml",
+      "topic_tags": ["indigenous", "culture", "global_affairs", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Indigenous rights, language revitalization, and cultural preservation news"
+    },
+    {
+      "id": "indian_country_today",
+      "name": "Indian Country Today",
+      "url": "https://indiancountrytoday.com/feed",
+      "topic_tags": ["indigenous", "culture", "society", "global_affairs"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Native American and Indigenous news, politics, and culture — North America focus"
+    },
+    {
+      "id": "survival_international",
+      "name": "Survival International",
+      "url": "https://www.survivalinternational.org/feed",
+      "topic_tags": ["indigenous", "humanity", "global_affairs"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "News on tribal peoples and human rights — advocacy-driven, global scope"
+    },
+
+    { "_section": "MEDICINE & GLOBAL HEALTH" },
+
+    {
+      "id": "medical_news_today",
+      "name": "Medical News Today",
+      "url": "https://www.medicalnewstoday.com/feed",
+      "topic_tags": ["medicine", "science", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Medicine, health, and wellness — accessible summaries of research for general audiences"
+    },
+    {
+      "id": "stat_news",
+      "name": "STAT News",
+      "url": "https://www.statnews.com/feed/",
+      "topic_tags": ["medicine", "science", "biotechnology", "ai"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "Breaking news in health, medicine, and life sciences — strong AI-in-medicine coverage"
+    },
+    {
+      "id": "who_news",
+      "name": "WHO News Releases",
+      "url": "https://www.who.int/feeds/news/en/",
+      "topic_tags": ["medicine", "global_affairs", "humanity"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "World Health Organization — disease alerts, global health policy, and emergency declarations"
+    },
+    {
+      "id": "nih_news",
+      "name": "NIH News Releases",
+      "url": "https://www.nih.gov/news-events/news-releases/feed",
+      "topic_tags": ["medicine", "science", "research"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "U.S. National Institutes of Health — biomedical research announcements and clinical findings"
+    },
+    {
+      "id": "nejm",
+      "name": "New England Journal of Medicine",
+      "url": "https://www.nejm.org/feed",
+      "topic_tags": ["medicine", "science", "research"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "NEJM current-issue headlines and summaries. Full text may require subscription."
+    },
+    {
+      "id": "the_lancet",
+      "name": "The Lancet",
+      "url": "https://www.thelancet.com/rss",
+      "topic_tags": ["medicine", "science", "global_affairs", "research"],
+      "requires_key": false,
+      "rate_limit": "unlimited",
+      "notes": "The Lancet general-interest medical journal headlines. Summaries free; full text paywalled."
+    }
+  ],
+
+  "apis": [
+    {
+      "id": "arxiv_api",
+      "name": "arXiv API",
+      "base_url": "http://export.arxiv.org/api/query",
+      "example": "http://export.arxiv.org/api/query?search_query=all:AI+labor&start=0&max_results=10",
+      "topic_tags": ["science", "ai", "robotics", "economy", "research"],
+      "requires_key": false,
+      "rate_limit": "1 req/3 sec (no key); 10 req/sec (with institutional key)",
+      "notes": "Use for targeted search on article topics. Prefer keyword search over broad RSS when you have a specific research question."
+    },
+    {
+      "id": "pubmed",
+      "name": "PubMed E-utilities",
+      "base_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+      "example": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=AI+healthcare&retmode=json",
+      "topic_tags": ["science", "biotechnology", "society", "humanity"],
+      "requires_key": false,
+      "rate_limit": "3 req/sec recommended",
+      "notes": "Biomedical and life sciences literature. Free, no key needed. Pair esearch (find IDs) with efetch (get abstracts)."
+    },
+    {
+      "id": "crossref",
+      "name": "Crossref API",
+      "base_url": "https://api.crossref.org/works",
+      "example": "https://api.crossref.org/works?query=artificial+intelligence+society&rows=10",
+      "topic_tags": ["science", "research", "ai", "economy", "society"],
+      "requires_key": false,
+      "rate_limit": "unlimited (polite pool); add mailto=joselitovsering@gmail.com to requests",
+      "notes": "DOIs, titles, abstracts across journals. Include mailto param for polite pool — faster response."
+    },
+    {
+      "id": "guardian",
+      "name": "The Guardian Open Platform",
+      "base_url": "https://content.guardianapis.com/search",
+      "example": "https://content.guardianapis.com/search?q=AI+labor&api-key=YOUR_KEY",
+      "arts_example": "https://content.guardianapis.com/search?section=artanddesign&api-key=YOUR_KEY",
+      "music_example": "https://content.guardianapis.com/search?section=music&api-key=YOUR_KEY",
+      "film_example": "https://content.guardianapis.com/search?section=film&api-key=YOUR_KEY",
+      "travel_example": "https://content.guardianapis.com/search?section=travel&api-key=YOUR_KEY",
+      "books_example": "https://content.guardianapis.com/search?section=books&api-key=YOUR_KEY",
+      "society_example": "https://content.guardianapis.com/search?section=society&api-key=YOUR_KEY",
+      "global_dev_example": "https://content.guardianapis.com/search?section=global-development&api-key=YOUR_KEY",
+      "topic_tags": ["global_affairs", "technology", "society", "economy", "science", "art", "music", "film", "culture", "travel", "literature", "medicine", "indigenous"],
+      "requires_key": true,
+      "key_env": "GUARDIAN_API_KEY",
+      "key_url": "https://open-platform.theguardian.com/access/",
+      "rate_limit": "5,000 req/day (free, non-commercial)",
+      "notes": "Full Guardian articles by section. Sections: artanddesign, music, film, stage, travel, culture, books, science, society, global-development. Strong for opinion and in-depth angles."
+    },
+    {
+      "id": "nyt",
+      "name": "New York Times Article Search",
+      "base_url": "https://api.nytimes.com/svc/search/v2/articlesearch.json",
+      "example": "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=AI+economy&api-key=YOUR_KEY",
+      "arts_example": "https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=section_name:(\"Arts\")&api-key=YOUR_KEY",
+      "travel_example": "https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=section_name:(\"Travel\")&api-key=YOUR_KEY",
+      "topic_tags": ["global_affairs", "economy", "technology", "society", "science", "art", "culture", "film", "music", "theater", "travel"],
+      "requires_key": true,
+      "key_env": "NYT_API_KEY",
+      "key_url": "https://developer.nytimes.com/",
+      "rate_limit": "5 req/min, 500 req/day",
+      "notes": "Article search, top stories, archives. Filter by section_name: Arts, Travel, Movies, Theater, Style. Good for US and international current events."
+    },
+    {
+      "id": "newsapi",
+      "name": "NewsAPI",
+      "base_url": "https://newsapi.org/v2/everything",
+      "example": "https://newsapi.org/v2/everything?q=generative+AI&language=en&apiKey=YOUR_KEY",
+      "finance_example": "https://newsapi.org/v2/everything?q=markets&domains=bloomberg.com,reuters.com,cnbc.com,ft.com&apiKey=YOUR_KEY",
+      "entertainment_example": "https://newsapi.org/v2/top-headlines?category=entertainment&apiKey=YOUR_KEY",
+      "topic_tags": ["ai", "technology", "economy", "global_affairs", "fintech", "blockchain", "finance", "markets", "culture", "film", "music", "art"],
+      "requires_key": true,
+      "key_env": "NEWSAPI_KEY",
+      "key_url": "https://newsapi.org/register",
+      "rate_limit": "100 req/day (free tier)",
+      "notes": "Aggregates 80k+ sources worldwide. Use category=entertainment for arts/culture. Filter to financial domains for market news."
+    },
+    {
+      "id": "gnews",
+      "name": "GNews API",
+      "base_url": "https://gnews.io/api/v4/search",
+      "example": "https://gnews.io/api/v4/search?q=robotics+society&lang=en&token=YOUR_KEY",
+      "finance_example": "https://gnews.io/api/v4/search?q=market+news&topic=business&token=YOUR_KEY",
+      "topic_tags": ["technology", "ai", "global_affairs", "economy", "society", "finance", "markets"],
+      "requires_key": true,
+      "key_env": "GNEWS_API_KEY",
+      "key_url": "https://gnews.io/",
+      "rate_limit": "100 req/day (free tier)",
+      "notes": "Google News-indexed stories. Use topic=business for finance/markets focus."
+    },
+    {
+      "id": "currents",
+      "name": "Currents API",
+      "base_url": "https://api.currentsapi.services/v1/latest-news",
+      "example": "https://api.currentsapi.services/v1/latest-news?apiKey=YOUR_KEY&language=en&category=technology",
+      "topic_tags": ["technology", "ai", "economy", "global_affairs"],
+      "requires_key": true,
+      "key_env": "CURRENTS_API_KEY",
+      "key_url": "https://currentsapi.services/en/register",
+      "rate_limit": "600 req/day (free tier)",
+      "notes": "Real-time and historical news. Category filters available."
+    },
+    {
+      "id": "mediastack",
+      "name": "MediaStack API",
+      "base_url": "https://api.mediastack.com/v1/news",
+      "example": "http://api.mediastack.com/v1/news?access_key=YOUR_KEY&keywords=blockchain&languages=en",
+      "topic_tags": ["blockchain", "fintech", "economy", "global_affairs", "technology"],
+      "requires_key": true,
+      "key_env": "MEDIASTACK_API_KEY",
+      "key_url": "https://mediastack.com/signup/free",
+      "rate_limit": "500 req/month (free tier)",
+      "notes": "Live news, multi-language. Useful for international and non-English-first stories."
+    },
+    {
+      "id": "event_registry",
+      "name": "Event Registry",
+      "base_url": "https://eventregistry.org/api/v1",
+      "example": "https://eventregistry.org/api/v1/article/getArticles?keyword=AI+labor&lang=eng&apiKey=YOUR_KEY",
+      "topic_tags": ["global_affairs", "economy", "technology", "ai", "society"],
+      "requires_key": true,
+      "key_env": "EVENT_REGISTRY_KEY",
+      "key_url": "https://eventregistry.org/register",
+      "rate_limit": "1,000 req/day (free tier)",
+      "notes": "Event-based news discovery with sentiment, impact, and trend signals. Best for finding angle on breaking events."
+    },
+
+    { "_section": "STATISTICAL DATA APIs", "_note": "These are data sources, not news feeds. Scout uses these to pull quantitative indicators that back article claims — GDP figures, health stats, trade volumes, demographic trends." },
+
+    {
+      "id": "world_bank",
+      "name": "World Bank API",
+      "base_url": "https://api.worldbank.org/v2/country/all/indicator",
+      "example": "https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=json",
+      "gdp_example": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.CD?format=json&date=2020:2024",
+      "topic_tags": ["statistics", "economy", "demographics", "global_affairs", "health_data", "trade"],
+      "requires_key": false,
+      "rate_limit": "moderate (anonymous calls allowed)",
+      "notes": "8,000+ indicators for 200+ countries. Key indicators: SP.POP.TOTL (population), NY.GDP.MKTP.CD (GDP), SI.POV.DDAY (poverty), SH.XPD.CHEX.GD.ZS (health spending). Append &date=YYYY:YYYY for time range."
+    },
+    {
+      "id": "imf_data",
+      "name": "IMF Data API",
+      "base_url": "http://dataservices.imf.org/REST/SDMX_JSON.svc/",
+      "example": "http://dataservices.imf.org/REST/SDMX_JSON.svc/CompactData/IFS/Q.US.PCPI_IX",
+      "topic_tags": ["statistics", "economy", "finance", "trade", "global_affairs"],
+      "requires_key": true,
+      "key_env": "IMF_API_KEY",
+      "key_url": "https://dataservices.imf.org/",
+      "rate_limit": "generous (non-commercial use)",
+      "notes": "SDMX-JSON protocol. Key datasets: IFS (International Financial Statistics), DOTS (trade), GFS (fiscal), WEO (World Economic Outlook). Registration required but generous limits."
+    },
+    {
+      "id": "fred",
+      "name": "FRED — Federal Reserve Economic Data",
+      "base_url": "https://api.stlouisfed.org/fred/series/observations",
+      "example": "https://api.stlouisfed.org/fred/series/observations?series_id=GDP&api_key=YOUR_KEY&file_type=json",
+      "cpi_example": "https://api.stlouisfed.org/fred/series/observations?series_id=CPIAUCSL&api_key=YOUR_KEY&file_type=json",
+      "topic_tags": ["statistics", "economy", "finance", "labor", "markets"],
+      "requires_key": true,
+      "key_env": "FRED_API_KEY",
+      "key_url": "https://fred.stlouisfed.org/docs/api/api_key.html",
+      "rate_limit": "120 req/min (free)",
+      "notes": "816,000+ time series from 100+ sources. Key series: GDP, CPIAUCSL (inflation), UNRATE (unemployment), FEDFUNDS (interest rates), DFF (fed funds). Best for US economic data."
+    },
+    {
+      "id": "un_sdg",
+      "name": "UN SDG Data API",
+      "base_url": "https://unstats.un.org/SDGAPI/v1/sdg",
+      "example": "https://unstats.un.org/SDGAPI/v1/sdg/DataAvailability?indicator=1.1.1",
+      "topic_tags": ["statistics", "global_affairs", "demographics", "economy", "humanity", "health_data"],
+      "requires_key": false,
+      "rate_limit": "fair-use",
+      "notes": "UN Sustainable Development Goals indicators. Covers poverty, hunger, health, education, gender equality, clean energy, and more across all 17 SDGs. No key required."
+    },
+    {
+      "id": "un_comtrade",
+      "name": "UN Comtrade",
+      "base_url": "https://comtrade.un.org/api/get",
+      "example": "https://comtrade.un.org/api/get?max=500&type=C&freq=A&px=HS&ps=2023&r=all&p=0&rg=1&cc=TOTAL",
+      "topic_tags": ["statistics", "trade", "economy", "global_affairs"],
+      "requires_key": true,
+      "key_env": "COMTRADE_API_KEY",
+      "key_url": "https://comtrade.un.org/data/",
+      "rate_limit": "500 records/call (free); higher limits with key",
+      "notes": "Commodity trade data — imports/exports by country and trading partner. Best for global trade articles. Free key after registration."
+    },
+    {
+      "id": "oecd",
+      "name": "OECD Data API",
+      "base_url": "https://stats.oecd.org/SDMX-JSON/data",
+      "example": "https://stats.oecd.org/SDMX-JSON/data/HEALTH_STAT/.../all?startTime=2015&endTime=2023",
+      "topic_tags": ["statistics", "economy", "health_data", "education", "society", "global_affairs"],
+      "requires_key": false,
+      "rate_limit": "moderate",
+      "notes": "OECD official statistics via SDMX-JSON. Datasets: HEALTH_STAT, PIAAC (skills), EAG (education), MEI (macroeconomic indicators), ENV (environment). No key required."
+    },
+    {
+      "id": "eurostat",
+      "name": "Eurostat API",
+      "base_url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data",
+      "example": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/hlth_rs_physd?format=JSON&lang=EN",
+      "topic_tags": ["statistics", "economy", "demographics", "health_data", "society", "global_affairs"],
+      "requires_key": false,
+      "rate_limit": "moderate (anonymous access)",
+      "notes": "EU statistical office — economy, population, energy, health, transport. Best for EU-focused articles. SDMX-JSON and REST. No key required."
+    },
+    {
+      "id": "google_trends",
+      "name": "Google Trends (via pytrends)",
+      "base_url": "python: from pytrends.request import TrendReq",
+      "example": "pip install pytrends — then: TrendReq().build_payload(['AI', 'jobs'], geo='', timeframe='today 12-m')",
+      "topic_tags": ["statistics", "culture", "society", "economy", "technology", "ai"],
+      "requires_key": false,
+      "rate_limit": "unofficial; may be rate-limited or blocked without delay()",
+      "notes": "No official API — pytrends is the standard Python workaround. Add time.sleep(1) between requests to avoid throttling. Use for trend direction, not absolute figures. May break without warning."
+    },
+    {
+      "id": "owid",
+      "name": "Our World in Data",
+      "base_url": "https://raw.githubusercontent.com/owid/owid-datasets/master/datasets",
+      "example": "https://raw.githubusercontent.com/owid/owid-datasets/master/datasets/Life%20expectancy%20-%20Our%20World%20in%20Data/Life%20expectancy%20-%20Our%20World%20in%20Data.csv",
+      "topic_tags": ["statistics", "health_data", "demographics", "economy", "global_affairs", "humanity", "science"],
+      "requires_key": false,
+      "rate_limit": "unlimited (static GitHub files)",
+      "notes": "Long-run global data on health, energy, education, poverty, and inequality. All charts downloadable as CSV. Not a live API — static snapshots updated regularly. Excellent for historical trend data."
+    },
+    {
+      "id": "trading_economics",
+      "name": "Trading Economics",
+      "base_url": "https://api.tradingeconomics.com/country/all/indicator",
+      "example": "https://api.tradingeconomics.com/country/all/indicator/gdp?c=YOUR_KEY",
+      "topic_tags": ["statistics", "economy", "finance", "markets", "trade"],
+      "requires_key": true,
+      "key_env": "TRADING_ECONOMICS_KEY",
+      "key_url": "https://tradingeconomics.com/api/",
+      "rate_limit": "1,000 req/month (free tier)",
+      "notes": "20M+ time series — real-time economic indicators, stock markets, commodities, currencies. Free tier is limited; best for cross-country economic comparisons."
+    },
+    {
+      "id": "nasdaq_data_link",
+      "name": "Nasdaq Data Link (formerly Quandl)",
+      "base_url": "https://data.nasdaq.com/api/v3/datasets",
+      "example": "https://data.nasdaq.com/api/v3/datasets/FRED/GDP.json?api_key=YOUR_KEY",
+      "topic_tags": ["statistics", "economy", "finance", "markets", "trade"],
+      "requires_key": true,
+      "key_env": "NASDAQ_DATA_LINK_KEY",
+      "key_url": "https://data.nasdaq.com/sign-up",
+      "rate_limit": "50 calls/day (free, core data); attribution required",
+      "notes": "Large collection of economic, social, and financial time series from official sources. Access FRED, World Bank, and other datasets through a unified API. Attribution required."
+    },
+    {
+      "id": "bls",
+      "name": "U.S. Bureau of Labor Statistics",
+      "base_url": "https://api.bls.gov/publicAPI/v2/timeseries/data",
+      "example": "https://api.bls.gov/publicAPI/v2/timeseries/data/LAUCN040010000000005?registrationkey=YOUR_KEY",
+      "topic_tags": ["statistics", "labor", "economy", "demographics"],
+      "requires_key": true,
+      "key_env": "BLS_API_KEY",
+      "key_url": "https://data.bls.gov/registrationEngine/",
+      "rate_limit": "500 req/day with key; 25 without",
+      "notes": "Official US labor market data — unemployment, CPI, PPI, wages, productivity. Key series: CES (employment), CPI (inflation), ECI (employment cost). Essential for US labor and economy articles."
+    },
+    {
+      "id": "us_census",
+      "name": "U.S. Census Bureau API",
+      "base_url": "https://api.census.gov/data",
+      "example": "https://api.census.gov/data/2020/dec/pl?get=NAME,P1_001N&for=state:*",
+      "acs_example": "https://api.census.gov/data/2022/acs/acs5?get=NAME,B01001_001E&for=state:*&key=YOUR_KEY",
+      "topic_tags": ["statistics", "demographics", "economy", "society"],
+      "requires_key": true,
+      "key_env": "CENSUS_API_KEY",
+      "key_url": "https://api.census.gov/data/key_signup.html",
+      "rate_limit": "500 queries/day without key; higher with key",
+      "notes": "US population, demographics, housing, and business data. Key surveys: ACS (American Community Survey), Decennial Census. Good for US inequality, race, immigration articles."
+    },
+    {
+      "id": "data_gov",
+      "name": "Data.gov API",
+      "base_url": "https://catalog.data.gov/api/3/action/package_search",
+      "example": "https://catalog.data.gov/api/3/action/package_search?q=health",
+      "topic_tags": ["statistics", "health_data", "society", "economy", "labor"],
+      "requires_key": false,
+      "rate_limit": "rate limited (generous for normal use)",
+      "notes": "CKAN API aggregating thousands of US open government datasets. Use package_search to find datasets, then download via datastore_search. Good for finding niche government data."
+    },
+    {
+      "id": "cdc_wonder",
+      "name": "CDC WONDER",
+      "base_url": "https://wonder.cdc.gov/wonder/help/WONDER-API.html",
+      "example": "POST XML request — see https://wonder.cdc.gov/wonder/help/WONDER-API.html",
+      "topic_tags": ["statistics", "health_data", "demographics", "medicine"],
+      "requires_key": false,
+      "rate_limit": "moderate (no key required)",
+      "notes": "US public health data — births, deaths, cancer, disease prevalence. Complex XML POST format. Best for US mortality, disease burden, and public health articles. No key, but complex to query."
+    },
+
+    { "_section": "FINANCIAL DATA APIs" },
+
+    {
+      "id": "finnhub",
+      "name": "Finnhub",
+      "base_url": "https://finnhub.io/api/v1/news",
+      "example": "https://finnhub.io/api/v1/news?category=general&token=YOUR_KEY",
+      "ticker_example": "https://finnhub.io/api/v1/company-news?symbol=AAPL&from=2026-01-01&to=2026-06-22&token=YOUR_KEY",
+      "topic_tags": ["finance", "markets", "algorithmic_trading"],
+      "requires_key": true,
+      "key_env": "FINNHUB_API_KEY",
+      "key_url": "https://finnhub.io/register",
+      "rate_limit": "60 calls/min (free tier)",
+      "notes": "Company news, market news, press releases. Ticker-specific news ideal for algorithmic trading context articles."
+    },
+    {
+      "id": "iex_cloud",
+      "name": "IEX Cloud",
+      "base_url": "https://cloud.iexapis.com/stable/news/last",
+      "example": "https://cloud.iexapis.com/stable/news/last?token=YOUR_KEY",
+      "ticker_example": "https://cloud.iexapis.com/stable/stock/AAPL/news/last/5?token=YOUR_KEY",
+      "topic_tags": ["finance", "markets", "algorithmic_trading"],
+      "requires_key": true,
+      "key_env": "IEX_CLOUD_API_KEY",
+      "key_url": "https://iexcloud.io/cloud-login#/register",
+      "rate_limit": "50,000 messages/month (free tier)",
+      "notes": "News per symbol or general market news. Machine-readable format ideal for trading bot or dashboard context."
+    },
+    {
+      "id": "polygon",
+      "name": "Polygon.io",
+      "base_url": "https://api.polygon.io/v2/reference/news",
+      "example": "https://api.polygon.io/v2/reference/news?apiKey=YOUR_KEY",
+      "ticker_example": "https://api.polygon.io/v2/reference/news?ticker=AAPL&apiKey=YOUR_KEY",
+      "topic_tags": ["finance", "markets", "algorithmic_trading"],
+      "requires_key": true,
+      "key_env": "POLYGON_API_KEY",
+      "key_url": "https://polygon.io/signup",
+      "rate_limit": "5 calls/min (free tier)",
+      "notes": "Aggregated financial news articles. Ticker-specific filtering available. Good for quant/trading angle research."
+    },
+    {
+      "id": "alpaca_news",
+      "name": "Alpaca Markets News",
+      "base_url": "https://data.alpaca.markets/v1beta1/news",
+      "example": "https://data.alpaca.markets/v1beta1/news (headers: APCA-API-KEY-ID + APCA-API-SECRET-KEY)",
+      "topic_tags": ["finance", "markets", "algorithmic_trading"],
+      "requires_key": true,
+      "key_env": "ALPACA_API_KEY_ID",
+      "key_secret_env": "ALPACA_API_SECRET_KEY",
+      "key_url": "https://alpaca.markets/",
+      "rate_limit": "unlimited (free paper-trading account)",
+      "notes": "US equities news feed. Free with paper-trading account — no live trading required. Keys passed as request headers, not query params."
+    }
+  ],
+
+  "local_data_paths": [
+    {
+      "id": "research_cache",
+      "path": "articles/research/",
+      "description": "Pre-cached CSVs and JSONs dropped here are picked up automatically by Scout at run start. Useful for pre-loaded datasets, webhook outputs, or manual research drops.",
+      "file_patterns": ["*.json", "*.csv"],
+      "notes": "Scout reads all files in this directory before fetching any external source."
+    }
+  ],
+
+  "topic_tag_index": {
+    "_note": "Tags used across sources for topic matching. Scout filters sources by matching article brief keywords against these tags.",
+    "ai": ["venturebeat_ai", "openai_blog", "stability_ai", "ieee_spectrum", "science_daily", "mit_tech_review", "arxiv_cs_ai", "arxiv_api", "phys_org", "ars_technica", "the_verge", "wired", "techcrunch", "gnews", "newsapi", "currents", "guardian", "nyt", "event_registry", "eurekalert", "the_conversation"],
+    "space": ["nasa", "esa", "space_com", "phys_org", "ars_technica", "the_verge"],
+    "robotics": ["ieee_spectrum", "robohub", "science_daily", "arxiv_cs_ro", "arxiv_api", "phys_org"],
+    "blockchain": ["coindesk", "techcrunch", "mediastack", "newsapi"],
+    "fintech": ["coindesk", "finextra", "techcrunch", "newsapi", "mediastack"],
+    "economy": ["project_syndicate", "the_conversation", "un_news", "arxiv_econ", "crossref", "guardian", "nyt", "event_registry", "al_jazeera", "reuters_markets", "marketwatch", "bloomberg_markets", "financial_times", "zerohedge"],
+    "generative_media": ["openai_blog", "stability_ai", "creative_bloq", "venturebeat_ai", "mit_tech_review"],
+    "society": ["the_conversation", "aeon", "bbc_future", "scientific_american", "wired", "al_jazeera", "the_intercept", "un_news", "guardian", "nyt"],
+    "global_affairs": ["un_news", "al_jazeera", "the_intercept", "project_syndicate", "guardian", "nyt", "event_registry", "mediastack", "gnews", "reuters_markets", "bloomberg_markets", "financial_times", "zerohedge"],
+    "humanity": ["the_conversation", "aeon", "bbc_future", "un_news", "al_jazeera", "scientific_american"],
+    "science": ["nasa", "esa", "science_daily", "nature_news", "phys_org", "scientific_american", "eurekalert", "plos_one", "arxiv_api", "pubmed", "crossref"],
+    "technology": ["mit_tech_review", "wired", "ars_technica", "techcrunch", "the_verge", "ieee_spectrum", "phys_org"],
+    "research": ["arxiv_cs_ai", "arxiv_cs_ro", "arxiv_econ", "arxiv_api", "pubmed", "crossref", "plos_one", "nature_news", "eurekalert"],
+    "finance": ["reuters_markets", "marketwatch", "cnbc_markets", "bloomberg_markets", "yahoo_finance", "seeking_alpha", "investopedia", "benzinga", "zerohedge", "financial_times", "finnhub", "iex_cloud", "polygon", "alpaca_news", "newsapi", "gnews"],
+    "markets": ["reuters_markets", "marketwatch", "cnbc_markets", "bloomberg_markets", "yahoo_finance", "seeking_alpha", "benzinga", "financial_times", "finnhub", "iex_cloud", "polygon", "alpaca_news", "forexlive", "fxstreet", "dailyfx"],
+    "technical_analysis": ["stockcharts_ta", "ta_stocks_commodities", "investopedia", "fxstreet", "dailyfx", "forexlive"],
+    "algorithmic_trading": ["finnhub", "iex_cloud", "polygon", "alpaca_news", "seeking_alpha", "benzinga", "stockcharts_ta", "ta_stocks_commodities"],
+    "forex": ["fxstreet", "dailyfx", "forexlive"],
+    "commodities": ["dailyfx", "ta_stocks_commodities", "reuters_markets", "bloomberg_markets"],
+    "art": ["artsy", "hyperallergic", "colossal", "juxtapoz", "the_art_newspaper", "bbc_culture", "guardian_culture", "nyt_arts", "open_culture", "playbill", "dazed", "guardian", "nyt", "newsapi"],
+    "music": ["pitchfork", "nme", "billboard", "stereogum", "rolling_stone", "bbc_culture", "guardian_culture", "nyt_arts", "open_culture", "highsnobiety", "dazed", "guardian", "nyt", "newsapi"],
+    "film": ["variety", "hollywood_reporter", "indiewire", "deadline", "screen_rant", "rolling_stone", "nme", "bbc_culture", "guardian_culture", "nyt_arts", "open_culture", "guardian", "nyt", "newsapi"],
+    "tv": ["variety", "hollywood_reporter", "indiewire", "deadline", "screen_rant", "rolling_stone", "nme", "nyt_arts", "newsapi"],
+    "theater": ["playbill", "theatermania", "variety", "nyt_arts", "guardian", "nyt"],
+    "culture": ["bbc_culture", "guardian_culture", "nyt_arts", "open_culture", "highsnobiety", "dazed", "atlas_obscura", "aeon", "the_conversation", "hyperallergic", "colossal", "rolling_stone", "nme", "guardian", "nyt", "newsapi"],
+    "luxury": ["robb_report", "conde_nast_traveler", "travel_leisure", "the_points_guy", "highsnobiety"],
+    "travel": ["atlas_obscura", "conde_nast_traveler", "travel_leisure", "lonely_planet", "the_points_guy", "robb_report", "guardian_culture", "guardian", "nyt"],
+    "design": ["colossal", "robb_report", "ieee_spectrum", "wired"],
+    "fashion": ["highsnobiety", "dazed"],
+    "literature": ["words_without_borders", "lithub", "guardian_books", "world_literature_today", "open_culture", "guardian", "nyt"],
+    "philosophy": ["daily_nous", "apa_blog", "aeon"],
+    "psychology": ["bps_digest", "psychology_today", "aps_observer", "sciencedaily_mind", "aeon", "eurekalert"],
+    "neuroscience": ["sciencedaily_mind", "bps_digest", "science_daily", "stat_news"],
+    "sociology": ["the_society_pages", "contexts_magazine", "everyday_sociology", "aeon", "the_conversation"],
+    "anthropology": ["sapiens", "anthrodendum", "eurekalert_anthro", "leakey_foundation", "eurekalert", "plos_one", "arxiv_api", "pubmed"],
+    "indigenous": ["cultural_survival", "indian_country_today", "survival_international"],
+    "medicine": ["medical_news_today", "stat_news", "who_news", "nih_news", "nejm", "the_lancet", "eurekalert", "plos_one", "pubmed", "science_daily", "guardian"],
+    "statistics": ["world_bank", "imf_data", "fred", "un_sdg", "un_comtrade", "oecd", "eurostat", "owid", "trading_economics", "nasdaq_data_link", "bls", "us_census", "data_gov", "cdc_wonder"],
+    "demographics": ["world_bank", "un_sdg", "eurostat", "owid", "us_census", "cdc_wonder", "pubmed"],
+    "economic_data": ["world_bank", "imf_data", "fred", "oecd", "eurostat", "trading_economics", "nasdaq_data_link", "bls"],
+    "trade": ["world_bank", "imf_data", "un_comtrade", "oecd", "trading_economics", "nasdaq_data_link", "reuters_markets", "bloomberg_markets"],
+    "labor": ["fred", "bls", "oecd", "world_bank", "data_gov"],
+    "health_data": ["world_bank", "un_sdg", "oecd", "eurostat", "owid", "cdc_wonder", "data_gov", "who_news", "nih_news", "pubmed"]
+  }
+}

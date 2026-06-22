@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AIMA Agent Pipeline — Workflow Architecture</title>
+<meta name="description" content="Architecture document and interactive diagram for the AIMA Magazine automated publishing pipeline. Nine specialized agents from trigger to analytics."/>
+<link rel="icon" type="image/svg+xml" href="../img/favicon-dark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+
+<style>
+/* ══ BRAND TOKENS ═══════════════════════════════════════════════════════ */
+:root {
+  --bg:#060810; --surface:#0B0E1C; --surface2:#10142A; --surface3:#161B36;
+  --cyan:#00D9F5; --orange:#FF5E20; --gold:#C8A84B; --gold-lt:#EDD483;
+  --green:#2DCA73; --purple:#A259FF; --red:#FF4060; --text:#DFE6F5;
+  --muted:#7A8BAA; --border:rgba(0,217,245,0.12); --border2:rgba(255,255,255,0.06);
+  --glow-c:rgba(0,217,245,0.25); --glow-o:rgba(255,94,32,0.20);
+  --glow-g:rgba(45,202,115,0.20); --glow-p:rgba(162,89,255,0.20);
+  --radius:6px; --mono:'Courier Prime',monospace; --nav-h:72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65;padding-top:var(--nav-h);}
+a{color:var(--cyan);text-decoration:none;transition:opacity .2s;}
+a:hover{opacity:.8;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px;}
+
+/* ══ NAV ══════════════════════════════════════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;background:rgba(6,8,16,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,217,245,.10);}
+.container{max-width:1180px;margin:0 auto;padding:0 32px;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.05em;text-transform:uppercase;color:#fff;text-decoration:none;}
+.nav-logo .pulse{width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:pulse 2.2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
+.nav-logo .ma{color:var(--cyan);}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none;}
+.nav-links a{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:color .2s;text-decoration:none;position:relative;padding-bottom:2px;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+.nav-links a:hover{color:#fff;}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-links a.active{color:var(--cyan);}
+.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:10px 20px;border-radius:var(--radius);transition:box-shadow .2s;text-decoration:none;}
+.nav-cta:hover{box-shadow:0 0 22px var(--glow-c);color:var(--bg);}
+
+/* ══ HERO ═════════════════════════════════════════════════════════════ */
+.hero{padding:80px 0 60px;border-bottom:1px solid var(--border2);}
+.hero-label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(36px,5vw,64px);letter-spacing:.02em;text-transform:uppercase;line-height:1.0;color:#fff;margin-bottom:20px;}
+.hero h1 span{color:var(--cyan);}
+.hero-sub{font-size:17px;color:var(--muted);max-width:640px;line-height:1.6;}
+.hero-meta{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap;}
+.hero-tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:6px 12px;border:1px solid var(--border);border-radius:4px;}
+.hero-tag span{color:var(--cyan);}
+
+/* ══ SECTIONS ═════════════════════════════════════════════════════════ */
+.section{padding:72px 0;border-bottom:1px solid var(--border2);}
+.section:last-child{border-bottom:none;}
+.section-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--cyan);}
+.section h2{font-family:'Anton',sans-serif;font-size:clamp(24px,3vw,36px);letter-spacing:.03em;text-transform:uppercase;color:#fff;margin-bottom:32px;}
+
+/* ══ PIPELINE DIAGRAM ═════════════════════════════════════════════════ */
+.pipeline-wrap{overflow-x:auto;padding-bottom:20px;}
+.pipeline{display:flex;flex-direction:column;align-items:center;gap:0;min-width:680px;}
+
+/* connector line */
+.pipe-connector{width:2px;height:36px;background:linear-gradient(to bottom,rgba(0,217,245,.3),rgba(0,217,245,.1));position:relative;flex-shrink:0;}
+.pipe-connector::after{content:'▼';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(0,217,245,.5);}
+
+/* agent card */
+.agent-card{width:100%;max-width:680px;position:relative;cursor:pointer;}
+.agent-inner{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:16px;padding:18px 24px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;transition:border-color .25s,box-shadow .25s,transform .2s;}
+.agent-inner:hover{transform:translateX(4px);}
+
+/* color bands per agent */
+.agent-card.c-cyan  .agent-inner{border-left:3px solid var(--cyan);}
+.agent-card.c-cyan  .agent-inner:hover{border-color:var(--cyan);box-shadow:0 0 24px var(--glow-c);}
+.agent-card.c-gold  .agent-inner{border-left:3px solid var(--gold);}
+.agent-card.c-gold  .agent-inner:hover{border-color:var(--gold);box-shadow:0 0 24px rgba(200,168,75,.25);}
+.agent-card.c-purple .agent-inner{border-left:3px solid var(--purple);}
+.agent-card.c-purple .agent-inner:hover{border-color:var(--purple);box-shadow:0 0 24px var(--glow-p);}
+.agent-card.c-green .agent-inner{border-left:3px solid var(--green);}
+.agent-card.c-green .agent-inner:hover{border-color:var(--green);box-shadow:0 0 24px var(--glow-g);}
+.agent-card.c-orange .agent-inner{border-left:3px solid var(--orange);}
+.agent-card.c-orange .agent-inner:hover{border-color:var(--orange);box-shadow:0 0 24px var(--glow-o);}
+
+.agent-avatar{width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:18px;letter-spacing:.05em;flex-shrink:0;}
+.c-cyan   .agent-avatar{background:rgba(0,217,245,.12);color:var(--cyan);}
+.c-gold   .agent-avatar{background:rgba(200,168,75,.12);color:var(--gold);}
+.c-purple .agent-avatar{background:rgba(162,89,255,.12);color:var(--purple);}
+.c-green  .agent-avatar{background:rgba(45,202,115,.12);color:var(--green);}
+.c-orange .agent-avatar{background:rgba(255,94,32,.12);color:var(--orange);}
+
+.agent-info{}
+.agent-name{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:#fff;line-height:1.2;}
+.agent-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.agent-role{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4;}
+
+.agent-badge{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
+.badge-auto{background:rgba(45,202,115,.15);color:var(--green);border:1px solid rgba(45,202,115,.3);}
+.badge-human{background:rgba(255,94,32,.15);color:var(--orange);border:1px solid rgba(255,94,32,.3);}
+.badge-toggle{background:rgba(162,89,255,.15);color:var(--purple);border:1px solid rgba(162,89,255,.3);}
+.badge-anchor{background:rgba(200,168,75,.15);color:var(--gold);border:1px solid rgba(200,168,75,.3);}
+
+/* ── tooltip panel (hidden by default) ─────────────────────────────── */
+.agent-tooltip{display:none;margin-top:2px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:20px 24px;animation:fadeDown .2s ease;}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.agent-card.open .agent-tooltip{display:block;}
+.agent-card.open .agent-inner{border-radius:8px 8px 0 0;border-bottom-color:transparent;}
+.agent-card.open .agent-tooltip{border-radius:0 0 8px 8px;border-top:none;}
+
+.tt-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.tt-block{}
+.tt-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;}
+.tt-files{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.tt-files li{font-family:var(--mono);font-size:11px;color:var(--muted);padding:4px 8px;background:var(--surface);border-radius:4px;border:1px solid var(--border2);word-break:break-all;}
+.tt-files li span{color:var(--text);}
+.tt-purpose{font-size:13px;color:var(--muted);line-height:1.55;}
+.tt-code{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:12px;margin-top:8px;}
+.tt-code pre{font-family:var(--mono);font-size:11px;color:#EDD483;white-space:pre-wrap;word-break:break-all;line-height:1.6;}
+.tt-divider{grid-column:1/-1;height:1px;background:var(--border2);margin:4px 0;}
+.tt-trigger{font-family:var(--mono);font-size:11px;color:var(--muted);padding:4px 0;}
+.tt-trigger span{color:var(--green);}
+
+/* ══ BATCH MODE TABLE ═════════════════════════════════════════════════ */
+.batch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:8px;}
+.batch-card{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:20px;}
+.batch-card-title{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:6px;}
+.batch-card-agents{font-family:var(--mono);font-size:11px;color:var(--cyan);margin-bottom:8px;}
+.batch-card-desc{font-size:13px;color:var(--muted);line-height:1.5;}
+
+/* ══ TOGGLE TABLE ═════════════════════════════════════════════════════ */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border2);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-key{font-family:var(--mono);font-size:13px;color:var(--gold);}
+.toggle-vals{display:flex;gap:8px;}
+.toggle-val{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:4px;}
+.tv-on{background:rgba(45,202,115,.15);color:var(--green);border:1px solid rgba(45,202,115,.3);}
+.tv-off{background:rgba(122,139,170,.1);color:var(--muted);border:1px solid var(--border2);}
+.toggle-desc{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* ══ AGENT PROMPT CARDS ═══════════════════════════════════════════════ */
+.prompt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;}
+.prompt-card{background:var(--surface);border:1px solid var(--border2);border-radius:8px;overflow:hidden;}
+.prompt-card-head{padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border2);}
+.prompt-card-avatar{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:13px;flex-shrink:0;}
+.prompt-card-name{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#fff;}
+.prompt-card-title{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
+.prompt-card-body{padding:16px 20px;}
+.prompt-card-body pre{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:pre-wrap;line-height:1.7;max-height:220px;overflow-y:auto;}
+.prompt-card-body pre::-webkit-scrollbar{width:3px;}
+.prompt-card-body pre::-webkit-scrollbar-thumb{background:var(--surface3);}
+
+/* ══ SEPARATION TABLE ═════════════════════════════════════════════════ */
+.sep-table{width:100%;border-collapse:collapse;}
+.sep-table th{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);}
+.sep-table td{padding:12px 16px;border-bottom:1px solid var(--border2);font-size:13px;vertical-align:top;}
+.sep-table tr:last-child td{border-bottom:none;}
+.sep-table tr:hover td{background:rgba(255,255,255,.02);}
+.sep-agent{font-family:'Anton',sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;}
+.sep-files{font-family:var(--mono);font-size:11px;color:var(--cyan);}
+.sep-never{font-family:var(--mono);font-size:11px;color:var(--muted);}
+
+/* ══ STATUS TABLE ═════════════════════════════════════════════════════ */
+.status-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.status-card{background:var(--surface);border:1px solid var(--border2);border-radius:6px;padding:14px 16px;}
+.status-agent{font-family:'Anton',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:4px;}
+.status-badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:3px 8px;border-radius:4px;margin-bottom:8px;}
+.s-working{background:rgba(45,202,115,.15);color:var(--green);border:1px solid rgba(45,202,115,.3);}
+.s-partial{background:rgba(200,168,75,.15);color:var(--gold);border:1px solid rgba(200,168,75,.3);}
+.s-manual{background:rgba(122,139,170,.1);color:var(--muted);border:1px solid var(--border2);}
+.s-build{background:rgba(255,94,32,.1);color:var(--orange);border:1px solid rgba(255,94,32,.2);}
+.status-note{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* ══ FLOW LEGEND ══════════════════════════════════════════════════════ */
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:32px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.legend-dot{width:8px;height:8px;border-radius:50%;}
+
+/* ══ SECTION PROSE ════════════════════════════════════════════════════ */
+.prose{max-width:720px;}
+.prose p{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.prose strong{color:var(--text);}
+
+/* ══ FILE PATH BOX ════════════════════════════════════════════════════ */
+.filepath-tree{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;font-family:var(--mono);font-size:12px;line-height:2;color:var(--muted);}
+.filepath-tree .f-dir{color:var(--cyan);}
+.filepath-tree .f-file{color:var(--text);}
+.filepath-tree .f-comment{color:var(--muted);}
+.filepath-tree .f-important{color:var(--gold);}
+
+/* ══ FOOTER ═══════════════════════════════════════════════════════════ */
+footer{padding:48px 0;border-top:1px solid var(--border2);}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-brand{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+.footer-brand span{color:var(--cyan);}
+.footer-note{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+/* ══ RESPONSIVE ═══════════════════════════════════════════════════════ */
+@media(max-width:768px){
+  .container{padding:0 20px;}
+  .nav-links{display:none;}
+  .tt-grid{grid-template-columns:1fr;}
+  .hero h1{font-size:32px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────────────── -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <div class="pulse"></div>
+        <span class="wordmark">AI<span class="ma">MA</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#articles">Articles</a></li>
+        <li><a href="#diagram" class="active">Pipeline</a></li>
+        <li><a href="#prompts">Agent Prompts</a></li>
+        <li><a href="#status">Status</a></li>
+      </ul>
+      <a href="../index.html#articles" class="nav-cta">Read AIMA</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-label">Internal Architecture · v1.0 · June 2026</div>
+    <h1>AIMA <span>Agent</span><br>Pipeline</h1>
+    <p class="hero-sub">Nine specialized agents handle every stage of AIMA Magazine's automated publishing workflow — from article assignment to LinkedIn analytics. Each agent runs independently and can be toggled on or off to economize tokens and batch work.</p>
+    <div class="hero-meta">
+      <div class="hero-tag">Agents: <span>9</span></div>
+      <div class="hero-tag">Pipeline Stages: <span>9</span></div>
+      <div class="hero-tag">Batch Modes: <span>7</span></div>
+      <div class="hero-tag">Stage Toggles: <span>7</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PIPELINE DIAGRAM ──────────────────────────────────────────────── -->
+<section class="section" id="diagram">
+  <div class="container">
+    <div class="section-label">Interactive Diagram</div>
+    <h2>Pipeline Architecture</h2>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--cyan)"></div>Trigger / Comms</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Oversight</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Content</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Autonomous</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>Human Gate</div>
+    </div>
+
+    <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Click any agent to expand its files, purpose, and code parameters.</p>
+
+    <div class="pipeline-wrap">
+      <div class="pipeline">
+
+        <!-- 1. IRIS — TRIGGER -->
+        <div class="agent-card c-cyan" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">IR</div>
+            <div class="agent-info">
+              <div class="agent-name">Iris</div>
+              <div class="agent-title">Pipeline Initiator</div>
+              <div class="agent-role">Fires the pipeline. Reads state to determine the next article, date, and track. Sets the run context for all downstream agents.</div>
+            </div>
+            <span class="agent-badge badge-auto">Auto</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Files Read</div>
+                <ul class="tt-files">
+                  <li><span>articles/aima-coworker-state.json</span> — next article, track, date</li>
+                  <li><span>articles/aima-coworker-prompt.md</span> — master pipeline instructions</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">Triggers</div>
+                <div class="tt-trigger"><span>Scheduled:</span> Cowork task `aima-article-coworker` (daily)</div>
+                <div class="tt-trigger"><span>Manual:</span> Direct invocation in Cowork session</div>
+              </div>
+              <div class="tt-divider"></div>
+              <div class="tt-block" style="grid-column:1/-1">
+                <div class="tt-label">Output — Run Context Object</div>
+                <div class="tt-code"><pre>{
+  "article_number": N,
+  "track": "joselito | trending",
+  "next_article_date": "YYYY-MM-DD",
+  "stages_enabled": {
+    "research": true, "write": true,
+    "qc_gate": "human | auto",
+    "publish": true, "marketing": true
+  }
+}</pre></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-connector"></div>
+
+        <!-- 2. MARCO — PRODUCT MANAGER -->
+        <div class="agent-card c-gold" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">MR</div>
+            <div class="agent-info">
+              <div class="agent-name">Marco</div>
+              <div class="agent-title">Execution Director · Product Manager</div>
+              <div class="agent-role">Orchestrates every stage. Checks quality at each gate. Updates state file. Logs decisions to CLAUDE.md and pipeline.log.</div>
+            </div>
+            <span class="agent-badge badge-anchor">Overseer</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Files Read</div>
+                <ul class="tt-files">
+                  <li><span>articles/aima-coworker-state.json</span> — pipeline state</li>
+                  <li><span>linkedin_pipeline/pipeline.log</span> — last 20 lines (error check)</li>
+                  <li><span>linkedin_pipeline/post_log.json</span> — pending analytics</li>
+                  <li><span>CLAUDE.md</span> — project memory &amp; decisions</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">Stage Toggle Flags</div>
+                <ul class="tt-files">
+                  <li><span>RESEARCH_ENABLED</span> = true | false</li>
+                  <li><span>WRITE_ENABLED</span> = true | false</li>
+                  <li><span>QC_GATE</span> = human | auto</li>
+                  <li><span>PUBLISH_ENABLED</span> = true | false</li>
+                  <li><span>MARKETING_ENABLED</span> = true | false</li>
+                  <li><span>ANALYTICS_ENABLED</span> = true | false</li>
+                </ul>
+              </div>
+              <div class="tt-divider"></div>
+              <div class="tt-block" style="grid-column:1/-1">
+                <div class="tt-label">End-of-Run Actions</div>
+                <div class="tt-code"><pre># Update state file
+next_article_number += 1
+next_track = rotate("joselito" | "trending")
+last_run = today
+
+# Write to CLAUDE.md if blockers exist
+# Close run log entry with stage results</pre></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-connector"></div>
+
+        <!-- 3. PRIYA — EDITORIAL CALENDAR -->
+        <div class="agent-card c-purple" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">PR</div>
+            <div class="agent-info">
+              <div class="agent-name">Priya</div>
+              <div class="agent-title">Calendar Coordinator · Editorial Calendar</div>
+              <div class="agent-role">Resolves the next article assignment from the editorial calendar and persona rotation. Outputs a complete article spec. Does not write.</div>
+            </div>
+            <span class="agent-badge badge-auto">Auto</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Files Read</div>
+                <ul class="tt-files">
+                  <li><span>articles/aima-editorial-calendar.md</span> — source of truth for all article titles, authors, categories</li>
+                  <li><span>articles/aima-coworker-state.json</span> — joselito.next_calendar_index, trending.next_persona</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">Author Resolution Logic</div>
+                <div class="tt-code"><pre>if track == "joselito":
+  author = "Joselito Sering"
+  use joselito.next_calendar_index
+
+if track == "trending":
+  author = trending.next_persona
+  rotate: dawn → kenji → dawn</pre></div>
+              </div>
+              <div class="tt-divider"></div>
+              <div class="tt-block" style="grid-column:1/-1">
+                <div class="tt-label">Output — Article Spec JSON</div>
+                <div class="tt-code"><pre>{
+  "number": 17, "slug": "dawn-ginhaua-ai-gender-gap",
+  "filename": "aima-article-[slug]-017.html",
+  "title": "...", "author": "dawn",
+  "category": "AI Society", "read_time": 10,
+  "publish_date": "2026-06-26",
+  "tone": "critical, feminist, globally-minded",
+  "tags": ["#AIEthics", "#GenderEquity", "#AIMA"]
+}</pre></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-connector"></div>
+
+        <!-- 4. SCOUT — RESEARCH AGENT -->
+        <div class="agent-card c-green" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">SC</div>
+            <div class="agent-info">
+              <div class="agent-name">Scout</div>
+              <div class="agent-title">Intelligence Analyst · Research Agent</div>
+              <div class="agent-role">Autonomous. Gathers sources, statistics, expert quotes, and counterarguments. Caches a research brief. Runs independently — writer can be off.</div>
+            </div>
+            <span class="agent-badge badge-auto">Autonomous</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Fetch (Web Search + WebFetch)</div>
+                <ul class="tt-files">
+                  <li>3–5 primary sources: studies, IMF/World Bank reports, academic papers</li>
+                  <li>2–3 expert quotes with name + affiliation</li>
+                  <li>4–6 key statistics (named source + year required)</li>
+                  <li>Contrarian / dissenting perspectives</li>
+                  <li>Related news (last 6 months)</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">Output File</div>
+                <ul class="tt-files">
+                  <li><span>articles/research/[slug]-research.json</span></li>
+                </ul>
+                <div class="tt-code" style="margin-top:8px"><pre>{
+  "article_number": 17, "slug": "...",
+  "researched_at": "YYYY-MM-DD",
+  "sources": [{ "title","url","publisher",
+    "date","key_stat" }],
+  "key_statistics": [],
+  "expert_quotes": [{ "name","affiliation",
+    "quote" }],
+  "background": "...",
+  "current_state": "...",
+  "counterarguments": "...",
+  "implications": "..."
+}</pre></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-connector"></div>
+
+        <!-- 5. QUILL — AUTHOR AGENT -->
+        <div class="agent-card c-purple" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">QL</div>
+            <div class="agent-info">
+              <div class="agent-name">Quill</div>
+              <div class="agent-title">Senior Writer · Author Agent</div>
+              <div class="agent-role">Writes the full article HTML in the persona's voice using the research brief. Generates the cover image via Higgsfield AI. Stages files. Does NOT push.</div>
+            </div>
+            <span class="agent-badge badge-toggle">Stage-able</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Files Read</div>
+                <ul class="tt-files">
+                  <li><span>articles/personas/[persona]-profile.md</span> — voice, tone, backstory</li>
+                  <li><span>articles/aima-coworker-prompt.md</span> — HTML structure rules</li>
+                  <li><span>articles/research/[slug]-research.json</span> — verified sources</li>
+                  <li><span>articles/[prev-article].html</span> — extract prev-url</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">Files Written</div>
+                <ul class="tt-files">
+                  <li><span>articles/aima-article-[slug]-[NNN].html</span> — new article</li>
+                  <li><span>articles/[prev-article].html</span> — updated next-url</li>
+                  <li><span>img/articles/aima-[NNN]-[slug].jpg</span> — 1200×630 cover</li>
+                </ul>
+              </div>
+              <div class="tt-divider"></div>
+              <div class="tt-block">
+                <div class="tt-label">Cover Image</div>
+                <div class="tt-code"><pre># Higgsfield AI generation
+model: nano_banana_pro, ratio: 16:9
+→ Download PNG from CDN
+→ PIL resize to 1200×630 JPG
+→ Save to img/articles/</pre></div>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">Git Staging (no push)</div>
+                <div class="tt-code"><pre>git add articles/[new-article].html
+git add articles/[prev-article].html
+git add img/articles/[cover].jpg
+# NO commit/push — Porter's job</pre></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-connector"></div>
+
+        <!-- 6. VERA — QC GATE -->
+        <div class="agent-card c-orange" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">VR</div>
+            <div class="agent-info">
+              <div class="agent-name">Vera</div>
+              <div class="agent-title">Quality Director · QC Gate</div>
+              <div class="agent-role">Runs 11-point quality checklist. Toggle: human (pause for approval) or auto (proceed if all pass). On failure, returns to Quill with notes.</div>
+            </div>
+            <span class="agent-badge badge-human">Human Toggle</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Toggle</div>
+                <div class="tt-code"><pre>QC_GATE=human  # pause; surface to user
+QC_GATE=auto   # proceed if all checks pass</pre></div>
+                <div class="tt-label" style="margin-top:12px">Output</div>
+                <ul class="tt-files">
+                  <li><span>articles/qc/[slug]-qc.json</span> — check results</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">11-Point Checklist</div>
+                <ul class="tt-files">
+                  <li>☑ 9 required meta tags present + non-empty</li>
+                  <li>☑ Body word count ≥ 1800</li>
+                  <li>☑ 5–6 H2 section headings</li>
+                  <li>☑ Stat grid with ≥ 4 numeric cards</li>
+                  <li>☑ 1 pullquote element present</li>
+                  <li>☑ ≥ 6 glossary terms (data-term attr)</li>
+                  <li>☑ ≥ 6 MLA 9th edition references</li>
+                  <li>☑ og:image URL matches img/articles/ file</li>
+                  <li>☑ article:prev-url points to existing file</li>
+                  <li>☑ Persona name matches article:persona meta</li>
+                  <li>☑ No TODO / PLACEHOLDER / lorem ipsum</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-connector"></div>
+
+        <!-- 7. PORTER — PUBLISHER -->
+        <div class="agent-card c-green" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">PT</div>
+            <div class="agent-info">
+              <div class="agent-name">Porter</div>
+              <div class="agent-title">Deployment Coordinator · Publisher</div>
+              <div class="agent-role">Pushes the approved article to GitHub Pages. Runs a 120-second deploy guard polling og:image. Logs canonical URL to Google Sheets column 1.</div>
+            </div>
+            <span class="agent-badge badge-auto">Autonomous</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Files / Config</div>
+                <ul class="tt-files">
+                  <li><span>articles/aima-coworker-secrets.json</span> — Google Sheets webapp URL</li>
+                  <li><span>linkedin_pipeline/post_log.json</span> — receives live URL</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">Execution Sequence</div>
+                <div class="tt-code"><pre>1. git commit -m "Article [NNN]: [Title]"
+2. git push origin main
+3. Poll og:image every 30s (max 120s):
+   HEAD https://joselitosering.github.io/
+       aima/img/articles/[slug].jpg
+   → HTTP 200: live ✓
+4. POST to GAS endpoint:
+   { "url": canonical_article_url }
+   → Response: { "success": true, "row": N }
+5. Log: live URL + GS row + timestamp</pre></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-connector"></div>
+
+        <!-- 8. NOVA — MARKETING -->
+        <div class="agent-card c-cyan" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">NV</div>
+            <div class="agent-info">
+              <div class="agent-name">Nova</div>
+              <div class="agent-title">Distribution Manager · Marketing Agent</div>
+              <div class="agent-role">Posts to AIMA LinkedIn company page with cover image + byline. Immediately reshares to Joselito's personal profile with persona-specific hook, TL;DR, and CTA.</div>
+            </div>
+            <span class="agent-badge badge-auto">Autonomous</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Config Files</div>
+                <ul class="tt-files">
+                  <li><span>linkedin_pipeline/.env</span> — LINKEDIN_ACCESS_TOKEN, LINKEDIN_ORG_ID, LINKEDIN_MEMBER_ID</li>
+                  <li><span>linkedin_pipeline/posted_articles.json</span> — de-dupe tracker</li>
+                  <li><span>linkedin_pipeline/post_log.json</span> — receives post URNs</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">Execution Sequence</div>
+                <div class="tt-code"><pre>python linkedin_pipeline/pipeline.py
+↓ Download cover image bytes
+↓ Assets API registerUpload (PUT bytes)
+↓ POST /v2/ugcPosts (company page, IMAGE)
+↓ Resolve urn:li:share: via /rest/posts
+↓ Build persona commentary (hook→TL;DR→CTA)
+↓ POST /rest/posts (personal reshare)
+↓ Log both URNs → post_log.json
+↓ git push post_log.json</pre></div>
+              </div>
+              <div class="tt-divider"></div>
+              <div class="tt-block" style="grid-column:1/-1">
+                <div class="tt-label">Key Functions</div>
+                <ul class="tt-files">
+                  <li><span>linkedin_poster.py → post_to_linkedin()</span> — company page post</li>
+                  <li><span>linkedin_poster.py → build_personal_commentary()</span> — hook + TL;DR + CTA + hashtags</li>
+                  <li><span>linkedin_poster.py → reshare_to_personal()</span> — personal profile reshare</li>
+                  <li><span>github_fetcher.py</span> — picks up aima-article-*.html only</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipe-connector"></div>
+
+        <!-- 9. ECHO — METRICS -->
+        <div class="agent-card c-green" onclick="toggleCard(this)">
+          <div class="agent-inner">
+            <div class="agent-avatar">EC</div>
+            <div class="agent-info">
+              <div class="agent-name">Echo</div>
+              <div class="agent-title">Analytics Specialist · Metrics Agent</div>
+              <div class="agent-role">Fully autonomous. Collects LinkedIn impressions, clicks, CTR, reactions for posts 48h+ old. Runs independently of all other agents on a schedule.</div>
+            </div>
+            <span class="agent-badge badge-auto">Autonomous</span>
+          </div>
+          <div class="agent-tooltip">
+            <div class="tt-grid">
+              <div class="tt-block">
+                <div class="tt-label">Files</div>
+                <ul class="tt-files">
+                  <li><span>linkedin_pipeline/post_log.json</span> — finds analytics_collected: false + posted_at &gt; 48h</li>
+                  <li><span>linkedin_pipeline/post_analytics.csv</span> — output</li>
+                  <li><span>linkedin_pipeline/xls_import.py</span> — fallback if token lacks r_member_social</li>
+                </ul>
+              </div>
+              <div class="tt-block">
+                <div class="tt-label">API + Fallback</div>
+                <div class="tt-code"><pre># Primary (requires r_member_social)
+GET /rest/socialMediaPostStatistics
+  ?q=statistics&urns[0]=urn:li:share:...
+
+# Fallback
+python linkedin_pipeline/xls_import.py
+  (LinkedIn Analytics XLS export)
+
+# Token refresh
+python linkedin_pipeline/linkedin_auth.py</pre></div>
+              </div>
+              <div class="tt-divider"></div>
+              <div class="tt-block" style="grid-column:1/-1">
+                <div class="tt-label">Metrics Collected</div>
+                <ul class="tt-files">
+                  <li>impressions · clicks · CTR (clicks/impressions) · reactions · reposts · comments</li>
+                  <li>Marks <span>analytics_collected: true</span> in post_log.json after collection</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /pipeline -->
+    </div><!-- /pipeline-wrap -->
+  </div>
+</section>
+
+<!-- ── BATCH MODES ───────────────────────────────────────────────────── -->
+<section class="section" id="batch">
+  <div class="container">
+    <div class="section-label">Token Economy</div>
+    <h2>Batch Modes</h2>
+    <p class="prose" style="margin-bottom:32px;font-size:15px;color:var(--muted);">Each agent runs independently. Batch modes let you front-load expensive stages (research, writing) and defer publishing and marketing — so you can write 6 articles in one session, review offline, then ship everything in one pass.</p>
+
+    <div class="batch-grid">
+      <div class="batch-card">
+        <div class="batch-card-title">Research Batch</div>
+        <div class="batch-card-agents">Scout only</div>
+        <div class="batch-card-desc">Queue N research briefs to <code>articles/research/</code> without writing any articles. Run overnight. Writer can be off.</div>
+      </div>
+      <div class="batch-card">
+        <div class="batch-card-title">Write Batch</div>
+        <div class="batch-card-agents">Quill only</div>
+        <div class="batch-card-desc">Write N articles from existing research briefs. Stage all files locally. No push, no LinkedIn. QC all at once before publishing.</div>
+      </div>
+      <div class="batch-card">
+        <div class="batch-card-title">Review Day</div>
+        <div class="batch-card-agents">Vera (human)</div>
+        <div class="batch-card-desc">Human reviews all staged articles against the QC checklist. Approve or return to Quill with specific revision notes.</div>
+      </div>
+      <div class="batch-card">
+        <div class="batch-card-title">Publish Batch</div>
+        <div class="batch-card-agents">Porter only</div>
+        <div class="batch-card-desc">Push all approved articles in sequence. Each waits for deploy guard before proceeding to next. Google Sheets updated per article.</div>
+      </div>
+      <div class="batch-card">
+        <div class="batch-card-title">Marketing Batch</div>
+        <div class="batch-card-agents">Nova only</div>
+        <div class="batch-card-desc">Post all queued live articles to LinkedIn. Company page + personal reshare per article. <code>posted_articles.json</code> prevents duplicates.</div>
+      </div>
+      <div class="batch-card">
+        <div class="batch-card-title">Full Pipeline</div>
+        <div class="batch-card-agents">All agents</div>
+        <div class="batch-card-desc">Single article end-to-end in one session: research → write → QC → publish → market. Default mode for the daily Cowork scheduled task.</div>
+      </div>
+      <div class="batch-card">
+        <div class="batch-card-title">Analytics Run</div>
+        <div class="batch-card-agents">Echo only</div>
+        <div class="batch-card-desc">Collect metrics for all posts 48h+ old. Fully independent — runs on its own schedule regardless of other agent state.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;">
+      <div class="section-label" style="margin-bottom:16px;">Stage Toggles</div>
+      <div style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:8px 20px;">
+        <div class="toggle-row">
+          <div><div class="toggle-key">RESEARCH_ENABLED</div><div class="toggle-desc">Run Scout (research brief generation)</div></div>
+          <div class="toggle-vals"><span class="toggle-val tv-on">true</span><span class="toggle-val tv-off">false</span></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-key">WRITE_ENABLED</div><div class="toggle-desc">Run Quill (article HTML generation)</div></div>
+          <div class="toggle-vals"><span class="toggle-val tv-on">true</span><span class="toggle-val tv-off">false</span></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-key">QC_GATE</div><div class="toggle-desc">Vera's quality check mode</div></div>
+          <div class="toggle-vals"><span class="toggle-val tv-on">human</span><span class="toggle-val tv-off">auto</span></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-key">PUBLISH_ENABLED</div><div class="toggle-desc">Run Porter (git push + deploy guard + GS)</div></div>
+          <div class="toggle-vals"><span class="toggle-val tv-on">true</span><span class="toggle-val tv-off">false</span></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-key">GS_ENABLED</div><div class="toggle-desc">Google Sheets canonical URL logging</div></div>
+          <div class="toggle-vals"><span class="toggle-val tv-on">true</span><span class="toggle-val tv-off">false</span></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-key">MARKETING_ENABLED</div><div class="toggle-desc">Run Nova (LinkedIn company page + reshare)</div></div>
+          <div class="toggle-vals"><span class="toggle-val tv-on">true</span><span class="toggle-val tv-off">false</span></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-key">ANALYTICS_ENABLED</div><div class="toggle-desc">Run Echo (LinkedIn metrics collection)</div></div>
+          <div class="toggle-vals"><span class="toggle-val tv-on">true</span><span class="toggle-val tv-off">false</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AGENT PROMPTS ──────────────────────────────────────────────────── -->
+<section class="section" id="prompts">
+  <div class="container">
+    <div class="section-label">Agent Prompts</div>
+    <h2>Invocation Prompts</h2>
+    <p style="font-size:15px;color:var(--muted);margin-bottom:32px;">Copy-paste system prompts for invoking each agent in a Cowork session or scheduled task.</p>
+
+    <div class="prompt-grid">
+
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <div class="prompt-card-avatar" style="background:rgba(200,168,75,.15);color:var(--gold);">MR</div>
+          <div>
+            <div class="prompt-card-name">Marco</div>
+            <div class="prompt-card-title">Execution Director · Product Manager</div>
+          </div>
+        </div>
+        <div class="prompt-card-body">
+          <pre>You are the Product Manager for AIMA Magazine's
+automated publishing pipeline.
+
+Read aima-coworker-state.json → current state.
+Read CLAUDE.md → approved workflows + decisions.
+Read pipeline.log (last 20 lines) → check errors.
+
+For each active stage:
+1. Confirm inputs exist
+2. Invoke the stage
+3. Confirm outputs pass quality check
+4. Log result (pass/fail + timestamp)
+5. On failure: stop, write to CLAUDE.md, surface to human
+
+At end of run:
+- Update aima-coworker-state.json
+  (next_article_number, next_track, last_run)
+- Write decisions to CLAUDE.md if needed
+- Report: articles written/published/posted
+
+Do not skip steps. Do not proceed past a failed gate.</pre>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <div class="prompt-card-avatar" style="background:rgba(162,89,255,.15);color:var(--purple);">PR</div>
+          <div>
+            <div class="prompt-card-name">Priya</div>
+            <div class="prompt-card-title">Calendar Coordinator · Editorial Calendar</div>
+          </div>
+        </div>
+        <div class="prompt-card-body">
+          <pre>You are the Editorial Calendar Agent for AIMA Magazine.
+
+READ:
+- aima-coworker-state.json
+  → next_article_number, next_track, persona indexes
+- aima-editorial-calendar.md
+  → row for next_article_number
+
+RESOLVE AUTHOR:
+- joselito track: Joselito Sering
+  (use joselito.next_calendar_index)
+- trending track: next_persona
+  (rotate dawn → kenji → dawn)
+
+OUTPUT article spec JSON:
+{ number, slug, filename, title, author,
+  category, read_time, publish_date,
+  tone, tags[] }
+
+Do not write the article.
+Do not fetch research. Output spec only.</pre>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <div class="prompt-card-avatar" style="background:rgba(45,202,115,.15);color:var(--green);">SC</div>
+          <div>
+            <div class="prompt-card-name">Scout</div>
+            <div class="prompt-card-title">Intelligence Analyst · Research Agent</div>
+          </div>
+        </div>
+        <div class="prompt-card-body">
+          <pre>You are the Research Agent for AIMA Magazine.
+
+INPUT: Article spec JSON
+
+YOUR JOB:
+1. Search 5+ primary sources: academic papers,
+   institutional reports, govt data, major journalism.
+   No blogs or unverified opinion.
+2. Extract 4–6 statistics with source + year + URL.
+3. Find 2–3 expert quotes: name + affiliation.
+4. Identify the strongest counterargument.
+5. Note 1–2 recent news events (last 6 months).
+
+QUALITY BAR:
+- Every stat needs a named source and year
+- Prefer primary over secondary sources
+- Flag unverifiable claims — do not include them
+
+SAVE: articles/research/[slug]-research.json
+
+Do not write prose. Do not write the article.</pre>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <div class="prompt-card-avatar" style="background:rgba(162,89,255,.15);color:var(--purple);">QL</div>
+          <div>
+            <div class="prompt-card-name">Quill</div>
+            <div class="prompt-card-title">Senior Writer · Author Agent</div>
+          </div>
+        </div>
+        <div class="prompt-card-body">
+          <pre>You are the Author Agent for AIMA Magazine.
+
+READ IN ORDER:
+1. articles/aima-coworker-prompt.md
+2. articles/personas/[persona]-profile.md
+3. articles/research/[slug]-research.json
+4. Previous article HTML (extract prev-url)
+
+WRITE: 1800–2500 words in persona voice.
+Structure: lead → 5–6 H2 sections → stat grid
+(4 cards) → pullquote → glossary (6+) →
+MLA references (6+)
+
+COVER IMAGE:
+- Generate: Higgsfield nano_banana_pro 16:9
+- Resize: 1200×630 JPG via Python PIL
+- Save: img/articles/aima-[NNN]-[slug].jpg
+
+AFTER WRITING:
+- Update prev article next-url/next-title
+- git add [new] [prev] img/articles/[cover]
+- DO NOT commit or push</pre>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <div class="prompt-card-avatar" style="background:rgba(255,94,32,.15);color:var(--orange);">VR</div>
+          <div>
+            <div class="prompt-card-name">Vera</div>
+            <div class="prompt-card-title">Quality Director · QC Gate</div>
+          </div>
+        </div>
+        <div class="prompt-card-body">
+          <pre>You are the QC Gate for AIMA Magazine.
+
+INPUT: Staged article HTML filename
+
+RUN ALL 11 CHECKS:
+[ ] 9 required meta tags present + non-empty
+[ ] Body word count ≥ 1800
+[ ] 5–6 H2 section headings
+[ ] Stat grid with ≥ 4 numeric cards
+[ ] 1 pullquote element
+[ ] ≥ 6 glossary terms (data-term attr)
+[ ] ≥ 6 MLA 9th edition references
+[ ] og:image URL → file in img/articles/
+[ ] article:prev-url → existing file
+[ ] Persona name matches article:persona
+[ ] No TODO / PLACEHOLDER / lorem ipsum
+
+OUTPUT:
+- QC_GATE=auto + all pass → "approved"
+- QC_GATE=human → present report, await approval
+- Any fail → "needs_revision" + specific notes
+  → return to Quill</pre>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <div class="prompt-card-avatar" style="background:rgba(45,202,115,.15);color:var(--green);">PT</div>
+          <div>
+            <div class="prompt-card-name">Porter</div>
+            <div class="prompt-card-title">Deployment Coordinator · Publisher</div>
+          </div>
+        </div>
+        <div class="prompt-card-body">
+          <pre>You are the Publisher Agent for AIMA Magazine.
+
+PRE-CHECK:
+- git status shows article + image staged
+- QC Gate has approved the article
+
+EXECUTE IN ORDER:
+1. git commit -m "Article [NNN]: [Title]"
+2. git push origin main
+3. Deploy guard (120s polling loop):
+   HEAD [og:image URL] every 30s
+   → HTTP 200: live ✓ proceed
+4. POST canonical URL to GAS endpoint:
+   { "url": "https://joselitosering.github.io/
+     aima/articles/[filename]" }
+   Confirm: { "success": true, "row": N }
+5. Log: live URL + GS row + deploy timestamp
+
+OUTPUT: "Article [NNN] live · GS row [N]"
+Pass live URL to Nova (Marketing Agent).
+
+Do not post to LinkedIn.</pre>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <div class="prompt-card-avatar" style="background:rgba(0,217,245,.12);color:var(--cyan);">NV</div>
+          <div>
+            <div class="prompt-card-name">Nova</div>
+            <div class="prompt-card-title">Distribution Manager · Marketing Agent</div>
+          </div>
+        </div>
+        <div class="prompt-card-body">
+          <pre>You are the Marketing Agent for AIMA Magazine.
+
+PRE-CHECK:
+- og:image URL returns HTTP 200 (article live)
+- LINKEDIN_ACCESS_TOKEN set in .env
+
+EXECUTE:
+python linkedin_pipeline/pipeline.py
+
+This runs automatically:
+1. Download cover image bytes
+2. LinkedIn Assets API → upload image
+3. POST company page (IMAGE mode, org URN)
+4. Resolve urn:li:share: via /rest/posts
+5. Build persona commentary:
+   hook → TL;DR → CTA → hashtags
+6. POST personal reshare via /rest/posts
+7. Log both URNs → post_log.json
+8. git push post_log.json
+
+VERIFY in post_log.json:
+- company page URN logged
+- personal reshare URN logged
+- analytics_collected: false (Echo picks up in 48h)</pre>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <div class="prompt-card-avatar" style="background:rgba(45,202,115,.15);color:var(--green);">EC</div>
+          <div>
+            <div class="prompt-card-name">Echo</div>
+            <div class="prompt-card-title">Analytics Specialist · Metrics Agent</div>
+          </div>
+        </div>
+        <div class="prompt-card-body">
+          <pre>You are the Metrics Agent for AIMA Magazine.
+
+RUNS AUTONOMOUSLY — independent of all other agents.
+
+FETCH from post_log.json:
+- Entries where analytics_collected: false
+- AND posted_at > 48 hours ago
+
+FOR EACH eligible post:
+1. GET /rest/socialMediaPostStatistics
+   ?q=statistics&urns[0]=urn:li:share:[ID]
+   (requires r_member_social scope)
+2. Extract: impressions, clicks, reactions,
+   reposts, comments
+3. Calculate CTR = clicks / impressions
+
+FALLBACK (no r_member_social):
+python linkedin_pipeline/xls_import.py
+
+OUTPUT:
+- Append row to post_analytics.csv
+- Mark analytics_collected: true in post_log.json
+- git push post_log.json
+- Log summary: N posts, avg impressions, avg CTR</pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SEPARATION OF CONCERNS ────────────────────────────────────────── -->
+<section class="section" id="separation">
+  <div class="container">
+    <div class="section-label">Ownership Model</div>
+    <h2>Separation of Concerns</h2>
+    <div style="overflow-x:auto;">
+      <table class="sep-table">
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Owns</th>
+            <th>Never Touches</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--cyan)">Iris</span><br><span style="font-size:11px;color:var(--muted)">Initiator</span></td>
+            <td class="sep-files">aima-coworker-state.json (read)<br>aima-coworker-prompt.md (read)</td>
+            <td class="sep-never">Article content, APIs, publishing</td>
+          </tr>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--gold)">Marco</span><br><span style="font-size:11px;color:var(--muted)">Exec Director</span></td>
+            <td class="sep-files">CLAUDE.md (write)<br>aima-coworker-state.json (write)<br>pipeline.log (write)</td>
+            <td class="sep-never">Article content, LinkedIn API, GS data</td>
+          </tr>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--purple)">Priya</span><br><span style="font-size:11px;color:var(--muted)">Cal. Coordinator</span></td>
+            <td class="sep-files">aima-editorial-calendar.md (read)<br>article spec JSON (output)</td>
+            <td class="sep-never">Research, writing, publishing, APIs</td>
+          </tr>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--green)">Scout</span><br><span style="font-size:11px;color:var(--muted)">Intel Analyst</span></td>
+            <td class="sep-files">articles/research/[slug]-research.json (write)</td>
+            <td class="sep-never">HTML writing, git, LinkedIn, GS</td>
+          </tr>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--purple)">Quill</span><br><span style="font-size:11px;color:var(--muted)">Senior Writer</span></td>
+            <td class="sep-files">articles/[article].html (write)<br>articles/[prev].html (next-url update)<br>img/articles/[cover].jpg (write)</td>
+            <td class="sep-never">git push, LinkedIn API, Google Sheets</td>
+          </tr>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--orange)">Vera</span><br><span style="font-size:11px;color:var(--muted)">Quality Director</span></td>
+            <td class="sep-files">articles/qc/[slug]-qc.json (write)<br>QC approval signal</td>
+            <td class="sep-never">Writing content, publishing, APIs</td>
+          </tr>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--green)">Porter</span><br><span style="font-size:11px;color:var(--muted)">Deploy Coord.</span></td>
+            <td class="sep-files">git commit + push<br>GS canonical URL log (POST)</td>
+            <td class="sep-never">LinkedIn API, article content, writing</td>
+          </tr>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--cyan)">Nova</span><br><span style="font-size:11px;color:var(--muted)">Distribution Mgr</span></td>
+            <td class="sep-files">posted_articles.json (write)<br>post_log.json (write)<br>LinkedIn company page + personal profile</td>
+            <td class="sep-never">git, Google Sheets, article writing</td>
+          </tr>
+          <tr>
+            <td><span class="sep-agent" style="color:var(--green)">Echo</span><br><span style="font-size:11px;color:var(--muted)">Analytics Spec.</span></td>
+            <td class="sep-files">post_log.json (analytics_collected update)<br>post_analytics.csv (write)</td>
+            <td class="sep-never">Everything else</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── CURRENT STATUS ────────────────────────────────────────────────── -->
+<section class="section" id="status">
+  <div class="container">
+    <div class="section-label">As of June 2026</div>
+    <h2>Pipeline Status</h2>
+    <div class="status-grid">
+      <div class="status-card">
+        <div class="status-agent">Iris · Trigger</div>
+        <div class="status-badge s-working">Working</div>
+        <div class="status-note">Daily via Cowork task <code>aima-article-coworker</code>. Manual invocation also available.</div>
+      </div>
+      <div class="status-card">
+        <div class="status-agent">Marco · Prod Mgr</div>
+        <div class="status-badge s-manual">Manual</div>
+        <div class="status-note">Cowork session context. No dedicated automation script yet.</div>
+      </div>
+      <div class="status-card">
+        <div class="status-agent">Priya · Calendar</div>
+        <div class="status-badge s-working">Working</div>
+        <div class="status-note"><code>aima-editorial-calendar.md</code> + state file. Persona rotation active.</div>
+      </div>
+      <div class="status-card">
+        <div class="status-agent">Scout · Research</div>
+        <div class="status-badge s-manual">Manual</div>
+        <div class="status-note">No dedicated research brief cache yet. <code>articles/research/</code> directory to build.</div>
+      </div>
+      <div class="status-card">
+        <div class="status-agent">Quill · Author</div>
+        <div class="status-badge s-working">Working</div>
+        <div class="status-note">Full article HTML + cover image via Higgsfield. 016 articles shipped.</div>
+      </div>
+      <div class="status-card">
+        <div class="status-agent">Vera · QC Gate</div>
+        <div class="status-badge s-manual">Manual</div>
+        <div class="status-note">Human review only. Automated QC script to build.</div>
+      </div>
+      <div class="status-card">
+        <div class="status-agent">Porter · Publisher</div>
+        <div class="status-badge s-working">Working</div>
+        <div class="status-note">git push + 120s deploy guard + Google Sheets logging. Tested and approved.</div>
+      </div>
+      <div class="status-card">
+        <div class="status-agent">Nova · Marketing</div>
+        <div class="status-badge s-working">Working</div>
+        <div class="status-note"><code>pipeline.py</code> — company page IMAGE post + personal reshare. Approved June 21.</div>
+      </div>
+      <div class="status-card">
+        <div class="status-agent">Echo · Metrics</div>
+        <div class="status-badge s-partial">Partial</div>
+        <div class="status-note">Needs token refresh for <code>r_member_social</code>. XLS import fallback available.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;">
+      <div class="section-label" style="margin-bottom:16px;">Next to Build</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="background:var(--surface);border:1px solid rgba(255,94,32,.2);border-left:3px solid var(--orange);border-radius:6px;padding:14px 18px;">
+          <div style="font-family:var(--mono);font-size:12px;color:var(--orange);margin-bottom:4px;">SCOUT</div>
+          <div style="font-size:14px;color:var(--text);">Build <code>articles/research/</code> cache system. Automated research brief generation with structured JSON output schema.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(255,94,32,.2);border-left:3px solid var(--orange);border-radius:6px;padding:14px 18px;">
+          <div style="font-family:var(--mono);font-size:12px;color:var(--orange);margin-bottom:4px;">VERA</div>
+          <div style="font-size:14px;color:var(--text);">Automated QC checker script against 11-point checklist. Outputs <code>articles/qc/[slug]-qc.json</code> with pass/fail per check.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid rgba(45,202,115,.2);border-left:3px solid var(--green);border-radius:6px;padding:14px 18px;">
+          <div style="font-family:var(--mono);font-size:12px;color:var(--green);margin-bottom:4px;">ECHO</div>
+          <div style="font-size:14px;color:var(--text);">Token refresh: <code>python linkedin_pipeline/linkedin_auth.py</code> → then test <code>analytics_collector.py</code>. <code>r_member_social</code> approved June 20.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FILE MAP ──────────────────────────────────────────────────────── -->
+<section class="section" id="files">
+  <div class="container">
+    <div class="section-label">Repository Map</div>
+    <h2>Key File Paths</h2>
+    <div class="filepath-tree">
+      <span class="f-dir">D:\Apps\DevOps\Github\aima\</span><br>
+      ├── <span class="f-important">CLAUDE.md</span> <span class="f-comment">← project memory · Marco writes here</span><br>
+      ├── <span class="f-important">AGENT-WORKFLOW.md</span> <span class="f-comment">← this document (source)</span><br>
+      ├── <span class="f-dir">articles/</span><br>
+      │ ├── <span class="f-important">aima-coworker-state.json</span> <span class="f-comment">← pipeline state · Marco owns</span><br>
+      │ ├── <span class="f-important">aima-coworker-prompt.md</span> <span class="f-comment">← master writing instructions</span><br>
+      │ ├── <span class="f-important">aima-editorial-calendar.md</span> <span class="f-comment">← article schedule · Priya reads</span><br>
+      │ ├── <span class="f-dir">research/</span> <span class="f-comment">← Scout output · [slug]-research.json · TO BUILD</span><br>
+      │ ├── <span class="f-dir">qc/</span> <span class="f-comment">← Vera output · [slug]-qc.json · TO BUILD</span><br>
+      │ └── <span class="f-dir">personas/</span><br>
+      │ &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-file">dawn-ginhaua.md</span><br>
+      │ &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="f-file">kenji-nakamoto.md</span><br>
+      ├── <span class="f-dir">img/articles/</span> <span class="f-comment">← cover images 1200×630 JPG · Quill writes</span><br>
+      └── <span class="f-dir">linkedin_pipeline/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-important">pipeline.py</span> <span class="f-comment">← Nova's main runner</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-file">linkedin_poster.py</span> <span class="f-comment">← company page + personal reshare</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-file">github_fetcher.py</span> <span class="f-comment">← picks aima-article-*.html only</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-file">gs_logger.py</span> <span class="f-comment">← GS canonical URL logging · Porter calls</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-file">analytics_collector.py</span> <span class="f-comment">← Echo's main tool</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-file">xls_import.py</span> <span class="f-comment">← analytics fallback</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-important">posted_articles.json</span> <span class="f-comment">← LinkedIn posting tracker</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-important">post_log.json</span> <span class="f-comment">← post IDs for Echo's analytics</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="f-file">pipeline.log</span> <span class="f-comment">← execution log · Marco reads</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="f-file">.env</span> <span class="f-comment">← tokens + IDs · gitignored</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">AI<span>MA</span> Magazine · Internal Architecture</div>
+      <div class="footer-note">v1.0 · June 21, 2026 · 9 Agents · 9 Pipeline Stages</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleCard(card) {
+  const wasOpen = card.classList.contains('open');
+  // close all
+  document.querySelectorAll('.agent-card.open').forEach(c => c.classList.remove('open'));
+  // open this one if it wasn't already open
+  if (!wasOpen) card.classList.add('open');
+}
+
+// Fade-in on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Smooth active nav highlight
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) cur = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+}, { passive: true });
+</script>
+
+</body>
+</html>
