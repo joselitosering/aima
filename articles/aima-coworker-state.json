@@ -1,7 +1,7 @@
 {
-  "next_article_number": 17,
-  "next_track": "trending",
-  "next_article_date": "2026-06-26",
+  "next_article_number": 18,
+  "next_track": "joselito",
+  "next_article_date": "2026-06-28",
 
   "joselito": {
     "next_calendar_index": 4,
@@ -10,14 +10,14 @@
   },
 
   "trending": {
-    "next_persona": "dawn",
+    "next_persona": "kenji",
     "topic_queue": [],
     "personas": {
       "dawn": {
         "full_name": "Dawn Ginhaua",
         "profile_file": "articles/personas/dawn-ginhaua.md",
-        "post_count": 0,
-        "last_topic": null
+        "post_count": 1,
+        "last_topic": "The Résumé Filter: How AI Turned Racial Bias Into Standard Hiring Practice"
       },
       "kenji": {
         "full_name": "Kenji Nakamoto",
@@ -28,7 +28,7 @@
     }
   },
 
-  "last_run": "2026-06-21",
+  "last_run": "2026-06-22",
   "articles_written": [
     {
       "number": 13,
@@ -46,22 +46,4 @@
       "date": "2026-06-20",
       "category": "AI Creative",
       "author": "Joselito Sering",
-      "track": "joselito",
-      "note": "Article 014 (Hallucination Nation) skipped — not yet written. Write 014 before publishing 016."
-    },
-    {
-      "number": 16,
-      "title": "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor",
-      "filename": "aima-article-digital-nomad-economy-016.html",
-      "date": "2026-06-24",
-      "category": "AI Society",
-      "author": "Joselito Sering",
-      "track": "joselito"
-    }
-  ],
-
-  "google_sheets_url": "https://docs.google.com/spreadsheets/d/1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs/edit",
-  "google_sheets_id": "1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs",
-  "google_sheets_tab": "Insights",
-  "google_sheets_webapp_url": "https://script.google.com/macros/s/AKfycbxWATw6f8Lrqgd3S5uHSBUTJB8CAeuTTY_kBj8U1tT-8jgO62-0gyjX4e1jssoTfEFo/exec"
-}
+      "track":
