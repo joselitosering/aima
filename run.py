@@ -6,32 +6,25 @@ Usage:
 """
 
 import argparse
-import json
 import sys
 
 
 def main():
     parser = argparse.ArgumentParser(description="AIMA article pipeline")
-    parser.add_argument("--dry-run", action="store_true", help="Skip git push and LinkedIn post")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Skip git push and LinkedIn post")
     args = parser.parse_args()
-
-    from agents.priya import run as priya_run
 
     print("=== AIMA Pipeline ===")
 
-    # Stage 1 — Priya builds the article spec
-    print("[1/9] Priya: building article spec...")
-    spec = priya_run()
-    print(f"      Spec: {spec.get('slug')} — {spec.get('title')}")
-    print(f"      Author: {spec.get('author')} | {spec.get('publish_date')}")
-    print()
-    print("Spec JSON:")
-    print(json.dumps(spec, indent=2))
-
-    # Stages 2-9 will be wired here as Marco is built (Phase 4)
-    print("\n[Phase 1 complete — Marco not yet wired. Spec above is ready for handoff.]")
-
-    return spec
+    try:
+        from agents import marco
+        marco.run(dry_run=args.dry_run)
+    except ImportError:
+        print("[run.py] Marco (Phase 4) not yet built — pipeline not wired.")
+        print("         Run each agent individually during development:")
+        print("           python -c \"from agents.priya import run; print(run())\"")
+        sys.exit(0)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,61 @@
+{
+  "run_date": "2026-06-22",
+  "article_number": 17,
+  "agents": {
+    "IR": {
+      "budget": 8000,
+      "used": 0,
+      "status": "idle"
+    },
+    "PR": {
+      "budget": 5000,
+      "used": 0,
+      "status": "idle"
+    },
+    "SC": {
+      "budget": 50000,
+      "used": 0,
+      "status": "idle"
+    },
+    "QL": {
+      "budget": 22000,
+      "used": 0,
+      "status": "idle"
+    },
+    "MY": {
+      "budget": 15000,
+      "used": 0,
+      "status": "idle"
+    },
+    "VR": {
+      "budget": 5000,
+      "used": 0,
+      "status": "idle"
+    },
+    "PT": {
+      "budget": 0,
+      "used": 0,
+      "status": "idle"
+    },
+    "NV": {
+      "budget": 0,
+      "used": 0,
+      "status": "idle"
+    },
+    "EC": {
+      "budget": 0,
+      "used": 0,
+      "status": "idle"
+    },
+    "LM": {
+      "budget": 10000,
+      "used": 0,
+      "status": "idle"
+    },
+    "CO": {
+      "budget": 5000,
+      "used": 0,
+      "status": "idle"
+    }
+  }
+}
