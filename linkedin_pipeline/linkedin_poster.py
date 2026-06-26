@@ -378,15 +378,28 @@ def post_to_linkedin(article):
 
 def _resolve_share_urn(ugc_id):
     """
-    Fetch the most recent org post via /rest/posts to get the urn:li:share: URN.
-    Needed for resharing since ugcPosts returns urn:li:ugcPost: IDs.
+    Convert a ugcPost URN to the corresponding share URN needed for resharing.
+
+    Race condition fix: previously grabbed the most-recently-modified org post,
+    which returned the wrong URN during batch posting sessions.
+
+    LinkedIn ugcPost and share URNs share the same numeric suffix:
+      urn:li:ugcPost:7474175107142266880 -> urn:li:share:7474175107142266880
+
+    We verify against /rest/posts by matching the numeric suffix, then fall back
+    to direct numeric conversion if the API call fails or no match is found.
     """
     import time, urllib.parse
+
+    # Extract numeric part from ugcPost URN (e.g. "7474175107142266880")
+    ugc_numeric      = ugc_id.split(":")[-1] if ":" in ugc_id else ugc_id
+    direct_share_urn = f"urn:li:share:{ugc_numeric}"
+
     time.sleep(2)
     org_urn = urllib.parse.quote(f"urn:li:organization:{ORG_ID}", safe="")
     url = (
         f"https://api.linkedin.com/rest/posts"
-        f"?q=author&author={org_urn}&count=3&sortBy=LAST_MODIFIED"
+        f"?q=author&author={org_urn}&count=5&sortBy=LAST_MODIFIED"
     )
     req = urllib.request.Request(url)
     req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
@@ -396,13 +409,18 @@ def _resolve_share_urn(ugc_id):
         with urllib.request.urlopen(req, timeout=15) as resp:
             data     = json.loads(resp.read())
             elements = data.get("elements", [])
-            if elements:
-                share_urn = elements[0].get("id", "")
-                print(f"  Resolved share URN: {share_urn}")
-                return share_urn
+            # Match by numeric suffix — race-condition-safe during batch posting
+            for el in elements:
+                share_id = el.get("id", "")
+                if share_id.endswith(ugc_numeric):
+                    print(f"  Resolved share URN (matched): {share_id}")
+                    return share_id
+            # Numeric match not found — use direct conversion
+            print(f"  Resolved share URN (direct): {direct_share_urn}")
+            return direct_share_urn
     except Exception as e:
-        print(f"  Warning: could not resolve share URN ({e})")
-    return None
+        print(f"  Warning: /rest/posts query failed ({e}) — using direct URN")
+        return direct_share_urn
 
 
 def _truncate_to_sentence(text, max_chars=280):

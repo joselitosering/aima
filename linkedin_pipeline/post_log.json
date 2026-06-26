@@ -1,16 +1,8 @@
 [
   {
-    "post_id": "urn:li:share:7473834626713559040",
-    "article": "aima-article-n8n-content-pipeline-003.html",
-    "title": "Build a Zero-Touch Content Pipeline with n8n \u2014 AIMA Magazine",
-    "persona": "joselito",
-    "posted_at": "2026-06-19T20:30:33",
-    "analytics_collected": false
-  },
-  {
     "post_id": "urn:li:share:7473819519409471488",
     "article": "aima-article-5k-music-video-blueprint-002.html",
-    "title": "The $5,000 Music Video Blueprint \u2014 AIMA Magazine",
+    "title": "The $5,000 Music Video Blueprint — AIMA Magazine",
     "persona": "joselito",
     "posted_at": "2026-06-19T19:30:31",
     "analytics_collected": true,
@@ -86,14 +78,6 @@
     "analytics_collected": false
   },
   {
-    "post_id": "urn:li:share:7473849595018625025",
-    "article": "aima-articles-rogue-ai-agents-007.html",
-    "title": "When Agents Go Rogue: Is AI Programming Its Own Survival?",
-    "persona": "joselito",
-    "posted_at": "2026-06-19T21:30:03",
-    "analytics_collected": false
-  },
-  {
     "post_id": "urn:li:share:7473864692680110081",
     "article": "aima-article-algorithm-of-atrocity-012.html",
     "title": "The Algorithm of Atrocity: AI, Surveillance, and the Companies That Profit from Both",
@@ -113,35 +97,11 @@
     "engagements": 0
   },
   {
-    "post_id": "urn:li:share:7473819395870314496",
-    "article": "aima-article-5k-music-video-blueprint-002.html",
-    "title": "The $5,000 Music Video Blueprint: How AI Replaced a $200K Production Budget",
-    "persona": "joselito",
-    "posted_at": "2026-06-19T19:30:02",
-    "analytics_collected": false
-  },
-  {
     "post_id": "urn:li:share:7473834498938314752",
     "article": "aima-article-n8n-content-pipeline-003.html",
     "title": "Build a Zero-Touch Content Pipeline with n8n: A Step-by-Step Guide",
     "persona": "joselito",
     "posted_at": "2026-06-19T20:30:03",
-    "analytics_collected": false
-  },
-  {
-    "post_id": "urn:li:share:7473830374456860672",
-    "article": "aima-article-ethics-theater-d1.html",
-    "title": "Your AI Ethics Board Is a Press Release &mdash; AIMA Magazine",
-    "persona": "dawn",
-    "posted_at": "2026-06-19T20:13:40",
-    "analytics_collected": false
-  },
-  {
-    "post_id": "urn:li:share:7473832573211693057",
-    "article": "aima-article-ethics-theater-d1.html",
-    "title": "Your AI Ethics Board Is a Press Release",
-    "persona": "dawn",
-    "posted_at": "2026-06-19T20:22:24",
     "analytics_collected": false
   },
   {
@@ -166,45 +126,45 @@
   },
   {
     "post_id": "urn:li:share:7474247482777026560",
+    "reshare_id": "urn:li:share:7474247496148340736",
     "article": "aima-article-machines-that-compose-015.html",
-    "title": "Machines That Compose: What AI Music Reveals About Human Creativity \u2014 AIMA Magazine",
+    "title": "Machines That Compose: What AI Music Reveals About Human Creativity — AIMA Magazine",
     "persona": "joselito",
     "posted_at": "2026-06-20T23:51:08",
-    "analytics_collected": false,
-    "reshare_id": "urn:li:share:7474247496148340736"
+    "analytics_collected": false
   },
   {
     "post_id": "urn:li:share:7474564358551805953",
+    "reshare_id": "urn:li:share:7474564371948523520",
     "article": "aima-article-digital-nomad-economy-016.html",
-    "title": "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor \u2014 AIMA Magazine",
+    "title": "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor — AIMA Magazine",
     "persona": "joselito",
     "posted_at": "2026-06-21T20:50:18",
     "analytics_collected": true,
-    "reshare_id": "urn:li:share:7474564371948523520",
     "analytics_source": "linkedin_personal_export",
     "impressions": 98,
     "engagements": 1
   },
   {
     "post_id": "urn:li:share:7474564399131803648",
+    "reshare_id": "urn:li:share:7474564411593097216",
     "article": "aima-pipeline-blueprint.html",
-    "title": "AIMA Pipeline \u2014 Blueprint",
+    "title": "AIMA Pipeline — Blueprint",
     "persona": "joselito",
     "posted_at": "2026-06-21T20:50:28",
     "analytics_collected": true,
-    "reshare_id": "urn:li:share:7474564411593097216",
     "analytics_source": "linkedin_personal_export",
     "impressions": 2,
     "engagements": 0
   },
   {
     "post_id": "urn:li:share:7474564436997922817",
+    "reshare_id": "urn:li:share:7474564448377217024",
     "article": "aima-pipeline-diagram.html",
     "title": "AIMA Article Pipeline",
     "persona": "joselito",
     "posted_at": "2026-06-21T20:50:36",
     "analytics_collected": true,
-    "reshare_id": "urn:li:share:7474564448377217024",
     "analytics_source": "linkedin_personal_export",
     "impressions": 3,
     "engagements": 0

@@ -55,18 +55,24 @@ def ensure_csv_headers():
 
 _ORG_STATS_CACHE = None  # loaded once per run
 
-def _load_all_org_stats():
+def _load_all_org_stats(verbose=False):
     """
-    Fetch ALL organizationalEntityShareStatistics for the company page in one pass
-    (paginated). Returns dict keyed by share/ugcPost URN -> stats dict.
-    LinkedIn does not support per-share filtering via shares[0] on this endpoint.
+    Attempt to fetch organizationalEntityShareStatistics for the company page.
+
+    NOTE: As of 2026-06, this endpoint returns 404/403 for all per-post queries
+    under r_organization_social. Per-post analytics must be imported via
+    xls_import.py from LinkedIn's personal profile analytics export.
+
+    This function is kept for the day LinkedIn reopens per-post org stats,
+    but currently always returns {} to avoid noisy API failures on every run.
     """
     global _ORG_STATS_CACHE
     if _ORG_STATS_CACHE is not None:
         return _ORG_STATS_CACHE
 
     if not ORG_ID:
-        print("    ERROR: LINKEDIN_ORG_ID not set in .env")
+        if verbose:
+            print("    LINKEDIN_ORG_ID not set — skipping org stats")
         _ORG_STATS_CACHE = {}
         return _ORG_STATS_CACHE
 
@@ -94,15 +100,13 @@ def _load_all_org_stats():
                 for el in elements:
                     urn   = el.get("share") or el.get("ugcPost") or ""
                     stats = el.get("totalShareStatistics", {})
-                    imp   = stats.get("impressionCount", 0)
-                    clk   = stats.get("clickCount", 0)
                     result[urn] = {
-                        "impressions":     imp,
-                        "clicks":          clk,
-                        "likes":           stats.get("likeCount", 0),
-                        "comments":        stats.get("commentCount", 0),
-                        "shares":          stats.get("shareCount", 0),
-                        "engagement_rate": round(stats.get("engagement", 0.0), 4),
+                        "impressions":        stats.get("impressionCount", 0),
+                        "clicks":             stats.get("clickCount", 0),
+                        "likes":              stats.get("likeCount", 0),
+                        "comments":           stats.get("commentCount", 0),
+                        "shares":             stats.get("shareCount", 0),
+                        "engagement_rate":    round(stats.get("engagement", 0.0), 4),
                         "unique_impressions": stats.get("uniqueImpressionsCount", 0),
                     }
                 paging = data.get("paging", {})
@@ -111,18 +115,21 @@ def _load_all_org_stats():
                     break
                 start += count
         except urllib.error.HTTPError as e:
-            body = e.read().decode()
-            print(f"    Org stats fetch error {e.code}: {body[:300]}")
+            # 403/404 expected until LinkedIn grants per-post org stats scope
+            if verbose:
+                body = e.read().decode()
+                print(f"    Org stats unavailable (HTTP {e.code}) — use xls_import.py instead")
+                if e.code not in (403, 404):
+                    print(f"    Detail: {body[:200]}")
             break
         except Exception as e:
-            print(f"    Org stats fetch failed: {e}")
+            if verbose:
+                print(f"    Org stats fetch failed: {e}")
             break
 
     _ORG_STATS_CACHE = result
-    print(f"  Org stats loaded: {len(result)} posts found on company page")
-    if result:
-        for urn in list(result.keys())[:3]:
-            print(f"    Sample URN: {urn}")
+    if verbose and result:
+        print(f"  Org stats loaded: {len(result)} posts found on company page")
     return result
 
 
@@ -208,13 +215,9 @@ def collect_pending_analytics(verbose=True):
     now       = datetime.now(timezone.utc)
     collected = 0
 
-    # Load ALL org stats once (one API call covers every post on the company page)
-    org_stats = _load_all_org_stats()
-    if verbose:
-        if org_stats:
-            print(f"  Org stats loaded: {len(org_stats)} posts on company page")
-        else:
-            print("  Org stats: 0 posts returned (check token/scopes)")
+    # Attempt to load org stats (currently returns {} — see _load_all_org_stats docstring)
+    # Per-post analytics come from xls_import.py, not this API path.
+    org_stats = _load_all_org_stats(verbose=verbose)
 
     for entry in log:
         if entry.get("analytics_collected"):

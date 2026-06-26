@@ -4,9 +4,10 @@ Run manually: python pipeline.py
 
 On each run:
   1. Collects analytics for any posts that are 48h+ old (non-blocking)
-  2. Deploy-guard: verifies og:image URL is live before posting
-  3. Posts new articles via direct LinkedIn image upload (Option B)
-  4. Logs post IDs to post_log.json for later analytics collection
+  2. Duplicate guard: skips articles already in post_log.json
+  3. Deploy-guard: verifies og:image URL is live before posting
+  4. Posts new articles via direct LinkedIn image upload (Option B)
+  5. Logs post IDs to post_log.json for later analytics collection
 """
 
 import sys
@@ -19,7 +20,10 @@ import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 from github_fetcher import get_new_articles, mark_as_posted
-from linkedin_poster import post_to_linkedin, reshare_to_personal, extract_metadata, extract_persona, build_personal_commentary, add_utm
+from linkedin_poster import (
+    post_to_linkedin, reshare_to_personal, extract_metadata,
+    extract_persona, build_personal_commentary, add_utm, extract_og_image,
+)
 from analytics_collector import collect_pending_analytics
 from gs_logger import log_to_google_sheets
 
@@ -87,20 +91,6 @@ def _git_push(filepath, message):
 
 # ── Deploy guard ──────────────────────────────────────────────────────────────
 
-def extract_og_image(html_content):
-    """Return the og:image URL from article HTML, or None."""
-    m = re.search(
-        r'<meta\s+property=["\']og:image["\']\s+content=["\'](.*?)["\']',
-        html_content, re.IGNORECASE
-    )
-    if not m:
-        m = re.search(
-            r'<meta\s+content=["\'](.*?)["\']\s+property=["\']og:image["\']',
-            html_content, re.IGNORECASE
-        )
-    return m.group(1).strip() if m else None
-
-
 def wait_for_image(image_url, article_name):
     """
     Poll image_url until it returns HTTP 200, or IMAGE_WAIT_LIMIT is reached.
@@ -158,7 +148,16 @@ def run():
         log.info(f"Found {len(articles)} new article(s). Posting to LinkedIn...")
         success_count = 0
 
+        # Duplicate guard — build set of articles already in post_log.json
+        post_log_entries  = load_post_log()
+        already_logged    = {entry["article"] for entry in post_log_entries}
+
         for article in articles:
+            # Duplicate guard — skip if already logged (belt-and-suspenders over posted_articles.json)
+            if article["name"] in already_logged:
+                log.warning(f"  Skipping duplicate: {article['name']} already in post_log.json")
+                continue
+
             log.info(f"  Posting: {article['name']}")
 
             # Deploy guard — verify og:image is live before posting
@@ -176,22 +175,25 @@ def run():
                 post_id = post_to_linkedin(article)
                 mark_as_posted(article["name"], posted)
 
-                # Log post ID for analytics collection in 48h
-                title, _, _ = extract_metadata(
+                # Extract metadata once for both logging and reshare
+                title, description, source_url = extract_metadata(
                     article["content"], article["name"], article.get("html_url", "")
                 )
                 persona = extract_persona(article["content"])
+
                 # Reshare company page post to Joselito's personal profile
-                _, description, source_url = extract_metadata(
-                    article["content"], article["name"], article.get("html_url", "")
+                source_url_reshare  = add_utm(source_url, article["name"], content="personal_reshare")
+                personal_commentary = build_personal_commentary(
+                    title, description, source_url_reshare,
+                    persona or "joselito", html_content=article["content"]
                 )
-                source_url_reshare = add_utm(source_url, article["name"], content="personal_reshare")
-                personal_commentary = build_personal_commentary(title, description, source_url_reshare, persona or "joselito", html_content=article["content"])
                 reshare_id = reshare_to_personal(post_id, title, commentary=personal_commentary)
                 if reshare_id:
                     log.info(f"  Personal reshare: {reshare_id}")
 
                 log_post(post_id, article["name"], title, persona, reshare_id)
+                # Add to in-memory guard so a second article in this same run can't re-log
+                already_logged.add(article["name"])
                 log.info(f"  Logged to post_log.json for analytics.")
 
                 success_count += 1

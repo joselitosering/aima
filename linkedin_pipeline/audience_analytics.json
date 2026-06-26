@@ -1,0 +1,1346 @@
+{
+  "report_period": "2026-03-29 to 2026-06-26",
+  "generated_at": "2026-06-26",
+  "source_file": "AggregateAnalytics_Joselito Sering_2026-03-29_2026-06-26.xlsx",
+  "discovery": {
+    "total_impressions": 2875,
+    "members_reached": 992
+  },
+  "followers": {
+    "total": 2498,
+    "total_as_of": "2026-06-26",
+    "daily": [
+      {
+        "date": "2026-03-29",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-03-30",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-03-31",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-04-01",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-02",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-03",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-04",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-05",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-06",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-07",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-04-08",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-09",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-04-10",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-11",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-04-12",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-13",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-04-14",
+        "new_followers": 3
+      },
+      {
+        "date": "2026-04-15",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-04-16",
+        "new_followers": 3
+      },
+      {
+        "date": "2026-04-17",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-18",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-19",
+        "new_followers": 4
+      },
+      {
+        "date": "2026-04-20",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-21",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-22",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-23",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-24",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-25",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-26",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-27",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-28",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-04-29",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-04-30",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-01",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-02",
+        "new_followers": 9
+      },
+      {
+        "date": "2026-05-03",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-05-04",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-05-05",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-05-06",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-05-07",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-05-08",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-05-09",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-10",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-11",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-05-12",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-13",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-05-14",
+        "new_followers": 4
+      },
+      {
+        "date": "2026-05-15",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-05-16",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-17",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-18",
+        "new_followers": 4
+      },
+      {
+        "date": "2026-05-19",
+        "new_followers": 7
+      },
+      {
+        "date": "2026-05-20",
+        "new_followers": 3
+      },
+      {
+        "date": "2026-05-21",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-22",
+        "new_followers": 6
+      },
+      {
+        "date": "2026-05-23",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-24",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-25",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-05-26",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-05-27",
+        "new_followers": 7
+      },
+      {
+        "date": "2026-05-28",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-05-29",
+        "new_followers": 5
+      },
+      {
+        "date": "2026-05-30",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-05-31",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-01",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-06-02",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-06-03",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-06-04",
+        "new_followers": 9
+      },
+      {
+        "date": "2026-06-05",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-06",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-06-07",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-08",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-06-09",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-10",
+        "new_followers": 3
+      },
+      {
+        "date": "2026-06-11",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-06-12",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-13",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-06-14",
+        "new_followers": 14
+      },
+      {
+        "date": "2026-06-15",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-06-16",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-06-17",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-06-18",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-19",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-20",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-21",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-22",
+        "new_followers": 5
+      },
+      {
+        "date": "2026-06-23",
+        "new_followers": 2
+      },
+      {
+        "date": "2026-06-24",
+        "new_followers": 1
+      },
+      {
+        "date": "2026-06-25",
+        "new_followers": 0
+      },
+      {
+        "date": "2026-06-26",
+        "new_followers": 1
+      }
+    ]
+  },
+  "engagement": {
+    "total_impressions": 2875,
+    "members_reached": 992,
+    "daily": [
+      {
+        "date": "2026-03-29",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-03-30",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-03-31",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-01",
+        "impressions": 90,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-02",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-03",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-04",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-05",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-06",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-07",
+        "impressions": 18,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-08",
+        "impressions": 1,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-09",
+        "impressions": 5,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-10",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-11",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-12",
+        "impressions": 1,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-13",
+        "impressions": 2,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-14",
+        "impressions": 2,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-15",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-16",
+        "impressions": 2,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-17",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-18",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-19",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-20",
+        "impressions": 104,
+        "engagements": 2
+      },
+      {
+        "date": "2026-04-21",
+        "impressions": 259,
+        "engagements": 6
+      },
+      {
+        "date": "2026-04-22",
+        "impressions": 63,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-23",
+        "impressions": 26,
+        "engagements": 3
+      },
+      {
+        "date": "2026-04-24",
+        "impressions": 33,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-25",
+        "impressions": 5,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-26",
+        "impressions": 3,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-27",
+        "impressions": 12,
+        "engagements": 1
+      },
+      {
+        "date": "2026-04-28",
+        "impressions": 7,
+        "engagements": 0
+      },
+      {
+        "date": "2026-04-29",
+        "impressions": 46,
+        "engagements": 1
+      },
+      {
+        "date": "2026-04-30",
+        "impressions": 6,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-01",
+        "impressions": 7,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-02",
+        "impressions": 15,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-03",
+        "impressions": 4,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-04",
+        "impressions": 6,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-05",
+        "impressions": 42,
+        "engagements": 1
+      },
+      {
+        "date": "2026-05-06",
+        "impressions": 40,
+        "engagements": 1
+      },
+      {
+        "date": "2026-05-07",
+        "impressions": 13,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-08",
+        "impressions": 15,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-09",
+        "impressions": 8,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-10",
+        "impressions": 52,
+        "engagements": 2
+      },
+      {
+        "date": "2026-05-11",
+        "impressions": 26,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-12",
+        "impressions": 25,
+        "engagements": 2
+      },
+      {
+        "date": "2026-05-13",
+        "impressions": 113,
+        "engagements": 1
+      },
+      {
+        "date": "2026-05-14",
+        "impressions": 69,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-15",
+        "impressions": 42,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-16",
+        "impressions": 12,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-17",
+        "impressions": 81,
+        "engagements": 3
+      },
+      {
+        "date": "2026-05-18",
+        "impressions": 68,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-19",
+        "impressions": 46,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-20",
+        "impressions": 36,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-21",
+        "impressions": 9,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-22",
+        "impressions": 1,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-23",
+        "impressions": 3,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-24",
+        "impressions": 6,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-25",
+        "impressions": 2,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-26",
+        "impressions": 4,
+        "engagements": 1
+      },
+      {
+        "date": "2026-05-27",
+        "impressions": 9,
+        "engagements": 1
+      },
+      {
+        "date": "2026-05-28",
+        "impressions": 2,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-29",
+        "impressions": 4,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-30",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-05-31",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-01",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-02",
+        "impressions": 74,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-03",
+        "impressions": 10,
+        "engagements": 1
+      },
+      {
+        "date": "2026-06-04",
+        "impressions": 13,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-05",
+        "impressions": 21,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-06",
+        "impressions": 6,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-07",
+        "impressions": 4,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-08",
+        "impressions": 6,
+        "engagements": 1
+      },
+      {
+        "date": "2026-06-09",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-10",
+        "impressions": 14,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-11",
+        "impressions": 1,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-12",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-13",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-14",
+        "impressions": 3,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-15",
+        "impressions": 0,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-16",
+        "impressions": 38,
+        "engagements": 1
+      },
+      {
+        "date": "2026-06-17",
+        "impressions": 190,
+        "engagements": -2
+      },
+      {
+        "date": "2026-06-18",
+        "impressions": 181,
+        "engagements": 2
+      },
+      {
+        "date": "2026-06-19",
+        "impressions": 178,
+        "engagements": -1
+      },
+      {
+        "date": "2026-06-20",
+        "impressions": 201,
+        "engagements": 5
+      },
+      {
+        "date": "2026-06-21",
+        "impressions": 245,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-22",
+        "impressions": 122,
+        "engagements": 1
+      },
+      {
+        "date": "2026-06-23",
+        "impressions": 56,
+        "engagements": 2
+      },
+      {
+        "date": "2026-06-24",
+        "impressions": 8,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-25",
+        "impressions": 14,
+        "engagements": 0
+      },
+      {
+        "date": "2026-06-26",
+        "impressions": 45,
+        "engagements": 0
+      }
+    ]
+  },
+  "demographics": {
+    "company": [
+      {
+        "name": "LinkedIn",
+        "percentage": "4%"
+      },
+      {
+        "name": "Meta",
+        "percentage": "1%"
+      },
+      {
+        "name": "Robert Half",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "Google",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "Apple",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "Adobe",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "Salesforce",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "Stanford University",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "ServiceNow",
+        "percentage": "< 1%"
+      }
+    ],
+    "location": [
+      {
+        "name": "San Francisco Bay Area",
+        "percentage": "44%"
+      },
+      {
+        "name": "Los Angeles Metropolitan Area",
+        "percentage": "8%"
+      },
+      {
+        "name": "New York City Metropolitan Area",
+        "percentage": "5%"
+      },
+      {
+        "name": "London Area, United Kingdom",
+        "percentage": "1%"
+      },
+      {
+        "name": "Greater Sacramento",
+        "percentage": "1%"
+      },
+      {
+        "name": "Washington DC-Baltimore Area",
+        "percentage": "1%"
+      },
+      {
+        "name": "Austin, Texas Metropolitan Area",
+        "percentage": "1%"
+      },
+      {
+        "name": "Greater Chicago Area",
+        "percentage": "1%"
+      },
+      {
+        "name": "Greater Seattle Area",
+        "percentage": "1%"
+      }
+    ],
+    "company_size": [
+      {
+        "name": "10,001+ employees",
+        "percentage": "17%"
+      },
+      {
+        "name": "2-10 employees",
+        "percentage": "16%"
+      },
+      {
+        "name": "11-50 employees",
+        "percentage": "11%"
+      },
+      {
+        "name": "1,001-5,000 employees",
+        "percentage": "8%"
+      },
+      {
+        "name": "51-200 employees",
+        "percentage": "8%"
+      },
+      {
+        "name": "201-500 employees",
+        "percentage": "6%"
+      },
+      {
+        "name": "501-1,000 employees",
+        "percentage": "4%"
+      },
+      {
+        "name": "0-1 employees",
+        "percentage": "4%"
+      },
+      {
+        "name": "5,001-10,000 employees",
+        "percentage": "3%"
+      }
+    ],
+    "seniority": [
+      {
+        "name": "Senior",
+        "percentage": "33%"
+      },
+      {
+        "name": "Entry",
+        "percentage": "20%"
+      },
+      {
+        "name": "Director",
+        "percentage": "11%"
+      },
+      {
+        "name": "Owner",
+        "percentage": "8%"
+      },
+      {
+        "name": "Manager",
+        "percentage": "7%"
+      },
+      {
+        "name": "CXO",
+        "percentage": "5%"
+      },
+      {
+        "name": "VP",
+        "percentage": "3%"
+      },
+      {
+        "name": "Partner",
+        "percentage": "2%"
+      },
+      {
+        "name": "Training",
+        "percentage": "< 1%"
+      }
+    ],
+    "job_title": [
+      {
+        "name": "Founder",
+        "percentage": "6%"
+      },
+      {
+        "name": "Co-Founder",
+        "percentage": "3%"
+      },
+      {
+        "name": "Owner",
+        "percentage": "2%"
+      },
+      {
+        "name": "Chief Executive Officer",
+        "percentage": "2%"
+      },
+      {
+        "name": "Creative Director",
+        "percentage": "1%"
+      },
+      {
+        "name": "Recruiter",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "Program Manager",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "Customer Success Manager",
+        "percentage": "< 1%"
+      },
+      {
+        "name": "Product Manager",
+        "percentage": "< 1%"
+      }
+    ],
+    "industry": [
+      {
+        "name": "Technology, Information and Internet",
+        "percentage": "14%"
+      },
+      {
+        "name": "Software Development",
+        "percentage": "7%"
+      },
+      {
+        "name": "IT Services and IT Consulting",
+        "percentage": "6%"
+      },
+      {
+        "name": "Advertising Services",
+        "percentage": "4%"
+      },
+      {
+        "name": "Financial Services",
+        "percentage": "4%"
+      },
+      {
+        "name": "Media Production",
+        "percentage": "4%"
+      },
+      {
+        "name": "Entertainment Providers",
+        "percentage": "4%"
+      },
+      {
+        "name": "Design Services",
+        "percentage": "3%"
+      },
+      {
+        "name": "Business Consulting and Services",
+        "percentage": "3%"
+      },
+      {
+        "name": "Staffing and Recruiting",
+        "percentage": "2%"
+      }
+    ]
+  },
+  "top_posts": {
+    "by_engagements": [
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_displaced-disrupted-and-determined-ai-share-7452249158775623680-1f9r",
+        "date": "2026-04-20",
+        "engagements": 7
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_i-recently-had-a-heated-discussion-with-a-share-7452083619696914432-h8pB",
+        "date": "2026-04-20",
+        "engagements": 5
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_ology-151-see-your-sound-still-your-share-7472839357276635136-inRa",
+        "date": "2026-06-16",
+        "engagements": 5
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_now-that-token-spend-is-proving-to-be-more-share-7467419830590189568-OHuH",
+        "date": "2026-06-01",
+        "engagements": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_upskill-now-hook-it-up-yourself-do-your-share-7461827803827671040-vrXD",
+        "date": "2026-05-17",
+        "engagements": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_aiproduction-contentstrategy-marketinginnovation-ugcPost-7457493314314072064-kUSL",
+        "date": "2026-05-05",
+        "engagements": 2
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_when-we-begin-to-think-that-the-ai-bot-is-share-7462638084350709763-M7S7",
+        "date": "2026-05-19",
+        "engagements": 2
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_ai-is-the-overwhelming-topic-in-all-the-corporate-share-7460154618140971008-yKr1",
+        "date": "2026-05-12",
+        "engagements": 1
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_creativeai-humancreativity-generativeai-share-7474564371948523520-xWd8",
+        "date": "2026-06-21",
+        "engagements": 1
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_the-global-south-ai-gap-who-gets-left-behind-share-7473451995576549376-ixIb",
+        "date": "2026-06-18",
+        "engagements": 1
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_developing-ai-for-humanity-and-social-welfare-share-7455112974387703808-6TEU",
+        "date": "2026-04-28",
+        "engagements": 1
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_the-5000-music-video-blueprint-aima-magazine-share-7473819519409471488-Nssq",
+        "date": "2026-06-19",
+        "engagements": 1
+      }
+    ],
+    "by_impressions": [
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_i-recently-had-a-heated-discussion-with-a-share-7452083619696914432-h8pB",
+        "date": "2026-04-20",
+        "impressions": 355
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_ai-is-the-overwhelming-topic-in-all-the-corporate-share-7460154618140971008-yKr1",
+        "date": "2026-05-12",
+        "impressions": 280
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_can-ai-be-used-for-uplifting-humanity-and-share-7472789597434064896-OYrI",
+        "date": "2026-06-16",
+        "impressions": 246
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_displaced-disrupted-and-determined-ai-share-7452249158775623680-1f9r",
+        "date": "2026-04-20",
+        "impressions": 202
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_now-that-token-spend-is-proving-to-be-more-share-7467419830590189568-OHuH",
+        "date": "2026-06-01",
+        "impressions": 170
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_aiproduction-contentstrategy-marketinginnovation-ugcPost-7457493314314072064-kUSL",
+        "date": "2026-05-05",
+        "impressions": 132
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_aimusic-creativeai-humancreativity-share-7474249658542780416-z3Oz",
+        "date": "2026-06-20",
+        "impressions": 129
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_ology-151-see-your-sound-still-your-share-7472839357276635136-inRa",
+        "date": "2026-06-16",
+        "impressions": 128
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_upskill-now-hook-it-up-yourself-do-your-share-7461827803827671040-vrXD",
+        "date": "2026-05-17",
+        "impressions": 120
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_when-we-begin-to-think-that-the-ai-bot-is-share-7462638084350709763-M7S7",
+        "date": "2026-05-19",
+        "impressions": 102
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_creativeai-humancreativity-generativeai-share-7474564371948523520-xWd8",
+        "date": "2026-06-21",
+        "impressions": 98
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_introducing-new-contributing-writer-for-aimaproductions-share-7474027389027647488-9LmY",
+        "date": "2026-06-20",
+        "impressions": 97
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_the-global-south-ai-gap-who-gets-left-behind-share-7473451995576549376-ixIb",
+        "date": "2026-06-18",
+        "impressions": 91
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_developing-ai-for-humanity-and-social-welfare-share-7455112974387703808-6TEU",
+        "date": "2026-04-28",
+        "impressions": 88
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_the-5000-music-video-blueprint-aima-magazine-share-7473819519409471488-Nssq",
+        "date": "2026-06-19",
+        "impressions": 88
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_the-future-of-creative-production-in-the-share-7473803142543863808-DZ3Z",
+        "date": "2026-06-19",
+        "impressions": 84
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_river-of-blood-share-7431070951515123712-FFIX",
+        "date": "2026-02-21",
+        "impressions": 19
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_new-from-the-aima-team-when-agents-go-rogue-share-7474175664460414976-BlDn",
+        "date": "2026-06-20",
+        "impressions": 14
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_bellicose-divulge-music-video-share-7429084886927384576-mQIq",
+        "date": "2026-02-16",
+        "impressions": 14
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_podcast-interview-business-ugcPost-7036515436900814848-tUGI",
+        "date": "2023-02-28",
+        "impressions": 7
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_bellicose-divulge-behind-the-scene-share-7422789263659970560-KTIm",
+        "date": "2026-01-29",
+        "impressions": 5
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_i-just-released-another-music-album-project-share-7331451229148987392-M2JI",
+        "date": "2025-05-22",
+        "impressions": 5
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_neon-pills-drum-and-bass-jungle-massive-share-7415865825263267840--jls",
+        "date": "2026-01-10",
+        "impressions": 5
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_volt-x-sabong-federation-share-7417344060279152641-ejDL",
+        "date": "2026-01-14",
+        "impressions": 5
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_hiawatha-movie-trailer-share-7399197832919961603-kYKC",
+        "date": "2025-11-25",
+        "impressions": 4
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_a-lesson-in-pain-teaser-share-7414093480140128256-5l50",
+        "date": "2026-01-05",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_0d0d0d-e0e0e0-1e1e1e-share-7474564448377217024-S7BZ",
+        "date": "2026-06-21",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_independent-filmmaker-indiefilm-ugcPost-6825342344972394496-QgYd",
+        "date": "2021-07-26",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_sabong-federation-an-fma-sparring-club-share-7105045444451332097-_Kf_",
+        "date": "2023-09-05",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_filmmakers-japan-tokyo-share-7005693000689352705-IrDI",
+        "date": "2022-12-05",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_share-6523926962380115968-HF8X",
+        "date": "2019-04-16",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_blockchain-development-finance-share-7033393456949460992-97RR",
+        "date": "2023-02-20",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_revolt-missed-connection-share-7227164803515965440-HfJ1",
+        "date": "2024-08-07",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_opentowork-media-producer-share-7297676047808962562-RrK5",
+        "date": "2025-02-18",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_a-lesson-in-pain-share-7413733197290696705--GB7",
+        "date": "2026-01-04",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_midjourney-ugcPost-7413743834427219968-1FtR",
+        "date": "2026-01-04",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_where-is-the-pizza-share-7262945727159369728-yoIo",
+        "date": "2024-11-14",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_bellicose-river-of-blood-share-7421646088614584321-2Sy2",
+        "date": "2026-01-26",
+        "impressions": 3
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_im-happy-to-share-love-letter-templates-ugcPost-7232828573374406657-c9mj",
+        "date": "2024-08-23",
+        "impressions": 2
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_revolt-the-most-disturbing-missed-connection-share-7248070820076396544-yIIf",
+        "date": "2024-10-04",
+        "impressions": 2
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_070c1a-b0d4f0-creativeai-share-7474564411593097216-W1VY",
+        "date": "2026-06-21",
+        "impressions": 2
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_ill-be-hosting-free-workshops-on-filipino-ugcPost-7099818088686112768-sEgw",
+        "date": "2023-08-22",
+        "impressions": 2
+      },
+      {
+        "url": "https://www.linkedin.com/posts/joselitosering_my-colleagues-and-coworkers-please-come-ugcPost-6894731474893987840-D_Ap",
+        "date": "2022-02-02",
+        "impressions": 2
+      }
+    ]
+  }
+}
