@@ -1,36 +1,41 @@
 {
-  "run_date": "2026-06-22",
-  "article_number": 17,
+  "run_date": "2026-06-25",
+  "article_number": 18,
   "agents": {
     "IR": {
       "budget": 8000,
       "used": 0,
       "status": "idle"
     },
-    "PR": {
-      "budget": 5000,
-      "used": 0,
-      "status": "idle"
-    },
-    "SC": {
-      "budget": 50000,
-      "used": 0,
-      "status": "idle"
-    },
-    "QL": {
+    "MR": {
       "budget": 22000,
       "used": 0,
       "status": "idle"
     },
+    "PR": {
+      "budget": 12500,
+      "used": 1200,
+      "status": "complete"
+    },
+    "SC": {
+      "budget": 25000,
+      "used": 15538,
+      "status": "complete"
+    },
+    "QL": {
+      "budget": 25000,
+      "used": 34877,
+      "status": "over_budget"
+    },
     "MY": {
-      "budget": 15000,
-      "used": 0,
-      "status": "idle"
+      "budget": 12500,
+      "used": 14664,
+      "status": "over_budget"
     },
     "VR": {
       "budget": 5000,
-      "used": 0,
-      "status": "idle"
+      "used": 7732,
+      "status": "over_budget"
     },
     "PT": {
       "budget": 0,
@@ -54,8 +59,9 @@
     },
     "CO": {
       "budget": 5000,
-      "used": 0,
-      "status": "idle"
+      "used": 10051,
+      "status": "over_budget"
     }
-  }
+  },
+  "estimated": true
 }

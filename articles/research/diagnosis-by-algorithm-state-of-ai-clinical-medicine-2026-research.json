@@ -1,0 +1,683 @@
+{
+  "_meta": {
+    "article_number": 18,
+    "slug": "diagnosis-by-algorithm-state-of-ai-clinical-medicine-2026",
+    "filename": "aima-article-diagnosis-by-algorithm-018.html",
+    "title": "Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026",
+    "author": "Joselito Sering",
+    "category": "AI Healthcare",
+    "researched_by": "Scout (Research Agent)",
+    "research_date": "2026-06-22",
+    "target_words": 3250,
+    "tone": "investigative, authoritative, evidence-driven",
+    "mood": "urgent clarity — grounded optimism tempered by critical scrutiny",
+    "research_priority_followed": [
+      "STEP 1: Read local cache — articles/research/diagnosis-by-algorithm-018-research.json (primary, exceptionally comprehensive)",
+      "STEP 1: Read local cache — articles/research/diagnosis-by-algorithm-research.json (secondary, added AMIE/DXplain/AMA 2026 data)",
+      "STEP 1: Read local cache — articles/research/governance-gap-ai-regulation-research.json (supplementary regulatory context)",
+      "STEP 2: PubMed E-utilities esearch (June 2026 papers: 1,325 results, 10 fetched)",
+      "STEP 2: PubMed E-utilities efetch (PMIDs 42329410, 42329385, 42329287, 42329268, 42329251 — new ophthalmology AI paper, ML limitations paper)",
+      "STEP 2: arXiv API (most recent AI clinical medicine papers — RadGrounder 2606.20477)",
+      "STEP 2: MIT Technology Review RSS (BCI trials story June 19, 2026 — adjacent, not directly used)",
+      "STEP 2: Cardiovascular Business (FDA count update — 1,524 cleared as of June 16, 2026)",
+      "STEP 2: STAT News — FDA January 2026 CES announcement (Commissioner Makary 'Silicon Valley speed')",
+      "STEP 2: Crescendo.ai AI healthcare news (OpenAI Medical AI June 19, 2026)",
+      "STEP 3: WebSearch (targeted gap-fill — confirmed FDA count, new OpenAI medical models)"
+    ],
+    "sources_checked": [
+      "Local cache (diagnosis-by-algorithm-018-research.json)",
+      "Local cache (diagnosis-by-algorithm-research.json)",
+      "Local cache (governance-gap-ai-regulation-research.json)",
+      "PubMed E-utilities (esearch + efetch, June 2026)",
+      "arXiv API (recent AI clinical medicine papers)",
+      "Cardiovascular Business (FDA count update)",
+      "STAT News (FDA January 2026 CES announcement)",
+      "Crescendo.ai (AI healthcare news aggregator)",
+      "MIT Technology Review RSS",
+      "WebSearch (FDA 1524, AI healthcare June 2026)"
+    ],
+    "research_confidence": "high",
+    "custom_tags": [
+      "AI healthcare",
+      "clinical medicine",
+      "medical diagnosis",
+      "radiology AI",
+      "patient outcomes",
+      "AI ethics",
+      "digital health",
+      "2026"
+    ],
+    "notes": "Local cache was exceptionally comprehensive. Live fetches added 4 significant updates: (1) FDA count revised upward to 1,524 cleared AI algorithms as of June 16, 2026 — up from 1,400+ in cache; (2) specialty breakdown confirmed — radiology 1,163, cardiology 146, neurology 69; (3) FDA Commissioner Makary's 'Silicon Valley speed' statement from STAT News adds specific regulatory voice; (4) OpenAI Medical AI launch (June 19, 2026) is a new development. PubMed fetch (June 2026) added: autonomous AI in ophthalmology paper (PMID 42329385, June 22, 2026) and ML limitations in orthopedic outcome prediction (PMID 42329268, AUC 0.67). EurekAlert and ScienceDaily RSS returned 404 (same as prior cache run)."
+  },
+
+  "executive_brief": "As of mid-2026, the FDA's official list — updated June 16, 2026 — counts 1,524 cleared AI-enabled medical algorithms, with radiology alone accounting for 1,163 devices. Physician adoption has more than doubled since 2023: the AMA's March 2026 survey found 81% of U.S. physicians now use AI in clinical practice. Google's AMIE multimodal AI outperformed primary care physicians on 29 of 32 axes in a Nature Medicine simulation study (May 2026), and OpenAI launched specialized medical AI models in June 2026 claiming to outperform physicians on certain clinical benchmarks. Yet three structural crises shadow every breakthrough: (1) a persistent equity gap — AI dermatology performs at 0.897 precision on light skin vs. 0.484 on dark skin, while fewer than 1 in 5 FDA-cleared AI devices are approved for pediatric use; (2) a reasoning ceiling — all 21 LLMs tested in the Harvard/Mass General Brigham study (JAMA Network Open, April 2026) failed differential diagnosis >80% of the time, and a traditional expert system (DXplain) beat ChatGPT-4 and Gemini 1.5 on real clinical cases at MGH; and (3) a legal vacuum — the AMA reports 85% of physicians rank clear liability frameworks as their top unresolved AI priority, while the FDA's January 2026 deregulatory pivot — announced at CES by Commissioner Marty Makary, who pledged to operate at 'Silicon Valley speed' — stripped pre-market approval requirements from clinical decision support tools. The dominant clinical story remains augmentation, not replacement.",
+
+  "key_statistics": [
+    {
+      "rank": 1,
+      "stat": "1,524",
+      "context": "FDA-cleared AI-enabled medical algorithms as of the official FDA list released June 16, 2026. Breakdown by specialty: radiology 1,163 devices (~76%), cardiology 146 (or 225 including cardiovascular-specific AI listed under radiology), neurology 69, anesthesiology 26, gastroenterology/urology 24, hematology 20, ophthalmology 10. Up from 1,400+ as of early 2026.",
+      "source_name": "Cardiovascular Business / FDA official AI device list",
+      "source_year": 2026,
+      "source_date": "June 16, 2026 (FDA list release date)",
+      "url": "https://cardiovascularbusiness.com/topics/artificial-intelligence/cardiology-healthcare-specialty-fda-cleared-ai",
+      "url_fda_list": "https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-and-machine-learning-aiml-enabled-medical-devices",
+      "verified": true,
+      "notes": "Up from ~1,400+ in early 2026 cache. 295 new 510(k) clearances in 2025 alone (Innolitics). Radiology concentration remains ~76% of total."
+    },
+    {
+      "rank": 2,
+      "stat": "81%",
+      "context": "U.S. physicians who now use AI in their clinical practices — more than double the 38% reported in 2023. Average use cases per physician: 2.3 (up from 1.1). Most common uses: medical research summarization (67%) and clinical documentation (54%). 85% want direct involvement in AI adoption decisions.",
+      "source_name": "AMA 2026 Physician Survey on Augmented Intelligence",
+      "source_year": 2026,
+      "source_date": "March 12, 2026",
+      "url": "https://www.ama-assn.org/practice-management/digital-health/more-80-physicians-use-ai-professionally-ama-survey",
+      "url_pdf": "https://www.ama-assn.org/system/files/physician-ai-sentiment-report.pdf",
+      "verified": true,
+      "notes": "Primary institutional source. Multiple independent sources confirm (GlobeNewsWire, FierceHealthcare, ASCO Post). High confidence."
+    },
+    {
+      "rank": 3,
+      "stat": ">80% differential diagnosis failure rate",
+      "context": "All 21 LLMs tested — including ChatGPT, Claude, DeepSeek, Gemini, and Grok — failed to generate clinically adequate differential diagnoses in more than 80% of 29 clinical cases, despite achieving >90% final diagnosis accuracy when given complete patient data. PrIME-LLM holistic scores ranged from 64% (Gemini 1.5 Flash) to 78% (Grok 4 / GPT-5).",
+      "source_name": "JAMA Network Open — 'Large Language Model Performance and Clinical Reasoning Tasks' (Rao & Succi, MGB/Harvard)",
+      "source_year": 2026,
+      "source_date": "April 13, 2026",
+      "url": "https://www.news-medical.net/news/20260413/Generative-AI-falls-short-in-diagnostic-reasoning-despite-accuracy.aspx",
+      "url_institution": "https://www.massgeneralbrigham.org/en/about/newsroom/press-releases/ai-chatbot-lacks-clinical-reasoning",
+      "verified": true,
+      "notes": "Lead authors: Arya Rao (MD-PhD, Harvard/MGB MESH) and Marc Succi MD. 29 clinical cases, 21 models. JAMA Network Open peer-reviewed. Landmark study for 2026 coverage."
+    },
+    {
+      "rank": 4,
+      "stat": "0.897 vs 0.484 precision",
+      "context": "State-of-the-art dermatology AI achieves precision of 0.897 on lighter skin phototypes versus 0.484 on darker skin phototypes — nearly half the accuracy. Root cause: dermatology training datasets contain dark skin tone images in only 4–18% of total images. Consequence: patients with skin of color are diagnosed at later cancer stages, compounding existing disparities.",
+      "source_name": "Science Advances — 'Disparities in Dermatology AI Performance on a Diverse, Curated Clinical Image Set'",
+      "source_year": 2022,
+      "url": "https://www.science.org/doi/10.1126/sciadv.abq6147",
+      "url_secondary": "https://www.jyi.org/2026-january-1/2026/1/8/bias-in-medical-ai-algorithmic-fairness-and-ethics-challenges",
+      "verified": true,
+      "notes": "Science Advances is peer-reviewed (AAAS). Study is from 2022 but remains the landmark quantitative benchmark for AI dermatology bias and is widely cited in 2026 literature. Use with year context."
+    },
+    {
+      "rank": 5,
+      "stat": "69% reduction in false-positive mammography marks",
+      "context": "AI reduced false-positive mammography marks by 69% compared to traditional computer-aided detection (CAD) systems in a systematic review across 150 peer-reviewed studies. Same review: AI for lung nodule detection achieved AUC up to 0.94; AI assistance raised pathologist sensitivity for lymph node metastasis detection from 83% to 91%.",
+      "source_name": "PMC12468291 — 'Artificial Intelligence in Clinical Medicine: Challenges Across Diagnostic Imaging, Clinical Decision Support, Surgery, Pathology, and Drug Discovery' (Ogut, Istanbul Medeniyet University)",
+      "source_year": 2026,
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12468291/",
+      "verified": true,
+      "notes": "150-study systematic review, 2026, peer-reviewed, indexed in PMC. High-quality secondary source."
+    },
+    {
+      "rank": 6,
+      "stat": "13.2 months vs 6.7 months median overall survival",
+      "context": "Daraxonrasib (AI-identified RAS inhibitor, Revolution Medicines) versus chemotherapy for metastatic pancreatic cancer in RASolute 302 Phase 3 trial — hazard ratio 0.40, nearly doubling median survival. Presented at ASCO 2026 Annual Meeting to a standing ovation. FDA Breakthrough Therapy + Orphan Drug designation; expanded access approved May 2026.",
+      "source_name": "New England Journal of Medicine — 'Daraxonrasib or Chemotherapy in Previously Treated Metastatic Pancreatic Cancer' (RASolute 302 Phase 3 trial)",
+      "source_year": 2026,
+      "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2605555",
+      "url_press": "https://ir.revmed.com/news-releases/news-release-details/daraxonrasib-demonstrates-unprecedented-overall-survival-benefit",
+      "verified": true,
+      "notes": "NEJM primary source. Darwin Health (Andrea Califano & Gideon Bosker) argue AI network biology was essential to identifying the RAS-targeted approach."
+    },
+    {
+      "rank": 7,
+      "stat": "78.9% sensitivity / 91.2% specificity",
+      "context": "Anumana's ECG-AI algorithm for cardiac amyloidosis — FDA-cleared, validated across 15,000+ adults. The only AI operating from a standard 12-lead ECG, making early screening feasible in any clinical setting with an ECG machine. Cardiac amyloidosis is typically diagnosed at advanced stage due to non-specific symptoms.",
+      "source_name": "Inside Precision Medicine + FDA Clearance Notice",
+      "source_year": 2026,
+      "url": "https://www.insideprecisionmedicine.com/topics/informatics/fda-clears-first-ai-algorithm-to-diagnose-cardiac-amyloidosis/",
+      "verified": true
+    },
+    {
+      "rank": 8,
+      "stat": "DXplain 72% vs ChatGPT-4 64% vs Gemini 1.5 58%",
+      "context": "Head-to-head comparison at Massachusetts General Hospital: a decades-old rule-based expert system (DXplain) outperformed both leading LLMs on real general medicine cases. Without lab data: DXplain 56% vs ChatGPT 42% vs Gemini 39%. Differences not statistically significant but directionally consistent across 36 cases at three academic medical centers.",
+      "source_name": "PMC12123466 — 'Dedicated AI Expert System vs Generative AI With LLMs for Clinical Diagnoses' (Feldman, Hoffer, Conley et al., MGH)",
+      "source_year": 2026,
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12123466/",
+      "verified": true,
+      "notes": "Counter-intuitive finding: the oldest, narrowest tool beats the newest. Authors recommend a hybrid approach."
+    },
+    {
+      "rank": 9,
+      "stat": "29 of 32 evaluation axes",
+      "context": "Google's multimodal AMIE AI outperformed primary care physicians on 29 of 32 evaluation axes — including 7 of 9 multimodal reasoning metrics — across 105 simulated clinical cases using patient actors. CRITICAL CAVEAT: Simulated cases with a remote chat interface, not real clinical settings. Real-world prospective clinical trial is underway at Beth Israel Deaconess Medical Center; no outcome data published.",
+      "source_name": "Nature Medicine — 'Advancing conversational diagnostic AI with multimodal reasoning' (Google DeepMind AMIE)",
+      "source_year": 2026,
+      "source_date": "May 15, 2026",
+      "url": "https://www.nature.com/articles/s41591-026-04371-0",
+      "url_blog": "https://research.google/blog/amie-gains-vision-a-research-ai-agent-for-multi-modal-diagnostic-dialogue/",
+      "verified": true,
+      "notes": "High-profile Nature Medicine paper. Must always be accompanied by simulation caveat. Built on Gemini 2.0 Flash. arXiv preprint: 2505.04653."
+    },
+    {
+      "rank": 10,
+      "stat": "85%",
+      "context": "85% of U.S. physicians say they want to be consulted or directly involved in decisions about AI adoption in their practice. When asked what single regulatory action would most build trust in AI tools, physicians ranked clear liability frameworks first — above accuracy transparency requirements, data governance standards, or explainability mandates.",
+      "source_name": "AMA 2026 Physician Survey on Augmented Intelligence",
+      "source_year": 2026,
+      "source_date": "March 12, 2026",
+      "url": "https://www.ama-assn.org/practice-management/digital-health/more-80-physicians-use-ai-professionally-ama-survey",
+      "verified": true,
+      "notes": "The buried lede: physicians are adopting AI at scale while simultaneously identifying legal accountability as their #1 unresolved concern."
+    }
+  ],
+
+  "expert_quotes": [
+    {
+      "rank": 1,
+      "name": "Marc Succi, MD",
+      "title": "Executive Director, MESH Incubator, Mass General Brigham / Harvard Medical School",
+      "quote": "Differential diagnoses are central to clinical reasoning and underlie the 'art of medicine' that AI cannot currently replicate.",
+      "context": "Lead co-author of the April 2026 JAMA Network Open study testing 21 LLMs on clinical reasoning across 29 cases — found >80% differential diagnosis failure rate despite >90% final diagnosis accuracy with complete data.",
+      "url": "https://www.massgeneralbrigham.org/en/about/newsroom/press-releases/ai-chatbot-lacks-clinical-reasoning",
+      "quality": "Primary institutional press release — verified",
+      "usage_note": "Anchor quote for the reasoning gap section. Pairs with Arya Rao."
+    },
+    {
+      "rank": 2,
+      "name": "Arya Rao",
+      "title": "MD-PhD student, MESH Incubator, Harvard Medical School",
+      "quote": "Models excel at naming a final diagnosis once the data is complete, but they struggle at the open-ended start of a case.",
+      "context": "Lead author of MGB LLM clinical reasoning study, JAMA Network Open April 13, 2026. Captures the core tension: AI as endpoint confirmer vs. AI as reasoning engine.",
+      "url": "https://www.massgeneralbrigham.org/en/about/newsroom/press-releases/ai-chatbot-lacks-clinical-reasoning",
+      "quality": "Primary institutional press release — verified",
+      "usage_note": "Pair with Marc Succi quote — same study, different angle."
+    },
+    {
+      "rank": 3,
+      "name": "Martha Grogan, MD",
+      "title": "Cardiologist, Mayo Clinic",
+      "quote": "A tool that helps clinicians recognize suspicion of amyloidosis from a routine ECG could support earlier diagnosis and more timely next steps in care.",
+      "context": "Commenting on Anumana's FDA-cleared ECG-AI algorithm for cardiac amyloidosis — a condition typically caught at advanced stage due to non-specific, easily missed early symptoms.",
+      "url": "https://www.insideprecisionmedicine.com/topics/informatics/fda-clears-first-ai-algorithm-to-diagnose-cardiac-amyloidosis/",
+      "quality": "Published news source — verified",
+      "usage_note": "Best quote for the 'where it works' section — Mayo Clinic affiliation lends authority."
+    },
+    {
+      "rank": 4,
+      "name": "Eren Ogut",
+      "title": "Department of Anatomy, Istanbul Medeniyet University — Lead author, 150-study systematic review of AI across all of clinical medicine",
+      "quote": "Current evidence for tangible improvements in day-to-day clinical practice is mixed.",
+      "context": "Conclusion from PMC12468291, a 150-study systematic review spanning diagnostic imaging, CDS, surgery, pathology, and drug discovery. Diagnostic imaging + human-AI synergy scored highest (9.0 ± 0.6); bias and explainability scored lowest (4.0–5.0 out of 10).",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12468291/",
+      "quality": "Peer-reviewed PMC article — verified",
+      "usage_note": "Strong counterbalancing quote to the hype — a researcher who reviewed 150 studies says the evidence for day-to-day improvement is mixed. Use in conclusion or equity section."
+    },
+    {
+      "rank": 5,
+      "name": "Mitchell J. Feldman, Edward P. Hoffer, Jared J. Conley et al.",
+      "title": "Massachusetts General Hospital Laboratory of Computer Science",
+      "quote": "A hybrid approach that combines the parsing and expository linguistic capabilities of LLMs with the deterministic and explanatory capabilities of traditional DDSSs may produce synergistic benefits.",
+      "context": "From the MGH DXplain vs ChatGPT/Gemini comparison study (PMC12123466). Authors found LLMs excelled at extracting clinical findings from narrative text, while traditional expert systems provided superior diagnostic accuracy and transparency.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12123466/",
+      "quality": "Peer-reviewed PMC article — verified",
+      "usage_note": "Forward-looking note that hybrid AI may be the real answer, not pure LLM or pure expert system."
+    },
+    {
+      "rank": 6,
+      "name": "Andrea Califano & Gideon Bosker",
+      "title": "Co-founders, Darwin Health",
+      "quote": "AI will be necessary for the next major advances — but not for reasons you might expect.",
+      "context": "STAT News op-ed on daraxonrasib and AI-driven drug discovery in pancreatic cancer, June 19, 2026. They argue AI network biology analysis was essential to identifying the RAS-targeted approach for a notoriously drug-resistant cancer.",
+      "url": "https://www.statnews.com/2026/06/19/daraxonrasib-pancreatic-cancer-miracle-drug-oncosystems-ai/",
+      "quality": "STAT News — accessible, verified",
+      "usage_note": "Best quote for the drug discovery section. The 'not for reasons you might expect' teaser works well in editorial copy."
+    }
+  ],
+
+  "strongest_counterargument": {
+    "title": "Benchmark Performance ≠ Clinical Reality: Traditional AI Still Beats LLMs, and Simulated Studies Don't Translate to Real Outcomes",
+    "argument": "The dominant 2026 narrative — 'AI is matching or exceeding doctors' — is built substantially on benchmark studies that have not survived contact with real clinical environments. Three pieces of simultaneous evidence challenge this framing:\n\n1. At Massachusetts General Hospital, a decades-old rule-based expert system (DXplain) outperformed both ChatGPT-4 and Gemini 1.5 on real general medicine cases: 72% vs. 64% vs. 58% accuracy with lab data. The newest, most hyped AI tools lost to an older, narrower, deterministic system specifically designed for diagnosis.\n\n2. Google's AMIE — despite winning 29 of 32 benchmark axes over primary care physicians in a Nature Medicine publication (May 2026) — achieved those results using simulated cases with patient actors in a remote chat interface. The authors themselves note 'further research is needed before real-world translation.' The real-world clinical trial at Beth Israel Deaconess Medical Center has produced no outcome data.\n\n3. Ogut et al.'s systematic review of 150 AI clinical medicine studies (PMC12468291, 2026) found that approximately half of measured outcomes showed improvement while others showed no significant change in real-world settings — and that bias and explainability (the two factors most consequential for patient safety) scored the lowest across all domains reviewed.\n\nSTAT News directly interrogated this pattern on May 5, 2026 ('Did AI Really Beat Doctors at Diagnosis?'), noting that controlled study performance and real-world clinical translation are systematically different under time pressure, diagnostic uncertainty, and incomplete patient data.\n\nThe conclusion: AI demonstrably improves specific, narrow diagnostic tasks — lung nodule detection, ECG arrhythmia analysis, breast cancer screening. It does not yet reliably improve the complete clinical reasoning workflow that constitutes medicine. The 1,524 cleared algorithms prove regulatory activity, not clinical outcomes.",
+    "sources": [
+      {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12123466/", "label": "DXplain vs LLM — MGH"},
+      {"url": "https://www.nature.com/articles/s41591-026-04371-0", "label": "Google AMIE — Nature Medicine"},
+      {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12468291/", "label": "150-study systematic review"},
+      {"url": "https://www.statnews.com/2026/05/05/did-ai-really-beat-doctors-at-diagnosis-health-tech/", "label": "STAT News — Did AI Really Beat Doctors? (PAYWALLED)"}
+    ]
+  },
+
+  "recent_news_items": [
+    {
+      "rank": 1,
+      "headline": "FDA Releases Updated AI Algorithm Count — 1,524 Cleared as of June 16, 2026; Announces Expanded Resources",
+      "date": "June 16, 2026",
+      "summary": "The FDA's official AI/ML-enabled medical devices list, updated June 16, 2026, now tallies 1,524 cleared AI algorithms — up from ~1,400 reported in early 2026. Radiology accounts for 1,163 devices (~76%), cardiology 146 (or 225 including cardiovascular-specific tools), neurology 69, anesthesiology 26. The FDA simultaneously announced expanded guidance and regulatory resources to support safe deployment. In March 2026 alone, the agency cleared 24 AI/ML applications — roughly one every 31 hours.",
+      "source": "Cardiovascular Business / FDA",
+      "url": "https://cardiovascularbusiness.com/topics/artificial-intelligence/cardiology-healthcare-specialty-fda-cleared-ai",
+      "editorial_angle": "Update the article's lead stat from 1,400+ to 1,524. The pace (1 every 31 hours in March 2026) is a powerful illustration of how rapidly the landscape is moving — and how inadequate the 2-CPT-code reimbursement framework is.",
+      "verified": true
+    },
+    {
+      "rank": 2,
+      "headline": "Google's AMIE Multimodal AI Outperforms Primary Care Physicians in Nature Medicine Study — But Only in Simulation",
+      "date": "May 15, 2026",
+      "summary": "Google DeepMind's AMIE (built on Gemini 2.0 Flash) — expanded to process images, lab reports, and visual clinical data — outperformed primary care physicians on 29 of 32 evaluation axes across 105 simulated clinical cases, including 7 of 9 multimodal reasoning metrics. Patient actors rated the AI as more empathetic and trustworthy than PCPs. Real-world prospective studies now underway at Beth Israel Deaconess Medical Center. No clinical outcome data published.",
+      "source": "Nature Medicine",
+      "url": "https://www.nature.com/articles/s41591-026-04371-0",
+      "url_blog": "https://research.google/blog/amie-gains-vision-a-research-ai-agent-for-multi-modal-diagnostic-dialogue/",
+      "editorial_angle": "Most significant AI-vs-physician study of 2026 — and simultaneously the strongest illustration of the benchmark-to-bedside translation problem. Always use both faces of this story.",
+      "verified": true,
+      "caveat": "Simulation-only. Patient actors in remote chat interface. Empathy scores from scripted scenarios may not reflect real clinical experience."
+    },
+    {
+      "rank": 3,
+      "headline": "OpenAI Launches Specialized Medical AI Models — Claims Physician-Level Performance on Clinical Benchmarks",
+      "date": "June 19, 2026",
+      "summary": "OpenAI announced healthcare-focused AI models that reportedly outperform physicians on certain clinical benchmarks while reducing inaccurate medical responses. No peer-reviewed clinical trial data published. The announcement follows the May 2026 Google AMIE study and comes amid an intensifying competition between AI labs for dominance in clinical medicine.",
+      "source": "Crescendo.ai / OpenAI",
+      "url": "https://www.crescendo.ai/news/ai-in-healthcare-news",
+      "editorial_angle": "The OpenAI entry into medical AI is notable for timing — announced within weeks of the AMIE study and the AMA survey showing 81% physician adoption. Benchmark-only claims with no published trial data follow the same pattern as AMIE's simulation gap. Use as supporting evidence for the benchmark-to-bedside theme.",
+      "verified": "medium — from news aggregator; OpenAI official press materials not directly reviewed",
+      "flag": "PARTIALLY VERIFIED — confirm from OpenAI official blog or peer-reviewed source before publication"
+    },
+    {
+      "rank": 4,
+      "headline": "FDA Commissioner Marty Makary Pledges 'Silicon Valley Speed' at CES — Announces AI Device Deregulation",
+      "date": "January 6, 2026",
+      "summary": "FDA Commissioner Marty Makary announced sweeping regulatory changes at CES on January 6, 2026, pledging the FDA would operate at 'Silicon Valley speed' and prioritize investor-friendly policies. Key change: clinical decision support tools that previously required pre-market FDA review can now enter clinical workflows without pre-market approval if they meet exemption criteria — opening the door to unregulated generative AI tools in clinical settings. The policy shift is the regulatory backdrop for all 2026 AI clinical medicine developments.",
+      "source": "STAT News",
+      "url": "https://www.statnews.com/2026/01/06/fda-pulls-back-oversight-ai-enabled-devices-wearables/",
+      "editorial_angle": "The 'Silicon Valley speed' quote is the policy backdrop for everything else in the article. FDA clearance is happening at 1 device every 31 hours; the liability framework is absent; and the regulator just removed pre-market requirements from CDS tools. These three facts together define the structural risk.",
+      "verified": "medium — STAT News paywall limits full text; key facts confirmed from summary and search results",
+      "flag": "PAYWALLED — commissioner quote and 'Silicon Valley speed' framing confirmed; full article text unavailable"
+    },
+    {
+      "rank": 5,
+      "headline": "Hospital Sues Insurer Over AI-Driven Claims Denials — A New Category of AI Healthcare Harm",
+      "date": "2025-2026",
+      "summary": "AdventHealth Shawnee Mission Hospital filed suit against Blue Cross and Blue Shield of Kansas City, alleging its AI-driven claims review system wrongfully denied hundreds of physician-made medical diagnoses, withholding more than $2 million in payments. Appeals were reportedly denied instantly without human review. One of the first legal challenges to denial-by-algorithm as a class of harm — distinct from diagnostic AI error but equally consequential for patients whose care is denied.",
+      "source": "FierceHealthcare / HealthcareIT News",
+      "url": "https://www.fiercehealthcare.com/payers/blue-kc-wrongfully-denied-medical-diagnoses-hospital-alleges-ai-driven-claims-lawsuit",
+      "url_alt": "https://www.healthcareitnews.com/news/kansas-hospital-sues-blue-kc-over-ai-driven-claims-denials",
+      "editorial_angle": "AI harm in healthcare is not only diagnostic — it is operational. Denial-by-algorithm is a distinct category of AI harm that connects the liability section to the equity section: denials disproportionately affect the already-disadvantaged.",
+      "verified": true
+    }
+  ],
+
+  "clinical_domains": {
+    "radiology": {
+      "summary": "The most mature AI clinical domain. 1,163 FDA-cleared radiology AI tools (June 16, 2026 count). Strongest evidence in stroke (LVO detection, hemorrhage identification, ASPECTS scoring) and lung nodule management. Breast imaging AI (8+ cleared products) functions as assistive reading, not autonomous. AI reduced false-positive mammography marks by 69% vs. traditional CAD; pathologist sensitivity raised from 83% to 91% for lymph node metastasis with AI assistance.",
+      "performance_metrics": {
+        "lung_nodule_detection_auc": "0.94",
+        "mammography_false_positive_reduction": "69% vs traditional CAD (150-study systematic review, PMC12468291)",
+        "emergent_ich_time_to_diagnosis": "Up to 90% faster (PMC AI Radiology Review 2026)",
+        "reporting_time_reduction": "30-50% with AI-assisted drafting",
+        "pathologist_sensitivity_gain": "83% to 91% for lymph node metastasis"
+      },
+      "gaps": [
+        "Most clearances based on retrospective data, not prospective trials",
+        "No dedicated CPT reimbursement outside cardiology (2 codes only)",
+        "Dataset transparency gap: race/ethnicity breakdowns absent from most regulatory dossiers",
+        "Reimbursement remains major adoption barrier — FDA clearance ≠ payer coverage ≠ clinical deployment"
+      ],
+      "new_2026": {
+        "radgrounder": {
+          "id": "arXiv 2606.20477",
+          "date": "June 18, 2026",
+          "description": "RadGrounder — new vision-language model trained on 1.2 million CT and MR image-text pairs from clinical practice for spatially grounded radiology report generation and visual question answering",
+          "significance": "Represents continued maturation of multimodal radiology AI beyond narrow detection to full report generation"
+        }
+      }
+    },
+    "cardiology": {
+      "summary": "The only radiology AI category with dedicated CPT reimbursement (2 Category I codes). 146–225 FDA-cleared cardiac AI tools (June 2026 count). AI-ECG analysis advancing fastest. Anumana has 3 FDA-cleared algorithms; CPT coverage creates a rare viable commercial pathway.",
+      "flagship_tool": {
+        "name": "Anumana ECG-AI for cardiac amyloidosis",
+        "performance": "78.9% sensitivity, 91.2% specificity",
+        "validation": "15,000+ adults",
+        "significance": "Only AI screening from a standard 12-lead ECG — makes early detection feasible in any setting"
+      },
+      "quote": {
+        "name": "Martha Grogan, MD",
+        "affiliation": "Mayo Clinic",
+        "text": "A tool that helps clinicians recognize suspicion of amyloidosis from a routine ECG could support earlier diagnosis and more timely next steps in care.",
+        "url": "https://www.insideprecisionmedicine.com/topics/informatics/fda-clears-first-ai-algorithm-to-diagnose-cardiac-amyloidosis/"
+      }
+    },
+    "pathology": {
+      "summary": "Digital pathology accelerating rapidly but adoption modest (10% of U.S. labs). Foundation models trained on billions of tiles achieving near-human performance in cancer subtyping. PathAI received FDA Breakthrough Device Designation for dermatopathology (March 2026).",
+      "notable_2026": [
+        "PathAI PathAssist Derm: FDA Breakthrough Device Designation, March 2026",
+        "PathAI AISight Dx: 510(k) cleared — first digital pathology IMS with PCCP",
+        "Paige acquired by Tempus; PanCancer Detect in Breakthrough Device pipeline",
+        "Virchow foundation model: 0.95 AUC detecting 16 cancer types across 1.5M slides",
+        "Artera AI: predicts 5/10-year metastasis risk in prostate cancer from pathology slides"
+      ],
+      "url": "https://jpatholtm.org/journal/view.php?number=17219"
+    },
+    "ophthalmology": {
+      "summary": "New domain gaining regulatory attention in 2026. A June 22, 2026 paper in Die Ophthalmologie (PMID 42329385) examines ethical implications of 'fully automated systems' vs. asynchronous diagnosis models in AI-driven eye screening and imaging diagnostics. 10 FDA-cleared ophthalmology AI devices as of June 2026.",
+      "key_tools": ["AI-driven diabetic retinopathy screening (several cleared systems)", "Glaucoma progression detection algorithms"],
+      "new_paper": {
+        "pmid": "42329385",
+        "title": "More than just technology: autonomous AI in ophthalmological care",
+        "journal": "Die Ophthalmologie",
+        "date": "June 22, 2026",
+        "relevance": "Rare academic focus on ethics of fully autonomous vs. human-supervised AI in eye diagnostics — points toward an emerging regulatory debate beyond radiology"
+      }
+    },
+    "llm_clinical_reasoning": {
+      "summary": "The April 2026 MGB/Harvard study (JAMA Network Open) is the landmark. All 21 LLMs fail differential diagnosis >80% of the time. DXplain outperforms ChatGPT and Gemini on real clinical cases at MGH. Google AMIE wins in simulation but has no real-world outcome data. OpenAI launched medical AI (June 2026) with benchmark claims but no published trials.",
+      "harvard_mgb_study": {
+        "journal": "JAMA Network Open",
+        "date": "April 13, 2026",
+        "models_tested": 21,
+        "cases_tested": 29,
+        "differential_failure_rate": ">80%",
+        "final_diagnosis_accuracy": ">90% with complete data",
+        "prime_llm_range": "64% (Gemini 1.5 Flash) to 78% (Grok 4 / GPT-5)",
+        "url": "https://www.massgeneralbrigham.org/en/about/newsroom/press-releases/ai-chatbot-lacks-clinical-reasoning"
+      },
+      "dxplain_vs_llm": {
+        "study": "PMC12123466, MGH",
+        "result": "DXplain 72% vs ChatGPT-4 64% vs Gemini 1.5 58% (with lab data)",
+        "lesson": "The oldest, narrowest tool beat the newest, broadest ones",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12123466/"
+      },
+      "google_amie": {
+        "result": "29 of 32 axes over PCPs in simulation",
+        "caveat": "Patient actors, remote chat interface, no real clinical outcome data",
+        "trial_ongoing": "Beth Israel Deaconess Medical Center",
+        "url": "https://www.nature.com/articles/s41591-026-04371-0"
+      }
+    },
+    "ambient_documentation": {
+      "summary": "Ambient AI scribes (Nuance DAX / Microsoft Dragon Copilot) remain the fastest-adopted AI in medicine. Marketing claims diverge sharply from RCT evidence. Burnout improvement is real; documentation time reduction is modest.",
+      "marketing_claims": "50% documentation time reduction; 70% users report reduced burnout",
+      "rct_evidence": "1.7% documentation time reduction (not statistically significant); +2.8 points on Mini-Z burnout scale (significant); physician task load drop of 39.9 points",
+      "nejm_ai_rct": {
+        "url": "https://ai.nejm.org/doi/abs/10.1056/AIoa2501000",
+        "design": "Parallel three-group RCT (238 physicians, 14 specialties — DAX vs Nabla vs control)"
+      },
+      "editorial_note": "Use RCT figures only. Do not use marketing claims as data. The burnout finding is real and important — but efficiency gains are more modest than advertised."
+    },
+    "sepsis_prediction": {
+      "summary": "AI sepsis prediction deployed in ICUs/EDs but alarm fatigue persists — too many false positives erode clinical responsiveness. Best systems predict onset 3–12 hours before first antibiotic order.",
+      "named_systems": [
+        "COMPOSER: 12.2h early warning in ICU, 2.1h in ED",
+        "NAVOY Sepsis: 79% accuracy, 80% sensitivity, 78% specificity, AUROC 0.80",
+        "InSight: associated with earlier detection and reduced ICU length of stay"
+      ],
+      "challenge": "Alarm fatigue. XAI methods (SHAP, LIME) increasingly required to build clinician trust. Without explainability, clinicians learn to ignore alerts.",
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12366378/"
+    },
+    "drug_discovery": {
+      "headline": "Daraxonrasib — AI-identified RAS inhibitor — nearly doubles survival in metastatic pancreatic cancer",
+      "trial": "RASolute 302 Phase 3; presented ASCO 2026 to standing ovation",
+      "survival": "13.2 months vs 6.7 months median OS; HR 0.40",
+      "ai_role": "Darwin Health (Califano & Bosker) argue AI network biology analysis was essential to identifying the RAS-targeted approach for a notoriously drug-resistant cancer",
+      "url_nejm": "https://www.nejm.org/doi/full/10.1056/NEJMoa2605555",
+      "url_stat": "https://www.statnews.com/2026/06/19/daraxonrasib-pancreatic-cancer-miracle-drug-oncosystems-ai/"
+    },
+    "mental_health_ai": {
+      "summary": "Accelerating across screening, triage, therapy delivery, and risk monitoring but remains largely research-phase in clinical deployment. Chatbots delivering CBT show moderate reductions in depressive/anxiety symptoms in 4–8 week RCTs.",
+      "barriers": [
+        "No FDA-cleared AI diagnostic for any primary psychiatric condition as of mid-2026",
+        "Algorithmic bias: worse performance for Black and Hispanic patients in risk models",
+        "Data privacy and HIPAA compliance complexity",
+        "Most trials are small-scale or single-center"
+      ]
+    },
+    "orthopedics_ai_limitations": {
+      "note": "New cautionary data point (June 2026)",
+      "pmid": "42329268",
+      "title": "Predicting persistent pain after total knee arthroplasty using different machine learning algorithms",
+      "journal": "Acta Orthopaedica",
+      "date": "June 22, 2026",
+      "finding": "XGBoost ML model achieved AUC of only 0.67 despite 751 patient variables — demonstrating inherent difficulty of AI outcome prediction in complex musculoskeletal conditions. Authors note ML performed poorly even with extensive feature sets.",
+      "relevance": "Strong counterpoint to 'AI can predict any clinical outcome' narratives. Use as supporting evidence for the reasoning gap and systematic review findings."
+    }
+  },
+
+  "regulatory_landscape": {
+    "fda_january_2026_guidance": {
+      "date": "January 6, 2026",
+      "venue": "Consumer Electronics Show (CES), Las Vegas",
+      "commissioner": "Marty Makary, FDA Commissioner",
+      "key_statement": "FDA pledged to operate at 'Silicon Valley speed' and prioritize investor-friendly policies",
+      "key_changes": [
+        "Clinical decision support tools that previously required pre-market FDA review can now enter clinical workflows without pre-market approval if they meet exemption criteria",
+        "Single clinically appropriate recommendation permitted (glass-box approach) instead of requiring multiple options",
+        "Consumer wearables may avoid device regulation if marketed for wellness only",
+        "Increased enforcement discretion for low-risk CDS tools"
+      ],
+      "concerns": [
+        "Opens door to unregulated generative AI tools in clinical workflows",
+        "FDA declined to define 'clinically appropriate' — creates developer-interpreted loophole",
+        "Guidance does not address LLMs or probabilistic outputs",
+        "Cognitive offloading risk: time-pressed physicians may not scrutinize AI recommendations",
+        "Patient-facing AI tools (symptom checkers, health chatbots) remain largely unaddressed"
+      ],
+      "sources": [
+        {"url": "https://www.statnews.com/2026/01/06/fda-pulls-back-oversight-ai-enabled-devices-wearables/", "label": "STAT News (paywalled)"},
+        {"url": "https://kevinmd.com/2026/01/fda-loosens-ai-oversight-what-clinicians-need-to-know-about-the-2026-guidance.html", "label": "KevinMD — Arthur Lazarus MD MBA"}
+      ]
+    },
+    "clearance_velocity": {
+      "total_cleared_june_2026": 1524,
+      "new_in_2025": 295,
+      "manufacturers_2025": 221,
+      "march_2026_pace": "24 clearances in one month — 1 every 31 hours",
+      "median_clearance_time": "142 days (2025); 24% cleared in under 90 days",
+      "pathway_breakdown": "96% via 510(k) (substantial equivalence); ~3% via De Novo",
+      "pccp_adoption": "Only 10% of 2025 clearances included Predetermined Change Control Plan"
+    },
+    "reimbursement_gap": {
+      "status": "Only 2 CPT Category I codes for AI-specific clinical functions — both cardiac imaging",
+      "implication": "1,524 cleared algorithms, 2 CPT codes. FDA clearance ≠ payer coverage ≠ hospital deployment ≠ clinical outcome improvement. The reimbursement desert is the single largest commercial deployment barrier for most AI specialties."
+    }
+  },
+
+  "health_equity": {
+    "headline": "AI in medicine risks encoding and amplifying existing healthcare disparities at scale — and 2026 federal deregulation is accelerating the risk",
+    "dermatology_case": {
+      "precision_lighter_skin": 0.897,
+      "precision_darker_skin": 0.484,
+      "training_data_dark_skin_share": "4-18%",
+      "consequence": "Later-stage cancer diagnosis for patients with skin of color",
+      "url": "https://www.science.org/doi/10.1126/sciadv.abq6147"
+    },
+    "documented_bias_cases": [
+      "U.S. health management algorithm used prior healthcare costs as proxy — systematically underestimated needs of Black patients",
+      "Sepsis prediction models showed significantly reduced accuracy among Hispanic patients due to unbalanced training data",
+      "AI claims denial by payer systems (Blue KC lawsuit): denial-by-algorithm disproportionately affects underserved and underinsured populations"
+    ],
+    "pediatric_representation_gap": {
+      "finding": "Fewer than 1 in 5 FDA-cleared AI medical devices are approved for pediatric use",
+      "url": "https://www.medrxiv.org/content/10.1101/2025.06.06.25328913.full.pdf",
+      "notes": "Preprint — treat as preliminary but noteworthy"
+    },
+    "policy_regression_2026": {
+      "finding": "Trump administration eliminated equity requirements for AI in healthcare, replacing Biden-era algorithmic fairness mandates with 'minimally burdensome' requirements",
+      "url": "https://www.kff.org/racial-equity-and-health-policy/the-growing-use-of-artificial-intelligence-in-health-care-and-implications-for-disparities/"
+    },
+    "global_trial_concentration": {
+      "finding": "China accounts for 35.6% of global AI clinical trials; U.S. 8.5%. Africa and Latin America severely underrepresented.",
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12385212/"
+    },
+    "who_initiative": {
+      "name": "WHO Global Initiative on AI for Health (GI-AI4H)",
+      "purpose": "Harmonize governance and advance implementation in LMICs",
+      "url": "https://www.who.int/teams/digital-health-and-innovation/harnessing-artificial-intelligence-for-health"
+    },
+    "paradox": "Populations with the greatest healthcare access gaps express the most optimism about AI's potential — Sub-Saharan Africa, Central Asia, South Asia, Latin America"
+  },
+
+  "liability_and_accountability": {
+    "current_framework": "No federal law shifts malpractice liability from clinician to AI developer. Courts hold physicians to independent standard of care regardless of algorithmic input.",
+    "key_tension": "85% of physicians cite clear liability frameworks as their #1 AI regulatory priority (AMA 2026), yet no federal action has been taken. FDA just removed pre-market approval requirements from CDS tools.",
+    "new_category_of_harm": "AI-driven insurance denials (Blue KC lawsuit) create a distinct liability vector — denial-by-algorithm — with no clear legal framework and no clinical outcome data to evaluate",
+    "shared_liability_framework": [
+      "Clinician: primary responsibility for all decisions, even AI-influenced",
+      "Hospital: responsible for vetting tools and training staff",
+      "Developer: potentially liable for defective algorithm or overstated reliability claims"
+    ],
+    "liability_sink_concern": "Clinicians risk becoming 'liability sinks' — absorbing legal exposure for algorithmic failures with limited ability to audit black-box recommendations",
+    "malpractice_trend": "Industry-sourced data suggests 14% increase in malpractice claims involving AI between 2022 and 2024 — see unverified claims",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11025047/"
+  },
+
+  "patient_trust": {
+    "findings": [
+      "91% of prostate cancer patients agreed to AI as primary reader alongside a radiologist; 79% as secondary reader",
+      "Patients significantly more likely to choose AI-assisted care when: strong performance demonstrated, FDA-approved, clinician oversight present, representative data used",
+      "Patients over-trust AI medical responses — rating them equally valid to doctors despite lower accuracy in some settings"
+    ],
+    "concern": "Over-trust is a documented phenomenon. Patients may accept incorrect AI diagnoses with the same confidence as correct ones — a new category of diagnostic risk from consumer health AI.",
+    "sources": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC12964161/",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC11782406/"
+    ]
+  },
+
+  "unverified_or_flagged_claims": [
+    {
+      "claim": "14% increase in malpractice claims involving AI between 2022 and 2024",
+      "source": "CM&F Group Healthcare Professionals blog; Davis & Davis Law AI Liability analysis",
+      "urls": [
+        "https://www.cmfgroup.com/blog/healthcare-professionals/ai-clinical-practice-liability/",
+        "https://www.davis-davislaw.com/blog/ai-misdiagnosis-liability-medical-errors/"
+      ],
+      "flag": "INDUSTRY-SOURCED — CM&F Group is a malpractice insurer with commercial interest. The 14% figure is not drawn from peer-reviewed literature or judicial records. Use directionally ('rising malpractice exposure') or with explicit attribution and caveat.",
+      "confidence": "low-medium"
+    },
+    {
+      "claim": "50% documentation time reduction with Nuance DAX Copilot",
+      "source": "Nuance/Microsoft marketing claims",
+      "flag": "SELF-REPORTED INDUSTRY DATA — contradicted by 2025 RCT which found only 1.7% documentation time reduction (not statistically significant). Burnout improvement (+2.8 Mini-Z points) has RCT support. Use the RCT figures; treat marketing claims as promotional context only.",
+      "confidence": "low for efficiency claims; medium for burnout claims"
+    },
+    {
+      "claim": "AMIE outperformed PCPs on empathy assessments",
+      "source": "Google Research Blog / Nature Medicine May 2026",
+      "flag": "SIMULATION ARTIFACT RISK — 'empathy' assessed by patient actors in chat interface, not real patients in real clinical encounters. Ecological validity unproven. Note simulation context when using.",
+      "confidence": "medium — published peer-reviewed but ecological validity is unproven"
+    },
+    {
+      "claim": "OpenAI specialized medical AI models outperform physicians on clinical benchmarks",
+      "source": "Crescendo.ai news aggregator (June 19, 2026)",
+      "flag": "PARTIALLY VERIFIED — no peer-reviewed source reviewed directly. Confirm from OpenAI official blog or published paper before use. Benchmark-only claims without published trial data.",
+      "confidence": "low-medium"
+    },
+    {
+      "claim": "STAT News: 'Did AI Really Beat Doctors at Diagnosis?' (May 5, 2026)",
+      "url": "https://www.statnews.com/2026/05/05/did-ai-really-beat-doctors-at-diagnosis-health-tech/",
+      "flag": "PAYWALLED — article confirmed to exist; content unavailable. Reference by title and date only.",
+      "confidence": "confirmed existence; content unverified"
+    },
+    {
+      "claim": "STAT News: 'What does malpractice insurance have to do with AI?' (March 4, 2026)",
+      "url": "https://www.statnews.com/2026/03/04/health-care-malpractice-insurance-ai-prognosis/",
+      "flag": "PAYWALLED — confirmed existence. Reference by title and date only.",
+      "confidence": "confirmed existence; content unverified"
+    },
+    {
+      "claim": "FDA Commissioner Makary said 'Silicon Valley speed'",
+      "source": "STAT News January 6, 2026",
+      "flag": "PAYWALLED — full article text unavailable. Quote and CES announcement confirmed from STAT News summary and search results. Use with source attribution and paywall caveat.",
+      "confidence": "medium — from news summary, not full article"
+    }
+  ],
+
+  "proposed_article_structure": {
+    "recommended_sections": [
+      {
+        "section": "Opening — A Patient With a Rash",
+        "angle": "A dermatology AI misses melanoma on dark skin. Precision: 0.897 on light skin phototypes vs. 0.484 on dark — nearly half the accuracy. Sets the tone: breakthrough and blind spot coexist. Then zoom out: 81% of physicians now use AI. 1,524 cleared devices. The field is already inside the clinic. The question is whose clinic, and for whom.",
+        "data_hook": "0.897 vs 0.484. Both numbers describe the same algorithm on the same day."
+      },
+      {
+        "section": "1 — The Numbers: 1,524 Cleared, and Counting",
+        "angle": "FDA clearance landscape. 1,524 algorithms as of June 16, 2026. March 2026: one cleared every 31 hours. 295 new clearances in 2025 alone. The radiology concentration (1,163 of 1,524). The 510(k) fast lane (96%). The reimbursement desert: 2 CPT codes for 1,524 cleared devices. FDA Commissioner Makary at CES pledging 'Silicon Valley speed.' FDA clearance ≠ payer coverage ≠ hospital deployment ≠ clinical outcome improvement.",
+        "data_hook": "1,524 cleared. 2 CPT codes. One every 31 hours. Something is out of alignment."
+      },
+      {
+        "section": "2 — Where It Actually Works: Radiology, Cardiology, Pathology",
+        "angle": "Evidence-based wins. Stroke triage (90% faster ICH diagnosis). Lung nodule detection AUC 0.94. Mammography false positives down 69%. Pathologist sensitivity: 83% to 91% with AI. Anumana ECG-AI amyloidosis — 78.9% sensitivity, 91.2% specificity, 15,000+ patients, routine ECG. Virchow detecting 16 cancers (0.95 AUC). Sepsis tools: 12.2h early warning — with the alarm fatigue caveat.",
+        "data_hook": "AI doesn't replace radiologists. It changes what they catch, and how fast."
+      },
+      {
+        "section": "3 — The Reasoning Gap: LLMs Can Name the Disease But Not Find It",
+        "angle": "MGB/Harvard JAMA study — 21 LLMs, >80% differential failure despite >90% accuracy with complete data. DXplain (decades-old expert system) beats ChatGPT-4 and Gemini 1.5 on real cases at MGH. Google AMIE wins 29/32 simulation axes but has no real clinical trial data. OpenAI medical AI: benchmark claims, no published trials. The benchmark-to-bedside gap is 2026's central AI healthcare paradox.",
+        "data_hook": "AMIE won 29/32 simulation axes. DXplain beat ChatGPT on real cases. The contradictions reveal why this is hard."
+      },
+      {
+        "section": "4 — The Equity Crisis Hidden in the Training Data",
+        "angle": "Dermatology 0.897 vs 0.484. Sepsis models underperforming on Hispanic patients. Blue KC denial-by-algorithm lawsuit. Pediatric AI gap — fewer than 1 in 5 cleared devices approved for children. Global trial concentration: China 35.6%, Africa near zero. FDA deregulation eliminated equity requirements. WHO GI-AI4H as partial counterweight. The bitter paradox: poorest-served populations are most optimistic about AI.",
+        "data_hook": "The algorithm's blind spot is a policy choice, not a technical inevitability."
+      },
+      {
+        "section": "5 — Who Is Liable When the Algorithm Is Wrong?",
+        "angle": "No federal law shifts liability. 85% of physicians rank liability clarity as their #1 AI regulatory priority (AMA 2026). FDA just removed pre-market approval requirements from CDS tools. The liability sink problem. Hospital suing insurer over AI claims denials — a new category of algorithmic harm. The FDA-cleared ≠ safe-to-rely-on problem. Double-review workflow as emerging medicolegal standard.",
+        "data_hook": "FDA clearance in 142 days. The legal framework for who pays when it's wrong — still being worked out."
+      },
+      {
+        "section": "6 — AI as Scribe, Not Doctor: Ambient Documentation",
+        "angle": "Burnout is real; documentation is crushing medicine. Nuance DAX/Dragon Copilot widely deployed. Marketing: 50% time reduction. NEJM AI RCT: 1.7% (not significant). Real finding: burnout scores genuinely improve (+2.8 Mini-Z). The physician still has to sign the note — and owns the liability. Efficiency gains modest; wellbeing gains real.",
+        "data_hook": "Marketing: 50% time reduction. NEJM AI RCT: 1.7%. Both may miss the point — what's improving is the physician's capacity to care."
+      },
+      {
+        "section": "7 — AI-Discovered Drugs and the Pipeline Getting Shorter",
+        "angle": "Daraxonrasib — nearly doubled survival in metastatic pancreatic cancer (13.2 vs 6.7 months median OS; HR 0.40). Darwin Health's AI network biology essential to identifying the RAS approach. ASCO 2026 standing ovation. The bridge from AI discovery to bedside getting shorter. But the Darwin Health founders note: 'not for reasons you might expect' — AI's real role is in target identification, not replacement of clinical judgment.",
+        "data_hook": "13.2 months vs 6.7 months. HR 0.40. That's the kind of number that changes a field."
+      },
+      {
+        "section": "Closing — Calibrated Optimism",
+        "angle": "81% adoption. 0.897 vs 0.484. 1,524 cleared. 2 CPT codes. AMIE in simulation, DXplain in clinic. Both are true. The answer isn't AI everywhere or AI nowhere — it's AI calibrated to evidence. The stroke neurologist with AI triage is saving lives. The dermatologist with a bias-laden algorithm is creating new disparities. AI is already in the clinic. The question is whose clinic, and for whom.",
+        "data_hook": "81% adoption. 0.897 vs 0.484. Both are true. That's the state of the field."
+      }
+    ]
+  },
+
+  "tone_and_angle_notes": {
+    "primary_tension": "Clinical AI is simultaneously the most evidence-backed AI application in the real world AND the most dangerous place to deploy unvalidated or biased models, because errors kill people.",
+    "2026_structural_risk": "The AMA adoption curve (81%) is outrunning the liability and equity frameworks. This is the defining structural risk of 2026.",
+    "use_the_contradictions": "AMIE beats PCPs in simulation; DXplain beats ChatGPT in clinic. 81% adoption; 85% want liability clarity. 1,524 cleared; 2 CPT codes. These contradictions ARE the story.",
+    "data_anchor": "Every claim grounded in named studies and sources. No generic 'AI can improve outcomes' framing.",
+    "equity_thread": "Run equity through the entire piece — surface in radiology (dataset transparency), pathology (skin tone bias), sepsis (Hispanic patients), global access, FDA deregulation.",
+    "humanize": "Open with a patient. Close with a patient. The data is in service of the human story.",
+    "avoid": [
+      "AI will replace doctors — MGB data + DXplain study contradict this",
+      "AMIE results as proof of clinical AI maturity — simulation caveat must accompany every AMIE citation",
+      "Industry-sourced marketing statistics without the RCT counterweight",
+      "Treating the 14% malpractice claim increase as peer-reviewed data",
+      "Generic optimism without caveats",
+      "Over-relying on FDA clearance count as evidence of clinical effectiveness"
+    ]
+  },
+
+  "sources_inventory": [
+    {"id": "s01", "title": "AMA 2026 Physician Survey on Augmented Intelligence", "url": "https://www.ama-assn.org/practice-management/digital-health/more-80-physicians-use-ai-professionally-ama-survey", "date": "March 12, 2026", "type": "institutional_survey", "confidence": "high"},
+    {"id": "s02", "title": "Nature Medicine — Advancing conversational diagnostic AI with multimodal reasoning (Google AMIE)", "url": "https://www.nature.com/articles/s41591-026-04371-0", "date": "May 15, 2026", "type": "peer_reviewed", "confidence": "high"},
+    {"id": "s03", "title": "PMC12468291 — AI in Clinical Medicine: 150-study systematic review (Ogut, Istanbul Medeniyet University)", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12468291/", "type": "systematic_review", "confidence": "high"},
+    {"id": "s04", "title": "PMC12123466 — Dedicated AI Expert System vs Generative AI LLMs (DXplain vs ChatGPT/Gemini, MGH)", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12123466/", "type": "comparative_study", "confidence": "high"},
+    {"id": "s05", "title": "Innolitics 2025 Year in Review: AI/ML Medical Device 510(k) Clearances", "url": "https://innolitics.com/articles/year-in-review-ai-ml-medical-device-k-clearances/", "type": "regulatory_analysis", "confidence": "high"},
+    {"id": "s06", "title": "OmniPACS — FDA-Cleared AI Diagnostic Tools in Radiology, 2026 Analysis", "url": "https://www.omnipacs.com/fda-cleared-ai-diagnostic-tools-radiology-2026/", "type": "industry_analysis", "confidence": "medium-high"},
+    {"id": "s07", "title": "Cardiovascular Business — FDA cleared AI count June 2026 (1,524 total)", "url": "https://cardiovascularbusiness.com/topics/artificial-intelligence/cardiology-healthcare-specialty-fda-cleared-ai", "date": "June 2026", "type": "industry_news", "confidence": "high"},
+    {"id": "s08", "title": "JAMA Network Open — LLM Performance and Clinical Reasoning Tasks (Rao & Succi, MGB/Harvard)", "url": "https://www.massgeneralbrigham.org/en/about/newsroom/press-releases/ai-chatbot-lacks-clinical-reasoning", "date": "April 13, 2026", "type": "peer_reviewed_plus_press_release", "confidence": "high"},
+    {"id": "s09", "title": "Science Advances — Disparities in Dermatology AI Performance", "url": "https://www.science.org/doi/10.1126/sciadv.abq6147", "type": "peer_reviewed", "confidence": "high"},
+    {"id": "s10", "title": "Inside Precision Medicine — FDA Clears First AI Algorithm to Detect Cardiac Amyloidosis (Anumana)", "url": "https://www.insideprecisionmedicine.com/topics/informatics/fda-clears-first-ai-algorithm-to-diagnose-cardiac-amyloidosis/", "type": "news", "confidence": "high"},
+    {"id": "s11", "title": "NEJM — Daraxonrasib or Chemotherapy in Metastatic Pancreatic Cancer (RASolute 302)", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2605555", "type": "clinical_trial", "confidence": "high"},
+    {"id": "s12", "title": "STAT News — Darwin Health on Daraxonrasib and AI Drug Discovery (June 19, 2026)", "url": "https://www.statnews.com/2026/06/19/daraxonrasib-pancreatic-cancer-miracle-drug-oncosystems-ai/", "date": "June 19, 2026", "type": "opinion", "confidence": "high"},
+    {"id": "s13", "title": "PMC11025047 — Clinicians Risk Becoming 'Liability Sinks' for Artificial Intelligence", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11025047/", "type": "peer_reviewed_commentary", "confidence": "high"},
+    {"id": "s14", "title": "Journal of Pathology & Translational Medicine — What's New in Digital and Computational Pathology 2026", "url": "https://jpatholtm.org/journal/view.php?number=17219", "type": "peer_reviewed_review", "confidence": "high"},
+    {"id": "s15", "title": "JYI — Bias in Medical AI: Algorithmic Fairness and Ethics Challenges (2026)", "url": "https://www.jyi.org/2026-january-1/2026/1/8/bias-in-medical-ai-algorithmic-fairness-and-ethics-challenges", "type": "journal_article", "confidence": "medium-high"},
+    {"id": "s16", "title": "KFF — The Growing Use of AI in Health Care and Implications for Disparities", "url": "https://www.kff.org/racial-equity-and-health-policy/the-growing-use-of-artificial-intelligence-in-health-care-and-implications-for-disparities/", "type": "policy_analysis", "confidence": "high"},
+    {"id": "s17", "title": "PMC12385212 — Beyond the Growth: Registry-Based Analysis of Global Imbalances in AI Clinical Trials", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12385212/", "type": "peer_reviewed", "confidence": "high"},
+    {"id": "s18", "title": "FierceHealthcare — Hospital Sues Blue KC Over AI-Driven Claims Denials", "url": "https://www.fiercehealthcare.com/payers/blue-kc-wrongfully-denied-medical-diagnoses-hospital-alleges-ai-driven-claims-lawsuit", "type": "news", "confidence": "high"},
+    {"id": "s19", "title": "NEJM AI — Ambient AI Scribes in Clinical Practice: A Randomized Trial", "url": "https://ai.nejm.org/doi/abs/10.1056/AIoa2501000", "type": "rct", "confidence": "high"},
+    {"id": "s20", "title": "PMC AI Radiology Review — AI in Radiology and Interventions: Workflow Automation, Accuracy, and Efficiency Gains", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12929352/", "type": "peer_reviewed_review", "confidence": "high"},
+    {"id": "s21", "title": "PMC12964161 — Factors for Patient Trust and Acceptance of Medical AI", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12964161/", "type": "peer_reviewed", "confidence": "high"},
+    {"id": "s22", "title": "PathAI — FDA Breakthrough Device Designation for PathAssist Derm (March 2026)", "url": "https://www.pathai.com/news/pathai-receives-u.s.-fda-breakthrough-device-designation-for-pathassist-derm-an-ai-powered-pathology-solution-to-transform-dermatopathology-workflow", "date": "March 2026", "type": "press_release", "confidence": "high"},
+    {"id": "s23", "title": "PMC12366378 — Transforming Sepsis Management: AI-Driven Innovations in Early Detection and Tailored Therapies", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12366378/", "type": "peer_reviewed_review", "confidence": "high"},
+    {"id": "s24", "title": "KevinMD — FDA Loosens AI Oversight: What Clinicians Need to Know About the 2026 Guidance (Arthur Lazarus MD MBA)", "url": "https://kevinmd.com/2026/01/fda-loosens-ai-oversight-what-clinicians-need-to-know-about-the-2026-guidance.html", "date": "January 2026", "type": "medical_commentary", "confidence": "medium-high"},
+    {"id": "s25", "title": "STAT News — FDA Pulls Back Oversight of AI-Enabled Devices and Wearables (January 6, 2026) [PAYWALLED]", "url": "https://www.statnews.com/2026/01/06/fda-pulls-back-oversight-ai-enabled-devices-wearables/", "date": "January 6, 2026", "type": "investigative_news", "confidence": "medium — paywalled, key facts confirmed from summary"},
+    {"id": "s26", "title": "Medrxiv Preprint — Pediatric Representation in FDA-Cleared AI Medical Devices", "url": "https://www.medrxiv.org/content/10.1101/2025.06.06.25328913.full.pdf", "type": "preprint", "confidence": "low-medium — preprint, not peer-reviewed"},
+    {"id": "s27", "title": "PubMed 42329385 — Autonomous AI in Ophthalmological Care (Die Ophthalmologie, June 22, 2026)", "url": "https://pubmed.ncbi.nlm.nih.gov/42329385/", "date": "June 22, 2026", "type": "peer_reviewed", "confidence": "high"},
+    {"id": "s28", "title": "PubMed 42329268 — Predicting Pain After TKA Using Machine Learning (Acta Orthopaedica, June 22, 2026)", "url": "https://pubmed.ncbi.nlm.nih.gov/42329268/", "date": "June 22, 2026", "type": "peer_reviewed", "confidence": "high"},
+    {"id": "s29", "title": "arXiv 2606.20477 — RadGrounder: Spatially Grounded Vision-Language Model for Radiology (June 18, 2026)", "url": "https://arxiv.org/abs/2606.20477", "date": "June 18, 2026", "type": "preprint", "confidence": "medium — preprint, not peer-reviewed"}
+  ]
+}

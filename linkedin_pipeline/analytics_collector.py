@@ -58,7 +58,7 @@ _ORG_STATS_CACHE = None  # loaded once per run
 def _load_all_org_stats():
     """
     Fetch ALL organizationalEntityShareStatistics for the company page in one pass
-    (paginated). Returns dict keyed by share/ugcPost URN → stats dict.
+    (paginated). Returns dict keyed by share/ugcPost URN -> stats dict.
     LinkedIn does not support per-share filtering via shares[0] on this endpoint.
     """
     global _ORG_STATS_CACHE
@@ -208,6 +208,14 @@ def collect_pending_analytics(verbose=True):
     now       = datetime.now(timezone.utc)
     collected = 0
 
+    # Load ALL org stats once (one API call covers every post on the company page)
+    org_stats = _load_all_org_stats()
+    if verbose:
+        if org_stats:
+            print(f"  Org stats loaded: {len(org_stats)} posts on company page")
+        else:
+            print("  Org stats: 0 posts returned (check token/scopes)")
+
     for entry in log:
         if entry.get("analytics_collected"):
             continue
@@ -232,10 +240,13 @@ def collect_pending_analytics(verbose=True):
         if verbose:
             print(f"  Collecting analytics: '{entry['title'][:60]}' ({age_hours:.0f}h old)")
 
-        stats = fetch_org_share_statistics(entry["post_id"])
+        # Look up this post's URN in the org stats cache
+        post_id = entry.get("post_id", "")
+        stats = org_stats.get(post_id)
         if stats is None:
             if verbose:
-                print("    No data returned — will retry next run.")
+                print(f"    URN not in org stats: {post_id}")
+                print("    Post may be from personal profile. Use xls_import.py for personal posts.")
             continue
 
         impressions  = stats["impressions"]
@@ -264,7 +275,7 @@ def collect_pending_analytics(verbose=True):
 
         if verbose:
             print(
-                f"    ✓ Impressions: {impressions:,} | Clicks: {clicks:,} | "
+                f"    Impressions: {impressions:,} | Clicks: {clicks:,} | "
                 f"Likes: {stats['likes']} | Comments: {stats['comments']} | "
                 f"Shares: {stats['shares']} | CTR: {ctr:.1%} | Eng: {stats['engagement_rate']:.2%}"
             )
@@ -321,7 +332,7 @@ def print_summary():
         return
 
     print(f"\n{'='*60}")
-    print(f"AIMA LinkedIn Post Analytics — {len(rows)} post(s)")
+    print(f"AIMA LinkedIn Post Analytics -- {len(rows)} post(s)")
     print(f"{'='*60}")
 
     for row in rows:

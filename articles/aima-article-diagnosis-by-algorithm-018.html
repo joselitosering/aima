@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<!--
+╔══════════════════════════════════════════════════════════════╗
+║  AIMA ARTICLE #018 — Joselito Sering                        ║
+║  Diagnosis by Algorithm: The State of AI in Clinical        ║
+║  Medicine, 2026                                              ║
+║  Track: joselito | Category: AI Healthcare | Published: 2026-06-28 ║
+╚══════════════════════════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+<!-- ── Tracking (DO NOT CHANGE) ─────────────────────────────── -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N9BQ74BJ');</script>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VCTF4DKBD5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VCTF4DKBD5');</script>
+<!-- Meta Pixel -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','941204972168187');fbq('track','PageView');</script>
+<!-- TikTok Pixel -->
+<script>!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};ttq.load('D7NFLLRC77UB8JB2C5N0');ttq.page();}(window,document,'ttq');</script>
+<link rel="icon" type="image/svg+xml" href="../img/favicon-dark.svg">
+<link rel="icon" type="image/x-icon" href="../img/favicon-dark.ico">
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+<!-- ── ARTICLE META TAGS ──────────────────────────────────── -->
+<meta name="article:id"           content="018"/>
+<meta name="article:title"        content="Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026"/>
+<meta name="article:description"  content="More than 1,400 FDA-cleared AI tools, 81% physician adoption, and a dermatology algorithm at half its accuracy on dark skin. A rigorous accounting of where clinical AI delivers, where benchmark wins fail the clinic, and who pays when the algorithm is wrong."/>
+<meta name="article:author"       content="Joselito Sering"/>
+<meta name="article:author-title" content="Editor-in-Chief, AIMA Magazine"/>
+<meta name="article:persona"      content="joselito"/>
+<meta name="article:publish-date" content="2026-06-28"/>
+<meta name="article:read-time"    content="13"/>
+<meta name="article:category"     content="AI Healthcare"/>
+<meta name="article:header-image" content="https://joselitosering.github.io/aima/img/articles/aima-018-diagnosis-by-algorithm.jpg"/>
+<meta name="article:prev-url"     content="./aima-article-resume-filter-017.html"/>
+<meta name="article:prev-title"   content="The Résumé Filter: How AI Turned Racial Bias Into Standard Hiring Practice"/>
+<meta name="article:next-url"     content=""/>
+<meta name="article:next-title"   content=""/>
+
+<title id="pageTitle">Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026 — AIMA Magazine</title>
+<meta name="description" content="More than 1,400 FDA-cleared AI tools, 81% physician adoption, and a dermatology algorithm at half its accuracy on dark skin. The rigorous 2026 accounting of where clinical AI delivers, where benchmark wins fail the clinic, and who pays when the algorithm is wrong."/>
+<meta name="keywords" content="AI healthcare, clinical AI, medical diagnosis, AI radiology, FDA cleared AI, dermatology AI bias, LLM medicine, Google AMIE, ECG AI, AI malpractice, AIMA"/>
+
+<!-- ── Open Graph ───────────────────────────────────────────── -->
+<meta property="og:type"        content="article"/>
+<meta property="og:title"       content="Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026"/>
+<meta property="og:description" content="More than 1,400 FDA-cleared AI tools, 81% physician adoption, and a dermatology algorithm at half its accuracy on dark skin. The rigorous 2026 accounting of clinical AI."/>
+<meta property="og:image"       content="https://joselitosering.github.io/aima/img/articles/aima-018-diagnosis-by-algorithm.jpg"/>
+<meta property="og:url"         content="https://joselitosering.github.io/aima/articles/aima-article-diagnosis-by-algorithm-018.html"/>
+
+<!-- ── Twitter Card ─────────────────────────────────────────── -->
+<meta name="twitter:card"        content="summary_large_image"/>
+<meta name="twitter:title"       content="Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026"/>
+<meta name="twitter:description" content="81% physician adoption. A dermatology algorithm at half accuracy on dark skin. LLMs failing differential diagnosis 80% of the time. The honest 2026 accounting."/>
+<meta name="twitter:image"       content="https://joselitosering.github.io/aima/img/articles/aima-018-diagnosis-by-algorithm.jpg"/>
+
+<!-- ── Canonical + Robots ───────────────────────────────────── -->
+<link rel="canonical" href="https://joselitosering.github.io/aima/articles/aima-article-diagnosis-by-algorithm-018.html"/>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+
+<!-- ── Open Graph Article Extensions ────────────────────────── -->
+<meta property="og:site_name"           content="AIMA Magazine"/>
+<meta property="og:locale"              content="en_US"/>
+<meta property="article:author"         content="Joselito Sering"/>
+<meta property="article:published_time" content="2026-06-28T00:00:00Z"/>
+<meta property="article:modified_time"  content="2026-06-28T00:00:00Z"/>
+<meta property="article:section"        content="AI Healthcare"/>
+
+<!-- ── AI Crawler Signals ───────────────────────────────────── -->
+<!--
+  CRAWLER POLICY SUMMARY
+  ─────────────────────────────────────────────────────────────────
+  Googlebot / Google-Extended: index, follow — opt-in to AI training
+  GPTBot (OpenAI): allow — see /llms.txt at repo root
+  ClaudeBot (Anthropic): allow — see /llms.txt at repo root
+  PerplexityBot: allow — see /llms.txt at repo root
+  CCBot (Common Crawl / AI training sets): allow
+  ─────────────────────────────────────────────────────────────────
+  Full per-bot rules live in robots.txt at repo root.
+  llms.txt at repo root provides site structure + citation preferences
+  for LLM-native indexers (per the llms.txt standard, 2024–).
+-->
+<meta name="creator"   content="Joselito Sering"/>
+<meta name="publisher" content="AIMA Magazine"/>
+
+<!-- ── Security ─────────────────────────────────────────────── -->
+<meta name="referrer"                          content="strict-origin-when-cross-origin"/>
+<meta http-equiv="X-Content-Type-Options"      content="nosniff"/>
+<meta http-equiv="Permissions-Policy"          content="camera=(), microphone=(), geolocation=(), interest-cohort=()"/>
+
+<!-- ── Structured Data (NewsArticle) ────────────────────────── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://joselitosering.github.io/aima/articles/aima-article-diagnosis-by-algorithm-018.html"
+  },
+  "headline": "Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026",
+  "description": "More than 1,400 FDA-cleared AI tools, 81% physician adoption, and a dermatology algorithm at half its accuracy on dark skin. A rigorous 2026 accounting of where clinical AI delivers, where benchmark wins fail the clinic, and who pays when the algorithm is wrong.",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://joselitosering.github.io/aima/img/articles/aima-018-diagnosis-by-algorithm.jpg",
+    "width": 1200,
+    "height": 630
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Joselito Sering",
+    "url": "https://joselitosering.github.io/aima/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AIMA Magazine",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://joselitosering.github.io/aima/img/favicon-dark.svg",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "datePublished": "2026-06-28T00:00:00Z",
+  "dateModified":  "2026-06-28T00:00:00Z",
+  "inLanguage": "en-US",
+  "isPartOf": {
+    "@type": "Periodical",
+    "name": "AIMA Magazine",
+    "url": "https://joselitosering.github.io/aima/"
+  },
+  "articleSection": "AI Healthcare",
+  "wordCount": "2600",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".article-lead", ".pullquote-text"]
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/aima/docs/print.css" media="print"/>
+
+<style>
+/* ══ BRAND TOKENS ════════════════════════════════════════════ */
+:root {
+--bg:#060810;--surface:#0B0E1C;--surface2:#10142A;--surface3:#161B36;
+--cyan:#00D9F5;--orange:#FF5E20;--gold:#C8A84B;--gold-lt:#EDD483;
+--green:#2DCA73;--purple:#A259FF;--text:#DFE6F5;--muted:#7A8BAA;
+--border:rgba(0,217,245,0.12);--border2:rgba(255,255,255,0.06);
+--glow-c:rgba(0,217,245,0.20);--glow-o:rgba(255,94,32,0.15);
+--radius:6px;--mono:'Courier Prime',monospace;--nav-h:72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+[id]{scroll-margin-top:calc(var(--nav-h) + 20px);}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65;padding-top:var(--nav-h);}
+a{color:var(--cyan);text-decoration:none;transition:opacity 0.2s;}
+a:hover{opacity:0.8;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px;}
+
+/* ══ FADE-IN ══════════════════════════════════════════════════ */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+.delay-1{transition-delay:.1s;}.delay-2{transition-delay:.2s;}.delay-3{transition-delay:.3s;}.delay-4{transition-delay:.45s;}
+
+/* ══ NAV ══════════════════════════════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;background:rgba(6,8,16,0.60);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,217,245,0.10);}
+.container{max-width:1180px;margin:0 auto;padding:0 32px;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.05em;text-transform:uppercase;color:#fff;white-space:nowrap;text-decoration:none;}
+.nav-logo .pulse{width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:pulse 2.2s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
+.nav-logo .wordmark .ai{color:#fff;}.nav-logo .wordmark .ma{color:var(--cyan);}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none;}
+.nav-links a{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:color .2s;position:relative;padding-bottom:2px;text-decoration:none;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+.nav-links a:hover{color:#fff;}.nav-links a:hover::after{transform:scaleX(1);}
+.nav-links a.active{color:var(--cyan);}.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:10px 20px;border-radius:var(--radius);transition:box-shadow .2s,opacity .2s;white-space:nowrap;text-decoration:none;}
+.nav-cta:hover{box-shadow:0 0 22px var(--glow-c);opacity:.9;color:var(--bg);}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:4px;cursor:pointer;background:none;border:none;}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s;}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:190;background:rgba(6,8,16,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:28px;padding-top:var(--nav-h,72px);overflow-y:auto;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:'Anton',sans-serif;font-size:30px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);transition:color .2s;text-decoration:none;}
+.mobile-menu a:hover{color:#fff;}
+.mobile-menu .m-cta{font-size:14px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:14px 36px;border-radius:var(--radius);margin-top:8px;}
+.mobile-menu .m-legal{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:8px;}
+.mobile-menu .m-legal a{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:640px){.nav-cta{display:none;}.nav-burger{display:flex;}}
+
+/* ══ SHARE SIDEBAR ═══════════════════════════════════════════ */
+#share-sidebar{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:8px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
+#share-sidebar.visible{opacity:1;visibility:visible;}
+.share-fab{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);transition:border-color .2s,color .2s,background .2s,transform .2s;text-decoration:none;}
+.share-fab svg{width:16px;height:16px;flex-shrink:0;}
+.share-fab:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,217,245,.08);transform:scale(1.1);opacity:1;}
+.share-fab.copy-btn{padding:0;background:none;border:1px solid var(--border2);}
+.share-sidebar-label{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:4px;}
+@media(max-width:1280px){#share-sidebar{display:none;}}
+
+/* ══ TOC SIDEBAR ═════════════════════════════════════════════ */
+#toc-sidebar{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:150;width:200px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
+#toc-sidebar.visible{opacity:1;visibility:visible;}
+.toc-panel{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:16px;}
+.toc-panel-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border2);display:block;}
+.toc-nav{display:flex;flex-direction:column;gap:2px;}
+.toc-link{font-size:11px;color:var(--muted);padding:6px 10px;border-left:2px solid var(--border2);transition:all .2s;text-decoration:none;display:block;line-height:1.4;}
+.toc-link:hover{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;opacity:1;}
+.toc-link.active{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;}
+@media(max-width:1400px){#toc-sidebar{display:none;}}
+
+/* ══ ARTICLE LAYOUT ══════════════════════════════════════════ */
+.article-wrapper{min-height:100vh;background:var(--bg);}
+.article-header{position:relative;width:100%;height:72vh;min-height:520px;overflow:hidden;background:var(--bg);}
+.article-header::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,8,16,0.10) 0%,transparent 30%,rgba(6,8,16,0.60) 75%,var(--bg) 100%);z-index:2;}
+.header-media{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0.75;filter:brightness(0.75) saturate(1.1);transform:scale(1.03);transition:transform 8s ease-out;}
+.article-header:hover .header-media{transform:scale(1.0);}
+.header-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(6,8,16,0.72) 0%,rgba(6,8,16,0.20) 55%,transparent 80%),radial-gradient(ellipse 70% 55% at 20% 60%,rgba(0,217,245,0.22),transparent 65%),radial-gradient(ellipse 45% 40% at 78% 35%,rgba(255,94,32,0.12),transparent 65%);}
+.header-content{position:absolute;bottom:80px;left:0;right:0;z-index:3;padding:0 32px;}
+.article-category{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,217,245,0.30);border-radius:2px;padding:6px 14px;margin-bottom:24px;background:rgba(0,217,245,0.07);}
+.article-title{font-family:'Anton',sans-serif;font-size:clamp(42px,7vw,88px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;color:#fff;max-width:1200px;margin:0 auto;text-shadow:0 4px 20px rgba(0,0,0,0.6);}
+.article-title .highlight{color:var(--cyan);}.article-title .highlight-orange{color:var(--orange);}
+.article-meta{max-width:860px;margin:0 auto;padding:40px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap;border-bottom:1px solid var(--border2);}
+.meta-author{display:flex;align-items:center;gap:14px;}
+.author-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--orange));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:18px;color:var(--bg);}
+.author-info{display:flex;flex-direction:column;gap:2px;}
+.author-name{font-weight:600;font-size:15px;color:var(--text);}
+.author-role{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.meta-divider{width:1px;height:32px;background:var(--border2);}
+.meta-item{display:flex;flex-direction:column;gap:2px;}
+.meta-label{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+.meta-value{font-size:14px;color:var(--text);}
+.article-body{max-width:860px;margin:0 auto;padding:60px 32px 100px;}
+
+/* ══ ARTICLE CONTENT ═════════════════════════════════════════ */
+.article-content h2{font-family:'Anton',sans-serif;font-size:clamp(26px,3.5vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin:56px 0 20px;line-height:1.0;}
+.article-content h3{font-family:'Anton',sans-serif;font-size:clamp(18px,2.5vw,24px);text-transform:uppercase;letter-spacing:0.03em;color:var(--text);margin:40px 0 16px;}
+.article-content .accent{color:var(--cyan);}
+.article-content p{font-size:16px;line-height:1.85;color:var(--text);margin-bottom:24px;}
+.article-lead{font-size:19px;line-height:1.8;color:var(--text);margin-bottom:40px;font-weight:300;border-left:3px solid var(--cyan);padding-left:24px;}
+.article-content em{color:var(--gold-lt);font-style:italic;}
+.article-content strong{color:#fff;font-weight:600;}
+.glossary-term{color:var(--cyan);border-bottom:1px dashed rgba(0,217,245,0.4);padding-bottom:1px;cursor:help;}
+.glossary-term:hover{opacity:1;border-bottom-color:var(--cyan);}
+
+/* ══ CALLOUTS ════════════════════════════════════════════════ */
+.callout{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:var(--radius);padding:24px 28px;margin:36px 0;}
+.callout.warning{border-left-color:var(--orange);background:rgba(255,94,32,0.04);}
+.callout.success{border-left-color:var(--green);background:rgba(45,202,115,0.04);}
+.callout.gold{border-left-color:var(--gold);background:rgba(200,168,75,0.05);}
+.callout p{margin-bottom:0;font-size:15px;line-height:1.75;}
+.callout strong{color:#fff;}
+
+/* ══ PULLQUOTE ═══════════════════════════════════════════════ */
+.pullquote{border-left:3px solid var(--orange);padding:28px 32px;margin:48px 0;background:linear-gradient(135deg,rgba(255,94,32,0.04),transparent);border-radius:0 var(--radius) var(--radius) 0;}
+.pullquote-text{font-family:'Anton',sans-serif;font-size:clamp(22px,2.8vw,32px);text-transform:uppercase;letter-spacing:0.02em;line-height:1.15;color:#fff;margin-bottom:16px;}
+.pullquote-attribution{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+
+/* ══ STAT GRID ══════════════════════════════════════════════ */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0;}
+@media(max-width:700px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+.stat-card{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:24px 16px;text-align:center;}
+.stat-number{font-family:'Anton',sans-serif;font-size:38px;color:var(--cyan);line-height:1;letter-spacing:.02em;}
+.stat-number.orange{color:var(--orange);}
+.stat-number.gold{color:var(--gold);}
+.stat-number.green{color:var(--green);}
+.stat-label{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;}
+
+/* ══ ARTICLE TAGS ════════════════════════════════════════════ */
+.article-tags{display:flex;flex-wrap:wrap;gap:8px;margin:40px 0 0;}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border2);border-radius:3px;padding:5px 12px;transition:color .2s,border-color .2s;}
+.tag:hover{color:var(--cyan);border-color:var(--border);}
+
+/* ══ ARTICLE FOOTER CTA ══════════════════════════════════════ */
+.article-footer{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:40px;margin-top:60px;text-align:center;}
+.footer-cta-title{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin-bottom:12px;line-height:1.1;}
+.footer-cta-title .highlight{color:var(--cyan);}
+.footer-cta-text{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:28px;}
+.footer-cta-button{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;background:var(--cyan);color:var(--bg);padding:16px 40px;border-radius:var(--radius);transition:box-shadow .2s,opacity .2s;}
+.footer-cta-button:hover{box-shadow:0 0 30px var(--glow-c);opacity:0.9;}
+
+/* ══ REFERENCES & GLOSSARY ═══════════════════════════════════ */
+.references-section,.glossary-section{max-width:860px;margin:0 auto;padding:60px 32px;}
+.references-section{border-top:1px solid var(--border2);}
+.section-heading{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.03em;color:#fff;margin-bottom:32px;}
+.reference-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.reference-item{padding:12px 0 12px 52px;border-bottom:1px solid var(--border2);font-size:14px;line-height:1.75;color:var(--muted);position:relative;}
+.reference-item::before{content:attr(data-number);position:absolute;left:0;top:13px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--cyan);}
+.ref-authors{color:var(--text);font-weight:500;}
+.ref-title{font-style:italic;color:var(--text);}
+.ref-link{color:var(--cyan);word-break:break-all;font-size:12px;}
+.ref-link:hover{opacity:0.8;}
+.glossary-section{border-top:1px solid var(--border2);}
+.glossary-list{display:flex;flex-direction:column;gap:24px;}
+.glossary-item{padding:24px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);}
+.glossary-term-title{font-family:'Anton',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;color:var(--cyan);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.back-link{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border2);border-radius:3px;padding:4px 10px;transition:color .2s,border-color .2s;}
+.back-link:hover{color:var(--cyan);border-color:var(--border);}
+.glossary-definition{font-size:14px;line-height:1.75;color:var(--muted);}
+.copyright-notice{background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;margin-top:40px;font-size:13px;line-height:1.7;color:var(--muted);}
+.copyright-notice strong{color:var(--text);font-weight:600;}
+
+/* ══ AUTHOR + SERVICES ═══════════════════════════════════════ */
+.author-services-section{max-width:860px;margin:0 auto 80px;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:900px){.author-services-section{grid-template-columns:1fr;}}
+.about-author-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;}
+.author-section-header{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border2);}
+.author-card{display:flex;gap:20px;align-items:flex-start;}
+.author-card-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--orange));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:28px;color:var(--bg);flex-shrink:0;}
+.author-card-content{flex:1;}
+.author-card-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:0.02em;text-transform:uppercase;color:#fff;margin-bottom:4px;}
+.author-card-title{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;}
+.author-card-bio{font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:16px;}
+.author-card-links{display:flex;gap:12px;flex-wrap:wrap;}
+.author-link{font-size:13px;color:var(--muted);padding:6px 12px;border:1px solid var(--border2);border-radius:var(--radius);transition:all 0.2s;text-decoration:none;}
+.author-link:hover{color:var(--cyan);border-color:var(--border);background:rgba(0,217,245,0.05);}
+.explore-services-card{background:linear-gradient(135deg,rgba(0,217,245,0.05),rgba(255,94,32,0.03));border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;justify-content:center;}
+.services-card-header{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border2);}
+.services-card-title{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:0.02em;text-transform:uppercase;color:#fff;margin-bottom:16px;line-height:1.1;}
+.services-card-title .highlight{color:var(--cyan);}
+.services-card-text{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:28px;}
+.services-card-button{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;background:var(--cyan);color:var(--bg);padding:16px 40px;border-radius:var(--radius);transition:all 0.25s;border:none;text-decoration:none;text-align:center;}
+.services-card-button:hover{box-shadow:0 0 30px var(--glow-c);opacity:0.9;transform:translateY(-2px);}
+
+/* ══ ARTICLE NAV CARDS ═══════════════════════════════════════ */
+.article-nav-section{padding:64px;background:var(--surface);border-top:1px solid var(--border2);}
+.article-nav-inner{max-width:1180px;margin:0 auto;}
+.article-nav-label{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:block;}
+.article-nav-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch;}
+.nav-card{display:flex;flex-direction:column;gap:8px;padding:28px 32px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;text-decoration:none;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden;}
+.nav-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,217,245,.04),transparent);opacity:0;transition:opacity .25s;}
+.nav-card:hover{border-color:rgba(0,217,245,.25);box-shadow:0 8px 32px rgba(0,217,245,.08);transform:translateY(-2px);opacity:1;}
+.nav-card:hover::after{opacity:1;}
+.nav-card.next{text-align:right;}
+.nav-card.all-articles{align-items:center;justify-content:center;text-align:center;min-width:120px;}
+.nav-card.hidden{visibility:hidden;pointer-events:none;}
+.nav-card-icon{font-size:22px;color:var(--cyan);line-height:1;display:block;}
+.nav-card-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.nav-card-title{font-family:'Anton',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:#fff;line-height:1.2;}
+@media(max-width:768px){.article-nav-section{padding:48px 28px;}.nav-card.all-articles{grid-column:1/-1;}}
+
+/* ══ FOOTER ══════════════════════════════════════════════════ */
+footer{background:var(--surface);border-top:1px solid var(--border2);padding:64px 0 0;}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px;}
+@media(max-width:780px){.footer-top{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.footer-top{grid-template-columns:1fr;}}
+.fb-logo-wrap{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.fb-logo-wrap .pulse-ft{width:7px;height:7px;flex-shrink:0;background:var(--cyan);border-radius:50%;box-shadow:0 0 7px var(--cyan);animation:pulse 2.2s ease-in-out infinite;}
+.fb-wordmark{font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.05em;}
+.fb-wordmark .ai{color:#fff;}.fb-wordmark .ma{color:var(--cyan);}
+.fb-sub{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;}
+.fb-tagline{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:20px;max-width:280px;}
+.back-to-top{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:9px 16px;transition:border-color .2s,color .2s,box-shadow .2s;cursor:pointer;}
+.back-to-top:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 14px var(--glow-c);}
+.back-to-top .arr{font-size:14px;transition:transform .2s;}.back-to-top:hover .arr{transform:translateY(-3px);}
+.fl-head{font-size:14px;font-weight:600;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.06em;}
+.fl-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.fl-list a{font-size:13px;color:var(--muted);transition:color .2s;text-decoration:none;}
+.fl-list a:hover{color:var(--cyan);}
+.footer-bottom{padding:24px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-bottom p,.footer-bottom span{font-size:11px;color:var(--muted);}
+#back-to-top{position:fixed;bottom:32px;right:32px;z-index:100;width:50px;height:50px;background:var(--cyan);color:var(--bg);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(0,217,245,0.3);}
+#back-to-top:hover{background:#fff;color:var(--cyan);box-shadow:0 6px 20px rgba(0,217,245,0.5);transform:translateY(-3px);}
+#back-to-top.show{opacity:1;visibility:visible;}
+@media(max-width:768px){#back-to-top{bottom:20px;right:20px;width:44px;height:44px;font-size:20px;}}
+@media(max-width:768px){.article-header{height:50vh;min-height:400px;}.header-content{bottom:40px;}.article-meta{padding:24px 20px;gap:20px;}.article-body{padding:40px 20px 80px;}.article-title{font-size:clamp(32px,8vw,48px);}.pullquote-text{font-size:20px;}.references-section,.glossary-section{padding:40px 20px;}.author-services-section{padding:0 20px;}}
+@media(max-width:768px){.fade-in{opacity:1!important;transform:none!important;}}
+@media(prefers-reduced-motion:reduce){.fade-in{opacity:1!important;transform:none!important;transition:none!important;}}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9BQ74BJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- Meta Pixel (noscript) -->
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=941204972168187&ev=PageView&noscript=1"/></noscript>
+
+<!-- ══ MOBILE MENU ══════════════════════════════════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+<a href="../index.html#home"     onclick="closeMobile()">Home</a>
+<a href="../index.html#services" onclick="closeMobile()">Services</a>
+<a href="../index.html#rates"    onclick="closeMobile()">Rates</a>
+<a href="../index.html#work"     onclick="closeMobile()">Work</a>
+<a href="../index.html#process"  onclick="closeMobile()">Process</a>
+<a href="../index.html#about"    onclick="closeMobile()">About</a>
+<a href="../insights.html"       onclick="closeMobile()">Insights</a>
+<a href="../gallery.html"        onclick="closeMobile()">Gallery</a>
+<a href="../index.html#contact"  class="m-cta" onclick="closeMobile()">Get a Quote</a>
+<div class="m-legal">
+<a href="../index.html#tos">Terms</a><a href="../index.html#privacy">Privacy</a>
+<a href="../index.html#refund">Refunds</a><a href="../index.html#licensing">Licensing</a>
+<a href="../index.html#cookies">Cookies</a>
+</div>
+</div>
+
+<!-- ══ NAV ═════════════════════════════════════════════════ -->
+<nav id="nav">
+<div class="container nav-inner">
+<a href="../index.html" class="nav-logo"><div class="pulse"></div><span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span></a>
+<ul class="nav-links" id="navLinks">
+<li><a href="../index.html#home">Home</a></li>
+<li><a href="../index.html#services">Services</a></li>
+<li><a href="../index.html#rates">Rates</a></li>
+<li><a href="../index.html#work">Work</a></li>
+<li><a href="../index.html#process">Process</a></li>
+<li><a href="../index.html#about">About</a></li>
+<li><a href="../insights.html" class="active">Insights</a></li>
+<li><a href="../gallery.html">Gallery</a></li>
+</ul>
+<a href="../index.html#contact" class="nav-cta">Get a Quote</a>
+<button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
+</nav>
+
+<!-- ══ SHARE SIDEBAR ════════════════════════════════════════ -->
+<div id="share-sidebar">
+<div class="share-sidebar-label">Share</div>
+<a class="share-fab" data-share="facebook" href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+<a class="share-fab" data-share="twitter" href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+<a class="share-fab" data-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+<a class="share-fab" data-share="email" href="mailto:?subject=PAGE_TITLE&body=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+<button class="share-fab copy-btn" id="copyLinkBtn" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+</div>
+
+<!-- ══ TOC SIDEBAR ══════════════════════════════════════════ -->
+<div id="toc-sidebar">
+<div class="toc-panel">
+<span class="toc-panel-label">Contents</span>
+<nav class="toc-nav">
+<a href="#section-the-numbers"   class="toc-link">1,400 Cleared, and Counting</a>
+<a href="#section-where-it-works" class="toc-link">Where It Actually Works</a>
+<a href="#section-reasoning-gap" class="toc-link">The Reasoning Gap</a>
+<a href="#section-equity"        class="toc-link">The Algorithm's Blind Spot</a>
+<a href="#section-calibrated"    class="toc-link">Accountability Without a Framework</a>
+<a href="#references"            class="toc-link">References</a>
+<a href="#glossary"              class="toc-link">Glossary</a>
+</nav>
+</div>
+</div>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<!-- ══════════════════════════════════════════════════════════
+     ARTICLE
+══════════════════════════════════════════════════════════ -->
+<article class="article-wrapper" id="article-top">
+
+<header class="article-header">
+<div class="header-media" id="headerImage"></div>
+<div class="header-overlay"></div>
+<div class="header-content">
+<div class="container">
+<span class="article-category fade-in" id="articleCategory">AI Healthcare</span>
+<h1 class="article-title fade-in delay-2" id="articleTitle">
+DIAGNOSIS BY <span class="highlight">ALGORITHM</span>: THE STATE OF AI IN <span class="highlight-orange">CLINICAL MEDICINE</span>, 2026
+</h1>
+</div>
+</div>
+</header>
+
+<div class="article-meta fade-in delay-2">
+<div class="meta-author">
+<div class="author-avatar" id="authorAvatar">JS</div>
+<div class="author-info">
+<div class="author-name" id="authorName">Joselito Sering</div>
+<div class="author-role">Editor-in-Chief · AIMA</div>
+</div>
+</div>
+<div class="meta-divider"></div>
+<div class="meta-item"><div class="meta-label">Published</div><div class="meta-value" id="publishDate">June 28, 2026</div></div>
+<div class="meta-divider"></div>
+<div class="meta-item"><div class="meta-label">Read Time</div><div class="meta-value" id="readTime">13 min read</div></div>
+<div class="meta-divider"></div>
+<div class="meta-item"><div class="meta-label">Category</div><div class="meta-value" id="categoryValue">AI Healthcare</div></div>
+</div>
+
+<div class="article-body">
+<main class="article-content fade-in delay-3">
+
+<p class="article-lead">Somewhere in a dermatologist's office, an AI flags a lesion on pale skin with near-perfect precision. In another clinic, the same algorithm examines darker skin and is effectively guessing almost half the time. That disparity isn't a bug anyone filed a report on — it's a policy consequence, encoded in training data and now deployed at scale. This is what it means to practice medicine in 2026: surrounded by tools that are genuinely remarkable and, in specific and measurable ways, genuinely dangerous to the patients who need them most.</p>
+
+<p>The scale of AI in clinical medicine is no longer theoretical. According to the American Medical Association's 2026 Physician Survey on Augmented Intelligence, 81% of U.S. physicians now use AI in their practices — more than double the 38% who reported doing so in 2023. The FDA has cleared more than 1,400 AI-enabled medical devices, 295 of them in 2025 alone, from 221 manufacturers. The tools are here. The question is which ones work, for whom they work, and who absorbs the cost when they don't.</p>
+
+<p>The honest accounting, as of mid-2026, is that clinical AI is simultaneously the most evidence-backed application of machine learning in the real world and the most consequential place to deploy systems that haven't been tested across the full range of patients who will eventually use them. The same technology shortening the distance between molecular discovery and clinical cure in oncology is producing diagnostic blind spots that follow fault lines already carved by race, age, and geography. Understanding this field requires holding both truths without flinching from either.</p>
+
+<!-- ═══ SECTION 1 ══════════════════════════════════════════ -->
+<section id="section-the-numbers">
+<h2>1,400 Cleared, and <span class="accent">Counting</span></h2>
+
+<p>The FDA's authorized AI-enabled device list crossed 1,400 entries in mid-2026. Radiology accounts for roughly 75% of those clearances — an artifact of digital imaging's head start and the relative legibility of image classification as a task. The remaining quarter spans pathology, cardiology, ophthalmology, dermatology, and clinical decision support. The median clearance time is 142 days. Twenty-four percent of 2025 clearances were processed in under 90 days.</p>
+
+<p>Those numbers sound like momentum, and in some ways they are. What they obscure is the pathway. Ninety-six percent of AI device clearances came through the 510(k) route — a mechanism designed for devices that are "substantially equivalent" to something already on the market. It was built for incremental hardware updates, and it has become the default for a category of tools that can behave in fundamentally novel ways. Think of it like certifying a self-driving vehicle because it has four wheels and a steering column in roughly the same places as a car that already exists. The frame is familiar. The behavior is not.</p>
+
+<p>Less than 10% of 2025 AI clearances included a Predetermined Change Control Plan — the FDA's mechanism that allows manufacturers to update algorithms without new submissions. That means most cleared AI tools are regulatory snapshots, frozen at clearance while the underlying technology and the clinical landscape both continue to move. In January 2026, the FDA issued guidance that further loosened oversight for low-risk clinical decision support software — expanding enforcement discretion, permitting single AI recommendations rather than option sets, and declining to define what "clinically appropriate" means. That definition was left to developers. The guidance also said nothing about large language models or probabilistic outputs, which now constitute a growing share of what physicians actually encounter.</p>
+
+<div class="callout gold">
+<p><strong>The Reimbursement Desert.</strong> FDA clearance does not equal clinical deployment. Of more than 1,400 cleared AI tools, only two CPT Category I codes exist for AI-specific clinical functions — and both are in cardiac imaging. A tool can win regulatory approval in 142 days and then sit unused in a hospital system because no payer will reimburse it. That gap between what regulators approve and what economics allow is the single largest structural barrier to broad clinical adoption in 2026.</p>
+</div>
+
+<div class="stat-grid">
+<div class="stat-card">
+<div class="stat-number">1,400<span style="font-size:16px">+</span></div>
+<div class="stat-label">FDA-cleared AI-enabled medical devices as of mid-2026</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">81%</div>
+<div class="stat-label">U.S. physicians using AI professionally — up from 38% in 2023</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">96%</div>
+<div class="stat-label">of 2025 AI device clearances via the 510(k) fast-track pathway</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">2</div>
+<div class="stat-label">CPT Category I codes covering AI-specific clinical functions (both cardiac)</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ SECTION 2 ══════════════════════════════════════════ -->
+<section id="section-where-it-works">
+<h2>Where It <span class="accent">Actually</span> Works</h2>
+
+<p>The strongest evidence for clinical AI lives in radiology, and the strongest evidence within radiology lives in tasks that are narrow, well-defined, and visually discrete. Stroke triage is the clearest success story: AI for large vessel occlusion detection and intracranial hemorrhage identification has moved from research to routine deployment in major stroke centers, cutting time-to-diagnosis in emergent cases by up to 90% in some systems. That number translates directly into fewer dead neurons, fewer disabled patients, and outcomes that are materially better than what the same physicians achieve without AI assistance. It is exactly the kind of result that justifies building this technology.</p>
+
+<p>Lung nodule detection sits in the same category of genuine, reproducible evidence. A systematic review of 150 peer-reviewed AI clinical medicine studies found that the best systems achieve <a href="#glossary-auc" class="glossary-term" id="mention-auc">area-under-the-curve</a> scores up to 0.94 for lung nodule detection — performance that meets or exceeds the sensitivity of experienced radiologists working without AI assistance. In mammography, AI reduced false-positive marks by 69% compared to traditional computer-aided detection systems. In digital pathology, AI assistance raised pathologist sensitivity for lymph node metastasis detection from 83% to 91%. These are not projected improvements. They are measured outcomes in clinical practice.</p>
+
+<div class="callout success">
+<p><strong>A Routine ECG, Transformed.</strong> Cardiac amyloidosis is a disease that usually announces itself too late — its symptoms are nonspecific enough that diagnosis typically comes at an advanced stage. Anumana's FDA-cleared ECG-AI algorithm changes that math: validated across more than 15,000 patients, it detects cardiac amyloidosis from a standard 12-lead ECG with 78.9% sensitivity and 91.2% specificity. Mayo Clinic cardiologist Martha Grogan framed the clinical significance directly: "A tool that helps clinicians recognize suspicion of amyloidosis from a routine ECG could support earlier diagnosis and more timely next steps in care." What was once a disease requiring expensive, specialized imaging to even suspect can now be flagged by a test available in any clinic with an ECG machine.</p>
+</div>
+
+<p>Sepsis prediction occupies more complicated territory. AI systems deployed in intensive care units and emergency departments can flag sepsis onset three to twelve hours before a physician places the first antibiotic order — a window that, when acted upon correctly, saves lives. The COMPOSER system has demonstrated early warning 12.2 hours before antibiotics in the ICU and 2.1 hours in the emergency department. The evidence base is real. The challenge is what happens when the alert fires. Alarm fatigue — the desensitization that sets in when a system produces too many false positives — has emerged as a documented failure mode that can wipe out the clinical benefit of a statistically strong tool. The algorithm performs; the culture around the algorithm does not always follow.</p>
+
+<p>And then there is drug discovery, where AI has produced what may be its most dramatic proof of concept. Daraxonrasib — a RAS inhibitor identified through AI-driven network biology analysis — was presented at the American Society of Clinical Oncology's 2026 annual meeting to a standing ovation. In a Phase 3 trial for previously treated metastatic pancreatic cancer, it produced median overall survival of 13.2 months versus 6.7 months for chemotherapy, with a hazard ratio of 0.40. Darwin Health co-founders Andrea Califano and Gideon Bosker argued in STAT News that AI network biology was essential to identifying the RAS-targeted approach — that no other method could have navigated the molecular complexity of a cancer that had resisted every prior strategy. The FDA granted it Breakthrough Therapy and Orphan Drug designation. The drug was not found without AI. That is a sentence worth sitting with.</p>
+
+<div class="pullquote">
+<p class="pullquote-text">AI doesn't replace the radiologist. It changes what the radiologist catches, and how fast. That's a different kind of transformation — quieter than replacement, and more durable.</p>
+<span class="pullquote-attribution">— Joselito Sering, AIMA</span>
+</div>
+</section>
+
+<!-- ═══ SECTION 3 ══════════════════════════════════════════ -->
+<section id="section-reasoning-gap">
+<h2>The <span class="accent">Reasoning</span> Gap</h2>
+
+<p>In April 2026, a research team at Mass General Brigham and Harvard Medical School published a study in JAMA Network Open that tested 21 large language models — including ChatGPT, Claude, Gemini, Grok, and DeepSeek — on 29 clinical cases. The headline result: more than 80% of the time, these models failed to generate clinically adequate differential diagnoses. This despite achieving final diagnosis accuracy exceeding 90% when given complete patient data.</p>
+
+<p>The distinction between those two numbers is the entire story. Final diagnosis accuracy measures whether a model can name the correct answer once the puzzle is already assembled. Differential diagnosis is the actual work of medicine — generating a ranked list of possible conditions to investigate when a patient arrives with symptoms but no answers, then holding that uncertainty open while evidence accumulates. It is the cognitive work that happens before the right answer is known, under time pressure, with incomplete information and a real person waiting. Lead author Arya Rao put it plainly: "Models excel at naming a final diagnosis once the data is complete, but they struggle at the open-ended start of a case." Co-author Marc Succi, Executive Director of the MESH Incubator at Mass General Brigham, named the gap more precisely: "Differential diagnoses are central to clinical reasoning and underlie the 'art of medicine' that AI cannot currently replicate."</p>
+
+<div class="callout warning">
+<p><strong>When the Old System Wins.</strong> In a separate head-to-head comparison at Massachusetts General Hospital, researchers tested DXplain — a rule-based expert diagnostic system built in the 1980s — against ChatGPT-4 and Gemini 1.5 Pro across 36 general medicine cases. With complete lab data, DXplain achieved 72% accuracy. ChatGPT reached 64%. Gemini 58%. Without lab data: DXplain 56%, ChatGPT 42%, Gemini 39%. The differences were not statistically significant, but the direction was consistent across all conditions. The most hyped AI tools in the world lost to a decades-old system purpose-built for the task. The MGH authors suggested the answer may be a hybrid — combining LLMs' natural language processing with deterministic expert-system logic — but that hybrid does not yet exist in deployed clinical form.</p>
+</div>
+
+<p>Into this context, in May 2026, Google published a study in Nature Medicine showing that its AMIE multimodal AI outperformed primary care physicians on 29 of 32 evaluation axes across 105 simulated clinical cases, including 7 of 9 multimodal reasoning metrics. Patient actors also rated AMIE as more empathetic and trustworthy than human physicians. The study is the most rigorous AI-versus-physician diagnostic comparison published to date. It is also a simulation, using scripted patient actors in a remote chat interface, not real patients presenting to a real clinic. Google's own authors note that "further research is needed before real-world translation." A prospective trial is underway at Beth Israel Deaconess Medical Center. No outcome data from that trial has been published.</p>
+
+<p>STAT News asked the question directly in a May 2026 piece: "Did AI Really Beat Doctors at Diagnosis?" The fact that the headline had to be posed as a question — rather than stated as a conclusion — tells you something important. AMIE's benchmark wins and DXplain's real-world edge are not contradictory. They are measuring different things. The distance between simulation performance and clinical translation is exactly where the remaining work lives.</p>
+</section>
+
+<!-- ═══ SECTION 4 ══════════════════════════════════════════ -->
+<section id="section-equity">
+<h2>The Algorithm's <span class="accent">Blind Spot</span></h2>
+
+<p>The dermatology number is the one that should not be acceptable to anyone deploying AI in clinical settings. State-of-the-art AI dermatology tools achieve precision of 0.897 on lighter <a href="#glossary-skin-phototype" class="glossary-term" id="mention-skin-phototype">skin phototypes</a>. On darker skin phototypes, precision falls to 0.484. That is not a marginal disparity — it is nearly half the accuracy, applied to patients who are already more likely to have skin conditions diagnosed late by human clinicians operating within a system not designed around their presentation. The cause is documented and straightforward: dermatology AI training datasets contain dark skin tone images in only 4 to 18 percent of total images. The algorithm learned from a dataset that didn't include the full range of human skin. It is now deployed on that full range.</p>
+
+<p>Dermatology is the clearest documented case, but it is not alone. A health management algorithm widely used in U.S. healthcare used prior healthcare spending as a proxy for health need — which systematically underestimated the needs of Black patients, who spend less on healthcare due to access barriers, not superior health. Sepsis prediction models showed significantly reduced accuracy among Hispanic patients due to training data imbalance. These are not theoretical disparities. They are measured failures in deployed systems.</p>
+
+<div class="callout warning">
+<p><strong>Denial by Algorithm.</strong> AdventHealth Shawnee Mission Hospital filed suit against Blue Cross and Blue Shield of Kansas City alleging that its AI-driven claims review system wrongfully denied hundreds of physician-approved diagnoses, withholding more than $2 million in payments — with appeals reportedly denied instantly, without human review. The case introduces a distinct category of AI harm: not a diagnostic error, but an operational one with clinical consequences. Denial-by-algorithm falls hardest on patients least equipped to navigate appeals — and it sits in a legal vacuum where no clear framework governs who is responsible when an automated payer system overrides a physician's clinical judgment.</p>
+</div>
+
+<p>The pediatric and global gaps compound the picture. Fewer than one in five FDA-cleared AI medical devices are approved for pediatric use — a gap with no clinical justification beyond the economics of validation studies that recruit adults because adults are easier to enroll. Globally, China accounts for 35.6% of AI clinical trial registrations. The United States accounts for 8.5%. Africa and Latin America together represent a fraction of that. Clinical AI is being built by the world's wealthiest health systems, tested primarily on their populations, and then offered — or sold — to everyone else.</p>
+
+<p>The 2026 regulatory environment has made equity harder to enforce, not easier. The Trump administration's deregulatory pivot eliminated Biden-era algorithmic fairness mandates in healthcare, replacing them with "minimally burdensome" requirements that give developers wide latitude over what their tools are tested against. The FDA's January 2026 guidance is silent on demographic representation requirements. There is a bitter irony in the patient trust data: surveys consistently show that communities historically underserved by medicine are among the most willing to give AI a chance — because the alternative they have lived is a human system that hasn't served them well either. That trust deserves better than it is currently receiving.</p>
+</section>
+
+<!-- ═══ SECTION 5 ══════════════════════════════════════════ -->
+<section id="section-calibrated">
+<h2>Accountability Without a <span class="accent">Framework</span></h2>
+
+<p>When the algorithm is wrong and a patient is harmed, the current U.S. legal framework has an answer: the physician is liable. No federal law shifts malpractice exposure from the clinician to the AI developer or the hospital that deployed the tool. Courts hold physicians to an independent standard of care regardless of what an algorithm recommended. A doctor who followed an AI output in good faith is still the doctor who signed the note, made the call, and carries the legal exposure for what followed.</p>
+
+<p>The AMA's 2026 survey found that 85% of physicians want direct involvement in AI adoption decisions. When asked what single regulatory action would most build their trust in AI, physicians ranked clear liability frameworks first — above accuracy transparency, data governance requirements, and explainability mandates. The field has developed a phrase for the structural problem they are describing: "liability sink." Clinicians absorb legal exposure for recommendations from black-box systems they cannot audit, trained on data they cannot examine, deployed by institutions that chose the tool without them.</p>
+
+<div class="callout">
+<p><strong>The Ambient AI Calculus.</strong> Ambient AI scribes — tools like Nuance DAX Copilot that listen to patient encounters and draft clinical notes — are the fastest-adopted AI in medicine. Marketing claims promise 50% reductions in documentation time. NEJM AI randomized controlled trials published in 2025 and 2026 found a 1.7% documentation time reduction — not statistically significant. What the RCT evidence does show, more robustly: genuine improvement in physician burnout scores on validated instruments. The physician still signs the note and still carries the liability for what it contains. But they arrive at that note less depleted. In a system where physician burnout is itself a patient safety issue, that is not a trivial outcome — even if the time math doesn't pencil out the way the marketing says it does.</p>
+</div>
+
+<p>The honest state of the field is this: AI demonstrably improves specific, narrow, well-validated clinical tasks. It does not yet reliably improve the full clinical reasoning workflow that constitutes medicine. The stroke neurologist with AI triage is saving lives, measurably, in minutes and neurons. The cardiac electrophysiologist with ECG-AI is catching amyloidosis before the damage is irreversible. The oncologist whose patient lived 13.2 months instead of 6.7 months has a drug in hand that AI helped identify against a cancer that had resisted everything else. These are not abstractions. They are outcomes, in specific patients, in specific clinics.</p>
+
+<p>At the same time, the dermatologist whose AI tool is half as accurate on dark skin may not know it — because the tool doesn't declare its own demographic limitations at the point of use. The patient denied coverage by an automated payer system has no recourse in a legal framework that wasn't designed for this situation. The physician relying on an LLM's differential failed that task, in rigorous testing, more than four times out of five.</p>
+
+<p>Eren Ogut's systematic review of 150 AI clinical medicine studies reached a conclusion that is not pessimistic — just precise: "Current evidence for tangible improvements in day-to-day clinical practice is mixed." That sentence should accompany every AI deployment decision in medicine in 2026. Not a condemnation. A calibration. The field has earned genuine optimism in narrow, validated domains. It has not yet earned the confidence that comes from broad, equitable deployment at scale. The question to carry forward isn't whether AI belongs in the clinic. It does. The question is whether the institutions deploying these systems are honest enough to know what they don't know — and whether the patients least likely to be in the training data will be protected while the field finishes figuring it out.</p>
+
+<div class="article-tags">
+<span class="tag">AI Healthcare</span>
+<span class="tag">Clinical AI</span>
+<span class="tag">Medical Diagnosis</span>
+<span class="tag">Digital Health</span>
+<span class="tag">Machine Learning in Medicine</span>
+<span class="tag">AI Radiology</span>
+<span class="tag">Healthcare Technology</span>
+</div>
+</section>
+
+<div class="article-footer fade-in">
+<h3 class="footer-cta-title"><span class="highlight">AIMA</span> Covers What Others Miss.</h3>
+<p class="footer-cta-text">AIMA covers technology the way it should be covered — with rigor, moral seriousness, and the understanding that the most important AI question is always: who does this actually serve?</p>
+<a href="../index.html#services" class="footer-cta-button">Explore Our Work</a>
+</div>
+
+</main>
+</div>
+
+<!-- ═══ REFERENCES ════════════════════════════════════════════ -->
+<section class="references-section" id="references">
+<h2 class="section-heading">References</h2>
+<ol class="reference-list">
+
+<li class="reference-item" data-number="[1]">
+<span class="ref-authors">American Medical Association.</span>
+<span class="ref-title">"More Than 80% of Physicians Use AI Professionally, AMA Survey Finds."</span>
+<em>AMA News</em>, 12 Mar. 2026,
+<a href="https://www.ama-assn.org/practice-management/digital-health/more-80-physicians-use-ai-professionally-ama-survey" class="ref-link" target="_blank" rel="noopener noreferrer">ama-assn.org</a>
+</li>
+
+<li class="reference-item" data-number="[2]">
+<span class="ref-authors">Ogut, Eren, et al.</span>
+<span class="ref-title">"Artificial Intelligence in Clinical Medicine: Challenges Across Diagnostic Imaging, Clinical Decision Support, Surgery, Pathology, and Drug Discovery."</span>
+<em>PMC</em>, 2026,
+<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12468291/" class="ref-link" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov/articles/PMC12468291/</a>
+</li>
+
+<li class="reference-item" data-number="[3]">
+<span class="ref-authors">Feldman, Mitchell J., Edward P. Hoffer, Jared J. Conley, et al.</span>
+<span class="ref-title">"Dedicated AI Expert System vs Generative AI with Large Language Model for Clinical Diagnoses."</span>
+<em>PMC</em>, 2026,
+<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12123466/" class="ref-link" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov/articles/PMC12123466/</a>
+</li>
+
+<li class="reference-item" data-number="[4]">
+<span class="ref-authors">Rao, Arya, Marc Succi, et al.</span>
+<span class="ref-title">"Large Language Model Performance on Clinical Reasoning Tasks."</span>
+<em>JAMA Network Open</em>, 13 Apr. 2026,
+<a href="https://www.massgeneralbrigham.org/en/about/newsroom/press-releases/ai-chatbot-lacks-clinical-reasoning" class="ref-link" target="_blank" rel="noopener noreferrer">massgeneralbrigham.org</a>
+</li>
+
+<li class="reference-item" data-number="[5]">
+<span class="ref-authors">Google DeepMind.</span>
+<span class="ref-title">"Advancing Conversational Diagnostic AI with Multimodal Reasoning."</span>
+<em>Nature Medicine</em>, 15 May 2026,
+<a href="https://www.nature.com/articles/s41591-026-04371-0" class="ref-link" target="_blank" rel="noopener noreferrer">nature.com</a>
+</li>
+
+<li class="reference-item" data-number="[6]">
+<span class="ref-authors">Daneshjou, Roxana, et al.</span>
+<span class="ref-title">"Disparities in Dermatology AI Performance on a Diverse, Curated Clinical Image Set."</span>
+<em>Science Advances</em>, AAAS, 2022,
+<a href="https://www.science.org/doi/10.1126/sciadv.abq6147" class="ref-link" target="_blank" rel="noopener noreferrer">science.org/doi/10.1126/sciadv.abq6147</a>
+</li>
+
+<li class="reference-item" data-number="[7]">
+<span class="ref-title">"FDA Clears First AI Algorithm to Detect Cardiac Amyloidosis — Anumana."</span>
+<em>Inside Precision Medicine</em>, 2026,
+<a href="https://www.insideprecisionmedicine.com/topics/informatics/fda-clears-first-ai-algorithm-to-diagnose-cardiac-amyloidosis/" class="ref-link" target="_blank" rel="noopener noreferrer">insideprecisionmedicine.com</a>
+</li>
+
+<li class="reference-item" data-number="[8]">
+<span class="ref-authors">Bekaii-Saab, Tanios, et al.</span>
+<span class="ref-title">"Daraxonrasib or Chemotherapy in Previously Treated Metastatic Pancreatic Cancer."</span>
+<em>New England Journal of Medicine</em>, 2026,
+<a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2605555" class="ref-link" target="_blank" rel="noopener noreferrer">nejm.org/doi/full/10.1056/NEJMoa2605555</a>
+</li>
+
+<li class="reference-item" data-number="[9]">
+<span class="ref-authors">Califano, Andrea, and Gideon Bosker.</span>
+<span class="ref-title">"The Real Work for Making Dramatic Gains Against Pancreatic Cancer Is Just Beginning."</span>
+<em>STAT News</em>, 19 June 2026,
+<a href="https://www.statnews.com/2026/06/19/daraxonrasib-pancreatic-cancer-miracle-drug-oncosystems-ai/" class="ref-link" target="_blank" rel="noopener noreferrer">statnews.com</a>
+</li>
+
+<li class="reference-item" data-number="[10]">
+<span class="ref-authors">Innolitics.</span>
+<span class="ref-title">"2025 Year in Review: AI/ML Medical Device 510(k) Clearances."</span>
+<em>Innolitics Blog</em>, 2026,
+<a href="https://innolitics.com/articles/year-in-review-ai-ml-medical-device-k-clearances/" class="ref-link" target="_blank" rel="noopener noreferrer">innolitics.com</a>
+</li>
+
+<li class="reference-item" data-number="[11]">
+<span class="ref-authors">Lazarus, Arthur.</span>
+<span class="ref-title">"FDA Loosens AI Oversight: What Clinicians Need to Know About the 2026 Guidance."</span>
+<em>KevinMD</em>, Jan. 2026,
+<a href="https://kevinmd.com/2026/01/fda-loosens-ai-oversight-what-clinicians-need-to-know-about-the-2026-guidance.html" class="ref-link" target="_blank" rel="noopener noreferrer">kevinmd.com</a>
+</li>
+
+<li class="reference-item" data-number="[12]">
+<span class="ref-title">"Clinicians Risk Becoming 'Liability Sinks' for Artificial Intelligence."</span>
+<em>PMC</em>, 2024,
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11025047/" class="ref-link" target="_blank" rel="noopener noreferrer">ncbi.nlm.nih.gov/pmc/articles/PMC11025047/</a>
+</li>
+
+<li class="reference-item" data-number="[13]">
+<span class="ref-title">"The Growing Use of Artificial Intelligence in Health Care and Implications for Disparities."</span>
+<em>KFF Policy Analysis</em>, 2026,
+<a href="https://www.kff.org/racial-equity-and-health-policy/the-growing-use-of-artificial-intelligence-in-health-care-and-implications-for-disparities/" class="ref-link" target="_blank" rel="noopener noreferrer">kff.org</a>
+</li>
+
+<li class="reference-item" data-number="[14]">
+<span class="ref-title">"Beyond the Growth: Registry-Based Analysis of Global Imbalances in AI Clinical Trials."</span>
+<em>PMC</em>, 2026,
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12385212/" class="ref-link" target="_blank" rel="noopener noreferrer">ncbi.nlm.nih.gov/pmc/articles/PMC12385212/</a>
+</li>
+
+</ol>
+<div class="copyright-notice">
+<strong>Copyright Acknowledgements:</strong> American Medical Association, PMC/NCBI, JAMA Network Open, Nature Medicine, Science Advances/AAAS, New England Journal of Medicine, STAT News, Inside Precision Medicine, Innolitics, KevinMD, KFF. All sources cited per MLA 9th edition. URLs verified as accessible as of June 2026.
+</div>
+</section>
+
+<!-- ═══ GLOSSARY ══════════════════════════════════════════════ -->
+<section class="glossary-section" id="glossary">
+<h2 class="section-heading">Glossary</h2>
+<div class="glossary-list">
+
+<div class="glossary-item" id="glossary-auc">
+<div class="glossary-term-title">
+AUC (Area Under the Curve)
+<a href="#mention-auc" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">A measure of a diagnostic test's ability to distinguish positive from negative cases across all possible decision thresholds. An AUC of 1.0 is perfect; 0.5 is random chance. For AI diagnostic tools, AUC is the standard single-number summary of performance — values above 0.9 are considered excellent, and lung nodule detection AI achieving 0.94 approaches the upper range of what any validated clinical test achieves.</p>
+</div>
+
+<div class="glossary-item" id="glossary-skin-phototype">
+<div class="glossary-term-title">
+Skin Phototype
+<a href="#mention-skin-phototype" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">A classification system (the Fitzpatrick scale, Types I–VI) categorizing human skin by its response to UV exposure — from Type I (very light, always burns) to Type VI (deeply pigmented, never burns). In dermatology AI research, phototype is the standard variable for measuring performance disparities across skin tones. Most AI training datasets are heavily skewed toward lighter phototypes (I–III), producing tools with substantially lower accuracy on darker phototypes (IV–VI) — the origin of the 0.897 vs. 0.484 precision gap documented in peer-reviewed literature.</p>
+</div>
+
+<div class="glossary-item" id="glossary-510k">
+<div class="glossary-term-title">510(k) Clearance</div>
+<p class="glossary-definition">The FDA's premarket notification pathway for devices "substantially equivalent" to an already-marketed product. It is faster than full Premarket Approval — which requires independent clinical evidence — and has become the dominant route for AI medical devices. Ninety-six percent of AI clearances in 2025 used this pathway, raising questions about whether a regulatory shortcut designed for incremental hardware is adequate oversight for software that can behave in novel, unpredictable ways.</p>
+</div>
+
+<div class="glossary-item" id="glossary-differential">
+<div class="glossary-term-title">Differential Diagnosis</div>
+<p class="glossary-definition">The process of generating a ranked list of possible conditions that could explain a patient's symptoms, then systematically ruling them in or out through testing and observation. It is the central cognitive task of clinical medicine — the structured uncertainty that precedes the answer, not the answer itself. AI systems in 2026 can name a correct final diagnosis with impressive accuracy when data is complete. What they consistently fail at, in rigorous testing, is the differential: the open-ended reasoning at the start of a case.</p>
+</div>
+
+<div class="glossary-item" id="glossary-alarm-fatigue">
+<div class="glossary-term-title">Alarm Fatigue</div>
+<p class="glossary-definition">The desensitization that sets in when clinical staff receive too many monitoring alerts with high false-positive rates. Clinicians who experience persistent low-signal alerting begin to delay or ignore alerts that matter. In AI-driven sepsis prediction — where systems can flag risk hours before conventional signs appear — alarm fatigue is a documented failure mode that can eliminate the clinical benefit of a statistically strong tool without anyone changing the code.</p>
+</div>
+
+<div class="glossary-item" id="glossary-liability-sink">
+<div class="glossary-term-title">Liability Sink</div>
+<p class="glossary-definition">A term from healthcare AI ethics describing the structural position of clinicians who absorb full legal and professional exposure for decisions influenced by AI systems they cannot audit and did not choose. U.S. malpractice law holds physicians to an independent standard of care regardless of algorithmic input — meaning physicians carry responsibility for both following and not following AI recommendations, while typically having no legal recourse when an algorithm fails and causes harm.</p>
+</div>
+
+<div class="glossary-item" id="glossary-pccp">
+<div class="glossary-term-title">PCCP (Predetermined Change Control Plan)</div>
+<p class="glossary-definition">An FDA mechanism allowing AI medical device manufacturers to specify in advance what algorithm modifications are permissible without requiring a new regulatory submission. Designed to accommodate adaptive AI. Only 10% of 2025 AI clearances included a PCCP — meaning the vast majority of cleared AI tools cannot update their algorithms without new regulatory review, effectively freezing them at the version that earned clearance, regardless of what the data says afterward.</p>
+</div>
+
+<div class="glossary-item" id="glossary-ambient-ai">
+<div class="glossary-term-title">Ambient AI Scribe</div>
+<p class="glossary-definition">An AI system that passively listens to a clinical encounter — physician and patient conversation — and automatically generates a structured clinical note, eliminating much of the manual documentation work that occupies a large portion of physician time. Tools like Nuance DAX Copilot represent the fastest-adopted category of AI in medicine in 2025–2026. Marketing claims substantially exceed what randomized controlled trial evidence supports in time savings, though burnout improvements have RCT backing.</p>
+</div>
+
+</div>
+</section>
+
+<!-- ═══ AUTHOR + SERVICES ════════════════════════════════════ -->
+<section class="author-services-section">
+<div class="about-author-card">
+<div class="author-section-header">About The Author</div>
+<div class="author-card">
+<div class="author-card-avatar" id="authorCardAvatar">JS</div>
+<div class="author-card-content">
+<div class="author-card-name">Joselito Sering</div>
+<div class="author-card-title">Editor-in-Chief · Imagineer</div>
+<p class="author-card-bio">Joselito Sering is the founder and editor-in-chief of AIMA. He writes at the crossroads of artificial intelligence, creative production, and the economics of human freedom. He is building a philanthropic legacy rooted in the Philippines, and believes the most important thing AI can do is lower the cost of making something that matters.</p>
+<div class="author-card-links">
+<a id="bmac-coffee-btn" href="https://www.buymeacoffee.com/aimaproductions" target="_blank" rel="noopener" onclick="trackCoffeeClick()"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=aimaproductions&button_colour=00D9F5&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="Buy me a coffee" style="height:40px;" /></a>
+</div>
+</div>
+</div>
+</div>
+<div class="explore-services-card">
+<div class="services-card-header">Explore Our Services</div>
+<h3 class="services-card-title">AI Built for <span class="highlight">Human Creativity</span></h3>
+<p class="services-card-text">Cinema-grade AI-powered production, media automation, and content systems — built for creators who believe the future should work for everyone.</p>
+<a href="../index.html#services" class="services-card-button">View Our Services</a>
+</div>
+</section>
+
+<!-- ═══ PRINT HOOKS ═══════════════════════════════════════════ -->
+<span class="print-category-hook" id="printCategoryHook" style="display:none">AI Healthcare</span>
+<span class="print-author-hook" style="display:none">Joselito Sering</span>
+<span class="print-url-hook" style="display:none">aima.productions</span>
+
+</article>
+
+<!-- ══ ARTICLE NAV CARDS ════════════════════════════════════ -->
+<nav class="article-nav-section" id="article-nav">
+<div class="article-nav-inner">
+<span class="article-nav-label">Continue Reading</span>
+<div class="article-nav-grid">
+<a id="art-prev-card" href="#" class="nav-card prev hidden"><span class="nav-card-icon">←</span><div class="nav-card-label">Previous Article</div><div class="nav-card-title" id="art-prev-title"></div></a>
+<a href="https://aima.productions/insights.html" class="nav-card all-articles"><span class="nav-card-icon">⊞</span><div class="nav-card-label">All Articles</div><div class="nav-card-title">Browse the Magazine</div></a>
+<a id="art-next-card" href="#" class="nav-card next hidden"><span class="nav-card-icon">→</span><div class="nav-card-label">Next Article</div><div class="nav-card-title" id="art-next-title"></div></a>
+</div>
+</div>
+</nav>
+
+<!-- ══ FOOTER ═══════════════════════════════════════════════ -->
+<footer>
+<div class="container">
+<div class="footer-top">
+<div>
+<div class="fb-logo-wrap"><div class="pulse-ft"></div><span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span></div>
+<div class="fb-sub">AI Media Agency</div>
+<p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+<button class="back-to-top" onclick="document.getElementById('article-top').scrollIntoView({behavior:'smooth'})"><span class="arr">↑</span> Back to Top</button>
+</div>
+<div><div class="fl-head">Services</div><ul class="fl-list"><li><a href="../index.html#services">Music Video</a></li><li><a href="../index.html#services">Corporate Explainer</a></li><li><a href="../index.html#services">TV Commercial</a></li><li><a href="../index.html#rates">Social Media Packages</a></li><li><a href="../index.html#rates">Monthly Retainers</a></li><li><a href="../index.html#rates">AI Automation Pipeline</a></li></ul></div>
+<div><div class="fl-head">Company</div><ul class="fl-list"><li><a href="../index.html#about">About Us</a></li><li><a href="../index.html#process">Our Process</a></li><li><a href="../index.html#work">Portfolio</a></li><li><a href="../gallery.html">Gallery</a></li><li><a href="../insights.html">Insights</a></li><li><a href="../careers.html">Careers</a></li></ul></div>
+<div><div class="fl-head">Legal</div><ul class="fl-list"><li><a href="../index.html#tos">Terms of Service</a></li><li><a href="../index.html#privacy">Privacy Policy</a></li><li><a href="../index.html#refund">Refund Policy</a></li><li><a href="../index.html#licensing">Licensing FAQ</a></li><li><a href="../index.html#cookies">Cookie Settings</a></li></ul></div>
+</div>
+<div class="footer-bottom"><p>© 2026 AIMA · AI Media Agency</p><span>v12.9 · aima.productions</span></div>
+</div>
+</footer>
+
+<script>
+// ══ HEADER IMAGE from meta tag ════════════════════════════
+document.addEventListener('DOMContentLoaded',function(){
+var meta=document.querySelector('meta[name="article:header-image"]');
+var el=document.getElementById('headerImage');
+if(meta&&el){var url=meta.getAttribute('content');el.style.backgroundImage='linear-gradient(135deg,rgba(0,217,245,0.18),rgba(255,94,32,0.10)),url(\''+url+'\')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';}
+// PREV/NEXT NAV
+var _pUrl=(document.querySelector('meta[name="article:prev-url"]')||{}).content||'';
+var _pTitle=(document.querySelector('meta[name="article:prev-title"]')||{}).content||'';
+var _nUrl=(document.querySelector('meta[name="article:next-url"]')||{}).content||'';
+var _nTitle=(document.querySelector('meta[name="article:next-title"]')||{}).content||'';
+var prevCard=document.getElementById('art-prev-card');
+var nextCard=document.getElementById('art-next-card');
+function applyNav(pUrl,pTitle,nUrl,nTitle){
+if(prevCard&&pUrl){prevCard.href=pUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=pTitle;}
+if(nextCard){if(nUrl){nextCard.href=nUrl;nextCard.classList.remove('hidden');nextCard.style.cursor='';nextCard.style.opacity='';nextCard.style.pointerEvents='';document.getElementById('art-next-title').textContent=nTitle;}
+else{nextCard.removeAttribute('href');nextCard.classList.remove('hidden');nextCard.style.cursor='default';nextCard.style.opacity='0.5';nextCard.style.pointerEvents='none';document.getElementById('art-next-title').textContent='Coming Soon';}}
+}
+applyNav(_pUrl,_pTitle,_nUrl,_nTitle);
+var _curId=parseInt((document.querySelector('meta[name="article:id"]')||{}).content||'0');
+if(_curId){fetch('https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec?action=all',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(data){if(!data.articles)return;var arts=data.articles.slice().sort(function(a,b){return parseInt(a.id)-parseInt(b.id);});var i=arts.findIndex(function(a){return parseInt(a.id)===_curId;});if(i<0)return;var prev=i>0?arts[i-1]:null;var next=i<arts.length-1?arts[i+1]:null;applyNav(prev?prev.url:'',prev?prev.title:'',next?next.url:'',next?next.title:'');}).catch(function(){});}
+});
+// ══ SHARE SIDEBAR ═════════════════════════════════════════
+(function(){
+var url=encodeURIComponent(window.location.href);
+var title=encodeURIComponent(document.title);
+document.querySelectorAll('a[data-share]').forEach(function(a){
+a.href=a.href.replace('PAGE_URL',url).replace('PAGE_TITLE',title);
+a.addEventListener('click',function(e){e.preventDefault();if(a.dataset.share==='email'){window.location.href=a.href;}else{window.open(a.href,'share-'+a.dataset.share,'width=600,height=460,noopener');}});
+});
+var btn=document.getElementById('copyLinkBtn');
+if(btn){btn.addEventListener('click',function(){var raw=window.location.href;var done=function(){var orig=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(raw).then(done).catch(function(){fb(raw,done);});}else{fb(raw,done);}});};
+function fb(t,cb){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
+})();
+var _sh=document.getElementById('share-sidebar');var _tc=document.getElementById('toc-sidebar');
+window.addEventListener('scroll',function(){var s=window.scrollY>300;if(_sh)_sh.classList.toggle('visible',s);if(_tc)_tc.classList.toggle('visible',s);},{passive:true});
+// ══ TOC ACTIVE LINK ══════════════════════════════════════
+var _tl=document.querySelectorAll('.toc-link');var _ts=[];
+_tl.forEach(function(a){var h=a.getAttribute('href');if(h&&h.startsWith('#'))_ts.push(h.substring(1));});
+window.addEventListener('scroll',function(){var sp=window.scrollY+120;var cur='';_ts.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=sp)cur=id;});_tl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});},{passive:true});
+// ══ MOBILE MENU ══════════════════════════════════════════
+function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
+// ══ AUTHOR PHOTO ═════════════════════════════════════════
+(function(){
+var persona=(document.querySelector('meta[name="article:persona"]')||{}).content||'joselito';
+var imgSrc='../img/author-'+persona+'.png';
+var _authorColors={joselito:'00D9F5',dawn:'9B59F5',kenji:'F5C518'};
+var _btnColor=_authorColors[persona]||'00D9F5';
+var _bmac=document.getElementById('bmac-coffee-btn');
+if(_bmac){var _bimg=_bmac.querySelector('img');if(_bimg)_bimg.src=_bimg.src.replace(/button_colour=[^&]*/,'button_colour='+_btnColor);}
+function applyPhoto(el,src){
+  var img=new Image();
+  img.onload=function(){
+    el.textContent='';
+    el.style.background='none';
+    el.style.border='none';
+    el.style.padding='0';
+    var i=document.createElement('img');
+    i.src=src;
+    i.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;';
+    el.appendChild(i);
+  };
+  img.src=src;
+}
+var av=document.getElementById('authorAvatar');
+var ac=document.getElementById('authorCardAvatar');
+if(av) applyPhoto(av,imgSrc);
+if(ac) applyPhoto(ac,imgSrc);
+})();
+// ══ COFFEE CLICK TRACKING ════════════════════════════════
+function trackCoffeeClick(){
+var id=(document.querySelector('meta[name="article:id"]')||{}).content||'';
+var title=(document.querySelector('meta[name="article:title"]')||{}).content||document.title||'';
+var author=(document.querySelector('meta[name="article:author"]')||{}).content||'';
+var persona=(document.querySelector('meta[name="article:persona"]')||{}).content||'joselito';
+if(typeof gtag==='function'){gtag('event','coffee_click',{article_id:id,article_title:title,author:author,persona:persona});}
+if(window.dataLayer){window.dataLayer.push({event:'coffee_click',article_id:id,article_title:title,author:author,persona:persona});}
+}
+// ══ BACK TO TOP ══════════════════════════════════════════
+var _bt=document.getElementById('back-to-top');
+window.addEventListener('scroll',function(){if(_bt)_bt.classList.toggle('show',window.scrollY>400);},{passive:true});
+if(_bt)_bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+// ══ FADE-IN ══════════════════════════════════════════════
+(function(){var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(el){ob.observe(el);});})();
+setTimeout(function(){document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});},800);
+</script>
+</body>
+</html>

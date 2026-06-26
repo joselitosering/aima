@@ -1,0 +1,12 @@
+{
+  "org_id": "111540594",
+  "collected_at": "2026-06-26T14:08:11",
+  "impressions": 533,
+  "unique_impressions": 135,
+  "clicks": 41,
+  "likes": 5,
+  "comments": 0,
+  "shares": 7,
+  "engagement_rate": 0.0994,
+  "note": "Aggregate org-page totals. Per-post stats require r_member_social scope or xls_import.py."
+}
