@@ -175,7 +175,7 @@ def collect(days=90, verbose=True):
         w.writerows(rows)
 
     if verbose:
-        print(f"\n✓ {len(rows)} articles written to ga4_traffic.csv")
+        print(f"\nDone: {len(rows)} articles written to ga4_traffic.csv")
 
     _git_push()
     return len(rows)
