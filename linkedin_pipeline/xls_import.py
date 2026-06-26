@@ -118,6 +118,75 @@ def find_best_match(content_snippet, log, threshold=0.35):
     return None, best_score
 
 
+# ── CSV parsing (LinkedIn sometimes exports .csv instead of .xlsx) ───────────
+
+def parse_csv(path):
+    """Parse a LinkedIn Analytics CSV export."""
+    with open(path, newline="", encoding="utf-8-sig") as f:
+        raw = list(csv.reader(f))
+
+    if not raw:
+        sys.exit("CSV file appears empty.")
+
+    # Find header row (first row with recognizable column names)
+    header_row_idx, col_map = None, {}
+    for i, row in enumerate(raw[:5]):
+        col_map = {}
+        for j, cell in enumerate(row):
+            alias = COLUMN_ALIASES.get(cell.strip().lower())
+            if alias:
+                col_map[alias] = j
+        if len(col_map) >= 3:
+            header_row_idx = i
+            break
+
+    if header_row_idx is None:
+        print("Could not auto-detect header row. First 3 rows:")
+        for r in raw[:3]:
+            print(" ", r)
+        sys.exit("Please check the CSV format.")
+
+    print(f"  Header row: {header_row_idx + 1}, columns mapped: {list(col_map.keys())}")
+
+    records = []
+    for row in raw[header_row_idx + 1:]:
+        if all(c.strip() == "" for c in row):
+            continue
+
+        def get(key, default=""):
+            idx = col_map.get(key)
+            return row[idx].strip() if idx is not None and idx < len(row) else default
+
+        content = get("content", "")
+        if not content:
+            continue
+
+        def num(v, default=0):
+            try:
+                return float(str(v).replace("%", "").replace(",", "")) if v != "" else default
+            except (ValueError, TypeError):
+                return default
+
+        engagement_raw = num(get("engagement_rate"))
+        ctr_raw        = num(get("ctr"))
+
+        records.append({
+            "content":         content,
+            "date":            get("date", ""),
+            "impressions":     int(num(get("impressions"))),
+            "clicks":          int(num(get("clicks"))),
+            "likes":           int(num(get("likes"))),
+            "comments":        int(num(get("comments"))),
+            "shares":          int(num(get("shares"))),
+            "engagement_rate": round(engagement_raw / 100 if engagement_raw > 1 else engagement_raw, 4),
+            "ctr":             round(ctr_raw / 100 if ctr_raw > 1 else ctr_raw, 4),
+            "post_url":        get("post_url", ""),
+            "post_urn":        get("post_urn", ""),
+        })
+
+    return records
+
+
 # ── XLS parsing ──────────────────────────────────────────────────────────────
 
 COLUMN_ALIASES = {
@@ -270,7 +339,10 @@ def main():
     ensure_csv_headers()
 
     print(f"\nParsing {xls_path.name}...")
-    records = parse_xls(xls_path)
+    if xls_path.suffix.lower() == ".csv":
+        records = parse_csv(xls_path)
+    else:
+        records = parse_xls(xls_path)
     print(f"  {len(records)} data rows found.\n")
 
     imported   = 0
@@ -343,12 +415,12 @@ def main():
 
     if not args.dry_run and imported:
         save_post_log(log)
-        print(f"\n✓ Imported {imported} row(s) → post_analytics.csv")
+        print(f"\nDone: Imported {imported} row(s) to post_analytics.csv")
         print(  "  post_log.json updated (analytics_collected = true)")
         _git_push()
 
     if unmatched:
-        print(f"\n⚠  {len(unmatched)} unmatched row(s) — use --map to assign:\n")
+        print(f"\nWARNING: {len(unmatched)} unmatched row(s) — use --map to assign:\n")
         for rec in unmatched:
             print(f'  --map "{rec["content"][:80]}"=article_filename.html')
             print(f"         Imp:{rec['impressions']} Clicks:{rec['clicks']} CTR:{rec['ctr']:.1%}\n")
