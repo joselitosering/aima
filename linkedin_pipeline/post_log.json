@@ -13,7 +13,10 @@
     "title": "The $5,000 Music Video Blueprint \u2014 AIMA Magazine",
     "persona": "joselito",
     "posted_at": "2026-06-19T19:30:31",
-    "analytics_collected": false
+    "analytics_collected": true,
+    "analytics_source": "linkedin_personal_export",
+    "impressions": 88,
+    "engagements": 1
   },
   {
     "post_id": "urn:li:share:7473451995576549376",
@@ -21,7 +24,10 @@
     "title": "The Global South AI Gap: Who Gets Left Behind When the Future Arrives",
     "persona": "joselito",
     "posted_at": "2026-06-18T12:10:06",
-    "analytics_collected": false
+    "analytics_collected": true,
+    "analytics_source": "linkedin_personal_export",
+    "impressions": 91,
+    "engagements": 1
   },
   {
     "post_id": "urn:li:share:7467419831055708163",
@@ -101,7 +107,10 @@
     "title": "The Future of Creative Production in the Age of AI",
     "persona": "joselito",
     "posted_at": "2026-06-19T18:25:27",
-    "analytics_collected": false
+    "analytics_collected": true,
+    "analytics_source": "linkedin_personal_export",
+    "impressions": 84,
+    "engagements": 0
   },
   {
     "post_id": "urn:li:share:7473819395870314496",
@@ -150,7 +159,10 @@
     "title": "When Agents Go Rogue: Is AI Programming Its Own Survival?",
     "persona": "joselito",
     "posted_at": "2026-06-20T12:03:32",
-    "analytics_collected": false
+    "analytics_collected": true,
+    "analytics_source": "linkedin_personal_export",
+    "impressions": 14,
+    "engagements": 0
   },
   {
     "post_id": "urn:li:share:7474247482777026560",
@@ -167,8 +179,11 @@
     "title": "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor \u2014 AIMA Magazine",
     "persona": "joselito",
     "posted_at": "2026-06-21T20:50:18",
-    "analytics_collected": false,
-    "reshare_id": "urn:li:share:7474564371948523520"
+    "analytics_collected": true,
+    "reshare_id": "urn:li:share:7474564371948523520",
+    "analytics_source": "linkedin_personal_export",
+    "impressions": 98,
+    "engagements": 1
   },
   {
     "post_id": "urn:li:share:7474564399131803648",
@@ -176,8 +191,11 @@
     "title": "AIMA Pipeline \u2014 Blueprint",
     "persona": "joselito",
     "posted_at": "2026-06-21T20:50:28",
-    "analytics_collected": false,
-    "reshare_id": "urn:li:share:7474564411593097216"
+    "analytics_collected": true,
+    "reshare_id": "urn:li:share:7474564411593097216",
+    "analytics_source": "linkedin_personal_export",
+    "impressions": 2,
+    "engagements": 0
   },
   {
     "post_id": "urn:li:share:7474564436997922817",
@@ -185,7 +203,10 @@
     "title": "AIMA Article Pipeline",
     "persona": "joselito",
     "posted_at": "2026-06-21T20:50:36",
-    "analytics_collected": false,
-    "reshare_id": "urn:li:share:7474564448377217024"
+    "analytics_collected": true,
+    "reshare_id": "urn:li:share:7474564448377217024",
+    "analytics_source": "linkedin_personal_export",
+    "impressions": 3,
+    "engagements": 0
   }
 ]
