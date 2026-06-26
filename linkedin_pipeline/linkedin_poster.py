@@ -9,7 +9,7 @@ to guarantee the visual is always shown.
 Requires scopes: w_organization_social
 """
 
-import os, json, re, urllib.request, urllib.error, mimetypes
+import os, json, re, urllib.request, urllib.error, urllib.parse, mimetypes
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -115,6 +115,26 @@ def extract_metadata(html_content, filename, html_url):
         source_url = "https://github.com/joselitosering/aima"
 
     return title, description[:700], source_url
+
+
+def add_utm(url, article_name, content="org_post"):
+    """
+    Append UTM parameters to a URL for GA4 attribution.
+      utm_source   = linkedin
+      utm_medium   = social
+      utm_campaign = article slug (filename without .html)
+      utm_content  = org_post | personal_reshare
+    Safe to call on URLs that may already have a query string.
+    """
+    slug = article_name.replace(".html", "").replace(".htm", "")
+    params = urllib.parse.urlencode({
+        "utm_source":   "linkedin",
+        "utm_medium":   "social",
+        "utm_campaign": slug,
+        "utm_content":  content,
+    })
+    separator = "&" if "?" in url else "?"
+    return f"{url}{separator}{params}"
 
 
 def generate_hashtags(html_content, title, description):
@@ -268,6 +288,7 @@ def post_to_linkedin(article):
     title, description, source_url = extract_metadata(
         article["content"], article["name"], article["html_url"]
     )
+    source_url = add_utm(source_url, article["name"], content="org_post")
 
     # -- Upload cover image --------------------------------------------------
     image_url = extract_og_image(article["content"])
