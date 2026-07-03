@@ -2,7 +2,7 @@
   {
     "post_id": "urn:li:share:7473819519409471488",
     "article": "aima-article-5k-music-video-blueprint-002.html",
-    "title": "The $5,000 Music Video Blueprint — AIMA Magazine",
+    "title": "The $5,000 Music Video Blueprint \u2014 AIMA Magazine",
     "persona": "joselito",
     "posted_at": "2026-06-19T19:30:31",
     "analytics_collected": true,
@@ -128,7 +128,7 @@
     "post_id": "urn:li:share:7474247482777026560",
     "reshare_id": "urn:li:share:7474247496148340736",
     "article": "aima-article-machines-that-compose-015.html",
-    "title": "Machines That Compose: What AI Music Reveals About Human Creativity — AIMA Magazine",
+    "title": "Machines That Compose: What AI Music Reveals About Human Creativity \u2014 AIMA Magazine",
     "persona": "joselito",
     "posted_at": "2026-06-20T23:51:08",
     "analytics_collected": false
@@ -137,7 +137,7 @@
     "post_id": "urn:li:share:7474564358551805953",
     "reshare_id": "urn:li:share:7474564371948523520",
     "article": "aima-article-digital-nomad-economy-016.html",
-    "title": "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor — AIMA Magazine",
+    "title": "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor \u2014 AIMA Magazine",
     "persona": "joselito",
     "posted_at": "2026-06-21T20:50:18",
     "analytics_collected": true,
@@ -149,7 +149,7 @@
     "post_id": "urn:li:share:7474564399131803648",
     "reshare_id": "urn:li:share:7474564411593097216",
     "article": "aima-pipeline-blueprint.html",
-    "title": "AIMA Pipeline — Blueprint",
+    "title": "AIMA Pipeline \u2014 Blueprint",
     "persona": "joselito",
     "posted_at": "2026-06-21T20:50:28",
     "analytics_collected": true,
@@ -168,5 +168,23 @@
     "analytics_source": "linkedin_personal_export",
     "impressions": 3,
     "engagements": 0
+  },
+  {
+    "post_id": "urn:li:share:7478691533681172480",
+    "article": "aima-article-diagnosis-by-algorithm-018.html",
+    "title": "Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026 \u2014 AIMA Magazine",
+    "persona": "joselito",
+    "posted_at": "2026-07-03T06:10:12",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7478691545764962305"
+  },
+  {
+    "post_id": "urn:li:share:7478700096574865408",
+    "article": "aima-article-resume-filter-017.html",
+    "title": "The R\u00e9sum\u00e9 Filter: How AI Turned Racial Bias Into Standard Hiring Practice \u2014 AIMA Magazine",
+    "persona": "dawn",
+    "posted_at": "2026-07-03T06:44:14",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7478700108579229697"
   }
 ]
