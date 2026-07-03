@@ -38,16 +38,19 @@ def run(article_path: str, spec: dict) -> dict:
     except FileNotFoundError:
         raise RuntimeError(f"[vera] Article not found at: {article_path}")
 
+    # Vera only needs enough HTML to check structure — truncate to avoid token bloat
+    html_excerpt = article_html[:12_000] if len(article_html) > 12_000 else article_html
+
     user_input = f"""\
 ARTICLE PATH: {article_path}
 COVER IMAGE:  {og_image}
 ALT IMAGE:    {alt_image}
 AUTHOR:       {spec.get('author')}
 
-ARTICLE HTML:
-{article_html}
+ARTICLE HTML (first 12000 chars):
+{html_excerpt}
 
-Run all 11 QC checks. Return your verdict on the first line as exactly one of:
+Run all 11 QC checks. Return your verdict on the FIRST LINE as exactly one of:
   approved
   needs_revision: copy
   needs_revision: visual

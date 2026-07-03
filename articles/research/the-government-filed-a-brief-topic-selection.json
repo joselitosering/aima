@@ -1,0 +1,67 @@
+{
+  "row": 25,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-07-02",
+  "chosen": {
+    "title": "The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law",
+    "category": "AI Ethics",
+    "rationale": "In April 2026, the Trump DOJ sided with Elon Musk's xAI to challenge Colorado's SB24-205 \u2014 a first-of-its-kind state law requiring AI systems used in hiring, mortgage lending, and student admissions to protect consumers from algorithmic discrimination based on race, gender, age, and income. Enforcement was suspended on April 27, right before its June 30 implementation deadline. The DOJ's argument: requiring companies to prevent discrimination violates the Fourteenth Amendment's equal protection clause; xAI's: labeling their outputs 'discriminatory' violates their First Amendment right to 'pursue truth.' This is corporate capture at its most naked \u2014 the nation's chief law enforcement agency in court as Big Tech's co-counsel \u2014 and the question Dawn demands answered is the one no regulator will touch: if the DOJ is now xAI's lawyer, who's left to protect the people the algorithm harms?",
+    "sources": [
+      {
+        "name": "DOJ Press Release: Justice Department Intervenes in xAI Lawsuit Challenging Colorado's 'Algorithmic Discrimination' Law",
+        "url": "https://www.justice.gov/opa/pr/justice-department-intervenes-xai-lawsuit-challenging-colorados-algorithmic-discrimination"
+      },
+      {
+        "name": "Colorado Sun: Justice Department joins Elon Musk's xAI in effort to block Colorado AI antidiscrimination law",
+        "url": "https://coloradosun.com/2026/04/24/doj-joins-lawsuit-colorado-ai-law-federal-court/"
+      },
+      {
+        "name": "Norton Rose Fulbright: xAI sues, DOJ intervenes, enforcement of Colorado's AI Act suspended",
+        "url": "https://www.nortonrosefulbright.com/en/knowledge/publications/de3ad9de/xai-sues-doj-intervenes-enforcement-of-colorados-ai-act-suspended"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The AI Alibi: How Corporate America Weaponized a Buzzword to Fire Workers Without Accountability",
+      "category": "AI Labor",
+      "rationale": "Companies attributed 55,000 layoffs to AI in 2025 \u2014 a 12x jump from two years prior \u2014 but a December 2025 Harvard Business Review study of 1,006 global executives found firms are eliminating jobs based on AI's *potential*, not its proven performance; actual AI-driven cuts account for only ~4.5% of total layoffs. Salesforce cut customer support from 9,000 to 5,000 citing AI agents barely deployed at scale; Amazon announced white-collar reductions in anticipation of 'agents'; 60% of hiring managers planning 2026 layoffs cite AI as the reason. The story Dawn tells is that 'the algorithm made us do it' has become the perfect corporate press release \u2014 it sounds like progress, invites no accountability, and lands entirely on the workers. The question no executive wants to answer: if AI isn't actually doing the job yet, what exactly justified firing the person who was?",
+      "sources": [
+        {
+          "name": "Harvard Business Review: Companies Are Laying Off Workers Because of AI's Potential \u2014 Not Its Performance",
+          "url": "https://hbr.org/2026/01/companies-are-laying-off-workers-because-of-ais-potential-not-its-performance"
+        },
+        {
+          "name": "Fortune: The job market is healing for everyone \u2014 except in the office",
+          "url": "https://fortune.com/2026/05/08/jobs-report-april-2026-ai-white-collar-layoffs-finance-wages/"
+        },
+        {
+          "name": "Built In: Did AI Take Your Job? The Truth About AI Washing",
+          "url": "https://builtin.com/articles/ai-washing-layoffs"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "'Coworker' Is a Legal Strategy: How AI Companies Use Workplace Language to Escape the Blame When Things Go Wrong",
+      "category": "AI Ethics",
+      "rationale": "Boston University research published this week found managers catch 18% fewer errors when AI output is attributed to an 'AI employee' versus a chatbot \u2014 and Microsoft, OpenAI, Anthropic, and Google are all deliberately marketing their agents as team members, not tools. Anthropic literally named their product 'Cowork.' MIT Technology Review flagged this on June 30 as a structural threat to worker oversight. Dawn's angle is sharper: calling a product a 'coworker' isn't a metaphor \u2014 it's a liability transfer. When the algorithm fails, the corporation that sold it walks away with the efficiency gains while the worker who 'didn't catch the error' absorbs the consequences. The question no one in the product marketing team wants on record: at what point does anthropomorphizing your software become a strategy to avoid a lawsuit?",
+      "sources": [
+        {
+          "name": "MIT Technology Review: The Download \u2014 AI 'coworkers' and stratospheric internet (June 30, 2026)",
+          "url": "https://www.technologyreview.com/2026/06/30/1139954/the-download-ai-agents-coworkers-solar-powered-internet/"
+        },
+        {
+          "name": "MIT Technology Review: Claude Science is Anthropic's newest flagship product",
+          "url": "https://www.technologyreview.com/2026/06/30/1139987/claude-science-is-anthropics-newest-flagship-product/"
+        },
+        {
+          "name": "TechCrunch: Investors predict AI is coming for labor in 2026",
+          "url": "https://techcrunch.com/2025/12/31/investors-predict-ai-is-coming-for-labor-in-2026/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

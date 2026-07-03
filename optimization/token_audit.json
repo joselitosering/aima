@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-07-02T14:58:16",
+  "article_number": 18,
+  "total_budget": 125000,
+  "total_used": 84062,
+  "pct": 67,
+  "over_budget": [
+    "Quill (34877/25000)",
+    "Maya (14664/12500)",
+    "Vera (7732/5000)",
+    "Cora (10051/5000)"
+  ]
+}

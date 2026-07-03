@@ -14,6 +14,75 @@ REPO_ROOT = Path(__file__).parent.parent
 log = logging.getLogger("aima")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
+# ─────────────────────────────────────────────────────────────
+# DRY-RUN STUB MODE
+# Set DRY_RUN = True in run.py when --dry-run is passed.
+# call_cc_agent() returns stub responses — no real claude CLI
+# calls, no tokens consumed. Validates orchestration only.
+# ─────────────────────────────────────────────────────────────
+DRY_RUN = False
+
+
+def _build_dry_run_priya_spec() -> str:
+    """Build Priya stub spec from state.json + existing article files."""
+    state_path = REPO_ROOT / "articles" / "aima-coworker-state.json"
+    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    number = int(state.get("next_article_number", 1))
+    padded = str(number).zfill(3)
+
+    import re as _re
+    articles_dir = REPO_ROOT / "articles"
+    matches = sorted(articles_dir.glob(f"aima-article-*-{padded}.html"),
+                     key=lambda p: p.stat().st_size, reverse=True)
+    if matches:
+        filename = matches[0].name
+        m = _re.match(r"aima-article-(.+)-\d{3}\.html", filename)
+        slug = m.group(1) if m else f"article-{padded}"
+    else:
+        slug = f"article-{padded}"
+        filename = f"aima-article-{slug}-{padded}.html"
+
+    og_image = f"img/articles/aima-{padded}-{slug}.jpg"
+    # Author comes from the calendar row's Author column (one canonical
+    # sequence — next_track rotation retired 2026-07-02, DECISION-LOG.md).
+    author = "Joselito Sering"
+    cal = REPO_ROOT / "articles" / "aima-editorial-calendar.md"
+    if cal.exists():
+        for line in cal.read_text(encoding="utf-8").splitlines():
+            if _re.match(rf"\s*\|\s*{number}\s*\|\s*[\d-]+\s*\|", line):
+                cells = [c.strip() for c in line.split("|")]
+                if len(cells) > 7 and cells[7]:
+                    author = cells[7]
+                break
+
+    return json.dumps({
+        "number": number,
+        "slug": slug,
+        "filename": filename,
+        "og_image": og_image,
+        "title": f"[DRY RUN] Article #{number}: {slug.replace('-', ' ').title()}",
+        "author": author,
+        "category": "AI Society",
+        "read_time": "8 min",
+        "publish_date": state.get("next_article_date", "2026-06-28"),
+        "tone": "analytical",
+        "mood": "thoughtful",
+        "custom_tags": ["#AI", "#AIMA"],
+        "target_words": 1600,
+    })
+
+
+_DRY_RUN_STUBS = {
+    # priya: built dynamically — see call_cc_agent
+    "scout": "",          # scout has its own cache check; fallback empty is fine
+    "quill": "",          # quill reuses existing file when force_rewrite=False
+    "maya":  "",          # maya checks file on disk; return value not used
+    "vera":  "approved",  # always approve in dry-run
+    "cora":  "dry_run_ok",
+    "lumen": "dry_run_ok",
+    "iris":  "dry_run_ok",
+}
+
 # Resolve the claude CLI path once at import time.
 # On Windows, subprocess cannot find executables via PATH without shell=True
 # unless the full path is provided. shutil.which() resolves it correctly.
@@ -40,16 +109,9 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
     Returns the agent's text output (stdout).
     Raises RuntimeError on non-zero exit code.
     """
-    from agents.config import BUDGET_MAP, CC_MODEL_OVERRIDE
+    from agents.config import CC_MODEL_OVERRIDE
 
-    full_prompt = f"{system_prompt}\n\n---\nINPUT:\n{user_input}"
-    tokens = max_tokens or BUDGET_MAP.get(name, 8_000)
     model = model_override or CC_MODEL_OVERRIDE.get(name)
-
-    cmd = ["claude", "--print", "--max-tokens", str(tokens), full_prompt]
-    if model:
-        cmd = ["claude", "--print", "--model", model,
-               "--max-tokens", str(tokens), full_prompt]
 
     if _CLAUDE_BIN is None:
         raise RuntimeError(
@@ -57,16 +119,37 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
             "Install Claude Code or add it to your PATH."
         )
 
-    # Replace "claude" with the resolved full path so Windows subprocess
-    # can find it without needing shell=True.
-    cmd[0] = _CLAUDE_BIN
+    # --dangerously-skip-permissions: CC agents need tools (WebSearch, Write, Bash)
+    # and cannot respond to interactive permission prompts when stdin is piped.
+    # Safe here — we control every agent's system prompt and user input.
+    # --system-prompt sets the role; user_input is piped via stdin.
+    cmd = [_CLAUDE_BIN, "--print", "--dangerously-skip-permissions",
+           "--system-prompt", system_prompt]
+    if model:
+        cmd += ["--model", model]
 
-    log.info(f"[{name.upper()}] calling CC subagent (max_tokens={tokens})")
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO_ROOT)
+    # ── Dry-run stub: skip real CC call entirely ─────────────
+    if DRY_RUN:
+        stub = _build_dry_run_priya_spec() if name == "priya" else _DRY_RUN_STUBS.get(name, "dry_run_ok")
+        log.info(f"[{name.upper()}] DRY RUN — returning stub (no CC call)")
+        return stub
+
+    log.info(f"[{name.upper()}] calling CC subagent")
+    try:
+        result = subprocess.run(cmd, input=user_input, capture_output=True,
+                                encoding="utf-8", cwd=REPO_ROOT, timeout=1800)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(
+            f"CC agent [{name}] timed out after 1800s (30 min). "
+            "Check Claude Code subscription status and network connectivity."
+        )
 
     if result.returncode != 0:
+        stdout_snippet = result.stdout[:500] if result.stdout else "(empty)"
         raise RuntimeError(
-            f"CC agent [{name}] failed (exit {result.returncode}):\n{result.stderr}"
+            f"CC agent [{name}] failed (exit {result.returncode}):\n"
+            f"STDERR: {result.stderr or '(empty)'}\n"
+            f"STDOUT (first 500): {stdout_snippet}"
         )
     return result.stdout.strip()
 

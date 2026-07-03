@@ -1,0 +1,15 @@
+{
+  "reviewed": 2,
+  "results": [
+    {
+      "article": "aima-article-diagnosis-by-algorithm-018.html",
+      "verdict": "approved",
+      "notes": []
+    },
+    {
+      "article": "aima-article-resume-filter-017.html",
+      "verdict": "approved",
+      "notes": []
+    }
+  ]
+}

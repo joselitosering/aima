@@ -1,0 +1,15 @@
+{
+  "status": "needs_images",
+  "article_number": 19,
+  "slug": "article-019",
+  "title": "[DRY RUN] Article #19: Article 019",
+  "mood": "thoughtful",
+  "primary_path": "img/articles/aima-019-article-019.jpg",
+  "alt_path": "img/alt-img/aima-019-article-019-alt.jpg",
+  "prompts": {
+    "primary": "[DRY RUN] Article #19: Article 019 \u2014 thoughtful editorial photography, wide establishing shot, cinematic 16:9, magazine cover quality",
+    "alt": "[DRY RUN] Article #19: Article 019 \u2014 thoughtful close detail composition, dramatic lighting, 16:9, editorial style"
+  },
+  "recommended_model": "soul_2",
+  "aspect_ratio": "16:9"
+}

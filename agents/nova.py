@@ -1,15 +1,15 @@
 """Nova — Marketing Agent (Pure Python, no LLM calls).
 
-Calls linkedin_pipeline/pipeline.py to post to the AIMA company page
-and reshare to Joselito's personal profile. Reads URNs back from post_log.json.
+Posts a published article to the AIMA company page + reshares it to Joselito's
+personal profile via linkedin_pipeline/linkedin_poster.py, then logs the post to
+post_log.json for Echo's analytics. (pipeline.py was retired — Nova posts directly.)
 """
 
 import json
-import os
-import subprocess
+import sys
 import urllib.request
 import urllib.error
-import logging
+from datetime import datetime, timezone
 
 from agents.base import REPO_ROOT, read_json, log
 
@@ -24,81 +24,79 @@ def _head_ok(url: str) -> bool:
         return False
 
 
+def _log_post(post_id, filename, title, persona, reshare_id=None):
+    """Append the new post to post_log.json so Echo can collect analytics later."""
+    p = REPO_ROOT / "linkedin_pipeline" / "post_log.json"
+    entries = read_json("linkedin_pipeline/post_log.json")
+    if not isinstance(entries, list):
+        entries = []
+    entry = {
+        "post_id": post_id,
+        "article": filename,
+        "title": title,
+        "persona": persona or "joselito",
+        "posted_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S"),
+        "analytics_collected": False,
+    }
+    if reshare_id:
+        entry["reshare_id"] = reshare_id
+    entries.append(entry)
+    p.write_text(json.dumps(entries, indent=2), encoding="utf-8")
+    log.info("[nova] logged to post_log.json for Echo analytics")
+
+
 def run(spec: dict, live_url: str, dry_run: bool = False) -> dict:
     """
-    Post to LinkedIn via linkedin_pipeline/pipeline.py.
+    Post one published article to the AIMA company page + personal reshare via
+    linkedin_poster, then log it to post_log.json.
 
-    Returns:
-      {
-        "company_urn": "urn:li:share:...",
-        "reshare_urn": "urn:li:share:..."
-      }
+    Returns: { "company_urn": "...", "reshare_urn": "..." }
     Raises RuntimeError on failure.
     """
+    filename = spec["filename"]
     og_image_url = f"https://joselitosering.github.io/aima/{spec['og_image']}"
 
-    # Pre-check 1 — article must be live
+    if dry_run:
+        log.info(f"[nova] DRY RUN — would post {filename} to LinkedIn (company + reshare)")
+        log.info(f"[nova] DRY RUN — article live at: {live_url}")
+        return {"company_urn": "urn:li:share:DRY_RUN", "reshare_urn": "urn:li:share:DRY_RUN"}
+
+    # Pre-check 1 — article must be live (Porter confirms deploy first)
     if not _head_ok(og_image_url):
         raise RuntimeError(
             f"[nova] Article image not live yet: {og_image_url}\n"
             "       Porter should have confirmed deploy before Nova runs."
         )
+    # Pre-check 2 — LinkedIn credentials
+    if not (REPO_ROOT / "linkedin_pipeline" / ".env").exists():
+        raise RuntimeError("[nova] linkedin_pipeline/.env not found — LinkedIn credentials missing.")
 
-    # Pre-check 2 — LinkedIn token must be set
-    linkedin_env = REPO_ROOT / "linkedin_pipeline" / ".env"
-    if not linkedin_env.exists():
-        raise RuntimeError(
-            "[nova] linkedin_pipeline/.env not found — LinkedIn credentials missing."
-        )
+    article_path = REPO_ROOT / "articles" / filename
+    if not article_path.exists():
+        raise RuntimeError(f"[nova] Article not found on disk: {article_path}")
+    content = article_path.read_text(encoding="utf-8", errors="replace")
+    article = {"name": filename, "html_url": live_url, "content": content}
 
-    if dry_run:
-        log.info(f"[nova] DRY RUN — would run: python linkedin_pipeline/pipeline.py")
-        log.info(f"[nova] DRY RUN — article live at: {live_url}")
-        return {
-            "company_urn": "urn:li:share:DRY_RUN",
-            "reshare_urn": "urn:li:share:DRY_RUN",
-        }
-
-    log.info(f"[nova] running linkedin_pipeline/pipeline.py")
-    result = subprocess.run(
-        ["python", "linkedin_pipeline/pipeline.py"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
+    # Post directly via linkedin_poster (lazy import — it loads creds at import time).
+    sys.path.insert(0, str(REPO_ROOT / "linkedin_pipeline"))
+    from linkedin_poster import (
+        post_to_linkedin, reshare_to_personal, extract_metadata,
+        extract_persona, add_utm, build_personal_commentary,
     )
 
-    if result.returncode != 0:
-        raise RuntimeError(
-            f"[nova] pipeline.py failed (exit {result.returncode}):\n{result.stderr}"
-        )
+    log.info(f"[nova] posting to company page: {filename}")
+    company_urn = post_to_linkedin(article)
 
-    log.info(f"[nova] pipeline.py output:\n{result.stdout}")
+    title, description, source_url = extract_metadata(content, filename, live_url)
+    persona = extract_persona(content)
+    source_url_reshare = add_utm(source_url, filename, content="personal_reshare")
+    commentary = build_personal_commentary(
+        title, description, source_url_reshare, persona or "joselito", html_content=content
+    )
+    reshare_urn = reshare_to_personal(company_urn, title, commentary=commentary)
+    if reshare_urn:
+        log.info(f"[nova] personal reshare: {reshare_urn}")
 
-    # Read URNs from post_log.json (pipeline.py writes these)
-    post_log = read_json("linkedin_pipeline/post_log.json")
-
-    # post_log.json is a list — find the most recent entry for this article
-    entries = post_log if isinstance(post_log, list) else []
-    slug = spec.get("slug", "")
-
-    company_urn = ""
-    reshare_urn = ""
-
-    # Try to find the entry matching this article's slug
-    for entry in reversed(entries):
-        if entry.get("slug") == slug or not company_urn:
-            company_urn = entry.get("company_urn", entry.get("urn", ""))
-            reshare_urn = entry.get("reshare_urn", "")
-            if entry.get("slug") == slug:
-                break
-
-    if not company_urn:
-        log.warning("[nova] Could not find company URN in post_log.json")
-    if not reshare_urn:
-        log.warning("[nova] Could not find reshare URN in post_log.json")
-
-    log.info(f"[nova] company_urn={company_urn} reshare_urn={reshare_urn}")
-    return {
-        "company_urn": company_urn,
-        "reshare_urn": reshare_urn,
-    }
+    _log_post(company_urn, filename, title, persona, reshare_urn)
+    log.info(f"[nova] done: company={company_urn} reshare={reshare_urn}")
+    return {"company_urn": company_urn, "reshare_urn": reshare_urn}

@@ -14,6 +14,27 @@ from agents.prompts import CORA_PROMPT
 from agents.config import BUDGET_MAP
 
 
+def prepare_quill_call(spec: dict) -> dict:
+    """
+    Enforce the hard word-count ceiling before Marco hands off to Quill.
+    Returns a dict with extra_instruction to inject into Quill's user_input.
+    Called by Marco — not Quill itself.
+    """
+    ceiling = 1800
+    target = spec.get("target_words", 1600)
+    clamped = min(target, ceiling)
+
+    return {
+        "target_words": clamped,
+        "ceiling": ceiling,
+        "extra_instruction": (
+            f"Write exactly {clamped} words (±50). "
+            f"Hard ceiling: {ceiling} words — stop when the idea is complete. "
+            "Do NOT pad to hit a number."
+        ),
+    }
+
+
 def init_budget(article_number: int) -> dict:
     """
     Write the initial token_budget.json for a new pipeline run.
@@ -34,6 +55,7 @@ def init_budget(article_number: int) -> dict:
             "EC":  {"budget": 0,                     "used": 0, "status": "idle"},
             "LM":  {"budget": BUDGET_MAP["lumen"],  "used": 0, "status": "idle"},
             "CO":  {"budget": BUDGET_MAP["cora"],   "used": 0, "status": "idle"},
+            "MR":  {"budget": 0,                     "used": 0, "status": "idle"},
         },
     }
     write_json("token_budget.json", budget)

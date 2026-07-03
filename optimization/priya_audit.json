@@ -1,0 +1,361 @@
+{
+  "generated_at": "2026-06-28T00:42:23",
+  "mode": "fix",
+  "summary": {
+    "total": 46,
+    "error": 3,
+    "warn": 12,
+    "info": 31,
+    "auto_fixable": 0,
+    "surfaced": 46
+  },
+  "fixes_applied": [],
+  "bugs": [
+    {
+      "category": "sequencing",
+      "severity": "error",
+      "ref": "#014",
+      "message": "title/file desync: calendar 'Machines That Compose: What AI Music R' vs file 'Your AI Ethics Board Is a Press Releas'",
+      "autofixable": false
+    },
+    {
+      "category": "sequencing",
+      "severity": "error",
+      "ref": "#015",
+      "message": "title/file desync: calendar 'Hallucination Nation: Why AI Lies with' vs file 'Machines That Compose: What AI Music R'",
+      "autofixable": false
+    },
+    {
+      "category": "sequencing",
+      "severity": "error",
+      "ref": "#017",
+      "message": "title/file desync: calendar 'Power Hungry: The Carbon Ledger of the' vs file 'The Résumé Filter: How AI Turned Racia'",
+      "autofixable": false
+    },
+    {
+      "category": "authors",
+      "severity": "warn",
+      "ref": "#017",
+      "message": "author mismatch: calendar 'Joselito Sering' vs state 'dawn ginhaua'",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "1",
+      "message": "category 'Innovation' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "2",
+      "message": "category 'Production Blueprint' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "3",
+      "message": "category 'Automation' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "11",
+      "message": "category 'Industry Analysis' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D2",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D3",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D4",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D5",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D6",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D7",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D8",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D9",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D10",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D11",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D12",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "D13",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K1",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K2",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K3",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K4",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K5",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K6",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K7",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K8",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K9",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K10",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K11",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "tags",
+      "severity": "info",
+      "ref": "K12",
+      "message": "category 'Trending' maps to no Scout source tags (generic fallback)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-token-bill-011.html",
+      "message": "analytics not collected, posted 26d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-anthropomorphization-trap-010.html",
+      "message": "analytics not collected, posted 38d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-future-of-media-009.html",
+      "message": "analytics not collected, posted 42d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-ai-in-medicine-008.html",
+      "message": "analytics not collected, posted 46d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-ethics-and-ai-006.html",
+      "message": "analytics not collected, posted 60d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-ai-workforce-005.html",
+      "message": "analytics not collected, posted 68d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-boycott-or-bigotry-004.html",
+      "message": "analytics not collected, posted 96d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-algorithm-of-atrocity-012.html",
+      "message": "analytics not collected, posted 8d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-n8n-content-pipeline-003.html",
+      "message": "analytics not collected, posted 8d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-ethics-theater-014.html",
+      "message": "analytics not collected, posted 8d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "analytics",
+      "severity": "warn",
+      "ref": "aima-article-machines-that-compose-015.html",
+      "message": "analytics not collected, posted 7d ago (Echo overdue)",
+      "autofixable": false
+    },
+    {
+      "category": "readiness",
+      "severity": "info",
+      "ref": "#019",
+      "message": "not Maya-ready (no staged image — run maya batch)",
+      "autofixable": false
+    },
+    {
+      "category": "readiness",
+      "severity": "info",
+      "ref": "#020",
+      "message": "not Maya-ready (no staged image — run maya batch)",
+      "autofixable": false
+    },
+    {
+      "category": "readiness",
+      "severity": "info",
+      "ref": "#021",
+      "message": "not Maya-ready (no staged image — run maya batch)",
+      "autofixable": false
+    }
+  ],
+  "upcoming_readiness": [
+    {
+      "number": 19,
+      "title": "Who Owns the Output? The Intellectual Property Crisis in Gen",
+      "scout_ready": true,
+      "quill_ready": true,
+      "maya_ready": false
+    },
+    {
+      "number": 20,
+      "title": "The Persuasion Engine: AI, Social Media, and the Death of Sh",
+      "scout_ready": true,
+      "quill_ready": true,
+      "maya_ready": false
+    },
+    {
+      "number": 21,
+      "title": "From Prompt to Profit: Building an AI-Native Business in 202",
+      "scout_ready": true,
+      "quill_ready": true,
+      "maya_ready": false
+    }
+  ],
+  "note": "Safe fixes auto-resolve only posted_articles.json hygiene. Title/number/author desyncs are surfaced for Iris/Joe sign-off."
+}

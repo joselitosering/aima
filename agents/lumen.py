@@ -61,7 +61,8 @@ Return your analytics entry as JSON (no markdown fences).\
     # Ensure source field is set
     entry["source"] = "lumen"
 
-    # Append to optimization_report.json (idempotent even if CC agent already wrote it)
+    # CC agent may have appended to optimization_report.json directly.
+    # Check for a lumen entry from today before appending again.
     existing = read_json("optimization/optimization_report.json")
     existing_entries = existing if isinstance(existing, list) else []
     already_written = any(

@@ -4,12 +4,13 @@ Calls all CC subagents in sequence via call_cc_agent().
 Owns every handoff. Nothing moves without Marco.
 
 Stage sequence:
-  1  Priya  → article spec
+  1  Priya  → article spec (Trend Scout resolves TBD trending rows first)
   2  Scout  → research JSON
-  3  Quill  → copy-only HTML
+  3a Writer → free draft in the row author's voice (reuses cached draft)
+  3b Quill  → EDITS the draft to Vera's targets (writes from scratch if no draft)
   4  Maya   → merged article (images + skeleton)
   5  Format check (Marco validates before Vera)
-  6  Vera   → QC verdict (retry Quill or Maya on fail)
+  6  Vera   → QC ASSURANCE verdict (halt + report on fail — no retry loop)
   7  Porter → git commit + push + deploy guard + GS log
   8  Nova   → LinkedIn company post + personal reshare
   9  Log    → optimization_report.json + state update
@@ -17,6 +18,7 @@ Stage sequence:
 
 import json
 import logging
+import os
 import sys
 from datetime import date, datetime, timezone
 
@@ -24,10 +26,8 @@ from agents.base import (
     read_json, write_json, read_file, write_file,
     append_optimization_report, REPO_ROOT, log,
 )
-from agents import priya, scout, quill, maya, vera, porter, nova, cora
-
-MAX_QUILL_REVISIONS = 2
-MAX_MAYA_REVISIONS = 2
+from agents.config import load_pipeline_config
+from agents import base, priya, scout, writer, quill, maya, vera, porter, nova, cora
 
 
 # ─────────────────────────────────────────────────────────────
@@ -64,20 +64,18 @@ def _format_check(article_path: str, spec: dict) -> list[str]:
 # ─────────────────────────────────────────────────────────────
 
 def _update_state(spec: dict):
-    """Advance next_article_number and next_track in state file."""
+    """Advance next_article_number in the state file.
+
+    Track rotation is retired (2026-07-02, DECISION-LOG.md): the calendar is
+    one canonical sequence and each row's Author column names the writer —
+    there is no next_track to rotate."""
     state = read_json("articles/aima-coworker-state.json")
     state["next_article_number"] = spec["number"] + 1
     state["last_run"] = date.today().isoformat()
-
-    # Rotate track
-    current_track = state.get("next_track", "trending")
-    if current_track == "trending":
-        state["next_track"] = "joselito"
-    else:
-        state["next_track"] = "trending"
+    state.pop("next_track", None)   # legacy field — retired
 
     write_json("articles/aima-coworker-state.json", state)
-    log.info(f"[marco] state updated: next_article={state['next_article_number']} track={state['next_track']}")
+    log.info(f"[marco] state updated: next_article={state['next_article_number']}")
 
 
 def _log_run(spec: dict, porter_result: dict, nova_result: dict,
@@ -109,31 +107,80 @@ def run(dry_run: bool = False):
     flags: list[str] = []
     revisions = {"quill": 0, "maya": 0}
 
+    # ── Load stage toggles (dashboard → .env → defaults) ─────
+    cfg = load_pipeline_config()
+    # Expose QC_GATE to Vera's CC prompt, which references it.
+    os.environ["QC_GATE"] = cfg["QC_GATE"]
+
     log.info("=" * 55)
     log.info("[marco] AIMA pipeline starting")
     log.info(f"[marco] dry_run={dry_run}")
+    log.info(f"[marco] toggles: {cfg}")
     log.info("=" * 55)
 
-    # ── Stage 1: Priya → spec ────────────────────────────────
+    # ── Stage 1: Priya → spec (always runs — the plan stage) ──
     log.info("[marco] Stage 1: Priya — building article spec")
     spec = priya.run()
     stages.append("priya")
     log.info(f"[marco] Spec: #{spec['number']} '{spec['title']}' by {spec['author']}")
 
-    # ── Stage 2: Scout → research ────────────────────────────
-    log.info("[marco] Stage 2: Scout — researching article")
-    research = scout.run(spec)
-    stages.append("scout")
+    # ── Init token budget for this run ───────────────────────
+    cora.init_budget(spec["number"])
+    log.info(f"[marco] token_budget.json initialized for article #{spec['number']}")
 
-    # ── Stage 3: Quill → copy HTML ───────────────────────────
-    log.info("[marco] Stage 3: Quill — writing article copy")
-    article_path = quill.run(spec, research)
-    stages.append("quill")
+    # ── Stage 2: Scout → research (RESEARCH_ENABLED) ─────────
+    if cfg["RESEARCH_ENABLED"]:
+        log.info("[marco] Stage 2: Scout — researching article")
+        research = scout.run(spec)
+        stages.append("scout")
+    else:
+        log.info("[marco] Stage 2: Research disabled — reusing cached research")
+        research = scout.load_cached(spec)
+        flags.append("research_skipped" + ("" if research else "_no_artifact"))
 
-    # ── Stage 4: Maya → merged article ───────────────────────
-    log.info("[marco] Stage 4: Maya — generating images + merging")
-    article_path = maya.run(article_path, spec)
-    stages.append("maya")
+    # ── Stage 3: Writer → free draft, Quill → edit to targets (WRITE_ENABLED) ──
+    # The author writes in their own voice; Quill (the EDITOR) refines the
+    # draft to Vera's checklist. Skip-and-reuse: an existing draft (from the
+    # writer batch) is picked up, never re-written.
+    if cfg["WRITE_ENABLED"]:
+        quill_params = cora.prepare_quill_call(spec)
+        spec["target_words"] = quill_params["target_words"]   # enforce ceiling in spec
+
+        draft_path = writer.find_draft(spec)
+        if draft_path:
+            log.info(f"[marco] Stage 3a: Writer — reusing cached draft: {draft_path}")
+            flags.append("writer_draft_reused")
+        elif base.DRY_RUN:
+            log.info("[marco] Stage 3a: DRY RUN — skipping Writer draft")
+        else:
+            log.info(f"[marco] Stage 3a: Writer — {spec['author']} drafting in persona voice")
+            draft_path = writer.run(spec, research)
+            stages.append("writer")
+
+        log.info(f"[marco] Stage 3b: Quill — "
+                 f"{'editing draft to targets' if draft_path else 'writing copy (no draft)'} "
+                 f"(target={quill_params['target_words']} words, "
+                 f"ceiling={quill_params['ceiling']})")
+        article_path = quill.run(spec, research,
+                                 extra_instruction=quill_params["extra_instruction"],
+                                 draft_path=draft_path)
+        stages.append("quill")
+    else:
+        article_path = f"articles/{spec['filename']}"
+        log.info(f"[marco] Stage 3: Write disabled — reusing existing draft: {article_path}")
+        flags.append("write_skipped")
+        if not (REPO_ROOT / article_path).exists():
+            flags.append("write_skipped_no_artifact")
+            log.warning(f"[marco] No existing draft at {article_path} — downstream stages may fail")
+
+    # ── Stage 4: Maya → merged article (MAYA_ENABLED) ────────
+    if cfg["MAYA_ENABLED"]:
+        log.info("[marco] Stage 4: Maya — generating images + merging")
+        article_path = maya.run(article_path, spec)
+        stages.append("maya")
+    else:
+        log.info("[marco] Stage 4: Design disabled — reusing existing layout")
+        flags.append("maya_skipped")
 
     # ── Stage 5: Format check ────────────────────────────────
     log.info("[marco] Stage 5: Format pre-check")
@@ -142,78 +189,87 @@ def run(dry_run: bool = False):
         flags.extend([f"format_check: {i}" for i in format_issues])
         log.warning(f"[marco] Format issues: {format_issues}")
 
-    # ── Stage 6: Vera → QC (with retry) ─────────────────────
-    log.info("[marco] Stage 6: Vera — QC check")
+    # ── Stage 6: Vera → QC ASSURANCE (check-off only, no iteration) ──────────
+    # Vera verifies the article against the assignment targets that Scout/Quill/
+    # Maya were given up front. She is quality ASSURANCE, not quality control:
+    # if something fails she HALTS the article and reports to Marco for review —
+    # she never triggers a Quill/Maya re-run. Revision decisions belong to
+    # Iris/Joe (quality control), not the pipeline.
+    log.info("[marco] Stage 6: Vera — QC assurance check")
     vera_result = vera.run(article_path, spec)
+    verdict = vera_result.get("verdict")
+    notes = vera_result.get("notes", [])
 
-    while vera_result["verdict"] != vera.VERDICT_APPROVED:
-        verdict = vera_result["verdict"]
-        notes = vera_result["notes"]
-
-        if verdict == vera.VERDICT_COPY:
-            revisions["quill"] += 1
-            if revisions["quill"] > MAX_QUILL_REVISIONS:
-                msg = f"Quill exceeded max revisions ({MAX_QUILL_REVISIONS}). Halting pipeline."
-                log.error(f"[marco] {msg}")
-                flags.append(f"quill_max_revisions: {revisions['quill']}")
-                _write_failure_to_claude_md(spec, msg, notes)
-                sys.exit(1)
-
-            log.info(f"[marco] Vera: copy revision #{revisions['quill']} — re-running Quill")
-            flags.append(f"quill_revision_{revisions['quill']}")
-            revision_notes = "\n".join(notes)
-            article_path = quill.run(spec, research)
-            vera_result = vera.run(article_path, spec)
-
-        elif verdict == vera.VERDICT_VISUAL:
-            revisions["maya"] += 1
-            if revisions["maya"] > MAX_MAYA_REVISIONS:
-                msg = f"Maya exceeded max revisions ({MAX_MAYA_REVISIONS}). Halting pipeline."
-                log.error(f"[marco] {msg}")
-                flags.append(f"maya_max_revisions: {revisions['maya']}")
-                _write_failure_to_claude_md(spec, msg, notes)
-                sys.exit(1)
-
-            log.info(f"[marco] Vera: visual revision #{revisions['maya']} — re-running Maya")
-            flags.append(f"maya_revision_{revisions['maya']}")
-            article_path = maya.run(article_path, spec)
-            vera_result = vera.run(article_path, spec)
-
-        else:
-            # Unknown verdict — stop for human review
-            msg = f"Vera returned unknown verdict: {verdict}"
-            log.error(f"[marco] {msg}")
-            _write_failure_to_claude_md(spec, msg, notes)
-            sys.exit(1)
+    if verdict != vera.VERDICT_APPROVED:
+        msg = (f"Vera halted the article (verdict={verdict}). Reported to Marco for "
+               f"Iris/human review — no auto-revision (publish/marketing skipped).")
+        log.warning(f"[marco] {msg}")
+        flags.append(f"vera_halt:{verdict}")
+        _write_failure_to_claude_md(spec, msg, notes)
+        return {
+            "spec": spec, "porter": {}, "nova": {},
+            "stages": stages, "flags": flags, "revisions": revisions,
+            "vera_verdict": verdict, "vera_notes": notes,
+            "halted_for_review": True,
+        }
 
     stages.append("vera")
     log.info("[marco] Vera: approved")
 
-    # ── Stage 7: Porter → deploy ─────────────────────────────
-    log.info("[marco] Stage 7: Porter — commit + push + deploy guard")
-    porter_result = porter.run(spec, dry_run=dry_run)
-    stages.append("porter")
-
-    # ── Stage 8: Nova → LinkedIn ─────────────────────────────
-    log.info("[marco] Stage 8: Nova — LinkedIn post + reshare")
-    nova_result = nova.run(spec, porter_result["live_url"], dry_run=dry_run)
-    stages.append("nova")
-
-    # ── Cora: governance check ───────────────────────────────
-    log.info("[marco] Cora — governance + hallucination check")
-    try:
-        run_summary = {
-            "stages": stages,
-            "flags": flags,
-            "revisions": revisions,
-            "porter": porter_result,
-            "nova": nova_result,
+    # ── QC gate: human mode holds the run before publishing ──
+    if cfg["QC_GATE"] == "human":
+        log.info("[marco] QC_GATE=human — approved and HELD for human review. "
+                 "Publish/marketing skipped; ship it with the Publish batch when ready.")
+        flags.append("held_for_human_review")
+        return {
+            "spec": spec, "porter": {}, "nova": {},
+            "stages": stages, "flags": flags, "revisions": revisions,
+            "held_for_human_review": True,
         }
-        cora.run(spec, article_path, run_summary)
-        stages.append("cora")
-    except Exception as exc:
-        log.warning(f"[marco] Cora check failed (non-fatal): {exc}")
-        flags.append(f"cora_error: {exc}")
+
+    porter_result: dict = {}
+    nova_result: dict = {}
+
+    # ── Stage 7: Porter → deploy (PUBLISH_ENABLED) ───────────
+    if cfg["PUBLISH_ENABLED"]:
+        log.info("[marco] Stage 7: Porter — commit + push + deploy guard")
+        porter_result = porter.run(spec, dry_run=dry_run, gs_enabled=cfg["GS_ENABLED"])
+        stages.append("porter")
+    else:
+        log.info("[marco] Stage 7: Publish disabled — skipping Porter")
+        flags.append("publish_skipped")
+
+    # ── Stage 8: Nova → LinkedIn (MARKETING_ENABLED) ─────────
+    if cfg["MARKETING_ENABLED"] and porter_result.get("live_url"):
+        log.info("[marco] Stage 8: Nova — LinkedIn post + reshare")
+        nova_result = nova.run(spec, porter_result["live_url"], dry_run=dry_run)
+        stages.append("nova")
+    elif not cfg["MARKETING_ENABLED"]:
+        log.info("[marco] Stage 8: Marketing disabled — skipping Nova")
+        flags.append("marketing_skipped")
+    else:
+        log.info("[marco] Stage 8: No live URL (publish skipped) — skipping Nova")
+        flags.append("marketing_skipped_no_url")
+
+    # ── Cora: governance check (CORA_ENABLED) ────────────────
+    if cfg["CORA_ENABLED"]:
+        log.info("[marco] Cora — governance + hallucination check")
+        try:
+            run_summary = {
+                "stages": stages,
+                "flags": flags,
+                "revisions": revisions,
+                "porter": porter_result,
+                "nova": nova_result,
+            }
+            cora.run(spec, article_path, run_summary)
+            stages.append("cora")
+        except Exception as exc:
+            log.warning(f"[marco] Cora check failed (non-fatal): {exc}")
+            flags.append(f"cora_error: {exc}")
+    else:
+        log.info("[marco] Cora disabled — skipping governance check")
+        flags.append("cora_skipped")
 
     # ── Stage 9: Log run ─────────────────────────────────────
     log.info("[marco] Stage 9: logging run")

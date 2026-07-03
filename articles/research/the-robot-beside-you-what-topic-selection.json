@@ -1,0 +1,67 @@
+{
+  "row": 23,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-07-02",
+  "chosen": {
+    "title": "The Robot Beside You: What Humanoid Machines Actually Do on the Factory Floor in 2026",
+    "category": "AI Technology",
+    "rationale": "Figure 02 at BMW's Spartanburg plant, Digit inside Amazon fulfillment centers, Atlas at Hyundai's Georgia facility, and Apollo on Mercedes-Benz assembly lines mark 2026 as the year humanoid robots crossed from demo to deployment \u2014 and the real story is the gap between Hollywood's vision and the precise, narrow material-handling jobs these machines actually perform. Kenji's 'explain the mechanism' mandate fits perfectly: why bipedal form matters in human-designed spaces, what \u00b12mm repeatability means versus \u00b10.02mm for fixed arms, how AI perception/navigation enables the flexibility trade-off, and what it looks like for a human worker to take a shift alongside a robot colleague.",
+    "sources": [
+      {
+        "name": "Humanoid Robots in Industrial Manufacturing: What They Can (and Can't) Do in 2026",
+        "url": "https://www.evsint.com/humanoid-robots-industrial-manufacturing-2026/"
+      },
+      {
+        "name": "CES 2026: AI and Robotics Shift from Hype to Deployment \u2014 Global X ETFs",
+        "url": "https://www.globalxetfs.com/articles/ces-2026-ai-and-robotics-shift-from-hype-to-deployment"
+      },
+      {
+        "name": "Accenture, Vodafone Procure & Connect and SAP Pilot Humanoid Robotics in Warehouse Operations",
+        "url": "https://newsroom.accenture.com/news/2026/accenture-vodafone-procure-connect-and-sap-pilot-humanoid-robotics-in-warehouse-operations"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The AI Lab Partner: How Scientific AI Is Compressing Decades of Discovery Into Months",
+      "category": "AI Science",
+      "rationale": "Anthropic launched Claude Science on June 30 as its newest flagship product \u2014 two days ago \u2014 positioning AI as an autonomous research collaborator that can identify drug candidates, run code on compute clusters, and perform at 'second-year grad student' level in physics and computational biology. MIT and Recursion simultaneously released Boltz-2, delivering 1,000\u00d7 faster binding affinity predictions than conventional methods. This is a decisive inflection: AI moving from paper-summarizer to hypothesis-generator running real experiments. Kenji's deep-dive lens \u2014 explaining how these systems actually reason about molecular structures, generate and test hypotheses, and feed back into the scientific method \u2014 is exactly the story no one is telling for a general audience.",
+      "sources": [
+        {
+          "name": "Claude Science Is Anthropic's Newest Flagship Product \u2014 MIT Technology Review",
+          "url": "https://www.technologyreview.com/2026/06/30/1139987/claude-science-is-anthropics-newest-flagship-product/"
+        },
+        {
+          "name": "MIT and Recursion Release Boltz-2, an AI Breakthrough in Drug Discovery Modeling \u2014 BioPharm International",
+          "url": "https://www.biopharminternational.com/view/mit-and-recursion-release-boltz-2-an-ai-breakthrough-in-drug-discovery-modeling"
+        },
+        {
+          "name": "Here's How AI Is Reshaping Drug Discovery \u2014 World Economic Forum",
+          "url": "https://www.weforum.org/stories/2026/01/how-ai-is-reshaping-drug-discovery/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Untethered Model: How On-Device AI Is Bringing Intelligence to the Places the Cloud Never Reached",
+      "category": "AI Technology",
+      "rationale": "By mid-2026, 80% of AI inference is happening locally on devices \u2014 not in data centers \u2014 as Qualcomm, Apple, and MediaTek NPUs now run production LLMs at sub-20ms latency on $400 phones. The shift is driven by quantization, model compression, and hardware co-design, but the human story is even bigger: on-device AI means private conversations that never leave your phone, real-time translation in rural clinics without internet, and AI tools that work in the 3 billion people-sized gap the cloud infrastructure never served. A perfect Kenji mechanism piece: explain how a 7B-parameter model fits on a phone chip, what precision trade-offs make it possible, and what becomes real for ordinary people when the cloud dependency disappears.",
+      "sources": [
+        {
+          "name": "On-Device LLMs in 2026: What Changed, What Matters, What's Next \u2014 Edge AI and Vision Alliance",
+          "url": "https://www.edge-ai-vision.com/2026/01/on-device-llms-in-2026-what-changed-what-matters-whats-next/"
+        },
+        {
+          "name": "Edge AI Dominance in 2026: When 80% of Inference Happens Locally \u2014 Medium / Vygha",
+          "url": "https://medium.com/@vygha812/edge-ai-dominance-in-2026-when-80-of-inference-happens-locally-99ebf486ca0a"
+        },
+        {
+          "name": "On-Device AI Inference in 2026: Sub-20ms on Android, Real Benchmarks \u2014 AlephZero Labs",
+          "url": "https://www.alephzerolabs.com/blog/on-device-ai-2026-sub-20ms/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

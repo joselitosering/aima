@@ -1,0 +1,521 @@
+[
+  {
+    "source": "cora",
+    "date": "2026-06-25",
+    "article_number": 18,
+    "article_slug": "diagnosis-by-algorithm",
+    "run_note": "Remediated governance run \u2014 prior Cora entry failed with parse_error: JSON not found in CC output. This entry supersedes that record.",
+    "total_tokens_used": 0,
+    "by_agent": {
+      "IR": 0,
+      "PR": 0,
+      "SC": 0,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "budget_alerts": [
+      {
+        "severity": "CRITICAL",
+        "agent": "ALL",
+        "type": "DATA_INTEGRITY",
+        "detail": "token_budget.json shows used=0 for all agents despite a fully completed pipeline run (stages: priya, scout, quill, maya, vera, porter, nova). Token consumption was not recorded during Article #018. Budget governance is operating blind. Actual token expenditure for this run is unknown and unrecoverable. Recommend: integrate token-usage reporting into each agent's completion callback before Cora receives the budget file next run."
+      },
+      {
+        "severity": "WARNING",
+        "agent": "QL",
+        "type": "REVISION_OVERRUN",
+        "detail": "Marco's direct run summary to Cora reports quill_revision_1 and quill_revision_2 \u2014 two full revision cycles. Pipeline standard is one. Without token tracking active, the budget impact is unquantifiable but directionally significant: QL budget is 22,000. Two revision cycles at average Quill token burn could easily exceed 17,600 (80% threshold). If revision cycles are routinely at 2+, QL budget needs upward review or Quill's prompt scope needs tightening.",
+        "budget": 22000,
+        "eighty_pct_threshold": 17600,
+        "revision_cycles_reported_by_marco_to_cora": 2,
+        "revision_cycles_in_optimization_report_marco_entry": 0,
+        "discrepancy": true
+      }
+    ],
+    "hallucination_flags": [
+      {
+        "severity": "HIGH",
+        "stat": "14% increase in malpractice claims involving AI between 2022 and 2024",
+        "source_claimed": "CM&F Group (malpractice insurer blog) / Davis & Davis Law AI Liability blog",
+        "confidence": "low-medium",
+        "flag": "INDUSTRY-SOURCED \u2014 CM&F Group is a malpractice insurer with a direct commercial interest in this narrative. The 14% figure does not appear in peer-reviewed literature or judicial records. Research JSON explicitly marks this as unverified. If used in article body, it must be attributed with caveat ('according to malpractice insurer CM&F Group') or rephrased directionally as 'rising malpractice exposure' without the specific percentage. Presenting this as an established fact is a hallucination-class error."
+      },
+      {
+        "severity": "HIGH",
+        "stat": "50% documentation time reduction and 70% burnout reduction with Nuance DAX Copilot",
+        "source_claimed": "Nuance / Microsoft marketing materials",
+        "confidence": "low",
+        "flag": "MARKETING CLAIM directly contradicted by 2025 NEJM AI RCT (238 physicians, 14 specialties): actual documentation time reduction was 1.7%, which was not statistically significant. Burnout improvement (+2.8 Mini-Z scale points) does have RCT support. If the article cites the 50% or 70% figures without the RCT counterweight, this constitutes a hallucination. Use only: '1.7% documentation time reduction (NEJM AI RCT, 2025, not statistically significant)' and '+2.8 Mini-Z burnout improvement (RCT-supported)'."
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "AMIE rated more empathetic and trustworthy than PCPs by patient evaluators",
+        "source_claimed": "Nature Medicine \u2014 Google AMIE study (May 15, 2026)",
+        "confidence": "medium",
+        "flag": "SIMULATION ARTIFACT RISK \u2014 empathy and trustworthiness ratings were collected from patient actors operating in a scripted remote chat interface, not real patients in real clinical encounters. The paper is peer-reviewed and the finding is real within its setting, but ecological validity is unproven. Research JSON mandates that every AMIE citation must be accompanied by the simulation caveat. If the article presents AMIE empathy scores as equivalent to real-world clinical empathy, flag for immediate revision."
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "STAT News: 'Did AI Really Beat Doctors at Diagnosis?' \u2014 content cited",
+        "source_claimed": "STAT News Health Tech Newsletter \u2014 Mario Aguilar (May 5, 2026) \u2014 PAYWALLED",
+        "confidence": "low \u2014 existence confirmed; article content unverified",
+        "flag": "PAYWALLED SOURCE \u2014 article was confirmed to exist but content was not accessible during research. Any direct quotation or specific claim attributed to this article's content cannot be verified. Article may be referenced by title, author, and date only. No stat or argument from this article may be presented as verified."
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "STAT News: 'What does malpractice insurance have to do with AI?' \u2014 content cited",
+        "source_claimed": "STAT News \u2014 Brittany Trang (March 4, 2026) \u2014 PAYWALLED",
+        "confidence": "low \u2014 existence confirmed; article content unverified",
+        "flag": "PAYWALLED SOURCE \u2014 same constraint as above. Reference by title, author, and date only. No specific claim from this article's body may be treated as verified."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "severity": "ERROR",
+        "agent": "PT",
+        "type": "SHEETS_LOG_FAILURE",
+        "detail": "Porter returned gs_row: -1 in both Marco's run summary and in the optimization_report.json Marco entry. Google Sheets logging did not execute or failed during Article #018 deployment. Article #018 is absent from the dashboard tracking sheet. Action required: manual Sheets entry for Article #018, or re-run Porter's Sheets logging step in isolation.",
+        "gs_row": -1
+      },
+      {
+        "severity": "WARNING",
+        "agent": "NV",
+        "type": "DRY_RUN_NOT_POSTED",
+        "detail": "Nova returned company_urn: 'urn:li:share:DRY_RUN' and reshare_urn: 'urn:li:share:DRY_RUN'. LinkedIn posting \u2014 both company page and personal reshare \u2014 was not executed live. Article #018 has received no LinkedIn promotion. Action required: run 'python linkedin_pipeline/pipeline.py' manually after confirming article is live. Note: article:publish-date in HTML is 2026-06-28 \u2014 confirm publication is live before posting.",
+        "company_urn": "urn:li:share:DRY_RUN",
+        "reshare_urn": "urn:li:share:DRY_RUN"
+      },
+      {
+        "severity": "INFO",
+        "agent": "PT",
+        "type": "PUBLISH_DATE_DISCREPANCY",
+        "detail": "Article HTML sets article:publish-date to 2026-06-28. Porter's deploy_timestamp is 2026-06-26T05:06:49Z. Today is 2026-06-25. The article is live at its canonical URL but carries a publish date 3 days in the future. If this is intentional scheduled publication, no action needed \u2014 but Nova (LinkedIn) must not post until 2026-06-28. If the date is unintentional, it should be corrected in the HTML before Porter finalizes.",
+        "publish_date_in_html": "2026-06-28",
+        "deploy_timestamp": "2026-06-26T05:06:49Z",
+        "governance_date": "2026-06-25"
+      },
+      {
+        "severity": "WARNING",
+        "agent": "MR",
+        "type": "REVISION_COUNT_DISCREPANCY",
+        "detail": "Data mismatch between two Marco sources for Article #018. Marco's run summary delivered to Cora states: revisions.quill=2, flags=['quill_revision_1','quill_revision_2']. Marco's own entry in optimization_report.json states: revisions.quill=0, flags=[]. Possible cause: optimization_report.json Marco entry was written before revision cycles were logged, or Marco wrote the report at a different pipeline checkpoint. Recommend: Marco write final optimization_report.json entry only after all stages including revisions are completed."
+      }
+    ],
+    "scope_violations": [],
+    "scope_check_notes": [
+      "No scope violations detected from available run logs. Quill performed copy editing only; Maya performed image generation only (0 revisions). No cross-role contamination observed.",
+      "Article HTML provided to Cora was truncated at 8,000 characters (header and meta tags only). Full article body was not available for inline stat-source verification. Hallucination checks above are based on research JSON unverified_claims section and known Scout guardrails \u2014 not direct article body audit. A full body audit would require reading the complete HTML file."
+    ],
+    "guardrails_applied": [
+      {
+        "agent": "SC",
+        "rule": "Research JSON unverified_claims section explicitly marks 5 high-risk claims with confidence levels, source attribution, and usage guidance. These serve as enforced guardrails against presenting industry data, marketing claims, paywalled articles, or simulation artifacts as verified facts.",
+        "status": "ENFORCED \u2014 unverified_claims section present and detailed in research JSON"
+      },
+      {
+        "agent": "QL",
+        "rule": "Research JSON tone_and_angle_notes mandates: (1) AMIE simulation caveat required on every AMIE citation; (2) 14% malpractice stat must be used directionally only or omitted; (3) no marketing statistics without RCT counterweight; (4) contradictions between AMIE and DXplain findings must be surfaced, not smoothed. Quill revision cycles (2 total) suggest at least one of these guardrails triggered a re-write.",
+        "status": "ENFORCED AT PROMPT LEVEL \u2014 compliance requires full article body review not available to Cora in this run"
+      },
+      {
+        "agent": "CO",
+        "rule": "Token usage must be tracked per agent per run via token_budget.json and logged to token_log.csv. Alert threshold: 80% of per-agent budget.",
+        "status": "FAILED \u2014 token_budget.json shows used=0 for all agents. Guardrail cannot be enforced retroactively. No token_log.csv entry can be written for this run. Root cause: token tracking integration not active in pipeline. Priority: HIGH."
+      }
+    ],
+    "action_items": [
+      {
+        "priority": "HIGH",
+        "action": "Activate token usage tracking in pipeline before next run. Each agent must write actual token consumption to token_budget.json upon completion.",
+        "owner": "MR"
+      },
+      {
+        "priority": "HIGH",
+        "action": "Manual Google Sheets entry required for Article #018. Porter gs_row=-1 means dashboard is missing this article.",
+        "owner": "PT or manual"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Run 'python linkedin_pipeline/pipeline.py' to post Article #018 to LinkedIn \u2014 but only after confirming article:publish-date (2026-06-28) is correct and the article is fully live.",
+        "owner": "NV or manual"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Investigate root cause of Quill's 2 revision cycles. Log revision trigger reason per cycle going forward. If revision trigger was a hallucination flag (unverified stat, AMIE caveat omission, marketing claim), that is a Quill prompt guardrail candidate.",
+        "owner": "MR + CO"
+      },
+      {
+        "priority": "LOW",
+        "action": "Confirm article:publish-date 2026-06-28 is intentional. If it is scheduled, block Nova until that date. If unintentional, correct in HTML and re-deploy.",
+        "owner": "PT"
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-06-25",
+    "article_number": 18,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-diagnosis-by-algorithm-018.html",
+    "gs_row": -1,
+    "company_urn": "urn:li:share:DRY_RUN",
+    "reshare_urn": "urn:li:share:DRY_RUN",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-06-25",
+    "article_number": 18,
+    "article_slug": "diagnosis-by-algorithm",
+    "run_note": "Remediated governance run \u2014 prior Cora entry in optimization_report.json failed with parse_error. This entry supersedes that record.",
+    "total_tokens_used": 0,
+    "by_agent": {
+      "IR": 0,
+      "PR": 0,
+      "SC": 0,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "budget_alerts": [
+      {
+        "severity": "CRITICAL",
+        "agent": "ALL",
+        "type": "DATA_INTEGRITY",
+        "detail": "token_budget.json shows used=0 for all agents despite a fully completed pipeline run (priya \u2192 scout \u2192 quill \u2192 maya \u2192 vera \u2192 porter \u2192 nova). Token consumption was not recorded for Article #018. Budget governance is operating blind this run. Actual expenditure is unknown and unrecoverable. Root cause: token-tracking integration not active in pipeline. Priority fix before Article #019."
+      },
+      {
+        "severity": "WARNING",
+        "agent": "QL",
+        "type": "REVISION_OVERRUN",
+        "detail": "Marco's direct run summary to Cora reports quill_revision_1 and quill_revision_2 \u2014 two full revision cycles. Pipeline standard is one. Without token tracking, budget impact is unquantifiable but directionally significant: QL budget is 22,000 tokens; 80% threshold is 17,600. Two revision cycles at Quill's typical burn rate likely breached that threshold. If revision count is routinely 2+, QL budget needs upward review or Quill's prompt scope needs tightening.",
+        "budget": 22000,
+        "eighty_pct_threshold": 17600,
+        "revision_cycles_reported_by_marco_to_cora": 2,
+        "revision_cycles_in_optimization_report_marco_entry": 0,
+        "discrepancy_flag": true
+      }
+    ],
+    "hallucination_flags": [
+      {
+        "severity": "HIGH",
+        "stat": "14% increase in malpractice claims involving AI between 2022 and 2024",
+        "source_claimed": "CM&F Group malpractice insurer blog / Davis & Davis Law blog",
+        "confidence": "low-medium",
+        "flag": "INDUSTRY-SOURCED \u2014 CM&F Group is a malpractice insurer with a commercial interest in this narrative. Stat does not appear in peer-reviewed literature or judicial records. Research JSON marks explicitly as unverified. If used in article, must be attributed with caveat or rephrased directionally ('rising malpractice exposure') without the specific percentage. Presenting as established fact is a hallucination-class error."
+      },
+      {
+        "severity": "HIGH",
+        "stat": "50% documentation time reduction / 70% burnout reduction with Nuance DAX Copilot",
+        "source_claimed": "Nuance/Microsoft marketing materials",
+        "confidence": "low",
+        "flag": "MARKETING CLAIM contradicted by 2025 NEJM AI RCT (238 physicians, 14 specialties): actual documentation time reduction was 1.7%, not statistically significant. Burnout improvement (+2.8 Mini-Z points) has RCT support. If article cites 50% or 70% figures without the RCT counterweight, this is a hallucination. Use only the RCT-sourced figures."
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "AMIE rated more empathetic and trustworthy than PCPs",
+        "source_claimed": "Nature Medicine \u2014 Google AMIE (May 15, 2026)",
+        "confidence": "medium",
+        "flag": "SIMULATION ARTIFACT RISK \u2014 empathy ratings collected from patient actors in a scripted remote chat interface, not real patients in clinical encounters. Peer-reviewed but ecological validity unproven. Research JSON mandates simulation caveat on every AMIE citation. If the article presents AMIE empathy scores as real-world clinical equivalents, flag for revision."
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "STAT News 'Did AI Really Beat Doctors at Diagnosis?' \u2014 content cited (May 5, 2026)",
+        "source_claimed": "STAT News \u2014 Mario Aguilar \u2014 PAYWALLED",
+        "confidence": "low \u2014 existence confirmed; content unverified",
+        "flag": "PAYWALLED SOURCE \u2014 content inaccessible during research. Any direct quotation or specific claim from this article's body cannot be verified. May be referenced by title, author, and date only."
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "STAT News 'What does malpractice insurance have to do with AI?' \u2014 content cited (March 4, 2026)",
+        "source_claimed": "STAT News \u2014 Brittany Trang \u2014 PAYWALLED",
+        "confidence": "low \u2014 existence confirmed; content unverified",
+        "flag": "PAYWALLED SOURCE \u2014 same constraint. Title and date reference only. No specific claim from this article may be treated as verified."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "severity": "ERROR",
+        "agent": "PT",
+        "type": "SHEETS_LOG_FAILURE",
+        "detail": "Porter returned gs_row: -1. Google Sheets logging did not execute or failed during Article #018 deployment. Article #018 is absent from dashboard tracking. Action required: manual Sheets entry, or re-run Porter Sheets step in isolation.",
+        "gs_row": -1
+      },
+      {
+        "severity": "WARNING",
+        "agent": "NV",
+        "type": "DRY_RUN_NOT_POSTED",
+        "detail": "Nova returned company_urn: 'urn:li:share:DRY_RUN' and reshare_urn: 'urn:li:share:DRY_RUN'. LinkedIn posting \u2014 company page and personal reshare \u2014 was not executed live. Article #018 has received no LinkedIn promotion. Action: run 'python linkedin_pipeline/pipeline.py' manually after confirming article is live and publish date (2026-06-28) is correct.",
+        "company_urn": "urn:li:share:DRY_RUN",
+        "reshare_urn": "urn:li:share:DRY_RUN"
+      },
+      {
+        "severity": "INFO",
+        "agent": "PT",
+        "type": "PUBLISH_DATE_DISCREPANCY",
+        "detail": "Article HTML sets article:publish-date to 2026-06-28. Porter's deploy_timestamp is 2026-06-26T05:06:49Z. Governance date is 2026-06-25. Article appears live at its canonical URL but carries a publish date 3 days forward. If intentional scheduling, Nova must be blocked until 2026-06-28. If unintentional, correct in HTML before LinkedIn promotion.",
+        "publish_date_in_html": "2026-06-28",
+        "deploy_timestamp": "2026-06-26T05:06:49Z"
+      },
+      {
+        "severity": "WARNING",
+        "agent": "MR",
+        "type": "REVISION_COUNT_DISCREPANCY",
+        "detail": "Data mismatch: Marco's run summary to Cora states revisions.quill=2 with flags ['quill_revision_1','quill_revision_2']. Marco's optimization_report.json entry states revisions.quill=0 with flags=[]. Likely cause: Marco's optimization_report.json entry was written before revision cycles completed. Recommend: Marco write final optimization_report.json entry only after all revision cycles and stage completions are logged."
+      }
+    ],
+    "scope_violations": [],
+    "scope_check_notes": [
+      "No scope violations detected from available run logs. Quill performed copy editing only. Maya performed image generation only (0 revisions). No cross-role contamination observed.",
+      "Article HTML provided to Cora was truncated at 8,000 characters (header and meta tags only). Full article body was not available for inline stat-source verification. Hallucination checks above are based on research JSON unverified_claims section and Scout guardrails \u2014 not a direct article body audit."
+    ],
+    "guardrails_applied": [
+      {
+        "agent": "SC",
+        "rule": "Research JSON unverified_claims section explicitly marks 5 high-risk claims with confidence levels and usage constraints. These serve as enforced guardrails against presenting industry data, marketing claims, paywalled content, or simulation artifacts as verified facts.",
+        "status": "ENFORCED \u2014 unverified_claims section present and detailed in research JSON"
+      },
+      {
+        "agent": "QL",
+        "rule": "Research JSON tone_and_angle_notes mandates: AMIE simulation caveat on every citation; 14% malpractice stat directional-only; no marketing stats without RCT counterweight; contradictions between AMIE and DXplain must be surfaced. Two Quill revision cycles suggest at least one guardrail triggered a re-write.",
+        "status": "ENFORCED AT PROMPT LEVEL \u2014 full compliance requires article body review not available to Cora in this run"
+      },
+      {
+        "agent": "CO",
+        "rule": "Token usage must be tracked per agent per run via token_budget.json. Alert threshold: 80% of per-agent budget. Log to token_log.csv.",
+        "status": "FAILED \u2014 token_budget.json shows used=0 for all agents. No token_log.csv entry can be written for Article #018. Root cause: token tracking not integrated in pipeline. This is a CRITICAL gap; Cora cannot perform budget governance without usage data."
+      }
+    ],
+    "action_items": [
+      {
+        "priority": "HIGH",
+        "action": "Activate token usage tracking in pipeline before Article #019. Each agent must write actual token consumption to token_budget.json upon stage completion.",
+        "owner": "MR"
+      },
+      {
+        "priority": "HIGH",
+        "action": "Manual Google Sheets entry required for Article #018. Porter gs_row=-1 means dashboard is missing this article's record.",
+        "owner": "PT or manual"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Run 'python linkedin_pipeline/pipeline.py' to post Article #018 to LinkedIn \u2014 but only after confirming publish date (2026-06-28) is correct and the article is fully live.",
+        "owner": "NV or manual"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Investigate root cause of Quill's 2 revision cycles. Log revision trigger reason per cycle. If triggered by a hallucination flag (unverified stat, AMIE caveat omission, marketing claim), add it as a named Quill prompt guardrail.",
+        "owner": "MR + CO"
+      },
+      {
+        "priority": "LOW",
+        "action": "Confirm article:publish-date 2026-06-28 is intentional. If scheduled, block Nova until that date. If unintentional, correct HTML and re-deploy.",
+        "owner": "PT"
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-06-25",
+    "article_number": 18,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-diagnosis-by-algorithm-018.html",
+    "gs_row": -1,
+    "company_urn": "urn:li:share:DRY_RUN",
+    "reshare_urn": "urn:li:share:DRY_RUN",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "quill_revision_1",
+      "quill_revision_2"
+    ],
+    "revisions": {
+      "quill": 2,
+      "maya": 0
+    }
+  },
+  {
+    "source": "priya",
+    "type": "calendar_audit",
+    "date": "2026-07-02",
+    "generated_at": "2026-07-02T14:58:36",
+    "summary": {
+      "errors": 3,
+      "warnings": 12,
+      "needs_decision": 15
+    },
+    "fixes_applied": [],
+    "needs_decision": [
+      {
+        "severity": "error",
+        "category": "sequencing",
+        "ref": "#014",
+        "message": "title/file desync: calendar 'Machines That Compose: What AI Music R' vs file 'Your AI Ethics Board Is a Press Releas'"
+      },
+      {
+        "severity": "error",
+        "category": "sequencing",
+        "ref": "#015",
+        "message": "title/file desync: calendar 'Hallucination Nation: Why AI Lies with' vs file 'Machines That Compose: What AI Music R'"
+      },
+      {
+        "severity": "error",
+        "category": "sequencing",
+        "ref": "#017",
+        "message": "title/file desync: calendar 'Power Hungry: The Carbon Ledger of the' vs file 'The R\u00e9sum\u00e9 Filter: How AI Turned Racia'"
+      },
+      {
+        "severity": "warn",
+        "category": "dates",
+        "ref": "#019",
+        "message": "scheduled 2026-06-30 is past but not yet written"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-token-bill-011.html",
+        "message": "analytics not collected, posted 31d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-anthropomorphization-trap-010.html",
+        "message": "analytics not collected, posted 43d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-future-of-media-009.html",
+        "message": "analytics not collected, posted 47d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-ai-in-medicine-008.html",
+        "message": "analytics not collected, posted 51d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-ethics-and-ai-006.html",
+        "message": "analytics not collected, posted 65d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-ai-workforce-005.html",
+        "message": "analytics not collected, posted 73d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-boycott-or-bigotry-004.html",
+        "message": "analytics not collected, posted 101d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-algorithm-of-atrocity-012.html",
+        "message": "analytics not collected, posted 12d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-n8n-content-pipeline-003.html",
+        "message": "analytics not collected, posted 12d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-ethics-theater-014.html",
+        "message": "analytics not collected, posted 12d ago (Echo overdue)"
+      },
+      {
+        "severity": "warn",
+        "category": "analytics",
+        "ref": "aima-article-machines-that-compose-015.html",
+        "message": "analytics not collected, posted 11d ago (Echo overdue)"
+      }
+    ],
+    "report": "optimization/priya_audit.json"
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-02",
+    "slot": "D2",
+    "persona": "dawn",
+    "title": "The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law",
+    "category": "AI Ethics",
+    "rationale": "In April 2026, the Trump DOJ sided with Elon Musk's xAI to challenge Colorado's SB24-205 \u2014 a first-of-its-kind state law requiring AI systems used in hiring, mortgage lending, and student admissions to protect consumers from algorithmic discrimination based on race, gender, age, and income. Enforcement was suspended on April 27, right before its June 30 implementation deadline. The DOJ's argument: requiring companies to prevent discrimination violates the Fourteenth Amendment's equal protection clause; xAI's: labeling their outputs 'discriminatory' violates their First Amendment right to 'pursue truth.' This is corporate capture at its most naked \u2014 the nation's chief law enforcement agency in court as Big Tech's co-counsel \u2014 and the question Dawn demands answered is the one no regulator will touch: if the DOJ is now xAI's lawyer, who's left to protect the people the algorithm harms?",
+    "sources": [
+      {
+        "name": "DOJ Press Release: Justice Department Intervenes in xAI Lawsuit Challenging Colorado's 'Algorithmic Discrimination' Law",
+        "url": "https://www.justice.gov/opa/pr/justice-department-intervenes-xai-lawsuit-challenging-colorados-algorithmic-discrimination"
+      },
+      {
+        "name": "Colorado Sun: Justice Department joins Elon Musk's xAI in effort to block Colorado AI antidiscrimination law",
+        "url": "https://coloradosun.com/2026/04/24/doj-joins-lawsuit-colorado-ai-law-federal-court/"
+      },
+      {
+        "name": "Norton Rose Fulbright: xAI sues, DOJ intervenes, enforcement of Colorado's AI Act suspended",
+        "url": "https://www.nortonrosefulbright.com/en/knowledge/publications/de3ad9de/xai-sues-doj-intervenes-enforcement-of-colorados-ai-act-suspended"
+      }
+    ]
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-02",
+    "slot": "K1",
+    "persona": "kenji",
+    "title": "The Robot Beside You: What Humanoid Machines Actually Do on the Factory Floor in 2026",
+    "category": "AI Technology",
+    "rationale": "Figure 02 at BMW's Spartanburg plant, Digit inside Amazon fulfillment centers, Atlas at Hyundai's Georgia facility, and Apollo on Mercedes-Benz assembly lines mark 2026 as the year humanoid robots crossed from demo to deployment \u2014 and the real story is the gap between Hollywood's vision and the precise, narrow material-handling jobs these machines actually perform. Kenji's 'explain the mechanism' mandate fits perfectly: why bipedal form matters in human-designed spaces, what \u00b12mm repeatability means versus \u00b10.02mm for fixed arms, how AI perception/navigation enables the flexibility trade-off, and what it looks like for a human worker to take a shift alongside a robot colleague.",
+    "sources": [
+      {
+        "name": "Humanoid Robots in Industrial Manufacturing: What They Can (and Can't) Do in 2026",
+        "url": "https://www.evsint.com/humanoid-robots-industrial-manufacturing-2026/"
+      },
+      {
+        "name": "CES 2026: AI and Robotics Shift from Hype to Deployment \u2014 Global X ETFs",
+        "url": "https://www.globalxetfs.com/articles/ces-2026-ai-and-robotics-shift-from-hype-to-deployment"
+      },
+      {
+        "name": "Accenture, Vodafone Procure & Connect and SAP Pilot Humanoid Robotics in Warehouse Operations",
+        "url": "https://newsroom.accenture.com/news/2026/accenture-vodafone-procure-connect-and-sap-pilot-humanoid-robotics-in-warehouse-operations"
+      }
+    ]
+  }
+]

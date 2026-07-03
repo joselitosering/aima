@@ -18,7 +18,9 @@ def main():
     print("=== AIMA Pipeline ===")
 
     try:
-        from agents import marco
+        from agents import base, marco
+        if args.dry_run:
+            base.DRY_RUN = True   # all CC subagent calls return stubs
         marco.run(dry_run=args.dry_run)
     except ImportError:
         print("[run.py] Marco (Phase 4) not yet built — pipeline not wired.")

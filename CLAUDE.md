@@ -1,5 +1,69 @@
 # AIMA Project Memory
 
+## Agents — start here (v2.6, Batch & Toggle Integration)
+
+**Read [AIMA-HANDOFF-v2.6.md](AIMA-HANDOFF-v2.6.md) first**, then this File Map. Routing:
+- **Run the pipeline:** `python run.py` → `agents/marco.py` (honors `pipeline_config.json` toggles).
+- **Run one stage on its own:** the `run_<batch>.py` at repo root (see File Map). Dashboard buttons hit
+  these via `insights/ /api/run`.
+- **Stage on/off + QC mode:** `pipeline_config.json` (dashboard-owned) → `agents/config.py:load_pipeline_config()`.
+- **Per-agent code:** `agents/<name>.py`. Shared infra: `agents/base.py`, `agents/config.py`, `agents/prompts.py`.
+- **Fiduciary rule:** Vera halts+reports (never iterates); writers halt without research; skip-and-reuse
+  cached artifacts; gate token/credit/live batches; report calendar bugs, don't auto-mutate the calendar (only Iris does —
+  plus the one sanctioned exception: Trend Scout fills a still-TBD trending row's title+category, with a logged rationale).
+- **Calendar is ONE canonical sequence (2026-07-02, per Joe — see DECISION-LOG.md):** single table, rows numbered 1–64;
+  Author is a per-row attribute (last column) that Joe can reassign freely — never a track, never slot labels (D#/K# retired).
+- **Retired:** `linkedin_pipeline/pipeline.py` — do not call/recreate. Publish=Porter, Marketing=Nova.
+
+## File Map (updated June 28, 2026 — v2.6)
+
+The article pipeline runs on **`agents/`** (Marco orchestrator). `linkedin_pipeline/`
+is now collectors + LinkedIn API only — **`pipeline.py` is retired**.
+
+```
+run.py                      full pipeline entry → Marco · python run.py [--dry-run]
+run_priya_batch.py          Priya audit · calendar bug report (+ --fix: safe posted_articles hygiene) → optimization/priya_audit.json
+run_research_batch.py       Research batch · Scout pre-researches next 2 titles → articles/research/
+run_writer_batch.py         Writer batch · persona writes next assignment → articles/drafts/ (halts if no research)
+run_marketing_batch.py      Marketing batch · Nova posts published-but-unmarketed → LinkedIn (reports if none)
+run_analytics_batch.py      Analytics run · Echo fetches LinkedIn analytics → post_analytics.csv (for Priya; no tokens)
+run_lumen_batch.py          Lumen run · merge LinkedIn analytics + GA4 → optimization report (CC tokens)
+run_token_audit.py          Token Audit (Cora) · token ledger report → optimization/token_audit.json (read-only)
+run_review_batch.py         Review Day (Vera) · QC staged articles → articles/review_day.json (CC tokens)
+run_optimization_batch.py   Optimization (Iris) · advisory from Marco/Lumen/Cora/Priya · edits calendar + CLAUDE.md (CC tokens)
+run_maya_batch.py           Maya batch · pre-designs next 2 calendar titles → handoff/ready/
+run_publish_batch.py        Publish batch · Porter publishes staged articles (push + GS, no LinkedIn)
+run_echo.py / run_iris.py   standalone Echo (LinkedIn analytics) / Iris runners
+pipeline_config.json        stage toggles · dashboard writes · Marco reads (load_pipeline_config)
+agents/
+  marco.py     orchestrator · gates each stage on pipeline_config; skipped stage reuses cached artifact
+  priya.py     plan · next article spec from calendar       scout.py   research → articles/research/[slug]-research.json (+load_cached)
+  trend_scout.py  trending-topic determination · turns "TBD — Trending Topic" calendar rows into real titles for the
+               row's ASSIGNED AUTHOR (any writer — reads Author column + articles/personas/<name>.md, not a fixed roster)
+               (runs BEFORE Scout · writes title+category back to the calendar row · logs rationale+sources to
+               articles/research/[slug]-topic-selection.json + optimization_report.json · idempotent: resolved rows skip it)
+  writer.py    free-form persona authors (Joselito/Dawn/Kenji) → articles/drafts/  [Quill is now the EDITOR of these]
+  quill.py     EDITOR · refines writer drafts to Vera's checklist  maya.py    design · handoff/ready pickup by #NNN, else generate
+  vera.py      QC ASSURANCE · checks targets, HALTS+reports to Marco (never re-runs Quill/Maya)
+  porter.py    publish · push → poll aima.productions → GS canonical (gs_enabled)
+  nova.py      marketing · LinkedIn company post + personal reshare
+  echo.py      LinkedIn analytics 48h+ (independent)        lumen.py   aggregate GA4/Meta/TikTok/BMC
+  cora.py      token audit · budgets + guardrails           iris.py    editorial decisions
+  config.py    load_pipeline_config() + model/budget maps   base.py    CC calls · file IO · git · agents/.env
+  prompts.py   per-agent system prompts (Vera checklist = ranges, not fixed 1800)
+articles/      aima-coworker-state.json · aima-editorial-calendar.md · research/ · personas/
+handoff/ready/ Maya batch staging — pipeline Maya moves matching #NNN images into img/articles/
+img/articles/  primary covers (Maya)        img/alt-img/  alternates
+optimization/  optimization_report.json (Iris/Marco/Cora/Lumen)
+linkedin_pipeline/  linkedin_poster.py (Nova) · github_fetcher.py · gs_logger.py (Porter) ·
+                    analytics_collector.py (Echo) · ga4_collector.py · xls_import.py ·
+                    posted_articles.json (calendar de-dupe) · post_log.json · .env
+token_budget.json   Cora per-agent budget + live usage
+```
+
+**Stage toggles** (`pipeline_config.json`): `RESEARCH/WRITE/MAYA/PUBLISH/GS/MARKETING/ANALYTICS/LUMEN/CORA_ENABLED`
+(bools) + `QC_GATE` (`human` = hold after Vera for review · `auto` = proceed). Dashboard panel: Articles → Data → Full Pipeline Toggles.
+
 ## Pending Actions
 
 ### LinkedIn Marketing API — Development Tier Approval
@@ -13,16 +77,19 @@
 
 ## LinkedIn Pipeline — Current State (as of June 21, 2026)
 
-### APPROVED POST-PUBLISH WORKFLOW
-After every article is written, pushed, and live on GitHub Pages:
-1. `git push` — publishes article to `joselitosering.github.io/aima`
-2. `python linkedin_pipeline/pipeline.py` — runs the full sequence automatically:
-   - Posts to **AIMA company page** with cover image + article hook + hashtags + **persona byline** (name credit)
-   - Immediately **reshares to Joselito's personal profile** with persona-tailored intro + **TL;DR** + CTA
-   - Logs post IDs to `post_log.json` for 48h analytics collection
-   - Google Sheets logging is also triggered inside the pipeline (Step 8 can be skipped manually if pipeline runs)
+### POST-PUBLISH WORKFLOW (now run by Marco / agents)
+> **`linkedin_pipeline/pipeline.py` was RETIRED June 27, 2026.** The full pipeline is
+> `python run.py` → `agents/marco.py`, which honors the stage toggles in
+> `pipeline_config.json`. Publish = **Porter** (`agents/porter.py`), Marketing = **Nova**
+> (`agents/nova.py`). The steps below describe Porter + Nova:
+1. **Porter** — `git push` → wait 60s → poll `aima.productions/articles/<file>` every 10s
+   for `og:title` → log the **canonical** URL (`joselitosering.github.io/aima/...`) to Google Sheets.
+2. **Nova** — posts to the **AIMA company page** (cover image + hook + hashtags + **persona byline**),
+   then **reshares to Joselito's personal profile** with persona-tailored intro + **TL;DR** + CTA,
+   and logs post IDs to `post_log.json` for 48h analytics collection.
 
-This workflow was tested and approved June 21, 2026.
+The company-page + reshare logic still lives in `linkedin_pipeline/linkedin_poster.py`
+(called by Nova). Tested/approved June 21, 2026.
 
 ### Technical State
 - **Company page posting:** Working. `linkedin_poster.py` posts as `urn:li:organization:{ORG_ID}` with direct image upload via Assets API. Byline appears at end of commentary.
@@ -135,6 +202,37 @@ Collect pixel and API analytics from all non-LinkedIn platforms and produce a un
 - Code: `LM` · Color: purple · Type: Autonomous
 
 ---
+
+## Trend Scout — Trending-Topic Determination (added July 2, 2026)
+
+Trending calendar rows start life as the literal "TBD — Trending Topic"
+placeholder. **`agents/trend_scout.py`** turns a TBD row into a real topic;
+before this, trending topics were always a manual human decision (#014, #017
+were one-offs outside the calendar system).
+
+- **Author-agnostic (per Joe, 2026-07-02):** the topic is chosen for the row's
+  ASSIGNED AUTHOR — read from the calendar's Author column, beat loaded from
+  `articles/personas/<slugified-name>.md` (generic AIMA beat if no profile).
+  NOT hardcoded to Dawn/Kenji; reassign a row's author and Trend Scout follows.
+- **Trigger:** any resolved spec whose title is still the TBD placeholder —
+  happens automatically in the default batch walk AND in the full pipeline
+  (`priya.run()` calls `trend_scout.resolve_tbd_row()` before her CC run;
+  skipped under `--dry-run`), or target a row explicitly:
+  `run_research_batch.py --article 26` / `run_writer_batch.py --article 26`.
+- **How:** CC_AGENT call (`trend_scout`, budget 12,000 — topic selection, not research).
+  Surveys beat-filtered feeds/APIs from `scout-sources.json` (news APIs +
+  google_trends + tagged RSS; WebSearch fallback), returns 3 ranked candidates.
+- **Dedup:** candidates are checked against all calendar titles, `articles_written[]`
+  in `aima-coworker-state.json`, and `articles/research/` slugs; collisions fall
+  through to the next candidate.
+- **Durability/idempotency:** the chosen title+category is written back into the
+  calendar row in place (matched by canonical row number). A re-run sees a real
+  title and skips straight to Scout — no re-roll.
+- **Fiduciary trace:** rationale + surfacing sources go to
+  `articles/research/[slug]-topic-selection.json` and `optimization_report.json`.
+- **Guardrails intact:** only the TITLE is replaced — writers still HALT without
+  a Scout brief; Scout still runs and produces real research afterward. The Maya
+  batch skips TBD rows (no cover art for placeholders).
 
 ## Scout Agent — Planned Enhancements (as of June 21, 2026)
 

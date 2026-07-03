@@ -1,23 +1,19 @@
 {
-  "next_article_number": 18,
-  "next_track": "joselito",
+  "next_article_number": 19,
   "next_article_date": "2026-06-28",
-
   "joselito": {
     "next_calendar_index": 4,
-    "post_count": 16,
-    "last_topic": "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor"
+    "post_count": 17,
+    "last_topic": "Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026"
   },
-
   "trending": {
     "next_persona": "kenji",
-    "topic_queue": [],
     "personas": {
       "dawn": {
         "full_name": "Dawn Ginhaua",
         "profile_file": "articles/personas/dawn-ginhaua.md",
         "post_count": 1,
-        "last_topic": "The Résumé Filter: How AI Turned Racial Bias Into Standard Hiring Practice"
+        "last_topic": "The R\u00e9sum\u00e9 Filter: How AI Turned Racial Bias Into Standard Hiring Practice"
       },
       "kenji": {
         "full_name": "Kenji Nakamoto",
@@ -27,8 +23,7 @@
       }
     }
   },
-
-  "last_run": "2026-06-22",
+  "last_run": "2026-06-25",
   "articles_written": [
     {
       "number": 13,
@@ -46,4 +41,40 @@
       "date": "2026-06-20",
       "category": "AI Creative",
       "author": "Joselito Sering",
-      "track":
+      "track": "joselito",
+      "note": "Corrected 2026-07-02 (was stale): the note here previously said 'Article 014 (Hallucination Nation) skipped' but real #014 is Dawn's 'Your AI Ethics Board Is a Press Release' (aima-article-ethics-theater-014.html), published 2026-06-19 \u2014 a different piece entirely. Calendar row 15 ('Hallucination Nation') is the actual skipped/unwritten item; it has no article number yet and is not #014. Rescheduled to 2026-07-06 in aima-editorial-calendar.md; will receive its real number from next_article_number whenever it's actually written."
+    },
+    {
+      "number": 16,
+      "title": "The Digital Nomad Economy: How Developing Nations Are Reshaping Global AI Labor",
+      "filename": "aima-article-digital-nomad-economy-016.html",
+      "date": "2026-06-24",
+      "category": "AI Society",
+      "author": "Joselito Sering",
+      "track": "joselito"
+    },
+    {
+      "number": 17,
+      "title": "The R\u00e9sum\u00e9 Filter: How AI Turned Racial Bias Into Standard Hiring Practice",
+      "filename": "aima-article-resume-filter-017.html",
+      "date": "2026-06-26",
+      "category": "AI Ethics",
+      "author": "Dawn Ginhaua",
+      "track": "trending"
+    },
+    {
+      "number": 18,
+      "title": "Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026",
+      "filename": "aima-article-diagnosis-by-algorithm-018.html",
+      "date": "2026-06-28",
+      "category": "AI Healthcare",
+      "author": "Joselito Sering",
+      "track": "joselito"
+    }
+  ],
+  "google_sheets_url": "https://docs.google.com/spreadsheets/d/1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs/edit",
+  "google_sheets_id": "1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs",
+  "google_sheets_tab": "Insights",
+  "google_sheets_webapp_url": "https://script.google.com/macros/s/AKfycbxWATw6f8Lrqgd3S5uHSBUTJB8CAeuTTY_kBj8U1tT-8jgO62-0gyjX4e1jssoTfEFo/exec",
+  "note_2026_07_02": "next_track + trending.topic_queue retired (DECISION-LOG.md): one canonical calendar sequence; author = calendar row Author column; trending topics resolved by agents/trend_scout.py, never queued here."
+}
