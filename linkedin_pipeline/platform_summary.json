@@ -1,0 +1,491 @@
+{
+  "generated_at": "2026-07-03T00:00:00",
+  "source": "lumen",
+  "collection_date": "2026-07-03",
+  "ga4_data_as_of": "2026-06-27T06:53:55",
+  "linkedin_data_as_of": "2026-06-26T15:08:49",
+  "platforms_available": ["ga4", "linkedin"],
+  "platforms_unavailable": {
+    "meta": "no_credentials — lumen_secrets.json empty",
+    "tiktok": "no_credentials — lumen_secrets.json empty",
+    "bmc": "no_credentials — lumen_secrets.json empty"
+  },
+  "articles": [
+    {
+      "slug": "aima-article-ethics-and-ai-006",
+      "ga4": {
+        "sessions": 23,
+        "pageviews": 67,
+        "engaged_sessions": 6,
+        "avg_engagement_sec": 30.8,
+        "li_attributed_sessions": 2,
+        "li_attributed_pageviews": 6
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 23,
+        "linkedin_drove_ga4_sessions_pct": 8.7
+      }
+    },
+    {
+      "slug": "aima-article-token-bill-011",
+      "ga4": {
+        "sessions": 18,
+        "pageviews": 36,
+        "engaged_sessions": 11,
+        "avg_engagement_sec": 17.2,
+        "li_attributed_sessions": 5,
+        "li_attributed_pageviews": 10
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 18,
+        "linkedin_drove_ga4_sessions_pct": 27.8
+      }
+    },
+    {
+      "slug": "aima-article-future-of-media-009",
+      "ga4": {
+        "sessions": 16,
+        "pageviews": 30,
+        "engaged_sessions": 10,
+        "avg_engagement_sec": 33.2,
+        "li_attributed_sessions": 8,
+        "li_attributed_pageviews": 12
+      },
+      "linkedin": {
+        "post_id": "urn:li:activity:7461826263796695041",
+        "impressions": 43,
+        "clicks": 2,
+        "likes": 2,
+        "comments": 0,
+        "shares": 1,
+        "engagement_rate": 0.1163,
+        "ctr": 0.0465,
+        "posted_at": "05/17/2026"
+      },
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_li_impressions": 43,
+        "total_ga4_sessions": 16,
+        "linkedin_drove_ga4_sessions_pct": 50.0,
+        "best_engagement_rate": 0.1163
+      }
+    },
+    {
+      "slug": "aima-article-ethics-theater-014",
+      "ga4": {
+        "sessions": 12,
+        "pageviews": 50,
+        "engaged_sessions": 12,
+        "avg_engagement_sec": 131.4,
+        "li_attributed_sessions": 9,
+        "li_attributed_pageviews": 45
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 12,
+        "linkedin_drove_ga4_sessions_pct": 75.0,
+        "note": "Highest avg engagement time across all GA4 articles (131.4s)"
+      }
+    },
+    {
+      "slug": "aima-article-global-south-ai-gap-013",
+      "ga4": {
+        "sessions": 11,
+        "pageviews": 50,
+        "engaged_sessions": 9,
+        "avg_engagement_sec": 100.1,
+        "li_attributed_sessions": 7,
+        "li_attributed_pageviews": 46
+      },
+      "linkedin": {
+        "post_id": "urn:li:share:7473451995576549376",
+        "impressions": 91,
+        "clicks": 0,
+        "likes": 0,
+        "comments": 0,
+        "shares": 1,
+        "engagement_rate": 0.0,
+        "ctr": 0.0,
+        "posted_at": "2026-06-18T12:10:06"
+      },
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_li_impressions": 91,
+        "total_ga4_sessions": 11,
+        "linkedin_drove_ga4_sessions_pct": 63.6
+      }
+    },
+    {
+      "slug": "aima-article-anthropomorphization-trap-010",
+      "ga4": {
+        "sessions": 9,
+        "pageviews": 15,
+        "engaged_sessions": 9,
+        "avg_engagement_sec": 25.8,
+        "li_attributed_sessions": 4,
+        "li_attributed_pageviews": 10
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 9,
+        "linkedin_drove_ga4_sessions_pct": 44.4
+      }
+    },
+    {
+      "slug": "aima-article-machines-that-compose-015",
+      "ga4": {
+        "sessions": 9,
+        "pageviews": 45,
+        "engaged_sessions": 7,
+        "avg_engagement_sec": 49.7,
+        "li_attributed_sessions": 8,
+        "li_attributed_pageviews": 44
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 9,
+        "linkedin_drove_ga4_sessions_pct": 88.9,
+        "note": "Highest LinkedIn-to-GA4 session attribution ratio"
+      }
+    },
+    {
+      "slug": "aima-article-digital-nomad-economy-016",
+      "ga4": {
+        "sessions": 7,
+        "pageviews": 11,
+        "engaged_sessions": 4,
+        "avg_engagement_sec": 19.1,
+        "li_attributed_sessions": 3,
+        "li_attributed_pageviews": 4
+      },
+      "linkedin": {
+        "post_id": "urn:li:share:7474564371948523520",
+        "impressions": 98,
+        "clicks": 0,
+        "likes": 0,
+        "comments": 0,
+        "shares": 1,
+        "engagement_rate": 0.0,
+        "ctr": 0.0,
+        "posted_at": "2026-06-21T20:50:18"
+      },
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_li_impressions": 98,
+        "total_ga4_sessions": 7,
+        "linkedin_drove_ga4_sessions_pct": 42.9,
+        "note": "Highest LinkedIn impressions of all posts (98)"
+      }
+    },
+    {
+      "slug": "aima-article-ai-workforce-005",
+      "ga4": {
+        "sessions": 7,
+        "pageviews": 34,
+        "engaged_sessions": 7,
+        "avg_engagement_sec": 122.5,
+        "li_attributed_sessions": 2,
+        "li_attributed_pageviews": 7
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 7,
+        "linkedin_drove_ga4_sessions_pct": 28.6
+      }
+    },
+    {
+      "slug": "aima-article-future-of-creative-production-001",
+      "ga4": {
+        "sessions": 7,
+        "pageviews": 20,
+        "engaged_sessions": 7,
+        "avg_engagement_sec": 43.7,
+        "li_attributed_sessions": 3,
+        "li_attributed_pageviews": 3
+      },
+      "linkedin": {
+        "post_id": "urn:li:share:7473803142543863808",
+        "impressions": 84,
+        "clicks": 0,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0,
+        "engagement_rate": 0.0,
+        "ctr": 0.0,
+        "posted_at": "2026-06-19T18:25:27"
+      },
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_li_impressions": 84,
+        "total_ga4_sessions": 7,
+        "linkedin_drove_ga4_sessions_pct": 42.9
+      }
+    },
+    {
+      "slug": "aima-article-ai-in-medicine-008",
+      "ga4": {
+        "sessions": 5,
+        "pageviews": 14,
+        "engaged_sessions": 5,
+        "avg_engagement_sec": 65.2,
+        "li_attributed_sessions": 2,
+        "li_attributed_pageviews": 8
+      },
+      "linkedin": {
+        "post_id": "urn:li:activity:7460153271945424896",
+        "impressions": 27,
+        "clicks": 0,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0,
+        "engagement_rate": 0.0,
+        "ctr": 0.0,
+        "posted_at": "05/13/2026"
+      },
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_li_impressions": 27,
+        "total_ga4_sessions": 5,
+        "linkedin_drove_ga4_sessions_pct": 40.0
+      }
+    },
+    {
+      "slug": "aima-article-algorithm-of-atrocity-012",
+      "ga4": {
+        "sessions": 5,
+        "pageviews": 12,
+        "engaged_sessions": 4,
+        "avg_engagement_sec": 105.2,
+        "li_attributed_sessions": 3,
+        "li_attributed_pageviews": 10
+      },
+      "linkedin": {
+        "post_id": "urn:li:activity:7468456066649903104",
+        "impressions": 36,
+        "clicks": 1,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0,
+        "engagement_rate": 0.0278,
+        "ctr": 0.0278,
+        "posted_at": "06/05/2026"
+      },
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_li_impressions": 36,
+        "total_ga4_sessions": 5,
+        "linkedin_drove_ga4_sessions_pct": 60.0
+      }
+    },
+    {
+      "slug": "aima-article-n8n-content-pipeline-003",
+      "ga4": {
+        "sessions": 5,
+        "pageviews": 20,
+        "engaged_sessions": 3,
+        "avg_engagement_sec": 64.0,
+        "li_attributed_sessions": 3,
+        "li_attributed_pageviews": 7
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 5,
+        "linkedin_drove_ga4_sessions_pct": 60.0
+      }
+    },
+    {
+      "slug": "aima-article-5k-music-video-blueprint-002",
+      "ga4": {
+        "sessions": 6,
+        "pageviews": 22,
+        "engaged_sessions": 5,
+        "avg_engagement_sec": 62.5,
+        "li_attributed_sessions": 3,
+        "li_attributed_pageviews": 12
+      },
+      "linkedin": {
+        "posts": [
+          {
+            "post_id": "urn:li:activity:7457513609850441728",
+            "impressions": 22,
+            "clicks": 0,
+            "likes": 0,
+            "comments": 0,
+            "shares": 0,
+            "engagement_rate": 0.0,
+            "ctr": 0.0,
+            "posted_at": "05/05/2026"
+          },
+          {
+            "post_id": "urn:li:share:7473819519409471488",
+            "impressions": 88,
+            "clicks": 0,
+            "likes": 0,
+            "comments": 0,
+            "shares": 1,
+            "engagement_rate": 0.0,
+            "ctr": 0.0,
+            "posted_at": "2026-06-19T19:30:31"
+          }
+        ],
+        "total_impressions": 110,
+        "total_shares": 1
+      },
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_li_impressions": 110,
+        "total_ga4_sessions": 6,
+        "linkedin_drove_ga4_sessions_pct": 50.0,
+        "note": "Two LinkedIn posts; combined impressions 110 — highest combined total"
+      }
+    },
+    {
+      "slug": "aima-article-boycott-or-bigotry-004",
+      "ga4": {
+        "sessions": 6,
+        "pageviews": 14,
+        "engaged_sessions": 4,
+        "avg_engagement_sec": 61.0,
+        "li_attributed_sessions": 3,
+        "li_attributed_pageviews": 4
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 6,
+        "linkedin_drove_ga4_sessions_pct": 50.0
+      }
+    },
+    {
+      "slug": "aima-article-rogue-ai-agents-007",
+      "ga4": {
+        "sessions": 2,
+        "pageviews": 6,
+        "engaged_sessions": 2,
+        "avg_engagement_sec": 45.5,
+        "li_attributed_sessions": 2,
+        "li_attributed_pageviews": 6
+      },
+      "linkedin": {
+        "post_id": "urn:li:share:7474175664460414976",
+        "impressions": 14,
+        "clicks": 0,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0,
+        "engagement_rate": 0.0,
+        "ctr": 0.0,
+        "posted_at": "2026-06-20T12:03:32"
+      },
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_li_impressions": 14,
+        "total_ga4_sessions": 2,
+        "linkedin_drove_ga4_sessions_pct": 100.0,
+        "note": "All GA4 sessions LinkedIn-attributed; lowest absolute reach"
+      }
+    },
+    {
+      "slug": "aima-article-ai-in-medicine",
+      "ga4": {
+        "sessions": 16,
+        "pageviews": 15,
+        "engaged_sessions": 2,
+        "avg_engagement_sec": 2.8,
+        "li_attributed_sessions": 0,
+        "li_attributed_pageviews": 0
+      },
+      "linkedin": null,
+      "meta": null,
+      "tiktok": null,
+      "bmc": null,
+      "cross_platform": {
+        "total_reach": 16,
+        "note": "Legacy slug — no LinkedIn attribution; very low engagement time (2.8s) suggests bounce traffic"
+      }
+    }
+  ],
+  "non_article_posts": [
+    {
+      "post_id": "urn:li:share:7474564411593097216",
+      "title": "AIMA Pipeline — Blueprint",
+      "impressions": 2,
+      "posted_at": "2026-06-21T20:50:28"
+    },
+    {
+      "post_id": "urn:li:share:7474564448377217024",
+      "title": "AIMA Article Pipeline",
+      "impressions": 3,
+      "posted_at": "2026-06-21T20:50:36"
+    }
+  ],
+  "ga4_totals": {
+    "articles_tracked": 17,
+    "total_sessions": 164,
+    "total_pageviews": 461,
+    "total_engaged_sessions": 116,
+    "li_attributed_sessions": 67,
+    "li_attributed_pageviews": 234,
+    "li_attribution_pct_of_sessions": 40.9,
+    "top_by_sessions": "aima-article-ethics-and-ai-006",
+    "top_by_pageviews": "aima-article-ethics-and-ai-006",
+    "top_by_engagement_time": "aima-article-ethics-theater-014",
+    "best_avg_engagement_sec": 131.4
+  },
+  "linkedin_totals": {
+    "posts_analyzed": 11,
+    "article_posts": 8,
+    "non_article_posts": 3,
+    "total_impressions": 508,
+    "avg_impressions_per_post": 46.2,
+    "total_clicks": 3,
+    "total_likes": 2,
+    "total_shares": 4,
+    "total_comments": 0,
+    "overall_ctr": 0.0059,
+    "top_post_by_impressions": "aima-article-digital-nomad-economy-016",
+    "top_post_by_engagement_rate": "aima-article-future-of-media-009",
+    "best_engagement_rate": 0.1163
+  }
+}

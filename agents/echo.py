@@ -33,16 +33,39 @@ def _get_token() -> str:
     return token
 
 
-def _fetch_post_stats(token: str, urn: str) -> dict:
+def _entity_param(urn: str) -> str:
     """
-    GET /rest/socialMediaPostStatistics for a single post URN.
-    Requires r_member_social scope.
-    Returns raw stats dict.
+    Build the Rest.li 2.0 `entity` query value memberCreatorPostAnalytics
+    expects, e.g. "(share:urn%3Ali%3Ashare%3A1234567890)" for a share URN or
+    "(ugc:urn%3Ali%3AugcPost%3A1234567890)" for a ugcPost URN. Only the URN's
+    own colons are percent-encoded — the surrounding parens and "share:"/
+    "ugc:" prefix are literal Rest.li structural syntax (per LinkedIn's own
+    sample request), not something urllib.parse.quote should touch.
     """
-    encoded_urn = urllib.parse.quote(urn, safe="")
+    encoded = urn.replace(":", "%3A")
+    kind = "ugc" if ":ugcPost:" in urn else "share"
+    return f"({kind}:{encoded})"
+
+
+# memberCreatorPostAnalytics returns exactly one metric per call — there is
+# no combined "all stats in one response" mode (the old socialMediaPostStatistics
+# endpoint this used to call doesn't actually exist on LinkedIn's API at all,
+# which is why every request 404'd). Map our field names to LinkedIn's
+# queryType values so _fetch_post_stats can make one call per metric.
+_METRIC_QUERY_TYPES = {
+    "impressions": "IMPRESSION",
+    "clicks": "LINK_CLICKS",
+    "reactions": "REACTION",
+    "reposts": "RESHARE",
+    "comments": "COMMENT",
+}
+
+
+def _fetch_metric(token: str, entity_param: str, query_type: str) -> int:
+    """GET /rest/memberCreatorPostAnalytics for one post, one metric. Requires r_member_postAnalytics scope (3-legged member token)."""
     url = (
-        f"{LINKEDIN_API_BASE}/rest/socialMediaPostStatistics"
-        f"?q=statistics&urns[0]={encoded_urn}"
+        f"{LINKEDIN_API_BASE}/rest/memberCreatorPostAnalytics"
+        f"?q=entity&entity={entity_param}&queryType={query_type}"
     )
     req = urllib.request.Request(
         url,
@@ -53,34 +76,23 @@ def _fetch_post_stats(token: str, urn: str) -> dict:
         },
     )
     with urllib.request.urlopen(req, timeout=15) as resp:
-        return json.loads(resp.read().decode("utf-8"))
-
-
-def _parse_stats(raw: dict, urn: str) -> dict:
-    """Extract key metrics from LinkedIn API response."""
+        raw = json.loads(resp.read().decode("utf-8"))
     elements = raw.get("elements", [])
-    if not elements:
-        return {"urn": urn, "impressions": 0, "clicks": 0,
-                "reactions": 0, "reposts": 0, "comments": 0, "ctr": 0.0}
+    return int(elements[0].get("count", 0)) if elements else 0
 
-    data = elements[0]
-    total = data.get("totalShareStatistics", {})
-    impressions = total.get("impressionCount", 0)
-    clicks = total.get("clickCount", 0)
-    reactions = total.get("likeCount", 0)
-    reposts = total.get("shareCount", 0)
-    comments = total.get("commentCount", 0)
-    ctr = round(clicks / impressions, 4) if impressions else 0.0
 
-    return {
-        "urn": urn,
-        "impressions": impressions,
-        "clicks": clicks,
-        "reactions": reactions,
-        "reposts": reposts,
-        "comments": comments,
-        "ctr": ctr,
-    }
+def _fetch_post_stats(token: str, urn: str) -> dict:
+    """
+    Fetch impressions/clicks/reactions/reposts/comments for a single post
+    URN via memberCreatorPostAnalytics (one API call per metric — see
+    _METRIC_QUERY_TYPES) and compute CTR from the results.
+    """
+    entity_param = _entity_param(urn)
+    stats = {"urn": urn}
+    for field, query_type in _METRIC_QUERY_TYPES.items():
+        stats[field] = _fetch_metric(token, entity_param, query_type)
+    stats["ctr"] = round(stats["clicks"] / stats["impressions"], 4) if stats["impressions"] else 0.0
+    return stats
 
 
 def _append_to_csv(row: dict):
@@ -109,6 +121,14 @@ def _is_eligible(entry: dict) -> bool:
         posted_dt = datetime.fromisoformat(posted_at.replace("Z", "+00:00"))
     except ValueError:
         return False
+    # posted_at is written by nova.py / force_repost.py as
+    # datetime.now(timezone.utc).strftime(...) — real UTC, but strftime
+    # strips the offset, so fromisoformat parses it back as naive. Attach
+    # UTC explicitly (same fix already applied in
+    # linkedin_pipeline/analytics_collector.py) or the comparison below
+    # raises "can't compare offset-naive and offset-aware datetimes".
+    if posted_dt.tzinfo is None:
+        posted_dt = posted_dt.replace(tzinfo=timezone.utc)
     cutoff = datetime.now(timezone.utc) - timedelta(hours=ANALYTICS_WINDOW_HOURS)
     return posted_dt < cutoff
 
@@ -129,15 +149,14 @@ def run() -> dict:
     today = datetime.now(timezone.utc).date().isoformat()
 
     for entry in eligible:
-        urn = entry.get("urn", entry.get("company_urn", ""))
-        slug = entry.get("slug", "")
+        urn = entry.get("urn") or entry.get("company_urn") or entry.get("post_id", "")
+        slug = entry.get("slug") or entry.get("article", "")
         if not urn:
             log.warning(f"[echo] entry missing URN: {entry}")
             continue
 
         try:
-            raw = _fetch_post_stats(token, urn)
-            stats = _parse_stats(raw, urn)
+            stats = _fetch_post_stats(token, urn)
         except Exception as exc:
             log.warning(f"[echo] API error for {urn}: {exc} — skipping")
             # Fallback: attempt xls_import if available

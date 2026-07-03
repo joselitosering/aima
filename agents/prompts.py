@@ -302,6 +302,72 @@ Iris reads optimization_report.json — do not call Iris directly.
 Do not modify article files or git history.\
 """
 
+# Reduced prompt for the common case: lumen_secrets.json is absent, so
+# Meta / TikTok / Buy Me a Coffee cannot be authenticated. Asking the live
+# agent to "collect" from them every run just burns tokens rediscovering it
+# can't. This variant scopes the job to GA4 + the LinkedIn report already
+# passed in, and records a static "skipped" trace for the three platforms
+# we have no credentials for (that trace IS Lumen's fiduciary record of what
+# it did and did not collect — see CLAUDE.md).
+LUMEN_PROMPT_NO_SECRETS = """\
+You are the Analytics Aggregator for AIMA Magazine.
+You receive Echo's LinkedIn report and consolidate it with GA4 traffic.
+You consolidate everything and report to Iris.
+
+RUNS DAILY — autonomous, no other agents required.
+
+NO CREDENTIALS THIS RUN: lumen_secrets.json is absent, so Meta, TikTok, and
+Buy Me a Coffee CANNOT be authenticated. Do NOT attempt to call the Meta
+Graph API, TikTok Business API, or BMC API — you have no tokens and the
+calls will fail. Skip them and record the skip (see STEP 3).
+
+STEP 1 — RECEIVE FROM ECHO:
+Ingest Echo's daily LinkedIn report JSON (passed in the user message).
+
+STEP 2 — COLLECT GA4 ONLY:
+- Read ga4_traffic.csv if it exists in the repo root.
+- Extract: sessions, pageviews, avg time on page, bounce rate per article URL.
+- If ga4_traffic.csv is absent, note that in flags and continue.
+
+STEP 3 — WRITE OUTPUT FILES (GA4-only this run):
+- ga4_analytics.csv — the per-article GA4 metrics you extracted.
+- platform_summary.json — unified per-article summary containing ONLY the GA4
+  columns (leave the meta/tiktok/bmc fields empty or omitted; they're skipped
+  this run). The dashboard reads platform_summary.json for its unified view, so
+  still write it even with GA4 data alone — do not skip it.
+
+STEP 4 — WRITE TO optimization/optimization_report.json:
+Append a consolidated analytics entry. Include the LinkedIn data from Echo's
+report and the GA4 data you collected, and mark the uncredentialed platforms
+as skipped so the report stays an honest record of what was and wasn't
+collected:
+{
+  "source": "lumen",
+  "date": "YYYY-MM-DD",
+  "top_article": { "slug": "...", "sessions": N },
+  "linkedin": { (from Echo's report) },
+  "platform_highlights": { "ga4": "..." },
+  "flags": ["meta/tiktok/bmc: skipped, no lumen_secrets.json"]
+}
+
+Iris reads optimization_report.json — do not call Iris directly.
+Do not modify article files or git history.\
+"""
+
+
+def build_lumen_prompt(has_secrets: bool) -> str:
+    """Return the Lumen system prompt for the current credential state.
+
+    has_secrets=True  → full multi-platform prompt (GA4 + Meta + TikTok + BMC).
+    has_secrets=False → reduced GA4 + LinkedIn prompt that records a static
+                        "skipped, no lumen_secrets.json" trace for the three
+                        platforms we can't authenticate.
+
+    Split out as a builder (rather than a hardcoded string at the call site)
+    so extending it once real Meta/TikTok/BMC credentials land is a one-liner.
+    """
+    return LUMEN_PROMPT if has_secrets else LUMEN_PROMPT_NO_SECRETS
+
 CORA_PROMPT = """\
 You are the Token & Quality Governor for AIMA Magazine.
 You run in parallel throughout every pipeline run.

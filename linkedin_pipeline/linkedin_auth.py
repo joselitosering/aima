@@ -3,12 +3,15 @@ linkedin_auth.py - One-time LinkedIn OAuth flow.
 Run: python linkedin_auth.py
 
 Scopes requested:
-  openid profile email    — OIDC identity (member name/ID)
-  w_member_social         — post on member's behalf (kept as fallback)
-  w_organization_social   — post on AIMA company page
-  r_organization_social   — read org posts, comments, reactions, engagement data (per-post stats)
-  rw_organization_admin   — org admin (posting to company page)
-  r_organization_admin    — read org pages + reporting (follower, visitor, content analytics)
+  openid profile email      — OIDC identity (member name/ID)
+  w_member_social           — post on member's behalf (kept as fallback)
+  w_organization_social     — post on AIMA company page
+  r_organization_social     — read org posts, comments, reactions, engagement data (per-post stats)
+  rw_organization_admin     — org admin (posting to company page)
+  r_organization_admin      — read org pages + reporting (follower, visitor, content analytics)
+  r_member_postAnalytics    — Echo's memberCreatorPostAnalytics calls (member's own post impressions/
+                              reactions/comments/reposts/clicks) — added 2026-07-03; the current token
+                              predates this and must be refreshed (re-run this script) before Echo works.
 """
 
 import os, json, re, webbrowser, urllib.parse, urllib.request
@@ -20,7 +23,7 @@ load_dotenv()
 CLIENT_ID     = os.getenv("LINKEDIN_CLIENT_ID")
 CLIENT_SECRET = os.getenv("LINKEDIN_CLIENT_SECRET")
 REDIRECT_URI  = os.getenv("LINKEDIN_REDIRECT_URI", "http://localhost:8080/callback")
-SCOPES        = "openid profile email w_member_social w_organization_social r_organization_social rw_organization_admin r_organization_admin"
+SCOPES        = "openid profile email w_member_social w_organization_social r_organization_social rw_organization_admin r_organization_admin r_member_postAnalytics"
 AUTH_URL      = "https://www.linkedin.com/oauth/v2/authorization"
 TOKEN_URL     = "https://www.linkedin.com/oauth/v2/accessToken"
 USERINFO_URL  = "https://api.linkedin.com/v2/userinfo"

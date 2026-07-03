@@ -517,5 +517,141 @@
         "url": "https://newsroom.accenture.com/news/2026/accenture-vodafone-procure-connect-and-sap-pilot-humanoid-robotics-in-warehouse-operations"
       }
     ]
+  },
+  {
+    "source": "lumen",
+    "date": "2026-07-03",
+    "generated_at": "2026-07-03T00:00:00",
+    "run_type": "analytics_aggregate",
+    "platforms_attempted": ["ga4", "meta", "tiktok", "bmc"],
+    "platforms_collected": ["ga4", "linkedin_echo_handoff"],
+    "platforms_unavailable": {
+      "meta": "no_credentials — lumen_secrets.json empty",
+      "tiktok": "no_credentials — lumen_secrets.json empty",
+      "bmc": "no_credentials — lumen_secrets.json empty"
+    },
+    "ga4_summary": {
+      "source_file": "linkedin_pipeline/ga4_traffic.csv",
+      "data_as_of": "2026-06-27T06:53:55",
+      "articles_tracked": 17,
+      "total_sessions": 164,
+      "total_pageviews": 461,
+      "total_engaged_sessions": 116,
+      "li_attributed_sessions": 67,
+      "li_attributed_pageviews": 234,
+      "li_attribution_pct_of_sessions": 40.9,
+      "top_by_sessions": {
+        "slug": "aima-article-ethics-and-ai-006",
+        "sessions": 23,
+        "pageviews": 67
+      },
+      "top_by_engagement_time": {
+        "slug": "aima-article-ethics-theater-014",
+        "avg_engagement_sec": 131.4,
+        "engaged_sessions": 12
+      },
+      "top_by_li_attribution": {
+        "slug": "aima-article-machines-that-compose-015",
+        "li_attribution_pct": 88.9,
+        "note": "88.9% of GA4 sessions LinkedIn-attributed"
+      },
+      "lowest_engagement": {
+        "slug": "aima-article-ai-in-medicine",
+        "avg_engagement_sec": 2.8,
+        "note": "Legacy slug — high sessions (16) but 2.8s avg engagement suggests bounce traffic from stale inbound links"
+      }
+    },
+    "linkedin_summary": {
+      "source": "echo_handoff",
+      "data_as_of": "2026-06-26T15:08:49",
+      "posts_analyzed": 11,
+      "article_posts": 8,
+      "non_article_posts": 3,
+      "total_impressions": 508,
+      "avg_impressions_per_post": 46.2,
+      "total_clicks": 3,
+      "total_likes": 2,
+      "total_shares": 4,
+      "total_comments": 0,
+      "overall_ctr": 0.0059,
+      "top_by_impressions": {
+        "article": "aima-article-digital-nomad-economy-016",
+        "impressions": 98,
+        "posted_at": "2026-06-21"
+      },
+      "top_by_engagement_rate": {
+        "article": "aima-article-future-of-media-009",
+        "engagement_rate": 0.1163,
+        "ctr": 0.0465,
+        "note": "Only post with meaningful engagement — likes (2), shares (1), clicks (2)"
+      },
+      "combined_impressions_leader": {
+        "article": "aima-article-5k-music-video-blueprint-002",
+        "posts": 2,
+        "combined_impressions": 110,
+        "note": "Two LinkedIn posts combined; highest total impressions per article"
+      }
+    },
+    "output_files": {
+      "ga4_analytics": "linkedin_pipeline/ga4_analytics.csv",
+      "meta_analytics": "linkedin_pipeline/meta_analytics.csv",
+      "tiktok_analytics": "linkedin_pipeline/tiktok_analytics.csv",
+      "bmc_analytics": "linkedin_pipeline/bmc_analytics.csv",
+      "platform_summary": "linkedin_pipeline/platform_summary.json"
+    },
+    "insights": [
+      {
+        "priority": "HIGH",
+        "insight": "LinkedIn is a significant traffic driver to GA4 — 40.9% of all tracked GA4 sessions are LinkedIn-attributed. However, LinkedIn post impressions are low (avg 46), and CTR is near zero on most posts, meaning the sessions come from a narrow but engaged slice of viewers who click through.",
+        "recommendation": "Focus LinkedIn copy on stronger click CTAs. future-of-media-009 is the only post with meaningful organic engagement (11.6% rate) — analyze its hook structure as a template."
+      },
+      {
+        "priority": "HIGH",
+        "insight": "ethics-theater-014 has the highest GA4 avg engagement time (131.4s) with 12 fully engaged sessions from 12 total — 100% engagement rate. This article is the strongest content performer by reader depth.",
+        "recommendation": "Use ethics-theater-014 as the baseline for content quality benchmarking. Trait to study: what topic/angle/length drove full reads?"
+      },
+      {
+        "priority": "MEDIUM",
+        "insight": "aima-article-ai-in-medicine (legacy slug, no article number) shows 16 sessions but only 2.8s avg engagement — likely bounce traffic from stale links. It is not the same as aima-article-ai-in-medicine-008.",
+        "recommendation": "Investigate the legacy /aima/ path slug. If it's a redirect or old URL that GA4 still tracks, consider canonical redirect hygiene to consolidate traffic under the numbered article slug."
+      },
+      {
+        "priority": "MEDIUM",
+        "insight": "Meta, TikTok, and BMC analytics are entirely dark — lumen_secrets.json is empty. No cross-platform revenue or multi-network reach data is available.",
+        "recommendation": "Populate lumen_secrets.json with GA4 service account, Meta Graph API token, TikTok Business API token, and BMC API key. Until credentials are added, Lumen cannot deliver her full charter. Priority: add Meta token first (Facebook + Instagram reach is the highest-ROI gap)."
+      },
+      {
+        "priority": "LOW",
+        "insight": "Three non-article LinkedIn posts (pipeline blueprint x2, pipeline diagram) garnered 2–3 impressions each. These are internal reference documents, not audience content.",
+        "recommendation": "Stop posting pipeline-internal documents to the public LinkedIn profile. Reserve the company page and personal reshare exclusively for published articles."
+      }
+    ],
+    "action_items": [
+      {
+        "priority": "HIGH",
+        "action": "Populate lumen_secrets.json with Meta Graph API token to unlock Meta analytics (Facebook + Instagram Insights).",
+        "owner": "LM or manual"
+      },
+      {
+        "priority": "HIGH",
+        "action": "Populate lumen_secrets.json with TikTok Business API token and BMC API key.",
+        "owner": "LM or manual"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Audit the legacy 'aima-article-ai-in-medicine' slug in GA4. If it represents stale inbound links, add a canonical redirect to the numbered article slug (aima-article-ai-in-medicine-008).",
+        "owner": "PT or manual"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Study future-of-media-009 LinkedIn hook (11.63% engagement rate) as a template for improving CTR on future posts. Current overall CTR is 0.59% — well below LinkedIn benchmarks (~2-3%).",
+        "owner": "NV"
+      },
+      {
+        "priority": "LOW",
+        "action": "Remove pipeline diagram/blueprint posts from LinkedIn company page feed — they serve no audience purpose and dilute the content signal.",
+        "owner": "NV or manual"
+      }
+    ]
   }
 ]

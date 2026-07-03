@@ -23,6 +23,9 @@ CC_MODEL_OVERRIDE = {
     "quill": None,   # → "claude-opus-4-8" if article quality plateaus
     "maya":  None,
     "vera":  None,
+    # lumen: model is chosen at runtime in agents/lumen.py by credential state —
+    # "claude-haiku-4-5" for the mechanical no-secrets path (GA4 + LinkedIn only),
+    # CC-default (Sonnet) below for the full multi-platform synthesis path.
     "lumen": None,
     "cora":  None,
 }

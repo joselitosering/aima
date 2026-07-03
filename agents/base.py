@@ -134,7 +134,7 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
         log.info(f"[{name.upper()}] DRY RUN — returning stub (no CC call)")
         return stub
 
-    log.info(f"[{name.upper()}] calling CC subagent")
+    log.info(f"[{name.upper()}] calling CC subagent (model={model or 'CC-default'})")
     try:
         result = subprocess.run(cmd, input=user_input, capture_output=True,
                                 encoding="utf-8", cwd=REPO_ROOT, timeout=1800)

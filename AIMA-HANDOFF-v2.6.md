@@ -198,7 +198,12 @@ python run_publish_batch.py            # Porter publishes staged articles (push 
 python run_review_batch.py             # Vera QC of staged articles
 python run_marketing_batch.py          # Nova posts published-but-unmarketed
 python run_analytics_batch.py          # Echo: LinkedIn metrics → post_analytics.csv
-python run_lumen_batch.py              # merge LinkedIn + GA4 → optimization report
+python run_lumen_batch.py [--force]    # merge LinkedIn + GA4 → optimization report
+#   ↳ dedups before the CC call (skips if a same-day lumen entry exists);
+#     --force bypasses the dedup and REPLACES today's entry (intra-day refresh).
+#     no lumen_secrets.json ⇒ reduced GA4+LinkedIn prompt on claude-haiku-4-5,
+#     writes ga4_analytics.csv + GA4-only platform_summary.json for the dashboard,
+#     + "meta/tiktok/bmc: skipped" trace. See CLAUDE.md → Lumen Agent.
 python run_token_audit.py              # Cora: token ledger report
 python run_optimization_batch.py       # Iris advisory (edits calendar + CLAUDE.md)
 ```

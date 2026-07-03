@@ -198,6 +198,27 @@ Collect pixel and API analytics from all non-LinkedIn platforms and produce a un
 ### Credentials (owned by Lumen, not Marco)
 - `lumen_secrets.json` — GA4 service account, Meta token, TikTok token, BMC API key
 
+### Runtime behavior (cost/efficiency, added July 3, 2026)
+- **Dedup before the CC call.** `lumen.run()` checks `optimization_report.json`
+  for a same-day `source:"lumen"` entry *before* invoking `call_cc_agent`. If
+  one exists it logs `entry already exists for <date> — skipping CC call` and
+  returns the existing entry — no subscription-billed call. (Re-running Lumen
+  twice in a day used to pay for the full call twice.)
+- **`--force` for intra-day refresh.** The dedup is per calendar day, so a
+  same-day re-run won't pick up sources that updated later that day. Pass
+  `python run_lumen_batch.py --force` (→ `lumen.run(report, force=True)`) to
+  bypass the dedup: it runs the paid CC call even if today's entry exists and
+  **replaces** that entry with the fresh result (no stale duplicate left behind).
+- **No-secrets prompt + model.** When `lumen_secrets.json` is absent (today's
+  state), Lumen runs the reduced `LUMEN_PROMPT_NO_SECRETS` (GA4 + LinkedIn
+  only) on `claude-haiku-4-5` and writes a `meta/tiktok/bmc: skipped, no
+  lumen_secrets.json` flag as the fiduciary trace for the uncredentialed
+  platforms. It still writes `ga4_analytics.csv` + a GA4-only
+  `platform_summary.json` so the dashboard's unified view keeps refreshing.
+  When secrets exist, the full multi-platform `LUMEN_PROMPT` runs on the CC
+  default (Sonnet). Prompt selection lives in
+  `prompts.build_lumen_prompt(has_secrets)`; model is chosen in `lumen.run()`.
+
 ### Badge
 - Code: `LM` · Color: purple · Type: Autonomous
 

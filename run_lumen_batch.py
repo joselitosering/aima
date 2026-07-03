@@ -5,7 +5,12 @@ Takes the LinkedIn analytics Echo already fetched (post_analytics.csv) plus GA4 
 + platform_summary.json. Run the Analytics (Echo) batch and the GA4 collector first.
 Lumen is a CC agent — this uses Claude Code tokens.
 
-Usage: python run_lumen_batch.py
+Usage: python run_lumen_batch.py [--force]
+
+--force bypasses the per-day dedup for an on-demand intra-day refresh: it runs
+the (paid) CC call even if today's entry already exists, and replaces that
+entry with the fresh result. Without it, a same-day re-run short-circuits with
+no CC call.
 """
 
 import csv
@@ -42,11 +47,14 @@ def _linkedin_report() -> dict:
 
 
 def main():
+    force = "--force" in sys.argv[1:]
     report = _linkedin_report()
     log.info(f"[lumen-batch] LinkedIn analytics: {report['posts_collected']} row(s) from post_analytics.csv")
+    if force:
+        log.info("[lumen-batch] --force set: bypassing per-day dedup, refreshing today's entry")
     log.info("[lumen-batch] Lumen: merging LinkedIn + GA4 (ga4_traffic.csv) -> optimization_report.json")
     try:
-        entry = lumen.run(report)
+        entry = lumen.run(report, force=force)
     except Exception as e:
         log.error(f"[lumen-batch] Lumen failed: {e}")
         sys.exit(1)
