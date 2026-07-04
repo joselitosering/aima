@@ -1,10 +1,14 @@
 """Maya — Visual Director (CC subagent).
 
 Receives Quill's article copy path + spec from Marco.
-Generates 2 header images via Higgsfield AI, selects the stronger one,
-merges copy + image into the article skeleton, and stages the files.
+Sources 2 header images (currently from Pexels free stock), uses one as the
+article cover and saves the other as the alt, merges copy + image into the
+article skeleton, and stages the files.
 
-Image generation is a stub until the Higgsfield API key is set in agents/.env.
+Image acquisition order: canonical-on-disk → handoff/ready pickup →
+Pexels stock (PEXELS_API_KEY in agents/.env) → empty stub placeholder.
+AI generation (_generate_images_higgsfield) is retained but dormant —
+reserved for a later "custom images" build.
 """
 
 import re
@@ -142,19 +146,96 @@ def _generate_images_higgsfield(spec: dict, primary_path: str, alt_path: str):
         urllib.request.urlretrieve(img_url, tmp_path)
         generated_paths.append(tmp_path)
 
-    # Resize both to 1200×630 via PIL
+    # Resize both to 1200×630 and save.
+    for tmp, dest in zip(generated_paths, [primary_path, alt_path]):
+        _save_header_image(tmp, dest)
+
+
+def _save_header_image(tmp_path, dest_rel: str):
+    """Resize a downloaded image to the 1200×630 header size and save it as
+    JPEG at dest_rel (repo-relative), then delete the temp file."""
     try:
         from PIL import Image
-        for i, (tmp, dest) in enumerate(zip(generated_paths, [primary_path, alt_path])):
-            with Image.open(tmp) as img:
-                img = img.convert("RGB")
-                img = img.resize((1200, 630), Image.LANCZOS)
-                full_dest = REPO_ROOT / dest
-                full_dest.parent.mkdir(parents=True, exist_ok=True)
-                img.save(full_dest, "JPEG", quality=90)
-            tmp.unlink(missing_ok=True)
     except ImportError:
         raise RuntimeError("[maya] Pillow not installed — run: pip install Pillow")
+    dest = REPO_ROOT / dest_rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    with Image.open(tmp_path) as img:
+        img = img.convert("RGB").resize((1200, 630), Image.LANCZOS)
+        img.save(dest, "JPEG", quality=90)
+    Path(tmp_path).unlink(missing_ok=True)
+
+
+def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str):
+    """
+    Source 2 header images from Pexels (free stock photography) based on the
+    article's category + mood, then resize + save them to primary_path (used
+    as the article cover) and alt_path (saved alternate). Same "grab 2, use 1,
+    save 1" contract as generation — only the acquisition method differs.
+
+    Requires PEXELS_API_KEY in agents/.env (free key: https://www.pexels.com/api/).
+    Raises on any failure so the caller can fall back to stub placeholders.
+    """
+    import os
+    import json
+    import urllib.request
+    import urllib.parse
+    import urllib.error
+
+    api_key = os.environ.get("PEXELS_API_KEY", "")
+    if not api_key:
+        raise RuntimeError("[maya] PEXELS_API_KEY not set in agents/.env")
+
+    category = spec.get("category", "technology")
+    mood = spec.get("mood", "")
+    query = f"{category} {mood}".strip() or "technology"
+
+    # A real User-Agent is required — Pexels sits behind Cloudflare, which
+    # bans the default "Python-urllib" signature (403 / error 1010).
+    ua = (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    )
+
+    # Pull a small pool so the primary and alt are visually distinct.
+    params = urllib.parse.urlencode({
+        "query": query,
+        "orientation": "landscape",
+        "per_page": 15,
+        "size": "large",
+    })
+    req = urllib.request.Request(
+        f"https://api.pexels.com/v1/search?{params}",
+        headers={"Authorization": api_key, "User-Agent": ua},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read())
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode(errors="ignore")
+        raise RuntimeError(f"[maya] Pexels search failed ({exc.code}): {body}") from exc
+
+    photos = data.get("photos") or []
+    if len(photos) < 2:
+        raise RuntimeError(
+            f"[maya] Pexels returned <2 photos for query '{query}' — cannot fill primary + alt"
+        )
+
+    # Primary = top hit; alt = the next distinct photo in the pool.
+    for i, (photo, dest) in enumerate(zip([photos[0], photos[1]], [primary_path, alt_path])):
+        src = photo.get("src", {})
+        img_url = src.get("large2x") or src.get("large") or src.get("original")
+        if not img_url:
+            raise RuntimeError(f"[maya] Pexels photo {photo.get('id')} has no usable src URL")
+        tmp_path = REPO_ROOT / f"_maya_stock_tmp_{i}.jpg"
+        dl = urllib.request.Request(img_url, headers={"User-Agent": ua})
+        with urllib.request.urlopen(dl, timeout=60) as r, open(tmp_path, "wb") as fh:
+            fh.write(r.read())
+        _save_header_image(tmp_path, dest)
+        log.info(
+            f"[maya] stock image #{i} from Pexels (photo id {photo.get('id')}, "
+            f"query '{query}') -> {dest}"
+        )
 
 
 def _pickup_from_handoff(number: int, og_image: str, alt_image: str) -> bool:
@@ -213,7 +294,7 @@ def run(article_path: str, spec: dict) -> str:
     if not (REPO_ROOT / article_path).exists():
         raise RuntimeError(f"[maya] Article copy not found at: {article_path}")
 
-    # ── Step 1: Image acquisition (canonical → handoff → generate) ────────────
+    # ── Step 1: Image acquisition (canonical → handoff → Pexels stock → stub) ─
     import os
     _primary_full = REPO_ROOT / og_image
     _alt_full     = REPO_ROOT / alt_image
@@ -234,11 +315,15 @@ def run(article_path: str, spec: dict) -> str:
 
         if _both_ready():
             log.info("[maya] images ready (canonical/handoff) — skipping generation")
-        elif os.environ.get("HIGGSFIELD_API_KEY") and os.environ.get("HIGGSFIELD_API_SECRET"):
-            log.info("[maya] generating images via Higgsfield")
-            _generate_images_higgsfield(spec, og_image, alt_image)
+        elif os.environ.get("PEXELS_API_KEY"):
+            log.info("[maya] sourcing stock header images via Pexels")
+            try:
+                _fetch_stock_images(spec, og_image, alt_image)
+            except Exception as exc:
+                log.warning(f"[maya] stock fetch failed ({exc}) — using stub placeholders")
+                _generate_images_stub(spec, og_image, alt_image)
         else:
-            log.info("[maya] HIGGSFIELD_API_KEY/SECRET not set — using stub placeholder images")
+            log.info("[maya] PEXELS_API_KEY not set — using stub placeholder images")
             _generate_images_stub(spec, og_image, alt_image)
 
     # ── Step 2: CC agent merges copy into full article skeleton ──
