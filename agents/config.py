@@ -37,7 +37,18 @@ BUDGET_MAP = {
     "priya":  5_000,
     "scout":  50_000,
     "trend_scout": 12_000,  # topic selection only — not full research (that's Scout's 50k)
-    "quill":  22_000,  # hard cap — Cora enforces 1600-1800 word output limit
+    "writer": 20_000,  # free-form persona draft (Joselito/Dawn/Kenji) — added 2026-07-04,
+                        # was previously uncounted: token_budget.json had no bucket for the
+                        # Writer stage at all, so its CC calls were invisible to Cora.
+                        # NOTE (Direction B, 2026-07-04): the full pipeline no longer spends
+                        # a separate Writer CC call — Quill authors+edits in one call when no
+                        # pre-staged draft exists (agents/quill.py). The WR bucket is now
+                        # populated ONLY by the standalone Writer batch (run_writer_batch.py);
+                        # in a from-scratch pipeline run the authoring cost lands in QL below.
+    "quill":  42_000,  # authoring + editing in the merged path (was 22k when Quill only
+                        # edited a separate Writer draft; raised to writer+quill combined so
+                        # Cora's 80% threshold doesn't spuriously trip now that one QL call
+                        # carries both stages). Cora still enforces the 1600-1800 word ceiling.
     "maya":   15_000,
     "vera":   5_000,
     "lumen":  10_000,

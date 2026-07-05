@@ -86,8 +86,11 @@ def _list_cached_research() -> list[str]:
 def _find_research_path(slug: str, number: int):
     """
     Return the first existing research file for this article, or the canonical path.
-    Checks slug-keyed paths first, then falls back to a glob on article number
-    (handles cases where Priya returns a different slug between runs).
+    Checks slug-keyed paths first, then a _meta.article_number scan (handles a
+    caller's slug drifting from Priya's actual chosen slug — e.g.
+    run_writer_batch.py's mechanical title-slugify vs. Priya's CC-picked
+    "persuasion-engine" for #19, confirmed 2026-07-04), then falls back to a
+    glob on the article number appearing in the filename itself.
     """
     padded = str(number).zfill(3)
     candidates = [
@@ -97,12 +100,29 @@ def _find_research_path(slug: str, number: int):
     for p in candidates:
         if p.exists() and p.stat().st_size > 100:
             return p
-    # Glob fallback: any research file containing the article number
+
     research_dir = REPO_ROOT / "articles" / "research"
-    for p in sorted(research_dir.glob(f"*{padded}*research*.json")):
-        if p.stat().st_size > 100:
-            log.info(f"[scout] found existing research via number glob: {p.name}")
-            return p
+    if research_dir.exists():
+        # Metadata scan: authoritative match on article_number regardless of
+        # slug drift. Every research file's _meta.article_number is the
+        # canonical row number, so this is safe even if the slug text differs.
+        for p in sorted(research_dir.glob("*-research.json")):
+            if p.stat().st_size <= 100:
+                continue
+            try:
+                meta = json.loads(p.read_text(encoding="utf-8")).get("_meta", {})
+            except (json.JSONDecodeError, OSError):
+                continue
+            if meta.get("article_number") == number:
+                log.info(f"[scout] found existing research via _meta.article_number scan: {p.name}")
+                return p
+
+        # Glob fallback: any research file containing the article number in its filename.
+        for p in sorted(research_dir.glob(f"*{padded}*research*.json")):
+            if p.stat().st_size > 100:
+                log.info(f"[scout] found existing research via number glob: {p.name}")
+                return p
+
     return candidates[0]  # canonical path — will be created on first run
 
 

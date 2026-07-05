@@ -38,24 +38,42 @@ def prepare_quill_call(spec: dict) -> dict:
 def init_budget(article_number: int) -> dict:
     """
     Write the initial token_budget.json for a new pipeline run.
-    Called by Marco at the start of each run.
+    Called by Marco at the start of each run — and again right after Priya
+    returns, in case Priya's CC call revised the article number.
+
+    Idempotent as of 2026-07-04: if token_budget.json already exists for
+    this exact run_date + article_number, it is returned unchanged instead
+    of being zeroed out. Before this fix, a resumed/retried run (e.g.
+    crashing at Quill and re-running python run.py the same day) would call
+    init_budget() again and silently wipe out any usage the earlier stages
+    (Priya, Scout, Writer) had just recorded for the SAME article — which
+    also means Marco must call this before Priya's own CC call now, not
+    only after, so Priya's usage has somewhere real to land.
     """
+    today = date.today().isoformat()
+    existing = read_json("token_budget.json")
+    if existing.get("run_date") == today and existing.get("article_number") == article_number:
+        log.info(f"[cora] token_budget.json already initialized for #{article_number} today — preserving usage")
+        return existing
+
     budget = {
-        "run_date": date.today().isoformat(),
+        "run_date": today,
         "article_number": article_number,
         "agents": {
-            "IR":  {"budget": BUDGET_MAP["iris"],   "used": 0, "status": "idle"},
-            "PR":  {"budget": BUDGET_MAP["priya"],  "used": 0, "status": "idle"},
-            "SC":  {"budget": BUDGET_MAP["scout"],  "used": 0, "status": "idle"},
-            "QL":  {"budget": BUDGET_MAP["quill"],  "used": 0, "status": "idle"},
-            "MY":  {"budget": BUDGET_MAP["maya"],   "used": 0, "status": "idle"},
-            "VR":  {"budget": BUDGET_MAP["vera"],   "used": 0, "status": "idle"},
-            "PT":  {"budget": 0,                     "used": 0, "status": "idle"},
-            "NV":  {"budget": 0,                     "used": 0, "status": "idle"},
-            "EC":  {"budget": 0,                     "used": 0, "status": "idle"},
-            "LM":  {"budget": BUDGET_MAP["lumen"],  "used": 0, "status": "idle"},
-            "CO":  {"budget": BUDGET_MAP["cora"],   "used": 0, "status": "idle"},
-            "MR":  {"budget": 0,                     "used": 0, "status": "idle"},
+            "IR":  {"budget": BUDGET_MAP["iris"],        "used": 0, "status": "idle"},
+            "PR":  {"budget": BUDGET_MAP["priya"],       "used": 0, "status": "idle"},
+            "SC":  {"budget": BUDGET_MAP["scout"],       "used": 0, "status": "idle"},
+            "TS":  {"budget": BUDGET_MAP["trend_scout"], "used": 0, "status": "idle"},
+            "WR":  {"budget": BUDGET_MAP["writer"],      "used": 0, "status": "idle"},
+            "QL":  {"budget": BUDGET_MAP["quill"],       "used": 0, "status": "idle"},
+            "MY":  {"budget": BUDGET_MAP["maya"],        "used": 0, "status": "idle"},
+            "VR":  {"budget": BUDGET_MAP["vera"],        "used": 0, "status": "idle"},
+            "PT":  {"budget": 0,                          "used": 0, "status": "idle"},
+            "NV":  {"budget": 0,                          "used": 0, "status": "idle"},
+            "EC":  {"budget": 0,                          "used": 0, "status": "idle"},
+            "LM":  {"budget": BUDGET_MAP["lumen"],       "used": 0, "status": "idle"},
+            "CO":  {"budget": BUDGET_MAP["cora"],        "used": 0, "status": "idle"},
+            "MR":  {"budget": 0,                          "used": 0, "status": "idle"},
         },
     }
     write_json("token_budget.json", budget)

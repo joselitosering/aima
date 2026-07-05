@@ -1,10 +1,1 @@
-[
-  {
-    "id": "pipeline_1783234500000",
-    "script": "pipeline",
-    "when": "2026-07-05T06:55:00.000Z",
-    "recurrence": "DAILY",
-    "taskName": "AIMA_pipeline_1783234500000",
-    "created": "2026-07-03T19:45:41.496Z"
-  }
-]
+[]

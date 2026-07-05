@@ -1,6 +1,6 @@
 {
-  "run_date": "2026-07-03",
-  "article_number": 19,
+  "run_date": "2026-07-04",
+  "article_number": 20,
   "agents": {
     "IR": {
       "budget": 8000,
@@ -17,8 +17,18 @@
       "used": 0,
       "status": "idle"
     },
+    "TS": {
+      "budget": 12000,
+      "used": 0,
+      "status": "idle"
+    },
+    "WR": {
+      "budget": 20000,
+      "used": 0,
+      "status": "idle"
+    },
     "QL": {
-      "budget": 22000,
+      "budget": 42000,
       "used": 0,
       "status": "idle"
     },

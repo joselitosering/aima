@@ -13,25 +13,31 @@ import re
 from pathlib import Path
 
 from agents.base import call_cc_agent, read_file, write_file, REPO_ROOT, log
+from agents.scout import _find_research_path
 
 DRAFTS_DIR = "articles/drafts"
 
 # Per-author form, length, and voice. Length drives the writer; Quill (editor)
 # later trims/expands to Vera's checklist.
+# Per-author form, length, and voice. Ranges lowered 2026-07-04 (Joe) to cut
+# per-article tokens: Joselito 1800+→1200-1500, Dawn 1200-1500→1000-1200,
+# Kenji 900-1200→800-1000. The finished-article length that these drive is also
+# what Marco caps the merged/edit word target to (agents/marco.py Stage 3), so
+# articles no longer balloon back past persona length.
 AUTHOR_SPECS = {
     "joselito": {
         "name": "Joselito Sering", "persona_file": "joselito-sering.md",
-        "form": "editorial", "range": "1800+ words", "target_words": 1900,
+        "form": "editorial", "range": "1200-1500 words", "target_words": 1350,
         "voice": "conviction-driven editorial — frames AI as a new creative instrument, not a shortcut",
     },
     "dawn": {
         "name": "Dawn Ginhaua", "persona_file": "dawn-ginhaua.md",
-        "form": "investigative report", "range": "1200-1500 words", "target_words": 1350,
+        "form": "investigative report", "range": "1000-1200 words", "target_words": 1100,
         "voice": "investigative, evidence-first, link-heavy — cite primary sources inline",
     },
     "kenji": {
         "name": "Kenji Nakamoto", "persona_file": "kenji-nakamoto.md",
-        "form": "blog post", "range": "900-1200 words", "target_words": 1050,
+        "form": "blog post", "range": "800-1000 words", "target_words": 900,
         "voice": "optimistic, accessible blog — grounded in what the tech makes possible for real people",
     },
 }
@@ -84,14 +90,23 @@ def run(spec: dict, research: dict, author: str | None = None) -> str:
     padded = str(spec.get("number", 0)).zfill(3)
     draft_path = f"{DRAFTS_DIR}/{slug}-{padded}-draft.html"
 
-    try:
-        persona = read_file(f"articles/personas/{a['persona_file']}")
-    except FileNotFoundError:
-        persona = f"[Persona profile not found — write as {a['name']}: {a['voice']}.]"
-    try:
-        format_guide = read_file("articles/aima-coworker-prompt.md")
-    except FileNotFoundError:
-        format_guide = "[Format guide not found — use the standard AIMA article HTML structure.]"
+    # Context-by-path (2026-07-04): pass the big context (research, persona,
+    # format guide) as FILE PATHS for the agent to Read, instead of inlining
+    # their full text. Inlined text sits in the prompt prefix that is re-processed
+    # as cache_read on every tool turn — the dominant token term in an authoring
+    # call. A small user_input shrinks the initial cache-creation and lets the
+    # agent read only what it needs (same pattern Maya/Scout already use).
+    persona_file = f"articles/personas/{a['persona_file']}"
+    format_guide_path = "articles/aima-coworker-prompt.md"
+    research_path = _find_research_path(spec["slug"], spec.get("number", 0))
+    if research_path.exists() and research_path.stat().st_size > 100:
+        research_ref = ("- RESEARCH (use these sources/stats/quotes; cite inline): "
+                        f"{research_path.relative_to(REPO_ROOT).as_posix()}")
+    else:
+        # No research file on disk — inline whatever we were handed so the
+        # no-fabrication rule still has something to check against.
+        research_ref = ("RESEARCH (none on disk — use ONLY what is inlined here; "
+                        "flag every gap, do not invent):\n" + json.dumps(research, indent=2))
 
     user_input = f"""\
 WRITER ASSIGNMENT — write as {a['name']} ({a['form']}).
@@ -105,14 +120,10 @@ VOICE: {a['voice']}
 ARTICLE SPEC (topic + tags from Priya's calendar):
 {json.dumps(spec, indent=2)}
 
-RESEARCH (from Scout — use these sources/stats/quotes; cite inline):
-{json.dumps(research, indent=2)}
-
-PERSONA PROFILE:
-{persona}
-
-HTML FORMAT REFERENCE (produce the AIMA article HTML; the editor will refine):
-{format_guide}
+READ THESE FILES FIRST with your Read tool (on disk; do NOT skip any):
+- PERSONA PROFILE (fully adopt this voice): {persona_file}
+- HTML FORMAT REFERENCE (produce AIMA article HTML; the editor refines): {format_guide_path}
+{research_ref}
 
 Write the complete article HTML now and save it to: {draft_path}
 Then return the HTML to stdout.\

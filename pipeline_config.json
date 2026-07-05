@@ -1,12 +1,12 @@
 {
-  "RESEARCH_ENABLED": true,
-  "WRITE_ENABLED": true,
-  "MAYA_ENABLED": true,
-  "QC_GATE": "human",
-  "PUBLISH_ENABLED": true,
-  "GS_ENABLED": true,
-  "MARKETING_ENABLED": true,
-  "ANALYTICS_ENABLED": true,
-  "LUMEN_ENABLED": true,
-  "CORA_ENABLED": true
+    "RESEARCH_ENABLED":  true,
+    "WRITE_ENABLED":  true,
+    "MAYA_ENABLED":  true,
+    "QC_GATE":  "auto",
+    "PUBLISH_ENABLED":  true,
+    "GS_ENABLED":  true,
+    "MARKETING_ENABLED":  true,
+    "ANALYTICS_ENABLED":  true,
+    "LUMEN_ENABLED":  true,
+    "CORA_ENABLED":  true
 }

@@ -21,6 +21,7 @@ import argparse
 import json
 import re
 import sys
+import traceback
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
@@ -70,7 +71,28 @@ def resolve_spec(article: str | None = None) -> dict | None:
     row = rows.get(num)
     if not row:
         return None
-    return {"number": num, "slug": _slugify(row["title"]), "title": row["title"],
+
+    slug = _slugify(row["title"])
+    # This mechanical slugify can drift from Priya's actual CC-chosen spec slug
+    # (confirmed 2026-07-04: #19 "The Persuasion Engine..." -> this function
+    # produces "the-persuasion-engine-ai-social", but Priya's real spec/research
+    # used "persuasion-engine"). If research already exists for this article
+    # number, adopt ITS slug so the draft lands under the same canonical name
+    # Marco/Quill/Maya will look for later — otherwise the writer batch either
+    # HALTs on a false "no_research" or writes a draft under a slug the rest of
+    # the pipeline never finds again.
+    existing = _find_research_path(slug, num)
+    if existing.exists() and existing.stat().st_size > 100:
+        try:
+            meta_slug = json.loads(existing.read_text(encoding="utf-8")).get("_meta", {}).get("slug")
+        except (json.JSONDecodeError, OSError):
+            meta_slug = None
+        if meta_slug and meta_slug != slug:
+            log.info(f"[writer-batch] slug drift: calendar-title slug '{slug}' -> "
+                     f"adopting Priya's existing research slug '{meta_slug}'")
+            slug = meta_slug
+
+    return {"number": num, "slug": slug, "title": row["title"],
             "category": row["category"], "author": row["author"],
             "tone_note": row["tone_note"], "custom_tags": []}
 
@@ -105,7 +127,14 @@ def main():
     key = writer.resolve_author(spec, args.author)
     log.info(f"[writer-batch] #{spec['number']:03d} '{spec['title'][:44]}' "
              f"-> writer={writer.AUTHOR_SPECS[key]['name']} ({writer.AUTHOR_SPECS[key]['range']})")
-    path = writer.run(spec, research, author=args.author)
+    try:
+        path = writer.run(spec, research, author=args.author)
+    except Exception:
+        # Full traceback now persists to pipeline.log (agents/base.py FileHandler,
+        # added 2026-07-04) instead of vanishing when a scheduled/detached run's
+        # console closes. Exit non-zero rather than an unhandled crash banner.
+        log.error(f"[writer-batch] Writer failed for #{spec['number']:03d}:\n{traceback.format_exc()}")
+        sys.exit(3)
     log.info(f"[writer-batch] Done. Draft -> {path}  (Quill edits this in the full pipeline)")
 
 

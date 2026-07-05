@@ -11,8 +11,21 @@ load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 
 REPO_ROOT = Path(__file__).parent.parent
 
+_LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
 log = logging.getLogger("aima")
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+log.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO, format=_LOG_FORMAT)
+
+# Persistent file logging — added 2026-07-04 after a scheduled run (schtasks,
+# no stdout/stderr redirection) died silently mid-pipeline with zero record of
+# why. Console-only logging is invisible once Task Scheduler's console window
+# closes. This appends every run (interactive or scheduled) to pipeline.log so
+# a crash is always diagnosable afterward. See CLAUDE.md / HANDOFF.md
+# "Pipeline Scheduled-Run Silent Failure" for the incident this fixes.
+if not any(isinstance(h, logging.FileHandler) for h in log.handlers):
+    _file_handler = logging.FileHandler(REPO_ROOT / "pipeline.log", encoding="utf-8")
+    _file_handler.setFormatter(logging.Formatter(_LOG_FORMAT))
+    log.addHandler(_file_handler)
 
 # ─────────────────────────────────────────────────────────────
 # DRY-RUN STUB MODE
@@ -100,14 +113,71 @@ if _CLAUDE_BIN is None:
 #                        Lumen, Cora, Iris
 # ─────────────────────────────────────────────────────────────
 
+# Maps call_cc_agent's `name` argument to the two-letter code used in
+# token_budget.json. Added 2026-07-04 alongside real usage capture — see
+# _record_token_usage(). Writer personas (joselito/dawn/kenji) all post to
+# one "WR" bucket since token_budget.json tracks by pipeline stage, not by
+# individual persona. Unmapped names fall back to their own upper-cased
+# initials in _record_token_usage() rather than being silently dropped.
+_AGENT_CODE_MAP = {
+    "iris": "IR", "priya": "PR", "scout": "SC", "trend_scout": "TS",
+    "quill": "QL", "maya": "MY", "vera": "VR", "lumen": "LM", "cora": "CO",
+    "joselito": "WR", "dawn": "WR", "kenji": "WR",
+}
+
+
+def _record_token_usage(name: str, tokens: int, cost_usd: float | None):
+    """Add real usage from one CC call into token_budget.json.
+
+    Added 2026-07-04 — this is the fix for the gap Cora flagged CRITICAL on
+    article #19: token_budget.json previously only ever had `used: 0`
+    written by cora.init_budget(); nothing ever incremented it, because
+    call_cc_agent() ran the CLI in plain-text (--print) mode, which returns
+    no usage data at all. There is nothing to parse in that mode — the fix
+    is capturing the numbers the CLI already reports in --output-format
+    json (usage.input_tokens / output_tokens / cache_*_tokens,
+    total_cost_usd — see https://code.claude.com/docs/en/headless), not a
+    smarter guess. This function is best-effort: a failure here must never
+    take down a pipeline run over an accounting nicety, so it swallows its
+    own errors after logging.
+    """
+    code = _AGENT_CODE_MAP.get(name, name.upper()[:2])
+    budget_path = REPO_ROOT / "token_budget.json"
+    try:
+        budget = json.loads(budget_path.read_text(encoding="utf-8")) if budget_path.exists() else {"agents": {}}
+        agents = budget.setdefault("agents", {})
+        entry = agents.setdefault(code, {"budget": 0, "used": 0, "status": "idle"})
+        entry["used"] = entry.get("used", 0) + tokens
+        cap = entry.get("budget", 0)
+        entry["status"] = (
+            "over_budget" if cap and entry["used"] > cap else
+            "warning" if cap and entry["used"] / cap >= 0.8 else
+            "used"
+        )
+        if cost_usd is not None:
+            entry["last_call_cost_usd"] = cost_usd
+            entry["cumulative_cost_usd"] = round(entry.get("cumulative_cost_usd", 0.0) + cost_usd, 6)
+        budget_path.write_text(json.dumps(budget, indent=2), encoding="utf-8")
+        log.info(f"[token] {code} +{tokens} tokens (call cost=${cost_usd if cost_usd is not None else '?'}) "
+                 f"— cumulative used={entry['used']}" + (f"/{cap}" if cap else ""))
+    except Exception as exc:
+        log.warning(f"[token] could not record usage for {name} ({code}): {exc}")
+
+
 def call_cc_agent(name: str, system_prompt: str, user_input: str,
                   max_tokens: int = None, model_override: str = None) -> str:
     """
     Invoke a Claude Code subagent via the 'claude' CLI.
     Subscription-billed — do NOT set ANTHROPIC_API_KEY in env.
 
-    Returns the agent's text output (stdout).
+    Returns the agent's text output (the CLI's `result` field).
     Raises RuntimeError on non-zero exit code.
+
+    Runs with --output-format json (added 2026-07-04) so real per-call
+    token usage and cost can be captured into token_budget.json via
+    _record_token_usage() — previously this ran in plain --print text mode,
+    which returns no usage data at all, so token_budget.json's `used` field
+    was permanently stuck at 0 (flagged CRITICAL by Cora on article #19).
     """
     from agents.config import CC_MODEL_OVERRIDE
 
@@ -123,7 +193,10 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
     # and cannot respond to interactive permission prompts when stdin is piped.
     # Safe here — we control every agent's system prompt and user input.
     # --system-prompt sets the role; user_input is piped via stdin.
+    # --output-format json: structured envelope with `result` (text) + `usage`
+    # + `total_cost_usd` — see https://code.claude.com/docs/en/headless.
     cmd = [_CLAUDE_BIN, "--print", "--dangerously-skip-permissions",
+           "--output-format", "json",
            "--system-prompt", system_prompt]
     if model:
         cmd += ["--model", model]
@@ -151,7 +224,29 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
             f"STDERR: {result.stderr or '(empty)'}\n"
             f"STDOUT (first 500): {stdout_snippet}"
         )
-    return result.stdout.strip()
+
+    raw_stdout = result.stdout.strip()
+    try:
+        payload = json.loads(raw_stdout)
+        text_output = payload.get("result", raw_stdout)
+        usage = payload.get("usage") or {}
+        total_tokens = (
+            usage.get("input_tokens", 0)
+            + usage.get("output_tokens", 0)
+            + usage.get("cache_creation_input_tokens", 0)
+            + usage.get("cache_read_input_tokens", 0)
+        )
+        cost_usd = payload.get("total_cost_usd")
+        _record_token_usage(name, total_tokens, cost_usd)
+    except (json.JSONDecodeError, AttributeError, TypeError) as exc:
+        # Fall back to treating stdout as plain text — matches the old
+        # behavior exactly, just without usage capture for this one call.
+        # Never let an accounting parse failure take down the pipeline.
+        log.warning(f"[{name.upper()}] --output-format json did not parse ({exc}) — "
+                    f"using raw stdout, usage not recorded this call")
+        text_output = raw_stdout
+
+    return text_output
 
 
 # ─────────────────────────────────────────────────────────────

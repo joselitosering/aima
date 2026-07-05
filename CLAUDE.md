@@ -1,5 +1,10 @@
 # AIMA Project Memory
 
+### Cora token tracking — FIXED (2026-07-04)
+Root cause: `call_cc_agent()` ran the `claude` CLI in plain `--print` text mode, which returns no usage data at all — `token_budget.json`'s `used` field was never incremented anywhere in the codebase (only ever zero-initialized by `cora.init_budget()`). Cora's prompt was asking the model to guess a `total_tokens_used` number with no real data in front of it.
+
+Fix: `agents/base.py::call_cc_agent()` now runs with `--output-format json` and extracts `result` (text), `usage.{input,output,cache_creation_input,cache_read_input}_tokens`, and `total_cost_usd` from the CLI's own JSON envelope (verified live against a real trivial CC call — schema matches https://code.claude.com/docs/en/headless exactly). New `_record_token_usage()` writes real per-call totals + cost into `token_budget.json`. `cora.init_budget()` is now idempotent per run_date+article_number (a resumed run no longer wipes usage already recorded); `marco.py` now inits the budget *before* Priya's own CC call too, so her usage has somewhere real to land. Also closed two silent gaps: Trend Scout ("TS") and the Writer stage ("WR", all three personas share one bucket) had no budget entry at all before this fix — they were invisible to Cora even after tracking is fixed for everyone else. Not yet validated inside a real full pipeline run — first real run after this change is the actual test; check `token_budget.json` after for non-zero `used` values before trusting Cora's next governance report's numbers.
+
 ## Agents — start here (v2.6, Batch & Toggle Integration)
 
 **Read [AIMA-HANDOFF-v2.6.md](AIMA-HANDOFF-v2.6.md) first**, then this File Map. Routing:
@@ -281,3 +286,110 @@ This makes Scout fully pre-loadable — she can run on her own schedule to cache
 - **Scheduled:** Daily via Cowork task `aima-article-coworker`
 - **State file:** `articles/aima-coworker-state.json`
 - **Note:** Article #014 (Hallucination Nation) was skipped in sequence — write it before publishing article #016 if strict numbering matters.
+
+
+### Pipeline CRASH — #19 'The Persuasion Engine: AI, Social Media, and the Death of Shared Reality' — stage 'quill' (2026-07-04)
+- **Error:** CC agent [quill] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): You've hit your session limit · resets 3:50pm (America/Los_Angeles)
+
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 176, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 143, in run
+    raw_html = call_cc_agent("quill", QUILL_PROMPT, user_input)
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 162, in call_cc_agent
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: CC agent [quill] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): You've hit your session limit · resets 3:50pm (America/Los_Angeles)
+
+
+```
+
+**RESOLVED 2026-07-04 17:33.** Re-ran `python run.py` after the 3:50pm PT session-limit reset. Marco correctly resumed from cache — Priya rebuilt the spec (only new CC call needed), Scout/Writer both hit cached artifacts (no CC calls), Quill succeeded clean on retry (0 revisions). Pipeline ran all the way through Porter (published, GS row 20) and Nova (LinkedIn company post + personal reshare) — QC_GATE was `auto` for this run per Joe's explicit instruction. Full resume wall-clock: ~25.8 min (17:07:23–17:33:11).
+
+**New finding from Cora's governance report (article #19, CRITICAL):** `token_budget.json` usage tracking is broken — `used=0` for every agent across two consecutive runs (#018 and #019). Cora flagged this HIGH after #018 and it wasn't actioned; now flagged CRITICAL with a recommendation to hold the pipeline at #020 until per-agent token usage is actually wired into each agent's completion callback. Until fixed, no real token/cost numbers exist for any pipeline run — budgets in `token_budget.json` are ceilings only, not measurements. Also flagged: 2 MEDIUM hallucination-risk stats in #19 (WEF 70%/64% survey figures — source blocked HTTP 403, Quill disclosed the limitation inline; Europol 90% synthetic-content projection — original report URL unconfirmed, framed as a projection not a measurement). Both mitigated in the published copy but flagged for follow-up verification before re-citation elsewhere.
+- Full run log: pipeline.log
+
+### Marco cost redesign — Direction B: Writer merged into Quill (2026-07-04)
+**What & why.** Marco's real cost driver is the number of *distinct cold `claude`
+subprocess launches* per article (each pays its own system-prompt cache-creation
+event), not lack of `--resume` context-carrying (a live 3-call test confirmed
+`--resume` chaining does NOT help — see the task file). Direction B collapses the
+two most-mergeable cold starts: the **Writer** stage no longer spends its own
+subprocess inside the full pipeline. When no pre-staged draft exists, **Quill now
+AUTHORS then EDITS in one call** (two phases: write freely in the row author's
+persona voice using the Writer stage's own form/length/voice spec, then edit that
+draft to Vera's checklist). One cold-start removed per from-scratch article.
+
+**Files.** `agents/quill.py` (two-phase authoring in the no-draft branch, imports
+`writer.AUTHOR_SPECS`/`resolve_author`), `agents/marco.py` Stage 3 (drops the
+separate `writer.run()` cold call; keeps `writer.find_draft()` reuse), `agents/
+config.py` (QL budget 22k→42k so Cora's 80% threshold doesn't trip now that one QL
+call carries authoring+editing; WR documented as standalone-batch-only in the
+merged pipeline). `writer.run()` and `run_writer_batch.py` are UNCHANGED — the
+standalone Writer batch still pre-stages drafts, which the merged Quill EDIT path
+reuses exactly as before.
+
+**Real measured cost (not an estimate).** `measure_writer_quill_merge.py` ran 3
+real CC calls on cached #19 research (Dawn persona, target 1400w), reading each
+call's real `total_cost_usd` from `token_budget.json` deltas:
+- OLD: Writer $0.9016 (253,880 tok) + Quill-edit $0.6283 (75,230 tok) = **$1.5299**
+- NEW: merged author+edit **$0.8719** (139,067 tok) — cheaper than the old Writer
+  call *alone*.
+- **Savings: $0.658/article = 43%** on the Writer+Quill stages, ~58% fewer tokens.
+(Probe corroboration: even a trivial one-word CC call cost $0.0584 with 8,962
+cache-creation tokens — the fixed per-cold-start overhead the merge eliminates.)
+
+**Guardrails — all verified preserved:** Vera still halts+reports (Stage 6
+untouched); Writer no-research HALT in the batch untouched + merged prompt keeps
+"don't invent beyond the research, flag gaps"; skip-and-reuse intact for research /
+pre-staged draft / final article (crash-recovery via final-article skip preserved);
+all `pipeline_config.json` toggles honored (only Stage 3 internals changed under
+`WRITE_ENABLED`); Trend Scout remains the SOLE calendar mutator (I deliberately did
+NOT merge Trend Scout→Priya — that would spread calendar-write permission); one
+canonical calendar sequence (merged path uses the row's Author attribute via
+`resolve_author`, no track logic); Cora attribution stays real (one call = one
+honest bucket, no fabricated split).
+
+**Open item — output quality not yet end-to-end verified.** The A/B harness deletes
+its throwaway outputs, and the merged call's stdout-fallback capture was much
+shorter (6,421 chars) than the old path's (44,878) — likely a harness artifact
+(direct Write-tool file vs stdout capture) rather than a real truncation, but
+UNCONFIRMED. Confirm equivalent article quality on the next real `python run.py`:
+the merged Quill output still routes through Maya + **Vera's QC gate**, which HALTS
+a too-short/under-structured article (word-count + 5-6 H2 + stat-grid checks) — so a
+quality regression cannot silently publish, it surfaces as a Vera halt. Deliberately
+NOT changed beyond the merge: Maya (its only CC call *is* the skeleton merge —
+nothing to collapse), Priya/Scout/Vera/Cora voices and quality bars.
+
+### Marco cost redesign — round 2 tuning: context-by-path + lower persona lengths (2026-07-04)
+Follow-up to the Direction B merge above, both aimed at getting the merged authoring
+call below ~125k tokens. Joe asked; will be confirmed on the next real run.
+- **Context-by-path.** `agents/writer.py` and `agents/quill.py` no longer INLINE the
+  full research JSON (~6.8k tok), format guide `aima-coworker-prompt.md` (~4.7k tok),
+  persona (~1.2k tok), or writer draft into `user_input`. They now pass those as FILE
+  PATHS for the agent to Read with its own tool. Measured effect on the initial prompt:
+  writer `user_input` ~50,000 → **1,301 chars**; quill ~50,000 → **1,911 chars**. That
+  slashes the one-time cache-creation and, more importantly, stops the big context from
+  sitting in the prompt prefix that gets re-charged as `cache_read` on every tool turn
+  (the dominant token term). Same "pass the path, not the content" pattern Maya uses.
+  Safety: if no research file is on disk, the passed dict is still inlined so the
+  no-fabrication guardrail keeps something to check against.
+- **Lower persona lengths (Joe).** `AUTHOR_SPECS` in `agents/writer.py`: Joselito
+  1800+→1200-1500 (target 1350), Dawn 1200-1500→1000-1200 (1100), Kenji 900-1200→
+  800-1000 (900). `agents/marco.py` Stage 3 now caps the article word target to the
+  row author's persona `target_words` via `min(priya_target, persona_target)` — the
+  persona is the ceiling (Priya may still go shorter), so the finished article can't
+  balloon back past persona length and undo the saving. Vera's word-count check is
+  `target_words ±10%`, so it auto-adapts — no guardrail change.
+- **Caveat:** word count is the *smaller* lever (output is only ~15-22k of the 139k);
+  context-by-path is the bigger one. Re-measure with `measure_writer_quill_merge.py` or
+  read `token_budget.json` after the next real `python run.py` for the true landing number.
