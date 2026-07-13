@@ -26,7 +26,7 @@ AIMA_COMPANY_PAGE   = "https://www.linkedin.com/company/aimaproductions"
 PERSONA_BYLINES = {
     "joselito": "Joselito Sering · Editor-in-Chief, AIMA",
     "dawn":     "Dawn Ginhaua · Cultural Critic & Educator, AIMA",
-    "kenji":    "Kenji · Contributing Writer, AIMA",
+    "kenji":    "Kenji Nakamoto · Contributing Writer, AIMA",
 }
 
 # Hashtag library — brand anchors + audience/topic tags per keyword
