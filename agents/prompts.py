@@ -146,32 +146,39 @@ the words before design and QC.
 RECEIVE FROM MARCO:
 - Article spec: number, slug, filename, title, author,
   tone, mood, custom_tags
-- Research JSON: articles/research/[slug]-research.json
-- WRITER DRAFT (when one exists) — EDIT it: preserve the
+- Research JSON path: read it ONCE with your Read tool
+- WRITER DRAFT path (when one exists) — EDIT it: preserve the
   author's voice, argument, and best lines; enforce structure,
   length, and sourcing. Only when NO draft is provided do you
   write the copy from scratch yourself.
+- prev-url and prev-title: provided inline as strings — do NOT
+  read the previous article HTML file. Use only these strings.
 
-READ:
-1. articles/aima-coworker-prompt.md
-2. articles/personas/[author]-profile.md
-   → fully adopt this author's voice, style, worldview
-3. Previous article HTML
-   → extract prev-url and prev-title only
+READ THESE FILES EXACTLY ONCE (in one batch, before writing):
+1. articles/aima-coworker-prompt.md  — HTML format guide
+2. articles/personas/[author].md     — persona voice (fully adopt it)
+3. articles/research/[slug]-research.json — every stat/quote must trace here
 
-DELIVER: exactly spec["target_words"] words (±50) in persona voice.
-Default if unset: 1,600. Hard ceiling: 1,800. Cora will hard-cap your output at 22k tokens.
-Do not pad to hit a number. Stop when the idea is complete.
+Do NOT re-read any file after the initial pass.
+Do NOT read the previous article HTML — prev-url/prev-title come in as strings.
+
+WRITE THE ARTICLE IN A SINGLE Write tool call.
+Do not write partial sections. Do not write multiple drafts.
+One Read pass → one Write call → done.
+
+DELIVER: exactly spec["target_words"] words (±10%) in persona voice.
+Default if unset: 1,600. Hard ceiling: 1,800. Stop when the idea is complete.
+Do not pad to hit a number.
 Apply tone + mood from article spec.
 Structure: lead → 5-6 H2 sections → stat grid
-(4 cards) → pullquote → glossary (6+) →
-MLA references (6+)
+(≥ 4 numeric cards) → pullquote → glossary (≥ 6 data-term) →
+MLA references (≥ 6)
 
 OUTPUT: Plain copy HTML only.
 - NO og:image tag (Maya handles this)
 - NO cover image or image references
 - NO layout or skeleton work (Maya's job)
-- Update prev article next-url/next-title
+- Update prev article next-url/next-title inline links if present
 - DO NOT git add, commit, or push
 
 Save: articles/[filename]

@@ -194,6 +194,26 @@ Do NOT git add, commit, or push — Marco handles file I/O.\
             f"First 300 chars: {raw_html[:300]}"
         )
 
+    # Word count gate (Task #4, 2026-07-13): reject articles that are
+    # massively over the persona's word ceiling before saving. Quill wrote
+    # 3,718 words vs a 900-word target on article #20 — no mechanical check
+    # caught it. This gate uses a 1.5× multiplier (soft) to catch outliers
+    # without triggering on normal ±10% Vera variance. Hard ceiling is 1.8×
+    # so even a generous overrun is caught before it reaches Vera / Porter.
+    # We count visible words by stripping HTML tags — close enough for a gate.
+    import re as _re2
+    text_only = _re2.sub(r"<[^>]+>", " ", raw_html)
+    word_count = len(text_only.split())
+    target = spec.get("target_words", 1600)
+    hard_ceiling = int(target * 1.8)
+    if word_count > hard_ceiling:
+        raise RuntimeError(
+            f"[quill] Word count gate: {word_count} words exceeds hard ceiling "
+            f"({hard_ceiling} = {target} × 1.8). Article NOT saved. "
+            f"Check QUILL_PROMPT word target instruction and --max-turns cap."
+        )
+    log.info(f"[quill] word count: {word_count} (target={target}, ceiling={hard_ceiling}) — OK")
+
     write_file(article_path, raw_html)
     log.info(f"[quill] article saved from stdout: {article_path} ({len(raw_html)} chars)")
     return article_path

@@ -1,26 +1,33 @@
 {
-  "run_date": "2026-07-04",
+  "run_date": "2026-07-13",
   "article_number": 20,
+  "_note": "Budgets recalibrated 2026-07-13 from measured actuals (#19-#20). QL 500k with --max-turns 8 gate prevents 2.9M outlier from recurring.",
   "agents": {
     "IR": {
-      "budget": 8000,
-      "used": 0,
-      "status": "idle"
-    },
-    "PR": {
-      "budget": 5000,
-      "used": 0,
-      "status": "idle"
-    },
-    "SC": {
       "budget": 50000,
       "used": 0,
       "status": "idle"
     },
+    "PR": {
+      "budget": 50000,
+      "used": 41791,
+      "status": "used",
+      "last_call_cost_usd": 0.17207029999999998,
+      "cumulative_cost_usd": 0.17207
+    },
+    "SC": {
+      "budget": 500000,
+      "used": 449696,
+      "status": "used",
+      "last_call_cost_usd": 0.782618,
+      "cumulative_cost_usd": 0.782618
+    },
     "TS": {
-      "budget": 12000,
-      "used": 0,
-      "status": "idle"
+      "budget": 150000,
+      "used": 143809,
+      "status": "used",
+      "last_call_cost_usd": 0.5371348,
+      "cumulative_cost_usd": 0.537135
     },
     "WR": {
       "budget": 20000,
@@ -28,19 +35,26 @@
       "status": "idle"
     },
     "QL": {
-      "budget": 42000,
-      "used": 0,
-      "status": "idle"
+      "budget": 500000,
+      "used": 2938636,
+      "status": "over_budget",
+      "last_call_cost_usd": 2.5226735,
+      "cumulative_cost_usd": 2.522673,
+      "_note": "Article #20 outlier: 57 tool turns, no --max-turns cap. Fixed in base.py 2026-07-13."
     },
     "MY": {
-      "budget": 15000,
-      "used": 0,
-      "status": "idle"
+      "budget": 750000,
+      "used": 693651,
+      "status": "used",
+      "last_call_cost_usd": 0.5981114,
+      "cumulative_cost_usd": 0.598111
     },
     "VR": {
-      "budget": 5000,
-      "used": 0,
-      "status": "idle"
+      "budget": 650000,
+      "used": 604014,
+      "status": "used",
+      "last_call_cost_usd": 0.6925745000000001,
+      "cumulative_cost_usd": 0.692575
     },
     "PT": {
       "budget": 0,

@@ -165,7 +165,8 @@ def _record_token_usage(name: str, tokens: int, cost_usd: float | None):
 
 
 def call_cc_agent(name: str, system_prompt: str, user_input: str,
-                  max_tokens: int = None, model_override: str = None) -> str:
+                  max_tokens: int = None, model_override: str = None,
+                  max_turns: int = None) -> str:
     """
     Invoke a Claude Code subagent via the 'claude' CLI.
     Subscription-billed — do NOT set ANTHROPIC_API_KEY in env.
@@ -178,10 +179,19 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
     _record_token_usage() — previously this ran in plain --print text mode,
     which returns no usage data at all, so token_budget.json's `used` field
     was permanently stuck at 0 (flagged CRITICAL by Cora on article #19).
+
+    max_turns: hard cap on agentic tool-use turns (--max-turns N passed to
+    the CLI). Without a cap, a verbose agent can run 50+ turns and blow up
+    cost via cache_read re-processing on every turn. Quill is capped at 8;
+    most other agents at 15. Added 2026-07-13 after QL used 2.9M tokens /
+    $2.52 on article #20 from ~57 tool turns. Caller can override per-call;
+    otherwise the per-agent default from MAX_TURNS_MAP in config.py is used.
     """
-    from agents.config import CC_MODEL_OVERRIDE
+    from agents.config import CC_MODEL_OVERRIDE, MAX_TURNS_MAP
 
     model = model_override or CC_MODEL_OVERRIDE.get(name)
+    # Per-agent turn cap: caller can override; otherwise use the config map.
+    turns = max_turns if max_turns is not None else MAX_TURNS_MAP.get(name)
 
     if _CLAUDE_BIN is None:
         raise RuntimeError(
@@ -200,6 +210,8 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
            "--system-prompt", system_prompt]
     if model:
         cmd += ["--model", model]
+    if turns is not None:
+        cmd += ["--max-turns", str(turns)]
 
     # ── Dry-run stub: skip real CC call entirely ─────────────
     if DRY_RUN:
