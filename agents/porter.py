@@ -79,16 +79,30 @@ def run(spec: dict, dry_run: bool = False, gs_enabled: bool = True) -> dict:
             "deploy_timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
-    # Steps 1+2 — commit & push. Tolerate "nothing to commit/push" so an
+    # Steps 1+2 — commit & push. Tolerate "nothing to commit" so an
     # already-committed article (e.g. a standalone Publish batch re-run) still
     # proceeds to the deploy guard + GS log instead of erroring out.
+    # IMPORTANT: always verify the push succeeded — git_commit may no-op but
+    # the branch could still be ahead of origin (commit made outside this call).
     try:
         log.info(f"[porter] committing: {commit_msg}")
         git_commit(commit_msg)
+    except subprocess.CalledProcessError:
+        log.info("[porter] nothing new to commit — checking if push is still needed")
+
+    # Always push; git push is a no-op if already up-to-date, and guarantees
+    # the commit reaches origin before the deploy guard starts polling.
+    try:
         log.info("[porter] pushing to origin main")
         git_push()
-    except subprocess.CalledProcessError:
-        log.info("[porter] nothing new to commit/push — article already on origin; confirming deploy")
+    except subprocess.CalledProcessError as e:
+        # Only skip if git explicitly says "Everything up-to-date"
+        stderr = e.stderr.decode("utf-8", errors="replace") if e.stderr else ""
+        stdout = e.stdout.decode("utf-8", errors="replace") if e.stdout else ""
+        if "Everything up-to-date" in stderr or "Everything up-to-date" in stdout:
+            log.info("[porter] already up-to-date on origin")
+        else:
+            raise  # real push failure — propagate
 
     # Step 3 — deploy guard: wait for propagation, then poll the public page
     log.info(f"[porter] waiting {INITIAL_PROPAGATION_WAIT}s for page to propagate: {page_url}")

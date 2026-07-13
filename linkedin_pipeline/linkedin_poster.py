@@ -295,6 +295,9 @@ def post_to_linkedin(article):
     asset_urn = None
 
     if image_url:
+        # og:image may be a relative path (e.g. "img/articles/...") — resolve to absolute.
+        if image_url and not image_url.startswith("http"):
+            image_url = "https://aima.productions/" + image_url.lstrip("/")
         try:
             asset_urn = upload_cover_image(image_url)
         except Exception as e:
