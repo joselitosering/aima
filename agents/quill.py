@@ -1,17 +1,13 @@
 """Quill — EDITOR (CC subagent).
 
-Receives spec + research from Marco. When a free-form writer draft exists
-(articles/drafts/, produced by the standalone writer batch), Quill EDITS it
-into Vera-checklist-compliant copy-only HTML, preserving the author's voice.
+Receives spec + research + a Writer draft from Marco. Edits the draft into
+Vera-checklist-compliant copy-only HTML, preserving the author's voice.
 
-When no draft exists, Quill AUTHORS then EDITS in one CC call (two phases:
-write freely in the row author's persona voice, then edit that draft to the QC
-checklist). This is the Direction B merge (2026-07-04): the full pipeline no
-longer spends a separate cold `claude` subprocess on the Writer stage plus a
-second one here — it collapses both into this single call for from-scratch
-articles, removing one cold-start per article while keeping the write/edit
-separation intact. The standalone Writer batch (run_writer_batch.py →
-writer.run()) is unchanged and still pre-stages drafts that this EDIT path reuses.
+Marco always provides a draft_path (Writer.run() runs before Quill in the full
+pipeline since 2026-07-13 revert of Direction B). If draft_path is None, Quill
+falls back to authoring from scratch — but this path should not occur in normal
+full-pipeline runs. The standalone Writer batch (run_writer_batch.py) can also
+pre-stage drafts that Quill edits without a fresh Writer CC call.
 """
 
 import json
@@ -61,15 +57,12 @@ def run(spec: dict, research: dict, extra_instruction: str = "",
     filename = spec["filename"]
     author = spec["author"]
 
-    # Context-by-path (2026-07-04): pass the big context (research, format guide,
-    # persona, and any writer draft) as FILE PATHS for the agent to Read, instead
-    # of inlining their full text into user_input. Inlined text sits in the prompt
-    # prefix that is re-processed as cache_read on every tool turn — the dominant
-    # token term in a merged authoring call. A small user_input shrinks the initial
-    # cache-creation and lets the agent read only what it needs (same "pass the
-    # path, not the content" pattern Maya already uses for the article file).
+    # Context-by-path: pass big context as FILE PATHS for the agent to Read.
+    # Removed aima-coworker-prompt.md (18KB HTML template) from Quill's context
+    # entirely — that's Maya's job. Quill's job is edit-to-spec, which only
+    # needs the persona voice and the research to verify citations against.
+    # (2026-07-13, part of Direction B revert + format guide removal.)
     persona_file = f"articles/personas/{_persona_filename(author)}"
-    format_guide_path = "articles/aima-coworker-prompt.md"
 
     research_path = _find_research_path(spec["slug"], spec.get("number", 0))
     if research_path.exists() and research_path.stat().st_size > 100:
@@ -88,6 +81,10 @@ def run(spec: dict, research: dict, extra_instruction: str = "",
         log.warning(f"[quill] draft_path given but missing: {draft_path} — authoring from scratch")
         draft_path = None
 
+    # Direction B removed (2026-07-13): Quill is now EDIT-ONLY. Marco always
+    # runs Writer first, so draft_path should always be present in the full
+    # pipeline. The no-draft fallback is kept as a safety net but should not
+    # normally trigger.
     if draft_path:
         task_section = f"""\
 WRITER DRAFT to EDIT — read it with your Read tool; do NOT write from scratch: {draft_path}
@@ -101,36 +98,21 @@ YOUR TASK — EDIT that draft into the final copy-only article HTML:
   the research cannot support.
 - Hit the word target below (trim or expand as needed)."""
     else:
-        # Direction B (2026-07-04): no pre-staged Writer draft exists, so rather
-        # than spend one cold `claude` subprocess on the Writer stage and a
-        # SECOND one here on Quill, this single call AUTHORS then EDITS in two
-        # phases. That preserves the deliberate write-freely / edit-to-checklist
-        # separation the two stages had — it just no longer pays two cold-starts
-        # (see HANDOFF.md 2026-07-04, recommended fix #2). The author's form,
-        # length, and voice come from the Writer stage's own persona spec so the
-        # authored draft matches what the standalone Writer batch would produce.
+        # Fallback only — should not occur in full-pipeline runs (Marco runs Writer first).
         wa = AUTHOR_SPECS[resolve_author(spec)]
         task_section = f"""\
-NO WRITER DRAFT EXISTS — author AND edit in one pass, in two phases:
-
-PHASE 1 — WRITE (as {wa['name']}, {wa['form']}, ~{wa['range']}):
-Draft the article freely in this persona's authentic voice. Voice: {wa['voice']}.
-Use the RESEARCH file faithfully and cite sources inline; do NOT invent facts
-beyond it — flag any gap rather than filling it.
-
-PHASE 2 — EDIT your own Phase-1 draft into the final copy-only article HTML:
-- PRESERVE the voice, argument, and best lines you just wrote — you are now the editor.
-- Enforce the QC structure: 5-6 H2 sections, stat grid (>= 4 numeric cards),
-  1 pullquote, >= 6 glossary terms (data-term), >= 6 MLA references.
-- Keep every fact/citation consistent with the RESEARCH file; cut anything it can't support.
-- Hit the word target below (trim or expand as needed)."""
+NO WRITER DRAFT EXISTS (fallback) — write AND edit in one pass as {wa['name']}:
+Voice: {wa['voice']}. Form: {wa['form']}. Range: {wa['range']}.
+Use the RESEARCH file faithfully; do NOT invent — flag gaps.
+Enforce QC structure: 5-6 H2 sections, stat grid (>= 4 numeric cards),
+1 pullquote, >= 6 glossary terms (data-term), >= 6 MLA references.
+Hit the word target below."""
 
     user_input = f"""\
 ARTICLE SPEC:
 {json.dumps(spec, indent=2)}
 
 READ THESE FILES FIRST with your Read tool (on disk; do NOT skip any):
-- FORMAT GUIDE (AIMA article HTML structure to follow): {format_guide_path}
 - AUTHOR PERSONA (fully adopt this voice): {persona_file}
 {research_ref}
 
@@ -170,7 +152,7 @@ Do NOT git add, commit, or push — Marco handles file I/O.\
     import time as _time
     call_start = _time.time()
 
-    mode = f"editing draft {draft_path}" if draft_path else "authoring+editing in one call (Writer merged)"
+    mode = f"editing draft {draft_path}" if draft_path else "authoring+editing (no draft — fallback)"
     log.info(f"[quill] {mode} -> {filename} ({spec.get('target_words', 1600)} words)")
     raw_html = call_cc_agent("quill", QUILL_PROMPT, user_input)
 
@@ -217,3 +199,4 @@ Do NOT git add, commit, or push — Marco handles file I/O.\
     write_file(article_path, raw_html)
     log.info(f"[quill] article saved from stdout: {article_path} ({len(raw_html)} chars)")
     return article_path
+                                                                                                                                                                                                                                               

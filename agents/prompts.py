@@ -155,12 +155,12 @@ RECEIVE FROM MARCO:
   read the previous article HTML file. Use only these strings.
 
 READ THESE FILES EXACTLY ONCE (in one batch, before writing):
-1. articles/aima-coworker-prompt.md  — HTML format guide
-2. articles/personas/[author].md     — persona voice (fully adopt it)
-3. articles/research/[slug]-research.json — every stat/quote must trace here
+1. articles/personas/[author].md     — persona voice (fully adopt it)
+2. articles/research/[slug]-research.json — every stat/quote must trace here
 
 Do NOT re-read any file after the initial pass.
 Do NOT read the previous article HTML — prev-url/prev-title come in as strings.
+Do NOT read articles/aima-coworker-prompt.md — Maya handles the HTML skeleton.
 
 WRITE THE ARTICLE IN A SINGLE Write tool call.
 Do not write partial sections. Do not write multiple drafts.
@@ -404,21 +404,4 @@ REVERSION GUARDRAILS:
 - On flag: stop agent → notify Marco immediately
 
 ERROR PROTOCOL:
-Round 1: Identify root cause → add guardrail → re-run → log
-Round 2 (same issue): Notify Marco → append to CLAUDE.md → recommend action
-
-WRITE TO optimization/optimization_report.json:
-{
-  "source": "cora",
-  "date": "YYYY-MM-DD",
-  "total_tokens_used": N,
-  "by_agent": { "SC": N, "QL": N, "MY": N, ... },
-  "hallucination_flags": [],
-  "reversion_flags": [],
-  "budget_alerts": [],
-  "guardrails_applied": []
-}
-
-Iris reads optimization_report.json — do not call Iris directly.
-Do not edit article content. Do not push to git.\
-"""
+Round 1: Identify root cause → add guardrail �

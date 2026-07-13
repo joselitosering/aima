@@ -41,11 +41,12 @@ BUDGET_MAP = {
     "priya":  50_000,
     "scout":  500_000,
     "trend_scout": 150_000,  # topic selection — feeds/APIs + dedup check
-    "writer": 20_000,   # standalone Writer batch only (Direction B: authoring cost
-                         # lands in QL in the full pipeline — see quill.py).
-    "quill":  500_000,  # authoring + editing merged (Direction B). Hard turn cap
-                         # (MAX_TURNS_MAP below) prevents the 2.9M outlier; 500k is
-                         # a safe ceiling for an 8-turn call writing ~1k-word article.
+    "writer": 300_000,  # free-form authoring call in both full pipeline and Writer
+                         # batch. Restored two-call arch (2026-07-13, reverts Direction
+                         # B). Measured ~253k tok for a Dawn article — budget 300k.
+    "quill":  200_000,  # edit-only call (no longer authors from scratch). Writer hands
+                         # off a draft; Quill reads persona + research + draft and edits.
+                         # Measured ~75k tok for edit-only — budget 200k with headroom.
     "maya":   750_000,
     "vera":   650_000,
     "lumen":  10_000,
@@ -58,10 +59,10 @@ BUDGET_MAP = {
 }
 
 # Hard cap on agentic tool-use turns per CC agent call (--max-turns N).
-# This is the primary mechanical control against token explosions from runaway
-# multi-turn loops (e.g. article #20 QL: 57 turns → 2.9M tokens / $2.52).
-# Quill is set to 8: read 3 context files (1), write article (2), verify/fix
-# length issues (3-4), handle edge cases (5-8). All other CC agents default 15.
+# Primary control against token explosions (article #20 QL: 57 turns → 2.9M tok).
+# Quill (edit-only, 2026-07-13): read persona (1) + research (2) + draft (3) +
+# write output (4) + edge cases (5-8). 8 turns is ample for edit-only.
+# Writer gets 15: it may need extra tool turns for file reads + write + verify.
 # Added 2026-07-13. To disable a cap for a specific call, pass max_turns=None
 # explicitly to call_cc_agent() — it will still fall through to this map,
 # so pass max_turns=0 or add a guard to bypass (not recommended).
@@ -121,18 +122,4 @@ def load_pipeline_config() -> dict:
                 if key == "QC_GATE":
                     if raw.get("QC_GATE") in ("human", "auto"):
                         cfg["QC_GATE"] = raw["QC_GATE"]
-                elif isinstance(raw.get(key), bool):
-                    cfg[key] = raw[key]
-            return cfg
-        except Exception:
-            pass  # fall through to env/defaults on malformed file
-
-    # 2. Environment variables (documented in AGENT-WORKFLOW.md).
-    for key in cfg:
-        if key == "QC_GATE":
-            v = os.environ.get("QC_GATE")
-            if v in ("human", "auto"):
-                cfg["QC_GATE"] = v
-        else:
-            cfg[key] = _env_bool(key, cfg[key])
-    return cfg
+                elif isinstance(raw.get(ke

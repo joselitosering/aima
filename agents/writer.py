@@ -90,14 +90,12 @@ def run(spec: dict, research: dict, author: str | None = None) -> str:
     padded = str(spec.get("number", 0)).zfill(3)
     draft_path = f"{DRAFTS_DIR}/{slug}-{padded}-draft.html"
 
-    # Context-by-path (2026-07-04): pass the big context (research, persona,
-    # format guide) as FILE PATHS for the agent to Read, instead of inlining
-    # their full text. Inlined text sits in the prompt prefix that is re-processed
-    # as cache_read on every tool turn — the dominant token term in an authoring
-    # call. A small user_input shrinks the initial cache-creation and lets the
-    # agent read only what it needs (same pattern Maya/Scout already use).
+    # Context-by-path: pass big context as FILE PATHS for the agent to Read
+    # rather than inlining text. Removed aima-coworker-prompt.md (18KB HTML
+    # template — Maya's job, not Writer's). Inline 10-line structure spec
+    # instead so Writer knows the shape without loading the full skeleton.
+    # (2026-07-13, part of Direction B revert + format guide removal.)
     persona_file = f"articles/personas/{a['persona_file']}"
-    format_guide_path = "articles/aima-coworker-prompt.md"
     research_path = _find_research_path(spec["slug"], spec.get("number", 0))
     if research_path.exists() and research_path.stat().st_size > 100:
         research_ref = ("- RESEARCH (use these sources/stats/quotes; cite inline): "
@@ -122,8 +120,11 @@ ARTICLE SPEC (topic + tags from Priya's calendar):
 
 READ THESE FILES FIRST with your Read tool (on disk; do NOT skip any):
 - PERSONA PROFILE (fully adopt this voice): {persona_file}
-- HTML FORMAT REFERENCE (produce AIMA article HTML; the editor refines): {format_guide_path}
 {research_ref}
+
+STRUCTURE (Quill enforces; aim for this order so edits are minimal):
+lead → 5-6 H2 sections → stat grid (>=4 numeric cards) → pullquote → glossary (>=6 data-term) → MLA references (>=6)
+Output copy HTML only — no full skeleton, no og:image, no image tags.
 
 Write the complete article HTML now and save it to: {draft_path}
 Then return the HTML to stdout.\
@@ -143,4 +144,4 @@ Then return the HTML to stdout.\
         raw = re.sub(r"```[a-z]*\n?", "", raw).strip().rstrip("`").strip()
     write_file(draft_path, raw)
     log.info(f"[writer] draft saved from stdout: {draft_path} ({len(raw)} chars)")
-    return draft_path
+    r

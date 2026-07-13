@@ -6,10 +6,8 @@ Owns every handoff. Nothing moves without Marco.
 Stage sequence:
   1  Priya  → article spec (Trend Scout resolves TBD trending rows first)
   2  Scout  → research JSON
-  3a Draft   → reuse a pre-staged Writer-batch draft if one exists (else none)
-  3b Quill   → EDITS the draft to Vera's targets, OR authors+edits in one call
-               when no draft exists (Direction B: Writer stage merged into Quill
-               to save one cold `claude` subprocess per from-scratch article)
+  3a Writer → free-form draft in author's voice (skipped if batch pre-staged one)
+  3b Quill  → EDITS the draft to Vera's targets (copy-only HTML)
   4  Maya   → merged article (images + skeleton)
   5  Format check (Marco validates before Vera)
   6  Vera   → QC ASSURANCE verdict (halt + report on fail — no retry loop)
@@ -162,23 +160,17 @@ def run(dry_run: bool = False):
             research = scout.load_cached(spec)
             flags.append("research_skipped" + ("" if research else "_no_artifact"))
 
-        # ── Stage 3: author + edit → final copy (WRITE_ENABLED) ──────────────
-        # Direction B (2026-07-04, see HANDOFF.md recommended fix #2): the Writer
-        # stage no longer spends its OWN cold `claude` subprocess inside the full
-        # pipeline. Skip-and-reuse is preserved — if the standalone Writer batch
-        # (run_writer_batch.py) has already pre-staged a free-form draft, Quill
-        # EDITS it exactly as before. When no draft exists, Quill AUTHORS then
-        # EDITS in one call (two-phase: write in the author's persona voice, then
-        # edit to Vera's checklist), collapsing the old Writer(cold) + Quill(cold)
-        # two-launch sequence into a single cold-start per from-scratch article.
-        # writer.run() is untouched and still drives the Writer batch.
-        current_stage = "quill"
+        # ── Stage 3: Writer → Quill → final copy (WRITE_ENABLED) ───────────────
+        # Restored two-call architecture (2026-07-13, reverts Direction B):
+        # Direction B merged Writer+Quill to save a cold-start, but measured
+        # cost was $2.15/article vs $1.53 two-call. Now: when no pre-staged
+        # draft exists, Writer.run() writes free-form first (cold call #1),
+        # then Quill.run() edits to QC targets (cold call #2). Skip-and-reuse
+        # preserved — a Writer-batch pre-staged draft skips Writer.run().
+        current_stage = "writer"
         if cfg["WRITE_ENABLED"]:
-            # Article length follows the row author's (lowered 2026-07-04) persona
-            # range, capping Priya's generic target so the finished article — merged
-            # authoring or edited draft — doesn't balloon back past persona length.
-            # Priya may still go SHORTER for a specific goal; the persona is the
-            # ceiling, not the floor. min() keeps that direction.
+            # Article length follows the row author's persona range, capping
+            # Priya's generic target so the finished article doesn't balloon.
             persona_target = writer.AUTHOR_SPECS[writer.resolve_author(spec)]["target_words"]
             spec["target_words"] = min(spec.get("target_words") or persona_target, persona_target)
 
@@ -190,12 +182,15 @@ def run(dry_run: bool = False):
                 log.info(f"[marco] Stage 3a: reusing pre-staged Writer-batch draft: {draft_path}")
                 flags.append("writer_draft_reused")
             else:
-                log.info(f"[marco] Stage 3a: no pre-staged draft — Quill authors+edits "
-                         f"in one call as {spec['author']} (Writer stage merged)")
-                flags.append("writer_merged_into_quill")
+                log.info(f"[marco] Stage 3a: no pre-staged draft — Writer writing "
+                         f"free-form draft as {spec['author']}")
+                draft_path = writer.run(spec, research)
+                stages.append("writer")
+                flags.append("writer_ran")
 
-            log.info(f"[marco] Stage 3b: Quill — "
-                     f"{'editing draft to targets' if draft_path else 'authoring+editing'} "
+        current_stage = "quill"
+        if cfg["WRITE_ENABLED"]:
+            log.info(f"[marco] Stage 3b: Quill editing draft "
                      f"(target={quill_params['target_words']} words, "
                      f"ceiling={quill_params['ceiling']})")
             article_path = quill.run(spec, research,
@@ -388,3 +383,4 @@ def _write_crash_to_claude_md(spec: dict, stage: str, exc: Exception):
     )
     (REPO_ROOT / "CLAUDE.md").write_text(claude_md + entry, encoding="utf-8")
     log.info(f"[marco] Crash at stage '{stage}' written to CLAUDE.md — surface to Joe")
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
