@@ -122,4 +122,18 @@ def load_pipeline_config() -> dict:
                 if key == "QC_GATE":
                     if raw.get("QC_GATE") in ("human", "auto"):
                         cfg["QC_GATE"] = raw["QC_GATE"]
-                elif isinstance(raw.get(ke
+                elif isinstance(raw.get(key), bool):
+                    cfg[key] = raw[key]
+            return cfg
+        except Exception:
+            pass  # fall through to env/defaults on malformed file
+
+    # 2. Environment variables (documented in AGENT-WORKFLOW.md).
+    for key in cfg:
+        if key == "QC_GATE":
+            v = os.environ.get("QC_GATE")
+            if v in ("human", "auto"):
+                cfg["QC_GATE"] = v
+        else:
+            cfg[key] = _env_bool(key, cfg[key])
+    return cfg
