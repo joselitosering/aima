@@ -78,7 +78,7 @@ One Twain-caliber line per piece. One.
 
 ## Author Bio (for article page)
 
-> Dawn Ginhaua is a cultural critic, educator, and essayist writing at the intersection of technology, power, and the communities technology claims to serve. She teaches media studies and critical theory, and has been known to frequent cannabis dispenseries.
+> Dawn Ginhaua is a cultural critic, educator, and essayist writing at the intersection of technology, power, and the communities technology claims to serve. She teaches media studies and critical theory, and has been known to frequent cannabis dispensaries.
 
 ---
 
