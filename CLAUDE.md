@@ -659,3 +659,23 @@ RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does 
   - 1. Actual word count (~747) is materially below Dawn's acceptable floor (~990) despite a higher declared JSON-LD count (856) — this is a recurrence of the exact word-count-inflation problem already logged against this article; Writer/Quill need to add substance, not just re-declare a bigger number.
   - 2. Stat-grid "90%" figure remains uncited.
   - 3. 5 of 7 glossary terms have no inline `glossary-term` link anchoring them to the body text.
+
+### Invisible article body (#25) — pure-python Maya replaced [persona] inside JS (2026-07-15)
+**Symptom:** #25's article page rendered blank in the body — the full prose was in the
+DOM but `<main class="article-content fade-in">` was stuck at `opacity:0`.
+**Root cause:** `agents/maya_merge.py`'s placeholder-replacement loop did
+`out.replace("[persona]", p["persona"])`. In the skeleton, `[persona]` appears ONLY as
+real JavaScript — `var _btnColor=_authorColors[persona]||'00D9F5';` (a lookup by the
+`persona` JS var), never as placeholder text. The replace turned it into
+`_authorColorsdawn` (undefined) → ReferenceError → the whole inline `<script>` stopped
+executing, including the IntersectionObserver + 800ms fallback that add `.visible` to
+`.fade-in` elements. No `.visible` → body stays hidden. Older articles (#24) predate this
+pure-python replacement, so their JS was intact — which is why "it worked before."
+**Fix:** removed the `[persona]` replacement (persona is delivered via
+`<meta property="article:persona">`, which that JS reads). `[slug]`/`[num]` only appear in
+URLs/ids, so they're safe. Re-merged #25 → `_authorColors[persona]` intact, reveal script
+runs, `main` gets `.visible` → opacity:1. Committed 3b9a4ce, pushed, verified live at
+aima.productions. **Lesson:** maya_merge's blunt `str.replace` on `[token]` tokens is
+dangerous near inline JS/CSS — a token that doubles as JS bracket-access (`obj[var]`) gets
+corrupted. Any new token must be checked against the skeleton's `<script>`/`<style>` before
+being added to that loop.
