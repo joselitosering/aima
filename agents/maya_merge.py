@@ -397,8 +397,13 @@ def merge(article_path: str, og_image: str, alt_image: str, spec: dict) -> bool:
         # Anchor on an actual <meta ...> element — NOT a bare attribute match,
         # which would false-positive on the skeleton's JS
         # (document.querySelector('meta[name="article:persona"]')) and skip injection.
-        if not re.search(r'<meta [^>]*(?:property|name)="' + re.escape(key) + r'"', out):
-            tag = f'<meta property="{key}" content="{html.escape(val, quote=True)}">\n'
+        if not re.search(r'<meta [^>]*(?:property|name)="' + re.escape(key) + r'"[^>]*content=', out):
+            # MUST be name= (not property=): the skeleton's JS reads the persona via
+            # document.querySelector('meta[name="article:persona"]') to pick the author
+            # PHOTO (img/author-<persona>.png) and accent color. A property= tag is
+            # invisible to that query → it defaulted to 'joselito' → Joselito's photo
+            # showed even for a Dawn article (2026-07-15).
+            tag = f'<meta name="{key}" content="{html.escape(val, quote=True)}">\n'
             out = out.replace("</head>", tag + "</head>", 1)
 
     # nav (static fallback; runtime GS-load overrides)
