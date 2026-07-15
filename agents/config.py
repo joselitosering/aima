@@ -9,12 +9,14 @@ REPO_ROOT = Path(__file__).parent.parent
 # CC_AGENTS  — called via Claude Code CLI (subscription-billed)
 # PY_AGENTS  — pure Python, no LLM calls
 # -------------------------------------------------------------------
-CC_AGENTS = {"iris", "priya", "scout", "trend_scout", "maya", "vera", "lumen", "cora"}
-PY_AGENTS  = {"marco", "porter", "nova", "echo", "quill"}  # quill demoted 2026-07-14 — verification gate, no LLM
+# Demoted to pure Python (no LLM call, $0, deterministic): quill (gate), maya
+# (Pexels + maya_merge, never actually called CC), priya (mechanical spec build),
+# vera (mechanical structural QC) — all 2026-07-14.
+CC_AGENTS = {"iris", "scout", "trend_scout", "lumen", "cora"}
+PY_AGENTS  = {"marco", "porter", "nova", "echo", "quill", "maya", "priya", "vera"}
 
-# Model overrides for CC subagents.
+# Model overrides for CC subagents (the `claude` CLI path).
 # Leave None to use the CC default (Sonnet on Pro/Max).
-# Set to "claude-opus-4-8" for Quill or Iris if quality warrants upgrade.
 CC_MODEL_OVERRIDE = {
     "iris":  None,
     "priya": None,
@@ -27,6 +29,15 @@ CC_MODEL_OVERRIDE = {
     # CC-default (Sonnet) below for the full multi-platform synthesis path.
     "lumen": None,
     "cora":  None,
+    # ── Per-author model tiering (2026-07-14, per Joe) ────────────────────────
+    # Authors are keyed by persona (writer.run passes key = joselito/dawn/kenji).
+    # Joselito = flagship editorial voice → Sonnet 4.6 (quality). Dawn → Haiku
+    # (cheaper, still capable). Kenji → Haiku on the CLI, and OpenRouter's free
+    # tier once OPENROUTER_API_KEY is enabled (see API_MODEL_MAP below) — this
+    # value is the CLI fallback for when that key is commented out.
+    "joselito": "claude-sonnet-4-6",
+    "dawn":     "claude-haiku-4-5",
+    "kenji":    "claude-haiku-4-5",
 }
 
 # Token budget per agent per run.
@@ -95,11 +106,16 @@ _JUDGE_MODEL    = os.environ.get("OPENROUTER_MODEL_JUDGE",    "openrouter/free")
 # Fallback tried automatically (OpenRouter `models` array) when the primary
 # model errors/churns/rate-limits. Sonnet is the quality safety net.
 API_FALLBACK_MODEL = os.environ.get("OPENROUTER_MODEL_FALLBACK", "anthropic/claude-sonnet-5")
+_KENJI_MODEL    = os.environ.get("OPENROUTER_MODEL_KENJI",    "openrouter/free")  # free-tier author (per Joe)
 API_MODEL_MAP = {
-    "joselito": _AUTHOR_MODEL, "dawn": _AUTHOR_MODEL, "kenji": _AUTHOR_MODEL,
+    # Authors (2026-07-14, per Joe): Joselito + Dawn are intentionally NOT here —
+    # they stay on the claude CLI (Sonnet 4.6 / Haiku via CC_MODEL_OVERRIDE) for
+    # quality + reliability. Only Kenji (lightest, blog voice) uses OpenRouter's
+    # free tier; when OPENROUTER_API_KEY is commented out he falls back to CLI Haiku.
+    "kenji": _KENJI_MODEL,
     "scout": _RESEARCH_MODEL, "trend_scout": _RESEARCH_MODEL,   # Sonnet + web search
-    "vera":   _GATE_MODEL,
-    "cora":   _JUDGE_MODEL, "priya": _JUDGE_MODEL, "iris": _JUDGE_MODEL, "lumen": _JUDGE_MODEL,
+    # priya + vera are pure Python now (no LLM) — intentionally absent.
+    "cora":   _JUDGE_MODEL, "iris": _JUDGE_MODEL, "lumen": _JUDGE_MODEL,
 }
 # NOTE: maya is intentionally absent -> stays on the claude CLI (it does an
 # agentic file-write + git add). Its skeleton merge was converted to PURE

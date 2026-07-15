@@ -1,98 +1,154 @@
-"""Vera — Quality Gate (CC subagent).
+"""Vera — Quality Gate (PURE PYTHON, no LLM).
 
-Receives the fully merged article from Marco and runs
-the 10-point QC checklist (word count removed 2026-07-14 —
-Writer now gates its own persona range). Returns a structured verdict.
+DEMOTED 2026-07-14 (per Joe): every one of Vera's QC checks is structural /
+mechanical (meta tags, counts, file existence, placeholder scan) — there is no
+semantic judgment in the checklist, so a deterministic Python gate does the same
+job for $0, can't rate-limit or flake during an unattended run, and gives a
+reproducible verdict. The one genuinely-semantic check (do the article's stats
+actually match the research?) lives in Cora, which stays an LLM call.
+
+Vera runs on the MERGED article (after Maya), so it verifies the things Quill's
+pre-merge gate cannot: head meta tags, the og:image file on disk, and that the
+structure survived the skeleton merge. Guardrail preserved: Vera HALTS + reports
+(returns a needs_revision verdict); it never rewrites or re-runs anything.
 """
 
-import json
 import re
+from pathlib import Path
 
-from agents.base import call_cc_agent, read_file, log
-from agents.prompts import VERA_PROMPT
+from agents.base import read_file, REPO_ROOT, log
+from agents.writer import AUTHOR_SPECS, resolve_author
 
-
-# Possible verdicts Vera returns
+# Possible verdicts Vera returns (unchanged interface for Marco)
 VERDICT_APPROVED = "approved"
 VERDICT_COPY = "needs_revision: copy"
 VERDICT_VISUAL = "needs_revision: visual"
 
+# 9 required meta tags (property= or name=), each must be present + non-empty.
+_REQUIRED_META = [
+    "og:title", "og:description", "og:image", "og:url",
+    "article:author", "article:published_time", "article:persona",
+    "twitter:title", "twitter:image",
+]
+
+
+def _n(pattern: str, text: str) -> int:
+    return len(re.findall(pattern, text, re.I))
+
 
 def run(article_path: str, spec: dict) -> dict:
-    """
-    Run the 11-point QC check on the merged article.
-
-    Returns a dict:
-      {
-        "verdict": "approved" | "needs_revision: copy" | "needs_revision: visual",
-        "notes": [...],
-        "raw": "full Vera output"
-      }
-    """
-    slug = spec["slug"]
-    og_image = spec["og_image"]
-    number = spec.get("number", 0)
-    alt_image = f"img/alt-img/aima-{number:03d}-{slug.replace(f'aima-{number:03d}-', '')}-alt.jpg"
+    """Run the 10-point structural QC on the merged article. Returns
+    {"verdict", "notes", "raw"} — same shape Marco already consumes."""
+    author = spec.get("author", "")
+    og_image = spec.get("og_image", "")
 
     try:
-        article_html = read_file(article_path)
+        html = read_file(article_path)
     except FileNotFoundError:
         raise RuntimeError(f"[vera] Article not found at: {article_path}")
 
-    # Inline the FULL article: single-shot is one pass (no re-reading), so the old
-    # 12K truncation — which existed to bound multi-turn token bloat — would now
-    # just hide the article's back half (refs, later sections) and cause false
-    # "needs_revision" flags. Cap at 60K chars only as an extreme-outlier guard.
-    html_excerpt = article_html[:60_000]
+    copy_fail: list[str] = []    # text/copy target failures
+    visual_fail: list[str] = []  # image/meta/layout target failures
+    passed: list[str] = []
 
-    user_input = f"""\
-You have NO tools. Everything you need is inlined below — do NOT try to Read any
-file. Judge the ARTICLE HTML given here and reply with text only.
+    # 1 — 9 required meta tags present + non-empty (+ canonical link)
+    for m in _REQUIRED_META:
+        if re.search(r'(?:property|name)="' + re.escape(m) + r'"\s+content="[^"]+"', html):
+            passed.append(f"meta {m}")
+        else:
+            visual_fail.append(f"missing/empty meta tag: {m}")
+    if re.search(r'rel="canonical"\s+href="[^"]+"', html):
+        passed.append("canonical link")
+    else:
+        visual_fail.append("missing/empty canonical link")
 
-EXPECTED COVER IMAGE REF (verify the HTML contains it): {og_image}
-EXPECTED ALT IMAGE REF (verify the HTML contains it):   {alt_image}
-AUTHOR: {spec.get('author')}
+    # 2 — 5-6 H2 body sections (maya tags body H2s with id="section-…"; the
+    #     Glossary/References <h2 class="section-heading"> are excluded).
+    section_h2 = _n(r'<h2[^>]*id="section-', html)
+    if section_h2 == 0:  # fallback for layouts that don't id every H2
+        section_h2 = _n(r"<h2[\s>]", html) - _n(r'<h2[^>]*class="section-heading"', html)
+    if 5 <= section_h2 <= 6:
+        passed.append(f"{section_h2} H2 sections")
+    else:
+        copy_fail.append(f"{section_h2} H2 body sections (need 5-6)")
 
-ARTICLE HTML (complete):
-{html_excerpt}
+    # 3 — stat grid, >= 4 numeric cards
+    stat_cards = _n(r'class="stat-card"', html)
+    (passed if stat_cards >= 4 else copy_fail).append(
+        f"stat grid {stat_cards} cards" + ("" if stat_cards >= 4 else " (need >=4)"))
 
-IMAGES are verified separately by the pipeline (Marco's format check + Porter's
-deploy guard, which confirms the live page renders with its og:image). You CANNOT
-see the image files, so do NOT flag visual/image issues. Judge COPY ONLY:
-structure (5-6 H2), word count, stat grid, pullquote, glossary (>=6), MLA
-references (>=6), citations trace to sources, no fabrication. Return your verdict
-on the FIRST LINE as exactly one of:
-  approved
-  needs_revision: copy
+    # 4 — at least one pullquote
+    pq = _n(r'class="pullquote"', html) or _n(r"<blockquote", html)
+    (passed if pq >= 1 else copy_fail).append(
+        "pullquote present" if pq >= 1 else "no pullquote found")
 
-Then list each copy check result and any specific line-level notes for failures.\
-"""
+    # 5 — >= 6 glossary terms (draft uses data-term; merged uses glossary-item)
+    gloss = _n(r'data-term="', html) + _n(r'class="glossary-item"', html)
+    (passed if gloss >= 6 else copy_fail).append(
+        f"{gloss} glossary terms" + ("" if gloss >= 6 else " (need >=6)"))
 
-    log.info(f"[vera] running QC on: {article_path}")
-    # single_shot: the article HTML is inlined above and Vera only returns a text
-    # verdict (no file I/O) — same shape as Cora. Was an 8-15 turn agentic loop
-    # re-reading the article each turn (1.46M tokens / $1.04); now one pass.
-    raw = call_cc_agent("vera", VERA_PROMPT, user_input, single_shot=True)
+    # 6 — >= 6 references
+    refs = _n(r'class="reference-item"', html)
+    if refs == 0:
+        rm = re.search(r'class="references?[^"]*".*?</(?:ol|section)>', html, re.S | re.I)
+        refs = _n(r"<li", rm.group(0)) if rm else 0
+    (passed if refs >= 6 else copy_fail).append(
+        f"{refs} references" + ("" if refs >= 6 else " (need >=6)"))
 
-    # Parse verdict from first non-empty line
-    lines = [l.strip() for l in raw.splitlines() if l.strip()]
-    verdict_line = lines[0].lower() if lines else ""
+    # 7 — no TODO / PLACEHOLDER / lorem ipsum / leftover skeleton tokens
+    if re.search(r"\bTODO\b|PLACEHOLDER|lorem ipsum|\[FULL TITLE\]|\[CATEGORY\]|\[Section", html, re.I):
+        copy_fail.append("contains TODO / PLACEHOLDER / lorem / leftover skeleton token")
+    else:
+        passed.append("no placeholders/leftover tokens")
 
-    if "approved" in verdict_line:
-        verdict = VERDICT_APPROVED
-    elif "copy" in verdict_line:
+    # 8 — og:image file exists on disk (real image, not an empty stub) + wired in
+    if og_image:
+        p = REPO_ROOT / og_image
+        if p.exists() and p.stat().st_size > 1024:
+            passed.append("og:image file exists")
+        else:
+            visual_fail.append(f"og:image missing/empty on disk: {og_image}")
+        if Path(og_image).name in html:
+            passed.append("og:image wired into HTML")
+        else:
+            visual_fail.append("og:image not referenced in article HTML")
+
+    # 9 — persona meta matches the spec's author
+    persona_m = re.search(r'article:persona"\s+content="([^"]*)"', html)
+    if persona_m:
+        want = resolve_author({"author": author})  # joselito/dawn/kenji
+        if want in persona_m.group(1).lower():
+            passed.append("persona meta matches author")
+        else:
+            visual_fail.append(f"persona meta '{persona_m.group(1)}' != author '{author}'")
+
+    # 10 — body word count within the row author's persona range (SAME thresholds
+    #      as Quill's gate, so the two stages never contradict each other).
+    m = re.search(r'<main class="article-content[^"]*">(.*?)</main>', html, re.S)
+    if m:
+        body = m.group(1)
+        for cls, end in [("glossary", "</dl>"), ("references", "</ol>")]:
+            body = re.sub(r'<div class="' + cls + r'">.*?' + re.escape(end) + r"\s*</div>",
+                          "", body, flags=re.S)
+        wc = len(re.sub(r"<[^>]+>", " ", body).split())
+        a = AUTHOR_SPECS[resolve_author({"author": author})]
+        floor, ceiling = int(a["range_min"] * 0.85), int(a["range_max"] * 1.2)
+        if floor <= wc <= ceiling:
+            passed.append(f"word count {wc}")
+        else:
+            copy_fail.append(f"word count {wc} outside {floor}-{ceiling} ({a['range']})")
+
+    notes = [f"PASS: {p}" for p in passed] + \
+            [f"FAIL (copy): {f}" for f in copy_fail] + \
+            [f"FAIL (visual): {f}" for f in visual_fail]
+
+    if copy_fail:
         verdict = VERDICT_COPY
-    elif "visual" in verdict_line:
+    elif visual_fail:
         verdict = VERDICT_VISUAL
     else:
-        # Default: treat ambiguous output as needing human review
-        verdict = VERDICT_COPY
+        verdict = VERDICT_APPROVED
 
-    notes = lines[1:] if len(lines) > 1 else []
-    log.info(f"[vera] verdict: {verdict} ({len(notes)} notes)")
-
-    return {
-        "verdict": verdict,
-        "notes": notes,
-        "raw": raw,
-    }
+    log.info(f"[vera] python QC: {verdict} — {len(passed)} pass, "
+             f"{len(copy_fail)} copy-fail, {len(visual_fail)} visual-fail")
+    return {"verdict": verdict, "notes": notes, "raw": "\n".join(notes)}

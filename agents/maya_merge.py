@@ -300,6 +300,18 @@ def merge(article_path: str, og_image: str, alt_image: str, spec: dict) -> bool:
     ]:
         out = _set_meta(out, key, val)
 
+    # _set_meta only EDITS existing <meta> tags. The skeleton is missing an
+    # article:persona tag, so it never got set — shipped articles had no persona
+    # meta (caught 2026-07-14 by the pure-python Vera). Inject any required meta
+    # the skeleton lacks, before </head>, so the value actually lands.
+    for key, val in [("article:persona", p["persona"])]:
+        # Anchor on an actual <meta ...> element — NOT a bare attribute match,
+        # which would false-positive on the skeleton's JS
+        # (document.querySelector('meta[name="article:persona"]')) and skip injection.
+        if not re.search(r'<meta [^>]*(?:property|name)="' + re.escape(key) + r'"', out):
+            tag = f'<meta property="{key}" content="{html.escape(val, quote=True)}">\n'
+            out = out.replace("</head>", tag + "</head>", 1)
+
     # nav (static fallback; runtime GS-load overrides)
     pu, pt = _prev_link(num)
     out = _set_meta(out, "article:prev-url", pu)
