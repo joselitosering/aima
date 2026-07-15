@@ -124,7 +124,9 @@ def extract_metadata(html_content, filename, html_url):
     if desc_m:
         description = desc_m.group(1).strip()
     else:
-        body = re.sub(r"<!--.*?-->", "", html_content, flags=re.DOTALL)
+        # Fallback: scope to the article body so the TOC/byline/meta chrome outside
+        # <main> can't leak in (same fix as extract_hook).
+        body = re.sub(r"<!--.*?-->", "", _article_body(html_content), flags=re.DOTALL)
         body = re.sub(r"<[^>]+>", " ", body)
         body = re.sub(r"\s+", " ", body).strip()
         description = (body[:300] + "...") if len(body) > 300 else body
@@ -204,15 +206,27 @@ def extract_og_image(html_content):
 
 
 
+def _article_body(html_content):
+    """Return the inner <main class="article-content"> HTML, or the whole doc if
+    there's no such <main>. The skeleton's TOC sidebar ("Contents"), byline, and
+    meta row (Published/Read Time/Category) live OUTSIDE <main> — scoping to it
+    keeps that chrome out of the hook/description (garbled #25 personal post,
+    2026-07-14)."""
+    m = re.search(r'<main[^>]*class=["\'][^"\']*article-content[^"\']*["\'][^>]*>(.*?)</main>',
+                  html_content, re.DOTALL | re.IGNORECASE)
+    return m.group(1) if m else html_content
+
+
 def extract_hook(html_content, max_sentences=2, max_chars=420):
     """
     Pull the first 1-2 sentences of the article lead paragraph.
     Targets <p class="article-lead"> first (guaranteed hook), then falls back
-    to the first general <p> with > 120 chars.
+    to the first general <p> with > 120 chars — searched only WITHIN the article
+    body, so page chrome (TOC/byline/meta) can't leak into the hook.
     Skips script, style, nav, header, footer, and aside blocks first.
     """
     clean = re.sub(r'<(script|style|nav|header|footer|aside)[^>]*>.*?</\1>', '',
-                   html_content, flags=re.DOTALL | re.IGNORECASE)
+                   _article_body(html_content), flags=re.DOTALL | re.IGNORECASE)
 
     # Prefer the explicit article-lead paragraph over generic scanning
     lead_m = re.search(
