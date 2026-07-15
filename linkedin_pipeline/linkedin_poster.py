@@ -75,9 +75,26 @@ HASHTAG_MAP = {
 # ── Metadata extraction ──────────────────────────────────────────────────────
 
 def extract_metadata(html_content, filename, html_url):
-    title_m = re.search(r"<title[^>]*>(.*?)</title>", html_content, re.IGNORECASE | re.DOTALL)
-    title   = title_m.group(1).strip() if title_m else \
-              filename.replace(".html","").replace("-"," ").title()
+    # Prefer og:title (always the clean headline). Fall back to <title> with HTML
+    # comments stripped FIRST — the skeleton's authoring comment contains the
+    # literal text "<title> tag", which made the old <title>…</title> DOTALL
+    # regex start inside that comment and capture the whole checklist as the
+    # title (garbled #25 LinkedIn post, 2026-07-14). Decode entities so e.g.
+    # "America&#x27;s" posts as "America's", and drop the " — AIMA Magazine" suffix.
+    import html as _html
+    og_m = re.search(r'<meta\s+property=["\']og:title["\']\s+content="([^"]*)"',
+                     html_content, re.IGNORECASE) or \
+           re.search(r'<meta\s+content="([^"]*)"\s+property=["\']og:title["\']',
+                     html_content, re.IGNORECASE)
+    if og_m:
+        title = og_m.group(1).strip()
+    else:
+        no_comments = re.sub(r"<!--.*?-->", "", html_content, flags=re.DOTALL)
+        title_m = re.search(r"<title[^>]*>(.*?)</title>", no_comments, re.IGNORECASE | re.DOTALL)
+        title   = title_m.group(1).strip() if title_m else \
+                  filename.replace(".html","").replace("-"," ").title()
+    title = _html.unescape(title)
+    title = re.sub(r"\s*[—\-|]\s*AIMA(?:\s+Magazine)?\s*$", "", title).strip()
 
     # Use quote-specific patterns so apostrophes in content don't truncate early.
     # Try name= first (most common), then reversed attribute order.
@@ -107,9 +124,11 @@ def extract_metadata(html_content, filename, html_url):
     if desc_m:
         description = desc_m.group(1).strip()
     else:
-        body = re.sub(r"<[^>]+>", " ", html_content)
+        body = re.sub(r"<!--.*?-->", "", html_content, flags=re.DOTALL)
+        body = re.sub(r"<[^>]+>", " ", body)
         body = re.sub(r"\s+", " ", body).strip()
         description = (body[:300] + "...") if len(body) > 300 else body
+    description = _html.unescape(description)   # entities → text, so no "&#x27;" in the post
 
     if not source_url:
         source_url = "https://github.com/joselitosering/aima"
@@ -459,33 +478,160 @@ def _personal_cta(title, source_url):
     return f"Worth the read.\n\nRead: {source_url}"
 
 
+def _extract_stat(html_content: str, max_chars: int = 200) -> str | None:
+    """
+    Pull a key statistic or data point from the article body.
+    Looks for sentences containing a number + % or $ or explicit stat phrasing.
+    Returns the first clean sentence found, or None.
+    """
+    clean = re.sub(r'<(script|style|nav|header|footer|aside)[^>]*>.*?</\1>', '',
+                   html_content, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<[^>]+>', ' ', clean)
+    text = re.sub(r'&#?\w+;', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    # Sentence tokenise
+    sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z“‘"\d])', text)
+    stat_re = re.compile(
+        r'(\$[\d,.]+|\d[\d,.]*\s*%|[\d,.]+\s*(billion|million|trillion|thousand)|'
+        r'\d+\s+(in|out of)\s+\d+)',
+        re.IGNORECASE
+    )
+    for s in sentences:
+        s = s.strip()
+        if stat_re.search(s) and 40 < len(s) <= max_chars:
+            return s
+    return None
+
+
+def _extract_pullquote(html_content: str, max_chars: int = 280) -> str | None:
+    """
+    Pull text from a <blockquote> or element with class containing 'pullquote'/'quote'.
+    Falls back to None if none found.
+    """
+    m = re.search(
+        r'<(?:blockquote|[^>]+class=["\'][^"\']*(?:pullquote|pull-quote|quote)[^"\']*["\'])[^>]*>'
+        r'(.*?)</(?:blockquote|[a-z]+)>',
+        html_content, re.DOTALL | re.IGNORECASE
+    )
+    if not m:
+        return None
+    text = re.sub(r'<[^>]+>', '', m.group(1))
+    text = re.sub(r'\s+', ' ', text).strip()
+    if 40 < len(text) <= max_chars:
+        return text
+    return None
+
+
+# Five distinct hook patterns for the personal reshare.
+# Selected deterministically by hashing the article filename so the same
+# article always gets the same pattern (crash-retry safe) but different
+# articles across consecutive days get different structures.
+_HOOK_PATTERNS = [
+    # Pattern 0 — Lead sentence drop (direct from article)
+    lambda hook, stat, quote, title, desc, url, tldr: (
+        f"{hook or desc}\n\n{tldr}\n\n{url}"
+    ),
+    # Pattern 1 — Stat first, then context
+    lambda hook, stat, quote, title, desc, url, tldr: (
+        f"{stat or hook or desc}\n\n"
+        f"That's one of the data points from a new piece I published on {title}.\n\n"
+        f"{tldr}\n\n{url}"
+    ),
+    # Pattern 2 — Question framing
+    lambda hook, stat, quote, title, desc, url, tldr: (
+        f"What happens when {title.lower()}?\n\n"
+        f"{hook or desc}\n\n"
+        f"{tldr}\n\n{url}"
+    ),
+    # Pattern 3 — Pullquote / blockquote drop
+    lambda hook, stat, quote, title, desc, url, tldr: (
+        f'"{quote or hook or desc}"\n\n'
+        f"— from my latest: {title}\n\n"
+        f"{tldr}\n\n{url}"
+    ),
+    # Pattern 4 — Stakes opener
+    lambda hook, stat, quote, title, desc, url, tldr: (
+        f"This matters more than most people realize.\n\n"
+        f"{hook or desc}\n\n"
+        f"{tldr}\n\n{url}"
+    ),
+]
+
+
+def _article_tldr(title: str, description: str, hook: str | None) -> str:
+    """Short TL;DR line — persona-neutral, derived from description or fallback."""
+    # Use first sentence of description if distinct from hook
+    if description and len(description) > 60:
+        first = re.split(r'(?<=[.!?])\s+', description.strip())[0]
+        if first and first != hook:
+            return f"TL;DR — {first}"
+    return f"TL;DR — {title}. Full argument at the link."
+
+
 def build_personal_commentary(title, description, source_url, persona="joselito", html_content=None):
     """
-    Build a compelling personal reshare commentary.
-    Structure: hook/intro -> TL;DR -> CTA -> hashtags.
-    Persona-aware: Joselito = editor/imagineer; Dawn = critic; Kenji = technologist.
-    Pass html_content to generate topic-matched hashtags automatically.
+    Build a personal reshare commentary with an article-specific hook.
+
+    Extracts a real hook (lead sentence, stat, or pullquote) from the article HTML
+    and rotates across 5 structural patterns keyed by article filename hash —
+    deterministic per article, varied across consecutive posts.
+
+    Persona-aware: Dawn = critical/cultural; Kenji = technical; Joselito = rotating patterns.
     """
     tags = generate_hashtags(html_content, title, description) if html_content else "#AIMA #AIForGood"
 
     if persona == "dawn":
-        intro = f"I've been sitting with this one.\n\n{_truncate_to_sentence(description, 280)}"
-        tldr  = "TL;DR -- The institutions calling this 'ethical AI' are the ones designing the systems that aren't."
-        cta   = f"Read the full take: {source_url}"
-    elif persona == "kenji":
-        intro = f"This is the story nobody's telling about what's actually possible.\n\n{_truncate_to_sentence(description, 280)}"
-        tldr  = "TL;DR -- The technology is further along than the headlines admit, and closer to real people's lives than the hype suggests."
-        cta   = f"Full breakdown: {source_url}"
-    else:
-        # Joselito: hook -> TL;DR -> CTA. No description block -- clean and human.
-        intro = _personal_hook(title)
-        tldr  = _personal_tldr(title)
-        cta   = _personal_cta(title, source_url)
+        hook = extract_hook(html_content) if html_content else None
+        stat = _extract_stat(html_content) if html_content else None
+        intro = (
+            f"I've been sitting with this one.\n\n"
+            f"{stat or hook or _truncate_to_sentence(description, 280)}"
+        )
+        tldr = (
+            "TL;DR — The institutions calling this 'ethical AI' are the ones "
+            "designing the systems that aren't."
+        )
+        cta = f"Read the full take: {source_url}"
+        commentary = f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
 
-    commentary = f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
-    # Preserve newlines (\x0a) and tabs (\x09); strip other non-printable control chars
+    elif persona == "kenji":
+        hook = extract_hook(html_content) if html_content else None
+        stat = _extract_stat(html_content) if html_content else None
+        intro = (
+            f"This is the story nobody's telling about what's actually possible.\n\n"
+            f"{stat or hook or _truncate_to_sentence(description, 280)}"
+        )
+        tldr = (
+            "TL;DR — The technology is further along than the headlines admit, "
+            "and closer to real people's lives than the hype suggests."
+        )
+        cta = f"Full breakdown: {source_url}"
+        commentary = f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
+
+    else:
+        # Joselito — rotate across 5 patterns based on article filename hash
+        hook   = extract_hook(html_content, max_sentences=2) if html_content else None
+        stat   = _extract_stat(html_content) if html_content else None
+        quote  = _extract_pullquote(html_content) if html_content else None
+        desc_s = _truncate_to_sentence(description, 280)
+        tldr   = _article_tldr(title, description, hook)
+
+        # Derive pattern index from article slug in source_url (stable across retries)
+        slug_seed = re.sub(r'[^a-z0-9]', '', source_url.lower())
+        pattern_idx = hash(slug_seed) % len(_HOOK_PATTERNS)
+        pattern_fn  = _HOOK_PATTERNS[pattern_idx]
+
+        body = pattern_fn(
+            hook  or desc_s,
+            stat  or desc_s,
+            quote or hook or desc_s,
+            title, desc_s, source_url, tldr,
+        )
+        commentary = f"{body}\n\n{tags}"
+
+    # Preserve newlines and tabs; strip other non-printable control chars
     commentary = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', commentary)
-    return commentary
+    return commentary[:3000]
 
 
 def _personal_hook(title):

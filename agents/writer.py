@@ -17,37 +17,44 @@ from agents.scout import _find_research_path
 
 DRAFTS_DIR = "articles/drafts"
 
-# Per-author form, length, and voice. Length drives the writer; Quill (editor)
-# later trims/expands to Vera's checklist.
-# Per-author form, length, and voice. Ranges lowered 2026-07-04 (Joe) to cut
-# per-article tokens: Joselito 1800+→1200-1500, Dawn 1200-1500→1000-1200,
-# Kenji 900-1200→800-1000. The finished-article length that these drive is also
-# what Marco caps the merged/edit word target to (agents/marco.py Stage 3), so
-# articles no longer balloon back past persona length.
+# Per-author form, length, and voice. DEMOTED-QUILL REDESIGN (2026-07-14, per
+# Joe): Writer now OWNS word count AND full structure — Quill no longer trims
+# or expands, it only verifies (see agents/quill.py). Writer has its own hard
+# gate below (word_count vs range_min/range_max) so an off-target draft is
+# caught here, before Quill/Maya/Vera ever spend a token on it. Ranges reset
+# 2026-07-14: Joselito 1200-1500 (unchanged), Dawn 1000-1200→900-1200,
+# Kenji 800-1000→500-1000.
 AUTHOR_SPECS = {
     "joselito": {
         "name": "Joselito Sering", "persona_file": "joselito-sering.md",
-        "form": "editorial", "range": "1200-1500 words", "target_words": 1350,
+        "form": "editorial", "range": "1200-1500 words",
+        "range_min": 1200, "range_max": 1500, "target_words": 1350,
         "voice": "conviction-driven editorial — frames AI as a new creative instrument, not a shortcut",
     },
     "dawn": {
         "name": "Dawn Ginhaua", "persona_file": "dawn-ginhaua.md",
-        "form": "investigative report", "range": "1000-1200 words", "target_words": 1100,
+        "form": "investigative report", "range": "900-1200 words",
+        "range_min": 900, "range_max": 1200, "target_words": 1050,
         "voice": "investigative, evidence-first, link-heavy — cite primary sources inline",
     },
     "kenji": {
         "name": "Kenji Nakamoto", "persona_file": "kenji-nakamoto.md",
-        "form": "blog post", "range": "800-1000 words", "target_words": 900,
+        "form": "blog post", "range": "500-1000 words",
+        "range_min": 500, "range_max": 1000, "target_words": 750,
         "voice": "optimistic, accessible blog — grounded in what the tech makes possible for real people",
     },
 }
 
 WRITER_PROMPT = (
-    "You are an AIMA staff writer producing a free-form article in your assigned persona's "
-    "authentic voice. Your job is GREAT READING MATERIAL, not QC compliance — the editor "
-    "(Quill) will trim, expand, and on-brand it later. Use the provided research faithfully "
-    "and cite sources; do not invent facts beyond the research (flag any gaps). Hit the target "
-    "length and form for your persona. Output clean AIMA article HTML."
+    "You are an AIMA staff writer producing a COMPLETE, publication-ready article in your "
+    "assigned persona's authentic voice. You own the final word count and full structure — "
+    "Quill only verifies afterward; it does not rewrite you for length or add anything you "
+    "left out. Use the provided research faithfully and cite sources; do not invent facts "
+    "beyond the research (flag any gaps). Your target word range is a hard constraint, not a "
+    "suggestion — stay inside it. Include every required structural element yourself: 5-6 H2 "
+    "sections, a stat grid (>=4 numeric cards), 1 pullquote, a glossary (>=6 data-term "
+    "entries), and MLA references (>=6) — keep them concise rather than skipping them or "
+    "blowing your word budget. Output clean, complete AIMA article HTML."
 )
 
 
@@ -90,44 +97,51 @@ def run(spec: dict, research: dict, author: str | None = None) -> str:
     padded = str(spec.get("number", 0)).zfill(3)
     draft_path = f"{DRAFTS_DIR}/{slug}-{padded}-draft.html"
 
-    # Context-by-path: pass big context as FILE PATHS for the agent to Read
-    # rather than inlining text. Removed aima-coworker-prompt.md (18KB HTML
-    # template — Maya's job, not Writer's). Inline 10-line structure spec
-    # instead so Writer knows the shape without loading the full skeleton.
-    # (2026-07-13, part of Direction B revert + format guide removal.)
+    # Inline persona + research CONTENT (2026-07-14) so Writer runs as one call
+    # (API or CLI) instead of an agentic Read loop. Was "context-by-path".
     persona_file = f"articles/personas/{a['persona_file']}"
+    try:
+        persona_content = read_file(persona_file)
+    except FileNotFoundError:
+        persona_content = f"(persona file missing — write in {a['name']}'s voice: {a['voice']})"
     research_path = _find_research_path(spec["slug"], spec.get("number", 0))
     if research_path.exists() and research_path.stat().st_size > 100:
-        research_ref = ("- RESEARCH (use these sources/stats/quotes; cite inline): "
-                        f"{research_path.relative_to(REPO_ROOT).as_posix()}")
+        research_content = read_file(research_path.relative_to(REPO_ROOT).as_posix())
     else:
-        # No research file on disk — inline whatever we were handed so the
-        # no-fabrication rule still has something to check against.
-        research_ref = ("RESEARCH (none on disk — use ONLY what is inlined here; "
-                        "flag every gap, do not invent):\n" + json.dumps(research, indent=2))
+        research_content = json.dumps(research, indent=2)
 
     user_input = f"""\
 WRITER ASSIGNMENT — write as {a['name']} ({a['form']}).
-You are the WRITER, not the editor. Write freely in your own voice to make great
-reading material. Do NOT optimize for the strict QC checklist — Quill (the editor)
-refines it afterward.
+You are producing the FINAL article, not a rough draft. Write freely in your own
+voice, and hit the target length AND include every required structural element
+yourself — Quill only verifies afterward; it will not rewrite you for length or
+add anything missing.
 
-TARGET LENGTH: {a['range']} ({a['form']}).
+TARGET LENGTH: {a['range']} ({a['form']}) — THIS IS A HARD CONSTRAINT. Stay inside it.
 VOICE: {a['voice']}
 
 ARTICLE SPEC (topic + tags from Priya's calendar):
 {json.dumps(spec, indent=2)}
 
-READ THESE FILES FIRST with your Read tool (on disk; do NOT skip any):
-- PERSONA PROFILE (fully adopt this voice): {persona_file}
-{research_ref}
+PERSONA PROFILE (fully adopt this voice):
+{persona_content}
 
-STRUCTURE (Quill enforces; aim for this order so edits are minimal):
-lead → 5-6 H2 sections → stat grid (>=4 numeric cards) → pullquote → glossary (>=6 data-term) → MLA references (>=6)
-Output copy HTML only — no full skeleton, no og:image, no image tags.
+RESEARCH (use these sources/stats/quotes; cite inline; do NOT invent — flag gaps):
+{research_content}
 
-Write the complete article HTML now and save it to: {draft_path}
-Then return the HTML to stdout.\
+STRUCTURE — YOU must include all of these in this exact HTML, or Quill's
+verification gate will reject the draft (it does not add missing pieces):
+1. Lead paragraph.
+2. 5-6 <h2> section headings.
+3. Stat grid, >=4 cards: <div class="stat-grid"><div class="stat-card">...</div>...</div>
+4. Exactly one: <blockquote class="pullquote">...</blockquote>
+5. Glossary, >=6 entries — EVERY <dt> MUST carry data-term="Term Name" (this
+   exact attribute, not optional, not just descriptive text):
+   <div class="glossary"><dl><dt data-term="Term Name">Term Name</dt><dd>Definition.</dd>...</dl></div>
+6. >=6 references: <div class="references"><ol><li>...</li>...</ol></div>
+
+Output the complete article copy HTML as your ENTIRE response — copy HTML only,
+no full skeleton, no og:image, no image tags, no markdown fences. Just the HTML.\
 """
 
     log.info(f"[writer] {a['name']} writing #{padded} '{spec.get('title','')[:40]}' "
@@ -137,11 +151,47 @@ Then return the HTML to stdout.\
     full = REPO_ROOT / draft_path
     if full.exists() and full.stat().st_size > 200:
         log.info(f"[writer] draft saved by agent: {draft_path}")
-        return draft_path
+        saved_content = full.read_text(encoding="utf-8")
+    else:
+        raw = raw.strip()
+        if raw.startswith("```"):
+            raw = re.sub(r"```[a-z]*\n?", "", raw).strip().rstrip("`").strip()
+        write_file(draft_path, raw)
+        log.info(f"[writer] draft saved from stdout: {draft_path} ({len(raw)} chars)")
+        saved_content = raw
 
-    raw = raw.strip()
-    if raw.startswith("```"):
-        raw = re.sub(r"```[a-z]*\n?", "", raw).strip().rstrip("`").strip()
-    write_file(draft_path, raw)
-    log.info(f"[writer] draft saved from stdout: {draft_path} ({len(raw)} chars)")
-    r
+    # Word-count gate (2026-07-14, per Joe): Writer is now the primary
+    # enforcement point for its own persona's word range — an off-target
+    # draft is rejected HERE, before Quill/Maya/Vera ever spend a token
+    # verifying/merging/QC-ing it. Mirrors the pattern Quill's own (now
+    # removed) gate used to use. Article #25's Writer draft ran 2912 words
+    # against a 1100 target with no gate at all to catch it.
+    #
+    # REVISED same day, second pass: count PROSE ONLY. The first version of
+    # this gate counted the whole document — glossary (7 terms x 1-3
+    # sentences) and references (8 full MLA citations) add several hundred
+    # words of text that isn't prose. That let a genuinely-short draft
+    # (actual narrative ~747-856w per Vera's manual count) register as
+    # 1191w and pass the gate, which is why word count was STILL Vera's
+    # #1 blocking issue even after the gate existed. Strip glossary/
+    # references before counting — same end-markers (</dl>, </ol>) Maya's
+    # merge already uses successfully for the same extraction.
+    prose_only = saved_content
+    for cls, end in [("glossary", "</dl>"), ("references", "</ol>")]:
+        prose_only = re.sub(
+            r'<div class="' + cls + r'">.*?' + re.escape(end) + r'\s*</div>',
+            "", prose_only, flags=re.S,
+        )
+    text_only = re.sub(r"<[^>]+>", " ", prose_only)
+    word_count = len(text_only.split())
+    floor, ceiling = int(a["range_min"] * 0.85), int(a["range_max"] * 1.2)
+    if not (floor <= word_count <= ceiling):
+        raise RuntimeError(
+            f"[writer] Word count gate: {word_count} words outside acceptable "
+            f"{floor}-{ceiling} (persona range {a['range']}). Draft NOT accepted: "
+            f"{draft_path}. Re-run Writer, or adjust the persona range if this "
+            f"topic genuinely needs more room."
+        )
+    log.info(f"[writer] word count: {word_count} (range {a['range']}, "
+             f"acceptable {floor}-{ceiling}) — OK")
+    return draft_path

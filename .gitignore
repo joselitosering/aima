@@ -29,3 +29,13 @@ AIMA-HANDOFF-2026-06-21.md
 # Dashboard packaging area — scraped site dumps + build tarballs, not source
 pipeline_build/
 pipeline build/
+
+# Scratch + run logs (not source) — added 2026-07-14
+tmp_*
+*.pre-*-backup
+articles/_rd_*.html
+articles/_redeploy_*.html
+scheduled-run-log.jsonl
+last-run-status.json
+linkedin_pipeline/coworker_run_log.jsonl
+pipeline_trigger_log.jsonl

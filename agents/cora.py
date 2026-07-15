@@ -52,9 +52,14 @@ def init_budget(article_number: int) -> dict:
     """
     today = date.today().isoformat()
     existing = read_json("token_budget.json")
+    # Preserve only if SAME date AND SAME article — a new article always gets a clean slate.
+    # Different article on same day (e.g. two articles in one day) must reset used/cost.
+    # Same article same day (crash-retry) preserves usage already recorded.
     if existing.get("run_date") == today and existing.get("article_number") == article_number:
         log.info(f"[cora] token_budget.json already initialized for #{article_number} today — preserving usage")
         return existing
+    # New article or new day — zero out used/cost for all agents, keep budgets from BUDGET_MAP.
+    log.info(f"[cora] resetting token_budget.json for #{article_number} ({today})")
 
     budget = {
         "run_date": today,
@@ -126,7 +131,7 @@ TASKS:
 2. Check article stats against research JSON — flag any stat without a named source+year.
 3. Check for quotes without named, verifiable individuals.
 4. Check for scope violations (e.g., Quill editing images, Maya editing copy).
-5. Write governance summary to optimization/optimization_report.json.
+5. Do NOT write, read, or touch any file — Marco saves your report. Return ONLY the JSON below.
 
 Return your governance report as JSON:
 {{
@@ -143,7 +148,7 @@ No markdown fences.\
 """
 
     log.info(f"[cora] running governance check: article #{spec.get('number')}")
-    raw = call_cc_agent("cora", CORA_PROMPT, user_input)
+    raw = call_cc_agent("cora", CORA_PROMPT, user_input, single_shot=True)
 
     # Strip markdown fences
     raw = raw.strip()

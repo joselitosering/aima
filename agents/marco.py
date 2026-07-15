@@ -16,9 +16,11 @@ Stage sequence:
   9  Log    → optimization_report.json + state update
 """
 
+import csv
 import json
 import logging
 import os
+import re
 import sys
 import traceback
 from datetime import date, datetime, timezone
@@ -29,6 +31,79 @@ from agents.base import (
 )
 from agents.config import load_pipeline_config
 from agents import base, priya, scout, writer, quill, maya, vera, porter, nova, cora
+
+
+# ─────────────────────────────────────────────────────────────
+# Category prioritization matrix
+# Ranks categories by avg impressions from post_analytics.csv,
+# joined to calendar by title-slug overlap. Written into the
+# state file before priya.run() so the CC model sees it.
+# ─────────────────────────────────────────────────────────────
+
+def _build_category_priority() -> list:
+    """
+    Return categories ranked by avg LinkedIn impressions (desc).
+    Categories with no analytics data append last (calendar order).
+    Returns [] if analytics CSV is absent -- Priya falls back to date order.
+    """
+    analytics_path = REPO_ROOT / "linkedin_pipeline" / "post_analytics.csv"
+    if not analytics_path.exists():
+        log.info("[marco] post_analytics.csv absent -- no category priority injected")
+        return []
+
+    slug_impressions = {}
+    try:
+        with open(analytics_path, newline="", encoding="utf-8") as f:
+            for row in csv.DictReader(f):
+                article = row.get("article", "")
+                if not article:
+                    continue
+                slug = re.sub(r"[^a-z0-9]+", "-",
+                              article.lower().replace(".html", "")).strip("-")
+                try:
+                    imp = float(row.get("impressions", 0) or 0)
+                except (ValueError, TypeError):
+                    imp = 0.0
+                slug_impressions.setdefault(slug, []).append(imp)
+    except Exception as exc:
+        log.warning("[marco] post_analytics.csv read error: %s", exc)
+        return []
+
+    avg_by_slug = {s: sum(v) / len(v) for s, v in slug_impressions.items()}
+
+    try:
+        calendar_text = read_file("articles/aima-editorial-calendar.md")
+    except Exception:
+        return []
+
+    cat_impressions = {}
+    for line in calendar_text.splitlines():
+        cols = [c.strip() for c in line.split("|")]
+        if len(cols) < 6 or not cols[1].strip().isdigit():
+            continue
+        title = cols[3].strip()
+        category = cols[4].strip()
+        if not category or category == "Category":
+            continue
+        t_words = set(
+            re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-").split("-")
+        )
+        cat_impressions.setdefault(category, [])
+        for slug, avg in avg_by_slug.items():
+            if len(t_words & set(slug.split("-"))) >= 3:
+                cat_impressions[category].append(avg)
+                break
+
+    if not cat_impressions:
+        return []
+
+    ranked = sorted(
+        cat_impressions.items(),
+        key=lambda kv: (0 if kv[1] else 1, -(sum(kv[1]) / len(kv[1])) if kv[1] else 0),
+    )
+    result = [cat for cat, _ in ranked]
+    log.info("[marco] category priority: %s", result)
+    return result
 
 
 # ─────────────────────────────────────────────────────────────
@@ -96,6 +171,52 @@ def _log_run(spec: dict, porter_result: dict, nova_result: dict,
 
 
 # ─────────────────────────────────────────────────────────────
+# Run-level cost ceiling (added 2026-07-14)
+# --max-turns caps a single CC call; this caps the WHOLE run. Checked before
+# the big downstream stages (Maya, Vera) so a runaway authoring/QC spend can't
+# push one run to unbounded cost — it halts like a Vera failure (report to
+# CLAUDE.md, no publish) instead. Ceiling: env AIMA_RUN_COST_CEILING_USD
+# (default $12; set 0 to disable). A normal run is ~$5–6.
+# ─────────────────────────────────────────────────────────────
+
+def _cumulative_cost_usd() -> float:
+    """Sum recorded per-agent cost from token_budget.json for this run."""
+    try:
+        b = read_json("token_budget.json")
+        return round(sum(float(a.get("cumulative_cost_usd", 0.0))
+                         for a in b.get("agents", {}).values()), 4)
+    except Exception:
+        return 0.0
+
+
+def _cost_ceiling_usd() -> float:
+    try:
+        return float(os.environ.get("AIMA_RUN_COST_CEILING_USD", "12.0"))
+    except (TypeError, ValueError):
+        return 12.0
+
+
+def _over_cost_ceiling(before_stage: str, spec: dict, stages: list,
+                       flags: list, revisions: dict):
+    """Return a halt result dict if cumulative run cost exceeds the ceiling, else None."""
+    ceiling = _cost_ceiling_usd()
+    total = _cumulative_cost_usd()
+    if ceiling and total > ceiling:
+        msg = (f"Run cost ${total:.2f} exceeded ceiling ${ceiling:.2f} before stage "
+               f"'{before_stage}'. Halting to prevent runaway spend (publish/marketing skipped).")
+        log.warning(f"[marco] {msg}")
+        flags.append(f"cost_ceiling_halt:${total:.2f}>${ceiling:.2f}")
+        _write_failure_to_claude_md(spec, msg, [])
+        return {
+            "spec": spec, "porter": {}, "nova": {},
+            "stages": stages, "flags": flags, "revisions": revisions,
+            "halted_for_review": True, "cost_halt": True,
+            "cost_usd": total, "cost_ceiling_usd": ceiling,
+        }
+    return None
+
+
+# ─────────────────────────────────────────────────────────────
 # Main pipeline
 # ─────────────────────────────────────────────────────────────
 
@@ -139,6 +260,21 @@ def run(dry_run: bool = False):
         current_stage = "priya"
         _state_preview = read_json("articles/aima-coworker-state.json")
         cora.init_budget(_state_preview.get("next_article_number", 0))
+
+        # ── Inject category priority before Priya reads state ──────────────────
+        # Ranks categories by avg LinkedIn impressions so overdue articles in
+        # high-performing categories are picked first within the same date tier.
+        # Written to state -- Priya's CC prompt already injects the full state JSON.
+        _cat_priority = _build_category_priority()
+        if _cat_priority:
+            _state_preview["category_priority"] = _cat_priority
+            _state_preview["category_priority_note"] = (
+                "Ranked by avg LinkedIn impressions (post_analytics.csv). "
+                "Pick the next article whose category ranks highest here, "
+                "then by oldest scheduled date within that category tier."
+            )
+            write_json("articles/aima-coworker-state.json", _state_preview)
+            log.info("[marco] injected %d categories into state priority", len(_cat_priority))
 
         log.info("[marco] Stage 1: Priya — building article spec")
         spec = priya.run()
@@ -205,6 +341,11 @@ def run(dry_run: bool = False):
                 flags.append("write_skipped_no_artifact")
                 log.warning(f"[marco] No existing draft at {article_path} — downstream stages may fail")
 
+        # ── Cost ceiling: halt before the expensive Maya/Vera stages ──
+        _halt = _over_cost_ceiling("maya", spec, stages, flags, revisions)
+        if _halt:
+            return _halt
+
         # ── Stage 4: Maya → merged article (MAYA_ENABLED) ────────
         current_stage = "maya"
         if cfg["MAYA_ENABLED"]:
@@ -229,6 +370,10 @@ def run(dry_run: bool = False):
         # if something fails she HALTS the article and reports to Marco for review —
         # she never triggers a Quill/Maya re-run. Revision decisions belong to
         # Iris/Joe (quality control), not the pipeline.
+        _halt = _over_cost_ceiling("vera", spec, stages, flags, revisions)
+        if _halt:
+            return _halt
+
         current_stage = "vera"
         log.info("[marco] Stage 6: Vera — QC assurance check")
         vera_result = vera.run(article_path, spec)
@@ -383,4 +528,3 @@ def _write_crash_to_claude_md(spec: dict, stage: str, exc: Exception):
     )
     (REPO_ROOT / "CLAUDE.md").write_text(claude_md + entry, encoding="utf-8")
     log.info(f"[marco] Crash at stage '{stage}' written to CLAUDE.md — surface to Joe")
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

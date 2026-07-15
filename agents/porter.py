@@ -84,6 +84,12 @@ def run(spec: dict, dry_run: bool = False, gs_enabled: bool = True) -> dict:
     # proceeds to the deploy guard + GS log instead of erroring out.
     # IMPORTANT: always verify the push succeeded — git_commit may no-op but
     # the branch could still be ahead of origin (commit made outside this call).
+    # Clear stale git lock if present (left by crashed prior processes).
+    lock_file = REPO_ROOT / ".git" / "HEAD.lock"
+    if lock_file.exists():
+        lock_file.unlink()
+        log.info("[porter] cleared stale .git/HEAD.lock")
+
     try:
         log.info(f"[porter] committing: {commit_msg}")
         git_commit(commit_msg)

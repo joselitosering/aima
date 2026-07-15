@@ -9,8 +9,8 @@ REPO_ROOT = Path(__file__).parent.parent
 # CC_AGENTS  — called via Claude Code CLI (subscription-billed)
 # PY_AGENTS  — pure Python, no LLM calls
 # -------------------------------------------------------------------
-CC_AGENTS = {"iris", "priya", "scout", "trend_scout", "quill", "maya", "vera", "lumen", "cora"}
-PY_AGENTS  = {"marco", "porter", "nova", "echo"}
+CC_AGENTS = {"iris", "priya", "scout", "trend_scout", "maya", "vera", "lumen", "cora"}
+PY_AGENTS  = {"marco", "porter", "nova", "echo", "quill"}  # quill demoted 2026-07-14 — verification gate, no LLM
 
 # Model overrides for CC subagents.
 # Leave None to use the CC default (Sonnet on Pro/Max).
@@ -20,7 +20,6 @@ CC_MODEL_OVERRIDE = {
     "priya": None,
     "scout": None,
     "trend_scout": None,
-    "quill": None,   # → "claude-opus-4-8" if article quality plateaus
     "maya":  None,
     "vera":  None,
     # lumen: model is chosen at runtime in agents/lumen.py by credential state —
@@ -34,7 +33,8 @@ CC_MODEL_OVERRIDE = {
 # These are realistic ceilings recalibrated 2026-07-13 from measured actuals
 # on articles #19–#20 after the QL token explosion investigation (article #20:
 # TS=143k, PR=42k, SC=450k, QL=2.9M[outlier], MY=694k, VR=604k).
-# QL is capped at 500k: with --max-turns 8 the 57-turn outlier cannot recur.
+# Quill demoted to pure Python 2026-07-14 (see agents/quill.py) — no longer
+# in this budget at all; Writer now owns word-count enforcement directly.
 # PY agents: not used (no LLM calls).
 BUDGET_MAP = {
     "iris":   50_000,
@@ -44,9 +44,6 @@ BUDGET_MAP = {
     "writer": 300_000,  # free-form authoring call in both full pipeline and Writer
                          # batch. Restored two-call arch (2026-07-13, reverts Direction
                          # B). Measured ~253k tok for a Dawn article — budget 300k.
-    "quill":  200_000,  # edit-only call (no longer authors from scratch). Writer hands
-                         # off a draft; Quill reads persona + research + draft and edits.
-                         # Measured ~75k tok for edit-only — budget 200k with headroom.
     "maya":   750_000,
     "vera":   650_000,
     "lumen":  10_000,
@@ -56,18 +53,18 @@ BUDGET_MAP = {
     "porter": 0,
     "nova":   0,
     "echo":   0,
+    "quill":  0,  # demoted 2026-07-14 — verification gate, no LLM call
 }
 
 # Hard cap on agentic tool-use turns per CC agent call (--max-turns N).
 # Primary control against token explosions (article #20 QL: 57 turns → 2.9M tok).
-# Quill (edit-only, 2026-07-13): read persona (1) + research (2) + draft (3) +
-# write output (4) + edge cases (5-8). 8 turns is ample for edit-only.
-# Writer gets 15: it may need extra tool turns for file reads + write + verify.
-# Added 2026-07-13. To disable a cap for a specific call, pass max_turns=None
-# explicitly to call_cc_agent() — it will still fall through to this map,
-# so pass max_turns=0 or add a guard to bypass (not recommended).
+# Quill no longer appears here — demoted to pure Python 2026-07-14, no CC
+# call to cap. Writer gets 15: it may need extra tool turns for file reads +
+# write + verify. Added 2026-07-13. To disable a cap for a specific call,
+# pass max_turns=None explicitly to call_cc_agent() — it will still fall
+# through to this map, so pass max_turns=0 or add a guard to bypass (not
+# recommended).
 MAX_TURNS_MAP = {
-    "quill":       8,
     "iris":       15,
     "priya":      15,
     "scout":      15,
@@ -77,6 +74,38 @@ MAX_TURNS_MAP = {
     "lumen":      15,
     "cora":       15,
 }
+
+# -------------------------------------------------------------------
+# API MODEL ROUTING (OpenRouter) — added 2026-07-14
+# Agents listed here call the direct OpenRouter API (base.call_api) instead of
+# the `claude` CLI: ONE HTTP call, no Claude Code system-prompt/tool overhead,
+# no agentic loop — ~$0-0.05 vs the ~$0.3-2 each cost via the CLI.
+# NOT listed (scout, trend_scout, maya) stay on the CLI: scout/trend_scout need
+# web-search tools; maya does an agentic file-write + git add. Requires
+# OPENROUTER_API_KEY in agents/.env; without it, call_cc_agent falls back to the
+# CLI for everyone (safe). Slugs are env-overridable (OPENROUTER_MODEL_*).
+# NOTE: an agent is only safe here if its user_input INLINES all content — a
+# prompt that says "Read this path" fails on the API (no tools).
+# -------------------------------------------------------------------
+_AUTHOR_MODEL   = os.environ.get("OPENROUTER_MODEL_AUTHOR",   "anthropic/claude-sonnet-5")
+_RESEARCH_MODEL = os.environ.get("OPENROUTER_MODEL_RESEARCH", "anthropic/claude-sonnet-5:online")  # :online = web search
+_EDITOR_MODEL   = os.environ.get("OPENROUTER_MODEL_EDITOR",   "openai/gpt-4o-mini")
+_GATE_MODEL     = os.environ.get("OPENROUTER_MODEL_GATE",     "openai/gpt-4o-mini")  # Vera — reliable gating for ~$0
+_JUDGE_MODEL    = os.environ.get("OPENROUTER_MODEL_JUDGE",    "openrouter/free")
+# Fallback tried automatically (OpenRouter `models` array) when the primary
+# model errors/churns/rate-limits. Sonnet is the quality safety net.
+API_FALLBACK_MODEL = os.environ.get("OPENROUTER_MODEL_FALLBACK", "anthropic/claude-sonnet-5")
+API_MODEL_MAP = {
+    "joselito": _AUTHOR_MODEL, "dawn": _AUTHOR_MODEL, "kenji": _AUTHOR_MODEL,
+    "scout": _RESEARCH_MODEL, "trend_scout": _RESEARCH_MODEL,   # Sonnet + web search
+    "vera":   _GATE_MODEL,
+    "cora":   _JUDGE_MODEL, "priya": _JUDGE_MODEL, "iris": _JUDGE_MODEL, "lumen": _JUDGE_MODEL,
+}
+# NOTE: maya is intentionally absent -> stays on the claude CLI (it does an
+# agentic file-write + git add). Its skeleton merge was converted to PURE
+# PYTHON 2026-07-14 (agents/maya_merge.py) — same move now applied to quill,
+# which is absent here too: demoted to pure Python 2026-07-14
+# (agents/quill.py), no LLM call of any kind, not CLI and not API.
 
 # -------------------------------------------------------------------
 # FULL-PIPELINE STAGE TOGGLES

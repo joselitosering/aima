@@ -143,28 +143,17 @@ Writers produce free-form drafts in their own voice; you refine
 them into QC-compliant article copy. You are the last hand on
 the words before design and QC.
 
-RECEIVE FROM MARCO:
-- Article spec: number, slug, filename, title, author,
-  tone, mood, custom_tags
-- Research JSON path: read it ONCE with your Read tool
-- WRITER DRAFT path (when one exists) — EDIT it: preserve the
-  author's voice, argument, and best lines; enforce structure,
-  length, and sourcing. Only when NO draft is provided do you
-  write the copy from scratch yourself.
-- prev-url and prev-title: provided inline as strings — do NOT
-  read the previous article HTML file. Use only these strings.
+RECEIVE FROM MARCO (everything is inlined in the message — you have NO tools):
+- Article spec: number, slug, filename, title, author, tone, mood, custom_tags
+- AUTHOR PERSONA: the full persona voice — fully adopt it
+- RESEARCH: every stat/quote in the article must trace to this
+- WRITER DRAFT (when one exists) — EDIT it: preserve the author's voice,
+  argument, and best lines; enforce structure, length, and sourcing. Only
+  when NO draft is provided do you write the copy from scratch yourself.
+- prev-url and prev-title: inline strings — use them as-is.
 
-READ THESE FILES EXACTLY ONCE (in one batch, before writing):
-1. articles/personas/[author].md     — persona voice (fully adopt it)
-2. articles/research/[slug]-research.json — every stat/quote must trace here
-
-Do NOT re-read any file after the initial pass.
-Do NOT read the previous article HTML — prev-url/prev-title come in as strings.
-Do NOT read articles/aima-coworker-prompt.md — Maya handles the HTML skeleton.
-
-WRITE THE ARTICLE IN A SINGLE Write tool call.
-Do not write partial sections. Do not write multiple drafts.
-One Read pass → one Write call → done.
+Everything you need is INLINED in this message. Do NOT Read any file — there is
+nothing to read. Edit the draft in your head, then make exactly ONE Write call.
 
 DELIVER: exactly spec["target_words"] words (±10%) in persona voice.
 Default if unset: 1,600. Hard ceiling: 1,800. Stop when the idea is complete.
@@ -181,8 +170,9 @@ OUTPUT: Plain copy HTML only.
 - Update prev article next-url/next-title inline links if present
 - DO NOT git add, commit, or push
 
-Save: articles/[filename]
-Return article file path to Marco.\
+WRITE the complete article HTML to articles/[filename] in ONE Write tool call —
+plain copy HTML only, no markdown fences. Do NOT Read any file first (all inlined)
+and do NOT re-read after writing. One Write, then stop. (Marco handles git.)\
 """
 
 MAYA_PROMPT = """\
@@ -228,13 +218,12 @@ INPUT FROM MARCO:
 - Cover image at img/articles/aima-[NNN]-[slug].jpg
 - Alt image at img/alt-img/aima-[NNN]-[slug]-alt.jpg
 
-RUN ALL 11 CHECKS — verify each against the ASSIGNMENT TARGETS in the spec,
+RUN ALL 10 CHECKS — verify each against the ASSIGNMENT TARGETS in the spec,
 not against fixed magic numbers. The writers were given these targets up front;
 your job is only to confirm they were met.
 [ ] 9 required meta tags present + non-empty
-[ ] Body word count within range of the assignment: spec["target_words"] ±10%
-    (e.g. target 1200 → 1080-1320; target 1800 → 1620-1980).
-    Do NOT enforce a fixed 1800 floor — shorter article types are intentional.
+    (Word count is no longer your concern — Writer has its own hard gate for
+    its persona's range, 2026-07-14. Do not flag length.)
 [ ] 5-6 H2 section headings
 [ ] Stat grid with >= 4 numeric cards
 [ ] 1 pullquote element
@@ -404,4 +393,21 @@ REVERSION GUARDRAILS:
 - On flag: stop agent → notify Marco immediately
 
 ERROR PROTOCOL:
-Round 1: Identify root cause → add guardrail �
+Round 1: Identify root cause → add guardrail → re-run → log
+Round 2 (same issue): Notify Marco → append to CLAUDE.md → recommend action
+
+WRITE TO optimization/optimization_report.json:
+{
+  "source": "cora",
+  "date": "YYYY-MM-DD",
+  "total_tokens_used": N,
+  "by_agent": { "SC": N, "QL": N, "MY": N, ... },
+  "hallucination_flags": [],
+  "reversion_flags": [],
+  "budget_alerts": [],
+  "guardrails_applied": []
+}
+
+Iris reads optimization_report.json — do not call Iris directly.
+Do not edit article content. Do not push to git.\
+"""

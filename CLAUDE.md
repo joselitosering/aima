@@ -393,3 +393,269 @@ call below ~125k tokens. Joe asked; will be confirmed on the next real run.
 - **Caveat:** word count is the *smaller* lever (output is only ~15-22k of the 139k);
   context-by-path is the bigger one. Re-measure with `measure_writer_quill_merge.py` or
   read `token_budget.json` after the next real `python run.py` for the true landing number.
+
+
+### Pipeline CRASH — (spec not yet built) — stage 'priya' (2026-07-13)
+- **Error:** CC agent [trend_scout] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":315,"duration_api_ms":0,"num_turns":1,"result":"Not logged in · Please run /login","stop_reason":"stop_sequence","session_id":"3536e76d-21cd-4b08-82c5-99fab516c2c3","total_cost_usd":0,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier":"standard","cache_creation":{"ephemeral
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/marco.py", line 146, in run
+    spec = priya.run()
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/priya.py", line 93, in run
+    elif trend_scout.resolve_tbd_row(number):
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/trend_scout.py", line 284, in resolve_tbd_row
+    chosen = determine_trending_topic(
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/trend_scout.py", line 172, in determine_trending_topic
+    raw = call_cc_agent("trend_scout", TREND_SCOUT_PROMPT, user_input).strip()
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/base.py", line 222, in call_cc_agent
+    raise RuntimeError(
+RuntimeError: CC agent [trend_scout] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":315,"duration_api_ms":0,"num_
+
+### Pipeline CRASH — (spec not yet built) — stage 'priya' (2026-07-13)
+- **Error:** Expecting ',' delimiter: line 52 column 43 (char 1149)
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/marco.py", line 143, in run
+    log.info("[marco] Stage 1: Priya — building article spec")
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/cora.py", line 54, in init_budget
+    existing = read_json("token_budget.json")
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/base.py", line 259, in read_json
+    text_output = raw_stdout
+  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.10/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 52 column 43 (char 1149)
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — (spec not yet built) — stage 'priya' (2026-07-13)
+- **Error:** CC agent [trend_scout] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":220,"duration_api_ms":0,"num_turns":1,"result":"Not logged in · Please run /login","stop_reason":"stop_sequence","session_id":"034d95cc-6a91-4250-8717-cd32edf6c9a4","total_cost_usd":0,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier":"standard","cache_creation":{"ephemeral
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/marco.py", line 146, in run
+    log.info(f"[marco] Spec: #{spec['number']} '{spec['title']}' by {spec['author']}")
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/priya.py", line 93, in run
+    elif trend_scout.resolve_tbd_row(number):
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/trend_scout.py", line 284, in resolve_tbd_row
+    chosen = determine_trending_topic(
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/trend_scout.py", line 172, in determine_trending_topic
+    raw = call_cc_agent("trend_scout", TREND_SCOUT_PROMPT, user_input).strip()
+  File "/sessions/gallant-eager-clarke/mnt/aima/agents/base.py", line 222, in call_cc_agent
+    log.info(f"[{name.upper()}] calling CC subagent (model={model or 'CC-default'})")
+RuntimeError: CC agent [trend_scout] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":220,"duration_api_ms":0,"num_turns":1,"result":"Not logged in · Please run /login","stop_reason":"stop_sequence","session_id":"034d95cc-6a91-4250-8717-cd32edf6c9a4","total_cost_usd":0,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier":"standard","cache_creation":{"ephemeral
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'scout' (2026-07-14)
+- **Error:** API agent [scout] HTTP 402: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account","code":402,"metadata":{"provider_name":null,"previous_errors":[{"code":402,"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 347, in call_api
+    with urllib.request.urlopen(req, timeout=300) as resp:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 493, in open
+    response = meth(req, response)
+  File "C:\Python314\Lib\urllib\request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "C:\Python314\Lib\urllib\request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 464, in _call_chain
+    result = func(*args)
+  File "C:\Python314\Lib\urllib\request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 402: Payment Required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 292, in run
+    research = scout.run(spec)
+  File "D:\Apps\DevOps\Github\aima\agents\scout.py", line 206, in run
+    raw = call_cc_agent("scout", SCOUT_PROMPT, user_input)
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 197, in call_cc_agent
+    return call_api(name, system_prompt, user_input,
+                    model=model_override or API_MODEL_MAP[name],
+                    fallback=API_FALLBACK_MODEL)
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 351, in call_api
+    raise RuntimeError(f"API agent [{name}] HTTP {exc.code}: {body}")
+RuntimeError: API agent [scout] HTTP 402: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account","code":402,"metadata":{"provider_name":null,"previous_errors":[{"code":402,"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'scout' (2026-07-14)
+- **Error:** API agent [scout] HTTP 402: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account","code":402,"metadata":{"provider_name":null,"previous_errors":[{"code":402,"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 347, in call_api
+    with urllib.request.urlopen(req, timeout=300) as resp:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 493, in open
+    response = meth(req, response)
+  File "C:\Python314\Lib\urllib\request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "C:\Python314\Lib\urllib\request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 464, in _call_chain
+    result = func(*args)
+  File "C:\Python314\Lib\urllib\request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 402: Payment Required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 292, in run
+    research = scout.run(spec)
+  File "D:\Apps\DevOps\Github\aima\agents\scout.py", line 206, in run
+    raw = call_cc_agent("scout", SCOUT_PROMPT, user_input)
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 197, in call_cc_agent
+    return call_api(name, system_prompt, user_input,
+                    model=model_override or API_MODEL_MAP[name],
+                    fallback=API_FALLBACK_MODEL)
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 351, in call_api
+    raise RuntimeError(f"API agent [{name}] HTTP {exc.code}: {body}")
+RuntimeError: API agent [scout] HTTP 402: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account","code":402,"metadata":{"provider_name":null,"previous_errors":[{"code":402,"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'quill' (2026-07-14)
+- **Error:** [quill] Word count gate: 2912 words exceeds hard ceiling (1980 = 1100 × 1.8). Article NOT saved. Check QUILL_PROMPT word target instruction and --max-turns cap.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 332, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 202, in run
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: [quill] Word count gate: 2912 words exceeds hard ceiling (1980 = 1100 × 1.8). Article NOT saved. Check QUILL_PROMPT word target instruction and --max-turns cap.
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'quill' (2026-07-14)
+- **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 1830 outside acceptable 765-1440 (persona range 900-1200). Draft at: articles/drafts/government-brief-algorithm-025-draft.html
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 332, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 93, in run
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 1830 outside acceptable 765-1440 (persona range 900-1200). Draft at: articles/drafts/government-brief-algorithm-025-draft.html
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'quill' (2026-07-14)
+- **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 0 glossary terms (need >=6). Draft at: articles/drafts/government-brief-algorithm-025-draft.html
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 332, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 93, in run
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 0 glossary terms (need >=6). Draft at: articles/drafts/government-brief-algorithm-025-draft.html
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline Failure — Article #25 (2026-07-14)
+- **Error:** Vera halted the article (verdict=needs_revision: copy). Reported to Marco for Iris/human review — no auto-revision (publish/marketing skipped).
+- **Notes:**
+  - **Structure**
+  - - H2 count: 5 top-level sections ("The Law They Filed a Brief to Kill," "Corporate Litigation, Federal Co-Counsel," "The Constitutional Argument, Turned Inside Out," "The Harm That Needed No Law to Document," "What the Replacement Law Does") — within the 5–6 range. PASS.
+  - - None of the 5 `<h2>` tags carry an `id` attribute (checklist requires `id="section-[slug]"` on each). The TOC sidebar still points to placeholder anchors `#section-[slug-1]` through `#section-[slug-5]` with literal unfilled labels `[Section 1 Title]`…`[Section 5 Title]` — these were never wired to the real sections. FAIL (broken in-page navigation, unfinished copy integration).
+  - **Word count**
+  - - JSON-LD declares `"wordCount": "1191"`. Manually counting the actual running prose (lead + 5 section bodies + closing paragraph, excluding stat-grid/pullquote) comes to roughly **840–900 words**, not ~1191. Author is Dawn Ginhaua, persona target 1100 (acceptable band ~990–1210 per Vera's ±10% gate). The real count appears to fall below the floor — this article has a documented history of repeated word-count gate failures (#25 crashed twice already for word count in the log above); this draft's declared count looks inflated relative to actual body text. FLAG for re-verification/revision.
+  - **Stat grid / Pullquote**
+  - - Stat grid present, 4 cards (26%, ~40,000, $2.3M, 90%). PASS.
+  - - Pullquote present and on-topic. PASS.
+  - - Note: the "90%" stat ("of U.S. employers use AI screening tools") has no matching in-text citation or reference number anywhere in the prose or reference list — it's asserted only in the stat card. Traceability gap / possible unsourced stat.
+  - **Glossary**
+  - - A glossary of 7 terms exists (Disparate Impact, Reasonable Care Standard, Equal Protection Clause, High-Risk AI System, Demographic-Conscious Engineering, AI Litigation Task Force, ADMT) — count clears the ≥6 minimum, but it's built as an ad-hoc `<dl>/<dt>/<dd>` block stuffed inside `.article-content`, not in the templated `#glossary` section with `.glossary-item`/`.glossary-term-title` markup.
+  - - The actual `#glossary` section (the one the TOC and footer nav point to) still contains **unfilled skeleton placeholder text**: `[Term Name]`, `id="glossary-[word]"`, `[Plain-language definition, 3–5 sentences...]`. FAIL — the real glossary never replaced the placeholder in its intended location.
+  - - No inline `<span class="glossary-term">` links appear anywhere in the body copy (checklist requires glossary-term links in the running text pointing readers to definitions). FAIL.
+  - **References**
+  - - 8 real, properly-sourced citations (DOJ, Colorado Sun, National Law Review, Norton Rose Fulbright, Stanford HAI, Leadership Conference on Civil and Human Rights, Crowell & Moring, White House EO 14365) meet the ≥6/8+ minimum and appear to trace consistently to the in-text parenthetical citations — content itself is not fabricated as far as can be judged.
+  - - However, like the glossary, these are dumped into an ad-hoc `<div class="references"><ol>` inside `.article-content` instead of replacing the templated `#references` section. The actual `#references` section still contains **unfilled skeleton placeholder text** ("Lastname, Firstname," `"Web Article With Author."`, `[URL]`, etc.) for all 5 example slots plus a placeholder copyright notice `[List institutions... as of [Month YYYY]]`. FAIL — the canonical references section a reader or the TOC would land on is fake boilerplate, not the real bibliography.
+  - **Summary of blocking issues**
+  - 1. Word count likely below Dawn's acceptable floor despite a higher declared count — re-verify actual word count.
+  - 2. Required `#glossary` and `#references` templated sections were left as unfilled placeholder copy; real content was misplaced into non-conforming ad-hoc divs earlier in the article.
+  - 3. TOC sidebar section links and H2 ids were never resolved from placeholders — broken navigation copy.
+  - 4. No inline glossary-term links in body copy.
+  - 5. One stat-grid figure (90% employer AI-screening adoption) lacks a traceable in-text source.
+
+### Pipeline Failure — Article #25 (2026-07-14)
+- **Error:** Vera halted the article (verdict=needs_revision: copy). Reported to Marco for Iris/human review — no auto-revision (publish/marketing skipped).
+- **Notes:**
+  - **Structure (H2 count + TOC/id alignment)**
+  - - 5 top-level H2 sections ("The Law They Filed a Brief to Kill," "Corporate Litigation, Federal Co-Counsel," "The Constitutional Argument, Turned Inside Out," "The Harm That Needed No Law to Document," "What the Replacement Law Does") — within the 5–6 range. PASS.
+  - - All 5 H2 `id` attributes now match the TOC sidebar hrefs exactly (`#section-the-law-they-filed-a-brief-to-kill`, `#section-corporate-litigation-federal-co-counsel`, `#section-the-constitutional-argument-turned-insid`, `#section-the-harm-that-needed-no-law-to-document`, `#section-what-the-replacement-law-does`), plus `#references`/`#glossary`. PASS — this resolves the broken-TOC issue from the prior halt on this article.
+  - **Word count — FAIL**
+  - - JSON-LD declares `"wordCount": "856"`. Manually counting the actual running prose (lead + 5 section bodies, excluding stat-grid captions and pullquote, consistent with prior Vera methodology on this same article) comes to approximately **747 words**.
+  - - Author is Dawn Ginhaua; per CLAUDE.md's round-2 tuning her persona target is 1100 words (band 1000–1200), and Vera's gate is target ±10% (~990–1210). Both the declared JSON-LD figure (856) and the actual measured count (~747) fall **below the floor**, with the real count roughly 25% short. This is the same word-count-inflation pattern flagged as unresolved in this article's prior halt — still not fixed in this draft.
+  - **Stat grid**
+  - - 4 cards present (26%, ~40,000, $2.3M, 90%). Structurally correct. PASS on format.
+  - - The "90%" card ("of U.S. employers use AI screening tools") still has no matching in-text citation or reference number — same unsourced-stat gap flagged previously. FLAG.
+  - **Pullquote**
+  - - Present, on-topic, thematically tied to the article's Fourteenth Amendment argument. PASS.
+  - **Glossary**
+  - - 7 terms in the proper templated `#glossary` section using correct `glossary-item`/`glossary-term-title` markup (fixes the earlier placeholder-skeleton failure). Count clears ≥6 minimum. PASS on placement/count.
+  - - Only 2 of 7 terms ("Equal Protection Clause," "demographic-conscious engineering") have a corresponding inline `<span/a class="glossary-term">` link in the running text. The other 5 ("Disparate Impact," "Reasonable Care Standard," "High-Risk AI System," "AI Litigation Task Force," "Automated Decision-Making Technology (ADMT)") are never linked from — and in the case of "Disparate Impact" and "ADMT," never even mentioned in — body copy. Improvement over the prior draft (which had zero inline links) but still incomplete. FLAG.
+  - **References**
+  - - 8 real, properly sourced MLA-formatted citations in the correct templated `#references` section (fixes the earlier placeholder-boilerplate failure). Meets ≥6/8+ minimum. PASS.
+  - - All 8 sources trace to matching in-text parenthetical citations (Leadership Conference, Norton Rose Fulbright/National Law Review, U.S. DOJ, White House, Stanford HAI, Crowell & Moring, Colorado Sun). No fabrication apparent. PASS.
+  - **Summary of blocking issues**
+  - 1. Actual word count (~747) is materially below Dawn's acceptable floor (~990) despite a higher declared JSON-LD count (856) — this is a recurrence of the exact word-count-inflation problem already logged against this article; Writer/Quill need to add substance, not just re-declare a bigger number.
+  - 2. Stat-grid "90%" figure remains uncited.
+  - 3. 5 of 7 glossary terms have no inline `glossary-term` link anchoring them to the body text.

@@ -326,49 +326,15 @@ def run(article_path: str, spec: dict) -> str:
             log.info("[maya] PEXELS_API_KEY not set — using stub placeholder images")
             _generate_images_stub(spec, og_image, alt_image)
 
-    # ── Step 2: CC agent merges copy into full article skeleton ──
-    # Pass the file path — not inline content — to keep user_input small.
-    # Maya's CC agent has --dangerously-skip-permissions so it can Read the file.
-    publish_date = spec.get("publish_date", "")
-    category = spec.get("category", "")
-    author = spec.get("author", "")
-    description = spec.get("description", title)   # fallback to title
-
-    user_input = f"""\
-ARTICLE_PATH: {article_path}
-OG_IMAGE: {og_image}
-ALT_IMAGE: {alt_image}
-
-SPEC:
-  slug={slug}  number={number}
-  title="{title}"
-  author="{author}"
-  publish_date="{publish_date}"
-  category="{category}"
-  og:description="{description}"
-  mood="{mood}"
-
-Images are already saved to disk. Do not generate new images.
-Read ARTICLE_PATH, build the complete merged HTML, write it to ARTICLE_PATH.\
-"""
-
-    article_full = REPO_ROOT / article_path
-
-    log.info(f"[maya] calling CC agent to merge article skeleton: {slug}")
-    call_cc_agent("maya", MAYA_PROMPT, user_input)
-
-    # Check merge success: og:image tag must be wired (not just file size growth)
-    merged_ok = False
-    if article_full.exists():
-        content = article_full.read_text(encoding="utf-8", errors="ignore")
-        merged_ok = og_image in content and "og:image" in content
-    if merged_ok:
-        log.info(f"[maya] merge complete (og:image wired): {article_path}")
-    else:
-        log.warning(
-            f"[maya] CC agent did not wire og:image into article — "
-            f"skeleton merge may be incomplete for {article_path}"
-        )
+    # ── Step 2: PURE-PYTHON skeleton merge (no LLM, $0) ──
+    # Was a CC-agent call (~$1.90/run of agentic Read+Write). The merge is
+    # mechanical (fill the skeleton template + drop Quill's copy into <main>),
+    # so it's deterministic Python now — see agents/maya_merge.py.
+    from agents.maya_merge import merge as _merge_skeleton
+    log.info(f"[maya] merging skeleton (pure python): {slug}")
+    merged_ok = _merge_skeleton(article_path, og_image, alt_image, spec)
+    if not merged_ok:
+        log.warning(f"[maya] skeleton merge incomplete for {article_path}")
 
     log.info(f"[maya] merge complete: {article_path}")
 

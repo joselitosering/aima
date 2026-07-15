@@ -1,7 +1,8 @@
 """Vera — Quality Gate (CC subagent).
 
 Receives the fully merged article from Marco and runs
-the 11-point QC checklist. Returns a structured verdict.
+the 10-point QC checklist (word count removed 2026-07-14 —
+Writer now gates its own persona range). Returns a structured verdict.
 """
 
 import json
@@ -38,28 +39,40 @@ def run(article_path: str, spec: dict) -> dict:
     except FileNotFoundError:
         raise RuntimeError(f"[vera] Article not found at: {article_path}")
 
-    # Vera only needs enough HTML to check structure — truncate to avoid token bloat
-    html_excerpt = article_html[:12_000] if len(article_html) > 12_000 else article_html
+    # Inline the FULL article: single-shot is one pass (no re-reading), so the old
+    # 12K truncation — which existed to bound multi-turn token bloat — would now
+    # just hide the article's back half (refs, later sections) and cause false
+    # "needs_revision" flags. Cap at 60K chars only as an extreme-outlier guard.
+    html_excerpt = article_html[:60_000]
 
     user_input = f"""\
-ARTICLE PATH: {article_path}
-COVER IMAGE:  {og_image}
-ALT IMAGE:    {alt_image}
-AUTHOR:       {spec.get('author')}
+You have NO tools. Everything you need is inlined below — do NOT try to Read any
+file. Judge the ARTICLE HTML given here and reply with text only.
 
-ARTICLE HTML (first 12000 chars):
+EXPECTED COVER IMAGE REF (verify the HTML contains it): {og_image}
+EXPECTED ALT IMAGE REF (verify the HTML contains it):   {alt_image}
+AUTHOR: {spec.get('author')}
+
+ARTICLE HTML (complete):
 {html_excerpt}
 
-Run all 11 QC checks. Return your verdict on the FIRST LINE as exactly one of:
+IMAGES are verified separately by the pipeline (Marco's format check + Porter's
+deploy guard, which confirms the live page renders with its og:image). You CANNOT
+see the image files, so do NOT flag visual/image issues. Judge COPY ONLY:
+structure (5-6 H2), word count, stat grid, pullquote, glossary (>=6), MLA
+references (>=6), citations trace to sources, no fabrication. Return your verdict
+on the FIRST LINE as exactly one of:
   approved
   needs_revision: copy
-  needs_revision: visual
 
-Then list each check result and any specific line-level notes for failures.\
+Then list each copy check result and any specific line-level notes for failures.\
 """
 
     log.info(f"[vera] running QC on: {article_path}")
-    raw = call_cc_agent("vera", VERA_PROMPT, user_input)
+    # single_shot: the article HTML is inlined above and Vera only returns a text
+    # verdict (no file I/O) — same shape as Cora. Was an 8-15 turn agentic loop
+    # re-reading the article each turn (1.46M tokens / $1.04); now one pass.
+    raw = call_cc_agent("vera", VERA_PROMPT, user_input, single_shot=True)
 
     # Parse verdict from first non-empty line
     lines = [l.strip() for l in raw.splitlines() if l.strip()]

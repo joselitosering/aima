@@ -166,7 +166,7 @@ def _record_token_usage(name: str, tokens: int, cost_usd: float | None):
 
 def call_cc_agent(name: str, system_prompt: str, user_input: str,
                   max_tokens: int = None, model_override: str = None,
-                  max_turns: int = None) -> str:
+                  max_turns: int = None, single_shot: bool = False) -> str:
     """
     Invoke a Claude Code subagent via the 'claude' CLI.
     Subscription-billed — do NOT set ANTHROPIC_API_KEY in env.
@@ -187,6 +187,17 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
     $2.52 on article #20 from ~57 tool turns. Caller can override per-call;
     otherwise the per-agent default from MAX_TURNS_MAP in config.py is used.
     """
+    # ── Route to the direct OpenRouter API for agents that don't need CLI tools ──
+    # (config.API_MODEL_MAP). ONE HTTP call, no Claude Code overhead/loop. Falls
+    # through to the CLI below if there's no OPENROUTER_API_KEY or the agent isn't
+    # mapped (scout/trend_scout/maya need CLI tools). single_shot/max_turns are
+    # CLI-only concepts and simply don't apply on the API path.
+    from agents.config import API_MODEL_MAP, API_FALLBACK_MODEL
+    if os.environ.get("OPENROUTER_API_KEY") and name in API_MODEL_MAP:
+        return call_api(name, system_prompt, user_input,
+                        model=model_override or API_MODEL_MAP[name],
+                        fallback=API_FALLBACK_MODEL)
+
     from agents.config import CC_MODEL_OVERRIDE, MAX_TURNS_MAP
 
     model = model_override or CC_MODEL_OVERRIDE.get(name)
@@ -205,13 +216,29 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
     # --system-prompt sets the role; user_input is piped via stdin.
     # --output-format json: structured envelope with `result` (text) + `usage`
     # + `total_cost_usd` — see https://code.claude.com/docs/en/headless.
-    cmd = [_CLAUDE_BIN, "--print", "--dangerously-skip-permissions",
-           "--output-format", "json",
-           "--system-prompt", system_prompt]
+    # single_shot: ONE turn, NO tools — for agents that receive all content
+    # inlined and return text/JSON directly (Cora, Quill, Vera). This avoids the
+    # multi-turn agentic loop (Read file -> Read file -> Write file over 8-15
+    # turns) that re-ingests the whole context every turn, which is what made
+    # Cora burn 906K tokens and Quill 2.55M on a single article (2026-07-14).
+    if single_shot:
+        # ONE turn, tools NOT enabled: for agents that receive everything inlined
+        # and return text/JSON. Do NOT pass --disallowedTools or --dangerously-
+        # skip-permissions — with tools "present but denied" the model retries a
+        # Write every turn and never emits text (error_max_turns). Plain -p with
+        # --max-turns 1 makes it generate directly. This replaces the 8-15 turn
+        # agentic loop that burned Cora 906K / Quill 2.55M tokens on ONE article.
+        cmd = [_CLAUDE_BIN, "--print", "--output-format", "json",
+               "--max-turns", "1",
+               "--system-prompt", system_prompt]
+    else:
+        cmd = [_CLAUDE_BIN, "--print", "--dangerously-skip-permissions",
+               "--output-format", "json",
+               "--system-prompt", system_prompt]
+        if turns is not None:
+            cmd += ["--max-turns", str(turns)]
     if model:
         cmd += ["--model", model]
-    if turns is not None:
-        cmd += ["--max-turns", str(turns)]
 
     # ── Dry-run stub: skip real CC call entirely ─────────────
     if DRY_RUN:
@@ -259,6 +286,79 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
         text_output = raw_stdout
 
     return text_output
+
+
+# ─────────────────────────────────────────────────────────────
+# TIER 1b — Direct model API (OpenRouter, OpenAI-compatible)
+# Drop-in alternative to call_cc_agent: ONE HTTP call, no Claude Code
+# system-prompt/tool overhead, no agentic loop. This is the cost fix —
+# a lean API call is ~$0.03-0.10 (or $0 on free models) vs the ~$0.15+
+# floor every `claude` CLI cold-start pays. Same (name, system, user)
+# interface so agents can switch with a one-line change.
+# ─────────────────────────────────────────────────────────────
+
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+
+
+def call_api(name: str, system_prompt: str, user_input: str,
+             model: str = None, fallback: str = None, max_tokens: int = 8000) -> str:
+    """Call an LLM via OpenRouter's OpenAI-compatible endpoint. Returns text.
+
+    If `fallback` is set (and differs from `model`), OpenRouter's native `models`
+    array is used so it transparently falls back to `fallback` when the primary
+    model errors, is unavailable (free-model churn), or rate-limits.
+    """
+    import urllib.request
+    import urllib.error
+
+    api_key = os.environ.get("OPENROUTER_API_KEY", "")
+    if not api_key:
+        raise RuntimeError("OPENROUTER_API_KEY not set — add it to agents/.env")
+    model = model or os.environ.get("OPENROUTER_MODEL_DEFAULT", "openrouter/free")
+
+    if DRY_RUN:
+        stub = _build_dry_run_priya_spec() if name == "priya" else _DRY_RUN_STUBS.get(name, "dry_run_ok")
+        log.info(f"[{name.upper()}] DRY RUN — returning stub (no API call)")
+        return stub
+
+    body = {
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_input},
+        ],
+        "max_tokens": max_tokens,
+        "usage": {"include": True},   # OpenRouter: return real cost in usage
+    }
+    if fallback and fallback != model:
+        body["models"] = [model, fallback]   # OpenRouter tries these in order
+    else:
+        body["model"] = model
+    payload = json.dumps(body).encode("utf-8")
+
+    req = urllib.request.Request(
+        OPENROUTER_URL, data=payload, method="POST",
+        headers={"Authorization": f"Bearer {api_key}",
+                 "Content-Type": "application/json",
+                 "HTTP-Referer": "https://aima.productions",
+                 "X-Title": "AIMA pipeline"},
+    )
+    log.info(f"[{name.upper()}] calling API (model={model})")
+    try:
+        with urllib.request.urlopen(req, timeout=300) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", "replace")[:500]
+        raise RuntimeError(f"API agent [{name}] HTTP {exc.code}: {body}")
+
+    choices = data.get("choices") or []
+    if not choices:
+        raise RuntimeError(f"API agent [{name}] returned no choices: {json.dumps(data)[:400]}")
+    text = choices[0]["message"]["content"] or ""
+    usage = data.get("usage") or {}
+    cost = usage.get("cost")
+    _record_token_usage(name, usage.get("total_tokens", 0), cost)
+    log.info(f"[api] {name} model={model} tokens={usage.get('total_tokens')} cost=${cost}")
+    return text
 
 
 # ─────────────────────────────────────────────────────────────

@@ -9,7 +9,7 @@ import json
 import sys
 import urllib.request
 import urllib.error
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 from agents.base import REPO_ROOT, read_json, log
 
@@ -60,6 +60,24 @@ def run(spec: dict, live_url: str, dry_run: bool = False) -> dict:
         log.info(f"[nova] DRY RUN — would post {filename} to LinkedIn (company + reshare)")
         log.info(f"[nova] DRY RUN — article live at: {live_url}")
         return {"company_urn": "urn:li:share:DRY_RUN", "reshare_urn": "urn:li:share:DRY_RUN"}
+
+    # Dedup guard — block accidental double-posts within a 10-minute window.
+    # Intentional reposts (bad post deleted + rerun) are older than 10 min and pass through.
+    entries = read_json("linkedin_pipeline/post_log.json")
+    if isinstance(entries, list):
+        cutoff = datetime.now(timezone.utc) - timedelta(minutes=10)
+        for e in entries:
+            if e.get("article") != filename:
+                continue
+            try:
+                posted_at = datetime.fromisoformat(e["posted_at"]).replace(tzinfo=timezone.utc)
+            except (KeyError, ValueError):
+                continue
+            if posted_at >= cutoff:
+                raise RuntimeError(
+                    f"[nova] dedup block: {filename} was already posted {int((datetime.now(timezone.utc) - posted_at).total_seconds())}s ago "
+                    f"(post_id={e.get('post_id')}). Delete the LinkedIn post first, then rerun after 10 min."
+                )
 
     # Pre-check 1 — article must be live (Porter confirms deploy first)
     if not _head_ok(og_image_url):
