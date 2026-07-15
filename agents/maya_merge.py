@@ -366,7 +366,14 @@ def merge(article_path: str, og_image: str, alt_image: str, spec: dict) -> bool:
         ("[YYYY-MM-DD]", publish_date), ("[Month DD, YYYY]", _fmt_date(publish_date)),
         ("[word count — approx 2000–3750]", str(wc)),
         ("[topic keywords]", ", ".join(list(tags)[:5])),
-        ("[slug]", slug), ("[num]", f"{num:03d}"), ("[persona]", p["persona"]),
+        ("[slug]", slug), ("[num]", f"{num:03d}"),
+        # NOTE: do NOT replace "[persona]". In the skeleton it only ever appears as
+        # legitimate JavaScript — `_authorColors[persona]` (line ~755), a lookup by
+        # the `persona` JS variable — NOT as placeholder text. Replacing it turned
+        # that into `_authorColorsdawn` (undefined var) → ReferenceError → the whole
+        # inline script (incl. the fade-in reveal) stopped running → article body
+        # stuck at opacity:0 / invisible on #25 (2026-07-14). Persona is delivered
+        # via the <meta property="article:persona"> tag, which that JS reads.
     ]:
         out = out.replace(tok, val)
     out = out.replace('"name": "Joselito Sering"', f'"name": "{author}"')  # JSON-LD author

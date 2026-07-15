@@ -738,7 +738,7 @@ function closeMobile(){var m=document.getElementById('mobileMenu');var b=documen
 var persona=(document.querySelector('meta[name="article:persona"]')||{}).content||'joselito';
 var imgSrc='../img/author-'+persona+'.png';
 var _authorColors={joselito:'00D9F5',dawn:'9B59F5',kenji:'F5C518'};
-var _btnColor=_authorColorsdawn||'00D9F5';
+var _btnColor=_authorColors[persona]||'00D9F5';
 var _bmac=document.getElementById('bmac-coffee-btn');
 if(_bmac){var _bimg=_bmac.querySelector('img');if(_bimg)_bimg.src=_bimg.src.replace(/button_colour=[^&]*/,'button_colour='+_btnColor);}
 
