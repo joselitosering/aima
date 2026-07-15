@@ -138,7 +138,13 @@ verification gate will reject the draft (it does not add missing pieces):
 5. Glossary, >=6 entries — EVERY <dt> MUST carry data-term="Term Name" (this
    exact attribute, not optional, not just descriptive text):
    <div class="glossary"><dl><dt data-term="Term Name">Term Name</dt><dd>Definition.</dd>...</dl></div>
+   EACH glossary term MUST also appear, WORDED THE SAME WAY, somewhere in the body
+   prose — only define terms you actually use in the article, so each one can be
+   linked back to where it's discussed. Do not add glossary terms that never appear
+   in the text.
 6. >=6 references: <div class="references"><ol><li>...</li>...</ol></div>
+   Where you have a source URL from the research, include it in the reference (MLA
+   puts the URL at the end); the pipeline also wires Scout's source links in.
 
 Output the complete article copy HTML as your ENTIRE response — copy HTML only,
 no full skeleton, no og:image, no image tags, no markdown fences. Just the HTML.\

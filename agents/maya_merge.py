@@ -25,6 +25,7 @@ import re
 from datetime import datetime
 
 from agents.base import read_file, write_file, REPO_ROOT, log
+from agents.scout import _find_research_path
 
 SKELETON = "articles/aima-article-skeleton.html"
 GITHUB_BASE = "https://joselitosering.github.io/aima"
@@ -32,9 +33,23 @@ PUBLIC_BASE = "https://aima.productions"
 
 # Per-persona byline (avatar initials + role), matching existing published articles.
 _PERSONA = {
-    "Joselito Sering": {"avatar": "JS", "role": "Editor-in-Chief · AIMA", "persona": "joselito"},
-    "Dawn Ginhaua":    {"avatar": "DG", "role": "Cultural Critic & Educator · AIMA", "persona": "dawn"},
-    "Kenji Nakamoto":  {"avatar": "KN", "role": "Technology Writer & Explorer · AIMA", "persona": "kenji"},
+    "Joselito Sering": {"avatar": "JS", "role": "Editor-in-Chief · AIMA", "persona": "joselito",
+        "title": "Editor-in-Chief · Imagineer",
+        "bio": "Joselito Sering is the founder and editor-in-chief of AIMA, a "
+               "practitioner-turned-publisher who writes about artificial intelligence the "
+               "way a craftsman writes about tools — deep respect for what they can do, "
+               "clear eyes about what they cannot replace."},
+    "Dawn Ginhaua": {"avatar": "DG", "role": "Cultural Critic & Educator · AIMA", "persona": "dawn",
+        "title": "Cultural Critic & Educator",
+        "bio": "Dawn Ginhaua is a cultural critic, educator, and essayist who writes about "
+               "technology the way a doctor reads a patient chart — clinical attention, zero "
+               "sentimentality. She believes AI is neither savior nor apocalypse, just power "
+               "that needs watching."},
+    "Kenji Nakamoto": {"avatar": "KN", "role": "Technology Writer & Explorer · AIMA", "persona": "kenji",
+        "title": "Technology Writer & Explorer",
+        "bio": "Kenji Nakamoto is a research analyst, adventurer, and relentlessly curious "
+               "writer who has eaten street food on six continents. His optimism is earned — "
+               "enthusiasm with rigor, grounded in what the tech makes possible for real people."},
 }
 
 
@@ -132,31 +147,46 @@ def _inject_h2_ids(body: str) -> tuple[str, list[tuple[str, str]]]:
     return new_body, toc
 
 
-def _link_first_mentions(body: str, terms: list[tuple[str, str]]) -> str:
-    """Wrap the FIRST occurrence of each glossary term's text in running prose
-    with the skeleton's mention-link pattern. Best-effort: a term that never
-    appears verbatim in the body is silently skipped (its glossary entry's
-    back-link will just have no matching anchor — degraded, not broken)."""
+def _link_first_mentions(body: str, terms: list[tuple[str, str]]) -> tuple[str, set]:
+    """Wrap the FIRST prose occurrence of each glossary term with the skeleton's
+    mention-link. Tries the full term, and for "Full Name (ACRONYM)" entries also
+    the acronym and the pre-paren name — so an author who defines a term one way
+    but uses a short form in the body still gets linked. Returns (new_body,
+    linked_terms): only terms in `linked_terms` actually have a #mention anchor,
+    so the glossary builder can skip the "Back to text" link for the rest (no
+    dead anchors — the bug Joe flagged on #25)."""
+    linked: set = set()
     for term, _ in terms:
         word = _slugify(term, maxlen=30)
-        # Avoid re-linking inside existing tags/attributes; only match plain text runs.
-        pat = re.compile(r'(?<![>\w])(' + re.escape(term) + r')(?!\w)', re.I)
-        def _wrap(m: re.Match, _word=word) -> str:
-            return f'<a href="#glossary-{_word}" class="glossary-term" id="mention-{_word}">{m.group(1)}</a>'
-        new_body, n = pat.subn(_wrap, body, count=1)
-        if n:
-            body = new_body
-    return body
+        m = re.match(r"^(.*?)\s*\(([^)]+)\)\s*$", term)
+        candidates = [m.group(1).strip(), m.group(2).strip(), term] if m else [term]
+
+        def _wrap(mm: re.Match, _word=word) -> str:
+            return (f'<a href="#glossary-{_word}" class="glossary-term" '
+                    f'id="mention-{_word}">{mm.group(1)}</a>')
+
+        for cand in candidates:
+            if len(cand) < 3:
+                continue
+            # Only match plain-text runs, never inside a tag/attribute.
+            pat = re.compile(r"(?<![>\w])(" + re.escape(cand) + r")(?!\w)", re.I)
+            new_body, n = pat.subn(_wrap, body, count=1)
+            if n:
+                body = new_body
+                linked.add(term)
+                break
+    return body, linked
 
 
-def _build_glossary_section(terms: list[tuple[str, str]]) -> str:
+def _build_glossary_section(terms: list[tuple[str, str]], linked: set) -> str:
     items = []
     for term, definition in terms:
         word = _slugify(term, maxlen=30)
+        back = (f'\n<a href="#mention-{word}" class="back-link">↑ Back to text</a>'
+                if term in linked else "")
         items.append(
             f'<div class="glossary-item" id="glossary-{word}">\n'
-            f'<div class="glossary-term-title">\n{html.escape(term)}\n'
-            f'<a href="#mention-{word}" class="back-link">↑ Back to text</a>\n</div>\n'
+            f'<div class="glossary-term-title">\n{html.escape(term)}{back}\n</div>\n'
             f'<p class="glossary-definition">{definition}</p>\n</div>'
         )
     return (
@@ -166,10 +196,67 @@ def _build_glossary_section(terms: list[tuple[str, str]]) -> str:
     )
 
 
-def _build_references_section(refs: list[str]) -> str:
+def _research_sources(spec: dict) -> list[tuple[str, str]]:
+    """Pull Scout's (title, url) source pairs from the research JSON. These are the
+    links Scout gathered; the author cites the sources but often drops the URLs, so
+    Maya wires them into the reference list here (Scout's data flowing through to
+    the skeleton). Returns [] if no research is on disk."""
+    import json
+    path = _find_research_path(spec.get("slug", ""), int(spec.get("number", 0)))
+    if not (path.exists() and path.stat().st_size > 100):
+        return []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return []
+
+    out: list[tuple[str, str]] = []
+
+    def _walk(o):
+        if isinstance(o, dict):
+            u = o.get("url")
+            if isinstance(u, str) and u.startswith("http"):
+                title = o.get("title") or o.get("name") or o.get("source") or ""
+                out.append((str(title), u))
+            for v in o.values():
+                _walk(v)
+        elif isinstance(o, list):
+            for x in o:
+                _walk(x)
+
+    _walk(data)
+    return out
+
+
+def _match_source_url(ref_html: str, sources: list[tuple[str, str]]) -> str | None:
+    """Find the Scout source URL for a reference — first by the site domain named in
+    the citation (e.g. 'justice.gov'), then by title-word overlap with the quoted
+    article title. Returns None if nothing matches well (no bogus link)."""
+    ref_low = ref_html.lower()
+    for title, url in sources:
+        dom = re.sub(r"^https?://(www\.)?", "", url).split("/")[0].lower()
+        if dom and dom in ref_low:
+            return url
+    qt = re.search(r'"([^"]+)"', ref_html)
+    if qt:
+        rt = set(re.findall(r"[a-z]{4,}", qt.group(1).lower()))
+        best, best_score = None, 0
+        for title, url in sources:
+            score = len(rt & set(re.findall(r"[a-z]{4,}", (title or "").lower())))
+            if score > best_score:
+                best, best_score = url, score
+        if best_score >= 3:
+            return best
+    return None
+
+
+def _build_references_section(refs: list[str], sources: list[tuple[str, str]]) -> str:
     items = []
     for i, ref_html in enumerate(refs, 1):
-        items.append(f'<li class="reference-item" data-number="[{i}]">{ref_html}</li>')
+        url = _match_source_url(ref_html, sources)
+        link = (f' <a href="{html.escape(url, quote=True)}" class="reference-link" '
+                f'target="_blank" rel="noopener">Link ↗</a>') if url else ""
+        items.append(f'<li class="reference-item" data-number="[{i}]">{ref_html}{link}</li>')
     publishers = sorted(set(re.findall(r"<em>([^<]+)</em>", " ".join(refs))))
     notice = ", ".join(publishers[:8]) if publishers else "sources cited above"
     return (
@@ -254,7 +341,9 @@ def merge(article_path: str, og_image: str, alt_image: str, spec: dict) -> bool:
     keywords = "AI, " + ", ".join(list(tags)[:6] + [category]) + ", AIMA" if tags else f"AI, {category}, AIMA"
 
     p = _PERSONA.get(author, {"avatar": "".join(w[0] for w in author.split()[:2]).upper() or "AI",
-                              "role": "Contributor · AIMA", "persona": "joselito"})
+                              "role": "Contributor · AIMA", "persona": "joselito",
+                              "title": "Contributor · AIMA",
+                              "bio": f"{author} is a contributor to AIMA Magazine."})
     img_url = f"{GITHUB_BASE}/{og_image.lstrip('/')}"
     canonical = f"{GITHUB_BASE}/articles/{filename}"
     og_url = f"{PUBLIC_BASE}/articles/{filename}"
@@ -282,7 +371,7 @@ def merge(article_path: str, og_image: str, alt_image: str, spec: dict) -> bool:
     body, toc_entries = _inject_h2_ids(body)
 
     # ── NEW: inline glossary-term first-mention links (best-effort) ──
-    body = _link_first_mentions(body, terms)
+    body, linked_terms = _link_first_mentions(body, terms)
 
     # ── head meta ──
     for key, val in [
@@ -336,6 +425,20 @@ def merge(article_path: str, og_image: str, alt_image: str, spec: dict) -> bool:
     out = _set_by_id(out, "div", "categoryValue", html.escape(category))
     out = _set_by_id(out, "span", "printCategoryHook", html.escape(category))
 
+    # ── footer "About The Author" card + print hook ──
+    # The author is DATA from the spec — transfer it into the skeleton's author
+    # card instead of leaving its hardcoded Joselito default (the byline showed
+    # the real author but this card + print hook did not — flagged by Joe on #25).
+    out = _set_by_id(out, "div", "authorCardAvatar", html.escape(p["avatar"]))
+    out = re.sub(r'(<div class="author-card-name">)[^<]*(</div>)',
+                 lambda m: m.group(1) + html.escape(author) + m.group(2), out, count=1)
+    out = re.sub(r'(<div class="author-card-title">)[^<]*(</div>)',
+                 lambda m: m.group(1) + html.escape(p["title"]) + m.group(2), out, count=1)
+    out = re.sub(r'(<p class="author-card-bio">).*?(</p>)',
+                 lambda m: m.group(1) + html.escape(p["bio"]) + m.group(2), out, flags=re.S, count=1)
+    out = re.sub(r'(<span class="print-author-hook"[^>]*>)[^<]*(</span>)',
+                 lambda m: m.group(1) + html.escape(author) + m.group(2), out, count=1)
+
     # ── body copy into <main> (glossary/references already stripped out) ──
     out = re.sub(r'(<main class="article-content[^"]*">).*?(</main>)',
                  lambda m: m.group(1) + "\n" + body + "\n" + m.group(2), out, flags=re.S, count=1)
@@ -350,10 +453,11 @@ def merge(article_path: str, og_image: str, alt_image: str, spec: dict) -> bool:
     # ── NEW: real #glossary and #references sections replace the skeleton stubs ──
     if terms:
         out = re.sub(r'<section class="glossary-section" id="glossary">.*?</section>',
-                     lambda m: _build_glossary_section(terms), out, flags=re.S, count=1)
+                     lambda m: _build_glossary_section(terms, linked_terms), out, flags=re.S, count=1)
     if refs:
+        _sources = _research_sources(spec)   # Scout's links, wired into the reference list
         out = re.sub(r'<section class="references-section" id="references">.*?</section>',
-                     lambda m: _build_references_section(refs), out, flags=re.S, count=1)
+                     lambda m: _build_references_section(refs, _sources), out, flags=re.S, count=1)
 
     # JSON-LD block + any other descriptive placeholders. wc now measures body
     # AFTER glossary/references were stripped out — narrative prose only, which
