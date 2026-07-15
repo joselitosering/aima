@@ -330,11 +330,26 @@ def run(article_path: str, spec: dict) -> str:
     # Was a CC-agent call (~$1.90/run of agentic Read+Write). The merge is
     # mechanical (fill the skeleton template + drop Quill's copy into <main>),
     # so it's deterministic Python now — see agents/maya_merge.py.
-    from agents.maya_merge import merge as _merge_skeleton
-    log.info(f"[maya] merging skeleton (pure python): {slug}")
-    merged_ok = _merge_skeleton(article_path, og_image, alt_image, spec)
-    if not merged_ok:
-        log.warning(f"[maya] skeleton merge incomplete for {article_path}")
+    #
+    # Idempotency guard (2026-07-14): maya_merge pulls glossary/references out of
+    # <main>; on an ALREADY-merged article those live in <section> blocks instead,
+    # so a second merge finds none and silently wipes them (caught when the reuse
+    # path re-merged a published #25 -> glossary=0/refs=0 -> Vera halt). If the
+    # article already carries the merged structure, it IS the final product —
+    # leave it untouched.
+    existing = (REPO_ROOT / article_path).read_text(encoding="utf-8", errors="ignore")
+    already_merged = ('class="glossary-item"' in existing
+                      and 'class="reference-item"' in existing
+                      and og_image.split("/")[-1] in existing)
+    if already_merged:
+        log.info(f"[maya] article already merged (glossary/refs sections present) — "
+                 f"skipping re-merge: {article_path}")
+    else:
+        from agents.maya_merge import merge as _merge_skeleton
+        log.info(f"[maya] merging skeleton (pure python): {slug}")
+        merged_ok = _merge_skeleton(article_path, og_image, alt_image, spec)
+        if not merged_ok:
+            log.warning(f"[maya] skeleton merge incomplete for {article_path}")
 
     log.info(f"[maya] merge complete: {article_path}")
 
