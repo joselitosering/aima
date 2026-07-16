@@ -71,7 +71,7 @@ def _fetch_metric(token: str, entity_param: str, query_type: str) -> int:
         url,
         headers={
             "Authorization": f"Bearer {token}",
-            "LinkedIn-Version": "202401",
+            "LinkedIn-Version": "202607",
             "X-Restli-Protocol-Version": "2.0.0",
         },
     )

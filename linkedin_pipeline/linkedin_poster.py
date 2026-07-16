@@ -439,7 +439,7 @@ def _resolve_share_urn(ugc_id):
     )
     req = urllib.request.Request(url)
     req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
-    req.add_header("LinkedIn-Version",          "202506")
+    req.add_header("LinkedIn-Version",          "202607")
     req.add_header("X-Restli-Protocol-Version", "2.0.0")
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
@@ -741,7 +741,7 @@ def reshare_to_personal(share_urn, title, commentary=None):
     req     = urllib.request.Request(url, data=payload, method="POST")
     req.add_header("Authorization",             f"Bearer {ACCESS_TOKEN}")
     req.add_header("Content-Type",              "application/json")
-    req.add_header("LinkedIn-Version",          "202506")
+    req.add_header("LinkedIn-Version",          "202607")
     req.add_header("X-Restli-Protocol-Version", "2.0.0")
 
     try:

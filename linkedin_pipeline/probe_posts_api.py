@@ -10,7 +10,7 @@ load_dotenv()
 
 ACCESS_TOKEN     = os.getenv("LINKEDIN_ACCESS_TOKEN", "").strip()
 ORG_ID           = os.getenv("LINKEDIN_ORG_ID", "").strip()
-LINKEDIN_VERSION = "202506"
+LINKEDIN_VERSION = "202607"
 
 org_urn = urllib.parse.quote(f"urn:li:organization:{ORG_ID}", safe="")
 url = f"https://api.linkedin.com/rest/posts?q=author&author={org_urn}&count=5&sortBy=LAST_MODIFIED"

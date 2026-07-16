@@ -19,7 +19,7 @@ load_dotenv()
 ACCESS_TOKEN           = os.getenv("LINKEDIN_ACCESS_TOKEN", "").strip()
 ORG_ID                 = os.getenv("LINKEDIN_ORG_ID", "").strip()
 COLLECTION_DELAY_HOURS = 48   # wait this long before pulling stats
-LINKEDIN_VERSION       = "202506"   # bump quarterly
+LINKEDIN_VERSION       = "202607"   # bump quarterly
 
 POST_LOG      = Path(__file__).parent / "post_log.json"
 ANALYTICS_CSV = Path(__file__).parent / "post_analytics.csv"
