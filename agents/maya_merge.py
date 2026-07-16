@@ -276,6 +276,48 @@ def _build_toc_links(toc: list[tuple[str, str]]) -> str:
     )
 
 
+def _enforce_section_order(html_out: str) -> str:
+    """Enforce canonical post-body display order: Author+Services → References → Glossary.
+
+    The skeleton places these three sections in the order they were originally
+    designed (References → Glossary → Author+Services), which differs from the
+    editorial spec. Rather than requiring the skeleton to be updated whenever the
+    design changes, this function deterministically extracts and reorders the three
+    sections after every merge. If any section is absent the remaining ones are
+    still placed in the correct relative order.
+    """
+    _pat_author = re.compile(
+        r'<!--[^\n]*AUTHOR[^\n]*\n'
+        r'<section class="author-services-section">.*?</section>',
+        re.S,
+    )
+    _pat_refs = re.compile(
+        r'<!--[^\n]*REFERENCES[^\n]*\n'
+        r'(?:<!--.*?-->\s*\n?)*'          # optional MLA format comment block
+        r'<section class="references-section"[^>]*>.*?</section>',
+        re.S,
+    )
+    _pat_gloss = re.compile(
+        r'<!--[^\n]*GLOSSARY[^\n]*\n'
+        r'<section class="glossary-section"[^>]*>.*?</section>',
+        re.S,
+    )
+    extracted: dict = {}
+    for key, pat in [("author", _pat_author), ("refs", _pat_refs), ("glossary", _pat_gloss)]:
+        m = pat.search(html_out)
+        if m:
+            extracted[key] = m.group(0).strip()
+            html_out = html_out[:m.start()].rstrip() + "\n" + html_out[m.end():].lstrip("\n")
+    if len(extracted) < 2:
+        return html_out  # too few sections; leave unchanged to avoid corrupting output
+    ordered = "\n\n".join(extracted[k] for k in ("author", "refs", "glossary") if k in extracted)
+
+    def _reinject(m: re.Match) -> str:
+        return m.group(0) + "\n\n" + ordered + "\n\n"
+
+    return re.sub(r'</main>\s*\n\s*</div>', _reinject, html_out, count=1)
+
+
 def _set_meta(text: str, key: str, value: str) -> str:
     """Set the content of every <meta name|property="key" content="..."/>."""
     pat = re.compile(r'(<meta (?:name|property)="' + re.escape(key) + r'"\s+content=")[^"]*(")')
@@ -486,6 +528,11 @@ def merge(article_path: str, og_image: str, alt_image: str, spec: dict) -> bool:
     ]:
         out = out.replace(tok, val)
     out = out.replace('"name": "Joselito Sering"', f'"name": "{author}"')  # JSON-LD author
+
+    # Enforce canonical display order: Author+Services → References → Glossary.
+    # The skeleton places these sections in a different order; correct it here so
+    # future skeleton edits can't silently reintroduce the wrong order (#026 bug).
+    out = _enforce_section_order(out)
 
     write_file(article_path, out)
     ok = (img_url in out and "og:image" in out and 'id="articleTitle"' in out

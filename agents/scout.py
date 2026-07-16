@@ -118,8 +118,18 @@ def _find_research_path(slug: str, number: int):
                 return p
 
         # Glob fallback: any research file containing the article number in its filename.
+        # Guard: padded must appear as an isolated segment (split on - or _) so that
+        # e.g. "2026" in a filename doesn't falsely match article 026.
         for p in sorted(research_dir.glob(f"*{padded}*research*.json")):
             if p.stat().st_size > 100:
+                import re as _re
+                stem_parts = _re.split(r"[-_]", p.stem)
+                if padded not in stem_parts:
+                    log.warning(
+                        f"[scout] number glob skipped {p.name!r}: "
+                        f"'{padded}' is not an isolated segment"
+                    )
+                    continue
                 log.info(f"[scout] found existing research via number glob: {p.name}")
                 return p
 

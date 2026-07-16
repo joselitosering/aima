@@ -59,7 +59,16 @@ def run(spec: dict, research: dict, extra_instruction: str = "",
 
     draft_content = read_file(draft_path)
 
-    text_only = re.sub(r"<[^>]+>", " ", draft_content)
+    # Strip glossary and references before counting — matches writer.py's
+    # prose-only gate. Without this, glossary+refs add ~300 words and cause
+    # Quill to reject drafts that Writer already accepted as in-range.
+    prose_only = draft_content
+    for cls, end in [("glossary", "</dl>"), ("references", "</ol>")]:
+        prose_only = re.sub(
+            r'<div class="' + cls + r'">.*?' + re.escape(end) + r'\s*</div>',
+            "", prose_only, flags=re.S,
+        )
+    text_only = re.sub(r"<[^>]+>", " ", prose_only)
     word_count = len(text_only.split())
 
     h2_count = len(re.findall(r"<h2[\s>]", draft_content, re.I))
