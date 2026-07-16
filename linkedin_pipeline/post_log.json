@@ -213,5 +213,67 @@
     "posted_at": "2026-07-13T19:33:22",
     "analytics_collected": false,
     "reshare_id": "urn:li:share:7482517504926531585"
+  },
+  {
+    "post_id": "urn:li:share:7482519513456898048",
+    "article": "aima-article-robots-go-public-020.html",
+    "title": "Robots Go Public: What the Humanoid Robotics IPO Wave Actually Means \u2014 AIMA Magazine",
+    "persona": "kenji",
+    "posted_at": "2026-07-13T19:41:24",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7482519525842644992"
+  },
+  {
+    "post_id": "urn:li:share:7482523668003180544",
+    "article": "aima-article-prompt-to-profit-021.html",
+    "title": "From Prompt to Profit: Building an AI-Native Business in 2026 \u2014 AIMA Magazine",
+    "persona": "joselito",
+    "posted_at": "2026-07-13T19:57:54",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7482523679969542144"
+  },
+  {
+    "post_id": "urn:li:share:7482555623708983296",
+    "article": "aima-article-data-broker-state-022.html",
+    "title": "The Data Broker State: How the FBI, DHS, and a $315 Billion Industry Built the Surveillance Machine Nobody Voted For \u2014 AIMA Magazine",
+    "persona": "dawn",
+    "posted_at": "2026-07-13T22:04:54",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7482555637642489856"
+  },
+  {
+    "post_id": "urn:li:share:7482806684239781888",
+    "article": "aima-article-robot-beside-you-023.html",
+    "title": "The Robot Beside You: What Humanoid Machines Actually Do on the Factory Floor in 2026 \u2014 AIMA Magazine",
+    "persona": "kenji",
+    "posted_at": "2026-07-14T14:42:32",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7482806696575197185"
+  },
+  {
+    "post_id": "urn:li:share:7482858401702641664",
+    "article": "aima-article-hallucination-nation-024.html",
+    "title": "Hallucination Nation: Why AI Lies with Confidence and What It Costs Us \u2014 AIMA Magazine",
+    "persona": "joselito",
+    "posted_at": "2026-07-14T18:08:02",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7482858415053041664"
+  },
+  {
+    "post_id": "urn:li:share:7483043718120226816",
+    "article": "aima-article-government-brief-algorithm-025.html",
+    "title": "The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law",
+    "persona": "joselito",
+    "posted_at": "2026-07-15T06:24:25",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7483043730027962368"
+  },
+  {
+    "post_id": "urn:li:share:7483598449389498368",
+    "article": "aima-article-data-centers-in-orbit-why-026.html",
+    "title": "Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space",
+    "persona": "kenji",
+    "posted_at": "2026-07-16T19:08:32",
+    "analytics_collected": false
   }
 ]

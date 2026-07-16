@@ -1,0 +1,102 @@
+{
+  "article_number": 21,
+  "slug": "prompt-to-profit",
+  "title": "From Prompt to Profit: Building an AI-Native Business in 2026",
+  "author": "Joselito Sering",
+  "category": "AI Business",
+  "research_date": "2026-07-13",
+  "sources_used": {
+    "local_cache": [
+      "checked all 10 files in articles/research/ — none topically on AI-native business/entrepreneurship/startups; only a tangential VC-market-size figure reused from governance-gap-ai-regulation-research.json (flagged below as background context, not primary)"
+    ],
+    "rss_feeds_checked": ["techcrunch"],
+    "apis_checked": ["none returned usable results without a key (Guardian/NYT/NewsAPI keys not present in agents/.env); arXiv/Crossref skipped as web search + TechCrunch RSS covered the ground faster for this topic"],
+    "web_search": true
+  },
+  "statistics": [
+    {
+      "stat": "AI-native startups generate roughly $2-4 million in revenue per employee, versus ~$300,000 for the average public SaaS company. Standout examples: Lovable ($400M ARR, 146 employees, ~$2.7M ARR/employee) and Midjourney (~$200M revenue, ~11 employees, ~$18M/employee) — the top 20 AI agent startups by this metric now exceed the per-employee revenue of Microsoft (~$1.8M) and Meta (~$2.2M).",
+      "source": "Forbes (Paul Baier, HBS Executive Fellow)",
+      "year": 2026,
+      "url": "https://www.forbes.com/sites/paulbaier/2026/03/31/ai-native-firms-lead-in-revenue-per-employee/"
+    },
+    {
+      "stat": "95% of generative AI pilots at companies fail to deliver measurable ROI, per MIT's NANDA initiative ('The GenAI Divide: State of AI in Business 2025' — 150 leader interviews, 350-employee survey, 300 public AI deployments analyzed). The failure is attributed to poor enterprise integration and misaligned priorities, not model quality — over half of GenAI budgets go to sales/marketing tools, while MIT found the biggest ROI is in back-office automation. Only about 5% of pilots achieve rapid revenue acceleration.",
+      "source": "MIT NANDA initiative, reported by Fortune",
+      "year": 2025,
+      "url": "https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/"
+    },
+    {
+      "stat": "In McKinsey's 2025 State of AI global survey, 23% of organizations are actively scaling an agentic AI system in at least one business function and 39% have begun experimenting — but in any single given business function, no more than 10% of respondents report they're scaling AI agents there. This is set against roughly $116 billion in venture capital deployed into AI in H1 2025 alone.",
+      "source": "McKinsey State of AI survey, reported by Forbes",
+      "year": 2026,
+      "url": "https://www.forbes.com/sites/josipamajic/2026/03/22/10-of-enterprise-functions-use-ai-agents-mckinsey-finds/"
+    },
+    {
+      "stat": "The U.S. non-employer (solo-operator) business economy now counts 29.8 million companies generating roughly $1.7 trillion in revenue — about 6.8% of GDP — with an estimated 41+ million current U.S. solopreneurs and 440,000+ new business applications filed monthly, a pace roughly 90% faster than pre-pandemic. Average headcount at one-year-old companies has fallen from 7-9 people (15-20 years ago) to 3-4 people today, a shift researchers tie to AI-enabled 'agentic leverage.'",
+      "source": "Fortune (citing U.S. Census / NYU Stern research)",
+      "year": 2026,
+      "url": "https://fortune.com/2026/05/18/solo-founders-ai-automation-entire-teams-entrepreneurs/"
+    },
+    {
+      "stat": "Solo-founded startups reportedly represent 36.3% of all new ventures as of early 2026 — a notable rise attributed to AI tooling lowering the cost of building without a co-founder or early hires.",
+      "source": "Scalable.news research, cited secondhand via NxCode",
+      "year": 2026,
+      "url": "https://www.nxcode.io/resources/news/one-person-unicorn-context-engineering-solo-founder-guide-2026",
+      "verification_note": "Could not reach the primary Scalable.news report directly in this research pass — this figure is sourced from a secondary citation only. Flagged in unverified_or_flagged_claims below; treat as directionally indicative, not load-bearing."
+    }
+  ],
+  "expert_quotes": [
+    {
+      "quote": "In my little group chat with my tech CEO friends there's this betting pool for the first year that there is a one-person billion-dollar company. Which would have been unimaginable without AI and now will happen.",
+      "name": "Sam Altman",
+      "affiliation": "CEO, OpenAI",
+      "url": "https://fortune.com/2024/02/04/sam-altman-one-person-unicorn-silicon-valley-founder-myth/",
+      "note": "Quote dates to a 2024 interview with Alexis Ohanian, outside the strict 6-month news window, but it is the origin point of the 'one-person unicorn' framing that defines this article's premise and is still the most-cited line on the topic through 2026 coverage."
+    },
+    {
+      "quote": "You're kind of taking it on faith that what the AI is producing is pretty good.",
+      "name": "J.P. Eggers",
+      "affiliation": "Professor of Entrepreneurship, NYU Stern School of Business",
+      "url": "https://fortune.com/2026/05/18/solo-founders-ai-automation-entire-teams-entrepreneurs/"
+    },
+    {
+      "quote": "The majority of companies aren't even using coding agents at scale, let alone for the rest of knowledge work.",
+      "name": "Aaron Levie",
+      "affiliation": "CEO, Box",
+      "url": "https://www.forbes.com/sites/josipamajic/2026/03/22/10-of-enterprise-functions-use-ai-agents-mckinsey-finds/"
+    }
+  ],
+  "strongest_counterargument": {
+    "argument": "The 'AI-native business' narrative conflates a handful of viral outliers (Lovable, Midjourney, Cursor) with a repeatable playbook — the data says most attempts don't work. MIT's NANDA research found 95% of generative AI pilots fail to deliver measurable ROI, with failure rooted in integration and prioritization, not model capability. And going solo with AI as your 'team' has real, underreported limits: NYU Stern's J.P. Eggers notes founders take AI output 'on faith' without the domain expertise to catch errors, and documents average headcount at year-old startups falling from 7-9 people to 3-4 — not zero. Base44 founder Maor Shlomo, held up as a poster child for solo AI building, ultimately sold to Wix for $80M in part because always-on agent monitoring meant setting alarms every 2-3 hours overnight to catch outages, and because consumer marketing and global-scaling expertise couldn't be prompted into existence. Always-on agent infrastructure can also cost 'hundreds of thousands of dollars' a month at scale — comparable to a real payroll, just without equity upside. In short: AI lowers the floor to start a business dramatically; it has not yet lowered the ceiling on what it takes to run one at scale.",
+    "source": "MIT NANDA 'GenAI Divide' report (via Fortune) / J.P. Eggers, NYU Stern (via Fortune)",
+    "url": "https://fortune.com/2026/05/18/solo-founders-ai-automation-entire-teams-entrepreneurs/"
+  },
+  "recent_news": [
+    {
+      "item": "Forbes analysis shows AI-native firms (Lovable, Midjourney, Cursor/Anysphere) posting revenue-per-employee multiples of 6-10x the average public SaaS company, with the gap 'widening every quarter' — Lovable alone reportedly adds ~1,500 paying customers/day with no traditional sales org.",
+      "date": "2026-03-31",
+      "source": "Forbes",
+      "url": "https://www.forbes.com/sites/paulbaier/2026/03/31/ai-native-firms-lead-in-revenue-per-employee/"
+    },
+    {
+      "item": "Fortune profiles the limits of the solo-AI-founder model: burnout from always-on agent monitoring, domain-expertise gaps, and infrastructure costs that scale like payroll — using Base44's $80M Wix acquisition and nonprofit-consulting solo operator Dana Snyder (reaching 93% of U.S. nonprofits too small for traditional consulting firms) as contrasting case studies.",
+      "date": "2026-05-18",
+      "source": "Fortune",
+      "url": "https://fortune.com/2026/05/18/solo-founders-ai-automation-entire-teams-entrepreneurs/"
+    },
+    {
+      "item": "July 2026 VC funding roundup shows capital concentrating on agentic AI for regulated, high-stakes workflows rather than general-purpose 'AI-native' consumer plays — e.g., Taktile's $110M Series C (led by Goldman Sachs Alternatives) for an agentic decision platform automating bank/insurer loan approvals, fraud triage, and claims processing.",
+      "date": "2026-07-06",
+      "source": "TechStartups.com",
+      "url": "https://techstartups.com/2026/07/06/venture-capital-startup-funding-roundup-july-6-2026/"
+    }
+  ],
+  "unverified_or_flagged_claims": [
+    "The 36.3% solo-founded-startups figure (statistics #5) traces to Scalable.news via a secondary citation (NxCode) — the primary report could not be reached and independently verified in this pass. Use as an approximate/directional figure, not a precise one, and consider a hedge phrase ('reportedly') if cited.",
+    "AI agent software market-size projections ($5.25B in 2024 → $7.84B in 2025 → a projected $52.62B by 2030) surfaced in aggregator/blog sources without a traceable primary research-firm citation — deliberately excluded from the statistics list above; do not cite without finding the original analyst report.",
+    "A widely-repeated claim that 'YC's 2026 batches are ~60% AI companies, up from ~40% in 2024' could not be confirmed against a primary YC source in this pass (direct fetch of the closest secondary source did not corroborate the comparison) — do not cite this specific comparison; general 'AI-dense YC batch' framing is well supported instead by multiple 2026 batch-breakdown pieces (W26 batch: 56 AI-native services, 45 AI-enhanced software cos, 34 dev-infra plays).",
+    "The AI venture capital figure carried over from governance-gap-ai-regulation-research.json ('AI venture capital 2023: $91.9B, CB Insights') is stale (2023) relative to this article's 2026 frame — cite only the fresher $116B H1-2025 VC figure (statistics #3 context) if a VC total is needed.",
+    "Sam Altman's 'one-person billion-dollar company' quote (expert_quotes #1) is from a 2024 interview, outside the 6-month recency window — flagged for editorial awareness; used here only as the origin/framing quote for the 'one-person unicorn' concept, not as a 2026 data point."
+  ]
+}

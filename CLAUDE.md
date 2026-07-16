@@ -679,3 +679,84 @@ aima.productions. **Lesson:** maya_merge's blunt `str.replace` on `[token]` toke
 dangerous near inline JS/CSS — a token that doubles as JS bracket-access (`obj[var]`) gets
 corrupted. Any new token must be checked against the skeleton's `<script>`/`<style>` before
 being added to that loop.
+
+
+### Pipeline CRASH — #26 'Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space' — stage 'writer' (2026-07-16)
+- **Error:** [writer] Word count gate: 211 words outside acceptable 425-1200 (persona range 500-1000 words). Draft NOT accepted: articles/drafts/data-centers-in-orbit-why-026-draft.html. Re-run Writer, or adjust the persona range if this topic genuinely needs more room.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 323, in run
+    draft_path = writer.run(spec, research)
+  File "D:\Apps\DevOps\Github\aima\agents\writer.py", line 195, in run
+    raise RuntimeError(
+    ...<4 lines>...
+    )
+RuntimeError: [writer] Word count gate: 211 words outside acceptable 425-1200 (persona range 500-1000 words). Draft NOT accepted: articles/drafts/data-centers-in-orbit-why-026-draft.html. Re-run Writer, or adjust the persona range if this topic genuinely needs more room.
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #26 'Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space' — stage 'scout' (2026-07-16)
+- **Error:** CC agent [scout] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":529,"duration_ms":198894,"duration_api_ms":1380,"num_turns":1,"result":"API Error: 529 Overloaded. This is a server-side issue, usually temporary — try again in a moment. If it persists, check https://status.claude.com.","stop_reason":"stop_sequence","session_id":"47503b6c-ef74-4467-87f7-9f270243bb97","total_cost_usd":0.004776,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_token
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 292, in run
+    research = scout.run(spec)
+  File "D:\Apps\DevOps\Github\aima\agents\scout.py", line 216, in run
+    raw = call_cc_agent("scout", SCOUT_PROMPT, user_input)
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 261, in call_cc_agent
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: CC agent [scout] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":529,"duration_ms":198894,"duration_api_ms":1380,"num_turns":1,"result":"API Error: 529 Overloaded. This is a server-side issue, usually temporary — try again in a moment. If it persists, check https://status.claude.com.","stop_reason":"stop_sequence","session_id":"47503b6c-ef74-4467-87f7-9f270243bb97","total_cost_usd":0.004776,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_token
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #26 'Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space' — stage 'quill' (2026-07-16)
+- **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 1217 outside acceptable 425-1200 (persona range 500-1000). Draft at: articles/drafts/data-centers-in-orbit-why-026-draft.html
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 332, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 93, in run
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 1217 outside acceptable 425-1200 (persona range 500-1000). Draft at: articles/drafts/data-centers-in-orbit-why-026-draft.html
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #26 'Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space' — stage 'porter' (2026-07-16)
+- **Error:** Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 417, in run
+    porter_result = porter.run(spec, dry_run=dry_run, gs_enabled=cfg["GS_ENABLED"])
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 103, in run
+    git_push()
+    ~~~~~~~~^^
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 408, in git_push
+    subprocess.run(["git", "push", "origin", "main"], cwd=REPO_ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1.
+
+```
+- Full run log: pipeline.log

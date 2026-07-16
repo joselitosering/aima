@@ -1,7 +1,6 @@
 {
-  "run_date": "2026-07-13",
-  "article_number": 20,
-  "_note": "Budgets recalibrated 2026-07-13 from measured actuals (#19-#20). QL 500k with --max-turns 8 gate prevents 2.9M outlier from recurring.",
+  "run_date": "2026-07-16",
+  "article_number": 26,
   "agents": {
     "IR": {
       "budget": 50000,
@@ -10,51 +9,42 @@
     },
     "PR": {
       "budget": 50000,
-      "used": 41791,
-      "status": "used",
-      "last_call_cost_usd": 0.17207029999999998,
-      "cumulative_cost_usd": 0.17207
-    },
-    "SC": {
-      "budget": 500000,
-      "used": 449696,
-      "status": "used",
-      "last_call_cost_usd": 0.782618,
-      "cumulative_cost_usd": 0.782618
-    },
-    "TS": {
-      "budget": 150000,
-      "used": 143809,
-      "status": "used",
-      "last_call_cost_usd": 0.5371348,
-      "cumulative_cost_usd": 0.537135
-    },
-    "WR": {
-      "budget": 20000,
       "used": 0,
       "status": "idle"
     },
-    "QL": {
+    "SC": {
       "budget": 500000,
-      "used": 2938636,
+      "used": 750238,
       "status": "over_budget",
-      "last_call_cost_usd": 2.5226735,
-      "cumulative_cost_usd": 2.522673,
-      "_note": "Article #20 outlier: 57 tool turns, no --max-turns cap. Fixed in base.py 2026-07-13."
+      "last_call_cost_usd": 1.0231463,
+      "cumulative_cost_usd": 1.023146
+    },
+    "TS": {
+      "budget": 150000,
+      "used": 0,
+      "status": "idle"
+    },
+    "WR": {
+      "budget": 300000,
+      "used": 103108,
+      "status": "used",
+      "last_call_cost_usd": 0.1159978,
+      "cumulative_cost_usd": 0.24783
+    },
+    "QL": {
+      "budget": 0,
+      "used": 0,
+      "status": "idle"
     },
     "MY": {
       "budget": 750000,
-      "used": 693651,
-      "status": "used",
-      "last_call_cost_usd": 0.5981114,
-      "cumulative_cost_usd": 0.598111
+      "used": 0,
+      "status": "idle"
     },
     "VR": {
       "budget": 650000,
-      "used": 604014,
-      "status": "used",
-      "last_call_cost_usd": 0.6925745000000001,
-      "cumulative_cost_usd": 0.692575
+      "used": 0,
+      "status": "idle"
     },
     "PT": {
       "budget": 0,
@@ -78,8 +68,10 @@
     },
     "CO": {
       "budget": 5000,
-      "used": 0,
-      "status": "idle"
+      "used": 61093,
+      "status": "over_budget",
+      "last_call_cost_usd": 0.3352856,
+      "cumulative_cost_usd": 0.335286
     },
     "MR": {
       "budget": 0,

@@ -1,0 +1,100 @@
+{
+  "article_number": 23,
+  "slug": "robot-beside-you",
+  "title": "The Robot Beside You: What Humanoid Machines Actually Do on the Factory Floor in 2026",
+  "author": "Kenji Nakamoto",
+  "category": "AI Technology",
+  "research_date": "2026-07-13",
+  "sources_used": {
+    "local_cache": [
+      "articles/research/the-robot-beside-you-what-topic-selection.json (topic rationale + seed sources)",
+      "articles/research/robots-go-public-research.json (background context only — that article covers the IPO/financing wave, not factory-floor task mechanics; not reused for stats here to avoid overlap)"
+    ],
+    "rss_feeds_checked": ["none topically dispositive — used targeted WebSearch instead per Step 3, since factory-floor deployment specifics needed named-company reporting not covered by the general science/tech feeds in scout-sources.json"],
+    "web_search": true
+  },
+  "statistics": [
+    {
+      "stat": "Figure 02 humanoid robots completed a real-production trial at BMW Group Plant Spartanburg, supporting the build of more than 30,000 BMW X3 vehicles over roughly 10 months of body-shop work (inserting sheet-metal parts for welding). The robots ran 10-hour shifts Monday–Friday, logging 1,250 hours of runtime and loading more than 90,000 parts, with a cycle-time requirement of loading each part within 37 seconds inside an 84-second total cycle.",
+      "source": "BMW Group press release / Figure AI",
+      "year": 2026,
+      "url": "https://www.press.bmwgroup.com/global/article/detail/T0444265EN/successful-test-of-humanoid-robots-at-bmw-group-plant-spartanburg?language=en"
+    },
+    {
+      "stat": "Agility Robotics' Digit is commercially deployed across nine-plus customer facilities — including Amazon, GXO, Toyota Motor Manufacturing Canada, Schaeffler, and Mercado Libre — and has accumulated more than 65,000 hours of operation moving totes between conveyors and autonomous mobile robots, at a walking speed of 1.8 m/s and a per-cycle carry load of roughly 16 kg (35 lb).",
+      "source": "Agility Robotics deployment reporting (OriginOfBots / RoboZaps)",
+      "year": 2026,
+      "url": "https://www.originofbots.com/news/agility-robotics-digit-moves-beyond-pilots-now-handling-real-warehouse-work-at-amazon-toyota-and-gxo"
+    },
+    {
+      "stat": "Apptronik's Apollo (5'8\", ~160 lb, rated to lift 55 lb) is piloting inside Mercedes-Benz manufacturing facilities in Berlin-Marienfelde and Hungary; Apptronik closed a $520 million extension to its Series A in February 2026, bringing the round past $935 million with backers including Mercedes-Benz Group, Google, John Deere, AT&T Ventures, and the Qatar Investment Authority.",
+      "source": "Bloomberg / Mercedes-Benz–Apptronik reporting",
+      "year": 2026,
+      "url": "https://www.bloomberg.com/news/features/2026-06-25/apptronik-s-humanoid-robots-walk-but-ceo-jeff-cardenas-isn-t-bragging-yet"
+    },
+    {
+      "stat": "Boston Dynamics' electric Atlas began autonomous parts-sequencing and heavy-lift field tests at Hyundai's Georgia Metaplant (HMGMA, Ellabell, GA) in January 2026 — lifting up to 110 lb and, per Hyundai, trainable for most tasks in under a day. Hyundai's stated target is to manufacture 30,000 Atlas units per year at the Metaplant by 2028 — a company production goal, not yet a realized output figure.",
+      "source": "Hyundai Motor Group / Axios / Boston Dynamics",
+      "year": 2026,
+      "url": "https://www.axios.com/2026/01/05/hyundai-humanoid-robots-boston-dynamics"
+    },
+    {
+      "stat": "Fixed industrial robot arms hold ±0.02mm to ±0.05mm positional repeatability; as of 2026 no humanoid platform is independently certified to that tolerance band for fine assembly work. A few manufacturers claim comparable numbers (Dobot's Atom, inherited from Dobot's arm business, cites ±0.05mm; a startup's RO1 cites ±0.025mm), but those are manufacturer-stated specs, not third-party-verified production benchmarks — which is why humanoids are being deployed for tote/material handling rather than precision fastening or welding.",
+      "source": "Standard Bots / EVSINT industry analysis",
+      "year": 2026,
+      "url": "https://www.evsint.com/humanoid-robots-vs-industrial-robot-arms-factory-2026/"
+    },
+    {
+      "stat": "Figure AI's BotQ factory scaled from producing one Figure 03 humanoid per day to one per hour in 120 days (reaching that rate by May 2026); by June 20, 2026 the company said its total robot count had, for the first time, surpassed its human employee headcount (crossing roughly 750 units).",
+      "source": "Figure AI (CEO Brett Adcock) via industry reporting",
+      "year": 2026,
+      "url": "https://digg.com/ai/pay6v1wt"
+    }
+  ],
+  "expert_quotes": [
+    {
+      "quote": "The developments in the field of robotics are very promising. With an early test operation, we are now determining possible applications for humanoid robots in production.",
+      "name": "Milan Nedeljković",
+      "affiliation": "Member of the Board of Management for Production, BMW AG",
+      "url": "https://www.press.bmwgroup.com/global/article/detail/T0444265EN/successful-test-of-humanoid-robots-at-bmw-group-plant-spartanburg?language=en"
+    },
+    {
+      "quote": "The bipedal humanoid has the highest ceiling in terms of what it can do, so it has the broadest workspace that it can perform [in] — built for environments closer to human spaces, where walking ability and adaptability are required.",
+      "name": "Jeff Cardenas",
+      "affiliation": "CEO, Apptronik",
+      "url": "https://www.bloomberg.com/news/features/2026-06-25/apptronik-s-humanoid-robots-walk-but-ceo-jeff-cardenas-isn-t-bragging-yet"
+    },
+    {
+      "quote": "Labor shortages, reshoring, and favorable regulatory tailwinds are accelerating enterprise demand, while data scarcity, talent constraints, battery limitations, and high deployment costs remain key friction points.",
+      "name": "Heath Terry",
+      "affiliation": "Analyst, Citi (Robotics & Physical AI Leadership Conference)",
+      "url": "https://www.technocracy.news/ramping-up-current-state-of-robotics-in-2026/"
+    }
+  ],
+  "strongest_counterargument": {
+    "argument": "The 2026 deployments are real but deliberately narrow, and the reliability gap with incumbent automation remains large. Industry reporting on Digit's rollout — genuinely one of the furthest-along commercial deployments — describes it as having 'crossed the technical-maturity bar for narrow warehouse and factory tasks, but not yet broadly operationally mature,' still running at 'cycle times and reliability levels that traditional industrial robots cleared a decade ago.' Battery/uptime is a recurring practical limit: industry commentary puts most humanoid platforms at only 30-90 minutes of continuous operation before recharge or intervention is needed, against an industrial-automation expectation of 95-99% uptime. And on pure precision, fixed arms still beat humanoids by roughly an order of magnitude (±0.02-0.05mm vs. no independently certified humanoid equivalent) — which is exactly why every 2026 deployment profiled here (BMW, Amazon/GXO/Toyota, Mercedes-Benz, Hyundai) assigns humanoids to material handling, tote-loading, and parts-sequencing rather than fine assembly or welding. The bipedal form factor's real justification — moving through spaces built for people — is also its cost: batteries, balance sensing, and whole-body control all needed just to stand and walk, overhead a wheeled or fixed-base machine doesn't pay. Going from 'multi-week trial' (BMW's own description of Spartanburg) to sustained multi-shift, multi-plant reliability is the actual gap between the 2026 headlines and the 2030s scale the more cautious industry voices point to.",
+    "source": "Circuits Assembly / New Market Pitch / Standard Bots industry analysis; Citi robotics research (Heath Terry)",
+    "url": "https://newmarketpitch.com/blogs/news/humanoid-robotics-factories-when"
+  },
+  "recent_news": [
+    {
+      "item": "Boston Dynamics' electric Atlas began autonomous, fully self-directed parts-sequencing and heavy-lift field tests at Hyundai's Georgia Metaplant (HMGMA) — one of the first live instances of a humanoid robot performing fully autonomous tasks in a running automotive plant.",
+      "date": "2026-01-16",
+      "source": "Axios / FinancialContent",
+      "url": "https://www.axios.com/2026/01/05/hyundai-humanoid-robots-boston-dynamics"
+    },
+    {
+      "item": "Apptronik opened 'Robot Park,' a 90,000-square-foot facility for training Apollo humanoids on real tasks before factory deployment, and teased its next-generation Apollo 2.",
+      "date": "2026-06-30",
+      "source": "Forbes",
+      "url": "https://www.forbes.com/sites/johnkoetsier/2026/06/30/apptronik-announces-robot-park-a-90000-square-foot-humanoid-data-factory-teases-new-robot/"
+    }
+  ],
+  "unverified_or_flagged_claims": [
+    "Manufacturer-claimed humanoid repeatability specs (e.g., Dobot Atom ±0.05mm, a startup's RO1 ±0.025mm) are self-reported and not confirmed by independent/third-party certification at production scale — do not cite as equivalent to certified fixed-arm tolerances without that caveat.",
+    "The '30-90 minutes of continuous operation before recharge/intervention' and '95-99% industrial uptime expectation' figures are aggregated industry commentary from secondary sources (RoboZaps/New Market Pitch-style analysis), not a single named, verifiable study — treat as a general directional claim, not a precise benchmark.",
+    "Hyundai's '30,000 Atlas units per year by 2028' is a stated company production target, not a realized or contracted output — do not present as current production volume.",
+    "BMW's Spartanburg description of a 'multi-week trial' and the 30,000-vehicle/10-month figure come from the same original BMW/Figure press materials; BMW's own press release explicitly notes no Figure robots currently operate at the facility on an ongoing basis and no firm deployment timeline has been set — the trial's success does not yet equal permanent production headcount.",
+    "This article deliberately does not reuse the humanoid-robotics-IPO financial statistics (Agility SPAC, Unitree IPO, UBTECH pre-orders) already covered in article #20 ('Robots Go Public') — those are financing-wave stats, distinct from this piece's factory-floor task-mechanics focus, and citing them here would be redundant with, not additive to, existing AIMA coverage."
+  ]
+}

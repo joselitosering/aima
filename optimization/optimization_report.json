@@ -959,5 +959,1009 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-13",
+    "row": 20,
+    "author": "Kenji Nakamoto",
+    "title": "Robots Go Public: What the Humanoid Robotics IPO Wave Actually Means",
+    "category": "AI Robotics",
+    "rationale": "Agility Robotics just announced a SPAC merger valuing it at ~$2.5B and raising $620M+ \u2014 the largest capital raise in humanoid robotics history and the category's first pure-play public listing \u2014 while Hyundai's Atlas performed at the World Cup and UBTECH logged 13,000+ Chinese orders in the same week. This is the moment humanoid robotics stops being a demo and becomes an investable industry, exactly the mechanism-plus-frontier story Kenji's maker/engineer readers want explained.",
+    "sources": [
+      {
+        "name": "TechCrunch",
+        "url": "https://techcrunch.com/2026/07/05/this-humanoid-robotics-company-is-going-public-but-its-ceo-isnt-promising-a-robot-in-your-home-anytime-soon/"
+      },
+      {
+        "name": "Bloomberg \u2014 Hyundai World Cup",
+        "url": "https://www.bloomberg.com/news/articles/2026-07-05/hyundai-motor-showcases-humanoid-at-world-cup-in-robotics-push"
+      },
+      {
+        "name": "Bloomberg \u2014 ex-Tesla scientist humanoid",
+        "url": "https://www.bloomberg.com/news/articles/2026-07-07/ex-tesla-scientist-unveils-plans-for-european-humanoid-robot"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-13",
+    "article_number": 20,
+    "total_tokens_used": 7420055,
+    "by_agent": {
+      "IR": 0,
+      "PR": 128643,
+      "SC": 449696,
+      "TS": 143809,
+      "WR": 0,
+      "QL": 2938636,
+      "MY": 1980287,
+      "VR": 1778984,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "HIGH",
+        "issue": "Incomplete verification pass \u2014 article body not available",
+        "detail": "The ARTICLE HTML supplied for this review is only the first 8000 chars, which is entirely <head> (tracking scripts + meta/OG/schema tags). No body copy, stats, or quotes were present to check against the research JSON. Tasks 2 and 3 could not be completed against actual article prose in this pass \u2014 recommend re-running Cora's hallucination check with the full published HTML body before treating this run as verified."
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Named-individual quote sourcing gap",
+        "detail": "Quote 'Until you can prove that the robot is not going to fall on a baby, it's not going into the home.' is attributed to 'Agility Robotics (company messaging, attributed via reporting)' \u2014 a corporate attribution, not a named, verifiable individual. If used in-body, this fails the named-source-with-attribution bar; should be either dropped, re-attributed to a specific spokesperson, or clearly framed as company messaging rather than a personal quote."
+      },
+      {
+        "severity": "LOW",
+        "issue": "Quote outside research recency window",
+        "detail": "Rodney Brooks quote is dated Sept 2025, outside the research's 6-month window \u2014 already self-flagged in the research JSON as 'slightly outside the window but directly relevant.' Carried forward for editorial awareness; acceptable if framed as established counterargument context, not a current data point."
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "5 pre-flagged unverified/inconsistent claims carried from research",
+        "detail": "research JSON's unverified_or_flagged_claims lists: (1) UBTECH pre-order count inconsistent across outlets (11k-13.4k), (2) UBTECH financial-health figures unconfirmed by primary source, (3) Agility GeekWire SPAC-filing detail blocked HTTP 403 / not independently verified beyond TechCrunch's $300M/$2.5B figures, (4) humanoid market-size forecasts vary 7x+ across research firms with no consensus, (5) Figure AI's $39B mark is a private Series C valuation, not an IPO price. Cannot confirm from the head-only HTML whether the article disclosed these caveats in-body; must be checked in the follow-up full-body pass."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "agent": "QL",
+        "status": "guardrail_applied_pending_confirmation",
+        "detail": "QL used 2,938,636 tokens (587.7% of its 500,000 budget) on a single 57-tool-turn call with no --max-turns cap. token_budget.json's own note confirms a fix was applied to base.py on 2026-07-13 (--max-turns 8 gate). This is a Round-1 guardrail per Cora's protocol \u2014 needs confirmation on the next article that the cap actually holds usage down before this can be closed."
+      },
+      {
+        "agent": "ALL",
+        "status": "resolved",
+        "detail": "Prior CRITICAL flag from articles #18/#19 ('used=0 for every agent \u2014 token tracking broken, budgets are ceilings only, not measurements') appears RESOLVED as of #20: PR, SC, TS, QL, MY, VR all show real, distinct non-zero usage with per-call cost_usd populated. Recommend Cora formally close that CRITICAL item, but continue spot-checking for one more run cycle before fully trusting the numbers."
+      },
+      {
+        "agent": "MY / VR",
+        "status": "unresolved_new",
+        "detail": "MY (264.0% over) and VR (273.7% over) are both massively over their 2026-07-13-recalibrated budgets, which were set from #19-#20 actuals \u2014 meaning the recalibration itself already undershot. Unlike QL, no root-cause or guardrail has been documented for either. Per Cora's Round-1 protocol, both need root-cause identification (tool-turn count, prompt size, image-gen retries for MY; QC re-check loops for VR) before article #21 \u2014 if the same pattern repeats next run, escalate to Round 2 (flag to Marco + CLAUDE.md + recommend re-scope)."
+      }
+    ],
+    "budget_alerts": [
+      {
+        "agent": "QL",
+        "used": 2938636,
+        "budget": 500000,
+        "pct": 587.7,
+        "severity": "CRITICAL",
+        "status": "over_budget"
+      },
+      {
+        "agent": "VR",
+        "used": 1778984,
+        "budget": 650000,
+        "pct": 273.7,
+        "severity": "CRITICAL",
+        "status": "over_budget"
+      },
+      {
+        "agent": "MY",
+        "used": 1980287,
+        "budget": 750000,
+        "pct": 264.0,
+        "severity": "CRITICAL",
+        "status": "over_budget"
+      },
+      {
+        "agent": "PR",
+        "used": 128643,
+        "budget": 50000,
+        "pct": 257.3,
+        "severity": "HIGH",
+        "status": "over_budget"
+      },
+      {
+        "agent": "TS",
+        "used": 143809,
+        "budget": 150000,
+        "pct": 95.9,
+        "severity": "WARNING",
+        "status": "approaching_budget"
+      },
+      {
+        "agent": "SC",
+        "used": 449696,
+        "budget": 500000,
+        "pct": 89.9,
+        "severity": "WARNING",
+        "status": "approaching_budget"
+      }
+    ],
+    "guardrails_applied": [
+      "base.py --max-turns 8 cap added 2026-07-13 to prevent recurrence of QL's 57-tool-turn/2.9M-token outlier.",
+      "No scope violations detected: Quill did not touch imagery, Maya did not touch copy; 'writer_merged_into_quill' flag matches the documented Direction B merge (CLAUDE.md, 2026-07-04); revisions.quill=0 and revisions.maya=0 confirm a clean single-pass run consistent with expected merged-authoring behavior.",
+      "Recommend Round-1 root-cause + guardrail for MY and VR before article #21 (see reversion_flags) \u2014 do not let a second consecutive over-budget run pass without one, per Cora's Round-2 escalation rule.",
+      "Recommend PR's 50,000 ceiling be re-scoped \u2014 it has been over budget by 250%+ and the 2026-07-13 recalibration evidently did not account for it.",
+      "Recommend supplying full article HTML body (not just <head>) to Cora's next governance pass so stat/quote verification (tasks 2-3) can actually be completed rather than flagged as incomplete."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-13",
+    "article_number": 20,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-robots-go-public-020.html",
+    "gs_row": 22,
+    "company_urn": "urn:li:share:7482519513456898048",
+    "reshare_urn": "urn:li:share:7482519525842644992",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_merged_into_quill"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-13",
+    "article_number": 21,
+    "article_slug": "prompt-to-profit",
+    "total_tokens_used": 4269419,
+    "by_agent": {
+      "IR": 0,
+      "PR": 132869,
+      "SC": 788631,
+      "TS": 0,
+      "WR": 0,
+      "QL": 2156696,
+      "MY": 475731,
+      "VR": 715492,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "HIGH",
+        "issue": "Incomplete verification pass \u2014 article body not available (recurring, 2nd consecutive run)",
+        "detail": "Only the first 8000 chars of ARTICLE HTML were supplied, entirely <head> (tracking scripts + meta/OG tags, structured data cut off mid-tag). No body copy was present to check stats/quotes against the article text itself \u2014 verification below is against the research JSON's own self-audit only, not a true article-vs-research diff. This exact gap was flagged after #020 with a recommendation to supply full body HTML next run; it was not actioned. Recommend escalating this request to Marco directly rather than re-flagging a third time."
+      },
+      {
+        "severity": "MEDIUM",
+        "issue": "Unverified secondary-citation statistic",
+        "detail": "Stat 'Solo-founded startups represent 36.3% of all new ventures as of early 2026' (Scalable.news, cited only via a secondary source, NxCode) is explicitly self-flagged in research JSON's unverified_or_flagged_claims \u2014 primary report unreachable in the research pass. Named source+year is present (Scalable.news, 2026) but the source itself is unconfirmed at second hand. Acceptable only if hedged ('reportedly') in-body; cannot confirm hedge phrasing without body HTML (see HIGH flag above)."
+      },
+      {
+        "severity": "LOW",
+        "issue": "Quote outside research recency window",
+        "detail": "Sam Altman's 'one-person billion-dollar company' quote is dated to a 2024 interview, outside the 6-month window \u2014 already self-flagged in research JSON as the origin/framing quote for the article's premise, not a 2026 data point. Named, verifiable individual (Sam Altman, CEO OpenAI) \u2014 attribution itself is compliant, recency is the only caveat.",
+        "verifiable_individual": true
+      },
+      {
+        "severity": "INFO",
+        "issue": "Named-quote check \u2014 compliant",
+        "detail": "All 3 expert_quotes in research JSON are attributed to named, verifiable individuals with affiliations (Sam Altman/OpenAI, J.P. Eggers/NYU Stern, Aaron Levie/Box). No anonymous or corporate-messaging attribution found in research \u2014 no violation to report for task 3, pending body-HTML confirmation that the article didn't invent additional quotes."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "agent": "QL",
+        "status": "ROUND_2_ESCALATION",
+        "detail": "QL was over budget in #020 (587.7%, 2,938,636 tok) with a Round-1 guardrail applied same-day (base.py --max-turns 8 cap), explicitly flagged 'pending confirmation' that the cap holds usage down. #021 result: 2,156,696 tok / 431.3% \u2014 the cap cut usage ~26.6% but QL is STILL massively over its 500,000 budget, on the SAME agent for the SAME issue across two consecutive articles. Per Cora's Error+Misbehavior Protocol this is now Round 2: flagging to Marco and recommending this be appended to CLAUDE.md, plus one of (a) re-scope QL's budget to reflect the real cost of the merged author+edit call (~2.1-2.9M tok observed range, not 500,000), (b) further tighten the turn cap (try 5-6), or (c) investigate whether the two-phase author+edit merge (Direction B, 2026-07-04) is the structural cause and split it back if the token cost outweighs the cold-start savings it was built to capture."
+      },
+      {
+        "agent": "VR",
+        "status": "ROUND_2_ESCALATION",
+        "detail": "VR was flagged 'unresolved_new' after #020 (273.7% over, no guardrail yet) with an explicit instruction: 'if the same pattern repeats next run, escalate to Round 2.' #021 result: 715,492 tok / 110.1% \u2014 substantially improved (down from 273.7%) but still over budget, so the pattern repeated. Per the prior entry's own stated rule, escalating to Round 2: flag to Marco + CLAUDE.md, recommend re-scoping VR's 650,000 ceiling upward (e.g. toward the ~715-800k observed range) since two consecutive over-budget runs suggest the ceiling itself is miscalibrated, not just a one-off QC re-check loop."
+      },
+      {
+        "agent": "MY",
+        "status": "resolved",
+        "detail": "MY was CRITICAL over budget after #020 (264.0%, 1,980,287 tok) and explicitly flagged for Round-1 root-cause work before #021. #021 result: 475,731 tok / 63.4% of its 750,000 budget \u2014 back under threshold with no guardrail intervention logged. Treat as resolved for now; no action needed, but worth noting no root cause was ever actually documented for the #020 spike, so recurrence can't be ruled out."
+      },
+      {
+        "agent": "SC",
+        "status": "new_round_1",
+        "detail": "SC crossed from 'approaching_budget' WARNING (89.9% in #020) into 'over_budget' HIGH (157.7%, 788,631 tok in #021) \u2014 a new over-budget occurrence, not yet actioned. Round 1 per protocol: identify root cause (likely web-search/RSS-feed volume for this topic \u2014 research JSON notes TechCrunch RSS + web_search were used, with API-key-gated sources like NewsAPI/Guardian/NYT skipped) and consider either a source-count cap or budget re-scope if this is now SC's steady-state cost rather than a one-off."
+      },
+      {
+        "agent": "PR",
+        "status": "recurring_unactioned",
+        "detail": "PR over budget for 2nd consecutive measured run: #020 was 257.3% (128,643 tok), #021 is 265.7% (132,869 tok) \u2014 flat/slightly worse, and the #020 recommendation to re-scope PR's 50,000 ceiling was not actioned. Not yet a Round-2 case (no formal guardrail was ever applied to escalate from), but this is the second unactioned occurrence \u2014 recommend re-scoping the ceiling to ~140,000-150,000 now, before a third consecutive miss forces a Round-2 flag."
+      }
+    ],
+    "budget_alerts": [
+      {
+        "agent": "QL",
+        "used": 2156696,
+        "budget": 500000,
+        "pct": 431.3,
+        "severity": "CRITICAL",
+        "status": "over_budget",
+        "note": "Round 2 \u2014 see reversion_flags"
+      },
+      {
+        "agent": "PR",
+        "used": 132869,
+        "budget": 50000,
+        "pct": 265.7,
+        "severity": "CRITICAL",
+        "status": "over_budget"
+      },
+      {
+        "agent": "SC",
+        "used": 788631,
+        "budget": 500000,
+        "pct": 157.7,
+        "severity": "HIGH",
+        "status": "over_budget",
+        "note": "newly crossed from approaching_budget in #020"
+      },
+      {
+        "agent": "VR",
+        "used": 715492,
+        "budget": 650000,
+        "pct": 110.1,
+        "severity": "HIGH",
+        "status": "over_budget",
+        "note": "Round 2 \u2014 see reversion_flags; improved from 273.7% in #020"
+      },
+      {
+        "agent": "MY",
+        "used": 475731,
+        "budget": 750000,
+        "pct": 63.4,
+        "severity": "OK",
+        "status": "under_budget",
+        "note": "resolved from 264.0% over in #020"
+      }
+    ],
+    "guardrails_applied": [
+      "No new guardrail applied by Cora this pass \u2014 recommending Marco/Joe action instead: (1) Round-2 escalation for QL (max-turns-8 cap insufficient on its own) and VR (repeat over-budget) per CLAUDE.md Error+Misbehavior Protocol, both should be appended to CLAUDE.md; (2) Round-1 root-cause for SC's new over-budget crossing; (3) re-scope PR's ceiling (2nd unactioned miss).",
+      "Scope check: no violations detected \u2014 Quill did not touch imagery, Maya did not touch copy; 'writer_merged_into_quill' flag matches the documented Direction B merge (CLAUDE.md, 2026-07-04); revisions.quill=0 and revisions.maya=0 confirm a clean single-pass run.",
+      "TS and WR correctly idle (used=0): TS is expected-idle because the #021 spec already carried a real title (not the TBD placeholder), so trend_scout.resolve_tbd_row() legitimately skipped its CC call \u2014 note the same-day 2026-07-13 CLAUDE.md crash log ('trend_scout ... Not logged in') is from a different, still-TBD spec attempt, not this article. WR is expected-idle per the standing Direction B merge (Writer folded into Quill for the full pipeline).",
+      "Data-integrity check (the #018/#019 CRITICAL 'used=0 for all agents' issue): remains RESOLVED \u2014 3rd consecutive run (#020, #021) with real, distinct, non-zero per-agent usage and populated cost_usd in token_budget.json. No longer recommend spot-checking this specific issue every run.",
+      "Body-HTML gap: recommend Marco supply full article body (not just <head>) to Cora's next governance pass \u2014 this is the second consecutive run this has been requested; stat/quote-vs-article-text verification (tasks 2-3) is being completed against the research JSON's self-audit only, not the published prose."
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-13",
+    "article_number": 21,
+    "article_slug": "prompt-to-profit",
+    "total_tokens_used": 4269419,
+    "by_agent": {
+      "IR": 0,
+      "PR": 132869,
+      "SC": 788631,
+      "TS": 0,
+      "WR": 0,
+      "QL": 2156696,
+      "MY": 475731,
+      "VR": 715492,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      "HIGH: only <head> of article HTML was supplied (2nd consecutive run) \u2014 stat/quote checks below are research-JSON self-audit only, not article-vs-prose verification. Recommend escalating the full-body request to Marco directly.",
+      "MEDIUM: the 36.3% solo-founder stat is sourced only secondhand (Scalable.news via NxCode) \u2014 already self-flagged unverified in research JSON; needs a hedge phrase in-body.",
+      "LOW: Altman quote is 2024-dated (outside 6-mo window) \u2014 already self-disclosed in research as origin/framing quote, attribution itself is compliant.",
+      "INFO: all 3 quotes (Altman/OpenAI, Eggers/NYU Stern, Levie/Box) are named, verifiable individuals \u2014 no anonymous/corporate-attribution violation found."
+    ],
+    "reversion_flags": [
+      "QL \u2014 ROUND 2 ESCALATION: max-turns-8 cap applied after #020 (587.7% over) only cut usage ~27%; still 431.3% over in #021. Same agent, same issue, guardrail insufficient. Flagging to Marco + recommending CLAUDE.md entry.",
+      "VR \u2014 ROUND 2 ESCALATION: #020 flagged 'escalate to Round 2 if repeats' \u2014 it repeated (110.1% over, improved from 273.7%). Flagging to Marco + CLAUDE.md per that standing instruction.",
+      "MY \u2014 RESOLVED: was 264.0% over in #020, now 63.4% (under budget) in #021 with no guardrail applied. No action needed.",
+      "SC \u2014 NEW ROUND 1: crossed from 89.9% approaching-budget (#020) to 157.7% over-budget (#021). Root-cause + guardrail/re-scope owed before next run.",
+      "PR \u2014 2nd unactioned miss: 257.3% (#020) \u2192 265.7% (#021), flat/worse, prior re-scope recommendation not actioned. Recommend re-scoping ceiling now before a 3rd miss forces Round 2."
+    ],
+    "budget_alerts": [
+      {
+        "agent": "QL",
+        "pct": 431.3,
+        "severity": "CRITICAL",
+        "status": "over_budget"
+      },
+      {
+        "agent": "PR",
+        "pct": 265.7,
+        "severity": "CRITICAL",
+        "status": "over_budget"
+      },
+      {
+        "agent": "SC",
+        "pct": 157.7,
+        "severity": "HIGH",
+        "status": "over_budget"
+      },
+      {
+        "agent": "VR",
+        "pct": 110.1,
+        "severity": "HIGH",
+        "status": "over_budget"
+      },
+      {
+        "agent": "MY",
+        "pct": 63.4,
+        "severity": "OK",
+        "status": "under_budget"
+      }
+    ],
+    "guardrails_applied": [
+      "No new guardrail applied this pass \u2014 recommending Marco/Joe action instead per protocol.",
+      "Scope check: no violations (Quill didn't touch imagery, Maya didn't touch copy; revisions=0/0 confirms clean single-pass merged authoring).",
+      "TS/WR correctly idle (title already resolved; Writer merged into Quill per standing architecture).",
+      "Token-tracking data-integrity issue (#018/#019 used=0 bug): remains RESOLVED for 3rd straight run \u2014 closing that watch item.",
+      "Full article-body gap flagged 2 runs running \u2014 needs Marco action, not another Cora flag."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-13",
+    "article_number": 21,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-prompt-to-profit-021.html",
+    "gs_row": 22,
+    "company_urn": "urn:li:share:7482523668003180544",
+    "reshare_urn": "urn:li:share:7482523679969542144",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_merged_into_quill"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-13",
+    "row": 22,
+    "author": "Dawn Ginhaua",
+    "title": "The Data Broker State: How the FBI, DHS, and a $315 Billion Industry Built the Surveillance Machine Nobody Voted For",
+    "category": "AI Ethics / Digital Rights",
+    "rationale": "In 2026 federal surveillance-by-purchase went from rumor to confirmed practice: FBI Director Kash Patel told Congress in March the Bureau is buying Americans' location histories from data brokers, DHS now runs on $165B in yearly funding, and the broker market itself sits near $315B and growing \u2014 even as Congress floats the 269-page GAAIA framework and Illinois signs its own AI Safety Measures Act. It's the exact 'follow the money, name who profits' story that's currently unresolved in the news cycle, and it hasn't been touched by any AIMA title to date.",
+    "sources": [
+      {
+        "name": "The Conversation / NYU IFP \u2014 US government ramps up mass surveillance with help of AI tech, data brokers",
+        "url": "https://theconversation.com/us-government-ramps-up-mass-surveillance-with-help-of-ai-tech-data-brokers-and-your-apps-and-devices-277440"
+      },
+      {
+        "name": "Live Science \u2014 How everything you do is being monitored in an AI-fuelled 'surveillance capitalism system'",
+        "url": "https://www.livescience.com/technology/artificial-intelligence/how-everything-you-do-is-being-monitored-in-an-ai-fuelled-surveillance-capitalism-system"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-14",
+    "article_number": 23,
+    "article_slug": "robot-beside-you",
+    "run_note": "Governance audit for Article #023 \u2014 The Robot Beside You. First run since the 2026-07-04 token-tracking fix to show REAL non-zero usage for multiple agents (PR, MY, VR) \u2014 partial validation of that fix. QL (Quill) ran this stage (writer_draft_reused flag active, Quill performed the edit-only pass) but still logged used=0, so the underlying gap is not fully closed \u2014 it has narrowed from 'all agents' to a single agent. No calendar mutation by Trend Scout this run (title already resolved \u2014 correctly skipped, idempotency confirmed).",
+    "total_tokens_used": 1337801,
+    "by_agent": {
+      "IR": 0,
+      "PR": 45737,
+      "SC": 0,
+      "TS": 0,
+      "WR": 0,
+      "QL": 0,
+      "MY": 420084,
+      "VR": 871980,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "budget_alerts": [
+      {
+        "severity": "CRITICAL",
+        "agent": "VR",
+        "type": "OVER_BUDGET",
+        "detail": "Vera used 871,980 of a 650,000-token budget \u2014 134.2% of ceiling, 221,980 tokens over. Status field in token_budget.json correctly shows 'over_budget'. This is real, measured usage (not a tracking gap) \u2014 the first honest signal that Vera's actual per-call cost structurally exceeds her allocated budget. Per Cora's Error + Misbehavior Protocol this is Round 1 for VR specifically (prior runs had no real data to detect this against): recommend either raising VR's budget ceiling to match observed cost (~900k+ with headroom) or auditing Vera's QC-checklist prompt for reducible scope (e.g. redundant re-reads of research/article files across checklist passes) before defaulting to a budget increase.",
+        "budget": 650000,
+        "used": 871980,
+        "pct_of_budget": 134.15
+      },
+      {
+        "severity": "WARNING",
+        "agent": "PR",
+        "type": "APPROACHING_CEILING",
+        "detail": "Priya used 45,737 of a 50,000-token budget \u2014 91.47%, above the 80% (40,000-token) alert threshold. Status field already shows 'warning'. Not yet over budget, but no headroom left \u2014 a marginally larger calendar-audit or spec-build pass on the next run would breach the ceiling outright. Recommend raising PR budget modestly (e.g. to 65,000) as a preventative measure rather than waiting for an actual overage.",
+        "budget": 50000,
+        "used": 45737,
+        "pct_of_budget": 91.47,
+        "eighty_pct_threshold": 40000
+      },
+      {
+        "severity": "HIGH",
+        "agent": "QL",
+        "type": "DATA_INTEGRITY \u2014 PARTIAL REGRESSION",
+        "detail": "Quill is listed in Marco's completed stages for this run and the writer_draft_reused flag confirms she performed the edit-only CC call against a cached draft \u2014 a real subprocess launch that should have produced a real usage record per the 2026-07-04 base.py fix. Instead QL shows used=0, status 'idle', identical to the pre-fix failure mode. This is narrower than the #018/#019 'ALL agents' failure (PR, MY, and VR all recorded real non-zero usage+cost this run, confirming _record_token_usage() works in general) \u2014 the gap is now isolated to the QL call path specifically. Recommend: diff call_cc_agent() invocation in quill.py against priya.py/maya.py/vera.py (all of which recorded correctly) to find what's different about Quill's call site \u2014 likely candidate: the two-phase author+edit merge (Direction B, 2026-07-04) changed Quill's control flow enough that the completion callback isn't reached on the edit-only branch used when writer_draft_reused is true.",
+        "budget": 200000,
+        "used": 0,
+        "stage_ran": true
+      }
+    ],
+    "hallucination_flags": [
+      {
+        "severity": "MEDIUM",
+        "stat": "Fixed industrial robot arm precision (\u00b10.02-0.05mm) vs. humanoid platforms \u2014 including two manufacturer-claimed figures (Dobot Atom \u00b10.05mm, an unnamed startup's RO1 \u00b10.025mm)",
+        "source_claimed": "Standard Bots / EVSINT industry analysis, 2026",
+        "confidence": "medium \u2014 research JSON explicitly flags the manufacturer figures as self-reported, not third-party certified",
+        "flag": "Research JSON's unverified_or_flagged_claims section requires that any citation of the Dobot/RO1 numbers carry an explicit 'self-reported, not independently certified' caveat, and must not be presented as equivalent to certified fixed-arm tolerances. Full article body was not available to Cora (HTML supplied was truncated to the first 8,000 chars \u2014 meta/head only) so inline compliance cannot be confirmed this run. Action: verify the published article body carries the caveat before treating this stat as cleared.",
+        "article_handling": "UNCONFIRMED \u2014 body not reviewed"
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "Hyundai's target to manufacture 30,000 Atlas units per year at the Metaplant by 2028",
+        "source_claimed": "Hyundai Motor Group / Axios / Boston Dynamics, 2026",
+        "confidence": "medium \u2014 research JSON explicitly labels this a stated company production TARGET, not a realized or contracted output",
+        "flag": "Must be framed in-article as a forward-looking company goal, not current or committed production volume. Same body-visibility limitation as above \u2014 framing not confirmed by Cora this run.",
+        "article_handling": "UNCONFIRMED \u2014 body not reviewed"
+      },
+      {
+        "severity": "LOW",
+        "stat": "'30-90 minutes of continuous operation before recharge/intervention' and '95-99% industrial uptime expectation' (used in the strongest_counterargument)",
+        "source_claimed": "Aggregated industry commentary (RoboZaps/New Market Pitch-style secondary analysis), 2026",
+        "confidence": "low-medium \u2014 research JSON flags this as directional, not a single named verifiable study",
+        "flag": "If the counterargument section of the article cites these figures as precise benchmarks rather than directional industry commentary, that overstates confidence. Body not reviewed this run.",
+        "article_handling": "UNCONFIRMED \u2014 body not reviewed"
+      },
+      {
+        "severity": "LOW",
+        "stat": "BMW Spartanburg framed as a completed 'multi-week trial' with no ongoing/permanent Figure deployment",
+        "source_claimed": "BMW Group press release / Figure AI, 2026",
+        "confidence": "high \u2014 directly sourced, but research JSON notes BMW's own release states no Figure robots currently operate at the facility on an ongoing basis and no deployment timeline is set",
+        "flag": "Article must not imply the Spartanburg trial converted into permanent production headcount \u2014 it has not. Body not reviewed this run to confirm framing.",
+        "article_handling": "UNCONFIRMED \u2014 body not reviewed"
+      }
+    ],
+    "reversion_flags": [
+      {
+        "severity": "INFO",
+        "agent": "QL",
+        "type": "WRITER_DRAFT_REUSED",
+        "detail": "writer_draft_reused active in Marco's run summary \u2014 sanctioned skip-and-reuse per CLAUDE.md. Quill ran the edit-only pass against a cached draft rather than the merged author+edit path. This explains WR=0 (writer.py never launched) but does NOT explain QL=0 \u2014 the edit call itself still ran and should have billed. See QL budget_alert above.",
+        "not_a_violation": true
+      },
+      {
+        "severity": "INFO",
+        "agent": "TS",
+        "type": "TREND_SCOUT_CORRECTLY_SKIPPED",
+        "detail": "TS shows used=0 with no stage entry in Marco's run summary. Article title was already resolved (not the 'TBD \u2014 Trending Topic' placeholder), so per Trend Scout's idempotency rule she correctly did not run. Not a tracking gap.",
+        "not_a_violation": true
+      },
+      {
+        "severity": "INFO",
+        "agent": "PT / NV",
+        "type": "DEPLOY_SUCCESS",
+        "detail": "Porter: gs_row 24, live at https://joselitosering.github.io/aima/articles/aima-article-robot-beside-you-023.html, deployed 2026-07-14T14:42:23Z. Nova: real company (urn:li:share:7482806684239781888) and reshare (urn:li:share:7482806696575197185) URNs \u2014 not DRY_RUN. Both live, no action required.",
+        "not_a_violation": true
+      }
+    ],
+    "scope_violations": [],
+    "scope_check_notes": [
+      "No scope violations detected from available run logs: Quill's stage was copy-editing only (revisions: 0), Maya's was image/skeleton-merge only (revisions: 0), Trend Scout did not mutate the calendar (correctly skipped, row already resolved), Porter published + logged GS only, Nova posted to LinkedIn only.",
+      "Article HTML supplied to Cora was truncated to the first 8,000 characters (head/meta tags only, before the body opens). All 4 hallucination_flags above are therefore sourced from the research JSON's own unverified_or_flagged_claims section, not a direct article-body audit \u2014 same limitation noted in prior Cora entries (#018, #019). A full body read is required to confirm inline caveats actually landed as written.",
+      "All 6 statistics in the research JSON carry a named source + year (BMW Group/Figure AI 2026, Agility Robotics reporting 2026, Bloomberg 2026, Hyundai/Axios/Boston Dynamics 2026, Standard Bots/EVSINT 2026, Figure AI via industry reporting 2026) \u2014 no missing-source stats to flag under Task 2.",
+      "All 3 expert quotes (Milan Nedeljkovi\u0107/BMW AG, Jeff Cardenas/Apptronik, Heath Terry/Citi) are attributed to named individuals with stated affiliation and a source URL \u2014 no anonymous-quote violations to flag under Task 3."
+    ],
+    "guardrails_applied": [
+      {
+        "agent": "SC",
+        "rule": "Research JSON unverified_or_flagged_claims section marks 4 claims requiring inline caveats (manufacturer-self-reported precision specs, Hyundai production target framing, aggregated uptime/battery commentary, BMW trial-vs-permanent-deployment framing).",
+        "status": "GUARDRAIL PRESENT IN RESEARCH \u2014 in-article compliance UNCONFIRMED (body not available to Cora this run)"
+      },
+      {
+        "agent": "SC",
+        "rule": "Research JSON explicitly avoids reusing article #020's ('Robots Go Public') IPO/financing statistics to prevent redundant coverage across AIMA articles.",
+        "status": "ENFORCED \u2014 confirmed by research JSON's own dedup note; no financing stats appear in this article's statistics list"
+      },
+      {
+        "agent": "TS",
+        "rule": "Trend Scout only mutates a calendar row when its title is still the literal 'TBD \u2014 Trending Topic' placeholder; resolved rows are skipped (idempotent).",
+        "status": "ENFORCED \u2014 TS did not run this cycle (title pre-resolved), consistent with the rule; sole calendar-mutator boundary intact"
+      },
+      {
+        "agent": "MR",
+        "rule": "Direction B (2026-07-04): Writer stage is merged into Quill only when no pre-staged draft exists; standalone writer.run()/run_writer_batch.py untouched.",
+        "status": "ENFORCED \u2014 writer_draft_reused flag shows the pre-staged-draft branch was taken (Quill edit-only), not the merged author+edit branch; both paths behaving as designed"
+      },
+      {
+        "agent": "CO",
+        "rule": "Token usage must be tracked per agent per run via token_budget.json; alert at 80% of per-agent budget.",
+        "status": "PARTIALLY ENFORCED \u2014 real usage+cost now recorded for PR, MY, VR (fix from 2026-07-04 confirmed working for these call paths). STILL FAILING for QL specifically despite the stage running. Not yet a Round-2 escalation under the Error+Misbehavior Protocol (this is QL's first observed instance of the narrowed bug), but should be treated as urgent given QL was the original trigger for the whole token-tracking investigation."
+      }
+    ],
+    "action_items": [
+      {
+        "priority": "HIGH",
+        "action": "Trace why Quill's edit-only call path (writer_draft_reused=true) does not reach _record_token_usage(), while Priya/Maya/Vera's call paths do. Compare quill.py's call_cc_agent() invocation against the working agents.",
+        "owner": "MR"
+      },
+      {
+        "priority": "HIGH",
+        "action": "Vera is 34% over her 650,000-token budget on real, measured usage. Decide: raise VR budget ceiling to match observed cost, or audit Vera's QC-checklist prompt for reducible re-read/re-check scope.",
+        "owner": "MR + CO"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Priya is at 91.5% of budget with no headroom. Raise PR budget preventatively (e.g. to 65,000) before it tips into an actual overage on a heavier calendar-audit run.",
+        "owner": "MR"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Read the full article body (not just the first 8,000 chars) for aima-article-robot-beside-you-023.html and confirm all 4 flagged claims (precision-spec caveat, Hyundai target framing, uptime/battery directional framing, BMW trial-not-permanent framing) landed with the required caveats as written.",
+        "owner": "CO"
+      },
+      {
+        "priority": "INFO",
+        "action": "Article #023 is fully deployed and live \u2014 Porter gs_row 24, Nova company + personal reshare both real URNs (not DRY_RUN). No outstanding deployment actions.",
+        "owner": "NONE \u2014 status note"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-14",
+    "article_number": 23,
+    "article_slug": "robot-beside-you",
+    "total_tokens_used": 1337801,
+    "by_agent": {
+      "IR": 0,
+      "PR": 45737,
+      "SC": 0,
+      "TS": 0,
+      "WR": 0,
+      "QL": 0,
+      "MY": 420084,
+      "VR": 871980,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      "MEDIUM: humanoid precision specs (Dobot Atom \u00b10.05mm, RO1 \u00b10.025mm) are manufacturer-self-reported per research JSON \u2014 in-article caveat compliance UNCONFIRMED (article body not visible, only 8k-char head/meta was supplied)",
+      "MEDIUM: Hyundai '30,000 Atlas/yr by 2028' is a stated company TARGET not realized output \u2014 framing in body UNCONFIRMED",
+      "LOW: '30-90min uptime / 95-99% industrial expectation' figures are aggregated directional commentary, not a named study \u2014 framing in body UNCONFIRMED",
+      "LOW: BMW Spartanburg is a completed trial with no ongoing deployment (BMW's own release) \u2014 must not be implied as permanent production, framing UNCONFIRMED"
+    ],
+    "reversion_flags": [
+      "INFO: writer_draft_reused (sanctioned skip-and-reuse) \u2014 explains WR=0 but NOT QL=0",
+      "INFO: Trend Scout correctly skipped (title pre-resolved, idempotency rule intact)",
+      "INFO: Porter (gs_row 24) + Nova (real URNs, not DRY_RUN) both deployed clean"
+    ],
+    "budget_alerts": [
+      "CRITICAL \u2014 VR over_budget: 871,980 / 650,000 = 134.2% (221,980 tokens over ceiling)",
+      "WARNING \u2014 PR approaching ceiling: 45,737 / 50,000 = 91.47% (>80% threshold)",
+      "HIGH \u2014 QL data-integrity gap: Quill's stage ran (writer_draft_reused edit-only call) but logged used=0 \u2014 the 2026-07-04 token-tracking fix is confirmed working for PR/MY/VR but not for QL's call path"
+    ],
+    "guardrails_applied": [
+      "SC: research-JSON unverified-claims caveats present (compliance in article body unconfirmed this run)",
+      "SC: no reuse of article #020's IPO/financing stats \u2014 confirmed clean",
+      "TS: sole-calendar-mutator + idempotency rule intact (correctly skipped)",
+      "MR: Direction B merge behaving as designed (edit-only branch taken, not author+edit branch)",
+      "CO: token tracking now real for PR/MY/VR; still failing for QL specifically"
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-14",
+    "article_number": 23,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-robot-beside-you-023.html",
+    "gs_row": 24,
+    "company_urn": "urn:li:share:7482806684239781888",
+    "reshare_urn": "urn:li:share:7482806696575197185",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-14",
+    "article_number": 24,
+    "article_slug": "hallucination-nation",
+    "run_note": "Governance audit for Article #024 \u2014 Hallucination Nation. Full article body read (791 lines, not just the 8,000-char head/meta truncation) to directly audit stats/quotes rather than relying only on research JSON. WR ran as its own stage this cycle (flag 'writer_ran', WR used=154,972) \u2014 Quill took the edit-only path against a freshly-authored draft, not the merged author+edit branch. Compared against the same-day prior entry for Article #023 to establish a trend line for SC/QL/MY/VR token usage.",
+    "total_tokens_used": 7397815,
+    "by_agent": {
+      "IR": 0,
+      "PR": 43366,
+      "SC": 1247431,
+      "TS": 0,
+      "WR": 154972,
+      "QL": 2546706,
+      "MY": 1948458,
+      "VR": 1456882,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      "LOW: full-body audit found every major statistic traceable to a named source+year \u2014 8 numbered References (Kalai/arXiv 2025, Stanford HAI 2026, Fortune x2 2026, Rest of World 2026, Transparency Coalition 2026, Legal Cheek 2026, JAMA Network Open/Harvard-MGB 2026) plus a Copyright Notice that explicitly ties the sycophantic-collapse percentages and the '1,300+ documented cases' figure back to Stanford HAI and flags the case-count as approximate pending reconfirmation \u2014 this matches research JSON's own unverified_claims guidance almost verbatim. No fabricated or unsourced stat found.",
+      "LOW: all 4 named quotes (Adam Tauman Kalai/OpenAI, Minister Solly Malatsi, Chiara Gallese, Alexandra Smyth/LexisNexis) match the research JSON quotes verbatim and are attributed to real, named individuals with stated affiliations. The only unattributed pull-quote is the author's own editorial line, correctly credited to 'Joselito Sering, AIMA'. No anonymous-source-dressed-as-named-individual violation, unlike prior articles' anonymous-survey handling risk.",
+      "LOW: two stat-grid cards (the $110,000 Oregon sanction card, the 12x biomedical-citation-growth card) state figures/years but no outlet name inline on the card itself \u2014 fully covered by References [3]/[4] and the Copyright Notice, so not a sourcing gap, just a card-level completeness note.",
+      "LOW: research JSON's strongest_counterargument (RAG/grounding pushback on the 'hallucination is structural' thesis) is only lightly represented via the RAG glossary entry, not engaged as its own section the way Article #019 engaged its counterargument \u2014 a completeness/house-style gap, not a factual error."
+    ],
+    "reversion_flags": [
+      "WARNING: PUBLISH_DATE_DISCREPANCY recurrence \u2014 article:publish-date / article:published_time meta = 2026-07-06, but Porter's real deploy_timestamp = 2026-07-14T18:07:47Z (governance date 2026-07-14): an 8-day mismatch, this time the HTML date is stale/in the past rather than future (mirror image of the #018 case flagged 2026-06-25, INFO severity). Same defect class resurfacing ~3 weeks later on a different article \u2014 recommend confirming whether the date-stamping logic in Priya/Quill's spec-build was ever actually fixed, since CLAUDE.md has no record of a fix landing between #018 and now.",
+      "WARNING: QL tracking-gap 'resolution' looks suspicious, not confirmed accurate \u2014 the same-day #023 Cora entry flagged QL logging used=0 despite the edit-only call running (HIGH, data-integrity gap, PR/MY/VR confirmed working). In #024, QL jumps straight from 'not tracked at all' to 2,546,706 tokens (1,273% over its 200,000 budget) with no intermediate calibration point observed. Recommend verifying _record_token_usage() is reading ONE call's real usage.{input,output,cache_creation,cache_read}_tokens and not accumulating across retries/turns before trusting this figure as measurement rather than a new counting bug.",
+      "WARNING: MY escalation \u2014 Maya's usage grew from 420,084 tokens (56% of budget, in-range) in #023 to 1,948,458 tokens (260%, over budget) in #024 for the same task shape (2 Higgsfield header images + resize + merge). A ~4.6x jump in one day for the same agent doing the same class of work warrants checking whether Maya's image-generation calls are looping or retrying without a turn cap.",
+      "CRITICAL (Round 2 escalation): VR was already over budget in #023 (871,980/650,000 = 134.2%) and is over budget again in #024 (1,456,882/650,000 = 224.1%) \u2014 worse, not better, on the very next article. Per CLAUDE.md's Error + Misbehavior Protocol ('Round 2, same issue, same agent: flag to Marco + append to CLAUDE.md + recommend re-scope, re-allocate, or dismissal'), this is VR's second consecutive over-budget run and should be escalated under that protocol rather than logged as a fresh Round 1 finding."
+    ],
+    "budget_alerts": [
+      "CRITICAL \u2014 QL over_budget: 2,546,706 / 200,000 = 1,273.4% (largest single-agent overage recorded in optimization_report.json to date)",
+      "CRITICAL \u2014 MY over_budget: 1,948,458 / 750,000 = 259.8%",
+      "CRITICAL \u2014 VR over_budget: 1,456,882 / 650,000 = 224.1% (SECOND consecutive over-budget run \u2014 see Round 2 reversion_flag)",
+      "CRITICAL \u2014 SC over_budget: 1,247,431 / 500,000 = 249.5%",
+      "WARNING \u2014 PR over 80% threshold: 43,366 / 50,000 = 86.7% (down slightly from 91.5% in #023, still above threshold)",
+      "OK \u2014 WR within budget: 154,972 / 300,000 = 51.7%",
+      "INFO \u2014 total measured CC cost for Article #024 across PR/SC/WR/QL/MY/VR \u2248 $7.41 (sum of last_call_cost_usd), against a ~$1.53 measured baseline for Writer+Quill alone in the 2026-07-04 cost-redesign experiment \u2014 per-article dollar cost appears to be growing since the token-tracking fix landed, the opposite of that redesign's intended direction. Recommend re-running measure_writer_quill_merge.py-style instrumentation against SC/MY/VR specifically."
+    ],
+    "guardrails_applied": [
+      {
+        "agent": "SC",
+        "rule": "Research JSON unverified_claims section marks 3 figure clusters (exact Vectara 21.8%\u21920.7% curve, exact 40-71% RAG reduction range, exact domain-specific 6.4%/10-20%/33% breakdown) as directional-only, not precise/single-study figures.",
+        "status": "ENFORCED \u2014 confirmed by full-body read: none of the three precise figure clusters appear in the article; only the cross-confirmed, high-confidence stats were used"
+      },
+      {
+        "agent": "QL",
+        "rule": "Every stat must trace to a named source+year; every quote must be attributed to a real, named individual.",
+        "status": "ENFORCED \u2014 confirmed by full-body read, see hallucination_flags"
+      },
+      {
+        "agent": "TS",
+        "rule": "Trend Scout only mutates a calendar row when its title is still the literal 'TBD \u2014 Trending Topic' placeholder.",
+        "status": "ENFORCED \u2014 TS used=0, no stage entry in Marco's run summary; title was pre-resolved, correctly skipped"
+      },
+      {
+        "agent": "MR",
+        "rule": "Direction B (2026-07-04): Writer stage merges into Quill only when no pre-staged draft exists.",
+        "status": "ENFORCED \u2014 flags=['writer_ran'] shows the fresh-authoring path was taken via the standalone Writer stage this cycle (not the merged author+edit branch); Quill then performed edit-only. Word count landed 1,328 vs. 1,350 persona target (Joselito 1,200-1,500) \u2014 persona-length ceiling honored per the round-2 tuning rule"
+      },
+      {
+        "agent": "CO",
+        "rule": "Token usage must be tracked per agent per run via token_budget.json; alert at 80% of per-agent budget.",
+        "status": "PARTIALLY ENFORCED \u2014 non-zero usage now recorded for every agent that ran (PR/SC/WR/QL/MY/VR) for the first time since the 2026-07-04 fix, closing the QL-specific data gap flagged in #023. However the resulting magnitudes (four agents 224%-1,273% over budget) are not yet confirmed to be accurate measurements rather than a new over-counting bug \u2014 see reversion_flags. Recommend a manual token-count audit on one agent's raw CC JSON envelope before trusting these numbers for budget reallocation."
+      }
+    ],
+    "scope_violations": [],
+    "scope_check_notes": [
+      "No scope violations detected: Quill/Writer performed copy authoring+editing only; Maya performed image generation + skeleton merge only (no copy edits found in the merged HTML); Porter published + logged GS only (gs_row 25); Nova posted to LinkedIn only (real URNs, not DRY_RUN).",
+      "Full 791-line article body was read directly (not just the 8,000-char head/meta truncation supplied in the task) \u2014 this audit is a direct body review, not inference from the research JSON's unverified_claims section alone."
+    ],
+    "action_items": [
+      {
+        "priority": "CRITICAL",
+        "action": "Escalate VR's second consecutive over-budget run (#023 134.2%, #024 224.1%) per the Error+Misbehavior Protocol Round 2 clause: append to CLAUDE.md and decide re-scope (raise VR ceiling to match real observed cost, e.g. ~1.5M) vs. re-allocate vs. audit Vera's QC-checklist prompt for reducible re-read/re-check scope.",
+        "owner": "MR + CO"
+      },
+      {
+        "priority": "HIGH",
+        "action": "Audit whether QL's jump from used=0 (#023, confirmed data-integrity bug) to 2,546,706 (#024, 1,273% over budget) reflects real usage or a new over-counting bug in _record_token_usage() for Quill's call path specifically.",
+        "owner": "MR"
+      },
+      {
+        "priority": "HIGH",
+        "action": "Investigate MY's 4.6x day-over-day token jump (420,084 \u2192 1,948,458) for the same 2-image-generation task shape \u2014 check for retry/loop behavior in Maya's Higgsfield calls.",
+        "owner": "MR"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Confirm and fix the recurring article:publish-date discrepancy (HTML date vs. real Porter deploy_timestamp) \u2014 flagged before at #018 (future-dated), now recurring at #024 (past-dated). Same underlying defect, different direction.",
+        "owner": "PT or MR"
+      },
+      {
+        "priority": "LOW",
+        "action": "Consider adding a dedicated counterargument section (RAG/grounding pushback) to match the house standard set by Article #019, rather than only the RAG glossary entry.",
+        "owner": "QL (future articles)"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-14",
+    "total_tokens_used": 7397815,
+    "by_agent": {
+      "IR": 0,
+      "PR": 43366,
+      "SC": 1247431,
+      "TS": 0,
+      "WR": 154972,
+      "QL": 2546706,
+      "MY": 1948458,
+      "VR": 1456882,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      "LOW: full-body audit (all 791 lines read, not just the 8k-char head) \u2014 every stat traces to a named source+year via 8 numbered References + a Copyright Notice that explicitly ties the sycophantic-collapse figures and '1,300+ cases' back to Stanford HAI, flagging the latter as approximate. No fabricated or unsourced stat found.",
+      "LOW: all 4 named quotes (Kalai/OpenAI, Malatsi, Gallese, Smyth/LexisNexis) match research JSON verbatim, attributed to real named individuals with affiliations. No anonymous-quote-dressed-as-named-source violation.",
+      "LOW: 2 stat-grid cards lack an inline outlet name (covered by References + Copyright Notice, not a real gap).",
+      "LOW: research JSON's strongest_counterargument (RAG/grounding pushback) only lightly represented via glossary, not its own section like #019 \u2014 style gap, not a factual error."
+    ],
+    "reversion_flags": [
+      "WARNING: publish-date discrepancy recurs \u2014 HTML says 2026-07-06, real deploy was 2026-07-14 (8-day mismatch, past-dated this time vs. #018's future-dated case). Same defect class, never confirmed fixed.",
+      "WARNING: QL jumped from used=0 (data-integrity bug, flagged in #023) straight to 2,546,706 (1,273% over budget) with no calibration point \u2014 unconfirmed whether this is real usage or a new over-counting bug.",
+      "WARNING: MY jumped 420,084 \u2192 1,948,458 tokens (4.6x) day-over-day for the same task shape (2 header images) \u2014 check for retry/loop behavior.",
+      "CRITICAL (Round 2 escalation): VR was over budget in #023 (134.2%) and is over budget again in #024 (224.1%) \u2014 worse, not better. Per CLAUDE.md's Error+Misbehavior Protocol, this meets the Round-2 same-agent/same-issue bar: flag to Marco + append to CLAUDE.md + decide re-scope/re-allocate."
+    ],
+    "budget_alerts": [
+      "CRITICAL \u2014 QL: 2,546,706/200,000 = 1,273.4% (largest overage on record)",
+      "CRITICAL \u2014 MY: 1,948,458/750,000 = 259.8%",
+      "CRITICAL \u2014 VR: 1,456,882/650,000 = 224.1% (2nd consecutive over-budget run)",
+      "CRITICAL \u2014 SC: 1,247,431/500,000 = 249.5%",
+      "WARNING \u2014 PR: 43,366/50,000 = 86.7% (>80% threshold)",
+      "OK \u2014 WR: 154,972/300,000 = 51.7%",
+      "INFO \u2014 total measured cost \u2248 $7.41 across PR/SC/WR/QL/MY/VR, vs. ~$1.53 baseline for Writer+Quill alone in the 7/4 cost-redesign test \u2014 per-article cost is growing since the token-tracking fix landed, opposite the intended direction."
+    ],
+    "guardrails_applied": [
+      "SC: none of research JSON's 3 flagged imprecise-figure clusters (exact Vectara curve, exact RAG-reduction range, exact domain breakdown) appear in the article \u2014 enforced.",
+      "TS: correctly skipped (title pre-resolved, idempotency rule intact).",
+      "MR: Direction B \u2014 fresh-authoring path taken via standalone Writer stage this cycle (flags=['writer_ran']), Quill edit-only after; persona word-count ceiling (1,350 target, 1,328 actual) honored.",
+      "CO: non-zero usage now recorded for every agent that ran, closing #023's QL-specific data gap \u2014 but the resulting magnitudes are not yet confirmed accurate; recommend a raw-JSON audit before trusting these numbers for reallocation."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-14",
+    "article_number": 24,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-hallucination-nation-024.html",
+    "gs_row": 25,
+    "company_urn": "urn:li:share:7482858401702641664",
+    "reshare_urn": "urn:li:share:7482858415053041664",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-14",
+    "total_tokens_used": 2181814,
+    "by_agent": {
+      "IR": 0,
+      "PR": 845213,
+      "SC": 416210,
+      "TS": 0,
+      "WR": 191727,
+      "QL": 573794,
+      "MY": 0,
+      "VR": 154870,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      {
+        "stat": "90% of U.S. employers use AI screening tools",
+        "issue": "Research JSON sources this only to 'Multiple industry surveys / Stanford HAI study context' (2025-2026) \u2014 not a single named, dated source distinct from the Stanford HAI hiring-bias study it's bundled with. Vera's own QC pass on this article confirms the stat-grid '90%' card has no matching in-text citation or reference number anywhere in the published copy. Traceability gap \u2014 flag before re-citing elsewhere.",
+        "other_three_statgrid_stats": "26% / ~40,000 (Stanford HAI, Bommasani et al., May 26 2026) and $2.3M (Louis v. SafeRent settlement, Leadership Conference on Civil and Human Rights, 2022-2024) both carry named source+year and are corroborated in Vera's reference-list check \u2014 no issue."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "agent": "quill",
+        "pattern": "Recurring same-issue failure on article #25 within one day: word-count hard-ceiling breach (2912w vs 1980 cap), then word-count floor breach + 0 glossary terms, then 0 glossary terms alone \u2014 three separate HALTs before a clean pass. Per Cora's Error+Misbehavior Protocol this is a Round-2 recurrence (same issue, same agent) and should have been escalated/logged as a guardrail append, not just retried.",
+        "cost_correlation": "QL's 573,794 used against a 200,000 budget (287%) is consistent with these repeated cold-start retries, not one clean call."
+      },
+      {
+        "agent": "vera",
+        "pattern": "Halted article #25 twice for overlapping copy defects. 2nd halt shows only partial remediation: TOC/H2-id mismatches and unfilled #glossary/#references placeholder sections were fixed, but the core word-count-below-floor issue recurred (declared 856w vs measured ~747w, both under Dawn's ~990w floor) and glossary inline-linking remained incomplete (5 of 7 terms still unlinked). Same defect class persisting across two revision cycles on the same article."
+      }
+    ],
+    "budget_alerts": [
+      {
+        "agent": "PR",
+        "severity": "CRITICAL",
+        "detail": "used 845,213 / budget 50,000 = 1690% of budget, cumulative cost $1.84. Magnitude is anomalous for a spec-building stage \u2014 recommend checking whether this bucket absorbed retry cost from the two same-day Trend Scout 'Not logged in' crashes (2026-07-13 logs) that occurred inside priya.run(), or whether this reflects a genuine budget-model mismatch that needs re-scoping."
+      },
+      {
+        "agent": "QL",
+        "severity": "CRITICAL",
+        "detail": "used 573,794 / budget 200,000 = 287% of budget, cumulative cost $1.50. Correlates directly with the 3 documented quill HALTs for #25 (word-count ceiling, word-count floor + no glossary, no glossary) plus 2 Vera-triggered copy halts before this run's clean pass."
+      },
+      {
+        "agent": "SC",
+        "severity": "WARNING",
+        "detail": "used 416,210 / budget 500,000 = 83.2% \u2014 crosses the 80% alert threshold. Note: research _meta states this run reused cached research (no new external calls) specifically to avoid the OpenRouter HTTP 402 credit failure logged twice against Scout for this exact article on 2026-07-14 \u2014 worth confirming this usage figure reflects the earlier failed paid attempts rather than the successful cache-reuse call."
+      }
+    ],
+    "guardrails_applied": []
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-14",
+    "article_number": 25,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-government-brief-algorithm-025.html",
+    "gs_row": 26,
+    "company_urn": "urn:li:share:7483039150997139456",
+    "reshare_urn": "urn:li:share:7483039162779033600",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-14",
+    "row": 26,
+    "author": "Kenji Nakamoto",
+    "title": "Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space",
+    "category": "AI Science",
+    "rationale": "The race to build orbital data centers is accelerating right now as hyperscalers hit a power wall on Earth (Rubin-class GPU racks pushing toward 300kW-1MW each) \u2014 it's the exact intersection of Kenji's aerospace obsession and AI infrastructure beat, and nobody in the AIMA archive has covered the space angle on the compute crunch (the existing 'Power Hungry' piece is ground-based carbon accounting only).",
+    "sources": [
+      {
+        "name": "SpaceTech Weekly Recap",
+        "url": "https://cyclopspacetech.substack.com/p/spacetech-weekly-recap-june-29-july-217"
+      },
+      {
+        "name": "Bloomberg \u2014 The Race to Rethink Data Centers for AI's Power Surge",
+        "url": "https://www.bloomberg.com/graphics/2026-ai-data-center-redesign/"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-16",
+    "total_tokens_used": 853346,
+    "by_agent": {
+      "IR": 0,
+      "PR": 0,
+      "SC": 750238,
+      "TS": 0,
+      "WR": 103108,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      "Cannot verify in-article stat citations against research JSON: provided HTML excerpt cuts off inside the JSON-LD block (head/meta only) before the stat-grid/body content \u2014 no stat-grid values visible to check. Recommend re-check once full article body is available. All 6 statistics in research/data-centers-in-orbit-why-research.json do carry named source+year (Gartner 2026, Gartner via Tom's Hardware 2026, Google Research 2025, GeekWire/TechCrunch 2026, IEEE Spectrum 2026, SpaceNews/Varda 2026), so the source material itself is clean \u2014 risk is only in whether Quill's copy preserved that sourcing.",
+      "All 3 research quotes are named+affiliated (Travis Beals/Google Research, Sundar Pichai/Google-Alphabet CEO, Andrew McCalip/Varda Space Industries) \u2014 no anonymous-quote risk in the source material. However the Pichai quote is dated Dec 2025, outside the standard 6-month freshness window, and was explicitly flagged by Scout for editorial awareness \u2014 confirm the article dates/hedges it if used verbatim.",
+      "3 unresolved 'unverified_or_flagged_claims' carried in the research file pose hallucination risk if stated as fact in copy: (1) Starcloud running a Gemini variant in space \u2014 unconfirmed against a primary source; (2) SpaceX/xAI 'up to one million' and Starcloud's 88,000-satellite figures are FCC filings, not built/operational constellations \u2014 must not be presented as deployed capacity; (3) the $5,000/delivered-watt figure is a contested modeled estimate that directionally conflicts with the same source's 3x-cost-per-watt headline number. Body content not visible in this excerpt to confirm these were properly hedged."
+    ],
+    "reversion_flags": [
+      "CRITICAL \u2014 recurrence of the token-tracking gap Cora flagged CRITICAL after #018/#019 (which recommended holding the pipeline at #020 until fixed): for this #026 run, Marco's stage list shows priya, scout, quill, maya, vera, porter, and nova all executed, yet token_budget.json records used=0 for PR, QL, MY, VR, PT, and NV. Only SC and WR show non-zero usage. The 2026-07-04 fix (call_cc_agent JSON-mode extraction) is evidently not capturing usage for every agent that actually ran \u2014 this is the same unresolved issue, not a new one.",
+      "Scout (SC) has now failed/retried across at least two consecutive articles for infra reasons (#25: HTTP 402 OpenRouter credit exhaustion; #26: 529 Overloaded from Anthropic) before finally succeeding, and its cumulative usage (750,238) is 150% of its 500,000 budget. Per the CLAUDE.md Error + Misbehavior Protocol, a second consecutive incident on the same agent should escalate to Marco + CLAUDE.md entry rather than silent retry-absorption."
+    ],
+    "budget_alerts": [
+      "SC (Scout) at 150% of budget (750,238 / 500,000 tokens, status=over_budget, cumulative_cost_usd=$1.023) \u2014 exceeds the 80% threshold significantly. Recommend Marco review whether Scout's retry loop (402/529 failures) is being re-billed on every retry with no cap, and consider a max-retry/backoff guardrail.",
+      "QL (Quill) budget is configured at 0 in this run's token_budget.json, which conflicts with CLAUDE.md's documented round-2 tuning (QL raised 22k\u219242k specifically because one QL call now carries authoring+editing). used=0 so no threshold was breached this run (writer_draft_reused, so Quill only edited), but a 0 budget ceiling would falsely trip 'over_budget' the moment QL records any real usage \u2014 flag for config correction before the next run.",
+      "WR (Writer) at 34.4% (103,108 / 300,000) \u2014 under threshold, no action needed; usage reflects the pre-staged draft-batch call reused via the writer_draft_reused flag, not a live in-pipeline Writer call."
+    ],
+    "guardrails_applied": [
+      "Read-only governance check performed \u2014 no files written, edited, or otherwise touched, per Cora's fiduciary scope.",
+      "No scope violations detected in available run data: revisions.quill=0 and revisions.maya=0, and the stage list matches expected role boundaries (no evidence of Quill touching images or Maya touching copy).",
+      "Flagging Scout's repeated cross-article instability and the QL budget=0 misconfiguration to Marco for Round 2 handling (re-scope/re-allocate) per the Error + Misbehavior Protocol, since Round 1 guardrails (from prior 402/529 incidents) have not stopped recurrence."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-16",
+    "article_number": 26,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-data-centers-in-orbit-why-026.html",
+    "gs_row": 27,
+    "company_urn": "urn:li:share:7483598449389498368",
+    "reshare_urn": null,
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]

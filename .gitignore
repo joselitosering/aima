@@ -39,3 +39,11 @@ scheduled-run-log.jsonl
 last-run-status.json
 linkedin_pipeline/coworker_run_log.jsonl
 pipeline_trigger_log.jsonl
+instagram_pipeline/carousel_log.jsonl
+instagram_pipeline/runner-log.jsonl
+instagram_pipeline/.carousel.lock
+instagram_pipeline/inbox/
+instagram_pipeline/archive/
+instagram_pipeline/rejected/
+instagram_pipeline/state/
+instagram_pipeline/.work/

@@ -1,0 +1,157 @@
+<!-- ═══════════════════════════════════════════════════════════
+     AIMA ARTICLE #023 — WRITER DRAFT (Kenji Nakamoto)
+     The Robot Beside You: What Humanoid Machines Actually Do
+     on the Factory Floor in 2026
+     Author: Kenji Nakamoto · Category: AI Technology
+     Written: 2026-07-13 · Status: DRAFT — for Quill's edit pass
+═══════════════════════════════════════════════════════════ -->
+
+<p class="article-lead">
+Picture a body shop in Spartanburg, South Carolina, ten hours into a Tuesday shift. A machine shaped roughly like a person — torso, two arms, two legs, quiet electric hum — reaches into a bin, picks up a sheet-metal part, and slots it onto a BMW X3 chassis before a welding arm finishes the job. It has 37 seconds. It does it again. Over ten months, a fleet of Figure's Figure 02 humanoids helped build more than 30,000 X3s, logging 1,250 hours and handling over 90,000 parts (BMW Group; Figure AI). Nobody stopped the line to gawk. That's the part that gets me: the most science-fiction object on that floor is, by design, the least dramatic thing on it.
+</p>
+
+<h2 id="section-moment">THE MOMENT THE ROBOT STOPPED BEING A DEMO</h2>
+
+<p>I've watched a lot of humanoid robot videos — backflips, an engineer kicking the machine to prove it won't fall over. Those are demos. Spartanburg was not: a body-shop production trial running real Monday-through-Friday shifts, moving real parts into real cars people drive right now. "The developments in the field of robotics are very promising," said Milan Nedeljković, BMW AG's board member for production. "With an early test operation, we are now determining possible applications for humanoid robots in production" (BMW Group). BMW notes no Figure robots run Spartanburg permanently yet, no timeline set. But the parts got loaded, the cars got built — the line between a conference and an industry, crossed in real time.</p>
+
+<h2 id="section-mechanism">HOW THESE THINGS ACTUALLY WORK</h2>
+
+<p>Here's the mechanism, stripped of gloss. A humanoid doing warehouse work solves three problems at once, continuously: stay upright while moving, grip an object it's never seen, and hit a cycle time fast enough to be worth the electricity. Agility Robotics' Digit, the most battle-tested humanoid in commercial service, walks at about 1.8 meters per second and carries roughly 16 kilograms per trip, ferrying totes between conveyors and autonomous mobile robots across nine-plus sites — Amazon, GXO, Toyota Motor Manufacturing Canada, Schaeffler, Mercado Libre — logging over 65,000 operating hours (Agility Robotics deployment reporting). Not a lab number. A machine that's been quietly clocking in.</p>
+
+<p>Here's the sentence that still gets me: the hardest part of a robot doing a warehouse job isn't the job — it's convincing a machine that falling over is just a math problem it hasn't solved yet, thousands of times a second, on two feet, in shoes it never gets to take off.</p>
+
+<h2 id="section-lineup">MEET THE ROBOTS ALREADY CLOCKING IN</h2>
+
+<p>Spartanburg and Digit's warehouses aren't outliers — 2026 is the year the humanoid lineup showed up to work. Apptronik's Apollo, a 5'8", 160-pound machine rated to lift 55 pounds, is piloting inside Mercedes-Benz plants in Berlin-Marienfelde and Hungary, backed by a February 2026 raise pushing Apptronik's total past $935 million from investors including Mercedes-Benz Group, Google, and the Qatar Investment Authority (Bloomberg). Boston Dynamics' electric Atlas began autonomous parts-sequencing and heavy-lift tests at Hyundai's Georgia Metaplant in January 2026, lifting up to 110 pounds, trainable on new tasks in under a day — with a stated (not yet realized) goal of 30,000 Atlas units a year by 2028 (Axios; Hyundai Motor Group). And Figure AI's factory, BotQ, went from one humanoid a day to one an hour in 120 days; by June 2026, Figure's robot headcount had, for the first time, passed its human headcount (Figure AI, via industry reporting).</p>
+
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-number">30,000+</div><div class="stat-label">BMW X3 vehicles built with Figure 02 humanoid support over a 10-month trial</div></div>
+<div class="stat-card"><div class="stat-number orange">65,000+</div><div class="stat-label">Operating hours logged by Agility Robotics' Digit across 9+ commercial sites</div></div>
+<div class="stat-card"><div class="stat-number gold">$935M</div><div class="stat-label">Total raised by Apptronik after its Feb. 2026 Series A extension</div></div>
+<div class="stat-card"><div class="stat-number green">1 hr</div><div class="stat-label">Time to build one Figure 03 humanoid at BotQ, down from 1 per day in 120 days</div></div>
+</div>
+
+<h2 id="section-why-bipedal">WHY BIPEDAL, THOUGH?</h2>
+
+<p>This is the question I get asked most: correctly, that a wheeled cart or fixed arm is cheaper and doesn't need a battery-hungry balance system just to stand still. The answer: humanoids aren't built to out-engineer a forklift. They're built to move through a world engineered for human bodies, without retrofitting that world first. "The bipedal humanoid has the highest ceiling in terms of what it can do, so it has the broadest workspace that it can perform in," Apptronik CEO Jeff Cardenas told Bloomberg, "built for environments closer to human spaces, where walking ability and adaptability are required." Stairs, narrow aisles, tools sized for hands — none of it needs to change if the robot already fits. Pay the balance tax once, in engineering, and skip the renovation tax at every facility.</p>
+
+<h2 id="section-honest">THE HONEST RECKONING</h2>
+
+<p>"The robots are here" is only half the sentence. Every 2026 deployment above has humanoids doing material handling — not fine assembly, not welding. Reason: fixed industrial arms hold positional repeatability of ±0.02 to ±0.05 millimeters, and no humanoid has an independently certified equivalent yet (Standard Bots; EVSINT). Battery life is another honest limit — estimates put most humanoids at 30 to 90 minutes of continuous operation before recharge or intervention, against an industrial standard of 95-99 percent uptime. Citi analyst Heath Terry put the tension well: demand is real, but "data scarcity, talent constraints, battery limitations, and high deployment costs remain key friction points" (Citi, via industry reporting). Going from a successful trial to sustained multi-shift reliability is the real distance left — measured in years, not headlines.</p>
+
+<div class="pullquote">
+<p class="pullquote-text">The bipedal humanoid has the highest ceiling in terms of what it can do — built for environments closer to human spaces, where walking ability and adaptability are required.</p>
+<span class="pullquote-attribution">— Jeff Cardenas, CEO, Apptronik</span>
+</div>
+
+<h2 id="section-invitation">WHAT YOU CAN DO FROM HERE</h2>
+
+<p>If any of this got your pulse up a little — good, that's the correct response. This is a rare moment you can watch a technology grow up in public: Agility, Apptronik, Figure, and Boston Dynamics all publish demo footage and technical blogs, and Apptronik just opened a 90,000-square-foot facility called Robot Park to train Apollo on real tasks before deployment (Forbes) — meaning the failure modes are, for once, not locked behind a firewall. Go watch a full unedited shift video, not the highlight reel. And if you're a student or maker with more curiosity than budget, the open-source humanoid research community is more accessible right now than it's ever been. The robot beside you isn't finished yet. That's exactly why this is the good part to pay attention to.</p>
+
+<!-- ═══ GLOSSARY ════════════════════════════════════════════════ -->
+<section class="glossary-section" id="glossary">
+<h2 class="section-heading">Glossary</h2>
+<div class="glossary-list">
+
+<div class="glossary-item" id="glossary-humanoid-robot">
+<div class="glossary-term-title">Humanoid Robot</div>
+<p class="glossary-definition">A robot built with a roughly human body plan — torso, two arms, two legs — so it can operate in spaces, use tools, and move through infrastructure designed for people without requiring facility retrofits. Figure 02/03, Agility's Digit, Apptronik's Apollo, and Boston Dynamics' electric Atlas are the leading commercial examples deployed in 2026.</p>
+</div>
+
+<div class="glossary-item" id="glossary-cycle-time">
+<div class="glossary-term-title">Cycle Time</div>
+<p class="glossary-definition">The total time allotted for one complete repetition of a task on a production line — for example, the 84-second total body-shop cycle at BMW's Spartanburg trial, within which the Figure 02 robots had to load each part within 37 seconds. Cycle time is the metric that determines whether a robot is fast enough to keep pace with human-run stations around it, not just capable of the task in isolation.</p>
+</div>
+
+<div class="glossary-item" id="glossary-positional-repeatability">
+<div class="glossary-term-title">Positional Repeatability</div>
+<p class="glossary-definition">A measure of how precisely a robot can return to the exact same point in space, repeatedly, expressed as a tolerance range. Fixed industrial robot arms hold ±0.02mm to ±0.05mm repeatability; no humanoid platform carries an independently certified equivalent as of 2026, which is why humanoids are currently assigned to material handling rather than fine assembly or welding.</p>
+</div>
+
+<div class="glossary-item" id="glossary-payload">
+<div class="glossary-term-title">Payload</div>
+<p class="glossary-definition">The maximum weight a robot is rated to safely lift or carry during normal operation. Ranges among 2026's deployed humanoids vary by design purpose: Digit carries about 16kg (35lb) per tote, Apollo is rated to 55lb, and Atlas has demonstrated lifts up to 110lb in Hyundai's heavy-lift field tests.</p>
+</div>
+
+<div class="glossary-item" id="glossary-uptime">
+<div class="glossary-term-title">Uptime</div>
+<p class="glossary-definition">The percentage of scheduled operating time a machine is actually functional and working, rather than down for charging, maintenance, or error recovery. Traditional industrial automation runs at 95-99% uptime; industry estimates place most 2026 humanoid platforms at 30-90 minutes of continuous operation before recharge or intervention, a gap that remains one of the field's central engineering challenges.</p>
+</div>
+
+<div class="glossary-item" id="glossary-whole-body-control">
+<div class="glossary-term-title">Whole-Body Control</div>
+<p class="glossary-definition">The software and sensor system that lets a bipedal robot coordinate balance, walking, and manipulation simultaneously — constantly adjusting posture and foot placement in real time so the robot doesn't fall while its arms and hands are busy doing something else. It's the overhead cost a wheeled or fixed-base robot never has to pay, and the reason bipedal humanoids are more expensive and complex to build than their non-walking counterparts.</p>
+</div>
+
+<div class="glossary-item" id="glossary-tote-handling">
+<div class="glossary-term-title">Tote Handling</div>
+<p class="glossary-definition">Moving standardized storage bins ("totes") between conveyors, shelving, and autonomous mobile robots within a warehouse or fulfillment center — currently the single most common commercial task assigned to deployed humanoid robots, including Digit's work at Amazon, GXO, and Toyota facilities, because it demands mobility and adaptable gripping rather than sub-millimeter precision.</p>
+</div>
+
+</div>
+</section>
+
+<!-- ═══ REFERENCES ══════════════════════════════════════════════ -->
+<section class="references-section" id="references">
+<h2 class="section-heading">References</h2>
+<ol class="reference-list">
+
+<li class="reference-item" data-number="[1]">
+<span class="ref-title">"Successful Test of Humanoid Robots at BMW Group Plant Spartanburg."</span>
+<em>BMW Group Press Release</em>, 2026,
+<a href="https://www.press.bmwgroup.com/global/article/detail/T0444265EN/successful-test-of-humanoid-robots-at-bmw-group-plant-spartanburg?language=en" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.press.bmwgroup.com/global/article/detail/T0444265EN/successful-test-of-humanoid-robots-at-bmw-group-plant-spartanburg</a>
+</li>
+
+<li class="reference-item" data-number="[2]">
+<span class="ref-title">"Agility Robotics' Digit Moves Beyond Pilots, Now Handling Real Warehouse Work at Amazon, Toyota, and GXO."</span>
+<em>OriginOfBots</em>, 2026,
+<a href="https://www.originofbots.com/news/agility-robotics-digit-moves-beyond-pilots-now-handling-real-warehouse-work-at-amazon-toyota-and-gxo" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.originofbots.com/news/agility-robotics-digit-moves-beyond-pilots-now-handling-real-warehouse-work-at-amazon-toyota-and-gxo</a>
+</li>
+
+<li class="reference-item" data-number="[3]">
+<span class="ref-title">"Apptronik's Humanoid Robots Walk, but CEO Jeff Cardenas Isn't Bragging Yet."</span>
+<em>Bloomberg</em>, 25 June 2026,
+<a href="https://www.bloomberg.com/news/features/2026-06-25/apptronik-s-humanoid-robots-walk-but-ceo-jeff-cardenas-isn-t-bragging-yet" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.bloomberg.com/news/features/2026-06-25/apptronik-s-humanoid-robots-walk-but-ceo-jeff-cardenas-isn-t-bragging-yet</a>
+</li>
+
+<li class="reference-item" data-number="[4]">
+<span class="ref-title">"Hyundai's Humanoid Robots, Built by Boston Dynamics, Start Work at Georgia Plant."</span>
+<em>Axios</em>, 5 Jan. 2026,
+<a href="https://www.axios.com/2026/01/05/hyundai-humanoid-robots-boston-dynamics" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.axios.com/2026/01/05/hyundai-humanoid-robots-boston-dynamics</a>
+</li>
+
+<li class="reference-item" data-number="[5]">
+<span class="ref-title">"Humanoid Robots vs. Industrial Robot Arms: The Factory Floor in 2026."</span>
+<em>EVSINT Industry Analysis</em>, 2026,
+<a href="https://www.evsint.com/humanoid-robots-vs-industrial-robot-arms-factory-2026/" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.evsint.com/humanoid-robots-vs-industrial-robot-arms-factory-2026/</a>
+</li>
+
+<li class="reference-item" data-number="[6]">
+<span class="ref-title">"Figure AI Now Has More Robots Than Human Employees."</span>
+<em>Digg</em>, 20 June 2026,
+<a href="https://digg.com/ai/pay6v1wt" class="ref-link" target="_blank" rel="noopener noreferrer">https://digg.com/ai/pay6v1wt</a>
+</li>
+
+<li class="reference-item" data-number="[7]">
+<span class="ref-title">"Apptronik Announces Robot Park, a 90,000-Square-Foot Humanoid Data Factory, Teases New Robot."</span>
+<em>Forbes</em>, 30 June 2026,
+<a href="https://www.forbes.com/sites/johnkoetsier/2026/06/30/apptronik-announces-robot-park-a-90000-square-foot-humanoid-data-factory-teases-new-robot/" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.forbes.com/sites/johnkoetsier/2026/06/30/apptronik-announces-robot-park-a-90000-square-foot-humanoid-data-factory-teases-new-robot/</a>
+</li>
+
+<li class="reference-item" data-number="[8]">
+<span class="ref-title">"Ramping Up: Current State of Robotics in 2026."</span>
+<em>Technocracy</em>, 2026,
+<a href="https://www.technocracy.news/ramping-up-current-state-of-robotics-in-2026/" class="ref-link" target="_blank" rel="noopener noreferrer">https://www.technocracy.news/ramping-up-current-state-of-robotics-in-2026/</a>
+</li>
+
+<li class="reference-item" data-number="[9]">
+<span class="ref-title">"Humanoid Robotics in Factories: When Does the Hype Become Reality?"</span>
+<em>New Market Pitch</em>, 2026,
+<a href="https://newmarketpitch.com/blogs/news/humanoid-robotics-factories-when" class="ref-link" target="_blank" rel="noopener noreferrer">https://newmarketpitch.com/blogs/news/humanoid-robotics-factories-when</a>
+</li>
+
+</ol>
+<div class="copyright-notice">
+<strong>Copyright Acknowledgements:</strong> Sources cited include BMW Group, Figure AI, OriginOfBots/RoboZaps, <em>Bloomberg</em>, <em>Axios</em>, EVSINT, <em>Digg</em>, <em>Forbes</em>, Technocracy, and New Market Pitch industry analysis. All sources cited per MLA 9th edition. Note: manufacturer-claimed humanoid repeatability specs (e.g., ±0.05mm, ±0.025mm claims from individual robot makers) are self-reported, not independently certified at production scale, and are not presented here as equivalent to certified fixed-arm tolerances. The 30-90 minute continuous-operation estimate and the 95-99% industrial uptime benchmark are aggregated industry commentary, not a single named study, and should be read as directional. Hyundai's 30,000-Atlas-per-year-by-2028 figure is a stated company production target, not a realized or contracted output. BMW's Spartanburg trial is explicitly described by BMW as a test operation with no ongoing deployment and no confirmed production timeline as of this writing.
+</div>
+</section>

@@ -1,0 +1,55 @@
+{
+  "row": 26,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-07-14",
+  "chosen": {
+    "title": "Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space",
+    "category": "AI Science",
+    "rationale": "The race to build orbital data centers is accelerating right now as hyperscalers hit a power wall on Earth (Rubin-class GPU racks pushing toward 300kW-1MW each) \u2014 it's the exact intersection of Kenji's aerospace obsession and AI infrastructure beat, and nobody in the AIMA archive has covered the space angle on the compute crunch (the existing 'Power Hungry' piece is ground-based carbon accounting only).",
+    "sources": [
+      {
+        "name": "SpaceTech Weekly Recap",
+        "url": "https://cyclopspacetech.substack.com/p/spacetech-weekly-recap-june-29-july-217"
+      },
+      {
+        "name": "Bloomberg \u2014 The Race to Rethink Data Centers for AI's Power Surge",
+        "url": "https://www.bloomberg.com/graphics/2026-ai-data-center-redesign/"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The Machine That Called the Hurricane: Inside AI's New Disaster-Prediction Models",
+      "category": "AI Science",
+      "rationale": "Google DeepMind's model nailing both the path and Category 5 intensity of Hurricane Melissa, plus USC's real-time wildfire-ignition model published this year, is a live, scored, verifiable AI-does-something-real story with immediate stakes \u2014 squarely Kenji's 'mechanism + honest reckoning' structure (who gets the warning, who doesn't) and his climate-tech beat.",
+      "sources": [
+        {
+          "name": "MIT Technology Review \u2014 Three climate technologies breaking through in 2026",
+          "url": "https://www.technologyreview.com/2026/01/15/1131348/climate-technologies-2026/"
+        },
+        {
+          "name": "ScienceDaily \u2014 Space & Time News",
+          "url": "https://www.sciencedaily.com/news/space_time/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Robot That Outran Us: What a Marathon-Winning Humanoid Actually Proves",
+      "category": "AI Robotics",
+      "rationale": "A fully autonomous humanoid beating the human half-marathon world record by nearly 7 minutes, landing the same season NVIDIA ships a dedicated safety architecture for physical AI, is a vivid 'moment of contact' scene made for Kenji \u2014 and it's a distinct angle from AIMA's already-published IPO and factory-floor humanoid pieces (endurance/locomotion + safety governance, not markets or manufacturing).",
+      "sources": [
+        {
+          "name": "Robot Magazine \u2014 Why 2026 could be the pivotal year for Humanoid Robots",
+          "url": "https://www.robot-magazine.fr/en/why-2026-could-be-the-pivotal-year-for-humanoid-robots/"
+        },
+        {
+          "name": "NVIDIA Blog \u2014 National Robotics Week: Physical AI Research",
+          "url": "https://blogs.nvidia.com/blog/national-robotics-week-2026/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

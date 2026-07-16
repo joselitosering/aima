@@ -24,13 +24,13 @@
 | 17 | 2026-06-26 | The Résumé Filter: How AI Turned Racial Bias Into Standard Hiring Practice | AI Ethics | 8 min | Row added 2026-07-02 — published trending one-off (article:id 017), previously missing from the calendar | Dawn Ginhaua |
 | 18 | 2026-06-28 | Diagnosis by Algorithm: The State of AI in Clinical Medicine, 2026 | AI Healthcare | 13 min |  | Joselito Sering |
 | 19 | 2026-07-02 | The Persuasion Engine: AI, Social Media, and the Death of Shared Reality | AI Ethics | 13 min |  | Joselito Sering |
-| 20 | 2026-07-03 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
+| 20 | 2026-07-03 | Robots Go Public: What the Humanoid Robotics IPO Wave Actually Means | AI Robotics | 8 min |  | Kenji Nakamoto |
 | 21 | 2026-07-04 | From Prompt to Profit: Building an AI-Native Business in 2026 | AI Business | 10 min |  | Joselito Sering |
-| 22 | 2026-07-05 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
+| 22 | 2026-07-05 | The Data Broker State: How the FBI, DHS, and a $315 Billion Industry Built the Surveillance Machine Nobody Voted For | AI Ethics / Digital Rights | 8 min |  | Dawn Ginhaua |
 | 23 | 2026-07-06 | The Robot Beside You: What Humanoid Machines Actually Do on the Factory Floor in 2026 | AI Technology | 8 min | Optimistic deep-dive — one emerging technology, grounded in what it makes possible for real people. Rescheduled (was 2026-06-21, overdue) · Post 10:00 AM PT | Kenji Nakamoto |
 | 24 | 2026-07-06 | Hallucination Nation: Why AI Lies with Confidence and What It Costs Us | AI Creative | 9 min | Rescheduled (was 2026-06-22, overdue) · Post 4:00 PM PT | Joselito Sering |
 | 25 | 2026-07-07 | The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law | AI Ethics | 8 min | Rescheduled (was 2026-06-23, overdue) · Post 10:00 AM PT | Dawn Ginhaua |
-| 26 | 2026-07-07 | TBD — Trending Topic | Trending | 8 min | Rescheduled (was 2026-06-25, overdue) · Post 4:00 PM PT | Kenji Nakamoto |
+| 26 | 2026-07-07 | Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space | AI Science | 8 min | Rescheduled (was 2026-06-25, overdue) · Post 4:00 PM PT | Kenji Nakamoto |
 | 27 | 2026-07-08 | Power Hungry: The Carbon Ledger of the AI Compute Boom | AI Environment | 10 min | Rescheduled (was 2026-06-26, overdue) · Post 10:00 AM PT | Joselito Sering |
 | 28 | 2026-07-08 | TBD — Trending Topic | Trending | 8 min | Rescheduled (was 2026-06-27, overdue) · Post 4:00 PM PT | Dawn Ginhaua |
 | 29 | 2026-07-09 | TBD — Trending Topic | Trending | 8 min | Rescheduled (was 2026-06-29, overdue) · Post 10:00 AM PT | Kenji Nakamoto |

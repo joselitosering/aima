@@ -1,0 +1,59 @@
+{
+  "row": 20,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-07-13",
+  "chosen": {
+    "title": "Robots Go Public: What the Humanoid Robotics IPO Wave Actually Means",
+    "category": "AI Robotics",
+    "rationale": "Agility Robotics just announced a SPAC merger valuing it at ~$2.5B and raising $620M+ \u2014 the largest capital raise in humanoid robotics history and the category's first pure-play public listing \u2014 while Hyundai's Atlas performed at the World Cup and UBTECH logged 13,000+ Chinese orders in the same week. This is the moment humanoid robotics stops being a demo and becomes an investable industry, exactly the mechanism-plus-frontier story Kenji's maker/engineer readers want explained.",
+    "sources": [
+      {
+        "name": "TechCrunch",
+        "url": "https://techcrunch.com/2026/07/05/this-humanoid-robotics-company-is-going-public-but-its-ceo-isnt-promising-a-robot-in-your-home-anytime-soon/"
+      },
+      {
+        "name": "Bloomberg \u2014 Hyundai World Cup",
+        "url": "https://www.bloomberg.com/news/articles/2026-07-05/hyundai-motor-showcases-humanoid-at-world-cup-in-robotics-push"
+      },
+      {
+        "name": "Bloomberg \u2014 ex-Tesla scientist humanoid",
+        "url": "https://www.bloomberg.com/news/articles/2026-07-07/ex-tesla-scientist-unveils-plans-for-european-humanoid-robot"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Data Centers Leave the Ground: Inside the Race to Compute in Orbit",
+      "category": "AI Infrastructure / Space Tech",
+      "rationale": "AI's power appetite is colliding with terrestrial grid limits, and SpaceX and others are now racing to put data centers in orbit to tap solar power directly and sidestep cooling/land constraints \u2014 a genuinely new collision of Kenji's aerospace and AI beats, and a mechanism story (orbital thermal management, latency, launch economics) no one else on staff would reach for.",
+      "sources": [
+        {
+          "name": "ScienceDaily \u2014 Space & Time News",
+          "url": "https://www.sciencedaily.com/news/space_time/"
+        },
+        {
+          "name": "Forbes \u2014 7 Space Science and Technology Breakthroughs 2026",
+          "url": "https://www.forbes.com/sites/charlottekiang/2026/01/01/7-space-science-and-technology-breakthroughs-to-watch-for-in-2026/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Teaching Robots to Dream: How World Models Are Making Physical AI Actually Work",
+      "category": "AI Robotics",
+      "rationale": "NVIDIA's newly released Isaac GR00T and Cosmos world models are the actual mechanism behind 2026's headline shift of 'physical AI' from proof-of-concept to deployed systems \u2014 robots learning from simulated, synthetic experience rather than costly real-world trial and error. It's a frontier-and-mechanism piece tailor-made for Kenji's 'how does this actually work' sequence, distinct from prior AIMA coverage of humanoid factory-floor tasks.",
+      "sources": [
+        {
+          "name": "NVIDIA Blog \u2014 National Robotics Week 2026",
+          "url": "https://blogs.nvidia.com/blog/national-robotics-week-2026/"
+        },
+        {
+          "name": "International Federation of Robotics \u2014 Top 5 Global Robotics Trends 2026",
+          "url": "https://ifr.org/ifr-press-releases/news/top-5-global-robotics-trends-2026"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

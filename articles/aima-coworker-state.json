@@ -1,5 +1,5 @@
 {
-  "next_article_number": 20,
+  "next_article_number": 27,
   "next_article_date": "2026-06-28",
   "joselito": {
     "next_calendar_index": 4,
@@ -23,7 +23,7 @@
       }
     }
   },
-  "last_run": "2026-07-04",
+  "last_run": "2026-07-16",
   "articles_written": [
     {
       "number": 13,
@@ -76,5 +76,30 @@
   "google_sheets_id": "1mBTEbyEPccy5KNAvVR4i-NvZICjA0B2OZBBbET_zJDs",
   "google_sheets_tab": "Insights",
   "google_sheets_webapp_url": "https://script.google.com/macros/s/AKfycbxWATw6f8Lrqgd3S5uHSBUTJB8CAeuTTY_kBj8U1tT-8jgO62-0gyjX4e1jssoTfEFo/exec",
-  "note_2026_07_02": "next_track + trending.topic_queue retired (DECISION-LOG.md): one canonical calendar sequence; author = calendar row Author column; trending topics resolved by agents/trend_scout.py, never queued here."
+  "note_2026_07_02": "next_track + trending.topic_queue retired (DECISION-LOG.md): one canonical calendar sequence; author = calendar row Author column; trending topics resolved by agents/trend_scout.py, never queued here.",
+  "category_priority": [
+    "AI Society",
+    "Innovation",
+    "Production Blueprint",
+    "AI Healthcare",
+    "AI Ethics",
+    "Automation",
+    "AI & Society",
+    "Health & AI",
+    "Media & Society",
+    "Industry Analysis",
+    "AI Robotics",
+    "AI Business",
+    "AI Ethics / Digital Rights",
+    "AI Technology",
+    "AI Creative",
+    "AI Science",
+    "AI Environment",
+    "Trending",
+    "AI Law",
+    "AI Labor",
+    "AI Innovation",
+    "AI Philosophy"
+  ],
+  "category_priority_note": "Ranked by avg LinkedIn impressions (post_analytics.csv). Pick the next article whose category ranks highest here, then by oldest scheduled date within that category tier."
 }

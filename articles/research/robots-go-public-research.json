@@ -1,0 +1,107 @@
+{
+  "article_number": 20,
+  "slug": "robots-go-public",
+  "title": "Robots Go Public: What the Humanoid Robotics IPO Wave Actually Means",
+  "author": "Kenji Nakamoto",
+  "category": "AI Robotics",
+  "research_date": "2026-07-13",
+  "sources_used": {
+    "local_cache": [
+      "articles/research/robots-go-public-what-the-topic-selection.json",
+      "articles/research/the-robot-beside-you-what-topic-selection.json (background context only, different article)"
+    ],
+    "rss_feeds_checked": ["techcrunch"],
+    "web_search": true
+  },
+  "statistics": [
+    {
+      "stat": "Agility Robotics agreed to go public via SPAC merger with Churchill Capital Corp XI at an implied valuation of ~$2.5 billion, with expected gross proceeds of more than $620 million (~$420M from Churchill's trust + a $200M PIPE led by Foxconn) — reported as the largest capital raise in humanoid robotics history.",
+      "source": "TechCrunch",
+      "year": 2026,
+      "url": "https://techcrunch.com/2026/06/24/agility-robotics-plans-to-go-public-via-spac-in-a-2-5b-deal/"
+    },
+    {
+      "stat": "Agility has more than $300 million in booked, multi-year revenue — representing roughly 1,000 Digit robots under a robots-as-a-service (monthly fee) model — per CEO Peggy Johnson. This is committed/booked contract value, not current-year realized revenue or a profitability measure.",
+      "source": "TechCrunch",
+      "year": 2026,
+      "url": "https://techcrunch.com/2026/07/05/this-humanoid-robotics-company-is-going-public-but-its-ceo-isnt-promising-a-robot-in-your-home-anytime-soon/"
+    },
+    {
+      "stat": "Unitree Robotics shipped 5,500+ humanoid robots in 2025 (more than Figure has shipped in its entire history) at price points roughly an order of magnitude below U.S. competitors, and is targeting 10,000–20,000 units in 2026. Its Shanghai STAR Market IPO application cleared final registration in early July 2026 after a record 104-day review, at a reported valuation of roughly $5.9 billion (raise target ~CNY 4.2B / ~$608M).",
+      "source": "KraneShares / South China Morning Post",
+      "year": 2026,
+      "url": "https://kraneshares.com/a-complete-guide-to-unitree-robotics-2026-ipo-why-it-matters-for-star-market-etf-kstr-humanoid-robotics-etf-koid/"
+    },
+    {
+      "stat": "UBTECH's UWORLD U1 consumer humanoid line (launched June 30, 2026, priced roughly $16,500–$17,650) had racked up 13,000+ cumulative pre-orders (reported as high as 13,361 in some outlets, 11,000 in others depending on count date) ahead of first deliveries; CEO Zhou Jian has set a 2026 delivery target of 10,000+ units, with mass production starting mid-September.",
+      "source": "BigGo Finance / humanoid.guide / TechNode",
+      "year": 2026,
+      "url": "https://finance.biggo.com/news/7e70bcd8-1dc9-422f-8cf1-3ff54e59764a"
+    },
+    {
+      "stat": "Figure AI closed a $1B+ Series C on September 17, 2025 at a $39 billion post-money valuation — a 15x step-up from its $2.6 billion Series B just 19 months earlier — led by Parkway Venture Capital with Brookfield, NVIDIA, Salesforce, Qualcomm, T-Mobile, LG, Macquarie and Intel Capital participating. This is a private valuation, not an IPO price — Figure has not gone public.",
+      "source": "TechMarketBriefs (compiling Figure funding disclosures)",
+      "year": 2025,
+      "url": "https://techmarketbriefs.com/pre-ipo/figure-ai/"
+    },
+    {
+      "stat": "Market-size forecasts for the humanoid robot industry vary enormously by research firm and show no real consensus: 2026 estimates range from $1.4B (Persistence Market Research) to $10.69B (Future Market Insights); 2030 estimates range from $4.04B (Grand View Research, 17.5% CAGR) to $18.9B (Knowledge-Sourcing, 59.8% CAGR) to $15.26B (MarketsAndMarkets, 39.2% CAGR).",
+      "source": "MarketsAndMarkets / Fortune Business Insights / Grand View Research / Knowledge-Sourcing / Persistence Market Research (aggregated)",
+      "year": 2026,
+      "url": "https://www.marketsandmarkets.com/PressReleases/humanoid-robot.asp"
+    }
+  ],
+  "expert_quotes": [
+    {
+      "quote": "We're just trying to keep our heads down and provide value for our shareholders, focus on the right metrics, the ones the public markets would value — revenue, profit — and delivering ROI to our customers.",
+      "name": "Peggy Johnson",
+      "affiliation": "CEO, Agility Robotics",
+      "url": "https://techcrunch.com/2026/07/05/this-humanoid-robotics-company-is-going-public-but-its-ceo-isnt-promising-a-robot-in-your-home-anytime-soon/"
+    },
+    {
+      "quote": "Until you can prove that the robot is not going to fall on a baby, it's not going into the home.",
+      "name": "Agility Robotics (company messaging, attributed via reporting)",
+      "affiliation": "Agility Robotics",
+      "url": "https://techcrunch.com/2026/07/05/this-humanoid-robotics-company-is-going-public-but-its-ceo-isnt-promising-a-robot-in-your-home-anytime-soon/"
+    },
+    {
+      "quote": "You're wasting your money. ... In 15 years, successful 'humanoid' robots will actually have wheels, multiple arms, and specialized sensors and abandon the human form. Check back in 15 years.",
+      "name": "Rodney Brooks",
+      "affiliation": "Roboticist, co-founder of iRobot and Rethink Robotics",
+      "url": "https://techcrunch.com/2025/09/26/famed-roboticist-says-humanoid-robot-bubble-is-doomed-to-burst/",
+      "note": "Quote is from September 2025, slightly outside the 6-month window but directly relevant counterargument context; flagged as such for editorial awareness."
+    }
+  ],
+  "strongest_counterargument": {
+    "argument": "Going public is a financing event, not proof the technology or business model works. None of the newly-public or IPO-track humanoid companies have disclosed sustained profitability — Agility declined to give forward profitability guidance and its $300M figure is booked multi-year contract value, not realized revenue; humanoid firms broadly are described as 'pre-revenue at scale' with R&D burn exceeding sales income. Rodney Brooks, one of robotics' most credentialed skeptics (co-founder of iRobot and Rethink Robotics), argues the whole category is a bubble: current approaches to robot dexterity (learning from human video) are 'pure fantasy thinking' because human hands have ~17,000 specialized touch receptors no robot sensor package approaches, and he predicts today's bipedal humanoid form factor will largely be abandoned within 15 years in favor of wheeled, multi-armed, task-specialized designs. In short: capital markets access (SPAC, IPO) signals investor appetite and liquidity timing, not commercial viability — the two are being conflated in most coverage of this 'wave.'",
+    "source": "TechCrunch (Rodney Brooks) / general industry financial reporting (Agility SPAC filings, AAA industry insights)",
+    "url": "https://techcrunch.com/2025/09/26/famed-roboticist-says-humanoid-robot-bubble-is-doomed-to-burst/"
+  },
+  "recent_news": [
+    {
+      "item": "Agility Robotics announces definitive agreement to go public via SPAC merger with Churchill Capital Corp XI, implying a $2.5B valuation and $620M+ in gross proceeds; expected to trade on Nasdaq as 'AGLT' later in 2026.",
+      "date": "2026-06-24",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/06/24/agility-robotics-plans-to-go-public-via-spac-in-a-2-5b-deal/"
+    },
+    {
+      "item": "UBTECH launches UWORLD U1 consumer humanoid robot line, claiming 13,000+ pre-orders ahead of first deliveries.",
+      "date": "2026-06-30",
+      "source": "PR Newswire / TechNode / BigGo Finance",
+      "url": "https://finance.biggo.com/news/7e70bcd8-1dc9-422f-8cf1-3ff54e59764a"
+    },
+    {
+      "item": "Unitree Robotics' Shanghai STAR Market IPO application clears final registration after a record 104-day review, at a reported ~$5.9B valuation.",
+      "date": "2026-07-early",
+      "source": "KraneShares / South China Morning Post",
+      "url": "https://kraneshares.com/a-complete-guide-to-unitree-robotics-2026-ipo-why-it-matters-for-star-market-etf-kstr-humanoid-robotics-etf-koid/"
+    }
+  ],
+  "unverified_or_flagged_claims": [
+    "UBTECH's exact pre-order count is reported inconsistently across outlets (11,000 vs. 13,000 vs. 13,361) depending on the date the outlet counted — use as an approximate 'north of 11,000, reported as high as 13,000+' rather than a single precise figure.",
+    "UBTECH's financial health ('mountain of red ink' per one secondary source, NewsCase) could not be independently confirmed with primary-source figures in this research pass — do not cite specific loss numbers for UBTECH without further verification.",
+    "Agility Robotics' GeekWire finance-detail article (SPAC filing breakdown) returned HTTP 403 and could not be fetched directly — finance specifics beyond the $300M booked-revenue and $2.5B valuation figures (already sourced from TechCrunch) are not independently verified from the primary SEC filing itself.",
+    "Market-size forecasts for the humanoid robot industry are wildly inconsistent across research firms (see statistics #6) — treat any single market-size figure as one analyst house's model, not an industry consensus, and disclose the range if citing one.",
+    "Figure AI's $39B valuation is a private Series C mark from September 2025, not a public IPO price — Figure has not gone public as of this research date; do not imply otherwise."
+  ]
+}

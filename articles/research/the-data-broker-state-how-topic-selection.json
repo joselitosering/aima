@@ -1,0 +1,59 @@
+{
+  "row": 22,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-07-13",
+  "chosen": {
+    "title": "The Data Broker State: How the FBI, DHS, and a $315 Billion Industry Built the Surveillance Machine Nobody Voted For",
+    "category": "AI Ethics / Digital Rights",
+    "rationale": "In 2026 federal surveillance-by-purchase went from rumor to confirmed practice: FBI Director Kash Patel told Congress in March the Bureau is buying Americans' location histories from data brokers, DHS now runs on $165B in yearly funding, and the broker market itself sits near $315B and growing \u2014 even as Congress floats the 269-page GAAIA framework and Illinois signs its own AI Safety Measures Act. It's the exact 'follow the money, name who profits' story that's currently unresolved in the news cycle, and it hasn't been touched by any AIMA title to date.",
+    "sources": [
+      {
+        "name": "The Conversation / NYU IFP \u2014 US government ramps up mass surveillance with help of AI tech, data brokers",
+        "url": "https://theconversation.com/us-government-ramps-up-mass-surveillance-with-help-of-ai-tech-data-brokers-and-your-apps-and-devices-277440"
+      },
+      {
+        "name": "Live Science \u2014 How everything you do is being monitored in an AI-fuelled 'surveillance capitalism system'",
+        "url": "https://www.livescience.com/technology/artificial-intelligence/how-everything-you-do-is-being-monitored-in-an-ai-fuelled-surveillance-capitalism-system"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The AI Alibi: How Companies Learned to Blame the Algorithm for Layoffs They'd Have Made Anyway",
+      "category": "AI Labor / Corporate Accountability",
+      "rationale": "The 'AI washing' debate has sharpened through mid-2026: 56% of this year's 267 layoff events cite AI, roughly 50,000 jobs' worth, even as the same firms post record revenue \u2014 and Gallup just found 62% of the workers actually laid off were non-users of AI, undercutting the official narrative. It's a live, data-backed instance of corporations using automation as rhetorical cover, distinct from AIMA's existing labor pieces (which cover the global labor shift and gig economy, not the deception framing itself) and squarely in Dawn's 'follow the money' register.",
+      "sources": [
+        {
+          "name": "TechCrunch \u2014 Every major tech layoff in 2026 that has name-checked AI",
+          "url": "https://techcrunch.com/2026/07/06/the-running-list-major-tech-layoffs-in-2026-where-employers-cited-ai/"
+        },
+        {
+          "name": "CBS News \u2014 AI job cuts are rising, but experts say layoffs are only part of the story",
+          "url": "https://www.cbsnews.com/news/ai-layoffs-hiring-entry-level-workers/"
+        },
+        {
+          "name": "Fox Business \u2014 Gallup data finds non-AI users more likely to face layoffs in 2026",
+          "url": "https://www.foxbusiness.com/economy/ai-adoption-job-security"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Bedside Bias: What Happens When the Algorithm Decides You Don't Need as Much Care",
+      "category": "AI Ethics / Health Equity",
+      "rationale": "A Cedars-Sinai-led study found leading LLMs \u2014 Claude, ChatGPT, Gemini, and others \u2014 generate measurably less aggressive treatment recommendations when a patient is coded as Black, echoing parallel findings that AI image tools score Black women's natural hairstyles as less 'professional' in hiring contexts. It's fresh clinical evidence with teeth for algorithmic bias in medicine specifically, distinct from AIMA's existing 'Diagnosis by Algorithm' industry-state piece by focusing on racial bias in the recommendation itself rather than adoption trends.",
+      "sources": [
+        {
+          "name": "PMC \u2014 Algorithmic bias in public health AI: a silent threat to equity",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12325396/"
+        },
+        {
+          "name": "Crescendo AI \u2014 AI Bias: 16 Real AI Bias Examples & Mitigation Guide",
+          "url": "https://www.crescendo.ai/blog/ai-bias-examples-mitigation-guide"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}
