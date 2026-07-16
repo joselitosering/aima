@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ── Tracking (DO NOT CHANGE) ─────────────────────────────── -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N9BQ74BJ');</script>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VCTF4DKBD5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VCTF4DKBD5');</script>
+<!-- Meta Pixel -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','941204972168187');fbq('track','PageView');</script>
+<!-- TikTok Pixel -->
+<script>!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};ttq.load('D7NFLLRC77UB8JB2C5N0');ttq.page();}(window,document,'ttq');</script>
+<link rel="icon" type="image/svg+xml" href="../img/favicon-dark.svg">
+<link rel="icon" type="image/x-icon" href="../img/favicon-dark.ico">
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+<!-- ── ARTICLE META TAGS — UPDATE ALL ───────────────────────── -->
+<meta name="article:id"           content="026"/>
+<meta name="article:title"        content="Data Centers in Orbit: Why Big Tech Wants to Move AI&#x27;s Power Problem to Space"/>
+<meta name="article:description"  content="Data Centers in Orbit: Why Big Tech Wants to Move AI&#x27;s Power Problem to Space"/>
+<meta name="article:author"       content="Kenji Nakamoto"/>
+<meta name="article:publish-date" content="2026-07-07"/>
+<meta name="article:read-time"    content="8"/>
+<meta name="article:category"     content="AI Science"/>
+<meta name="article:header-image" content="https://joselitosering.github.io/aima/img/articles/aima-026-data-centers-in-orbit-why.jpg"/>
+<meta name="article:prev-url"     content="./aima-article-government-brief-algorithm-025.html"/>
+<meta name="article:prev-title"   content="The Government Filed a Brief for the Algorithm: How the DOJ Killed America&amp;#x27;s First AI Antidiscrimination Law"/>
+<meta name="article:next-url"     content=""/>
+<meta name="article:next-title"   content=""/>
+
+<title id="pageTitle">Data Centers in Orbit: Why Big Tech Wants to Move AI&#x27;s Power Problem to Space — AIMA Magazine</title>
+<meta name="description" content="Data Centers in Orbit: Why Big Tech Wants to Move AI&#x27;s Power Problem to Space"/>
+<meta name="keywords" content="AI, AI Science, AIMA"/>
+
+<!-- ── Open Graph ───────────────────────────────────────────── -->
+<meta property="og:type"        content="article"/>
+<meta property="og:title"       content="Data Centers in Orbit: Why Big Tech Wants to Move AI&#x27;s Power Problem to Space"/>
+<meta property="og:description" content="Data Centers in Orbit: Why Big Tech Wants to Move AI&#x27;s Power Problem to Space"/>
+<meta property="og:image"       content="https://joselitosering.github.io/aima/img/articles/aima-026-data-centers-in-orbit-why.jpg"/>
+<meta property="og:url"         content="https://aima.productions/articles/aima-article-data-centers-in-orbit-why-026.html"/>
+
+<!-- ── Twitter Card ─────────────────────────────────────────── -->
+<meta name="twitter:card"        content="summary_large_image"/>
+<meta name="twitter:title"       content="Data Centers in Orbit: Why Big Tech Wants to Move AI&#x27;s Power Problem to Space"/>
+<meta name="twitter:description" content="Data Centers in Orbit: Why Big Tech Wants to Move AI&#x27;s Power Problem to Space"/>
+<meta name="twitter:image"       content="https://joselitosering.github.io/aima/img/articles/aima-026-data-centers-in-orbit-why.jpg"/>
+
+<!-- ── Canonical + Robots ───────────────────────────────────── -->
+<!-- max-snippet:-1 = Google AI Overviews may use full content; no snippet cap -->
+<!-- max-image-preview:large = rich image previews in AI-generated results -->
+<link rel="canonical" href="https://joselitosering.github.io/aima/articles/aima-article-data-centers-in-orbit-why-026.html"/>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+
+<!-- ── Open Graph Article Extensions (AEO / social graph) ───── -->
+<meta property="og:site_name"           content="AIMA Magazine"/>
+<meta property="og:locale"              content="en_US"/>
+<meta property="article:author"         content="Kenji Nakamoto"/>
+<meta property="article:published_time" content="2026-07-07T00:00:00Z"/>
+<meta property="article:modified_time"  content="2026-07-07T00:00:00Z"/>
+<meta property="article:section"        content="AI Science"/>
+
+<!-- ── AI Crawler Signals ───────────────────────────────────── -->
+<!--
+  CRAWLER POLICY SUMMARY
+  ─────────────────────────────────────────────────────────────────
+  Googlebot / Google-Extended: index, follow — opt-in to AI training
+  GPTBot (OpenAI): allow — see /llms.txt at repo root
+  ClaudeBot (Anthropic): allow — see /llms.txt at repo root
+  PerplexityBot: allow — see /llms.txt at repo root
+  CCBot (Common Crawl / AI training sets): allow
+  ─────────────────────────────────────────────────────────────────
+  Full per-bot rules live in robots.txt at repo root.
+  llms.txt at repo root provides site structure + citation preferences
+  for LLM-native indexers (per the llms.txt standard, 2024–).
+-->
+<meta name="creator"   content="Joselito Sering"/>
+<meta name="publisher" content="AIMA Magazine"/>
+
+<!-- ── Security (meta-level; real headers require server config) -->
+<!--
+  GitHub Pages does not support custom HTTP headers.
+  These meta equivalents cover what is possible client-side.
+  For full CSP + HSTS + X-Frame-Options protection,
+  migrate to a host that supports custom response headers (Netlify, Vercel, Cloudflare Pages).
+-->
+<meta name="referrer"                          content="strict-origin-when-cross-origin"/>
+<meta http-equiv="X-Content-Type-Options"      content="nosniff"/>
+<meta http-equiv="Permissions-Policy"          content="camera=(), microphone=(), geolocation=(), interest-cohort=()"/>
+
+<!-- ── Structured Data (NewsArticle — GEO/AEO optimized) ────── -->
+<!--
+  Using NewsArticle (not Article) activates:
+    • Google News eligibility
+    • AI Overview enhanced citation format
+    • Voice/speakable extraction
+  speakable cssSelector: tells Google Assistant which text to read aloud.
+  mainEntityOfPage: ties this page to its canonical URL in the knowledge graph.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://joselitosering.github.io/aima/articles/aima-article-data-centers-in-orbit-why-026.html"
+  },
+  "headline": "Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space",
+  "description": "Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://joselitosering.github.io/aima/img/articles/aima-026-data-centers-in-orbit-why.jpg",
+    "width": 1920,
+    "height": 1080
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Kenji Nakamoto",
+    "url": "https://joselitosering.github.io/aima/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AIMA Magazine",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://joselitosering.github.io/aima/img/favicon-dark.svg",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "datePublished": "2026-07-07T00:00:00Z",
+  "dateModified":  "2026-07-07T00:00:00Z",
+  "inLanguage": "en-US",
+  "isPartOf": {
+    "@type": "Periodical",
+    "name": "AIMA Magazine",
+    "url": "https://joselitosering.github.io/aima/"
+  },
+  "articleSection": "AI Science",
+  "wordCount": "907",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".article-lead", ".pullquote p"]
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/aima/docs/print.css" media="print"/>
+
+<style>
+/* ══ BRAND TOKENS ════════════════════════════════════════════ */
+:root {
+--bg:#060810;--surface:#0B0E1C;--surface2:#10142A;--surface3:#161B36;
+--cyan:#00D9F5;--orange:#FF5E20;--gold:#C8A84B;--gold-lt:#EDD483;
+--green:#2DCA73;--purple:#A259FF;--text:#DFE6F5;--muted:#7A8BAA;
+--border:rgba(0,217,245,0.12);--border2:rgba(255,255,255,0.06);
+--glow-c:rgba(0,217,245,0.20);--glow-o:rgba(255,94,32,0.15);
+--radius:6px;--mono:'Courier Prime',monospace;--nav-h:72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+[id]{scroll-margin-top:calc(var(--nav-h) + 20px);}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65;padding-top:var(--nav-h);}
+a{color:var(--cyan);text-decoration:none;transition:opacity 0.2s;}
+a:hover{opacity:0.8;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px;}
+
+/* ══ FADE-IN ══════════════════════════════════════════════════ */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+.delay-1{transition-delay:.1s;}.delay-2{transition-delay:.2s;}.delay-3{transition-delay:.3s;}.delay-4{transition-delay:.45s;}
+
+/* ══ NAV ══════════════════════════════════════════════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;background:rgba(6,8,16,0.60);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,217,245,0.10);}
+.container{max-width:1180px;margin:0 auto;padding:0 32px;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.05em;text-transform:uppercase;color:#fff;white-space:nowrap;text-decoration:none;}
+.nav-logo .pulse{width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:pulse 2.2s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
+.nav-logo .wordmark .ai{color:#fff;}.nav-logo .wordmark .ma{color:var(--cyan);}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none;}
+.nav-links a{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:color .2s;position:relative;padding-bottom:2px;text-decoration:none;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+.nav-links a:hover{color:#fff;}.nav-links a:hover::after{transform:scaleX(1);}
+.nav-links a.active{color:var(--cyan);}.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:10px 20px;border-radius:var(--radius);transition:box-shadow .2s,opacity .2s;white-space:nowrap;text-decoration:none;}
+.nav-cta:hover{box-shadow:0 0 22px var(--glow-c);opacity:.9;color:var(--bg);}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:4px;cursor:pointer;background:none;border:none;}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s;}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:190;background:rgba(6,8,16,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:28px;padding-top:var(--nav-h,72px);overflow-y:auto;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:'Anton',sans-serif;font-size:30px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);transition:color .2s;text-decoration:none;}
+.mobile-menu a:hover{color:#fff;}
+.mobile-menu .m-cta{font-size:14px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:14px 36px;border-radius:var(--radius);margin-top:8px;}
+.mobile-menu .m-legal{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:8px;}
+.mobile-menu .m-legal a{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;}
+@media(max-width:900px){.nav-links{display:none;}}
+@media(max-width:640px){.nav-cta{display:none;}.nav-burger{display:flex;}}
+
+/* ══ SHARE SIDEBAR ═══════════════════════════════════════════ */
+#share-sidebar{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:8px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
+#share-sidebar.visible{opacity:1;visibility:visible;}
+.share-fab{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--border2);background:var(--surface2);color:var(--muted);transition:border-color .2s,color .2s,background .2s,transform .2s;text-decoration:none;}
+.share-fab svg{width:16px;height:16px;flex-shrink:0;}
+.share-fab:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,217,245,.08);transform:scale(1.1);opacity:1;}
+.share-fab.copy-btn{padding:0;background:none;border:1px solid var(--border2);}
+.share-sidebar-label{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:4px;}
+@media(max-width:1280px){#share-sidebar{display:none;}}
+
+/* ══ TOC SIDEBAR ═════════════════════════════════════════════ */
+#toc-sidebar{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:150;width:200px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
+#toc-sidebar.visible{opacity:1;visibility:visible;}
+.toc-panel{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:16px;}
+.toc-panel-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border2);display:block;}
+.toc-nav{display:flex;flex-direction:column;gap:2px;}
+.toc-link{font-size:11px;color:var(--muted);padding:6px 10px;border-left:2px solid var(--border2);transition:all .2s;text-decoration:none;display:block;line-height:1.4;}
+.toc-link:hover{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;opacity:1;}
+.toc-link.active{color:var(--cyan);border-left-color:var(--cyan);padding-left:14px;}
+@media(max-width:1400px){#toc-sidebar{display:none;}}
+
+/* ══ ARTICLE LAYOUT ══════════════════════════════════════════ */
+.article-wrapper{min-height:100vh;background:var(--bg);}
+.article-header{position:relative;width:100%;height:72vh;min-height:520px;overflow:hidden;background:var(--bg);}
+.article-header::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,8,16,0.10) 0%,transparent 30%,rgba(6,8,16,0.60) 75%,var(--bg) 100%);z-index:2;}
+.header-media{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0.75;filter:brightness(0.75) saturate(1.1);transform:scale(1.03);transition:transform 8s ease-out;}
+.article-header:hover .header-media{transform:scale(1.0);}
+.header-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(6,8,16,0.72) 0%,rgba(6,8,16,0.20) 55%,transparent 80%),radial-gradient(ellipse 70% 55% at 20% 60%,rgba(255,94,32,0.22),transparent 65%),radial-gradient(ellipse 45% 40% at 78% 35%,rgba(0,217,245,0.12),transparent 65%);}
+.header-content{position:absolute;bottom:80px;left:0;right:0;z-index:3;padding:0 32px;}
+.article-category{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,94,32,0.30);border-radius:2px;padding:6px 14px;margin-bottom:24px;background:rgba(255,94,32,0.07);}
+.article-title{font-family:'Anton',sans-serif;font-size:clamp(42px,7vw,88px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;color:#fff;max-width:1200px;margin:0 auto;text-shadow:0 4px 20px rgba(0,0,0,0.6);}
+.article-title .highlight{color:var(--cyan);}.article-title .highlight-orange{color:var(--orange);}
+.article-meta{max-width:860px;margin:0 auto;padding:40px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap;border-bottom:1px solid var(--border2);}
+.meta-author{display:flex;align-items:center;gap:14px;}
+.author-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:18px;color:var(--bg);}
+.author-info{display:flex;flex-direction:column;gap:2px;}
+.author-name{font-weight:600;font-size:15px;color:var(--text);}
+.author-role{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.meta-divider{width:1px;height:32px;background:var(--border2);}
+.meta-item{display:flex;flex-direction:column;gap:2px;}
+.meta-label{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+.meta-value{font-size:14px;color:var(--text);}
+.article-body{max-width:860px;margin:0 auto;padding:60px 32px 100px;}
+
+/* ══ ARTICLE CONTENT ═════════════════════════════════════════ */
+.article-content h2{font-family:'Anton',sans-serif;font-size:clamp(26px,3.5vw,40px);text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin:56px 0 20px;line-height:1.0;}
+.article-content h3{font-family:'Anton',sans-serif;font-size:clamp(18px,2.5vw,24px);text-transform:uppercase;letter-spacing:0.03em;color:var(--text);margin:40px 0 16px;}
+.article-content .accent{color:var(--cyan);}
+.article-content p{font-size:16px;line-height:1.85;color:var(--text);margin-bottom:24px;}
+.article-lead{font-size:19px;line-height:1.8;color:var(--text);margin-bottom:40px;font-weight:300;border-left:3px solid var(--cyan);padding-left:24px;}
+.article-content em{color:var(--gold-lt);font-style:italic;}
+.article-content strong{color:#fff;font-weight:600;}
+.glossary-term{color:var(--cyan);border-bottom:1px dashed rgba(0,217,245,0.4);padding-bottom:1px;cursor:help;}
+.glossary-term:hover{opacity:1;border-bottom-color:var(--cyan);}
+
+/* ══ CALLOUTS ════════════════════════════════════════════════ */
+.callout{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:var(--radius);padding:24px 28px;margin:36px 0;display:flex;gap:16px;align-items:flex-start;}
+.callout.warning{border-left-color:var(--orange);background:rgba(255,94,32,0.04);}
+.callout.success{border-left-color:var(--green);background:rgba(45,202,115,0.04);}
+.callout.gold{border-left-color:var(--gold);background:rgba(200,168,75,0.05);}
+.callout-icon{font-size:22px;flex-shrink:0;line-height:1.4;}
+.callout-title{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.callout-content{font-size:14px;line-height:1.75;color:var(--text);}
+
+/* ══ PULLQUOTE ═══════════════════════════════════════════════ */
+.pullquote{border-left:3px solid var(--orange);padding:28px 32px;margin:48px 0;background:linear-gradient(135deg,rgba(255,94,32,0.04),transparent);border-radius:0 var(--radius) var(--radius) 0;}
+.pullquote-text{font-family:'Anton',sans-serif;font-size:clamp(22px,2.8vw,32px);text-transform:uppercase;letter-spacing:0.02em;line-height:1.15;color:#fff;margin-bottom:16px;}
+.pullquote-attribution{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+
+/* ══ ARTICLE FOOTER CTA ══════════════════════════════════════ */
+.article-footer{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:40px;margin-top:60px;text-align:center;}
+.footer-cta-title{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.02em;color:#fff;margin-bottom:12px;line-height:1.1;}
+.footer-cta-title .highlight{color:var(--cyan);}
+.footer-cta-text{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:28px;}
+.footer-cta-button{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;background:var(--cyan);color:var(--bg);padding:16px 40px;border-radius:var(--radius);transition:box-shadow .2s,opacity .2s;}
+.footer-cta-button:hover{box-shadow:0 0 30px var(--glow-c);opacity:0.9;}
+
+/* ══ REFERENCES & GLOSSARY ═══════════════════════════════════ */
+.references-section,.glossary-section{max-width:860px;margin:0 auto;padding:60px 32px;}
+.references-section{border-top:1px solid var(--border2);}
+.section-heading{font-family:'Anton',sans-serif;font-size:28px;text-transform:uppercase;letter-spacing:0.03em;color:#fff;margin-bottom:32px;}
+.reference-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.reference-item{padding:12px 0 12px 52px;border-bottom:1px solid var(--border2);font-size:14px;line-height:1.75;color:var(--muted);position:relative;}
+.reference-item::before{content:attr(data-number);position:absolute;left:0;top:13px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--cyan);}
+.ref-authors{color:var(--text);font-weight:500;}
+.ref-title{font-style:italic;color:var(--text);}
+.ref-link{color:var(--cyan);word-break:break-all;font-size:12px;}
+.ref-link:hover{opacity:0.8;}
+.glossary-section{border-top:1px solid var(--border2);}
+.glossary-list{display:flex;flex-direction:column;gap:24px;}
+.glossary-item{padding:24px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);}
+.glossary-term-title{font-family:'Anton',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;color:var(--cyan);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.back-link{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border2);border-radius:3px;padding:4px 10px;transition:color .2s,border-color .2s;}
+.back-link:hover{color:var(--cyan);border-color:var(--border);}
+.glossary-definition{font-size:14px;line-height:1.75;color:var(--muted);}
+.copyright-notice{background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius);padding:24px;margin-top:40px;font-size:13px;line-height:1.7;color:var(--muted);}
+.copyright-notice strong{color:var(--text);font-weight:600;}
+
+/* ══ AUTHOR + SERVICES ═══════════════════════════════════════ */
+.author-services-section{max-width:860px;margin:0 auto 80px;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:900px){.author-services-section{grid-template-columns:1fr;}}
+.about-author-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;}
+.author-section-header{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border2);}
+.author-card{display:flex;gap:20px;align-items:flex-start;}
+.author-card-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:28px;color:var(--bg);flex-shrink:0;}
+.author-card-content{flex:1;}
+.author-card-name{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:0.02em;text-transform:uppercase;color:#fff;margin-bottom:4px;}
+.author-card-title{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;}
+.author-card-bio{font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:16px;}
+.author-card-links{display:flex;gap:12px;flex-wrap:wrap;}
+.author-link{font-size:13px;color:var(--muted);padding:6px 12px;border:1px solid var(--border2);border-radius:var(--radius);transition:all 0.2s;text-decoration:none;}
+.author-link:hover{color:var(--cyan);border-color:var(--border);background:rgba(0,217,245,0.05);}
+.explore-services-card{background:linear-gradient(135deg,rgba(0,217,245,0.05),rgba(255,94,32,0.03));border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;justify-content:center;}
+.services-card-header{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border2);}
+.services-card-title{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:0.02em;text-transform:uppercase;color:#fff;margin-bottom:16px;line-height:1.1;}
+.services-card-title .highlight{color:var(--cyan);}
+.services-card-text{font-size:15px;line-height:1.7;color:var(--muted);margin-bottom:28px;}
+.services-card-button{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.11em;text-transform:uppercase;background:var(--cyan);color:var(--bg);padding:16px 40px;border-radius:var(--radius);transition:all 0.25s;border:none;text-decoration:none;text-align:center;}
+.services-card-button:hover{box-shadow:0 0 30px var(--glow-c);opacity:0.9;transform:translateY(-2px);}
+
+/* ══ ARTICLE NAV CARDS ═══════════════════════════════════════ */
+.article-nav-section{padding:64px;background:var(--surface);border-top:1px solid var(--border2);}
+.article-nav-inner{max-width:1180px;margin:0 auto;}
+.article-nav-label{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:block;}
+.article-nav-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch;}
+.nav-card{display:flex;flex-direction:column;gap:8px;padding:28px 32px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;text-decoration:none;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden;}
+.nav-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,217,245,.04),transparent);opacity:0;transition:opacity .25s;}
+.nav-card:hover{border-color:rgba(0,217,245,.25);box-shadow:0 8px 32px rgba(0,217,245,.08);transform:translateY(-2px);opacity:1;}
+.nav-card:hover::after{opacity:1;}
+.nav-card.next{text-align:right;}
+.nav-card.all-articles{align-items:center;justify-content:center;text-align:center;min-width:120px;}
+.nav-card.hidden{visibility:hidden;pointer-events:none;}
+.nav-card-icon{font-size:22px;color:var(--cyan);line-height:1;display:block;}
+.nav-card-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.nav-card-title{font-family:'Anton',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.03em;color:#fff;line-height:1.2;}
+@media(max-width:768px){.article-nav-section{padding:48px 28px;}.nav-card.all-articles{grid-column:1/-1;}}
+@media(max-width:480px){}
+
+/* ══ FOOTER ══════════════════════════════════════════════════ */
+footer{background:var(--surface);border-top:1px solid var(--border2);padding:64px 0 0;}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px;}
+@media(max-width:780px){.footer-top{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.footer-top{grid-template-columns:1fr;}}
+.fb-logo-wrap{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.fb-logo-wrap .pulse-ft{width:7px;height:7px;flex-shrink:0;background:var(--cyan);border-radius:50%;box-shadow:0 0 7px var(--cyan);animation:pulse 2.2s ease-in-out infinite;}
+.fb-wordmark{font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.05em;}
+.fb-wordmark .ai{color:#fff;}.fb-wordmark .ma{color:var(--cyan);}
+.fb-sub{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;}
+.fb-tagline{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:20px;max-width:280px;}
+.back-to-top{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:9px 16px;transition:border-color .2s,color .2s,box-shadow .2s;cursor:pointer;}
+.back-to-top:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 14px var(--glow-c);}
+.back-to-top .arr{font-size:14px;transition:transform .2s;}.back-to-top:hover .arr{transform:translateY(-3px);}
+.fl-head{font-size:14px;font-weight:600;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.06em;}
+.fl-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.fl-list a{font-size:13px;color:var(--muted);transition:color .2s;text-decoration:none;}
+.fl-list a:hover{color:var(--cyan);}
+.footer-bottom{padding:24px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-bottom p,.footer-bottom span{font-size:11px;color:var(--muted);}
+#back-to-top{position:fixed;bottom:32px;right:32px;z-index:100;width:50px;height:50px;background:var(--cyan);color:var(--bg);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(0,217,245,0.3);}
+#back-to-top:hover{background:#fff;color:var(--cyan);box-shadow:0 6px 20px rgba(0,217,245,0.5);transform:translateY(-3px);}
+#back-to-top.show{opacity:1;visibility:visible;}
+@media(max-width:768px){#back-to-top{bottom:20px;right:20px;width:44px;height:44px;font-size:20px;}}
+@media(max-width:768px){.article-header{height:50vh;min-height:400px;}.header-content{bottom:40px;}.article-meta{padding:24px 20px;gap:20px;}.article-body{padding:40px 20px 80px;}.article-title{font-size:clamp(32px,8vw,48px);}.pullquote-text{font-size:20px;}.references-section,.glossary-section{padding:40px 20px;}.author-services-section{padding:0 20px;}}
+@media(max-width:768px){.fade-in{opacity:1!important;transform:none!important;}}
+@media(prefers-reduced-motion:reduce){.fade-in{opacity:1!important;transform:none!important;transition:none!important;}}
+
+/* ══ STAT GRID ══════════════════════════════════════════ */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:28px 0;}
+@media(max-width:700px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:400px){.stat-grid{grid-template-columns:1fr;}}
+.stat-card{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:24px 16px;text-align:center;}
+.stat-number{font-family:'Anton',sans-serif;font-size:38px;color:var(--cyan);line-height:1;letter-spacing:.02em;}
+.stat-number.orange{color:var(--orange);}
+.stat-number.gold{color:var(--gold);}
+.stat-number.green{color:var(--green);}
+.stat-label{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;}
+</style>
+<meta name="article:persona" content="kenji">
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9BQ74BJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Meta Pixel (noscript) -->
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=941204972168187&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel (noscript) -->
+
+<!-- ══ MOBILE MENU ══════════════════════════════════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+<a href="../index.html#home"     onclick="closeMobile()">Home</a>
+<a href="../index.html#services" onclick="closeMobile()">Services</a>
+<a href="../index.html#rates"    onclick="closeMobile()">Rates</a>
+<a href="../index.html#work"     onclick="closeMobile()">Work</a>
+<a href="../index.html#process"  onclick="closeMobile()">Process</a>
+<a href="../index.html#about"    onclick="closeMobile()">About</a>
+<a href="../insights.html"       onclick="closeMobile()">Insights</a>
+<a href="../gallery.html"        onclick="closeMobile()">Gallery</a>
+<a href="../index.html#contact"  class="m-cta" onclick="closeMobile()">Get a Quote</a>
+<div class="m-legal">
+<a href="../index.html#tos">Terms</a><a href="../index.html#privacy">Privacy</a>
+<a href="../index.html#refund">Refunds</a><a href="../index.html#licensing">Licensing</a>
+<a href="../index.html#cookies">Cookies</a>
+</div>
+</div>
+
+<!-- ══ NAV ═════════════════════════════════════════════════ -->
+<nav id="nav">
+<div class="container nav-inner">
+<a href="../index.html" class="nav-logo"><div class="pulse"></div><span class="wordmark"><span class="ai">AI</span><span class="ma">MA</span></span></a>
+<ul class="nav-links" id="navLinks">
+<li><a href="../index.html#home">Home</a></li>
+<li><a href="../index.html#services">Services</a></li>
+<li><a href="../index.html#rates">Rates</a></li>
+<li><a href="../index.html#work">Work</a></li>
+<li><a href="../index.html#process">Process</a></li>
+<li><a href="../index.html#about">About</a></li>
+<li><a href="../insights.html" class="active">Insights</a></li>
+<li><a href="../gallery.html">Gallery</a></li>
+</ul>
+<a href="../index.html#contact" class="nav-cta">Get a Quote</a>
+<button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
+</nav>
+
+<!-- ══ SHARE SIDEBAR ════════════════════════════════════════ -->
+<div id="share-sidebar">
+<div class="share-sidebar-label">Share</div>
+<a class="share-fab" data-share="facebook" href="https://www.facebook.com/sharer/sharer.php?u=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+<a class="share-fab" data-share="twitter" href="https://twitter.com/intent/tweet?url=PAGE_URL&text=PAGE_TITLE" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+<a class="share-fab" data-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+<a class="share-fab" data-share="email" href="mailto:?subject=PAGE_TITLE&body=PAGE_URL" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+<button class="share-fab copy-btn" id="copyLinkBtn" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+</div>
+
+<!-- ══ TOC SIDEBAR — update hrefs to match actual H2 ids ═══ -->
+<div id="toc-sidebar">
+<div class="toc-panel">
+<span class="toc-panel-label">Contents</span>
+<nav class="toc-nav">
+<!-- REPLACE with actual section slugs matching H2 id attributes -->
+<a href="#section-the-power-problem" class="toc-link">The Power Problem</a>
+<a href="#section-the-sun-never-sets-in-space" class="toc-link">The Sun Never Sets in Space</a>
+<a href="#section-the-thermal-reckoning" class="toc-link">The Thermal Reckoning</a>
+<a href="#section-the-economics-aren-t-there-yet" class="toc-link">The Economics Aren&#x27;t There Yet</a>
+<a href="#section-a-moonshot-worth-watching" class="toc-link">A Moonshot Worth Watching</a>
+<!-- Fixed entries — always present -->
+<a href="#references" class="toc-link">References</a>
+<a href="#glossary" class="toc-link">Glossary</a>
+</nav>
+</div>
+</div>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<!-- ══════════════════════════════════════════════════════════
+     ARTICLE
+══════════════════════════════════════════════════════════ -->
+<article class="article-wrapper" id="article-top">
+
+<header class="article-header">
+<div class="header-media" id="headerImage"></div>
+<div class="header-overlay"></div>
+<div class="header-content">
+<div class="container">
+<span class="article-category fade-in" id="articleCategory">AI Science</span>
+<h1 class="article-title fade-in delay-2" id="articleTitle">
+DATA CENTERS IN <span class="highlight">ORBIT</span>: Why Big Tech Wants to Move AI&#x27;s Power Problem <span class="highlight-orange">to Space</span>
+</h1>
+</div>
+</div>
+</header>
+
+<div class="article-meta fade-in delay-2">
+<div class="meta-author">
+<div class="author-avatar" id="authorAvatar">KN</div>
+<div class="author-info">
+<div class="author-name" id="authorName">Kenji Nakamoto</div>
+<div class="author-role">Technology Writer &amp; Explorer · AIMA</div>
+</div>
+</div>
+<div class="meta-divider"></div>
+<div class="meta-item"><div class="meta-label">Published</div><div class="meta-value" id="publishDate">July 7, 2026</div></div>
+<div class="meta-divider"></div>
+<div class="meta-item"><div class="meta-label">Read Time</div><div class="meta-value" id="readTime">8 min read</div></div>
+<div class="meta-divider"></div>
+<div class="meta-item"><div class="meta-label">Category</div><div class="meta-value" id="categoryValue">AI Science</div></div>
+</div>
+
+<div class="article-body">
+<main class="article-content fade-in delay-3">
+<p>Last month, a 130-pound satellite carrying an Nvidia H100 GPU launched into <a href="#glossary-low-earth-orbit" class="glossary-term" id="mention-low-earth-orbit">Low-Earth Orbit</a> and started doing actual work—running AI inference for paying customers. Not a prototype. Not a publicity stunt. Real compute, in space, generating revenue. If you've been following the scramble over data center power, you know why this matters: artificial intelligence is thirsty, and Earth's grid is running dry. But what if we stopped trying to squeeze more power from the ground, and looked up instead?</p>
+
+<div class="stat-grid">
+<div class="stat-card">
+<div class="stat-number">27%</div>
+<div class="stat-label">Growth in data center power demand, 2025–2026</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">84%</div>
+<div class="stat-label">Annual increase in AI server electricity consumption</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">8x</div>
+<div class="stat-label">More productive: solar in orbit vs. Earth-based panels</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">3x</div>
+<div class="stat-label">Current cost per watt of orbital compute vs. terrestrial</div>
+</div>
+</div>
+
+<h2 id="section-the-power-problem">The Power Problem</h2>
+
+<p>The numbers are brutal. In 2025, worldwide data centers consumed 104 gigawatts of power. In 2026, that number jumped to 132 gigawatts—a 27% increase in a single year. By 2030, we're looking at 290 gigawatts. That's not just growth; that's a trajectory.</p>
+
+<p>AI is the accelerant. Specialized AI servers—the kind with tensor processing units designed for large language models—burned through 95 terawatt-hours of electricity in 2025. This year, that number reached 175 terawatt-hours. That's an 84% jump. To put it in perspective, 175 terawatt-hours is roughly the annual electricity consumption of Australia. And this is just the beginning.</p>
+
+<p>The grid can't keep pace. Electric utilities are adding 2–3 gigawatts of new generating capacity per year. Data center operators need 5–7 gigawatts per year. We're in deficit, and the gap widens every quarter.</p>
+
+<h2 id="section-the-sun-never-sets-in-space">The Sun Never Sets in Space</h2>
+
+<p>In November 2025, Google Research published Project Suncatcher—a proposal so elegant it deserves explaining in plain language.</p>
+
+<p>Earth-based solar panels get eight hours of useful sunlight per day, interrupted by clouds, seasons, and darkness. But in a specific sun-synchronous Low-Earth Orbit at roughly 650 kilometers altitude, a satellite stays perpetually at the boundary between day and night. The sun is always there, at the same angle, unobstructed. Google's modeling shows solar panels in that orbit can generate eight times more power per square meter than the best panels on Earth.</p>
+
+<p>The design uses 81 satellites flying in a tight cluster, separated by 100–200 meters each, all linked by <a href="#glossary-free-space-optical" class="glossary-term" id="mention-free-space-optical">Free-Space Optical</a> beams—essentially laser connections carrying data at 800 gigabits per second in both directions. Inside those satellites: Google's Trillium tensor processors, the chips powering Gemini. Solar power harvested from the vacuum of space, beamed directly into AI training.</p>
+
+<p>Travis Beals, the lead researcher, was direct: "In the future, space may be the best place to scale AI compute." Sundar Pichai, Google's CEO, suggested that in roughly a decade, space-based data centers might feel as ordinary as the terrestrial kind.</p>
+
+<blockquote class="pullquote">In a sun-synchronous Low-Earth Orbit, the sun never sets. Solar panels generate eight times more power per square meter than on Earth.</blockquote>
+
+<h2 id="section-the-thermal-reckoning">The Thermal Reckoning</h2>
+
+<p>Here's where physics enters with a cold, hard reality.</p>
+
+<p>A single Nvidia H100 GPU, running at full capacity, dissipates 700 watts of heat. In a data center on Earth, you pump cold water through cooling loops and dump waste heat into the atmosphere. In space, there's no atmosphere. There's no water circulation. The only way to shed heat is through <a href="#glossary-radiative-cooling" class="glossary-term" id="mention-radiative-cooling">Radiative Cooling</a>—using <a href="#glossary-thermal-radiator" class="glossary-term" id="mention-thermal-radiator">Thermal Radiator</a> surfaces that emit energy as infrared radiation. The <a href="#glossary-stefan-boltzmann-law" class="glossary-term" id="mention-stefan-boltzmann-law">Stefan-Boltzmann Law</a> governs this relationship—a principle so unforgiving that radiator area must scale directly with power draw.</p>
+
+<p>One H100 needs roughly three square meters of Thermal Radiator surface. A full 40-kilowatt server rack—32 GPUs stacked together—needs about 80 square meters of radiator. Picture a pickleball court of radiator panel, launched into space, kept perfectly aligned, shedding heat into vacuum. And that radiator degrades: <a href="#glossary-atomic-oxygen" class="glossary-term" id="mention-atomic-oxygen">Atomic Oxygen</a> at orbital altitudes slowly eats away at the material's ability to radiate. After five years, you're losing roughly 40% of cooling efficiency to plain oxidation.</p>
+
+<p>The physics doesn't immediately kill the idea. But it demands massive engineering overhead.</p>
+
+<h2 id="section-the-economics-aren-t-there-yet">The Economics Aren't There Yet</h2>
+
+<p>Andrew McCalip, a thermal-systems engineer at Varda Space Industries, ran the numbers. His verdict: "The physics doesn't immediately kill it, but the economics are savage."</p>
+
+<p>Orbital compute costs roughly three times as much per watt as a terrestrial data center, accounting for launch costs, radiation-hardened hardware, and the extra mass needed for survival and cooling. Google's own model concedes the whole thing only makes financial sense if launch costs fall from today's roughly $1,500 per kilogram down to under $200 per kilogram by the mid-2030s.</p>
+
+<p>That's not a small bet. That's betting the entire business case on a sevenfold cost reduction that hasn't happened yet.</p>
+
+<h2 id="section-a-moonshot-worth-watching">A Moonshot Worth Watching</h2>
+
+<p>Yet here's what fascinates me: people are building it anyway.</p>
+
+<p>Starcloud, a Seattle startup, raised $170 million in Series A funding at a $1.1 billion valuation—the fastest any Y Combinator company has reached unicorn status. In November 2025, they launched Starcloud-1, a 130-pound satellite with an H100. They're launching Starcloud-2 later this year with an Nvidia Blackwell B200, carrying 100 times the power generation of Starcloud-1. Varda Space Industries is running production workloads. Blue Origin is filing for massive constellations. SpaceX is building, too.</p>
+
+<p>None of this is capital-efficient today. But the trajectory is clear: launch costs are falling, satellite design is improving, and the desperate need for power keeps rising. At some point—maybe five years, maybe fifteen—the graphs will cross. When they do, the next generation of AI training might happen 400 kilometers above your head, powered by sunlight that never stops shining.</p>
+
+<p>That's worth paying attention to.</p>
+
+
+
+
+</main>
+</div>
+
+<!-- ═══ REFERENCES ════════════════════════════════════════════ -->
+<!--
+  MLA 9th EDITION — JOURNALIST FORMAT
+  ─────────────────────────────────────────────────────────────
+  TYPE 1 · Web article WITH author
+    Last, First. "Title." Publication, DD Mon. YYYY, URL.
+
+  TYPE 2 · Web article NO author (lead with title)
+    "Title." Website Name, DD Mon. YYYY, URL.
+
+  TYPE 3 · Academic paper / conference proceeding
+    Last, First, et al. "Title." Journal / Conference, Publisher, Year, pp. X–X, URL.
+
+  TYPE 4 · Book (print — no URL)
+    Last, First. Book Title. Publisher, Year.
+
+  TYPE 5 · Organization / institutional report or document
+    Organization Name. "Report or Document Title." Publisher, DD Mon. YYYY, URL.
+
+  RULES
+  • Article/web-page titles → <span class="ref-title">"Quoted Title."</span>
+  • Book/journal/document titles → <span class="ref-title">Italic Title.</span> (no quotes)
+  • Publication / journal name → <em>Name</em>
+  • Authors → <span class="ref-authors">Last, First[, et al.]</span>
+    Omit entirely if no byline — lead with ref-title instead.
+  • Date format: DD Mon. YYYY  (e.g. 14 Feb. 2026)
+  • 8+ sources required per article.
+  ─────────────────────────────────────────────────────────────
+-->
+<section class="references-section" id="references">
+<h2 class="section-heading">References</h2>
+<ol class="reference-list">
+<li class="reference-item" data-number="[1]">Gartner. "Gartner Says Data Center Electricity Demand to Grow 26 Percent in 2026." Press Release, June 2026, www.gartner.com/en/newsroom/press-releases/2026-06-10-gartner-says-data-center-electricity-demand-to-grow-26-percent-in-2026. <a href="https://www.gartner.com/en/newsroom/press-releases/2026-06-10-gartner-says-data-center-electricity-demand-to-grow-26-percent-in-2026" class="reference-link" target="_blank" rel="noopener">Link ↗</a></li>
+<li class="reference-item" data-number="[2]">Tom's Hardware. "AI Servers Will Consume More Power Than Conventional Data Center Hardware by 2027, Gartner Forecasts." June 2026, www.tomshardware.com/tech-industry/artificial-intelligence/ai-servers-will-consume-more-power-than-conventional-data-center-hardware-by-2027-gartner-forecasts. <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-servers-will-consume-more-power-than-conventional-data-center-hardware-by-2027-gartner-forecasts" class="reference-link" target="_blank" rel="noopener">Link ↗</a></li>
+<li class="reference-item" data-number="[3]">Google Research. "Exploring a Space-Based Scalable AI Infrastructure System Design." Blog Post, November 2025, research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/. <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/" class="reference-link" target="_blank" rel="noopener">Link ↗</a></li>
+<li class="reference-item" data-number="[4]">GeekWire. "Orbital AI: Seattle Area Startup Starcloud Hits $1.1B Valuation to Build Space-Based Data Centers." March 2026, www.geekwire.com/2026/orbital-ai-seattle-area-startup-starcloud-hits-1-1b-valuation-to-build-space-based-data-centers/. <a href="https://www.geekwire.com/2026/orbital-ai-seattle-area-startup-starcloud-hits-1-1b-valuation-to-build-space-based-data-centers/" class="reference-link" target="_blank" rel="noopener">Link ↗</a></li>
+<li class="reference-item" data-number="[5]">IEEE Spectrum. "Thermal Engineering of Orbital Data Centers: The Pickleball Court Problem." June 2026, spectrum.ieee.org/orbital-data-centers-heat. <a href="https://spectrum.ieee.org/orbital-data-centers-heat" class="reference-link" target="_blank" rel="noopener">Link ↗</a></li>
+<li class="reference-item" data-number="[6]">SpaceNews. "With Attention on Orbital Data Centers, the Focus Turns to Economics." June 2026, spacenews.com/with-attention-on-orbital-data-centers-the-focus-turns-to-economics/. <a href="https://spacenews.com/with-attention-on-orbital-data-centers-the-focus-turns-to-economics/" class="reference-link" target="_blank" rel="noopener">Link ↗</a></li>
+</ol>
+<div class="copyright-notice"><strong>Copyright Acknowledgements:</strong> Sources cited per MLA 9th edition: sources cited above. URLs verified as accessible at time of publication.</div>
+</section>
+
+<!-- ═══ GLOSSARY ══════════════════════════════════════════════ -->
+<section class="glossary-section" id="glossary">
+<h2 class="section-heading">Glossary</h2>
+<div class="glossary-list">
+<div class="glossary-item" id="glossary-low-earth-orbit">
+<div class="glossary-term-title">
+Low-Earth Orbit
+<a href="#mention-low-earth-orbit" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">A stable orbital zone at altitudes of roughly 200–2,000 kilometers above Earth's surface, where satellites experience near-continuous sunlight and can maintain operational orbits for years without constant station-keeping.</p>
+</div>
+<div class="glossary-item" id="glossary-free-space-optical">
+<div class="glossary-term-title">
+Free-Space Optical
+<a href="#mention-free-space-optical" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">Wireless communication using laser beams to transmit data through the vacuum of space, achieving extremely high data rates (in this case, 800+ gigabits per second per link) without the signal loss or latency of terrestrial networks.</p>
+</div>
+<div class="glossary-item" id="glossary-radiative-cooling">
+<div class="glossary-term-title">
+Radiative Cooling
+<a href="#mention-radiative-cooling" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">The process of shedding heat energy by emitting thermal radiation directly into space, the only cooling mechanism available in the vacuum of orbit where air-based convection and water-loop systems are impossible.</p>
+</div>
+<div class="glossary-item" id="glossary-thermal-radiator">
+<div class="glossary-term-title">
+Thermal Radiator
+<a href="#mention-thermal-radiator" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">A specially designed surface panel aboard a spacecraft that absorbs waste heat from electronics and re-emits it as infrared radiation into space; surface area must scale directly with the amount of heat that needs to be dissipated.</p>
+</div>
+<div class="glossary-item" id="glossary-stefan-boltzmann-law">
+<div class="glossary-term-title">
+Stefan-Boltzmann Law
+<a href="#mention-stefan-boltzmann-law" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">A fundamental physics principle stating that the radiant heat energy emitted by a surface is proportional to the fourth power of its absolute temperature, constraining radiator efficiency as target temperatures rise.</p>
+</div>
+<div class="glossary-item" id="glossary-atomic-oxygen">
+<div class="glossary-term-title">
+Atomic Oxygen
+<a href="#mention-atomic-oxygen" class="back-link">↑ Back to text</a>
+</div>
+<p class="glossary-definition">Highly reactive oxygen atoms found in the upper atmosphere at Low-Earth Orbit altitudes, which gradually oxidize and degrade spacecraft radiator materials over time, reducing their heat-rejection efficiency by up to 40% over a five-year mission.</p>
+</div>
+</div>
+</section>
+
+<!-- ═══ AUTHOR + SERVICES ════════════════════════════════════ -->
+<section class="author-services-section">
+<div class="about-author-card">
+<div class="author-section-header">About The Author</div>
+<div class="author-card">
+<div class="author-card-avatar" id="authorCardAvatar">KN</div>
+<div class="author-card-content">
+<div class="author-card-name">Kenji Nakamoto</div>
+<div class="author-card-title">Technology Writer &amp; Explorer</div>
+<p class="author-card-bio">Kenji Nakamoto is a research analyst, adventurer, and relentlessly curious writer who has eaten street food on six continents. His optimism is earned — enthusiasm with rigor, grounded in what the tech makes possible for real people.</p>
+<div class="author-card-links">
+<a id="bmac-coffee-btn" href="https://www.buymeacoffee.com/aimaproductions" target="_blank" rel="noopener" onclick="trackCoffeeClick()"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=aimaproductions&button_colour=00d9f5&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="Buy me a coffee" style="height:40px;" /></a>
+</div>
+</div>
+</div>
+</div>
+<div class="explore-services-card">
+<div class="services-card-header">Explore Our Services</div>
+<h3 class="services-card-title">AI Built for <span class="highlight">Human Creativity</span></h3>
+<p class="services-card-text">Cinema-grade AI-powered production, media automation, and content systems — built for creators who believe the future should work for everyone.</p>
+<a href="../index.html#services" class="services-card-button">View Our Services</a>
+</div>
+</section>
+
+<!-- ═══ PRINT HOOKS (always hidden on screen) ════════════════ -->
+<span class="print-category-hook" id="printCategoryHook" style="display:none">AI Science</span>
+<span class="print-author-hook" style="display:none">Kenji Nakamoto</span>
+<span class="print-url-hook" style="display:none">aima.productions</span>
+
+</article>
+
+<!-- ══ ARTICLE NAV CARDS ════════════════════════════════════ -->
+<nav class="article-nav-section" id="article-nav">
+<div class="article-nav-inner">
+<span class="article-nav-label">Continue Reading</span>
+<div class="article-nav-grid">
+<a id="art-prev-card" href="#" class="nav-card prev hidden"><span class="nav-card-icon">←</span><div class="nav-card-label">Previous Article</div><div class="nav-card-title" id="art-prev-title"></div></a>
+<a href="https://aima.productions/insights.html" class="nav-card all-articles"><span class="nav-card-icon">⊞</span><div class="nav-card-label">All Articles</div><div class="nav-card-title">Browse the Magazine</div></a>
+<a id="art-next-card" href="#" class="nav-card next hidden"><span class="nav-card-icon">→</span><div class="nav-card-label">Next Article</div><div class="nav-card-title" id="art-next-title"></div></a>
+</div>
+</div>
+</nav>
+
+<!-- ══ FOOTER ═══════════════════════════════════════════════ -->
+<footer>
+<div class="container">
+<div class="footer-top">
+<div>
+<div class="fb-logo-wrap"><div class="pulse-ft"></div><span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span></div>
+<div class="fb-sub">AI Media Agency</div>
+<p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+<button class="back-to-top" onclick="document.getElementById('article-top').scrollIntoView({behavior:'smooth'})"><span class="arr">↑</span> Back to Top</button>
+</div>
+<div><div class="fl-head">Services</div><ul class="fl-list"><li><a href="../index.html#services">Music Video</a></li><li><a href="../index.html#services">Corporate Explainer</a></li><li><a href="../index.html#services">TV Commercial</a></li><li><a href="../index.html#rates">Social Media Packages</a></li><li><a href="../index.html#rates">Monthly Retainers</a></li><li><a href="../index.html#rates">AI Automation Pipeline</a></li></ul></div>
+<div><div class="fl-head">Company</div><ul class="fl-list"><li><a href="../index.html#about">About Us</a></li><li><a href="../index.html#process">Our Process</a></li><li><a href="../index.html#work">Portfolio</a></li><li><a href="../gallery.html">Gallery</a></li><li><a href="../insights.html">Insights</a></li><li><a href="../careers.html">Careers</a></li></ul></div>
+<div><div class="fl-head">Legal</div><ul class="fl-list"><li><a href="../index.html#tos">Terms of Service</a></li><li><a href="../index.html#privacy">Privacy Policy</a></li><li><a href="../index.html#refund">Refund Policy</a></li><li><a href="../index.html#licensing">Licensing FAQ</a></li><li><a href="../index.html#cookies">Cookie Settings</a></li></ul></div>
+</div>
+<div class="footer-bottom"><p>© 2026 AIMA · AI Media Agency</p><span>v12.9 · aima.productions</span></div>
+</div>
+</footer>
+
+<script>
+// ══ HEADER IMAGE from meta tag ════════════════════════════
+document.addEventListener('DOMContentLoaded',function(){
+var meta=document.querySelector('meta[name="article:header-image"]');
+var el=document.getElementById('headerImage');
+if(meta&&el){var url=meta.getAttribute('content');el.style.backgroundImage='linear-gradient(135deg,rgba(255,94,32,0.28),rgba(0,217,245,0.10)),url(\''+url+'\')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';}
+// PREV/NEXT NAV
+var _pUrl=(document.querySelector('meta[name="article:prev-url"]')||{}).content||'';
+var _pTitle=(document.querySelector('meta[name="article:prev-title"]')||{}).content||'';
+var _nUrl=(document.querySelector('meta[name="article:next-url"]')||{}).content||'';
+var _nTitle=(document.querySelector('meta[name="article:next-title"]')||{}).content||'';
+var prevCard=document.getElementById('art-prev-card');
+var nextCard=document.getElementById('art-next-card');
+function applyNav(pUrl,pTitle,nUrl,nTitle){
+if(prevCard&&pUrl){prevCard.href=pUrl;prevCard.classList.remove('hidden');document.getElementById('art-prev-title').textContent=pTitle;}
+if(nextCard){if(nUrl){nextCard.href=nUrl;nextCard.classList.remove('hidden');nextCard.style.cursor='';nextCard.style.opacity='';nextCard.style.pointerEvents='';document.getElementById('art-next-title').textContent=nTitle;}
+else{nextCard.removeAttribute('href');nextCard.classList.remove('hidden');nextCard.style.cursor='default';nextCard.style.opacity='0.5';nextCard.style.pointerEvents='none';document.getElementById('art-next-title').textContent='Coming Soon';}}
+}
+applyNav(_pUrl,_pTitle,_nUrl,_nTitle);
+var _curId=parseInt((document.querySelector('meta[name="article:id"]')||{}).content||'0');
+if(_curId){fetch('https://script.google.com/macros/s/AKfycbyPkD0BJOw0LyMEe2q6adUCDysv_lpB0WzTCPtWXNT7LaCz-n80nmD6WnQ2Tb51xDiD/exec?action=all',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(data){if(!data.articles)return;function _n(s){return parseInt((''+s).replace(/\D/g,''),10);}var arts=data.articles.slice().sort(function(a,b){return _n(a.id)-_n(b.id);});var i=arts.findIndex(function(a){return _n(a.id)===_curId;});if(i<0)return;var prev=i>0?arts[i-1]:null;var next=i<arts.length-1?arts[i+1]:null;applyNav(prev?prev.url:'',prev?prev.title:'',next?next.url:'',next?next.title:'');}).catch(function(){});}
+});
+// ══ SHARE SIDEBAR ═════════════════════════════════════════
+(function(){
+var url=encodeURIComponent(window.location.href);
+var title=encodeURIComponent(document.title);
+document.querySelectorAll('a[data-share]').forEach(function(a){
+a.href=a.href.replace('PAGE_URL',url).replace('PAGE_TITLE',title);
+a.addEventListener('click',function(e){e.preventDefault();if(a.dataset.share==='email'){window.location.href=a.href;}else{window.open(a.href,'share-'+a.dataset.share,'width=600,height=460,noopener');}});
+});
+var btn=document.getElementById('copyLinkBtn');
+if(btn){btn.addEventListener('click',function(){var raw=window.location.href;var done=function(){var orig=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor='';},2000);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(raw).then(done).catch(function(){fb(raw,done);});}else{fb(raw,done);}});};
+function fb(t,cb){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
+})();
+var _sh=document.getElementById('share-sidebar');var _tc=document.getElementById('toc-sidebar');
+window.addEventListener('scroll',function(){var s=window.scrollY>300;if(_sh)_sh.classList.toggle('visible',s);if(_tc)_tc.classList.toggle('visible',s);},{passive:true});
+// ══ TOC ACTIVE LINK ══════════════════════════════════════
+var _tl=document.querySelectorAll('.toc-link');var _ts=[];
+_tl.forEach(function(a){var h=a.getAttribute('href');if(h&&h.startsWith('#'))_ts.push(h.substring(1));});
+window.addEventListener('scroll',function(){var sp=window.scrollY+120;var cur='';_ts.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=sp)cur=id;});_tl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});},{passive:true});
+// ══ MOBILE MENU ══════════════════════════════════════════
+function toggleMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(!m||!b)return;m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMobile(){var m=document.getElementById('mobileMenu');var b=document.getElementById('navBurger');if(m)m.classList.remove('open');if(b)b.classList.remove('open');document.body.style.overflow='';}
+// ══ AUTHOR PHOTO ═════════════════════════════════════════
+(function(){
+var persona=(document.querySelector('meta[name="article:persona"]')||{}).content||'joselito';
+var imgSrc='../img/author-'+persona+'.png';
+var _authorColors={joselito:'00D9F5',dawn:'9B59F5',kenji:'F5C518'};
+var _btnColor=_authorColors[persona]||'00D9F5';
+var _bmac=document.getElementById('bmac-coffee-btn');
+if(_bmac){var _bimg=_bmac.querySelector('img');if(_bimg)_bimg.src=_bimg.src.replace(/button_colour=[^&]*/,'button_colour='+_btnColor);}
+
+function applyPhoto(el,src,fallbackText,size){
+  var img=new Image();
+  img.onload=function(){
+    el.textContent='';
+    el.style.background='none';
+    el.style.border='none';
+    el.style.padding='0';
+    var i=document.createElement('img');
+    i.src=src;
+    i.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;';
+    el.appendChild(i);
+  };
+  img.src=src;
+}
+var av=document.getElementById('authorAvatar');
+var ac=document.getElementById('authorCardAvatar');
+if(av) applyPhoto(av,imgSrc);
+if(ac) applyPhoto(ac,imgSrc);
+})();
+// ══ COFFEE CLICK TRACKING ════════════════════════════════
+function trackCoffeeClick(){
+var id=(document.querySelector('meta[name="article:id"]')||{}).content||'';
+var title=(document.querySelector('meta[name="article:title"]')||{}).content||document.title||'';
+var author=(document.querySelector('meta[name="article:author"]')||{}).content||'';
+var persona=(document.querySelector('meta[name="article:persona"]')||{}).content||'joselito';
+if(typeof gtag==='function'){gtag('event','coffee_click',{article_id:id,article_title:title,author:author,persona:persona});}
+if(window.dataLayer){window.dataLayer.push({event:'coffee_click',article_id:id,article_title:title,author:author,persona:persona});}
+}
+// ══ BACK TO TOP ══════════════════════════════════════════
+var _bt=document.getElementById('back-to-top');
+window.addEventListener('scroll',function(){if(_bt)_bt.classList.toggle('show',window.scrollY>400);},{passive:true});
+if(_bt)_bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+// ══ FADE-IN ══════════════════════════════════════════════
+(function(){var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(el){ob.observe(el);});})();
+setTimeout(function(){document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});},800);
+</script>
+</body>
+</html>
