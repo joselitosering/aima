@@ -1,35 +1,26 @@
-"""Quill — VERIFICATION GATE (pure Python, no LLM).
+"""Quill — EDITOR + VERIFICATION GATE.
 
-DEMOTED 2026-07-14 (per Joe): Writer now owns word count, voice, AND full
-structure (5-6 H2, stat grid >=4, pullquote, glossary >=6, references >=6) —
-Writer has its own hard gate for all of this (agents/writer.py). Quill no
-longer authors, rewrites, trims, or expands. Its only job is to verify
-Writer's draft still meets spec and pass it through as the final article
-copy, unchanged.
+Restored as LLM editor 2026-07-17 (per Joe): when Writer's draft has
+structural problems, Quill calls call_api (gpt-4o-mini via OpenRouter) to fix
+the specific issues rather than halting. Catastrophically empty drafts
+(< MIN_FIXABLE_WORDS) still halt — there's nothing an editor can fix from
+near-nothing.
 
-No CC call in the normal path — $0, always. If a draft is genuinely
-incomplete, Quill HALTS and reports (same philosophy Vera already uses:
-report to Marco/Iris/Joe, do not silently rewrite or auto-iterate).
+Clean drafts → pass through unchanged, $0.
+Fixable drafts → call_api fix, ~$0.01-0.05 (gpt-4o-mini).
 
-Why pure Python and not Haiku: article #25's rejected Writer draft (still on
-disk in articles/drafts/ at the time of this rewrite) already contained every
-required structural element — 5 H2s, 6 stat cards, 1 pullquote, 8 glossary
-terms, 9 references. A properly-gated Writer reliably produces complete
-output; there was no real evidence a generative patch step is needed. If
-that changes in practice (halts become frequent for missing-but-fixable
-pieces), a narrow Haiku patch call is the next lever — not built here,
-not needed yet.
-
-Previously a Sonnet CC call costing ~$1.30-1.96/article. Article #20 hit
-2.9M tokens/$2.52 in a 57-turn loop; article #25's attempt hit 2912 words
-against a 1100 target because the old prompt explicitly permitted "trim or
-expand as needed."
+Previously demoted to pure Python gate 2026-07-14 (per Joe) after the
+article #20 QL token explosion (2.9M tok, $2.52, 57 turns). Restored after
+Writer began producing halts too frequently for fixable structural issues.
+The API path (not CLI) is intentional: no cold-start overhead, no tool loop.
 """
 
 import re
 
 from agents.base import read_file, write_file, REPO_ROOT, log
 from agents.writer import AUTHOR_SPECS, resolve_author
+
+MIN_FIXABLE_WORDS = 200  # below this Quill cannot patch — Writer must rerun
 
 
 def run(spec: dict, research: dict, extra_instruction: str = "",
