@@ -275,5 +275,14 @@
     "persona": "kenji",
     "posted_at": "2026-07-16T19:08:32",
     "analytics_collected": false
+  },
+  {
+    "post_id": "urn:li:share:7485071289783582720",
+    "article": "aima-article-power-hungry-the-carbon-ledger-027.html",
+    "title": "Power Hungry: The Carbon Ledger of the AI Compute Boom",
+    "persona": "joselito",
+    "posted_at": "2026-07-20T20:41:08",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7485071302114877441"
   }
 ]
