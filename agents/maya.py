@@ -305,9 +305,24 @@ def run(article_path: str, spec: dict) -> str:
             _alt_full.exists()     and _alt_full.stat().st_size > 1024
         )
 
-    if _both_ready():
+    def _is_duplicate_of_prev() -> bool:
+        """True if primary image is byte-for-byte identical to the previous article's cover."""
+        import hashlib, glob as _glob
+        prev = sorted(_glob.glob(str(REPO_ROOT / f"img/articles/aima-{number-1:03d}-*.jpg")))
+        if not prev:
+            return False
+        cur_hash  = hashlib.md5(_primary_full.read_bytes()).hexdigest()
+        prev_hash = hashlib.md5(Path(prev[-1]).read_bytes()).hexdigest()
+        return cur_hash == prev_hash
+
+    if _both_ready() and not _is_duplicate_of_prev():
         log.info("[maya] real images already on disk — skipping generation")
     else:
+        if _both_ready():
+            log.warning(
+                f"[maya] primary image is identical to article #{number-1:03d} cover "
+                "— forcing regeneration"
+            )
         # Reuse anything the Maya batch pre-staged in handoff/ready/ before paying
         # for generation.
         if _pickup_from_handoff(number, og_image, alt_image):

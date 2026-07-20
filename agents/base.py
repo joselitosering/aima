@@ -405,4 +405,18 @@ def git_commit(message: str):
 
 
 def git_push():
+    # Stash unstaged changes so rebase doesn't abort, then restore them.
+    status = subprocess.run(
+        ["git", "status", "--porcelain"], cwd=REPO_ROOT, capture_output=True, text=True
+    ).stdout.strip()
+    stashed = False
+    if status:
+        subprocess.run(["git", "stash", "-u"], cwd=REPO_ROOT, check=True)
+        stashed = True
+    try:
+        subprocess.run(["git", "pull", "--rebase", "origin", "main"],
+                       cwd=REPO_ROOT, check=True)
+    finally:
+        if stashed:
+            subprocess.run(["git", "stash", "pop"], cwd=REPO_ROOT, check=False)
     subprocess.run(["git", "push", "origin", "main"], cwd=REPO_ROOT, check=True)
