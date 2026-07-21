@@ -1,18 +1,19 @@
-"""Quill — EDITOR + VERIFICATION GATE.
+"""Quill — PURE PYTHON VERIFICATION GATE.
 
-Restored as LLM editor 2026-07-17 (per Joe): when Writer's draft has
-structural problems, Quill calls call_api (gpt-4o-mini via OpenRouter) to fix
-the specific issues rather than halting. Catastrophically empty drafts
-(< MIN_FIXABLE_WORDS) still halt — there's nothing an editor can fix from
-near-nothing.
+Demoted from LLM editor to a pure Python gate 2026-07-14 (per Joe) after the
+article #20 QL token explosion (2.9M tok, $2.52, 57 turns). The "Restored as
+LLM editor 2026-07-17" note in earlier versions of this docstring was stale —
+the API fix path was never implemented. Quill does NOT call any LLM.
 
-Clean drafts → pass through unchanged, $0.
-Fixable drafts → call_api fix, ~$0.01-0.05 (gpt-4o-mini).
+Design contract (2026-07-14, confirmed 2026-07-21):
+- Writer owns structure and word count. It must deliver a correct draft.
+- Quill verifies the draft against Vera's checklist in pure Python, $0.
+- If the draft fails: Quill halts and Marco surfaces the problem. No auto-fix.
+- Only catastrophically empty drafts (< MIN_FIXABLE_WORDS) are even worth
+  halting on — clean drafts pass through unchanged.
 
-Previously demoted to pure Python gate 2026-07-14 (per Joe) after the
-article #20 QL token explosion (2.9M tok, $2.52, 57 turns). Restored after
-Writer began producing halts too frequently for fixable structural issues.
-The API path (not CLI) is intentional: no cold-start overhead, no tool loop.
+Structural errors (wrong H2 count, missing stat grid, etc.) are Writer prompt
+failures. Fix them in Writer's prompt and user_input, not here.
 """
 
 import re
@@ -26,13 +27,14 @@ MIN_FIXABLE_WORDS = 200  # below this Quill cannot patch — Writer must rerun
 def run(spec: dict, research: dict, extra_instruction: str = "",
         force_rewrite: bool = False, draft_path: str | None = None) -> str:
     """
-    Verify Writer's draft meets spec (word count + structure) and save it as
-    the final article copy, unchanged. Returns the saved article path
-    (relative to repo root).
+    Verify Writer's draft meets spec (word count + structure) in pure Python
+    and save it as the final article copy, unchanged. Returns the saved article
+    path (relative to repo root).
 
-    Raises RuntimeError if the draft is incomplete — Quill reports problems,
-    it does not fix them. extra_instruction is accepted for call-signature
-    compatibility with Marco but is not used (nothing left to instruct).
+    Raises RuntimeError if the draft fails any check. Structural failures are
+    Writer prompt failures — fix them in agents/writer.py, not here.
+    extra_instruction is accepted for call-signature compatibility with Marco
+    but is not used.
     """
     filename = spec["filename"]
     article_path = f"articles/{filename}"

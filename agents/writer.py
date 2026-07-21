@@ -51,27 +51,59 @@ WRITER_PROMPT = (
     "Quill only verifies afterward; it does not rewrite you for length or add anything you "
     "left out. Use the provided research faithfully and cite sources; do not invent facts "
     "beyond the research (flag any gaps). Your target word range is a hard constraint, not a "
-    "suggestion — stay inside it. Include every required structural element yourself: 5-6 H2 "
-    "sections, a stat grid (>=4 numeric cards), 1 pullquote, a glossary (>=6 data-term "
-    "entries), and MLA references (>=6) — keep them concise rather than skipping them or "
-    "blowing your word budget. Output clean, complete AIMA article HTML."
+    "suggestion — stay inside it. Include every required structural element yourself: exactly "
+    "5-6 <h2> section headings IN THE ARTICLE BODY (the body H2s are the ONLY <h2> tags in "
+    "the entire file — do NOT put an <h2> inside <div class=\"glossary\"> or "
+    "<div class=\"references\">; those divs have no heading), a stat grid (>=4 numeric "
+    "cards), 1 pullquote, a glossary (>=6 data-term entries), and MLA references (>=6) — "
+    "keep them concise rather than skipping them or blowing your word budget. Output clean, "
+    "complete AIMA article HTML."
 )
+
+
+def _prose_word_count(content: str) -> int:
+    """Count words in prose only — strips glossary and references first,
+    same method used by Writer's gate and Quill's verifier."""
+    prose = content
+    for cls, end in [("glossary", "</dl>"), ("references", "</ol>")]:
+        prose = re.sub(
+            r'<div class="' + cls + r'">.*?' + re.escape(end) + r'\s*</div>',
+            "", prose, flags=re.S,
+        )
+    return len(re.sub(r"<[^>]+>", " ", prose).split())
 
 
 def find_draft(spec: dict) -> str | None:
     """Return the repo-relative path of an existing free-form draft for this
-    spec, or None. Checked by slug+number, then number, then slug — used by
-    Marco's WRITE stage (skip-and-reuse: an existing draft is never re-written)."""
+    spec that passes Writer's prose word-count floor, or None.
+
+    Checked by slug+number, then number, then slug. Stale stubs from failed
+    Writer runs are skipped — a file must hit the author's range_min * 0.85
+    floor to be considered valid (same gate Writer's run() applies).
+    """
     drafts = REPO_ROOT / DRAFTS_DIR
     if not drafts.exists():
         return None
+    key = resolve_author(spec)
+    a = AUTHOR_SPECS[key]
+    floor = int(a["range_min"] * 0.85)
+
+    def _valid(p: Path) -> bool:
+        if not p.exists() or p.stat().st_size <= 200:
+            return False
+        wc = _prose_word_count(p.read_text(encoding="utf-8", errors="replace"))
+        if wc < floor:
+            log.info(f"[writer] find_draft: skipping stub {p.name} ({wc}w < floor {floor})")
+            return False
+        return True
+
     padded = str(spec.get("number", 0)).zfill(3)
     exact = drafts / f"{spec['slug']}-{padded}-draft.html"
-    if exact.exists() and exact.stat().st_size > 200:
+    if _valid(exact):
         return f"{DRAFTS_DIR}/{exact.name}"
     for pattern in (f"*-{padded}-draft.html", f"{spec['slug']}-*draft.html"):
         for p in sorted(drafts.glob(pattern)):
-            if p.stat().st_size > 200:
+            if _valid(p):
                 return f"{DRAFTS_DIR}/{p.name}"
     return None
 
@@ -132,7 +164,9 @@ RESEARCH (use these sources/stats/quotes; cite inline; do NOT invent — flag ga
 STRUCTURE — YOU must include all of these in this exact HTML, or Quill's
 verification gate will reject the draft (it does not add missing pieces):
 1. Lead paragraph.
-2. 5-6 <h2> section headings.
+2. 5-6 <h2> section headings IN THE ARTICLE BODY ONLY. These are the ONLY <h2>
+   tags in the file. Do NOT use <h2> inside <div class="glossary"> or
+   <div class="references"> — those divs have no heading element at all.
 3. Stat grid, >=4 cards: <div class="stat-grid"><div class="stat-card">...</div>...</div>
 4. Exactly one: <blockquote class="pullquote">...</blockquote>
 5. Glossary, >=6 entries — EVERY <dt> MUST carry data-term="Term Name" (this
@@ -146,8 +180,9 @@ verification gate will reject the draft (it does not add missing pieces):
    Where you have a source URL from the research, include it in the reference (MLA
    puts the URL at the end); the pipeline also wires Scout's source links in.
 
-Output the complete article copy HTML as your ENTIRE response — copy HTML only,
-no full skeleton, no og:image, no image tags, no markdown fences. Just the HTML.\
+Use the Write tool to save the complete article HTML to: {draft_path}
+Copy HTML only — no full skeleton, no og:image, no image tags, no markdown fences.
+After the Write call succeeds, output only the single word: DRAFT_SAVED\
 """
 
     log.info(f"[writer] {a['name']} writing #{padded} '{spec.get('title','')[:40]}' "
