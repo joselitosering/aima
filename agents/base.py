@@ -272,8 +272,15 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
 
     log.info(f"[{name.upper()}] calling CC subagent (model={model or 'CC-default'})")
     try:
+        # Strip ANTHROPIC_API_KEY from the subprocess env so the CC CLI uses OAuth
+        # (subscription billing) for this call. If it's present in os.environ (e.g.
+        # because it was loaded from agents/.env as a headless fallback key), the CLI
+        # would switch to per-token API billing instead — we want subscription for
+        # normal runs and only use the key in the Python-level fallback below.
+        _cc_env = {k: v for k, v in os.environ.items() if k != "ANTHROPIC_API_KEY"}
         result = subprocess.run(cmd, input=user_input, capture_output=True,
-                                encoding="utf-8", cwd=REPO_ROOT, timeout=1800)
+                                encoding="utf-8", cwd=REPO_ROOT, timeout=1800,
+                                env=_cc_env)
     except subprocess.TimeoutExpired:
         raise RuntimeError(
             f"CC agent [{name}] timed out after 1800s (30 min). "
@@ -283,16 +290,18 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
     if result.returncode != 0:
         stdout_snippet = result.stdout[:500] if result.stdout else "(empty)"
 
-        # ── Auth-failure: auto-fallback to OpenRouter rather than crashing ──
+        # ── Auth-failure: tiered fallback rather than crashing ──────────────
         # CC OAuth expires every few weeks and cannot be refreshed headlessly.
-        # When the CLI reports an auth error (exit 1 + is_error:true), we try
-        # OpenRouter for any agent already in API_MODEL_MAP — same model, one
-        # HTTP call, no OAuth dependency. If OpenRouter isn't configured, we
-        # raise a specific fix-me message instead of a generic crash.
+        # When the CLI reports auth failure we try fallbacks in order:
+        #   Tier A: OpenRouter  — if OPENROUTER_API_KEY + agent in API_MODEL_MAP
+        #   Tier B: Anthropic API directly — if ANTHROPIC_API_KEY is set
+        # If neither is available, raise a clear multi-option fix-me message.
         if result.stdout and _is_cc_auth_error(result.stdout):
             from agents.config import API_MODEL_MAP, API_FALLBACK_MODEL
-            api_key = os.environ.get("OPENROUTER_API_KEY", "")
-            if api_key and name in API_MODEL_MAP:
+
+            # Tier A: OpenRouter
+            or_key = os.environ.get("OPENROUTER_API_KEY", "")
+            if or_key and name in API_MODEL_MAP:
                 log.warning(
                     f"[{name.upper()}] CC OAuth expired — "
                     f"auto-fallback to OpenRouter ({API_MODEL_MAP[name]})"
@@ -300,12 +309,31 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
                 return call_api(name, system_prompt, user_input,
                                 model=model_override or API_MODEL_MAP[name],
                                 fallback=API_FALLBACK_MODEL)
+
+            # Tier B: Direct Anthropic API (no OpenRouter needed)
+            anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
+            if anthropic_key:
+                from agents.config import CC_MODEL_OVERRIDE
+                _fb_model = (model_override or CC_MODEL_OVERRIDE.get(name)
+                             or "claude-sonnet-4-6")
+                log.warning(
+                    f"[{name.upper()}] CC OAuth expired — "
+                    f"auto-fallback to direct Anthropic API ({_fb_model})"
+                )
+                return call_anthropic_api(name, system_prompt, user_input,
+                                          model=_fb_model)
+
             raise RuntimeError(
                 f"CC agent [{name}] failed: Claude Code OAuth expired.\n"
-                f"Permanent fix: set OPENROUTER_API_KEY in agents/.env and "
-                f"fund the account at https://openrouter.ai/settings/credits "
-                f"(~$5 covers 60+ Trend Scout calls).\n"
-                f"One-time workaround: run `/login` in a Claude Code terminal."
+                f"Fix options (pick one):\n"
+                f"  1. Re-authenticate now: open a terminal, run 'claude', complete OAuth.\n"
+                f"     (Token lasts weeks — if this expires daily, Task Scheduler may be\n"
+                f"      running as SYSTEM instead of your user account. Fix the task's\n"
+                f"      'Run As' setting to use your Windows login.)\n"
+                f"  2. Add ANTHROPIC_API_KEY=<key> to agents/.env for headless fallback.\n"
+                f"     Get a key at https://console.anthropic.com/settings/keys\n"
+                f"     Cost: ~$0.10-0.50/article (only charged when OAuth is expired).\n"
+                f"  3. Fund OpenRouter + uncomment OPENROUTER_API_KEY in agents/.env."
             )
 
         raise RuntimeError(
@@ -408,6 +436,64 @@ def call_api(name: str, system_prompt: str, user_input: str,
     cost = usage.get("cost")
     _record_token_usage(name, usage.get("total_tokens", 0), cost)
     log.info(f"[api] {name} model={model} tokens={usage.get('total_tokens')} cost=${cost}")
+    return text
+
+
+def call_anthropic_api(name: str, system_prompt: str, user_input: str,
+                       model: str = "claude-sonnet-4-6", max_tokens: int = 8000) -> str:
+    """Direct Anthropic Messages API call. Used as Tier B fallback when CC OAuth
+    expires and OpenRouter is not configured. Requires ANTHROPIC_API_KEY in
+    agents/.env. Billed per token — only triggered on auth failure, not normal runs.
+    Uses urllib (already imported) — no new dependencies.
+    """
+    import urllib.request
+    import urllib.error
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not api_key:
+        raise RuntimeError("ANTHROPIC_API_KEY not set — add it to agents/.env")
+
+    if DRY_RUN:
+        stub = _build_dry_run_priya_spec() if name == "priya" else _DRY_RUN_STUBS.get(name, "dry_run_ok")
+        log.info(f"[{name.upper()}] DRY RUN — returning stub (no Anthropic API call)")
+        return stub
+
+    body = {
+        "model": model,
+        "max_tokens": max_tokens,
+        "system": system_prompt,
+        "messages": [{"role": "user", "content": user_input}],
+    }
+    payload = json.dumps(body).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.anthropic.com/v1/messages",
+        data=payload, method="POST",
+        headers={
+            "x-api-key": api_key,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        },
+    )
+    log.info(f"[{name.upper()}] calling Anthropic API directly (model={model})")
+    try:
+        with urllib.request.urlopen(req, timeout=300) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        err_body = exc.read().decode("utf-8", "replace")[:500]
+        raise RuntimeError(f"Anthropic API agent [{name}] HTTP {exc.code}: {err_body}")
+
+    content = data.get("content") or []
+    text = "".join(block.get("text", "") for block in content if block.get("type") == "text")
+
+    usage = data.get("usage") or {}
+    input_tokens = usage.get("input_tokens", 0)
+    output_tokens = usage.get("output_tokens", 0)
+    total_tokens = input_tokens + output_tokens
+    # Estimate cost at Sonnet 4.x pricing ($3/$15 per 1M in/out tokens).
+    # Best-effort — actual billing may differ by model tier.
+    cost_estimate = round((input_tokens * 3 + output_tokens * 15) / 1_000_000, 6)
+    _record_token_usage(name, total_tokens, cost_estimate)
+    log.info(f"[anthropic-direct] {name} model={model} tokens={total_tokens} est_cost=${cost_estimate}")
     return text
 
 
