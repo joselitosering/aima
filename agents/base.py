@@ -164,6 +164,30 @@ def _record_token_usage(name: str, tokens: int, cost_usd: float | None):
         log.warning(f"[token] could not record usage for {name} ({code}): {exc}")
 
 
+def _is_cc_auth_error(stdout: str) -> bool:
+    """Detect CC CLI OAuth expiry / not-logged-in from stdout JSON.
+
+    The CLI returns exit 1 with is_error:true and one of these result strings:
+      - "Not logged in · Please run /login"           (expired/never logged in)
+      - "Failed to authenticate: OAuth session expired and could not be refreshed"
+    We match case-insensitively so future wording changes don't slip through.
+    """
+    _AUTH_PHRASES = (
+        "oauth session expired",
+        "failed to authenticate",
+        "not logged in",
+        "please run /login",
+        "could not be refreshed",
+    )
+    try:
+        payload = json.loads(stdout.strip())
+        result_text = (payload.get("result") or "").lower()
+        return payload.get("is_error") is True and any(p in result_text for p in _AUTH_PHRASES)
+    except (json.JSONDecodeError, AttributeError, TypeError):
+        lower = stdout.lower()
+        return any(p in lower for p in _AUTH_PHRASES)
+
+
 def call_cc_agent(name: str, system_prompt: str, user_input: str,
                   max_tokens: int = None, model_override: str = None,
                   max_turns: int = None, single_shot: bool = False) -> str:
@@ -258,6 +282,32 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
 
     if result.returncode != 0:
         stdout_snippet = result.stdout[:500] if result.stdout else "(empty)"
+
+        # ── Auth-failure: auto-fallback to OpenRouter rather than crashing ──
+        # CC OAuth expires every few weeks and cannot be refreshed headlessly.
+        # When the CLI reports an auth error (exit 1 + is_error:true), we try
+        # OpenRouter for any agent already in API_MODEL_MAP — same model, one
+        # HTTP call, no OAuth dependency. If OpenRouter isn't configured, we
+        # raise a specific fix-me message instead of a generic crash.
+        if result.stdout and _is_cc_auth_error(result.stdout):
+            from agents.config import API_MODEL_MAP, API_FALLBACK_MODEL
+            api_key = os.environ.get("OPENROUTER_API_KEY", "")
+            if api_key and name in API_MODEL_MAP:
+                log.warning(
+                    f"[{name.upper()}] CC OAuth expired — "
+                    f"auto-fallback to OpenRouter ({API_MODEL_MAP[name]})"
+                )
+                return call_api(name, system_prompt, user_input,
+                                model=model_override or API_MODEL_MAP[name],
+                                fallback=API_FALLBACK_MODEL)
+            raise RuntimeError(
+                f"CC agent [{name}] failed: Claude Code OAuth expired.\n"
+                f"Permanent fix: set OPENROUTER_API_KEY in agents/.env and "
+                f"fund the account at https://openrouter.ai/settings/credits "
+                f"(~$5 covers 60+ Trend Scout calls).\n"
+                f"One-time workaround: run `/login` in a Claude Code terminal."
+            )
+
         raise RuntimeError(
             f"CC agent [{name}] failed (exit {result.returncode}):\n"
             f"STDERR: {result.stderr or '(empty)'}\n"
