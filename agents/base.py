@@ -35,6 +35,33 @@ if not any(isinstance(h, logging.FileHandler) for h in log.handlers):
 # ─────────────────────────────────────────────────────────────
 DRY_RUN = False
 
+# ─────────────────────────────────────────────────────────────
+# LIVE-RESEARCH AGENTS — no non-searching fallback allowed
+# ─────────────────────────────────────────────────────────────
+# scout and trend_scout exist to survey what is ACTUALLY out there right now
+# (scout-sources.json feeds/APIs + web search). Tier B (call_anthropic_api) is a
+# plain Messages API call with NO tools and NO web search — if these two agents
+# resolved through it they would answer from training data and emit confident
+# "trending" topics and "research" stats with plausible-looking but unverified
+# sources. That is a direct violation of this project's zero-hallucination rule
+# and is strictly worse than crashing: a crash is at least honest.
+#
+# So: Tier A (OpenRouter, whose :online models keep real search) stays allowed
+# for them, but Tier B is carved out — they raise LiveResearchUnavailableError
+# instead, which Marco treats as a clean recoverable halt rather than a bug.
+# Added 2026-07-22 (see CLAUDE_CODE_TASK-scheduled-run-oauth-hardening.md).
+LIVE_RESEARCH_AGENTS = ("scout", "trend_scout")
+
+
+class LiveResearchUnavailableError(RuntimeError):
+    """A live-research agent (scout/trend_scout) has no search-capable backend.
+
+    Raised INSTEAD of falling through to the tool-less Anthropic Messages API.
+    This is an expected, recoverable, operator-actionable condition (CC OAuth
+    expired / no funded OpenRouter key) — NOT a code defect. Marco catches it
+    and halts the run cleanly without advancing state or touching the calendar.
+    """
+
 
 def _build_dry_run_priya_spec() -> str:
     """Build Priya stub spec from state.json + existing article files."""
@@ -310,6 +337,30 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
                                 model=model_override or API_MODEL_MAP[name],
                                 fallback=API_FALLBACK_MODEL)
 
+            # ── Carve-out: live-research agents must NOT use Tier B ──────
+            # Tier B has no tools/web search. Letting scout/trend_scout answer
+            # from training data would fabricate "trending" topics and research
+            # stats with unverifiable sources. Raise a distinct, clearly-labeled
+            # recoverable error instead — even when ANTHROPIC_API_KEY is set.
+            if name in LIVE_RESEARCH_AGENTS:
+                raise LiveResearchUnavailableError(
+                    f"[{name}] needs a SEARCH-CAPABLE backend and none is available.\n"
+                    f"Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) "
+                    f"cannot run.\n"
+                    f"Deliberately NOT falling back to the direct Anthropic API: it has no "
+                    f"tools, so {name} would invent trends/statistics from training data "
+                    f"instead of surveying real sources. A clean halt beats fabricated "
+                    f"research.\n"
+                    f"This is a RECOVERABLE operator condition, not a code bug. Fix by:\n"
+                    f"  1. Re-authenticate the CLI: open a terminal, run 'claude', "
+                    f"complete OAuth. (Best option — restores real search, subscription-billed.)\n"
+                    f"  2. Resolve the work by hand: for trend_scout, put a real title in the "
+                    f"calendar row; for scout, pre-stage a research brief in articles/research/.\n"
+                    f"  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models "
+                    f"keep real web search, so it IS an acceptable backend for {name}. "
+                    f"(Joe's call — currently commented out in agents/.env on purpose.)"
+                )
+
             # Tier B: Direct Anthropic API (no OpenRouter needed)
             anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
             if anthropic_key:
@@ -327,9 +378,12 @@ def call_cc_agent(name: str, system_prompt: str, user_input: str,
                 f"CC agent [{name}] failed: Claude Code OAuth expired.\n"
                 f"Fix options (pick one):\n"
                 f"  1. Re-authenticate now: open a terminal, run 'claude', complete OAuth.\n"
-                f"     (Token lasts weeks — if this expires daily, Task Scheduler may be\n"
-                f"      running as SYSTEM instead of your user account. Fix the task's\n"
-                f"      'Run As' setting to use your Windows login.)\n"
+                f"     (Token lasts weeks. This is a human action — it cannot be done\n"
+                f"      headlessly, and nothing in this repo can work around it.)\n"
+                f"     NOTE: the old 'Task Scheduler is running as SYSTEM' guess that used\n"
+                f"     to be printed here was FALSIFIED on 2026-07-22 — no scheduled task\n"
+                f"     runs this pipeline at all, and 'claude --print ping' fails the same\n"
+                f"     way in a normal interactive shell. Don't chase task identity.\n"
                 f"  2. Add ANTHROPIC_API_KEY=<key> to agents/.env for headless fallback.\n"
                 f"     Get a key at https://console.anthropic.com/settings/keys\n"
                 f"     Cost: ~$0.10-0.50/article (only charged when OAuth is expired).\n"

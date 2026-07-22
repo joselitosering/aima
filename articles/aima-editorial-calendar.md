@@ -32,8 +32,8 @@
 | 25 | 2026-07-07 | The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law | AI Ethics | 8 min | Rescheduled (was 2026-06-23, overdue) · Post 10:00 AM PT | Dawn Ginhaua |
 | 26 | 2026-07-07 | Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space | AI Science | 8 min | Rescheduled (was 2026-06-25, overdue) · Post 4:00 PM PT | Kenji Nakamoto |
 | 27 | 2026-07-08 | Power Hungry: The Carbon Ledger of the AI Compute Boom | AI Environment | 10 min | Rescheduled (was 2026-06-26, overdue) · Post 10:00 AM PT | Joselito Sering |
-| 28 | 2026-07-08 | TBD — Trending Topic | Trending | 8 min | Rescheduled (was 2026-06-27, overdue) · Post 4:00 PM PT | Dawn Ginhaua |
-| 29 | 2026-07-09 | TBD — Trending Topic | Trending | 8 min | Rescheduled (was 2026-06-29, overdue) · Post 10:00 AM PT | Kenji Nakamoto |
+| 28 | 2026-07-08 | The Termination Algorithm: How 'Token Consumption' Became a Layoff Metric | AI Labor | 8 min | Rescheduled (was 2026-06-27, overdue) · Post 4:00 PM PT | Dawn Ginhaua |
+| 29 | 2026-07-09 | The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days | AI Science | 8 min | Rescheduled (was 2026-06-29, overdue) · Post 10:00 AM PT | Kenji Nakamoto |
 | 30 | 2026-07-09 | Who Owns the Output? The Intellectual Property Crisis in Generative AI | AI Law | 11 min | Rescheduled (was 2026-06-30, overdue) · Post 4:00 PM PT | Joselito Sering |
 | 31 | 2026-07-10 | TBD — Trending Topic | Trending | 8 min | Rescheduled (was 2026-07-01, overdue) · Post 10:00 AM PT | Dawn Ginhaua |
 | 32 | 2026-07-11 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |

@@ -1,0 +1,54 @@
+{
+  "row": 29,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-07-22",
+  "resolved_by": "claude_code_manual",
+  "resolution_note": "trend_scout's CC agent path was unavailable (Claude Code OAuth expired and cannot be refreshed headlessly; 5 identical pipeline crashes on 2026-07-22). Topic surveyed live via Claude Code WebSearch against Kenji's beat, deduped against all 64 calendar titles + articles_written[] + articles/research/ slugs, then persisted through trend_scout.persist_topic_to_calendar(). No CC tokens spent.",
+  "chosen": {
+    "title": "The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days",
+    "category": "AI Science",
+    "rationale": "Self-driving labs crossed from demo to working infrastructure in the first half of 2026 -- C&EN ran a field survey in June 2026, Materials Horizons published a 'self-driving laboratory 2.0' review, and Argonne's Polybot is closing the design-run-analyze loop on electronic polymer films. It is squarely Kenji's primary beat (materials science, robotics, autonomous systems, clean energy) and is mechanism-rich rather than hype, which is what his readers come for.",
+    "sources": [
+      {
+        "name": "Argonne National Laboratory -- Polybot autonomous materials lab",
+        "url": "https://www.anl.gov/article/selfdriving-lab-transforms-materials-discovery"
+      },
+      {
+        "name": "C&EN (June 2026) -- Self-driving labs are changing how chemists work",
+        "url": "https://cen.acs.org/physical-chemistry/computational-chemistry/Self-driving-labs-changing-chemists/104/web/2026/06"
+      },
+      {
+        "name": "Materials Horizons (RSC, 2026) -- Toward self-driving laboratory 2.0",
+        "url": "https://pubs.rsc.org/en/content/articlelanding/2026/mh/d5mh01984b"
+      },
+      {
+        "name": "ScienceDaily -- self-driving lab collects 10x more data",
+        "url": "https://www.sciencedaily.com/releases/2025/07/250714052105.htm"
+      },
+      {
+        "name": "Lab Manager -- closed-loop autonomous materials discovery system",
+        "url": "https://www.labmanager.com/closed-loop-autonomous-materials-discovery-system-advances-lab-innovation-34949"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Humanoid robots crossing from pilot to production line (BMW Spartanburg, Figure 03, AgiBot 15k units)",
+      "category": "AI Robotics",
+      "rejected_reason": "dedup_collision",
+      "collides_with": [
+        "#20 Robots Go Public: What the Humanoid Robotics IPO Wave Actually Means",
+        "#23 The Robot Beside You: What Humanoid Machines Actually Do on the Factory Floor in 2026"
+      ]
+    },
+    {
+      "title": "The BCI trial split: minimum-intervention (Synchron) vs maximum-bandwidth (Neuralink, Paradromics)",
+      "category": "AI Science",
+      "rejected_reason": "dedup_collision",
+      "collides_with": [
+        "#33 The Brain-Computer Interface Horizon: Where Mind Meets Machine"
+      ]
+    }
+  ]
+}

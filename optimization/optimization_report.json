@@ -1963,5 +1963,183 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-20",
+    "total_tokens_used": 114502,
+    "by_agent": {
+      "PR": 0,
+      "SC": 0,
+      "TS": 0,
+      "WR": 114502,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PT": 0,
+      "NV": 0,
+      "LM": 0,
+      "CO": 0
+    },
+    "hallucination_flags": [
+      "Article HTML supplied to Cora cuts off at meta/JSON-LD head (truncated at 'description' field) \u2014 no body prose, stat-grid, or quote blocks were visible to audit against research JSON. Cannot confirm in-body attribution matches the research file for this run; recommend Vera's own body-level checklist be treated as the binding check for this article, not this report.",
+      "Research JSON's Allianz Trade figures (286 Mt CO2 2025, 57% above IEA estimate, $50B+/yr climate damages by 2030, 1.3-1.8 trillion liters water by 2030) are sourced from a single trade-credit-insurer analysis via secondary tech-press reporting, not a fetched primary report \u2014 flagged in research itself as 'one institution's model, not a settled consensus'; if the published copy states these as settled fact rather than attributed-to-Allianz-Trade, that is a hallucination-risk understatement of uncertainty.",
+      "The WEF/arXiv 'AI could offset 3.2-5.4 Gt CO2e/year by 2035' figure is a scenario-dependent projection contingent on deliberate climate-directed AI deployment, directly contested by Jevons-paradox rebound-effect literature in the same research doc \u2014 research flags 'present both sides as contested rather than resolving'; cannot verify from truncated HTML whether the article resolved this in one direction.",
+      "Two expert quotes (Travis Beals/Google Research, Andrew McCalip/Varda Space) are carried over verbatim from article #26's orbital-compute research and are explicitly flagged in this article's research JSON as being about space-based compute economics/physics, NOT carbon accounting \u2014 with an explicit instruction 'do not attribute a carbon-specific climate claim to either quote.' Both individuals are real, named, and verifiable, so no fabrication risk, but reuse must be checked for correct framing (infrastructure-strain color only, not climate-policy statements) \u2014 not visible in the truncated HTML excerpt provided.",
+      "Microsoft (+30% vs 2020) and Meta (+70% vs 2019) emissions figures are drawn from secondary reporting (Carbon Direct) of company disclosures, not independently verified against primary CSR reports \u2014 research itself flags this; low risk (named source+year present) but noted for completeness."
+    ],
+    "reversion_flags": [
+      "writer_draft_reused: Stage 3 (Writer) was skipped this run per the skip-and-reuse guardrail \u2014 WR's 114,502 tokens / $0.625 reflect a prior pre-staged draft run, not a new call in this pipeline execution. Expected behavior, not a violation."
+    ],
+    "budget_alerts": [
+      "No agent crossed the 80% threshold this run \u2014 WR is the only agent with nonzero usage at 114,502/300,000 (38.2%).",
+      "QL shows budget=0, used=0 despite 'quill' appearing in this run's stage list and Vera/Maya proceeding downstream \u2014 this is inconsistent with CLAUDE.md's documented QL budget of 42,000 (post round-2 tuning) and with the prior CRITICAL finding (articles #18/#19) that token usage tracking has previously gone silently to zero for whole agents. Recommend Marco/Cora Round 1 action: verify QL's completion callback is actually writing to token_budget.json for this run before trusting 'QL: idle' at face value \u2014 a real $0 edit call is implausible given quill.py's edit-only path still invokes call_cc_agent."
+    ],
+    "guardrails_applied": [
+      "Flagged QL zero-usage anomaly for Round 1 root-cause check (per Cora's Error + Misbehavior Protocol) rather than escalating to Marco \u2014 this is the first occurrence logged for QL specifically; escalate to Round 2 (flag Marco + append CLAUDE.md) if the same zero-usage pattern recurs on the next article."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-20",
+    "article_number": 27,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-power-hungry-the-carbon-ledger-027.html",
+    "gs_row": 28,
+    "company_urn": "urn:li:share:7485065866141958144",
+    "reshare_urn": "urn:li:share:7485065878124830720",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-20",
+    "row": 28,
+    "author": "Dawn Ginhaua",
+    "title": "The Termination Algorithm: How 'Token Consumption' Became a Layoff Metric",
+    "category": "AI Labor",
+    "rationale": "A live July 2026 lawsuit against Meta alleges the company used AI-usage proxies like token consumption to target employees for layoffs, and industry-wide, AI-generated performance data is now used in discipline and termination decisions without human review \u2014 a concrete, breaking-news instance of the algorithmic-management critique Dawn's beat is built for, with a real corporate defendant and paper trail rather than a hypothetical.",
+    "sources": [
+      {
+        "name": "CNBC via Mintz AI Washington Report",
+        "url": "https://www.mintz.com/insights-center/viewpoints/54941/2026-07-08-ai-washington-report-july-2026-edition"
+      },
+      {
+        "name": "Curionic \u2014 AI and Labor Relations in 2026",
+        "url": "https://www.curionic.net/2026/07/ai-labor-relations-unions-collective-bargaining-workers-2026.html"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-21",
+    "total_tokens_used": 476462,
+    "by_agent": {
+      "IR": 0,
+      "PR": 0,
+      "SC": 378840,
+      "TS": 0,
+      "WR": 97622,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      "Expert quote attributed to 'Cognizant Chief AI Officer' has no named, verifiable individual behind it \u2014 research JSON itself flags the speaker's name as unresolved within the search-budget window. Do not treat as a verbatim attributable quote until a named source is confirmed.",
+      "Sam Altman 'AI washing' reference in the counterargument is a secondhand characterization from an aggregator blog, not sourced to a primary interview/transcript \u2014 flagged unverified in research; must not be presented as a direct quotation.",
+      "56% / 156,270-worker SkillSyncer stat is sourced only via a secondary blog (The Interview Guys), not SkillSyncer's own tracker directly \u2014 research JSON flags this for primary-source re-verification before publication.",
+      "Gartner ~1% AI-productivity-attributed / <5% hiring-restraint stat is cited secondhand via the same aggregator blog, not a directly fetched Gartner report \u2014 flagged unverified in research JSON.",
+      "Cannot confirm how these four flagged claims were actually rendered in the published copy \u2014 provided article HTML is truncated at the JSON-LD head block (before body prose), so in-text sourcing/attribution of these specific claims is unverifiable from the data supplied this run."
+    ],
+    "reversion_flags": [
+      "QL (Quill) shows budget=0 / used=0 / status=idle in token_budget.json despite the 'quill' stage actively running this pipeline (present in stages list, revisions.quill=0, article published successfully). This reproduces the exact token-tracking blackout pattern logged CRITICAL against articles #18/#19 in CLAUDE.md ('used=0 for every agent... no real token/cost numbers exist'). Per the Cora Round 2 protocol (same issue recurring), this should be flagged to Marco and appended to CLAUDE.md rather than silently re-logged.",
+      "Scout (SC) token-overspend fix was explicitly scheduled for validation on article #28 (this run) per CLAUDE.md. Result: last_call_cost_usd=$0.822236, 378,840 tokens used \u2014 close to the pre-fix baseline (~$0.90) and well above the fix's stated target ($0.30\u20130.40/article). The guardrail block (per-category read/feed/search limits, MAX_TURNS_MAP 15\u21928) does not appear to be holding on this validation run; recommend re-inspecting Scout's actual tool-call trace for #28 before declaring the fix effective."
+    ],
+    "budget_alerts": [
+      "SC at 75.77% of its 500,000-token budget (378,840 used) \u2014 under the 80% hard-alert line but trending toward it, and combined with the cost-reduction shortfall above warrants proactive review before the next Scout run rather than waiting for an 80% breach.",
+      "QL has no budget allocation (0) recorded this run despite an active Quill stage \u2014 budget-vs-usage cannot be evaluated; treat as an unmonitored agent until the tracking gap above is fixed."
+    ],
+    "guardrails_applied": [
+      "writer_draft_reused flag confirms find_draft()'s prose-word-count gate correctly reused a valid cached Writer draft instead of re-invoking Writer's cold subprocess \u2014 cost-saving guardrail from the 2026-07-17 fix functioned as intended.",
+      "Quill completed with 0 revisions and Vera passed the article through to Porter/Nova without a halt \u2014 full pipeline completion with no fiduciary-rule violations observed (no scope bleed between Quill/Maya/Vera detected in the data available)."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-21",
+    "article_number": 28,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-termination-algorithm-how-token-028.html",
+    "gs_row": 29,
+    "company_urn": "urn:li:share:7485435676230975488",
+    "reshare_urn": "urn:li:share:7485435688100839424",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-22",
+    "row": 29,
+    "author": "Kenji Nakamoto",
+    "title": "The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days",
+    "category": "AI Science",
+    "rationale": "Self-driving labs crossed from demo to working infrastructure in the first half of 2026 -- C&EN ran a field survey in June 2026, Materials Horizons published a 'self-driving laboratory 2.0' review, and Argonne's Polybot is closing the design-run-analyze loop on electronic polymer films. It is squarely Kenji's primary beat (materials science, robotics, autonomous systems, clean energy) and is mechanism-rich rather than hype, which is what his readers come for.",
+    "sources": [
+      {
+        "name": "Argonne National Laboratory -- Polybot autonomous materials lab",
+        "url": "https://www.anl.gov/article/selfdriving-lab-transforms-materials-discovery"
+      },
+      {
+        "name": "C&EN (June 2026) -- Self-driving labs are changing how chemists work",
+        "url": "https://cen.acs.org/physical-chemistry/computational-chemistry/Self-driving-labs-changing-chemists/104/web/2026/06"
+      },
+      {
+        "name": "Materials Horizons (RSC, 2026) -- Toward self-driving laboratory 2.0",
+        "url": "https://pubs.rsc.org/en/content/articlelanding/2026/mh/d5mh01984b"
+      },
+      {
+        "name": "ScienceDaily -- self-driving lab collects 10x more data",
+        "url": "https://www.sciencedaily.com/releases/2025/07/250714052105.htm"
+      },
+      {
+        "name": "Lab Manager -- closed-loop autonomous materials discovery system",
+        "url": "https://www.labmanager.com/closed-loop-autonomous-materials-discovery-system-advances-lab-innovation-34949"
+      }
+    ],
+    "resolved_by": "claude_code_manual (CC OAuth expired -- see topic-selection sidecar)"
   }
 ]

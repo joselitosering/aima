@@ -28,6 +28,7 @@ from datetime import date, datetime, timezone
 from agents.base import (
     read_json, write_json, read_file, write_file,
     append_optimization_report, REPO_ROOT, log,
+    LiveResearchUnavailableError,
 )
 from agents.config import load_pipeline_config
 from agents import base, priya, scout, writer, quill, maya, vera, porter, nova, cora
@@ -474,6 +475,24 @@ def run(dry_run: bool = False):
             "flags": flags,
             "revisions": revisions,
         }
+    except LiveResearchUnavailableError as exc:
+        # EXPECTED, RECOVERABLE — not a bug. scout/trend_scout have no
+        # search-capable backend (CC OAuth expired, no funded OpenRouter key),
+        # and we refuse to fabricate research from a tool-less fallback.
+        # Halt cleanly: no state advance (_update_state only runs at Stage 9),
+        # no calendar mutation, no traceback dump in CLAUDE.md. Added 2026-07-22.
+        _write_halt_to_claude_md(spec, current_stage, exc)
+        log.warning(
+            f"[marco] HALTED at stage '{current_stage}' — live research unavailable. "
+            f"This is a recoverable operator condition, not a crash. Details:\n{exc}"
+        )
+        return {
+            "spec": spec, "porter": {}, "nova": {},
+            "stages": stages, "flags": flags + ["live_research_unavailable"],
+            "revisions": revisions,
+            "trend_scout_unavailable": True,
+            "halted_stage": current_stage, "error": str(exc),
+        }
     except Exception as exc:
         _write_crash_to_claude_md(spec, current_stage, exc)
         log.error(f"[marco] CRASHED at stage '{current_stage}': {exc}", exc_info=True)
@@ -502,6 +521,62 @@ def _write_failure_to_claude_md(spec: dict, message: str, notes: list):
     log.info("[marco] Failure written to CLAUDE.md — surface to Joe")
 
 
+def _dedup_key(stage: str, exc: Exception) -> str:
+    """Stable same-day identity for a failure: date | stage | error prefix.
+
+    Only the error's FIRST line (truncated) is used, so a repeat of the same
+    failure matches even when the tail of the message varies (timestamps,
+    session ids, byte offsets).
+    """
+    first_line = str(exc).strip().splitlines()[0] if str(exc).strip() else "(no message)"
+    first_line = first_line.replace("-->", "--").replace("|", "/")[:90]
+    return f"{date.today().isoformat()}|{stage}|{first_line}"
+
+
+def _append_or_bump_claude_md(key: str, entry: str, what: str):
+    """Write `entry` to CLAUDE.md — or, if an entry with the same `key` was
+    already written today, just bump its Occurrences / Last seen counters.
+
+    Added 2026-07-22. Before this, _write_crash_to_claude_md appended a full
+    traceback block unconditionally on every call: five identical scheduled-run
+    failures on 2026-07-22 appended the SAME traceback five times and pushed
+    CLAUDE.md past 76KB. Repeats are now one entry with a count, which also
+    makes "this has happened N times" visible at a glance instead of requiring
+    the reader to notice duplicate blocks.
+    """
+    path = REPO_ROOT / "CLAUDE.md"
+    try:
+        claude_md = path.read_text(encoding="utf-8")
+    except FileNotFoundError:
+        claude_md = ""
+
+    marker = f"<!-- aima-failure-key: {key} -->"
+    ts = datetime.now().isoformat(timespec="seconds")
+
+    if marker in claude_md:
+        start = claude_md.index(marker)
+        end = claude_md.find("\n### ", start)
+        if end == -1:
+            end = len(claude_md)
+        block = claude_md[start:end]
+        bumped, n_sub = re.subn(
+            r"- \*\*Occurrences:\*\* (\d+)",
+            lambda m: f"- **Occurrences:** {int(m.group(1)) + 1}",
+            block, count=1,
+        )
+        if n_sub:   # legacy entries without the counter fall through to append
+            bumped = re.sub(r"- \*\*Last seen:\*\* .*", f"- **Last seen:** {ts}",
+                            bumped, count=1)
+            path.write_text(claude_md[:start] + bumped + claude_md[end:], encoding="utf-8")
+            count = re.search(r"- \*\*Occurrences:\*\* (\d+)", bumped).group(1)
+            log.info(f"[marco] {what} is a repeat of an existing CLAUDE.md entry "
+                     f"— bumped to {count} occurrences (no duplicate block appended)")
+            return
+
+    path.write_text(claude_md + entry, encoding="utf-8")
+    log.info(f"[marco] {what} written to CLAUDE.md — surface to Joe")
+
+
 def _write_crash_to_claude_md(spec: dict, stage: str, exc: Exception):
     """Append an unhandled-crash note (full traceback) to CLAUDE.md.
 
@@ -512,19 +587,49 @@ def _write_crash_to_claude_md(spec: dict, stage: str, exc: Exception):
     from any stage, so a crash is always surfaced here even if pipeline.log
     is never read. Distinct from _write_failure_to_claude_md, which is for
     Vera's designed QC halt, not an unexpected crash.
-    """
-    try:
-        claude_md = (REPO_ROOT / "CLAUDE.md").read_text(encoding="utf-8")
-    except FileNotFoundError:
-        claude_md = ""
 
+    Deduped same-day since 2026-07-22 — see _append_or_bump_claude_md.
+    """
+    key = _dedup_key(stage, exc)
     article = f"#{spec.get('number')} '{spec.get('title', '?')}'" if spec else "(spec not yet built)"
+    ts = datetime.now().isoformat(timespec="seconds")
     entry = (
         f"\n\n### Pipeline CRASH — {article} — stage '{stage}' "
         f"({date.today().isoformat()})\n"
+        f"<!-- aima-failure-key: {key} -->\n"
+        f"- **Occurrences:** 1\n"
+        f"- **First seen:** {ts}\n"
+        f"- **Last seen:** {ts}\n"
         f"- **Error:** {exc}\n"
         f"- **Traceback:**\n```\n{traceback.format_exc()}\n```\n"
         f"- Full run log: pipeline.log\n"
     )
-    (REPO_ROOT / "CLAUDE.md").write_text(claude_md + entry, encoding="utf-8")
-    log.info(f"[marco] Crash at stage '{stage}' written to CLAUDE.md — surface to Joe")
+    _append_or_bump_claude_md(key, entry, f"Crash at stage '{stage}'")
+
+
+def _write_halt_to_claude_md(spec: dict, stage: str, exc: Exception):
+    """Record a clean, EXPECTED halt (live research unavailable) in CLAUDE.md.
+
+    Deliberately short and traceback-free: this is a known operator condition
+    with a known fix, not a defect needing a stack trace. Keeping it visually
+    distinct from '### Pipeline CRASH' is the whole point — before 2026-07-22
+    an OAuth expiry and a genuine new bug looked identical in this file, so a
+    reader had to parse a traceback to tell "go run 'claude'" from "debug me".
+    """
+    key = _dedup_key(stage, exc)
+    article = f"#{spec.get('number')} '{spec.get('title', '?')}'" if spec else "(spec not yet built)"
+    ts = datetime.now().isoformat(timespec="seconds")
+    entry = (
+        f"\n\n### Pipeline HALT (recoverable) — {article} — stage '{stage}' "
+        f"({date.today().isoformat()})\n"
+        f"<!-- aima-failure-key: {key} -->\n"
+        f"- **Occurrences:** 1\n"
+        f"- **First seen:** {ts}\n"
+        f"- **Last seen:** {ts}\n"
+        f"- **What happened:** scout/trend_scout had no search-capable backend, so the run "
+        f"stopped cleanly rather than fabricating research from a tool-less fallback.\n"
+        f"- **Not a code bug.** No state advanced, no calendar row changed, nothing published.\n"
+        f"- **Fix:**\n```\n{exc}\n```\n"
+        f"- Full run log: pipeline.log\n"
+    )
+    _append_or_bump_claude_md(key, entry, f"Recoverable halt at stage '{stage}'")

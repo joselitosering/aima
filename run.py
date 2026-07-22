@@ -26,6 +26,13 @@ def _classify(result: dict) -> dict:
     nova = result.get("nova") or {}
     if result.get("crashed"):
         outcome = "crash"
+    elif result.get("trend_scout_unavailable"):
+        # Expected + recoverable: scout/trend_scout had no search-capable
+        # backend (CC OAuth expired / no funded OpenRouter key) and we refuse
+        # to fabricate research from a tool-less fallback. Kept OUT of the
+        # "crash" bucket on purpose so alerting can tell "go re-auth the CLI"
+        # apart from "a genuine new bug needs debugging". Added 2026-07-22.
+        outcome = "trend_scout_unavailable"
     elif result.get("cost_halt"):
         outcome = "cost_halt"
     elif result.get("halted_for_review"):
@@ -53,6 +60,7 @@ def _classify(result: dict) -> dict:
         "cost_usd": cost,
         "cost_ceiling_usd": result.get("cost_ceiling_usd"),
         "crashed_stage": result.get("crashed_stage"),
+        "halted_stage": result.get("halted_stage"),
         "error": result.get("error"),
         "vera_verdict": result.get("vera_verdict"),
         "flags": result.get("flags"),

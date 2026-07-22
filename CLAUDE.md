@@ -1,5 +1,13 @@
 # AIMA Project Memory
 
+### find_draft stale-stub bypass — FIXED (2026-07-17)
+Root cause: `writer.find_draft()` only checked `stat().st_size > 200` bytes. A partial/failed Writer CC run that wrote a 104-word skeleton to disk left a stub that easily passed that check. On the next pipeline run Marco called `find_draft()`, got the stub back, skipped `writer.run()` entirely, and passed the bad draft straight to Quill — causing repeated Quill halts for the same draft that Writer had already rejected. Fix: `find_draft()` now runs the same prose word-count gate (`range_min * 0.85` floor) Writer's `run()` uses. Stubs below the floor are logged and skipped; Marco calls `writer.run()` fresh instead. Also added `_prose_word_count()` helper (shared logic, glossary+refs stripped before counting).
+
+### Scout token overspend — FIXED (2026-07-17)
+Root cause (3 compounding issues): (1) `_list_cached_research()` returned ALL 18+ files in `articles/research/` with no topic filter — Scout would read whichever it judged relevant, including 65KB files costing ~16k tokens each, before any real research started. (2) No budget guardrail in Scout's prompt — it had no awareness of its 500k ceiling before firing tools. (3) `MAX_TURNS_MAP["scout"]` was 15, allowing unbounded context accumulation across turns.
+
+Fix: (a) `_list_cached_research()` now accepts `topic_tags` and `max_files=5`, filtering by tag keyword match on filename and sorting by size ascending (cheapest first). Topic-selection files excluded. Falls back to all candidates if filter is too aggressive. (b) `run()` reads `token_budget.json` before building `user_input` and injects a hard budget guardrail block at the top — ceiling, remaining tokens, and strict per-category limits (≤3 reads, ≤4 feeds, ≤3 web searches, stop at 4 stats + 2 quotes). (c) `MAX_TURNS_MAP["scout"]` reduced 15→8 (3 reads + 4 fetches + 1 write). Expected cost reduction: $0.90→$0.30–0.40 per article. Validate on article #28.
+
 ### Cora token tracking — FIXED (2026-07-04)
 Root cause: `call_cc_agent()` ran the `claude` CLI in plain `--print` text mode, which returns no usage data at all — `token_budget.json`'s `used` field was never incremented anywhere in the codebase (only ever zero-initialized by `cora.init_budget()`). Cora's prompt was asking the model to guess a `total_tokens_used` number with no real data in front of it.
 
@@ -289,6 +297,10 @@ This makes Scout fully pre-loadable — she can run on her own schedule to cache
 
 
 ### Pipeline CRASH — #19 'The Persuasion Engine: AI, Social Media, and the Death of Shared Reality' — stage 'quill' (2026-07-04)
+<!-- aima-failure-key: 2026-07-04|quill|CC agent [quill] failed (exit 1): -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** CC agent [quill] failed (exit 1):
 STDERR: (empty)
 STDOUT (first 500): You've hit your session limit · resets 3:50pm (America/Los_Angeles)
@@ -396,6 +408,10 @@ call below ~125k tokens. Joe asked; will be confirmed on the next real run.
 
 
 ### Pipeline CRASH — (spec not yet built) — stage 'priya' (2026-07-13)
+<!-- aima-failure-key: 2026-07-13|priya|CC agent [trend_scout] failed (exit 1): -->
+- **Occurrences:** 2
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** CC agent [trend_scout] failed (exit 1):
 STDERR: (empty)
 STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":315,"duration_api_ms":0,"num_turns":1,"result":"Not logged in · Please run /login","stop_reason":"stop_sequence","session_id":"3536e76d-21cd-4b08-82c5-99fab516c2c3","total_cost_usd":0,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier":"standard","cache_creation":{"ephemeral
@@ -417,6 +433,10 @@ STDERR: (empty)
 STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":315,"duration_api_ms":0,"num_
 
 ### Pipeline CRASH — (spec not yet built) — stage 'priya' (2026-07-13)
+<!-- aima-failure-key: 2026-07-13|priya|Expecting ',' delimiter: line 52 column 43 (char 1149) -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** Expecting ',' delimiter: line 52 column 43 (char 1149)
 - **Traceback:**
 ```
@@ -439,76 +459,11 @@ json.decoder.JSONDecodeError: Expecting ',' delimiter: line 52 column 43 (char 1
 - Full run log: pipeline.log
 
 
-### Pipeline CRASH — (spec not yet built) — stage 'priya' (2026-07-13)
-- **Error:** CC agent [trend_scout] failed (exit 1):
-STDERR: (empty)
-STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":220,"duration_api_ms":0,"num_turns":1,"result":"Not logged in · Please run /login","stop_reason":"stop_sequence","session_id":"034d95cc-6a91-4250-8717-cd32edf6c9a4","total_cost_usd":0,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier":"standard","cache_creation":{"ephemeral
-- **Traceback:**
-```
-Traceback (most recent call last):
-  File "/sessions/gallant-eager-clarke/mnt/aima/agents/marco.py", line 146, in run
-    log.info(f"[marco] Spec: #{spec['number']} '{spec['title']}' by {spec['author']}")
-  File "/sessions/gallant-eager-clarke/mnt/aima/agents/priya.py", line 93, in run
-    elif trend_scout.resolve_tbd_row(number):
-  File "/sessions/gallant-eager-clarke/mnt/aima/agents/trend_scout.py", line 284, in resolve_tbd_row
-    chosen = determine_trending_topic(
-  File "/sessions/gallant-eager-clarke/mnt/aima/agents/trend_scout.py", line 172, in determine_trending_topic
-    raw = call_cc_agent("trend_scout", TREND_SCOUT_PROMPT, user_input).strip()
-  File "/sessions/gallant-eager-clarke/mnt/aima/agents/base.py", line 222, in call_cc_agent
-    log.info(f"[{name.upper()}] calling CC subagent (model={model or 'CC-default'})")
-RuntimeError: CC agent [trend_scout] failed (exit 1):
-STDERR: (empty)
-STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":220,"duration_api_ms":0,"num_turns":1,"result":"Not logged in · Please run /login","stop_reason":"stop_sequence","session_id":"034d95cc-6a91-4250-8717-cd32edf6c9a4","total_cost_usd":0,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier":"standard","cache_creation":{"ephemeral
-
-```
-- Full run log: pipeline.log
-
-
 ### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'scout' (2026-07-14)
-- **Error:** API agent [scout] HTTP 402: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account","code":402,"metadata":{"provider_name":null,"previous_errors":[{"code":402,"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to
-- **Traceback:**
-```
-Traceback (most recent call last):
-  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 347, in call_api
-    with urllib.request.urlopen(req, timeout=300) as resp:
-         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-  File "C:\Python314\Lib\urllib\request.py", line 187, in urlopen
-    return opener.open(url, data, timeout)
-           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
-  File "C:\Python314\Lib\urllib\request.py", line 493, in open
-    response = meth(req, response)
-  File "C:\Python314\Lib\urllib\request.py", line 602, in http_response
-    response = self.parent.error(
-        'http', request, response, code, msg, hdrs)
-  File "C:\Python314\Lib\urllib\request.py", line 531, in error
-    return self._call_chain(*args)
-           ~~~~~~~~~~~~~~~~^^^^^^^
-  File "C:\Python314\Lib\urllib\request.py", line 464, in _call_chain
-    result = func(*args)
-  File "C:\Python314\Lib\urllib\request.py", line 611, in http_error_default
-    raise HTTPError(req.full_url, code, msg, hdrs, fp)
-urllib.error.HTTPError: HTTP Error 402: Payment Required
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 292, in run
-    research = scout.run(spec)
-  File "D:\Apps\DevOps\Github\aima\agents\scout.py", line 206, in run
-    raw = call_cc_agent("scout", SCOUT_PROMPT, user_input)
-  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 197, in call_cc_agent
-    return call_api(name, system_prompt, user_input,
-                    model=model_override or API_MODEL_MAP[name],
-                    fallback=API_FALLBACK_MODEL)
-  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 351, in call_api
-    raise RuntimeError(f"API agent [{name}] HTTP {exc.code}: {body}")
-RuntimeError: API agent [scout] HTTP 402: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account","code":402,"metadata":{"provider_name":null,"previous_errors":[{"code":402,"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to
-
-```
-- Full run log: pipeline.log
-
-
-### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'scout' (2026-07-14)
+<!-- aima-failure-key: 2026-07-14|scout|API agent [scout] HTTP 402: {"error":{"message":"This request requires more credits, or fe -->
+- **Occurrences:** 2
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** API agent [scout] HTTP 402: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account","code":402,"metadata":{"provider_name":null,"previous_errors":[{"code":402,"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 3990. To increase, visit https://openrouter.ai/settings/credits and upgrade to
 - **Traceback:**
 ```
@@ -553,6 +508,10 @@ RuntimeError: API agent [scout] HTTP 402: {"error":{"message":"This request requ
 
 
 ### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'quill' (2026-07-14)
+<!-- aima-failure-key: 2026-07-14|quill|[quill] Word count gate: 2912 words exceeds hard ceiling (1980 = 1100 × 1.8). Article NOT  -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** [quill] Word count gate: 2912 words exceeds hard ceiling (1980 = 1100 × 1.8). Article NOT saved. Check QUILL_PROMPT word target instruction and --max-turns cap.
 - **Traceback:**
 ```
@@ -572,6 +531,10 @@ RuntimeError: [quill] Word count gate: 2912 words exceeds hard ceiling (1980 = 1
 
 
 ### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'quill' (2026-07-14)
+<!-- aima-failure-key: 2026-07-14|quill|[quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word co -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 1830 outside acceptable 765-1440 (persona range 900-1200). Draft at: articles/drafts/government-brief-algorithm-025-draft.html
 - **Traceback:**
 ```
@@ -591,6 +554,10 @@ RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does 
 
 
 ### Pipeline CRASH — #25 'The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law' — stage 'quill' (2026-07-14)
+<!-- aima-failure-key: 2026-07-14|quill|[quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 0 gloss -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 0 glossary terms (need >=6). Draft at: articles/drafts/government-brief-algorithm-025-draft.html
 - **Traceback:**
 ```
@@ -682,6 +649,10 @@ being added to that loop.
 
 
 ### Pipeline CRASH — #26 'Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space' — stage 'writer' (2026-07-16)
+<!-- aima-failure-key: 2026-07-16|writer|[writer] Word count gate: 211 words outside acceptable 425-1200 (persona range 500-1000 wo -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** [writer] Word count gate: 211 words outside acceptable 425-1200 (persona range 500-1000 words). Draft NOT accepted: articles/drafts/data-centers-in-orbit-why-026-draft.html. Re-run Writer, or adjust the persona range if this topic genuinely needs more room.
 - **Traceback:**
 ```
@@ -699,6 +670,10 @@ RuntimeError: [writer] Word count gate: 211 words outside acceptable 425-1200 (p
 
 
 ### Pipeline CRASH — #26 'Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space' — stage 'scout' (2026-07-16)
+<!-- aima-failure-key: 2026-07-16|scout|CC agent [scout] failed (exit 1): -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** CC agent [scout] failed (exit 1):
 STDERR: (empty)
 STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":529,"duration_ms":198894,"duration_api_ms":1380,"num_turns":1,"result":"API Error: 529 Overloaded. This is a server-side issue, usually temporary — try again in a moment. If it persists, check https://status.claude.com.","stop_reason":"stop_sequence","session_id":"47503b6c-ef74-4467-87f7-9f270243bb97","total_cost_usd":0.004776,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_token
@@ -722,6 +697,10 @@ STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_er
 
 
 ### Pipeline CRASH — #26 'Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space' — stage 'quill' (2026-07-16)
+<!-- aima-failure-key: 2026-07-16|quill|[quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word co -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 1217 outside acceptable 425-1200 (persona range 500-1000). Draft at: articles/drafts/data-centers-in-orbit-why-026-draft.html
 - **Traceback:**
 ```
@@ -741,6 +720,10 @@ RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does 
 
 
 ### Pipeline CRASH — #26 'Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space' — stage 'porter' (2026-07-16)
+<!-- aima-failure-key: 2026-07-16|porter|Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1. -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
 - **Error:** Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1.
 - **Traceback:**
 ```
@@ -760,3 +743,320 @@ subprocess.CalledProcessError: Command '['git', 'push', 'origin', 'main']' retur
 
 ```
 - Full run log: pipeline.log
+
+
+### Pipeline CRASH — #27 'Power Hungry: The Carbon Ledger of the AI Compute Boom' — stage 'writer' (2026-07-17)
+<!-- aima-failure-key: 2026-07-17|writer|[writer] Word count gate: 104 words outside acceptable 1020-1800 (persona range 1200-1500  -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
+- **Error:** [writer] Word count gate: 104 words outside acceptable 1020-1800 (persona range 1200-1500 words). Draft NOT accepted: articles/drafts/power-hungry-the-carbon-ledger-027-draft.html. Re-run Writer, or adjust the persona range if this topic genuinely needs more room.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 323, in run
+    draft_path = writer.run(spec, research)
+  File "D:\Apps\DevOps\Github\aima\agents\writer.py", line 195, in run
+    raise RuntimeError(
+    ...<4 lines>...
+    )
+RuntimeError: [writer] Word count gate: 104 words outside acceptable 1020-1800 (persona range 1200-1500 words). Draft NOT accepted: articles/drafts/power-hungry-the-carbon-ledger-027-draft.html. Re-run Writer, or adjust the persona range if this topic genuinely needs more room.
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #27 'Power Hungry: The Carbon Ledger of the AI Compute Boom' — stage 'quill' (2026-07-17)
+<!-- aima-failure-key: 2026-07-17|quill|[quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word co -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
+- **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 104 outside acceptable 1020-1800 (persona range 1200-1500); 2 H2 sections (need 5-6); 0 stat cards (need >=4); no pullquote found. Draft at: articles/drafts/power-hungry-the-carbon-ledger-027-draft.html
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 332, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 102, in run
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 104 outside acceptable 1020-1800 (persona range 1200-1500); 2 H2 sections (need 5-6); 0 stat cards (need >=4); no pullquote found. Draft at: articles/drafts/power-hungry-the-carbon-ledger-027-draft.html
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #27 'Power Hungry: The Carbon Ledger of the AI Compute Boom' — stage 'quill' (2026-07-17)
+<!-- aima-failure-key: 2026-07-17|quill|[quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 8 H2 se -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
+- **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 8 H2 sections (need 5-6). Draft at: articles/drafts/power-hungry-the-carbon-ledger-027-draft.html
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 332, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 102, in run
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 8 H2 sections (need 5-6). Draft at: articles/drafts/power-hungry-the-carbon-ledger-027-draft.html
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #27 'Power Hungry: The Carbon Ledger of the AI Compute Boom' — stage 'porter' (2026-07-20)
+<!-- aima-failure-key: 2026-07-20|porter|Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1. -->
+- **Occurrences:** 2
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
+- **Error:** Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 417, in run
+    porter_result = porter.run(spec, dry_run=dry_run, gs_enabled=cfg["GS_ENABLED"])
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 103, in run
+    git_push()
+    ~~~~~~~~^^
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 408, in git_push
+    subprocess.run(["git", "push", "origin", "main"], cwd=REPO_ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 1.
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #28 'The Termination Algorithm: How 'Token Consumption' Became a Layoff Metric' — stage 'quill' (2026-07-21)
+<!-- aima-failure-key: 2026-07-21|quill|[quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 8 H2 se -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
+- **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 8 H2 sections (need 5-6). Draft at: articles/drafts/the-termination-algorithm-how-token-028-draft.html
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 332, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 93, in run
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): 8 H2 sections (need 5-6). Draft at: articles/drafts/the-termination-algorithm-how-token-028-draft.html
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — (spec not yet built) — stage 'priya' (2026-07-22)
+<!-- aima-failure-key: 2026-07-22|priya|CC agent [trend_scout] failed (exit 1): -->
+- **Occurrences:** 1
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
+- **Error:** CC agent [trend_scout] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":2049,"duration_api_ms":0,"num_turns":1,"result":"Failed to authenticate: OAuth session expired and could not be refreshed","stop_reason":"stop_sequence","session_id":"e29481be-2ba1-4bbe-9fa6-580e2bee854c","total_cost_usd":0,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier"
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 280, in run
+    spec = priya.run()
+  File "D:\Apps\DevOps\Github\aima\agents\priya.py", line 145, in run
+    elif trend_scout.resolve_tbd_row(number):
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\Apps\DevOps\Github\aima\agents\trend_scout.py", line 284, in resolve_tbd_row
+    chosen = determine_trending_topic(
+        row["author"],
+    ...<2 lines>...
+        number=number,
+    )
+  File "D:\Apps\DevOps\Github\aima\agents\trend_scout.py", line 172, in determine_trending_topic
+    raw = call_cc_agent("trend_scout", TREND_SCOUT_PROMPT, user_input).strip()
+          ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 261, in call_cc_agent
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: CC agent [trend_scout] failed (exit 1):
+STDERR: (empty)
+STDOUT (first 500): {"type":"result","subtype":"success","is_error":true,"api_error_status":null,"duration_ms":2049,"duration_api_ms":0,"num_turns":1,"result":"Failed to authenticate: OAuth session expired and could not be refreshed","stop_reason":"stop_sequence","session_id":"e29481be-2ba1-4bbe-9fa6-580e2bee854c","total_cost_usd":0,"usage":{"input_tokens":0,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":0,"server_tool_use":{"web_search_requests":0,"web_fetch_requests":0},"service_tier"
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — (spec not yet built) — stage 'priya' (2026-07-22)
+<!-- aima-failure-key: 2026-07-22|priya|CC agent [trend_scout] failed: Claude Code OAuth expired. -->
+- **Occurrences:** 4
+- **First seen:** (backfilled — predates dedup)
+- **Last seen:** (backfilled — predates dedup)
+- **Error:** CC agent [trend_scout] failed: Claude Code OAuth expired.
+Fix options (pick one):
+  1. Re-authenticate now: open a terminal, run 'claude', complete OAuth.
+     (Token lasts weeks — if this expires daily, Task Scheduler may be
+      running as SYSTEM instead of your user account. Fix the task's
+      'Run As' setting to use your Windows login.)
+  2. Add ANTHROPIC_API_KEY=<key> to agents/.env for headless fallback.
+     Get a key at https://console.anthropic.com/settings/keys
+     Cost: ~$0.10-0.50/article (only charged when OAuth is expired).
+  3. Fund OpenRouter + uncomment OPENROUTER_API_KEY in agents/.env.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 280, in run
+    spec = priya.run()
+  File "D:\Apps\DevOps\Github\aima\agents\priya.py", line 145, in run
+    elif trend_scout.resolve_tbd_row(number):
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\Apps\DevOps\Github\aima\agents\trend_scout.py", line 284, in resolve_tbd_row
+    chosen = determine_trending_topic(
+        row["author"],
+    ...<2 lines>...
+        number=number,
+    )
+  File "D:\Apps\DevOps\Github\aima\agents\trend_scout.py", line 172, in determine_trending_topic
+    raw = call_cc_agent("trend_scout", TREND_SCOUT_PROMPT, user_input).strip()
+          ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 326, in call_cc_agent
+    raise RuntimeError(
+    ...<10 lines>...
+    )
+RuntimeError: CC agent [trend_scout] failed: Claude Code OAuth expired.
+Fix options (pick one):
+  1. Re-authenticate now: open a terminal, run 'claude', complete OAuth.
+     (Token lasts weeks — if this expires daily, Task Scheduler may be
+      running as SYSTEM instead of your user account. Fix the task's
+      'Run As' setting to use your Windows login.)
+  2. Add ANTHROPIC_API_KEY=<key> to agents/.env for headless fallback.
+     Get a key at https://console.anthropic.com/settings/keys
+     Cost: ~$0.10-0.50/article (only charged when OAuth is expired).
+  3. Fund OpenRouter + uncomment OPENROUTER_API_KEY in agents/.env.
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #29 'The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days' — stage 'scout' (2026-07-22)
+<!-- aima-failure-key: 2026-07-22|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 2
+- **First seen:** 2026-07-22T15:03:36
+- **Last seen:** 2026-07-22T15:03:50
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Scheduled-run OAuth hardening — Task Scheduler theory FALSIFIED (2026-07-22)
+
+**The premise was wrong: there is no scheduled task.** Five identical `priya`-stage crashes
+on 2026-07-22 were attributed to a scheduled run (`AIMA_pipeline_...`) running under the
+wrong identity. Checked the actual machine: **no Windows scheduled task runs this pipeline
+at all.** The only AIMA-related tasks are `AIMA-Backfill-002/003/007/012` (one-shot LinkedIn
+`post_0NN.bat` backfills) and `InstapostAIMA`/`_Story` (a different project) — all already
+running as `ShadowMonkey` / Interactive / Limited, none of them touching `run.py`. There is
+also no Claude Code cron job and no cloud scheduled task. **The 5 runs were manual/dashboard-
+triggered** (13:50, 13:57, 14:02, 14:02 — a retry cluster, consistent with hitting the same
+wall each time).
+
+**So the "Run As = SYSTEM" hypothesis that has been sitting in `base.py`'s error text across
+multiple incidents is dead — do not re-derive it.** The real cause is simpler and dumber:
+the `claude` CLI's OAuth token is genuinely expired for Joe's own interactive login. Proof —
+running the canary directly in a normal PowerShell session as ShadowMonkey:
+
+```
+PS> claude --print "ping"
+Failed to authenticate: OAuth session expired and could not be refreshed   (exit 1)
+```
+
+No task identity is involved. **Fix is a human action: open a terminal, run `claude`,
+complete OAuth.** It cannot be done headlessly, and nothing in this repo can work around it
+for the live-research agents (see next section for why we no longer try).
+
+**The `base.py` error text was corrected** to stop asserting the Task-Scheduler theory.
+
+### Live-research agents refuse the tool-less fallback (2026-07-22)
+
+`call_anthropic_api()` (Tier B) is a plain Messages API call — **no tools, no web search**.
+`scout` and `trend_scout` exist *only* to survey what is actually out there right now
+(`scout-sources.json` feeds/APIs + WebSearch). If an OAuth expiry silently fell through to
+Tier B, they would answer from training data and emit confident "trending" topics and
+"research" stats with plausible-looking, unverified sources — a direct violation of the
+zero-hallucination rule and strictly worse than the crash, because a crash is at least honest.
+
+- `agents/base.py`: new `LIVE_RESEARCH_AGENTS = ("scout", "trend_scout")` +
+  `LiveResearchUnavailableError`. In `call_cc_agent()`'s auth-failure branch these two now
+  raise that error **instead of** Tier B, *even when `ANTHROPIC_API_KEY` is set*. Tier A
+  (OpenRouter) is deliberately still allowed for them — its `:online` models keep real search,
+  so it is an acceptable backend. **Every other CC agent (`iris`, `cora`, `lumen`, writers)
+  keeps Tier B unchanged** — governance/synthesis work doesn't need live facts, so that's an
+  acceptable trade there.
+- `agents/marco.py`: `run()` catches `LiveResearchUnavailableError` *before* the generic
+  `except Exception`, so it never lands in the `crashed` bucket. Returns
+  `trend_scout_unavailable: True` + `halted_stage`. **No state advance, no calendar mutation,
+  nothing published** — the catch is above Stage 9, so `_update_state()` never runs.
+- `agents/marco.py`: new `_write_halt_to_claude_md()` writes a short, traceback-free
+  `### Pipeline HALT (recoverable)` block. The point is that "go re-auth the CLI" no longer
+  looks identical to "a genuine new bug needs debugging" in this file.
+- `run.py`: `_classify()` gained the `trend_scout_unavailable` outcome (+ `halted_stage` in
+  the status file) so alerting can distinguish the two.
+
+**OpenRouter was NOT enabled** — `OPENROUTER_API_KEY` stays commented out in `agents/.env`
+per Joe (DECISION-LOG.md). Funding it is the one path that would give `scout`/`trend_scout`
+a tool-capable fallback without OAuth; that remains Joe's call.
+
+### CLAUDE.md crash-log dedup (2026-07-22)
+
+`_write_crash_to_claude_md()` appended a full traceback block unconditionally on every call.
+Today that wrote the *same* traceback 5 times and pushed this file past 76KB. Both failure
+writers now go through `_append_or_bump_claude_md()`, keyed on
+`date | stage | error-first-line` via a `<!-- aima-failure-key: ... -->` marker: a same-day
+repeat bumps `Occurrences:` / `Last seen:` on the existing entry instead of appending.
+Verified live — two consecutive halted runs produced **one** block reading `Occurrences: 2`
+with distinct first/last-seen timestamps. Already-duplicated historical blocks were
+retro-compacted the same way (24 → 18 CRASH blocks, 76,817 → 67,983 bytes).
+
+### Article #29 unblocked — row resolved without a CC call (2026-07-22)
+
+Row 29 was still the literal `TBD — Trending Topic` for Kenji Nakamoto, and every run called
+`trend_scout` to resolve it, which is exactly where all 5 crashes landed. `trend_scout`'s CC
+path is unavailable, so the topic was surveyed live with Claude Code's own WebSearch and
+persisted through `trend_scout.persist_topic_to_calendar()` — the sanctioned mutator, so the
+"Trend Scout is the sole calendar writer" rule is preserved.
+
+- **#29 = "The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery
+  From Years to Days"** (AI Science) — self-driving labs, squarely Kenji's beat.
+- Two higher-ranked candidates were **rejected on dedup**: humanoid-robot production
+  deployment (collides with #20 *Robots Go Public* and #23 *The Robot Beside You*) and the
+  BCI trial split (collides with #33 *The Brain-Computer Interface Horizon*).
+- Fiduciary trace: `articles/research/the-lab-that-runs-itself-topic-selection.json`
+  (marked `resolved_by: claude_code_manual`, honest about not being a CC-agent selection)
+  + `optimization/optimization_report.json`. Cost: $0.00.
+
+**Confirmed by a real `python run.py`:** Priya now builds the #29 spec and gets past
+Trend Scout cleanly; the run then halts at Scout with the new recoverable-halt path
+(`outcome=trend_scout_unavailable`, cost $0.00) instead of crashing. **The pipeline will keep
+halting at Scout until someone runs `claude` and completes OAuth** — that is the one
+remaining blocker, and it is a human action.
