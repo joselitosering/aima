@@ -68,8 +68,10 @@
     },
     "CO": {
       "budget": 5000,
-      "used": 0,
-      "status": "idle"
+      "used": 68665,
+      "status": "over_budget",
+      "last_call_cost_usd": 0.7474989999999999,
+      "cumulative_cost_usd": 0.747499
     },
     "MR": {
       "budget": 0,

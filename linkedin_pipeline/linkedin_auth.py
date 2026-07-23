@@ -23,7 +23,10 @@ load_dotenv()
 CLIENT_ID     = os.getenv("LINKEDIN_CLIENT_ID")
 CLIENT_SECRET = os.getenv("LINKEDIN_CLIENT_SECRET")
 REDIRECT_URI  = os.getenv("LINKEDIN_REDIRECT_URI", "http://localhost:8080/callback")
-SCOPES        = "openid profile email w_member_social w_organization_social r_organization_social rw_organization_admin r_organization_admin r_member_postAnalytics"
+# r_member_postAnalytics removed 2026-07-23: not authorized for this app (Echo analytics,
+# pending LinkedIn approval). It blocked the whole OAuth flow; posting only needs the
+# w_*_social scopes. Re-add it here once LinkedIn approves the analytics product.
+SCOPES        = "openid profile email w_member_social w_organization_social r_organization_social rw_organization_admin r_organization_admin"
 AUTH_URL      = "https://www.linkedin.com/oauth/v2/authorization"
 TOKEN_URL     = "https://www.linkedin.com/oauth/v2/accessToken"
 USERINFO_URL  = "https://api.linkedin.com/v2/userinfo"

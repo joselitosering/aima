@@ -1086,3 +1086,77 @@ subprocess.CalledProcessError: Command '['git', 'push', 'origin', 'main']' retur
 
 ```
 - Full run log: pipeline.log
+
+
+### Pipeline CRASH — #29 'The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days' — stage 'porter' (2026-07-23)
+<!-- aima-failure-key: 2026-07-23|porter|HTTP Error 403: Forbidden -->
+- **Occurrences:** 1
+- **First seen:** 2026-07-23T12:12:21
+- **Last seen:** 2026-07-23T12:12:21
+- **Error:** HTTP Error 403: Forbidden
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 418, in run
+    porter_result = porter.run(spec, dry_run=dry_run, gs_enabled=cfg["GS_ENABLED"])
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 139, in run
+    response = _post_to_gas(gas_endpoint, live_url)
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 48, in _post_to_gas
+    with urllib.request.urlopen(req, timeout=15) as resp:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 493, in open
+    response = meth(req, response)
+  File "C:\Python314\Lib\urllib\request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "C:\Python314\Lib\urllib\request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 464, in _call_chain
+    result = func(*args)
+  File "C:\Python314\Lib\urllib\request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 403: Forbidden
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #29 'The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days' — stage 'nova' (2026-07-23)
+<!-- aima-failure-key: 2026-07-23|nova|HTTP Error 401: Unauthorized -->
+- **Occurrences:** 1
+- **First seen:** 2026-07-23T12:14:41
+- **Last seen:** 2026-07-23T12:14:41
+- **Error:** HTTP Error 401: Unauthorized
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 428, in run
+    nova_result = nova.run(spec, porter_result["live_url"], dry_run=dry_run)
+  File "D:\Apps\DevOps\Github\aima\agents\nova.py", line 106, in run
+    company_urn = post_to_linkedin(article)
+  File "D:\Apps\DevOps\Github\aima\linkedin_pipeline\linkedin_poster.py", line 403, in post_to_linkedin
+    with urllib.request.urlopen(req, timeout=30) as resp:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 493, in open
+    response = meth(req, response)
+  File "C:\Python314\Lib\urllib\request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "C:\Python314\Lib\urllib\request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 464, in _call_chain
+    result = func(*args)
+  File "C:\Python314\Lib\urllib\request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 401: Unauthorized
+
+```
+- Full run log: pipeline.log

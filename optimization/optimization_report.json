@@ -2141,5 +2141,147 @@
       }
     ],
     "resolved_by": "claude_code_manual (CC OAuth expired -- see topic-selection sidecar)"
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-23",
+    "total_tokens_used": 557213,
+    "by_agent": {
+      "IR": 0,
+      "PR": 0,
+      "SC": 437242,
+      "TS": 0,
+      "WR": 119971,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PT": 0,
+      "NV": 0,
+      "EC": 0,
+      "LM": 0,
+      "CO": 0,
+      "MR": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "MEDIUM",
+        "claim": "Palgrave & Schoop re-analysis concluded essentially zero of A-Lab's 41 compounds were genuinely novel",
+        "issue": "Research JSON's own unverified_flags state the underlying preprint/paper was never opened; the finding is sourced only via Chemistry World (secondary). Must be framed as a serious independent critique, not settled consensus. Verify the primary preprint before this figure is re-cited in any future article.",
+        "source_status": "named source + year present (Chemistry World, 2024) but primary source unopened"
+      },
+      {
+        "severity": "MEDIUM",
+        "claim": "Berkeley Lab AutoBot applications \u2014 LEDs, lasers, photodetectors (2025)",
+        "issue": "Sourced to an LBL 'Big Science Stories of 2025' roundup dated 2025-12-17, which post-dates the stated research window and was flagged unverified in the research JSON itself. Specific application claims should not be stated as definitive without the primary AutoBot publication.",
+        "source_status": "named source + year present, primary publication unconfirmed"
+      },
+      {
+        "severity": "LOW",
+        "claim": "A-Lab: 41 of 58 compounds, 71% success rate, ~21 experiments/day over 17 days",
+        "issue": "Secondary sources disagree ('36 of 57'). The primary Nature 2023 paper figure is canonical and correctly chosen, but any variant number appearing in the body copy would be a fabrication risk.",
+        "source_status": "fully sourced \u2014 Nature (Szymanski et al.), 2023, DOI URL present"
+      },
+      {
+        "severity": "INFO",
+        "claim": "Body-prose stat verification could not be completed",
+        "issue": "Only the first 8000 chars of the article HTML were supplied \u2014 all of it <head> tracking/meta/JSON-LD. Zero body prose, zero stat-grid cards, and zero pullquote text were visible to this audit. Stat-to-research traceability and inline citation coverage are therefore UNVERIFIED for this article, not cleared. Vera's structural QC passed the article; Cora's factual cross-check did not run.",
+        "source_status": "n/a \u2014 input truncation"
+      }
+    ],
+    "reversion_flags": [
+      {
+        "agent": "CO",
+        "issue": "Token tracking regression persists. Stages priya, quill, maya, vera, porter and nova all executed per Marco's run summary, yet PR/QL/MY/VR/PT/NV all report used=0. Only SC and WR recorded usage. This is the same class of failure logged CRITICAL after articles #018/#019 \u2014 partially fixed, still incomplete.",
+        "impact": "Real per-article cost is understated. Recorded spend is $1.4449 (SC $1.2041 + WR $0.2408); true spend is higher by the unmeasured Quill authoring+edit call and Maya's merge call \u2014 historically the two largest single buckets after Scout."
+      },
+      {
+        "agent": "QL",
+        "issue": "QL budget is set to 0 while Quill demonstrably ran (stage present, revisions=0). A zero budget means the 80% threshold can never fire for the pipeline's most expensive merged call. Per CLAUDE.md the QL budget was deliberately raised 22k\u219242k for the Writer-merge; it has since been reset to 0.",
+        "impact": "Quill is currently ungoverned \u2014 no ceiling, no alert, no measurement."
+      }
+    ],
+    "budget_alerts": [
+      {
+        "agent": "SC",
+        "severity": "HIGH",
+        "used": 437242,
+        "budget": 500000,
+        "pct": 87.4,
+        "cost_usd": 1.204102,
+        "note": "Exceeds the 80% threshold. The 2026-07-17 Scout overspend fix (topic-filtered cache listing, max_files=5, budget guardrail in prompt, MAX_TURNS 15\u21928) targeted $0.30\u20130.40/article; this run landed at $1.20 \u2014 roughly 3x the target and 83% of total measured article cost. The guardrail did not hold on #29. Recommend re-inspecting Scout's actual turn count and cached-file reads for this run before #30."
+      },
+      {
+        "agent": "WR",
+        "severity": "OK",
+        "used": 119971,
+        "budget": 300000,
+        "pct": 40.0,
+        "cost_usd": 0.240787,
+        "note": "Well within budget. Flag 'writer_draft_reused' confirms a pre-staged draft was reused rather than re-authored \u2014 the skip-and-reuse guardrail worked and saved a cold start."
+      },
+      {
+        "agent": "QL",
+        "severity": "MEDIUM",
+        "used": 0,
+        "budget": 0,
+        "pct": null,
+        "note": "Budget of 0 with a stage that ran. Cannot compute utilization. Restore to 42000 per the Direction B merge decision."
+      },
+      {
+        "agent": "MY",
+        "severity": "MEDIUM",
+        "used": 0,
+        "budget": 750000,
+        "pct": 0.0,
+        "note": "Maya ran (maya stage present, revisions=0) but recorded no usage. Untracked, not unused."
+      },
+      {
+        "agent": "VR",
+        "severity": "MEDIUM",
+        "used": 0,
+        "budget": 650000,
+        "pct": 0.0,
+        "note": "Vera ran and passed the article to Porter, but recorded no usage. Untracked, not unused."
+      }
+    ],
+    "guardrails_applied": [
+      "Scope check \u2014 writer/Quill: no image generation, path manipulation, or img/ writes attributable to the copy stages. CLEAN.",
+      "Scope check \u2014 Maya: og:image and article:header-image both point to the spec path img/articles/aima-029-the-lab-that-runs-itself.jpg; no evidence of copy edits. CLEAN.",
+      "Scope check \u2014 calendar mutation: Trend Scout remains the sole calendar writer. Row 29 was resolved on 2026-07-22 via trend_scout.persist_topic_to_calendar() with an honest resolved_by: claude_code_manual trace. No unsanctioned mutator observed this run. CLEAN.",
+      "Scope check \u2014 Vera: verdict was pass-through to Porter with no auto-revision (revisions quill=0, maya=0). The halt-and-report fiduciary rule held. CLEAN.",
+      "Quote check: all 3 expert quotes carry a named individual, institutional affiliation, and a live source URL \u2014 Milad Abolhasani (NC State, x2) and Robert Palgrave (UCL). No anonymous, composite, or 'one industry expert' attributions in the research brief. CLEAN at the research layer; body-copy quote usage UNVERIFIED due to HTML truncation.",
+      "Stat check: all 5 research statistics carry a named source AND a year AND a URL. No unsourced stats at the research layer. CLEAN at the research layer; stat-grid card sourcing UNVERIFIED due to HTML truncation.",
+      "RECOMMENDED \u2014 restore QL budget to 42000 in agents/config.py; a zero ceiling disables governance on the merged authoring+edit call.",
+      "RECOMMENDED \u2014 wire _record_token_usage() into the priya/quill/maya/vera completion paths. Six of eight executed stages recorded nothing this run; measured cost is a floor, not a total.",
+      "RECOMMENDED \u2014 re-audit Scout on #30. At 87.4% of ceiling and $1.20, the 2026-07-17 guardrail is not delivering its $0.30\u20130.40 target and Scout is now 83% of measured article cost.",
+      "OPERATIONAL \u2014 Porter returned gs_row: -1 (Google Sheets canonical logging did not land) despite a successful publish and successful Nova company post + reshare. Consistent with the 403 on the GAS endpoint logged earlier today. Outside Cora's token remit; reported to Marco for Iris/human follow-up so the GS ledger does not silently drift from published reality.",
+      "OPERATIONAL \u2014 metadata date drift: article:publish-date and article:published_time read 2026-07-09 while the actual deploy timestamp is 2026-07-23T19:50:27Z. Fourteen-day discrepancy in the structured data Google will index. Flagged for Iris; not auto-corrected (Cora does not write files)."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-23",
+    "article_number": 29,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-lab-that-runs-itself-029.html",
+    "gs_row": -1,
+    "company_urn": "urn:li:share:7486145733163675648",
+    "reshare_urn": "urn:li:share:7486145746811920384",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]
