@@ -166,12 +166,16 @@ def _save_header_image(tmp_path, dest_rel: str):
     Path(tmp_path).unlink(missing_ok=True)
 
 
-def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str):
+def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str,
+                         exclude_hashes: set = None):
     """
     Source 2 header images from Pexels (free stock photography) based on the
     article's category + mood, then resize + save them to primary_path (used
     as the article cover) and alt_path (saved alternate). Same "grab 2, use 1,
     save 1" contract as generation — only the acquisition method differs.
+
+    exclude_hashes: MD5 hashes of all existing covers. Any downloaded photo
+    whose hash matches is skipped so we never silently reuse an existing image.
 
     Requires PEXELS_API_KEY in agents/.env (free key: https://www.pexels.com/api/).
     Raises on any failure so the caller can fall back to stub placeholders.
@@ -197,11 +201,11 @@ def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str):
         "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     )
 
-    # Pull a small pool so the primary and alt are visually distinct.
+    # Pull a large pool — the default 15 is too small when we skip duplicates.
     params = urllib.parse.urlencode({
         "query": query,
         "orientation": "landscape",
-        "per_page": 15,
+        "per_page": 30,
         "size": "large",
     })
     req = urllib.request.Request(
@@ -216,22 +220,48 @@ def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str):
         raise RuntimeError(f"[maya] Pexels search failed ({exc.code}): {body}") from exc
 
     photos = data.get("photos") or []
-    if len(photos) < 2:
+    if not photos:
         raise RuntimeError(
-            f"[maya] Pexels returned <2 photos for query '{query}' — cannot fill primary + alt"
+            f"[maya] Pexels returned no photos for query '{query}'"
         )
 
-    # Primary = top hit; alt = the next distinct photo in the pool.
-    for i, (photo, dest) in enumerate(zip([photos[0], photos[1]], [primary_path, alt_path])):
+    # Iterate pool in order, skipping any photo whose downloaded image hash
+    # matches an existing cover. This prevents Pexels returning the same top
+    # result for similar-category articles across different runs.
+    import hashlib as _hashlib
+    selected: list = []   # list of (photo_meta, tmp_path)
+    for photo in photos:
+        if len(selected) >= 2:
+            break
         src = photo.get("src", {})
         img_url = src.get("large2x") or src.get("large") or src.get("original")
         if not img_url:
-            raise RuntimeError(f"[maya] Pexels photo {photo.get('id')} has no usable src URL")
-        tmp_path = REPO_ROOT / f"_maya_stock_tmp_{i}.jpg"
+            continue
+        idx = len(selected)
+        tmp_path = REPO_ROOT / f"_maya_stock_tmp_{idx}.jpg"
         dl = urllib.request.Request(img_url, headers={"User-Agent": ua})
         with urllib.request.urlopen(dl, timeout=60) as r, open(tmp_path, "wb") as fh:
             fh.write(r.read())
-        _save_header_image(tmp_path, dest)
+        if exclude_hashes:
+            h = _hashlib.md5(Path(tmp_path).read_bytes()).hexdigest()
+            if h in exclude_hashes:
+                log.warning(
+                    f"[maya] Pexels photo {photo.get('id')} matches an existing cover "
+                    f"— skipping (hash {h[:8]})"
+                )
+                Path(tmp_path).unlink(missing_ok=True)
+                continue
+        selected.append((photo, tmp_path))
+
+    if len(selected) < 2:
+        raise RuntimeError(
+            f"[maya] Could not find 2 non-duplicate photos from Pexels pool "
+            f"of {len(photos)} for query '{query}'"
+        )
+
+    for i, (photo, tmp) in enumerate(selected):
+        dest = primary_path if i == 0 else alt_path
+        _save_header_image(tmp, dest)
         log.info(
             f"[maya] stock image #{i} from Pexels (photo id {photo.get('id')}, "
             f"query '{query}') -> {dest}"
@@ -305,24 +335,30 @@ def run(article_path: str, spec: dict) -> str:
             _alt_full.exists()     and _alt_full.stat().st_size > 1024
         )
 
-    def _is_duplicate_of_prev() -> bool:
-        """True if primary image is byte-for-byte identical to the previous article's cover."""
-        import hashlib, glob as _glob
-        prev = sorted(_glob.glob(str(REPO_ROOT / f"img/articles/aima-{number-1:03d}-*.jpg")))
-        if not prev:
+    def _is_any_duplicate() -> bool:
+        """True if primary image is byte-for-byte identical to ANY existing article cover."""
+        import hashlib
+        if not _primary_full.exists() or _primary_full.stat().st_size <= 1024:
             return False
-        cur_hash  = hashlib.md5(_primary_full.read_bytes()).hexdigest()
-        prev_hash = hashlib.md5(Path(prev[-1]).read_bytes()).hexdigest()
-        return cur_hash == prev_hash
+        cur_hash = hashlib.md5(_primary_full.read_bytes()).hexdigest()
+        for p in sorted((REPO_ROOT / "img/articles").glob("aima-*.jpg")):
+            if p.resolve() == _primary_full.resolve():
+                continue  # skip self
+            if hashlib.md5(p.read_bytes()).hexdigest() == cur_hash:
+                log.warning(f"[maya] primary image is a duplicate of {p.name} — forcing regeneration")
+                return True
+        return False
 
-    if _both_ready() and not _is_duplicate_of_prev():
+    if _both_ready() and not _is_any_duplicate():
         log.info("[maya] real images already on disk — skipping generation")
     else:
         if _both_ready():
-            log.warning(
-                f"[maya] primary image is identical to article #{number-1:03d} cover "
-                "— forcing regeneration"
-            )
+            # Remove the duplicate so _both_ready() goes False below and
+            # generation actually runs. Without this, _both_ready() stays True
+            # after the handoff check and generation is silently skipped.
+            log.warning("[maya] wiping duplicate image files before regeneration")
+            _primary_full.unlink(missing_ok=True)
+            _alt_full.unlink(missing_ok=True)
         # Reuse anything the Maya batch pre-staged in handoff/ready/ before paying
         # for generation.
         if _pickup_from_handoff(number, og_image, alt_image):
@@ -332,8 +368,14 @@ def run(article_path: str, spec: dict) -> str:
             log.info("[maya] images ready (canonical/handoff) — skipping generation")
         elif os.environ.get("PEXELS_API_KEY"):
             log.info("[maya] sourcing stock header images via Pexels")
+            import hashlib as _hlib
+            existing_hashes = {
+                _hlib.md5(p.read_bytes()).hexdigest()
+                for p in (REPO_ROOT / "img/articles").glob("aima-*.jpg")
+                if p.stat().st_size > 1024
+            }
             try:
-                _fetch_stock_images(spec, og_image, alt_image)
+                _fetch_stock_images(spec, og_image, alt_image, exclude_hashes=existing_hashes)
             except Exception as exc:
                 log.warning(f"[maya] stock fetch failed ({exc}) — using stub placeholders")
                 _generate_images_stub(spec, og_image, alt_image)
