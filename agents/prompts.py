@@ -1,4 +1,4 @@
-"""System prompts for all 8 CC subagents.
+"""System prompts for all CC/API subagents.
 
 Marco, Porter, Nova, and Echo are Pure Python — no prompts needed.
 """

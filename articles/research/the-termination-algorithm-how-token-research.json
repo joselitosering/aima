@@ -1,0 +1,99 @@
+{
+  "article_number": 28,
+  "slug": "the-termination-algorithm-how-token",
+  "title": "The Termination Algorithm: How 'Token Consumption' Became a Layoff Metric",
+  "author": "Dawn Ginhaua",
+  "category": "AI Labor",
+  "research_date": "2026-07-21",
+  "sources_used": {
+    "local_cache": [
+      "articles/research/prompt-to-profit-research.json (background context only — revenue-per-employee/AI-native business framing, not layoff-metric specific)",
+      "articles/research/robot-beside-you-research.json (not topically relevant — factory-floor humanoid deployment, unused)",
+      "articles/research/robots-go-public-research.json (not topically relevant — humanoid robotics IPO wave, unused)"
+    ],
+    "rss_feeds_checked": [
+      "scout-sources.json topic-filtered feed list (nasa/esa/space.com/science_daily/nature_news/phys_org/scientific_american/eurekalert/mit_tech_review/wired/ars_technica/techcrunch) was mismatched to this AI-labor topic — mostly space/general-science feeds. Skipped feed fetches entirely in favor of targeted WebSearch, which surfaced primary/named reporting (CNBC, CBS News, TechCrunch, Forbes, Tech Times) directly on point within the 3-search budget."
+    ],
+    "apis_checked": ["none — no key-gated API queried; WebSearch covered the ground faster for this fast-moving news topic"],
+    "web_search": true
+  },
+  "statistics": [
+    {
+      "stat": "26 current and former Meta employees sued the company alleging its layoff-selection system discriminated against workers on protected medical or family leave. The plaintiffs were among roughly 8,000 employees — about 10% of Meta's workforce — cut starting in May 2026. The suit alleges Meta's internal AI systems (including 'Metamate,' employee-trained 'second-brain' agents, keystroke/activity-monitoring data, and AI-token-usage dashboards) fed inputs like 'AI-native' ratings and AI-token consumption into algorithmically assisted performance ranking and calibration used to select employees for the list.",
+      "source": "CNBC / CBS News",
+      "year": 2026,
+      "url": "https://www.cnbc.com/2026/07/14/meta-lawsuit-layoffs-ai.html"
+    },
+    {
+      "stat": "Meta employees collectively consumed 73.7 trillion tokens in roughly a 30-day period, tracked on an internal leaderboard nicknamed 'Claudeonomics' — part of why Meta capped internal AI token spending after related costs approached billions of dollars in 2026.",
+      "source": "MLQ News / Cybernews",
+      "year": 2026,
+      "url": "https://mlq.ai/news/meta-caps-internal-ai-token-spending-after-costs-approach-billions-in-2026/"
+    },
+    {
+      "stat": "56% of tracked 2026 layoff events now explicitly cite AI, automation, or machine learning as a reason, per the SkillSyncer 2026 Tech Layoffs Tracker — affecting roughly 156,270 workers across more than 150 companies.",
+      "source": "SkillSyncer 2026 Tech Layoffs Tracker, reported by The Interview Guys",
+      "year": 2026,
+      "url": "https://blog.theinterviewguys.com/56-of-2026-layoffs-now-blame-ai-but-the-companies-cutting-jobs-are/"
+    },
+    {
+      "stat": "US tech employers announced 139,156 job cuts between January and June 2026 — an 83% surge from the 76,214 recorded over the same period in 2025 — with AI explicitly cited in 101,743 of those announcements.",
+      "source": "Tech Times (citing Challenger, Gray & Christmas-style tracking)",
+      "year": 2026,
+      "url": "https://www.techtimes.com/articles/319588/20260703/ai-leads-us-job-cuts-record-4th-month-tech-claims-31-h1-layoffs.htm"
+    },
+    {
+      "stat": "Oracle disclosed it reduced its workforce by 21,000 employees over the prior 12 months (a 13% decline), citing AI among the drivers, with additional layoffs flagged as possible.",
+      "source": "Forbes",
+      "year": 2026,
+      "url": "https://www.forbes.com/sites/maryroeloffs/2026/06/23/ai-cost-21000-jobs-at-oracle-this-year-and-more-layoffs-could-be-coming/"
+    },
+    {
+      "stat": "Gartner analysis found only about 1% of studied job losses were tied directly to measurable AI productivity gains, with less than 5% attributable to AI-driven hiring restraint — a sharp contrast to the volume of layoffs publicly attributed to AI. (Counterargument evidence — see below.)",
+      "source": "Gartner, via industry reporting",
+      "year": 2026,
+      "url": "https://blog.theinterviewguys.com/56-of-2026-layoffs-now-blame-ai-but-the-companies-cutting-jobs-are/"
+    }
+  ],
+  "expert_quotes": [
+    {
+      "quote": "Those tools draw on inputs—performance ratings, calibration scores, productivity and output metrics, 'AI-native' ratings, and AI-token consumption—that, by design, cannot be accumulated by an employee who is on protected medical or family leave, or whose output is reduced by a disability.",
+      "name": "Plaintiffs' counsel",
+      "affiliation": "Meta AI-layoff discrimination lawsuit filing",
+      "url": "https://www.cbsnews.com/news/26-meta-workers-sue-ai-aided-layoffs-medical-family-leave/"
+    },
+    {
+      "quote": "Sometimes AI becomes the scapegoat from a financial perspective.",
+      "name": "Cognizant Chief AI Officer",
+      "affiliation": "Cognizant",
+      "url": "https://blog.theinterviewguys.com/56-of-2026-layoffs-now-blame-ai-but-the-companies-cutting-jobs-are/",
+      "note": "Exact individual's name was not resolved within the search-budget window — attribution is to the role/title as reported secondhand. Verify named speaker before publication if a precise byline is required."
+    }
+  ],
+  "strongest_counterargument": {
+    "argument": "The headline layoff-AI link is largely narrative, not measured causation. Gartner's analysis found only ~1% of studied job losses were tied to demonstrable AI productivity gains and less than 5% to AI-driven hiring restraint — meaning the vast majority of layoffs publicly framed as 'AI-driven' are better explained by ordinary cost-cutting, margin pressure, or restructuring, with AI invoked as investor-friendly cover. Cognizant's Chief AI Officer has said plainly that 'sometimes AI becomes the scapegoat from a financial perspective,' and OpenAI's Sam Altman has used the term 'AI washing' for the same phenomenon. This cuts directly against this article's premise: even where a system like Meta's cites 'AI-token consumption' as a formal input into termination scoring, the token-usage metric may function less as a genuine productivity signal and more as a legally exposed, easily gamed proxy — one already the subject of an active discrimination lawsuit alleging it structurally penalizes employees on protected leave or with disabilities, rather than a defensible measure of who is or isn't 'using AI enough' to keep their job.",
+    "source": "Gartner analysis (via The Interview Guys) / Cognizant Chief AI Officer statement / Sam Altman 'AI washing' framing",
+    "url": "https://blog.theinterviewguys.com/56-of-2026-layoffs-now-blame-ai-but-the-companies-cutting-jobs-are/"
+  },
+  "recent_news": [
+    {
+      "item": "26 current and former Meta employees filed a lawsuit alleging the company's AI-assisted layoff-selection process — drawing on 'Metamate,' keystroke/activity monitoring, and AI-token-usage dashboards — discriminated against workers on medical or family leave, among the ~8,000 (10% of workforce) cut starting May 2026. A July 22, 2026 deadline is noted in related coverage.",
+      "date": "2026-07-14",
+      "source": "CNBC / CBS News / Tech Times",
+      "url": "https://www.cnbc.com/2026/07/14/meta-lawsuit-layoffs-ai.html"
+    },
+    {
+      "item": "Meta capped internal employee AI token spending after related costs approached billions of dollars in 2026, following disclosure that staff consumed 73.7 trillion tokens in roughly 30 days on an internal 'Claudeonomics' leaderboard.",
+      "date": "2026-07",
+      "source": "MLQ News / Cybernews",
+      "url": "https://mlq.ai/news/meta-caps-internal-ai-token-spending-after-costs-approach-billions-in-2026/"
+    }
+  ],
+  "unverified_or_flagged_claims": [
+    "The Cognizant 'scapegoat' quote's exact named speaker (title given as 'Chief AI Officer') was not independently confirmed against a primary interview transcript within the search budget for this run — verify the individual's name before publication if precise attribution is required.",
+    "The Sam Altman 'AI washing' reference surfaced only as a secondhand characterization in aggregator coverage, not a directly sourced quote/transcript — do not present as a verbatim quotation without locating the primary interview.",
+    "UBTECH/Oracle/SkillSyncer-style layoff aggregator figures (56% of layoffs citing AI; 156,270 workers/150 companies) come from a single tracker (SkillSyncer) as reported by a secondary blog (The Interview Guys) — the primary SkillSyncer tracker itself was not directly fetched in this pass; treat as directionally reliable but re-verify the exact numbers against SkillSyncer's own site before publication.",
+    "Gartner's '~1% of job losses tied to AI productivity gains, <5% to hiring restraint' figure is cited secondhand via the same aggregator blog, not a directly fetched Gartner report — flag for primary-source verification.",
+    "The RSS feed list supplied for this research run (scout-sources.json topic-filtered set) was mismatched to the AI Labor category — it is a space/general-science feed set, not an AI/labor/tech-news set. Recommend Cora/Scout config review so future 'AI Labor' or 'AI Business' articles get mit_tech_review/wired/ars_technica/techcrunch prioritized over nasa/esa/space_com."
+  ]
+}

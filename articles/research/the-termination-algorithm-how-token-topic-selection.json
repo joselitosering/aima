@@ -1,0 +1,51 @@
+{
+  "row": 28,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-07-20",
+  "chosen": {
+    "title": "The Termination Algorithm: How 'Token Consumption' Became a Layoff Metric",
+    "category": "AI Labor",
+    "rationale": "A live July 2026 lawsuit against Meta alleges the company used AI-usage proxies like token consumption to target employees for layoffs, and industry-wide, AI-generated performance data is now used in discipline and termination decisions without human review \u2014 a concrete, breaking-news instance of the algorithmic-management critique Dawn's beat is built for, with a real corporate defendant and paper trail rather than a hypothetical.",
+    "sources": [
+      {
+        "name": "CNBC via Mintz AI Washington Report",
+        "url": "https://www.mintz.com/insights-center/viewpoints/54941/2026-07-08-ai-washington-report-july-2026-edition"
+      },
+      {
+        "name": "Curionic \u2014 AI and Labor Relations in 2026",
+        "url": "https://www.curionic.net/2026/07/ai-labor-relations-unions-collective-bargaining-workers-2026.html"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The Lobby in the Room: How the AI Industry Wrote Its Own Rulebook",
+      "category": "AI Ethics",
+      "rationale": "A newly published ACM FAccT 2026 paper documents that AI corporations and trade groups now account for over 80% of AI-related lobbying, actively steering regulation toward 'technical symptoms' instead of economic incentives \u2014 a direct, freshly-peer-reviewed case study in Dawn's core beat of corporate capture of public institutions and the Naomi-Klein-style 'follow the money' argument.",
+      "sources": [
+        {
+          "name": "ACM FAccT 2026 \u2014 Big AI's Regulatory Capture",
+          "url": "https://dl.acm.org/doi/10.1145/3805689.3806740"
+        },
+        {
+          "name": "arXiv preprint",
+          "url": "https://arxiv.org/html/2605.06806v1"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Your Camera Roll Is the Product: Consent, AI, and the New Surveillance Default",
+      "category": "Digital Rights",
+      "rationale": "Reporting this month shows consumer apps like Tinder moving to let AI scan a user's entire camera roll, arriving as the US still has no federal law meaningfully limiting this kind of data harvesting \u2014 a timely, visceral entry point into Dawn's surveillance-capitalism and data-colonialism beat that lands the abstraction in something readers already carry in their pocket.",
+      "sources": [
+        {
+          "name": "Live Science \u2014 AI-fuelled surveillance capitalism system",
+          "url": "https://www.livescience.com/technology/artificial-intelligence/how-everything-you-do-is-being-monitored-in-an-ai-fuelled-surveillance-capitalism-system"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

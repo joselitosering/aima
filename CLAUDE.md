@@ -951,9 +951,9 @@ Fix options (pick one):
 
 ### Pipeline HALT (recoverable) — #29 'The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days' — stage 'scout' (2026-07-22)
 <!-- aima-failure-key: 2026-07-22|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
-- **Occurrences:** 2
+- **Occurrences:** 3
 - **First seen:** 2026-07-22T15:03:36
-- **Last seen:** 2026-07-22T15:03:50
+- **Last seen:** 2026-07-22T17:55:23
 - **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
 - **Not a code bug.** No state advanced, no calendar row changed, nothing published.
 - **Fix:**
@@ -1060,3 +1060,29 @@ Trend Scout cleanly; the run then halts at Scout with the new recoverable-halt p
 (`outcome=trend_scout_unavailable`, cost $0.00) instead of crashing. **The pipeline will keep
 halting at Scout until someone runs `claude` and completes OAuth** — that is the one
 remaining blocker, and it is a human action.
+
+
+### Pipeline CRASH — #29 'The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days' — stage 'porter' (2026-07-23)
+<!-- aima-failure-key: 2026-07-23|porter|Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 128. -->
+- **Occurrences:** 1
+- **First seen:** 2026-07-23T12:01:53
+- **Last seen:** 2026-07-23T12:01:53
+- **Error:** Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 128.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 418, in run
+    porter_result = porter.run(spec, dry_run=dry_run, gs_enabled=cfg["GS_ENABLED"])
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 103, in run
+    git_push()
+    ~~~~~~~~^^
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 612, in git_push
+    subprocess.run(["git", "push", "origin", "main"], cwd=REPO_ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 128.
+
+```
+- Full run log: pipeline.log

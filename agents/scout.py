@@ -14,6 +14,24 @@ from pathlib import Path
 from agents.base import call_cc_agent, read_json, write_json, REPO_ROOT, log
 from agents.prompts import SCOUT_PROMPT
 
+
+def _scout_budget_remaining() -> tuple[int, int]:
+    """Return (budget_ceiling, tokens_remaining) for Scout from token_budget.json.
+
+    Used to inject a hard token guardrail into Scout's user_input BEFORE the
+    CC call fires — so Scout knows its ceiling before it picks up a single tool.
+    Returns (0, 0) if the budget file is absent or unreadable (fail-open).
+    """
+    try:
+        b = json.loads((REPO_ROOT / "token_budget.json").read_text(encoding="utf-8"))
+        sc = b.get("agents", {}).get("SC", {})
+        ceiling = int(sc.get("budget", 0))
+        used    = int(sc.get("used",   0))
+        remaining = max(0, ceiling - used)
+        return ceiling, remaining
+    except Exception:
+        return 0, 0
+
 # Rough mapping from article category keywords → scout-sources topic tags
 _CATEGORY_TAG_MAP = {
     "health":       {"medicine", "health_data", "ai", "science", "neuroscience"},
@@ -71,16 +89,42 @@ def _filtered_sources(sources_config: dict, topic_tags: set) -> dict:
     }
 
 
-def _list_cached_research() -> list[str]:
-    """Return relative paths of all files in articles/research/."""
+def _list_cached_research(topic_tags: set = None, max_files: int = 5) -> list[str]:
+    """Return relative paths of topic-relevant cached research files.
+
+    Filters by topic_tags keywords appearing in the filename (same tag logic
+    used for feeds/APIs). Caps at max_files, sorted by file size ascending so
+    Scout reads the smallest (cheapest) relevant files first.
+
+    Guardrail added 2026-07-17: previously returned ALL files unfiltered —
+    Scout would list 18+ files (some 65KB each) and read whichever it judged
+    relevant, burning 50k+ tokens on cache reads before any real research.
+    """
     research_dir = REPO_ROOT / "articles" / "research"
     if not research_dir.exists():
         return []
-    return [
-        f"articles/research/{p.name}"
-        for p in sorted(research_dir.iterdir())
-        if p.suffix in {".json", ".csv"}
+
+    candidates = [
+        p for p in research_dir.iterdir()
+        if p.suffix in {".json", ".csv"} and p.stat().st_size > 100
+        and "-topic-selection" not in p.name  # topic-selection files are not research
     ]
+
+    # Topic filter: keep files whose stem contains at least one tag keyword.
+    if topic_tags:
+        tag_words = {t.replace("_", "") for t in topic_tags}  # "health_data" → "healthdata"
+        def _relevant(p: Path) -> bool:
+            stem = p.stem.lower().replace("-", "").replace("_", "")
+            return any(word in stem for word in tag_words)
+        filtered = [p for p in candidates if _relevant(p)]
+        # Fall back to all candidates if topic filter is too aggressive
+        candidates = filtered if filtered else candidates
+
+    # Sort by size ascending (smallest = fewest tokens to read)
+    candidates.sort(key=lambda p: p.stat().st_size)
+    candidates = candidates[:max_files]
+
+    return [f"articles/research/{p.name}" for p in candidates]
 
 
 def _find_research_path(slug: str, number: int):
@@ -169,11 +213,30 @@ def run(spec: dict) -> dict:
     sources_config = read_json("scout-sources.json")
     topic_tags = _topic_tags_for_spec(spec)
     filtered = _filtered_sources(sources_config, topic_tags)
-    cached_files = _list_cached_research()
+    cached_files = _list_cached_research(topic_tags=topic_tags, max_files=5)
+
+    # ── Budget guardrail: read BEFORE building user_input ────
+    budget_ceiling, budget_remaining = _scout_budget_remaining()
+    if budget_ceiling:
+        budget_note = (
+            f"TOKEN BUDGET HARD LIMIT: {budget_ceiling:,} tokens total for this task. "
+            f"You have used {budget_ceiling - budget_remaining:,} already — "
+            f"{budget_remaining:,} remain.\n"
+            f"STRICT RULES to stay within budget:\n"
+            f"  - Read AT MOST 3 cached files (skip the rest — they are for reference only)\n"
+            f"  - Fetch AT MOST 4 RSS feeds (pick the most relevant)\n"
+            f"  - Run AT MOST 3 web searches\n"
+            f"  - Stop as soon as you have 4 statistics + 2 quotes. Do NOT keep searching.\n"
+            f"  - Write the JSON file and return immediately. No review pass.\n"
+            f"Exceeding the budget wastes subscription credits and triggers a Cora alert."
+        )
+    else:
+        budget_note = "No token budget data available — proceed efficiently."
 
     log.info(f"[scout] topic_tags: {sorted(topic_tags)}")
     log.info(f"[scout] {len(filtered['rss_feeds'])} feeds, "
-             f"{len(filtered['apis'])} APIs, {len(cached_files)} cached files")
+             f"{len(filtered['apis'])} APIs, {len(cached_files)} cached files "
+             f"(budget: {budget_remaining:,}/{budget_ceiling:,} remaining)")
 
     cache_section = (
         "\n".join(f"  - {f}" for f in cached_files)
@@ -181,25 +244,26 @@ def run(spec: dict) -> dict:
     )
 
     user_input = f"""\
+⚠ {budget_note}
+
 ARTICLE SPEC:
 {json.dumps(spec, indent=2)}
 
 RESEARCH PRIORITY ORDER — follow this exactly:
 
 STEP 1 — READ LOCAL CACHE FIRST (fastest, free, no API calls)
-Pre-cached research files in articles/research/:
+Up to 3 topic-relevant cached files (already filtered for you — read all of these):
 {cache_section}
-Read any files that are topically relevant to this article BEFORE fetching anything external.
 
 STEP 2 — USE THESE TOPIC-FILTERED SOURCES (curated for this article)
 {json.dumps(filtered, indent=2)}
 
 Fetch RSS feeds (no key required) and call APIs with keys from agents/.env.
-Prefer no-key sources if keys are unavailable.
+Prefer no-key sources if keys are unavailable. Stop after 4 feeds.
 
 STEP 3 — WEB SEARCH (only for gaps the above cannot fill)
 Use WebSearch only if local cache + feeds/APIs don't provide enough statistics,
-expert quotes, or recent news. Prefer primary sources over secondary.
+expert quotes, or recent news. Maximum 3 searches. Prefer primary sources.
 
 OUTPUT REQUIREMENTS:
 - 4-6 statistics, each with source name + year + URL
@@ -209,7 +273,7 @@ OUTPUT REQUIREMENTS:
 - Flag any claim you cannot verify
 
 Save output to: articles/research/{slug}-research.json
-Then return the complete research JSON to stdout.\
+Then return the complete research JSON to stdout. Stop immediately after writing.\
 """
 
     log.info(f"[scout] calling CC subagent for: {slug}")

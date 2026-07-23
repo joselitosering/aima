@@ -78,7 +78,7 @@ BUDGET_MAP = {
 MAX_TURNS_MAP = {
     "iris":       15,
     "priya":      15,
-    "scout":      15,
+    "scout":       8,   # reduced 2026-07-17: 3 reads + 4 fetches + 1 write = 8 max
     "trend_scout": 15,
     "maya":       15,
     "vera":       15,

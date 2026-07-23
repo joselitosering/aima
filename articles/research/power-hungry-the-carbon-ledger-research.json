@@ -1,0 +1,105 @@
+{
+  "article_number": 27,
+  "slug": "power-hungry-the-carbon-ledger",
+  "title": "Power Hungry: The Carbon Ledger of the AI Compute Boom",
+  "author": "Joselito Sering",
+  "category": "AI Environment",
+  "research_date": "2026-07-17",
+  "sources_used": {
+    "local_cache": [
+      "articles/research/data-centers-in-orbit-why-research.json"
+    ],
+    "local_cache_note": "Reused Gartner power-demand/electricity-consumption figures from #26's cached research (topically overlapping: data center power draw driving the orbital-compute pitch is the same underlying demand curve this article's carbon ledger tracks). No other cached research/*.json files (medicine, robotics IPOs, data-broker privacy, DOJ/AI regulation, hallucination/misinformation, prompt economics) were topically relevant to energy/carbon accounting.",
+    "rss_feeds_checked": [],
+    "rss_feeds_note": "The curated feed list for this article (NASA, ESA, Space.com, ScienceDaily, Nature, Phys.org, Sci Am, EurekAlert, MIT Tech Review, Wired, Ars Technica, TechCrunch) is space/general-science oriented and carried over from the orbital-compute article — none are specialized energy/climate trade press, so no live RSS pulls surfaced carbon-specific data not already found via web search below.",
+    "web_search": true,
+    "web_search_note": "Went to WebSearch/WebFetch for carbon-emissions-specific data (IEA, Carbon Brief, Allianz Trade, Cornell, arXiv AI-climate literature) since none of the curated no-key sources cover utility-scale emissions accounting."
+  },
+  "statistics": [
+    {
+      "stat": "Global data center electricity consumption is projected to rise 26% in 2026 to roughly 565 terawatt-hours (TWh) and exceed 1,200 TWh by 2030 (up from 104GW of power demand in 2025 to a projected 290GW by 2030). AI-optimized servers alone consumed ~95 TWh in 2025, projected to draw 175 TWh in 2026 (an 84% jump), and 258 TWh in 2027 — the first year AI hardware is expected to consume more electricity than all conventional (non-AI) data center servers combined.",
+      "source": "Gartner (via Tom's Hardware reporting)",
+      "year": 2026,
+      "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-servers-will-consume-more-power-than-conventional-data-center-hardware-by-2027-gartner-forecasts"
+    },
+    {
+      "stat": "The IEA's central estimate puts data center electricity generation at approximately 182 million tonnes (Mt) of CO2 in 2024 — about 1% of global electricity demand and 0.5% of global CO2 emissions. But a 2026 Allianz Trade analysis puts actual 2025 data center emissions at 286 Mt CO2, 57% above the IEA's prior estimate; AI workloads currently account for 15-20% of data center electricity use, projected to reach 40% by 2030.",
+      "source": "IEA / Allianz Trade (via Tech Xplore reporting)",
+      "year": 2026,
+      "url": "https://techxplore.com/news/2026-06-centers-emit.html"
+    },
+    {
+      "stat": "IEA projects data center electricity demand will more than double from 2024 levels to 945 TWh by 2030 (equivalent to Japan's current national consumption) — 8% of total global electricity demand growth, behind EVs (838 TWh) and air conditioning (651 TWh). The current generation mix is roughly 60% fossil fuels, 27% renewables, and 15% nuclear; the IEA projects this flips to ~60% clean power by 2035, even as gas-fired generation feeding data centers more than doubles from 120 TWh (2024) to 293 TWh (2035).",
+      "source": "IEA / Carbon Brief analysis",
+      "year": 2026,
+      "url": "https://www.carbonbrief.org/ai-five-charts-that-put-data-centre-energy-use-and-emissions-into-context/"
+    },
+    {
+      "stat": "A Cornell University analysis found that the current US build-out of gas-fired power plants to meet AI/data-center demand could add as much as 44 million metric tons of CO2 to the atmosphere by 2030 — equivalent to the annual emissions of about 10 million passenger cars. Developers already have 18.7 gigawatts of new combined-cycle gas turbine (CCGT) capacity planned through 2028 specifically to serve this load.",
+      "source": "Cornell University (via Grist/Carbon Brief reporting)",
+      "year": 2026,
+      "url": "https://grist.org/energy/data-centers-natural-gas-methane-behind-the-meter/"
+    },
+    {
+      "stat": "Corporate climate commitments are visibly slipping under AI-driven load growth: Microsoft's total 2024 emissions were around 30% higher than its 2020 baseline, and Meta reported 2024 emissions 70% above 2019 levels — both companies had made public net-zero-by-2030 pledges predating the current AI buildout.",
+      "source": "Company sustainability disclosures (via Carbon Direct 2026 outlook reporting)",
+      "year": 2026,
+      "url": "https://www.carbon-direct.com/insights/ai-scale-and-climate-commitments-a-2026-outlook"
+    },
+    {
+      "stat": "Modeled AI-attributable climate damages (a social-cost-of-carbon-style estimate) are projected to exceed $50 billion annually by 2030, within a broader data center climate-damage bill projected to rise from $68 billion today to $154 billion by 2030 absent faster grid decarbonization. The same analysis projects AI-linked data center water demand of 1.3-1.8 trillion liters by 2030, with emissions intensity varying more than 20-fold by grid — under 30 grams CO2/kWh in Norway/Sweden versus over 600 grams/kWh in India — meaning siting decisions are as consequential as efficiency gains.",
+      "source": "Allianz Trade",
+      "year": 2026,
+      "url": "https://techxplore.com/news/2026-06-centers-emit.html"
+    }
+  ],
+  "expert_quotes": [
+    {
+      "quote": "Data centers are evolving from a marginal factor into a structural driver of electricity demand in many regions.",
+      "name": "Patrick Hoffmann",
+      "affiliation": "Senior Climate Economist, Allianz Trade",
+      "url": "https://techxplore.com/news/2026-06-centers-emit.html"
+    },
+    {
+      "quote": "In the future, space may be the best place to scale AI compute.",
+      "name": "Travis Beals",
+      "affiliation": "Senior Director, Paradigms of Intelligence, Google Research (Project Suncatcher)",
+      "url": "https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/",
+      "note": "Carried over from #26's cached research — used here only as evidence that hyperscalers themselves treat terrestrial power/cooling limits as a binding constraint serious enough to justify off-planet workarounds; cite as illustrative of industry's own read of the problem, not as a climate-policy statement."
+    },
+    {
+      "quote": "The physics doesn't immediately kill it, but the economics are savage.",
+      "name": "Andrew McCalip",
+      "affiliation": "Engineer, Varda Space Industries",
+      "url": "https://spacenews.com/with-attention-on-orbital-data-centers-the-focus-turns-to-economics/",
+      "note": "Carried over from #26's cached research; originally about orbital-compute economics, usable here as a general line on how thin the margin is between AI infrastructure ambition and grid/thermal reality — flag if reused verbatim outside that context."
+    }
+  ],
+  "strongest_counterargument": {
+    "argument": "The industry counter-case is that AI is a net climate positive, not a net drain, if judged on application rather than infrastructure alone. Modeling cited by the World Economic Forum and peer-reviewed sustainability literature estimates AI applications in power, food, and mobility could cut global emissions by 3.2 to 5.4 billion metric tons annually by 2035 — through smart-grid optimization (Google DeepMind's wind-forecasting tool reportedly boosted the value of wind energy by 20%), accelerated materials discovery for batteries and carbon capture (DeepMind's GNoME flagged ~2 million candidate materials), and efficiency gains elsewhere in the economy — which on these estimates would more than offset the projected 0.4-1.6 GtCO2e/year AI is expected to add from data center demand by the same year. The rebuttal to this rebuttal, per critics invoking the Jevons paradox (formalized in a 2025 FAccT paper and echoed across 2026 industry commentary), is that efficiency gains in chips and cooling systematically lower the cost of compute, which historically has expanded total consumption faster than it shrinks per-unit footprint — so the 'AI saves more carbon than it costs' case remains a projection contingent on deliberate climate-directed deployment, not an automatic byproduct of the current commercial AI buildout, which is overwhelmingly optimized for capability and speed-to-market rather than emissions reduction.",
+    "source": "World Economic Forum / arXiv (Jevons paradox, FAccT 2025) / Google DeepMind disclosures",
+    "url": "https://www.weforum.org/stories/2025/01/artificial-intelligence-climate-transition-drive-growth/"
+  },
+  "recent_news": [
+    {
+      "item": "Allianz Trade published an analysis finding 2025 data center CO2 emissions (286 Mt) ran 57% above the IEA's prior estimate, and projecting AI's share of data center electricity use will rise from 15-20% today to 40% by 2030, with climate damages exceeding $50 billion/year by then.",
+      "date": "2026-06",
+      "source": "Tech Xplore (reporting on Allianz Trade study)",
+      "url": "https://techxplore.com/news/2026-06-centers-emit.html"
+    },
+    {
+      "item": "Carbon Brief reported that AI-driven data center investment has pushed the US to now 'invest more' in fossil-fuel power capacity than China, tying a threefold 2025 increase in US gas-power investment directly to data center load growth, with the IEA expecting the trend to continue through 2026.",
+      "date": "2026-06",
+      "source": "Carbon Brief",
+      "url": "https://www.carbonbrief.org/ai-boom-means-us-is-now-investing-more-in-fossil-fuel-power-than-china/"
+    }
+  ],
+  "unverified_or_flagged_claims": [
+    "The Allianz Trade figures (286 Mt CO2 in 2025, 57% above IEA estimate, $50B+ AI climate damages by 2030, 1.3-1.8 trillion liters water by 2030) come from a single trade-credit-insurer analysis surfaced via secondary tech-press reporting (Tech Xplore) — the primary Allianz Trade report itself was not independently fetched in this pass; treat the exact figures as one institution's model, not a settled consensus number, and attribute to Allianz Trade explicitly if cited.",
+    "The 'AI could offset 3.2-5.4 Gt CO2e/year by 2035' figure is a scenario-dependent modeled projection (WEF-cited, sourced to broader net-zero/AI literature) contingent on AI being deliberately deployed toward decarbonization — it is not a measured or guaranteed outcome, and conflicts in framing with the Jevons-paradox rebound-effect literature; present both sides as contested rather than resolving in the copy.",
+    "Microsoft's ~30% emissions increase vs. 2020 and Meta's ~70% increase vs. 2019 are drawn from the companies' own sustainability disclosures as reported by secondary sources (Carbon Direct's 2026 outlook) — not independently verified against Microsoft's/Meta's primary CSR reports in this pass.",
+    "The Travis Beals and Andrew McCalip quotes are carried over from article #26's research (orbital data centers) and are about space-based compute economics/physics, not carbon accounting directly — use only as supporting color on infrastructure strain, not as direct climate statements; do not attribute a carbon-specific claim to either quote.",
+    "Gartner's TWh/GW figures (565 TWh in 2026, 1,200+ TWh by 2030, 290GW by 2030) are demand/power projections, not emissions figures — emissions depend on the generation mix (fossil/renewable/nuclear split), which itself is projected to shift materially by 2035 per IEA; don't conflate rising electricity demand with a 1:1 rising carbon figure without noting the mix caveat.",
+    "No primary-source fetch was completed on the IEA 'Energy and AI' report itself (iea.org) or the Cornell University study directly (only secondary Grist/Carbon Brief coverage) — both are reputable secondary sources but flagged per instructions for anyone wanting to cite the primary document."
+  ]
+}
