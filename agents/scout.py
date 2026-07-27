@@ -111,8 +111,10 @@ def _list_cached_research(topic_tags: set = None, max_files: int = 5) -> list[st
     ]
 
     # Topic filter: keep files whose stem contains at least one tag keyword.
+    # IMPORTANT: exclude "research" from tag_words — every file is named
+    # *-research.json so "research" matches everything and makes the filter a no-op.
     if topic_tags:
-        tag_words = {t.replace("_", "") for t in topic_tags}  # "health_data" → "healthdata"
+        tag_words = {t.replace("_", "") for t in topic_tags} - {"research"}
         def _relevant(p: Path) -> bool:
             stem = p.stem.lower().replace("-", "").replace("_", "")
             return any(word in stem for word in tag_words)
@@ -217,21 +219,26 @@ def run(spec: dict) -> dict:
 
     # ── Budget guardrail: read BEFORE building user_input ────
     budget_ceiling, budget_remaining = _scout_budget_remaining()
+    # Cap the working budget shown to Scout at 60k regardless of the full ceiling.
+    # Showing the real remaining (often 490k+) signals "plenty of room" and the
+    # model ignores the per-action limits. 60k is enough for 3 cached reads +
+    # 2 web searches + 1 write; anything over that is overspend.
+    SCOUT_WORKING_BUDGET = 60_000
     if budget_ceiling:
+        working_budget = min(budget_remaining, SCOUT_WORKING_BUDGET)
         budget_note = (
-            f"TOKEN BUDGET HARD LIMIT: {budget_ceiling:,} tokens total for this task. "
-            f"You have used {budget_ceiling - budget_remaining:,} already — "
-            f"{budget_remaining:,} remain.\n"
-            f"STRICT RULES to stay within budget:\n"
-            f"  - Read AT MOST 3 cached files (skip the rest — they are for reference only)\n"
-            f"  - Fetch AT MOST 4 RSS feeds (pick the most relevant)\n"
-            f"  - Run AT MOST 3 web searches\n"
-            f"  - Stop as soon as you have 4 statistics + 2 quotes. Do NOT keep searching.\n"
+            f"TOKEN BUDGET HARD LIMIT: {working_budget:,} tokens for this research task. "
+            f"(Full subscription ceiling is larger — ignore it. Your working budget is {working_budget:,}.)\n"
+            f"STRICT RULES — stop the moment these are met:\n"
+            f"  - Read AT MOST 3 cached files (skim, do not read every word)\n"
+            f"  - Fetch AT MOST 3 RSS feeds or API calls total\n"
+            f"  - Run AT MOST 2 web searches — prefer snippets, avoid full-page fetches\n"
+            f"  - Stop as soon as you have 4 statistics + 2 quotes\n"
             f"  - Write the JSON file and return immediately. No review pass.\n"
-            f"Exceeding the budget wastes subscription credits and triggers a Cora alert."
+            f"Exceeding {working_budget:,} tokens triggers a Cora escalation."
         )
     else:
-        budget_note = "No token budget data available — proceed efficiently."
+        budget_note = "No token budget data available — proceed with maximum frugality: 3 sources, 2 searches, stop at 4 stats + 2 quotes."
 
     log.info(f"[scout] topic_tags: {sorted(topic_tags)}")
     log.info(f"[scout] {len(filtered['rss_feeds'])} feeds, "
