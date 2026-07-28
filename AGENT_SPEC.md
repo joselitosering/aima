@@ -907,7 +907,7 @@ FALLBACK (no r_member_social):
 python linkedin_pipeline/xls_import.py
 
 OUTPUT FILES:
-- Append row to linkedin_analytics.csv
+- Append row to linkedin_pipeline/post_analytics.csv
 - Mark analytics_collected: true in post_log.json
 - git push post_log.json
 

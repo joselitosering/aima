@@ -69,7 +69,7 @@ Priya → Marco → Scout → Marco → Quill → Marco → Maya → Marco → V
 
 **Nova** — Calls `linkedin_pipeline/pipeline.py` which posts to company page + reshares to personal profile + logs to `post_log.json`.
 
-**Echo** — Reads `post_log.json` for posts where `analytics_collected: false` and `posted_at > 48h`. Calls `/rest/socialMediaPostStatistics`. Writes to `linkedin_analytics.csv`.
+**Echo** — Reads `post_log.json` for posts where `analytics_collected: false` and `posted_at > 48h`. Calls `/rest/memberCreatorPostAnalytics` (blocked: HTTP 403, missing `r_member_postAnalytics` scope). Writes to `linkedin_pipeline/post_analytics.csv`.
 
 **Lumen** — Collects GA4, Meta, TikTok, and Buy Me a Coffee analytics. Writes per-platform CSVs and `platform_summary.json`. Appends to `optimization_report.json`.
 
@@ -99,7 +99,7 @@ Two implementation tiers were established:
 | `token_budget.json` | Cora | Per-agent budget + live usage |
 | `token_log.csv` | Cora | Per-run history, errors, guardrails |
 | `linkedin_pipeline/post_log.json` | Nova (write) · Echo (read) | Post IDs for analytics collection |
-| `linkedin_analytics.csv` | Echo | LinkedIn metrics per post |
+| `linkedin_pipeline/post_analytics.csv` | Echo / xls_import | LinkedIn metrics per post (canonical) |
 | `platform_summary.json` | Lumen | Cross-platform analytics per article |
 | `scout-sources.json` | Static config · Scout (read) | Research source library |
 | `CLAUDE.md` | Iris (write) · all agents (read) | Project memory and editorial decisions |

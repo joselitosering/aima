@@ -1,5 +1,39 @@
 # AIMA Project Memory
 
+### Echo analytics: CSV split + dead XLS fallback — FIXED (2026-07-28)
+Two code bugs fixed; the underlying **LinkedIn scope gap remains open and is not fixable in
+code** (see Pending Actions). Full write-up: [HANDOFF-2026-07-28-echo-analytics.md](HANDOFF-2026-07-28-echo-analytics.md).
+
+1. **CSV split.** `agents/echo.py` wrote `REPO_ROOT/linkedin_analytics.csv` — a file that has
+   never existed, because Echo has never had a successful API call. Every *reader* uses
+   `linkedin_pipeline/post_analytics.csv` instead: `run_lumen_batch._linkedin_report()`,
+   `marco._category_priority()`, and `article-manager.html`; the two other *writers*
+   (`xls_import.py`, legacy `analytics_collector.py`) also write there. So even a working Echo
+   would have written into a file nothing reads. **`linkedin_pipeline/post_analytics.csv` is
+   now the single canonical file.** Note the non-obvious part: the two schemas differed (Echo
+   emitted `date,slug,urn,…,reactions,reposts`; the canonical file is
+   `post_id,article,title,persona,posted_at,collected_at,…,likes,shares,engagement_rate`), so a
+   bare path swap would have appended ragged rows into a file with 11 live data rows and
+   corrupted the dashboard's backfill. Echo now maps onto the canonical 13-column schema
+   (`REACTION`→`likes`, `RESHARE`→`shares`, `engagement_rate` derived as
+   `(likes+comments+shares)/impressions`) via a new `_build_csv_row()`. `run_lumen_batch.py`
+   needed **no change** — it already read the canonical file.
+2. **Dead `xls_import.py` auto-call.** On API failure Echo ran
+   `subprocess.run(["python","linkedin_pipeline/xls_import.py"], check=False)`. `xls_import`
+   requires a positional `xls_file`, so this exited 2 and did nothing — verified by running it
+   (`error: the following arguments are required: xls_file`). With `check=False` the failure was
+   swallowed, so Echo *appeared* to have a fallback while spawning one wasted subprocess per
+   uncollected post per run. Removed. The LinkedIn analytics export is a human action with no
+   pull API, so nothing can be auto-invoked; Echo now logs the real command once per run.
+3. **Scope-gate short-circuit (new).** A 401/403 is a token-wide condition, not a per-post one.
+   Echo now stops the loop on the first one instead of firing 5 API calls × 26 eligible posts
+   (130 doomed requests) every run.
+
+**Verified against the live API 2026-07-28:** real HTTP 403, halt after exactly 1 attempt,
+correct operator message, no `post_log.json` write and no git push when nothing is collected.
+Backlog is unchanged at **28 of 35** uncollected (26 currently past the 48h window) — code
+cannot reduce this while the scope is missing.
+
 ### find_draft stale-stub bypass — FIXED (2026-07-17)
 Root cause: `writer.find_draft()` only checked `stat().st_size > 200` bytes. A partial/failed Writer CC run that wrote a 104-word skeleton to disk left a stub that easily passed that check. On the next pipeline run Marco called `find_draft()`, got the stub back, skipped `writer.run()` entirely, and passed the bad draft straight to Quill — causing repeated Quill halts for the same draft that Writer had already rejected. Fix: `find_draft()` now runs the same prose word-count gate (`range_min * 0.85` floor) Writer's `run()` uses. Stubs below the floor are logged and skipped; Marco calls `writer.run()` fresh instead. Also added `_prose_word_count()` helper (shared logic, glossary+refs stripped before counting).
 
@@ -79,12 +113,41 @@ token_budget.json   Cora per-agent budget + live usage
 
 ## Pending Actions
 
-### LinkedIn Marketing API — Development Tier Approval
-- **Status:** APPROVED June 20, 2026 (Advertising API, app id 253440006)
-- **SCOPES updated:** `r_member_social` added to `linkedin_pipeline/linkedin_auth.py`
-- **NEXT STEP:** Run `python linkedin_pipeline/linkedin_auth.py` to get a new token with `r_member_social`
-- Then test: `python linkedin_pipeline/analytics_collector.py`
-- **analytics_collector.py is ready** — already uses `/rest/socialMediaPostStatistics`, no code changes needed after token refresh
+### LinkedIn analytics scope — BLOCKED on LinkedIn, not on code (verified 2026-07-28)
+
+**Corrects the previous note here**, which claimed `r_member_social` was "APPROVED June 20,
+2026" and "added to SCOPES". Both halves were false and are retracted — verified two ways on
+2026-07-28: (a) the live `SCOPES` string in `linkedin_pipeline/linkedin_auth.py` has never
+contained `r_member_social` (it isn't in the file, and `git log -p` shows it never was), and
+(b) LinkedIn's own token introspection endpoint reports the granted scopes on the current
+active token as exactly `openid profile email w_member_social w_organization_social
+r_organization_social rw_organization_admin r_organization_admin` — no `r_member_social`.
+LinkedIn's docs now list `r_member_social` as a **closed** permission ("not accepting access
+requests at this time"). The old note also pointed at `/rest/socialMediaPostStatistics`, an
+endpoint that does not exist on LinkedIn's API (every call 404'd — see `agents/echo.py`).
+
+**Actual current state:**
+- **Posting works.** Token is `active` (expires 2026-09-21), and both posting scopes
+  (`w_member_social`, `w_organization_social`) are granted. Nova is unaffected.
+- **Analytics collection cannot work.** `agents/echo.py` calls
+  `/rest/memberCreatorPostAnalytics`, which requires **`r_member_postAnalytics`**. That scope
+  is not granted to this app. Confirmed live 2026-07-28: the endpoint returns **HTTP 403**.
+- `r_member_postAnalytics` was removed from `SCOPES` in `be88f65` (2026-07-23) for a real
+  reason: **requesting an unapproved scope makes LinkedIn reject the entire OAuth
+  authorization request**, which broke posting too. **Do not re-add it** until approval is
+  actually confirmed — re-adding it will immediately re-break posting the same way.
+- It is **not a self-serve Developer Portal checkbox.** `r_member_postAnalytics` / the Post
+  Statistics endpoint sit under the **Community Management API**, which requires a formal
+  **Technical Sign-Off**: contacting a LinkedIn Business Development point of contact and
+  completing a live product demo against ~28 requirements.
+
+- **NEXT STEP (Joe, external — cannot be closed by code):** pursue the LinkedIn Community
+  Management API Technical Sign-Off for `r_member_postAnalytics`. Only after approval is
+  confirmed: re-add the scope to `SCOPES`, re-run `python linkedin_pipeline/linkedin_auth.py`,
+  then `python run_analytics_batch.py`.
+- **Meanwhile the working path is manual:** export the LinkedIn Analytics XLS and run
+  `python linkedin_pipeline/xls_import.py <path-to-export.xlsx>`. Echo prints this exact
+  instruction on every run while posts remain uncollected.
 
 ---
 
@@ -134,9 +197,19 @@ The company-page + reshare logic still lives in `linkedin_pipeline/linkedin_post
 
 Echo stays narrowly scoped to **LinkedIn post metrics only**. She does not aggregate other platforms.
 
-- Collects impressions, clicks, CTR, reactions, reposts, comments via `/rest/socialMediaPostStatistics`
+- Collects impressions, clicks, CTR, reactions, reposts, comments via
+  `/rest/memberCreatorPostAnalytics` (one API call per metric — there is no combined-stats
+  mode). **Currently returns HTTP 403** — see the analytics-scope entry under Pending Actions.
 - Reads `linkedin_pipeline/post_log.json` — posts where `analytics_collected: false` + posted_at > 48h
-- Writes to `linkedin_analytics.csv`
+- Writes to **`linkedin_pipeline/post_analytics.csv`** — the ONE canonical LinkedIn analytics
+  file (2026-07-28). Echo previously wrote `linkedin_analytics.csv` at the repo root in its own
+  narrower schema; nothing read that file. Echo now emits the same 13-column schema as
+  `xls_import.py` / `analytics_collector.py`, so API rows and XLS-imported rows are
+  interchangeable. Readers: `run_lumen_batch._linkedin_report()`,
+  `marco._category_priority()` (keys off the `article` column), `article-manager.html`.
+  **Any change to that column list must change all four readers.**
+- On failure Echo does **not** shell out to `xls_import.py` (that call was a no-op — see the
+  2026-07-28 entry below). It logs the manual import command once per run instead.
 - Credentials: `linkedin_pipeline/.env`
 
 ---
@@ -1157,6 +1230,42 @@ Traceback (most recent call last):
   File "C:\Python314\Lib\urllib\request.py", line 611, in http_error_default
     raise HTTPError(req.full_url, code, msg, hdrs, fp)
 urllib.error.HTTPError: HTTP Error 401: Unauthorized
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #30 'Who Owns the Output? The Intellectual Property Crisis in Generative AI' — stage 'scout' (2026-07-27)
+<!-- aima-failure-key: 2026-07-27|scout|[scout] No research JSON found in CC output or on disk for 'who-owns-the-output-the'. Pars -->
+- **Occurrences:** 1
+- **First seen:** 2026-07-27T12:22:19
+- **Last seen:** 2026-07-27T12:22:19
+- **Error:** [scout] No research JSON found in CC output or on disk for 'who-owns-the-output-the'. Parser error: Expecting value: line 30 column 14 (char 1243)
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\scout.py", line 297, in run
+    research = json.loads(raw[start:end])
+  File "C:\Python314\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Python314\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\json\decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 30 column 14 (char 1243)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 293, in run
+    research = scout.run(spec)
+  File "D:\Apps\DevOps\Github\aima\agents\scout.py", line 300, in run
+    raise RuntimeError(
+    ...<2 lines>...
+    ) from exc
+RuntimeError: [scout] No research JSON found in CC output or on disk for 'who-owns-the-output-the'. Parser error: Expecting value: line 30 column 14 (char 1243)
 
 ```
 - Full run log: pipeline.log

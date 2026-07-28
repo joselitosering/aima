@@ -1389,7 +1389,7 @@ Round 2 — Same agent, same issue:
       <div class="batch-tokens"><span class="t-label">Allocated:</span><span class="t-alloc">~10k</span><span class="t-label" style="opacity:.4">·</span><span class="t-label">Typical burn:</span><span class="t-burn">~3–5k</span><span class="t-label" style="opacity:.4">·</span><span class="t-label" style="font-size:9px;">API-heavy · low inference</span></div>
       <div class="batch-handoff">
         <span class="h-from">← receives:</span> Post URNs from <span class="batch-code">post_log.json</span><br>
-        <span class="h-to">→ passes:</span> <span class="batch-code">linkedin_analytics.csv</span> to dashboard
+        <span class="h-to">→ passes:</span> <span class="batch-code">linkedin_pipeline/post_analytics.csv</span> to dashboard
       </div>
     </div>
 
@@ -1918,7 +1918,7 @@ FALLBACK (no r_member_social):
 python linkedin_pipeline/xls_import.py
 
 OUTPUT FILES:
-- Append row to linkedin_analytics.csv
+- Append row to linkedin_pipeline/post_analytics.csv
 - Mark analytics_collected: true in post_log.json
 - git push post_log.json
 
@@ -2223,7 +2223,7 @@ Do not call any external APIs.</pre>
           </tr>
           <tr>
             <td><span class="sep-name" style="color:var(--green)">Echo</span><br><span style="font-size:10px;color:var(--muted)">Analytics Spec.</span></td>
-            <td class="sep-files">post_log.json (analytics_collected update)<br>linkedin_analytics.csv (write)</td>
+            <td class="sep-files">post_log.json (analytics_collected update)<br>linkedin_pipeline/post_analytics.csv (write)</td>
             <td class="sep-never">Non-LinkedIn platforms · Lumen's files</td>
           </tr>
           <tr>

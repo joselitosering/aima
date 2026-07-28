@@ -33,9 +33,12 @@ def main():
         sys.exit(1)
 
     log.info(f"[analytics-batch] posts_collected={report.get('posts_collected', 0)} "
+             f"awaiting={report.get('posts_awaiting_analytics', 0)} "
              f"avg_impressions={report.get('avg_impressions', 0)} "
              f"avg_ctr={report.get('avg_ctr', '0%')}")
-    log.info("[analytics-batch] Reported to post_analytics.csv. "
+    for flag in report.get("flags", []):
+        log.warning(f"[analytics-batch] FLAG: {flag}")
+    log.info("[analytics-batch] Reported to linkedin_pipeline/post_analytics.csv. "
              "Priya reconciles analytics on her audit run; Lumen merges with GA4 on the Lumen run.")
 
 
