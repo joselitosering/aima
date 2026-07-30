@@ -302,5 +302,32 @@
     "posted_at": "2026-07-23T21:05:11",
     "analytics_collected": false,
     "reshare_id": "urn:li:share:7486164530100862976"
+  },
+  {
+    "post_id": "urn:li:share:7487592580810027008",
+    "article": "aima-article-who-owns-the-output-the-030.html",
+    "title": "Who Owns the Output? The Intellectual Property Crisis in Generative AI",
+    "persona": "joselito",
+    "posted_at": "2026-07-27T19:39:47",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7487592592763969536"
+  },
+  {
+    "post_id": "urn:li:share:7488291701791498241",
+    "article": "aima-article-the-clause-that-broke-the-031.html",
+    "title": "The Clause That Broke the Contract: What Anthropic's Refusal to Arm the Pentagon Reveals About Who Really Governs AI",
+    "persona": "dawn",
+    "posted_at": "2026-07-29T17:57:51",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7488291714076614656"
+  },
+  {
+    "post_id": "urn:li:share:7488311266265120770",
+    "article": "aima-article-the-living-battery-how-bioengineered-032.html",
+    "title": "The Living Battery: How Bioengineered Microbes Are Powering the Next Wave of Clean Energy",
+    "persona": "kenji",
+    "posted_at": "2026-07-29T19:15:35",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7488311278453559296"
   }
 ]

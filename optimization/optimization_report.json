@@ -2283,5 +2283,240 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-27",
+    "total_tokens_used": 506484,
+    "by_agent": {
+      "SC": 382421,
+      "WR": 124063,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "TS": 0,
+      "PR": 0,
+      "IR": 0,
+      "LM": 0,
+      "CO": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "info",
+        "agent": "CO",
+        "issue": "Partial verification only \u2014 I received the article HTML head (first 8000 chars: tracking/meta/JSON-LD open) but NOT the article body, stat grid, quotes, or references. Body-level stat and quote checks below are inferred from the research JSON, not confirmed against rendered prose.",
+        "action": "Vera's QC gate is the authoritative body check; treat these as watch-items, not confirmed defects."
+      },
+      {
+        "severity": "medium",
+        "stat": "J.S. Held case counts (42 new/35% quarterly/426 tracked/73 YTD ~86% of 2025)",
+        "source_present": true,
+        "issue": "Research JSON explicitly warns these originate from ONE proprietary tracker (J.S. Held AI Disputes Monitor); other trackers (BakerHostetler, Mishcon, Copyright Alliance) tally differently. Must be attributed to J.S. Held and hedged as 'one leading tracker', NOT presented as a universal/official count. Verify the published body honors this hedge."
+      },
+      {
+        "severity": "low",
+        "stat": "Anthropic $1.5B settlement",
+        "source_present": true,
+        "issue": "Sourced (Reuters/AI Business, 2026) and 'largest known' is defensible, but per-author/per-work distribution was still being administered at research time. Confirm the body cites only the headline figure + approval date and does NOT assert precise per-author payouts."
+      },
+      {
+        "severity": "low",
+        "stat": "OpenAI/NYT, Meta, Getty v. Stability cases",
+        "source_present": true,
+        "issue": "These are ongoing/unresolved per research. Confirm the body states no final verdict for any of them."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "severity": "medium",
+        "agent": "WR/QL",
+        "issue": "Only one of the two supplied quotes is a named, verifiable individual (James E. Malackowski, Chief IP Officer, J.S. Held). The second 'quote' is institutional \u2014 attributed to the U.S. Copyright Office report, not a named human expert. Research JSON itself flags this: 'If Vera/Quill require a named human second source, add one named IP-law academic before publication.' Recommend confirming a named second human source exists in the body, or accept the institutional quote as the controlling agency position with clear attribution."
+      }
+    ],
+    "budget_alerts": [
+      {
+        "severity": "medium",
+        "agent": "SC",
+        "used": 382421,
+        "budget": 500000,
+        "pct": 76.5,
+        "issue": "Below the 80% token ceiling (no hard trip) but at 76.5% and rising. More importantly, Scout's last-call cost was $1.82 (cumulative $1.82) \u2014 4.5x-6x above the $0.30-0.40/article target set by the 2026-07-17 Scout-overspend fix. The overspend guardrail is NOT delivering its expected reduction on article #30. Recommend auditing Scout's actual tool calls (reads/feeds/web searches) against the injected budget block; the cost regression should be investigated before #31."
+      }
+    ],
+    "guardrails_applied": [
+      {
+        "agent": "CO",
+        "action": "Read-only governance pass \u2014 no files written, no guardrails auto-injected this run. Recommendations above are advisory to Marco/Iris. Note: no agent exceeded the 80% hard budget threshold, so no reallocation or SAVE_AS_DRAFT was triggered."
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-27",
+    "article_number": 30,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-who-owns-the-output-the-030.html",
+    "gs_row": 31,
+    "company_urn": "urn:li:share:7487592580810027008",
+    "reshare_urn": "urn:li:share:7487592592763969536",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-28",
+    "row": 31,
+    "author": "Dawn Ginhaua",
+    "title": "The Clause That Broke the Contract: What Anthropic's Refusal to Arm the Pentagon Reveals About Who Really Governs AI",
+    "category": "AI Ethics",
+    "rationale": "Unsealed court filings this month detail how Anthropic's $200M Pentagon deal collapsed over a single 'any lawful use' clause that would have permitted domestic mass surveillance and autonomous lethal targeting \u2014 with the DoD then branding the company a 'supply-chain risk.' It is exactly Dawn's beat: surveillance, corporate capture of state power, and the EFF's uncomfortable point that Americans' privacy currently hinges on the conscience of a handful of CEOs rather than any law.",
+    "sources": [
+      {
+        "name": "Storyboard18 \u2014 Unsealed court filings on how Anthropic's Pentagon talks collapsed",
+        "url": "https://www.storyboard18.com/digital/unsealed-court-filings-reveal-how-anthropics-pentagon-talks-collapsed-over-ai-safeguards-103342.htm"
+      },
+      {
+        "name": "Electronic Frontier Foundation \u2014 Privacy protections shouldn't depend on a few powerful people",
+        "url": "https://www.eff.org/deeplinks/2026/03/anthropic-dod-conflict-privacy-protections-shouldnt-depend-decisions-few-powerful"
+      },
+      {
+        "name": "CBS News \u2014 Pentagon official lashes out as Anthropic talks break down",
+        "url": "https://www.cbsnews.com/news/pentagon-anthropic-feud-ai-military-says-it-made-compromises/"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-28",
+    "total_tokens_used": 736488,
+    "by_agent": {
+      "SC": 322553,
+      "TS": 297011,
+      "WR": 116924,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "IR": 0,
+      "PR": 0
+    },
+    "hallucination_flags": [
+      "Quote attributed to 'Pentagon Chief Technology Officer' ('not democratic' framing) has NO named individual and is a reported paraphrase, not a verified verbatim quotation \u2014 do not present as a direct quote without confirming exact wording (Breaking Defense).",
+      "EFF quote ('Privacy protections shouldn't depend on the decisions of a few powerful people') is attributed to an organization, not a named individual \u2014 acceptable as organizational framing but not a personal attribution.",
+      "Dario Amodei statement is a reported paraphrase of his position, not a confirmed verbatim quote \u2014 verify exact wording before presenting as a direct quotation.",
+      "Iran-strike Claude-usage claim rests on a single aggregator (AOL) \u2014 must be confirmed against a primary outlet or dropped; risk of unsourced assertion if it appears in body copy.",
+      "'$200M' figure is a per-contract CEILING ('up to'), not an amount paid \u2014 must be phrased as a ceiling; presenting it as spend would be inaccurate.",
+      "'Department of Defense' vs 'Department of War' naming is unresolved in sources \u2014 confirm current official name before asserting either.",
+      "NOTE: only the article <head>/meta (first 8000 chars) was available for inspection \u2014 the article body stat-grid, in-text citations, glossary, and references could NOT be verified against the research JSON. Stat/quote traceability in body copy is UNVERIFIED and must be confirmed by Vera's QC gate."
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      "TS (Trend Scout) OVER BUDGET: 297,011 / 150,000 tokens = 198% of budget (>80% threshold breached, status already 'over_budget'). Last-call cost $1.177349. A topic-selection stage (budget 12k\u2013150k) consumed nearly 2x its ceiling \u2014 investigate why Trend Scout burned 297k tokens on a single row resolution.",
+      "SC (Scout): 322,553 / 500,000 = 64.5% \u2014 under the 80% threshold but the single largest token consumer this run ($1.046955). Monitor; approaching the historical Scout-overspend pattern flagged in CLAUDE.md."
+    ],
+    "guardrails_applied": [
+      "TS over-budget flagged to Marco (Round 1 per Cora protocol): recommend auditing Trend Scout token spend for article #31 \u2014 a 297k-token topic-selection call is anomalous vs its 150k ceiling. Root-cause the turn accumulation and add a hard budget guardrail block to the trend_scout prompt (same pattern applied to Scout after the #28 overspend fix).",
+      "No scope violations detected: run summary shows quill=0 revisions, maya=0 revisions, standard stage order (priya\u2192scout\u2192writer\u2192quill\u2192maya\u2192vera\u2192porter\u2192nova); no evidence of Quill touching images or Maya touching copy.",
+      "No auto-mutation performed \u2014 report returned to Marco for logging; Cora touched no files."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-28",
+    "article_number": 31,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-clause-that-broke-the-031.html",
+    "gs_row": 32,
+    "company_urn": "urn:li:share:7487954809149628416",
+    "reshare_urn": "urn:li:share:7487954822025924608",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-07-29",
+    "row": 32,
+    "author": "Kenji Nakamoto",
+    "title": "The Living Battery: How Bioengineered Microbes Are Powering the Next Wave of Clean Energy",
+    "category": "Climate Tech",
+    "rationale": "Synthetic biology is merging with energy storage in ways that could reshape how we think about batteries, and recent breakthroughs in microbial fuel cells are moving from lab curiosity to pilot deployments. This fits Kenji's passion for the intersection of biology and technology, told through his lens of grounded optimism and honest reckoning.",
+    "sources": [
+      {
+        "name": "phys.org",
+        "url": "https://phys.org/news/2026-07-microbial-fuel-cells-clean-energy.html"
+      },
+      {
+        "name": "nature.com",
+        "url": "https://www.nature.com/articles/s41560-026-01498-2"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-29",
+    "total_tokens_used": 0,
+    "by_agent": {},
+    "hallucination_flags": [],
+    "reversion_flags": [],
+    "budget_alerts": [],
+    "guardrails_applied": [
+      "parse_error: JSON not found in CC output"
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-29",
+    "article_number": 32,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-living-battery-how-bioengineered-032.html",
+    "gs_row": 33,
+    "company_urn": "urn:li:share:7488311266265120770",
+    "reshare_urn": "urn:li:share:7488311278453559296",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]

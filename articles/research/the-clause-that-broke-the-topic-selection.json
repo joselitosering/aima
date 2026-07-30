@@ -1,0 +1,59 @@
+{
+  "row": 31,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-07-28",
+  "chosen": {
+    "title": "The Clause That Broke the Contract: What Anthropic's Refusal to Arm the Pentagon Reveals About Who Really Governs AI",
+    "category": "AI Ethics",
+    "rationale": "Unsealed court filings this month detail how Anthropic's $200M Pentagon deal collapsed over a single 'any lawful use' clause that would have permitted domestic mass surveillance and autonomous lethal targeting \u2014 with the DoD then branding the company a 'supply-chain risk.' It is exactly Dawn's beat: surveillance, corporate capture of state power, and the EFF's uncomfortable point that Americans' privacy currently hinges on the conscience of a handful of CEOs rather than any law.",
+    "sources": [
+      {
+        "name": "Storyboard18 \u2014 Unsealed court filings on how Anthropic's Pentagon talks collapsed",
+        "url": "https://www.storyboard18.com/digital/unsealed-court-filings-reveal-how-anthropics-pentagon-talks-collapsed-over-ai-safeguards-103342.htm"
+      },
+      {
+        "name": "Electronic Frontier Foundation \u2014 Privacy protections shouldn't depend on a few powerful people",
+        "url": "https://www.eff.org/deeplinks/2026/03/anthropic-dod-conflict-privacy-protections-shouldnt-depend-decisions-few-powerful"
+      },
+      {
+        "name": "CBS News \u2014 Pentagon official lashes out as Anthropic talks break down",
+        "url": "https://www.cbsnews.com/news/pentagon-anthropic-feud-ai-military-says-it-made-compromises/"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "99 Percent: The Deepfake Abuse Epidemic the AI Industry Built for Women and Girls",
+      "category": "AI Ethics",
+      "rationale": "At the UN's first Global Dialogue on AI Governance (Geneva, 6\u20137 July 2026), officials reported that 99% of deepfakes are sexual and 96% target women and girls, alongside evidence of AI-generated child sexual abuse material spreading through Global South classrooms \u2014 prompting a proposed AI Child Safety Pledge. A feminist, postcolonial critique of who bears the harm of a technology sold as neutral is Dawn's exact register, and distinct from the democracy-focused 'Deepfakes and Democracy' already covered.",
+      "sources": [
+        {
+          "name": "UN News \u2014 From AI to 'killer robots': UN chief issues urgent governance call",
+          "url": "https://news.un.org/en/story/2026/07/1167873"
+        },
+        {
+          "name": "UN News \u2014 When AI hurts people, who's to blame? Experts grapple with accountability",
+          "url": "https://news.un.org/en/story/2026/07/1167886"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Nobody Filed the Paperwork: How Agentic AI Erased the Question of Who's to Blame",
+      "category": "AI Governance",
+      "rationale": "July 2026 delivered a cluster of accountability flashpoints \u2014 the UN's Independent Scientific Panel foregrounding the accountability gap, a federal ruling against Workday over AI hiring, and Meta layoffs allegedly keyed to 'token consumption' \u2014 all circling the same void: when an autonomous system harms someone, responsibility evaporates into the machine. Dawn's structural, Arendt-and-Graeber sensibility (diffused complicity, bureaucracy as violence) is built for naming that vanishing act.",
+      "sources": [
+        {
+          "name": "UN News \u2014 When AI hurts people, who's to blame?",
+          "url": "https://news.un.org/en/story/2026/07/1167886"
+        },
+        {
+          "name": "AIhub \u2014 Top AI ethics and policy issues of 2025 and what to expect in 2026",
+          "url": "https://aihub.org/2026/03/04/top-ai-ethics-and-policy-issues-of-2025-and-what-to-expect-in-2026/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

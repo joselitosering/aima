@@ -35,8 +35,8 @@
 | 28 | 2026-07-08 | The Termination Algorithm: How 'Token Consumption' Became a Layoff Metric | AI Labor | 8 min | Rescheduled (was 2026-06-27, overdue) · Post 4:00 PM PT | Dawn Ginhaua |
 | 29 | 2026-07-09 | The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days | AI Science | 8 min | Rescheduled (was 2026-06-29, overdue) · Post 10:00 AM PT | Kenji Nakamoto |
 | 30 | 2026-07-09 | Who Owns the Output? The Intellectual Property Crisis in Generative AI | AI Law | 11 min | Rescheduled (was 2026-06-30, overdue) · Post 4:00 PM PT | Joselito Sering |
-| 31 | 2026-07-10 | TBD — Trending Topic | Trending | 8 min | Rescheduled (was 2026-07-01, overdue) · Post 10:00 AM PT | Dawn Ginhaua |
-| 32 | 2026-07-11 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
+| 31 | 2026-07-10 | The Clause That Broke the Contract: What Anthropic's Refusal to Arm the Pentagon Reveals About Who Really Governs AI | AI Ethics | 8 min | Rescheduled (was 2026-07-01, overdue) · Post 10:00 AM PT | Dawn Ginhaua |
+| 32 | 2026-07-11 | The Living Battery: How Bioengineered Microbes Are Powering the Next Wave of Clean Energy | Climate Tech | 8 min |  | Kenji Nakamoto |
 | 33 | 2026-07-12 | The Brain-Computer Interface Horizon: Where Mind Meets Machine | AI Science | 10 min |  | Joselito Sering |
 | 34 | 2026-07-13 | The Ghost Workers: Hidden Human Labor Behind AI's Illusion of Autonomy | AI Labor | 12 min | Bumped from 2026-07-06 to make room for overdue backlog · Post 4:00 PM PT | Joselito Sering |
 | 35 | 2026-07-13 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |

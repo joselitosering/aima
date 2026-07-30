@@ -536,6 +536,41 @@ def _extract_pullquote(html_content: str, max_chars: int = 280) -> str | None:
     return None
 
 
+def _stable_index(seed: str, modulus: int) -> int:
+    """Deterministic, process-independent index selection.
+
+    Python's builtin hash() is salted per-process (PYTHONHASHSEED) unless
+    that env var is pinned, so `hash(seed) % n` is NOT actually stable
+    across a crash-retry — a fresh process can pick a different index for
+    the identical article. The pattern-rotation code below has always been
+    commented as "stable across retries"; this makes that true.
+    """
+    import hashlib
+    return int(hashlib.md5(seed.encode("utf-8")).hexdigest(), 16) % modulus
+
+
+# Dawn ("critical/cultural" byline) and Kenji ("technical" byline) each
+# previously had a single hardcoded opening line used on EVERY post for that
+# persona, forever — e.g. Dawn's reshare always started "I've been sitting
+# with this one." regardless of article. Rotated the same way Joselito's
+# patterns are: deterministic per article (stable across retries), varied
+# across consecutive posts, without breaking the persona's voice.
+_DAWN_OPENERS = [
+    "I've been sitting with this one.",
+    "This one's been sitting with me for a few days.",
+    "I keep coming back to this.",
+    "Something about this story wouldn't let me go.",
+    "I wasn't planning to write about this — then I couldn't stop thinking about it.",
+]
+
+_KENJI_OPENERS = [
+    "This is the story nobody's telling about what's actually possible.",
+    "The technical reality here is more interesting than the headlines suggest.",
+    "Most of the coverage on this misses the actual engineering story.",
+    "Here's the part of this story the industry conversation keeps leaving out.",
+    "The build details on this deserve more attention than they're getting.",
+]
+
 # Five distinct hook patterns for the personal reshare.
 # Selected deterministically by hashing the article filename so the same
 # article always gets the same pattern (crash-retry safe) but different
@@ -591,35 +626,27 @@ def build_personal_commentary(title, description, source_url, persona="joselito"
     deterministic per article, varied across consecutive posts.
 
     Persona-aware: Dawn = critical/cultural; Kenji = technical; Joselito = rotating patterns.
+    Dawn and Kenji each rotate across 5 persona-voiced openers the same way
+    Joselito rotates across 5 structural patterns (see _stable_index) — none
+    of the three personas repeats the identical opening line every post.
     """
     tags = generate_hashtags(html_content, title, description) if html_content else "#AIMA #AIForGood"
+    slug_seed = re.sub(r'[^a-z0-9]', '', source_url.lower())
 
-    if persona == "dawn":
-        hook = extract_hook(html_content) if html_content else None
-        stat = _extract_stat(html_content) if html_content else None
-        intro = (
-            f"I've been sitting with this one.\n\n"
-            f"{stat or hook or _truncate_to_sentence(description, 280)}"
-        )
-        tldr = (
-            "TL;DR — The institutions calling this 'ethical AI' are the ones "
-            "designing the systems that aren't."
-        )
-        cta = f"Read the full take: {source_url}"
-        commentary = f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
+    if persona in ("dawn", "kenji"):
+        hook   = extract_hook(html_content) if html_content else None
+        stat   = _extract_stat(html_content) if html_content else None
+        desc_s = _truncate_to_sentence(description, 280)
+        # Content-derived TL;DR (was a single hardcoded claim asserted on
+        # every article regardless of topic — repetitive AND not
+        # necessarily true of the specific piece being shared).
+        tldr = _article_tldr(title, description, hook)
 
-    elif persona == "kenji":
-        hook = extract_hook(html_content) if html_content else None
-        stat = _extract_stat(html_content) if html_content else None
-        intro = (
-            f"This is the story nobody's telling about what's actually possible.\n\n"
-            f"{stat or hook or _truncate_to_sentence(description, 280)}"
-        )
-        tldr = (
-            "TL;DR — The technology is further along than the headlines admit, "
-            "and closer to real people's lives than the hype suggests."
-        )
-        cta = f"Full breakdown: {source_url}"
+        openers = _DAWN_OPENERS if persona == "dawn" else _KENJI_OPENERS
+        opener  = openers[_stable_index(slug_seed + ":" + persona, len(openers))]
+        intro   = f"{opener}\n\n{stat or hook or desc_s}"
+        cta     = (f"Read the full take: {source_url}" if persona == "dawn"
+                   else f"Full breakdown: {source_url}")
         commentary = f"{intro}\n\n{tldr}\n\n{cta}\n\n{tags}"
 
     else:
@@ -631,8 +658,7 @@ def build_personal_commentary(title, description, source_url, persona="joselito"
         tldr   = _article_tldr(title, description, hook)
 
         # Derive pattern index from article slug in source_url (stable across retries)
-        slug_seed = re.sub(r'[^a-z0-9]', '', source_url.lower())
-        pattern_idx = hash(slug_seed) % len(_HOOK_PATTERNS)
+        pattern_idx = _stable_index(slug_seed, len(_HOOK_PATTERNS))
         pattern_fn  = _HOOK_PATTERNS[pattern_idx]
 
         body = pattern_fn(

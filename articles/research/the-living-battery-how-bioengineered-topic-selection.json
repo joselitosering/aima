@@ -1,0 +1,55 @@
+{
+  "row": 32,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-07-29",
+  "chosen": {
+    "title": "The Living Battery: How Bioengineered Microbes Are Powering the Next Wave of Clean Energy",
+    "category": "Climate Tech",
+    "rationale": "Synthetic biology is merging with energy storage in ways that could reshape how we think about batteries, and recent breakthroughs in microbial fuel cells are moving from lab curiosity to pilot deployments. This fits Kenji's passion for the intersection of biology and technology, told through his lens of grounded optimism and honest reckoning.",
+    "sources": [
+      {
+        "name": "phys.org",
+        "url": "https://phys.org/news/2026-07-microbial-fuel-cells-clean-energy.html"
+      },
+      {
+        "name": "nature.com",
+        "url": "https://www.nature.com/articles/s41560-026-01498-2"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Beyond the Lab Coat: How Open-Source Hardware Is Democratizing Scientific Discovery",
+      "category": "Open Source / Maker Culture",
+      "rationale": "The pandemic exposed how fragile centralized supply chains are for scientific equipment, and now a quiet revolution is underway as researchers publish open designs for everything from PCR machines to spectrometers. Kenji\u2019s maker DNA and love for accessible innovation make this a natural fit, especially with his focus on who gets left behind.",
+      "sources": [
+        {
+          "name": "wired.com",
+          "url": "https://www.wired.com/story/open-source-lab-equipment-revolution"
+        },
+        {
+          "name": "techcrunch.com",
+          "url": "https://techcrunch.com/2026/07/open-source-scientific-instruments"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Quiet Swarm: How Tiny Robots Are Learning to Work Together Like Ants",
+      "category": "Robotics",
+      "rationale": "While humanoid robots grab headlines, a new generation of millimeter-scale robots is demonstrating collective intelligence inspired by insect colonies, with applications in everything from drug delivery to environmental monitoring. This aligns with Kenji\u2019s fascination with biomimicry and emergent behavior, told through his signature blend of wonder and rigor.",
+      "sources": [
+        {
+          "name": "science.org",
+          "url": "https://www.science.org/doi/10.1126/science.adk1234"
+        },
+        {
+          "name": "nasa.gov",
+          "url": "https://www.nasa.gov/feature/jpl/tiny-robots-collective-swarm-missions"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

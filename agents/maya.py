@@ -166,6 +166,32 @@ def _save_header_image(tmp_path, dest_rel: str):
     Path(tmp_path).unlink(missing_ok=True)
 
 
+def _processed_hash(tmp_path) -> str:
+    """MD5 of an image AFTER the SAME resize-to-1200x630/JPEG-quality-90
+    pipeline that _save_header_image() applies before anything lands in
+    img/articles/ or img/alt-img/.
+
+    2026-07-28 root-cause fix: the old duplicate check hashed the raw,
+    as-downloaded Pexels file and compared it against hashes of files that
+    were already resized+recompressed. Those two hashes can never usefully
+    match — even a byte-for-byte-identical source photo produces a
+    different raw hash than its own processed copy — so the "exclude
+    existing covers" guard was silently a no-op for every first-time
+    fetch (only re-runs against an already-processed on-disk file, via
+    _is_any_duplicate() below, ever actually caught anything). This helper
+    hashes candidates through the identical pipeline so the comparison is
+    apples-to-apples against existing covers.
+    """
+    import hashlib
+    import io
+    from PIL import Image
+    with Image.open(tmp_path) as img:
+        img = img.convert("RGB").resize((1200, 630), Image.LANCZOS)
+        buf = io.BytesIO()
+        img.save(buf, "JPEG", quality=90)
+        return hashlib.md5(buf.getvalue()).hexdigest()
+
+
 def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str,
                          exclude_hashes: set = None):
     """
@@ -225,11 +251,14 @@ def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str,
             f"[maya] Pexels returned no photos for query '{query}'"
         )
 
-    # Iterate pool in order, skipping any photo whose downloaded image hash
-    # matches an existing cover. This prevents Pexels returning the same top
-    # result for similar-category articles across different runs.
-    import hashlib as _hashlib
-    selected: list = []   # list of (photo_meta, tmp_path)
+    # Iterate pool in order, skipping any photo whose PROCESSED image hash
+    # (same resize/recompress pipeline used for every saved cover — see
+    # _processed_hash()) matches an existing cover. This prevents Pexels
+    # returning the same top result for similar-category articles across
+    # different runs. Also tracks hashes selected earlier in THIS call so
+    # primary and alt can't duplicate each other or a photo skipped this run.
+    selected: list = []   # list of (photo_meta, tmp_path, processed_hash)
+    seen_this_call = set()
     for photo in photos:
         if len(selected) >= 2:
             break
@@ -242,16 +271,16 @@ def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str,
         dl = urllib.request.Request(img_url, headers={"User-Agent": ua})
         with urllib.request.urlopen(dl, timeout=60) as r, open(tmp_path, "wb") as fh:
             fh.write(r.read())
-        if exclude_hashes:
-            h = _hashlib.md5(Path(tmp_path).read_bytes()).hexdigest()
-            if h in exclude_hashes:
-                log.warning(
-                    f"[maya] Pexels photo {photo.get('id')} matches an existing cover "
-                    f"— skipping (hash {h[:8]})"
-                )
-                Path(tmp_path).unlink(missing_ok=True)
-                continue
-        selected.append((photo, tmp_path))
+        h = _processed_hash(tmp_path)
+        if h in seen_this_call or (exclude_hashes and h in exclude_hashes):
+            log.warning(
+                f"[maya] Pexels photo {photo.get('id')} matches an existing cover "
+                f"— skipping (processed hash {h[:8]})"
+            )
+            Path(tmp_path).unlink(missing_ok=True)
+            continue
+        seen_this_call.add(h)
+        selected.append((photo, tmp_path, h))
 
     if len(selected) < 2:
         raise RuntimeError(
@@ -259,7 +288,7 @@ def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str,
             f"of {len(photos)} for query '{query}'"
         )
 
-    for i, (photo, tmp) in enumerate(selected):
+    for i, (photo, tmp, h) in enumerate(selected):
         dest = primary_path if i == 0 else alt_path
         _save_header_image(tmp, dest)
         log.info(
@@ -267,13 +296,47 @@ def _fetch_stock_images(spec: dict, primary_path: str, alt_path: str,
             f"query '{query}') -> {dest}"
         )
 
+    # Safety net: re-verify the file that actually landed on disk still isn't
+    # a duplicate (belt-and-braces against any future drift between this
+    # function's hashing and what gets saved). Raises so the caller falls
+    # back to a stub rather than silently shipping a repeat image.
+    if exclude_hashes:
+        import hashlib as _hashlib
+        final_hash = _hashlib.md5((REPO_ROOT / primary_path).read_bytes()).hexdigest()
+        if final_hash in exclude_hashes:
+            raise RuntimeError(
+                f"[maya] post-save verification failed — {primary_path} still "
+                f"matches an existing cover (hash {final_hash[:8]})"
+            )
+
+
+def _existing_cover_hashes(exclude: Path = None) -> set:
+    """Processed-pipeline MD5 hashes of every real (>1KB) cover currently in
+    img/articles/, for apples-to-apples duplicate comparison. `exclude` skips
+    one path (e.g. the file we're about to overwrite)."""
+    import hashlib
+    hashes = set()
+    for p in (REPO_ROOT / "img/articles").glob("aima-*.jpg"):
+        if exclude is not None and p.resolve() == exclude.resolve():
+            continue
+        if p.stat().st_size > 1024:
+            hashes.add(hashlib.md5(p.read_bytes()).hexdigest())
+    return hashes
+
 
 def _pickup_from_handoff(number: int, og_image: str, alt_image: str) -> bool:
     """Move any pre-staged images for this article from handoff/ready/ into their
     canonical locations, so a pipeline run reuses what the Maya batch already made
     instead of regenerating. Matches by article number (slug-agnostic); only moves
-    real images (>1KB), so empty stubs are ignored. Returns True if anything moved.
+    real images (>1KB) that AREN'T byte-for-byte duplicates of an existing cover,
+    so empty stubs and pre-staged repeats are both ignored. Returns True if
+    anything moved.
+
+    2026-07-28: previously moved whatever was staged with zero duplicate
+    checking — the batch pre-stager (run_maya_batch.py) has never deduped
+    against existing covers, so anything it staged landed here unverified.
     """
+    import hashlib
     import shutil
     ready_dir = REPO_ROOT / "handoff" / "ready"
     if not ready_dir.exists():
@@ -281,25 +344,40 @@ def _pickup_from_handoff(number: int, og_image: str, alt_image: str) -> bool:
 
     padded = str(number).zfill(3)
     moved = False
+    existing_hashes = _existing_cover_hashes()
 
     # Primary cover: handoff/ready/aima-NNN-*.jpg (excluding the -alt variant)
     primaries = [p for p in ready_dir.glob(f"aima-{padded}-*.jpg")
                  if not p.stem.endswith("-alt") and p.stat().st_size > 1024]
     if primaries:
-        dest = REPO_ROOT / og_image
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(primaries[0]), str(dest))
-        log.info(f"[maya] handoff pickup: {primaries[0].name} -> {og_image}")
-        moved = True
+        cand = primaries[0]
+        h = hashlib.md5(cand.read_bytes()).hexdigest()
+        if h in existing_hashes:
+            log.warning(f"[maya] handoff candidate {cand.name} duplicates an existing "
+                        f"cover (hash {h[:8]}) — discarding, will regenerate instead")
+            cand.unlink(missing_ok=True)
+        else:
+            dest = REPO_ROOT / og_image
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(cand), str(dest))
+            log.info(f"[maya] handoff pickup: {cand.name} -> {og_image}")
+            moved = True
 
     # Alt image: handoff/ready/aima-NNN-*-alt.jpg
     alts = [p for p in ready_dir.glob(f"aima-{padded}-*-alt.jpg") if p.stat().st_size > 1024]
     if alts:
-        dest = REPO_ROOT / alt_image
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(alts[0]), str(dest))
-        log.info(f"[maya] handoff pickup: {alts[0].name} -> {alt_image}")
-        moved = True
+        cand = alts[0]
+        h = hashlib.md5(cand.read_bytes()).hexdigest()
+        if h in existing_hashes:
+            log.warning(f"[maya] handoff alt candidate {cand.name} duplicates an existing "
+                        f"cover (hash {h[:8]}) — discarding, will regenerate instead")
+            cand.unlink(missing_ok=True)
+        else:
+            dest = REPO_ROOT / alt_image
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(cand), str(dest))
+            log.info(f"[maya] handoff pickup: {cand.name} -> {alt_image}")
+            moved = True
 
     return moved
 
@@ -368,12 +446,7 @@ def run(article_path: str, spec: dict) -> str:
             log.info("[maya] images ready (canonical/handoff) — skipping generation")
         elif os.environ.get("PEXELS_API_KEY"):
             log.info("[maya] sourcing stock header images via Pexels")
-            import hashlib as _hlib
-            existing_hashes = {
-                _hlib.md5(p.read_bytes()).hexdigest()
-                for p in (REPO_ROOT / "img/articles").glob("aima-*.jpg")
-                if p.stat().st_size > 1024
-            }
+            existing_hashes = _existing_cover_hashes(exclude=_primary_full)
             try:
                 _fetch_stock_images(spec, og_image, alt_image, exclude_hashes=existing_hashes)
             except Exception as exc:

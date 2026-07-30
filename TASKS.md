@@ -36,6 +36,23 @@ _Last updated: 2026-07-22 (pipeline hardened for #29; machine compromise contain
 
 ## 🐛 Known Issues / Open Items
 
+- [ ] **Action needed: finish the #031 image swap.** Code is fixed (see Completed below)
+  and `fix_031_image.py` is sitting in the repo root, but nothing could actually be
+  committed/pushed from the Cowork sandbox — both the cloud sandbox and the local
+  device-bridge VM sit behind a network allowlist that blocks api.pexels.com AND
+  the Higgsfield CDN (`X-Proxy-Error: blocked-by-allowlist`). Run `python
+  fix_031_image.py` from a real terminal in this repo root to download the two
+  already-generated replacement images, verify they're non-duplicate, and commit+push.
+  It only touches the two image files (not the article HTML — og:image path is
+  unchanged). NOTE: your working tree currently has ~244 modified/untracked files
+  (line-ending churn across most articles, `pipeline_build/*`, uncommitted research
+  files) — worth a separate cleanup pass so future one-off fixes don't risk sweeping
+  in unrelated changes.
+- [ ] **Review + commit the Maya/LinkedIn dedup fixes.** `agents/maya.py` and
+  `linkedin_pipeline/linkedin_poster.py` were edited in place (2026-07-28) but not
+  committed — same sandbox network restriction meant git operations were left for a
+  real terminal too. `git diff agents/maya.py linkedin_pipeline/linkedin_poster.py`
+  to review, then commit. Root cause + rationale below under Completed.
 - [ ] **Inline glossary-term linking is partial** — 2 of 7 terms linked on #25. Root cause: short-form references ("AVM") miss full-form definitions ("Automated Valuation Model (AVM)"). Fuzzy/partial matching or a small model call needed — not worth it yet.
 - [ ] **Format pre-check false positive** — "TODO/PLACEHOLDER/lorem ipsum" warning fires on merged articles even when placeholders are confirmed gone. Non-blocking WARNING only. Root in marco.py format-check logic — not yet read/diagnosed.
 - [ ] **Stat-grid citation gaps** — content-accuracy issue (Writer asserting stats without in-text sources). Per-article editorial review, not a pipeline bug. #25 had the 90% employer AI-screening stat uncited.
@@ -46,6 +63,39 @@ _Last updated: 2026-07-22 (pipeline hardened for #29; machine compromise contain
 
 ## ✅ Completed (recent)
 
+- [x] **Root-caused why duplicate cover images keep recurring despite the #027/#029
+  "fixes" — both were one-off patches, not fixes to the code path that actually
+  causes it.** (2026-07-28, Cowork investigation) Article #031 shipped with its
+  primary cover byte-identical to #019 AND #025's covers (which were already
+  duplicates of each other, uncaught), and its alt image identical to #024's alt.
+  Root cause: `_fetch_stock_images()`'s `exclude_hashes` dedup hashed the RAW,
+  just-downloaded Pexels file and compared it against hashes of files in
+  `img/articles/` — but every file there has already been through
+  `_save_header_image()`'s resize-to-1200×630/JPEG-quality-90 pipeline. Raw bytes
+  vs. processed bytes can never match, even for the literal same source photo, so
+  the "exclude existing covers" guard was a silent no-op for every first-time
+  fetch. The broader `_is_any_duplicate()` gate (added in the #029 fix, commit
+  921a85d) only protects RE-runs of an article that already has a file on disk —
+  it never fires on a brand-new article's first fetch, which is exactly the #031
+  case. Separately, `_pickup_from_handoff()` (the handoff/ready pre-stage path)
+  had zero duplicate checking at all. Fixed in `agents/maya.py`: added
+  `_processed_hash()` so the comparison is apples-to-apples, added a post-save
+  verification safety net, and added duplicate checking to the handoff pickup
+  path. See "Action needed" above — the code fix is done but not yet committed.
+- [x] **Fixed the personal-profile-reshare repetition** — `build_personal_commentary()`
+  in `linkedin_pipeline/linkedin_poster.py` had Dawn's persona ALWAYS opening with
+  the literal line "I've been sitting with this one." and Kenji's ALWAYS opening
+  with "This is the story nobody's telling about what's actually possible." — 100%
+  static on every single post for those two bylines (only Joselito's branch
+  rotated). Their TL;DR lines were also hardcoded, identical, topic-generic claims
+  regardless of the actual article. Gave Dawn and Kenji their own 5-opener pools,
+  selected the same deterministic-per-article way Joselito's pattern rotation
+  works, and switched both personas' TL;DR to the same content-derived
+  `_article_tldr()` Joselito already uses. Also fixed the pattern-index hashing
+  itself: it used Python's builtin `hash()`, which is process-salted
+  (PYTHONHASHSEED) and NOT actually stable across a crash-retry despite being
+  commented as such — replaced with an md5-based stable hash so retries land on
+  the same variant instead of reshuffling. Not yet committed — see above.
 - [x] **Pipeline hardened against CC OAuth expiry** (commit 408bd94) — scout/trend_scout raise a clean recoverable halt (`LiveResearchUnavailableError` → `trend_scout_unavailable`) instead of crashing or fabricating research via the tool-less fallback; CLAUDE.md crash-log deduped; Task Scheduler theory falsified (no such task exists). (2026-07-22)
 - [x] **Article #29 row resolved** — TBD → real Kenji title via the sanctioned `persist_topic_to_calendar()` path; verified `python run.py` clears Priya + Trend Scout. (2026-07-22)
 - [x] **Machine compromise contained** — obfuscated malware killed/quarantined, persistence removed. (2026-07-22) See handoff doc + Quarantine folder.

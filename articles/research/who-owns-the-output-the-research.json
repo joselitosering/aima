@@ -1,0 +1,90 @@
+{
+  "article_number": 30,
+  "slug": "who-owns-the-output-the",
+  "title": "Who Owns the Output? The Intellectual Property Crisis in Generative AI",
+  "author": "Joselito Sering",
+  "category": "AI Law",
+  "research_date": "2026-07-27",
+  "sources_used": {
+    "local_cache": [
+      "prompt-to-profit-research.json reviewed — only tangential (AI-native business economics, not copyright/IP); no reusable IP-law statistics. Other cached files (autonomous labs, robots, termination-algorithm) checked as off-topic and skipped to stay within budget."
+    ],
+    "rss_feeds_checked": [],
+    "apis_checked": ["Guardian/NYT/NewsAPI require keys not confirmed present in agents/.env; arXiv/Crossref skipped as legal-news web search covered the ground faster and with primary-quality secondary sources (law firms, Copyright Office reporting)."],
+    "web_search": true
+  },
+  "statistics": [
+    {
+      "stat": "A U.S. federal judge approved Anthropic's $1.5 billion settlement of a class-action copyright suit brought by authors who alleged Anthropic used pirated books to train its Claude models. It is the largest known copyright settlement involving generative AI and the clearest signal yet of what copyright exposure could cost model builders.",
+      "source": "Reuters / AI Business (reporting on the Bartz v. Anthropic settlement approval)",
+      "year": 2026,
+      "url": "https://aibusiness.com/generative-ai/ai-lawsuits-in-2026-settlements-licensing-deals-litigation",
+      "date": "2026-07-20"
+    },
+    {
+      "stat": "In Bartz v. Anthropic the court issued a split fair-use ruling: training an AI model on lawfully acquired copyrighted books can qualify as fair use, but Anthropic's storage of pirated copies in a central library does NOT. The ruling left the industry's biggest question — whether training on copyrighted material is broadly fair use — formally unresolved.",
+      "source": "Norton Rose Fulbright — 'An update on AI copyright cases in 2026'",
+      "year": 2026,
+      "url": "https://www.nortonrosefulbright.com/en/knowledge/publications/ce8eaa5f/ai-in-litigation-series-an-update-on-ai-copyright-cases-in-2026"
+    },
+    {
+      "stat": "AI-related litigation is accelerating sharply. The Q2 2026 J.S. Held AI Disputes Monitor recorded 42 new AI-related lawsuits filed between April 1 and June 30, 2026 — a 35% quarterly increase — bringing its tracked dataset to 426 cases, with copyright claims dominating the docket. Year-to-date filings by mid-2026 reached 73, about 86% of the entire 2025 total, putting 2026 on pace to more than double the prior year.",
+      "source": "J.S. Held AI Disputes Monitor, Q2 2026 (via PR Newswire)",
+      "year": 2026,
+      "url": "https://www.prnewswire.com/news-releases/copyright-cases-dominate-as-regulatory-and-product-liability-challenges-emerge-in-the-q2-2026-js-held-ai-disputes-monitor-302825770.html",
+      "verification_note": "The 426 tracked-cases figure and the 42-new/35% quarterly numbers come from J.S. Held's proprietary tracker; other trackers (BakerHostetler, Mishcon de Reya, Copyright Alliance) count differently. Cite as 'one leading tracker' rather than a definitive universal count."
+    },
+    {
+      "stat": "The U.S. Copyright Office reaffirmed that human authorship is the bedrock of copyrightability: works generated entirely by AI are not copyrightable, and 'given current generally available technology, prompts alone do not provide sufficient human control to make users of an AI system the authors of the output.' Only the human-authored contributions to a mixed human/AI work are protectable, judged case by case.",
+      "source": "U.S. Copyright Office, 'Copyright and Artificial Intelligence, Part 2: Copyrightability' report (Jan. 29, 2025), via Skadden / Perkins Coie analyses",
+      "year": 2025,
+      "url": "https://www.skadden.com/insights/publications/2025/02/copyright-office-publishes-report"
+    },
+    {
+      "stat": "Despite the 'no copyright for AI alone' rule, the Copyright Office has granted registrations for hundreds of works that incorporate some AI-generated material since its 2023 guidance — protection attaching to the human-authored selection, arrangement, and modification rather than the raw AI output.",
+      "source": "U.S. Copyright Office guidance, reported by Center for Art Law / Perkins Coie",
+      "year": 2025,
+      "url": "https://perkinscoie.com/insights/update/copyright-office-solidifies-stance-copyrightability-ai-generated-works"
+    }
+  ],
+  "expert_quotes": [
+    {
+      "quote": "The Q2 copyright filings underscore how central valuation, licensing benchmarks, and IP cost analysis have become to AI litigation. As theories of harm grow more refined, from real-time competitive substitution to structured-database scraping, the economic questions are becoming more robust, and courts will need well supported answers.",
+      "name": "James E. Malackowski",
+      "affiliation": "Chief Intellectual Property Officer, J.S. Held",
+      "url": "https://www.prnewswire.com/news-releases/copyright-cases-dominate-as-regulatory-and-product-liability-challenges-emerge-in-the-q2-2026-js-held-ai-disputes-monitor-302825770.html"
+    },
+    {
+      "quote": "Given current generally available technology, prompts alone do not provide sufficient human control to make users of an AI system the authors of the output.",
+      "name": "U.S. Copyright Office",
+      "affiliation": "Copyright and Artificial Intelligence, Part 2: Copyrightability (official report, Jan. 2025)",
+      "url": "https://www.skadden.com/insights/publications/2025/02/copyright-office-publishes-report",
+      "note": "Institutional/authoritative quote taken verbatim from the Office's own report (as reported by Skadden). Not an individual named expert, but the controlling agency position on the article's central 'who owns the output' question."
+    }
+  ],
+  "strongest_counterargument": {
+    "argument": "The AI industry's core defense is that training on copyrighted works is a transformative, non-expressive use squarely within fair use — the model learns statistical patterns, it does not republish the works — and that the Bartz v. Anthropic ruling partly vindicated this by holding training itself lawful (the $1.5B liability turned on how Anthropic acquired and stored the books, i.e., piracy, not on training per se). On this view, forcing per-work licensing for the billions of items in a training corpus is practically impossible and would simply entrench the largest incumbents who can afford blanket licensing deals, while foreclosing open research and smaller entrants. Requiring copyright clearance for training, defenders argue, regulates the wrong thing: the harm (if any) is competitive market substitution by specific outputs, which existing infringement law already reaches, not the act of learning from lawfully accessible text and images.",
+    "source": "Synthesized from Bartz v. Anthropic fair-use holding (Norton Rose Fulbright) and Anthropic settlement coverage",
+    "url": "https://www.nortonrosefulbright.com/en/knowledge/publications/ce8eaa5f/ai-in-litigation-series-an-update-on-ai-copyright-cases-in-2026"
+  },
+  "recent_news": [
+    {
+      "item": "A U.S. federal judge approved Anthropic's $1.5 billion settlement with authors on July 20, 2026 — the largest known generative-AI copyright settlement — resolving the pirated-books claims while leaving the broader 'is training fair use?' question open for the still-pending OpenAI, Microsoft, Meta, and Getty/Stability cases.",
+      "date": "2026-07-20",
+      "source": "AI Business / Reuters",
+      "url": "https://aibusiness.com/generative-ai/ai-lawsuits-in-2026-settlements-licensing-deals-litigation"
+    },
+    {
+      "item": "The Q2 2026 J.S. Held AI Disputes Monitor (released mid-July 2026) reported copyright cases dominating AI litigation, with 42 new AI-related suits filed in Q2 alone (up 35% quarter-over-quarter) and licensing-valuation and IP-cost analysis emerging as central battlegrounds.",
+      "date": "2026-07-16",
+      "source": "J.S. Held / PR Newswire",
+      "url": "https://www.prnewswire.com/news-releases/copyright-cases-dominate-as-regulatory-and-product-liability-challenges-emerge-in-the-q2-2026-js-held-ai-disputes-monitor-302825770.html"
+    }
+  ],
+  "unverified_or_flagged_claims": [
+    "Case-count figures (75 by Jan 2026; 426 total tracked; 42 new in Q2; 73 YTD = ~86% of 2025) all originate from the J.S. Held AI Disputes Monitor and reporting summaries. Different trackers (BakerHostetler, Mishcon de Reya, Copyright Alliance) tally different totals depending on scope (US-only vs. global, copyright-only vs. all AI disputes). Attribute to J.S. Held specifically and hedge as 'one leading tracker,' not an official/universal count.",
+    "The Anthropic settlement is widely reported at $1.5 billion and 'largest known,' but final court-approved per-work distribution details were still being administered as of this research pass — cite the headline figure and approval date, avoid asserting precise per-author payouts.",
+    "The OpenAI/NYT, Meta, and Getty v. Stability cases are described as unresolved/ongoing as of mid-2026 in the sources; do not state any final verdict for these — they remain in active litigation.",
+    "The second 'expert quote' is an institutional quote from the U.S. Copyright Office report (as reported by Skadden), not an individually attributed expert. If Vera/Quill require a named human second source, add one named IP-law academic before publication."
+  ]
+}
