@@ -24,34 +24,65 @@ DRAFTS_DIR = "articles/drafts"
 # caught here, before Quill/Maya/Vera ever spend a token on it. Ranges reset
 # 2026-07-14: Joselito 1200-1500 (unchanged), Dawn 1000-1200→900-1200,
 # Kenji 800-1000→500-1000.
+#
+# CEILING MADE EXPLICIT (2026-07-31, per Joe): "ceiling" is now a real key on
+# every persona instead of implicit range_max * 1.2 math buried in run(). It is
+# the AUTO-REJECT line, NOT a target — a draft above it is thrown away and the
+# whole run is discarded. Articles #26, #27 and #33 all overshot range_max; #33
+# hit 1816w and CRASHED the 2026-07-30 run at the gate (pipeline.log:2890),
+# burning a $0.63 Writer call and forcing a manual trim plus two re-runs. Root
+# cause: the gate knew about 1800, but the PROMPT never told the writer, so the
+# model had no number to steer against. Writers now self-enforce both bounds —
+# hit range_min, cap at range_max — with ceiling as the hard backstop.
 AUTHOR_SPECS = {
     "joselito": {
         "name": "Joselito Sering", "persona_file": "joselito-sering.md",
         "form": "editorial", "range": "1200-1500 words",
         "range_min": 1200, "range_max": 1500, "target_words": 1350,
+        "ceiling": 1800,  # 1500 x 1.2 — auto-reject above this
         "voice": "conviction-driven editorial — frames AI as a new creative instrument, not a shortcut",
     },
     "dawn": {
         "name": "Dawn Ginhaua", "persona_file": "dawn-ginhaua.md",
         "form": "investigative report", "range": "900-1200 words",
         "range_min": 900, "range_max": 1200, "target_words": 1050,
+        "ceiling": 1440,  # 1200 x 1.2 — auto-reject above this
         "voice": "investigative, evidence-first, link-heavy — cite primary sources inline",
     },
     "kenji": {
         "name": "Kenji Nakamoto", "persona_file": "kenji-nakamoto.md",
         "form": "blog post", "range": "500-1000 words",
         "range_min": 500, "range_max": 1000, "target_words": 750,
+        "ceiling": 1200,  # 1000 x 1.2 — auto-reject above this
         "voice": "optimistic, accessible blog — grounded in what the tech makes possible for real people",
     },
 }
+
+
+def _bounds(a: dict) -> tuple[int, int]:
+    """(floor, ceiling) for a persona spec — the single source of truth for
+    Writer's own gate AND find_draft()'s reuse check. Falls back to the old
+    implicit math if a persona is missing the explicit "ceiling" key."""
+    return int(a["range_min"] * 0.85), int(a.get("ceiling") or a["range_max"] * 1.2)
+
 
 WRITER_PROMPT = (
     "You are an AIMA staff writer producing a COMPLETE, publication-ready article in your "
     "assigned persona's authentic voice. You own the final word count and full structure — "
     "Quill only verifies afterward; it does not rewrite you for length or add anything you "
     "left out. Use the provided research faithfully and cite sources; do not invent facts "
-    "beyond the research (flag any gaps). Your target word range is a hard constraint, not a "
-    "suggestion — stay inside it. Include every required structural element yourself: exactly "
+    "beyond the research (flag any gaps).\n\n"
+    "WORD COUNT IS SELF-ENFORCED. Your assignment states a minimum, a maximum, and an "
+    "auto-reject ceiling. You are responsible for all three — nothing downstream will trim "
+    "you back or pad you out. Land inside the minimum-maximum range: coming in under the "
+    "minimum is as much a failure as running over the maximum. The ceiling is a rejection "
+    "threshold, NOT a target and NOT permission to write longer — a draft above it is "
+    "discarded and the entire run is thrown away. Before you save, count the prose words "
+    "yourself (excluding the glossary and references blocks, which do not count toward your "
+    "total) and cut or expand until you are inside the stated range. If the research gives "
+    "you more material than fits, choose the strongest thread and cut the rest — do not run "
+    "long to cover everything.\n\n"
+    "Include every required structural element yourself: exactly "
     "5-6 <h2> section headings IN THE ARTICLE BODY (the body H2s are the ONLY <h2> tags in "
     "the entire file — do NOT put an <h2> inside <div class=\"glossary\"> or "
     "<div class=\"references\">; those divs have no heading), a stat grid (>=4 numeric "
@@ -77,16 +108,25 @@ def find_draft(spec: dict) -> str | None:
     """Return the repo-relative path of an existing free-form draft for this
     spec that passes Writer's prose word-count floor, or None.
 
-    Checked by slug+number, then number, then slug. Stale stubs from failed
-    Writer runs are skipped — a file must hit the author's range_min * 0.85
-    floor to be considered valid (same gate Writer's run() applies).
+    Checked by slug+number, then number, then slug. A candidate must pass the
+    SAME floor AND ceiling that Writer's run() gate applies (see _bounds) —
+    stale stubs from failed runs are skipped at the bottom, oversize drafts at
+    the top.
+
+    CEILING CHECK ADDED 2026-07-31 (per Joe): this used to test the floor only.
+    Marco reuses a pre-staged Writer-batch draft at Stage 3a WITHOUT calling
+    writer.run(), so an over-ceiling draft accepted here bypassed the word-count
+    gate entirely and went straight to Quill/Maya/Vera — the exact path article
+    #33 took on its 2026-07-31 re-run. Rejecting it here forces a fresh Writer
+    call (which costs a Writer call, but is the intended behaviour: an oversize
+    draft should never reach publish just because it was written earlier).
     """
     drafts = REPO_ROOT / DRAFTS_DIR
     if not drafts.exists():
         return None
     key = resolve_author(spec)
     a = AUTHOR_SPECS[key]
-    floor = int(a["range_min"] * 0.85)
+    floor, ceiling = _bounds(a)
 
     def _valid(p: Path) -> bool:
         if not p.exists() or p.stat().st_size <= 200:
@@ -94,6 +134,13 @@ def find_draft(spec: dict) -> str | None:
         wc = _prose_word_count(p.read_text(encoding="utf-8", errors="replace"))
         if wc < floor:
             log.info(f"[writer] find_draft: skipping stub {p.name} ({wc}w < floor {floor})")
+            return False
+        if wc > ceiling:
+            log.warning(
+                f"[writer] find_draft: skipping OVERSIZE {p.name} ({wc}w > ceiling "
+                f"{ceiling}, persona range {a['range']}) — will not reuse a draft "
+                f"that would fail the word-count gate; Writer must re-run."
+            )
             return False
         return True
 
@@ -149,7 +196,21 @@ voice, and hit the target length AND include every required structural element
 yourself — Quill only verifies afterward; it will not rewrite you for length or
 add anything missing.
 
-TARGET LENGTH: {a['range']} ({a['form']}) — THIS IS A HARD CONSTRAINT. Stay inside it.
+WORD COUNT — SELF-ENFORCED, THREE NUMBERS. Prose only; the glossary and
+references blocks are EXCLUDED from every figure below.
+  MINIMUM  {a['range_min']} words — below this the draft is rejected as a stub.
+  TARGET   {a['target_words']} words — aim here.
+  MAXIMUM  {a['range_max']} words — do not exceed this. This is your cap.
+  CEILING  {a['ceiling']} words — AUTO-REJECT. A draft over {a['ceiling']} words is
+           thrown away and the whole pipeline run is discarded, wasting every
+           token spent on it. This is a rejection threshold, NOT a target and
+           NOT room to expand into. Never treat it as your budget.
+Count your prose words BEFORE you save. If you are over {a['range_max']}, cut until
+you are under it. If you are under {a['range_min']}, develop the argument further —
+do not pad. Landing between {a['range_min']} and {a['range_max']} is part of the assignment,
+not a guideline.
+
+FORM: {a['form']}
 VOICE: {a['voice']}
 
 ARTICLE SPEC (topic + tags from Priya's calendar):
@@ -225,7 +286,7 @@ After the Write call succeeds, output only the single word: DRAFT_SAVED\
         )
     text_only = re.sub(r"<[^>]+>", " ", prose_only)
     word_count = len(text_only.split())
-    floor, ceiling = int(a["range_min"] * 0.85), int(a["range_max"] * 1.2)
+    floor, ceiling = _bounds(a)
     if not (floor <= word_count <= ceiling):
         raise RuntimeError(
             f"[writer] Word count gate: {word_count} words outside acceptable "
