@@ -1269,3 +1269,47 @@ RuntimeError: [scout] No research JSON found in CC output or on disk for 'who-ow
 
 ```
 - Full run log: pipeline.log
+
+
+### Pipeline CRASH — #33 'The Brain-Computer Interface Horizon: Where Mind Meets Machine' — stage 'writer' (2026-07-30)
+<!-- aima-failure-key: 2026-07-30|writer|[writer] Word count gate: 1816 words outside acceptable 1020-1800 (persona range 1200-1500 -->
+- **Occurrences:** 1
+- **First seen:** 2026-07-30T12:41:38
+- **Last seen:** 2026-07-30T12:41:38
+- **Error:** [writer] Word count gate: 1816 words outside acceptable 1020-1800 (persona range 1200-1500 words). Draft NOT accepted: articles/drafts/the-brain-computer-interface-horizon-033-draft.html. Re-run Writer, or adjust the persona range if this topic genuinely needs more room.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 324, in run
+    draft_path = writer.run(spec, research)
+  File "D:\Apps\DevOps\Github\aima\agents\writer.py", line 230, in run
+    raise RuntimeError(
+    ...<4 lines>...
+    )
+RuntimeError: [writer] Word count gate: 1816 words outside acceptable 1020-1800 (persona range 1200-1500 words). Draft NOT accepted: articles/drafts/the-brain-computer-interface-horizon-033-draft.html. Re-run Writer, or adjust the persona range if this topic genuinely needs more room.
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #33 'The Brain-Computer Interface Horizon: Where Mind Meets Machine' — stage 'quill' (2026-07-31)
+<!-- aima-failure-key: 2026-07-31|quill|[quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word co -->
+- **Occurrences:** 1
+- **First seen:** 2026-07-31T14:27:08
+- **Last seen:** 2026-07-31T14:27:08
+- **Error:** [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 1816 outside acceptable 1020-1800 (persona range 1200-1500). Draft at: articles/drafts/the-brain-computer-interface-horizon-033-draft.html
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 333, in run
+    article_path = quill.run(spec, research,
+                             extra_instruction=quill_params["extra_instruction"],
+                             draft_path=draft_path)
+  File "D:\Apps\DevOps\Github\aima\agents\quill.py", line 95, in run
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does not auto-rewrite): word count 1816 outside acceptable 1020-1800 (persona range 1200-1500). Draft at: articles/drafts/the-brain-computer-interface-horizon-033-draft.html
+
+```
+- Full run log: pipeline.log

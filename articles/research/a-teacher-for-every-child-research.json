@@ -1,0 +1,135 @@
+{
+  "article_number": 36,
+  "slug": "a-teacher-for-every-child",
+  "title": "A Teacher for Every Child: AI and the Education Revolution",
+  "category": "AI Society",
+  "researched_on": "2026-08-04",
+  "researcher": "Scout",
+  "budget_note": "Ran under the 60k research cap. Skipped the 4 cached files provided in the spec — all were off-topic (brain-computer interfaces, surveillance wages, AI regulation, clinical diagnosis); none touched education, so reading them would have wasted budget. 2 Exa semantic searches, 0 web fetches.",
+  "summary": "The animating promise behind this article — an AI 'personal tutor for every child' (Sal Khan's 2023 TED framing, echoing Bloom's 1984 two-sigma study) — collides with a real 2026 evidence gap. Rigorously designed AI tutors post large learning gains in controlled trials, but the deployed products have underwhelmed: Khan Academy's own leaders now say the revolution hasn't arrived. The strongest narrative tension is controlled-trial promise vs. real-classroom engagement, set against a genuine global teacher shortage (44M short by 2030) that makes the stakes real.",
+
+  "statistics": [
+    {
+      "stat": "In a randomized controlled trial at Harvard (N=194 undergraduates in a physics course), students using a purpose-built AI tutor learned significantly more in LESS time than students in an active-learning classroom; median learning gains were over double those of the in-class group, with an estimated effect size of 0.73 to 1.3 standard deviations (a linear-regression estimate of 0.63 understated it due to a ceiling effect).",
+      "source": "Nature Scientific Reports (Kestin et al., 'AI tutoring outperforms in-class active learning')",
+      "year": "2025",
+      "url": "https://www.nature.com/articles/s41598-025-97652-6",
+      "verified": true,
+      "note": "Primary source, peer-reviewed RCT. Key caveat for the piece: this is a carefully prompt-engineered custom tutor in a controlled setting, NOT a shipped consumer product — see the DiCerbo/Khan counter-evidence below."
+    },
+    {
+      "stat": "The world needs 44 million additional primary and secondary teachers by 2030 to reach universal education goals (SDG 4).",
+      "source": "UNESCO & Teacher Task Force, Global Report on Teachers",
+      "year": "2024 (reaffirmed at the 2025 World Summit on Teachers)",
+      "url": "https://www.unesco.org/en/articles/teachers-cannot-be-coded",
+      "verified": true,
+      "note": "This is the real-world stake that gives 'a teacher for every child' its urgency."
+    },
+    {
+      "stat": "Sub-Saharan Africa alone needs 15 million more teachers of the 44 million global shortfall.",
+      "source": "UNESCO / Teacher Task Force, Global Report on Teachers (PDF)",
+      "year": "2024",
+      "url": "https://www.teachertaskforce.org/sites/default/files/2024-02/2024_TTF-UNESCO-Global-Report-on-Teachers_EN.pdf",
+      "verified": true,
+      "note": "Useful for the equity/global-access angle — the shortage is concentrated where the digital divide is also widest."
+    },
+    {
+      "stat": "The share of primary teachers leaving the profession has roughly doubled, from 4.6% in 2015 to over 9% in 2022.",
+      "source": "UNESCO ('Teachers cannot be coded')",
+      "year": "2025",
+      "url": "https://www.unesco.org/en/articles/teachers-cannot-be-coded",
+      "verified": true,
+      "note": "Attrition data — shows the shortage is a retention crisis in higher-income countries, not only a supply gap in lower-income ones."
+    },
+    {
+      "stat": "A recent study found teachers using Khan Academy for academic practice produced slightly faster class learning gains — but lower-performing students saw few, if any, improvements. Khan Academy's chief learning officer says the evidence base for AI in education remains 'extremely limited.'",
+      "source": "Chalkbeat (Matt Barnum), reporting on Khan Academy and an overview paper",
+      "year": "2026",
+      "url": "https://www.chalkbeat.org/2026/04/09/sal-khan-reflects-on-ai-in-schools-and-khanmigo/",
+      "verified": true,
+      "note": "The equity twist: benefits skew toward students who were already doing well, risking a widening gap rather than a closing one."
+    },
+    {
+      "stat": "A majority of U.S. teenagers say AI-powered cheating is at least somewhat prevalent in their schools (cited via a Pew Research survey).",
+      "source": "Pew Research Center, cited secondhand in Chalkbeat",
+      "year": "2026",
+      "url": "https://www.chalkbeat.org/2026/04/09/sal-khan-reflects-on-ai-in-schools-and-khanmigo/",
+      "verified": false,
+      "note": "FLAG: Reported secondhand via Chalkbeat; the exact Pew figure and survey date were not confirmed against the Pew source directly. Verify or attribute cautiously ('a recent Pew survey') before citing a specific percentage."
+    }
+  ],
+
+  "quotes": [
+    {
+      "quote": "For a lot of students, it was a non-event. They just didn't use it much.",
+      "speaker": "Sal Khan",
+      "affiliation": "Founder, Khan Academy (on Khanmigo, the AI tutoring chatbot he predicted would spark a learning revolution)",
+      "year": "2026",
+      "url": "https://www.chalkbeat.org/2026/04/09/sal-khan-reflects-on-ai-in-schools-and-khanmigo/",
+      "verified": true
+    },
+    {
+      "quote": "So far I am not seeing the revolution in education.",
+      "speaker": "Kristen DiCerbo",
+      "affiliation": "Chief Learning Officer, Khan Academy",
+      "year": "2026",
+      "url": "https://www.chalkbeat.org/2026/04/09/sal-khan-reflects-on-ai-in-schools-and-khanmigo/",
+      "verified": true,
+      "note": "Companion quote from DiCerbo: 'Students aren't great at asking questions well' — AI can only respond to what a student thinks to ask."
+    },
+    {
+      "quote": "While AI can support education, teachers must remain at its core, guiding students with the empathy, creativity, and judgment that no machine can replace.",
+      "speaker": "UNESCO",
+      "affiliation": "UNESCO ('Teachers cannot be coded' global education campaign, Digital Learning Week 2025)",
+      "year": "2025",
+      "url": "https://www.unesco.org/en/articles/teachers-cannot-be-coded",
+      "verified": true
+    },
+    {
+      "quote": "We're at the cusp of using AI for probably the biggest positive transformation that education has ever seen... by giving every student on the planet an artificially intelligent but amazing personal tutor.",
+      "speaker": "Sal Khan",
+      "affiliation": "Founder, Khan Academy (2023 TED Talk — the optimistic framing the article's title echoes; pair with his 2026 walk-back above for the arc)",
+      "year": "2023",
+      "url": "https://www.chalkbeat.org/2026/04/09/sal-khan-reflects-on-ai-in-schools-and-khanmigo/",
+      "verified": true,
+      "note": "Quoted within the 2026 Chalkbeat piece. The title 'A Teacher for Every Child' maps directly onto this claim."
+    }
+  ],
+
+  "counterargument": {
+    "claim": "The 'AI tutor for every child' promise has not survived contact with real classrooms. The impressive learning gains come from carefully prompt-engineered tutors in controlled RCTs; the deployed products have underdelivered. Khan Academy's own Khanmigo was 'a non-event' for most students — they didn't use it, found it frustrating (it makes mistakes and won't hand over answers), and, per the org's chief learning officer, 'students aren't great at asking questions well,' so a reactive tutor can't personalize as hoped. Meanwhile the tools that DO get used skew toward already-strong students (lower performers saw few gains) and toward cheating, and the underlying evidence base is 'extremely limited.' Access is gated by the digital divide — many students lack reliable devices or internet — so AI risks widening the very gap it claims to close.",
+    "strongest_form": "Technology promising to democratize tutoring has a decades-long track record of unrealized hype; AI so far fits the pattern. The 44M-teacher shortage is a labor, financing, and retention problem, and a chatbot doesn't fix labor markets — UNESCO's framing is that teaching 'cannot be coded.'",
+    "source_urls": [
+      "https://www.chalkbeat.org/2026/04/09/sal-khan-reflects-on-ai-in-schools-and-khanmigo/",
+      "https://www.unesco.org/en/articles/teachers-cannot-be-coded"
+    ]
+  },
+
+  "recent_news": [
+    {
+      "item": "Sal Khan publicly acknowledges the AI-tutoring revolution he predicted in 2023 hasn't happened yet; Khan Academy is overhauling its product to embed Khanmigo directly into practice problems because students weren't seeking it out on their own.",
+      "date": "April 2026",
+      "source": "Chalkbeat",
+      "url": "https://www.chalkbeat.org/2026/04/09/sal-khan-reflects-on-ai-in-schools-and-khanmigo/"
+    },
+    {
+      "item": "UNESCO launches its 'Teachers cannot be coded' global campaign around the 2025 World Summit on Teachers and Digital Learning Week, arguing AI should support but not replace human teachers amid the 44M-teacher shortage.",
+      "date": "September 2025",
+      "source": "UNESCO",
+      "url": "https://www.unesco.org/en/articles/teachers-cannot-be-coded"
+    }
+  ],
+
+  "narrative_angles": [
+    "The arc from Khan's 2023 'personal tutor for every child on the planet' to his 2026 'it was a non-event' — hope vs. deployment reality.",
+    "Controlled-trial magic vs. real-classroom friction: the Harvard RCT proves the ceiling, Khanmigo shows the floor. What's the gap made of? (engagement, question-asking, self-pacing, motivation).",
+    "Equity paradox: the shortage is worst where devices/connectivity are scarcest (15M teachers short in sub-Saharan Africa), and existing AI gains accrue to already-strong students — the tool could widen, not close, the gap.",
+    "'Teachers cannot be coded' — the human-in-the-loop argument: empathy, judgment, and motivating reluctant learners are exactly what current AI tutors fail at."
+  ],
+
+  "verification_flags": [
+    "Pew 'majority of teens see AI cheating as prevalent' stat is secondhand via Chalkbeat — NOT verified against Pew directly. Attribute loosely or verify before quoting a number.",
+    "The 1984 'two sigma' individualized-tutoring study (Benjamin Bloom) is referenced by Khan as 'seminal but controversial' — if the article invokes it, note it is contested and was not independently re-verified in this research pass.",
+    "Harvard RCT effect sizes (0.63 linear / 0.73–1.3 quantile) are from the paper's own text; the 0.73–1.3 range is the authors' ceiling-corrected estimate, not a second independent replication."
+  ]
+}

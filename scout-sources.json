@@ -1,14 +1,16 @@
 {
   "_meta": {
-    "version": "1.0",
-    "updated": "2026-06-22",
-    "purpose": "Scout agent research library — RSS feeds and APIs checked before web search each run",
-    "usage": "Scout reads this file at run start. For each source: fetch RSS feed or call API, filter by topic_tags matching the article brief, pass summaries to Quill's research brief.",
+    "version": "1.1",
+    "updated": "2026-08-01",
+    "purpose": "Scout agent research library — RSS feeds, APIs, and search backends checked before falling back to generic web search each run",
+    "usage": "Scout reads this file at run start. For each source: fetch RSS feed or call API, filter by topic_tags matching the article brief, pass summaries to Quill's research brief. search_backends is NOT topic-filtered — it is the STEP 3 gap-filling layer, tried in priority order.",
     "env_file": "agents/.env",
     "notes": [
       "Sources marked requires_key:true need an env var set in agents/.env",
       "All rate_limit values are free-tier limits",
-      "Sources are roughly ordered: no-key first, key-required last within each section"
+      "Sources are roughly ordered: no-key first, key-required last within each section",
+      "search_backends added 2026-08-01: Exa (via mcporter, installed by Agent Reach) is priority 1 and is the ONLY search backend that keeps working when Claude Code OAuth is expired — the condition that halted the pipeline on 2026-07-22.",
+      "Jina Reader (r.jina.ai) is NOT usable from this network — anonymous queries return HTTP 401 (AS7018 reputation block). Use exa_mcp_fetch instead."
     ]
   },
 
@@ -1333,6 +1335,46 @@
       "description": "Pre-cached CSVs and JSONs dropped here are picked up automatically by Scout at run start. Useful for pre-loaded datasets, webhook outputs, or manual research drops.",
       "file_patterns": ["*.json", "*.csv"],
       "notes": "Scout reads all files in this directory before fetching any external source."
+    }
+  ],
+
+  "search_backends": [
+    {
+      "_note": "Search/fetch backends for STEP 3 (gap-filling), in priority order. These are NOT topic-filtered — they are general-purpose and always offered. Unlike rss_feeds/apis, these are local CLI commands, not URLs to fetch."
+    },
+    {
+      "id": "exa_mcp_search",
+      "name": "Exa semantic web search (via mcporter)",
+      "type": "cli",
+      "command": "mcporter call exa.web_search_exa query=\"<natural-language description of the ideal page>\" numResults=5",
+      "priority": 1,
+      "requires_key": false,
+      "rate_limit": "Exa free hosted MCP endpoint — limits undocumented. Treat as scarce: <=3 calls per research run.",
+      "installed_by": "Agent Reach 1.5.0 (2026-08-01)",
+      "verified": "2026-08-01 — live call returned real 2026-dated primary sources",
+      "notes": "Semantic, not keyword. Describe the ideal page ('blog post comparing X and Y performance'), NOT keywords ('X vs Y'). Supports category:people / category:company for LinkedIn-style profile and company lookups. Returns clean extracted text + URL + publish date, so results are directly citable. PREFER THIS over WebSearch: one call returns page content, so it usually removes the need for a follow-up fetch."
+    },
+    {
+      "id": "exa_mcp_fetch",
+      "name": "Exa page fetch (via mcporter)",
+      "type": "cli",
+      "command": "mcporter call exa.web_fetch_exa urls='[\"<url>\"]' maxCharacters=8000",
+      "priority": 1,
+      "requires_key": false,
+      "rate_limit": "same endpoint as exa_mcp_search — count against the same <=3 calls/run",
+      "installed_by": "Agent Reach 1.5.0 (2026-08-01)",
+      "verified": "2026-08-01 — live call returned clean markdown",
+      "notes": "Use to read a specific URL when a search highlight is insufficient. ALWAYS cap maxCharacters (8000 is plenty for a stat + quote) — an uncapped fetch of a long page is the single easiest way to blow Scout's 60k working budget. This REPLACES Jina Reader (https://r.jina.ai/URL), which returns HTTP 401 from this network: 'blocked from performing anonymous queries due to bad network reputation (AS7018)'. Do not use Jina."
+    },
+    {
+      "id": "cc_websearch",
+      "name": "Claude Code built-in WebSearch / WebFetch",
+      "type": "builtin_tool",
+      "command": "WebSearch(query) / WebFetch(url, prompt)",
+      "priority": 2,
+      "requires_key": false,
+      "rate_limit": "subscription-billed; counts against Scout's token budget",
+      "notes": "Fallback when Exa returns nothing usable. Only available when running as a Claude Code subagent — unavailable when CC OAuth is expired, which is exactly when exa_mcp_* still works. Prefer snippets over full-page fetches."
     }
   ],
 

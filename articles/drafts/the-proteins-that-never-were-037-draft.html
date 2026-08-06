@@ -1,0 +1,54 @@
+<p class="lead">Somewhere in a lab at the University of Washington, a machine was asked a question no one had ever handed a computer before: not "what does this protein look like?" but "build me one that has never existed, and make it work on the first try." It did. And when I read that the resulting enzyme started catalyzing reactions the moment it was synthesized — no years of tinkering, no trial-and-error grind — I actually looked up from my screen. We spent a century reading the book of life. We just started writing new chapters.</p>
+
+<h2>The Moment We Stopped Reading and Started Writing</h2>
+<p>For most of biology's history, proteins were something you discovered, like fossils. You found them in a cell, worked out their shape, and marveled at how evolution had folded a chain of amino acids into a tiny molecular machine. Then came <strong>AlphaFold</strong>, the AI system from Google DeepMind that could predict a protein's 3D structure from its sequence. It was so good it released predicted shapes for roughly 200 million proteins — nearly every protein science had catalogued (AlphaFold Protein Structure Database, EMBL-EBI). [Scout flag: the ~200M figure was recalled, not re-fetched — verify before publishing.]</p>
+<p>But prediction is reading. The leap that changes everything is <strong>de novo protein design</strong> — designing life's machinery from scratch, from a blank page rather than nature's back catalogue. In 2024, that leap earned a Nobel Prize in Chemistry, split between David Baker for computational design and Demis Hassabis and John Jumper for AlphaFold (The Nobel Prize, Royal Swedish Academy of Sciences, 2024). [Scout flag: confirm the exact nobelprize.org path.]</p>
+
+<h2>How a Machine Dreams Up a Molecule</h2>
+<p>Here's the mechanism, and it's beautiful. Baker's team built a <strong>diffusion model</strong> — the same family of AI that turns static into photorealistic images. Picture sculpting a statue by starting with a random block of noise and, step by step, removing everything that isn't the shape you want. RFdiffusion does exactly that, but the "statue" is a folded protein and the noise is a cloud of possible atoms. You give it a target — a chemical reaction, a molecule to grab — and it denoises its way to a structure that could do the job.</p>
+<p>The tool that stopped me cold is <strong>RFdiffusion</strong>'s latest generation. In a Nature Methods benchmark, RFdiffusion2 solved 41 out of 41 hard enzyme-design challenges — the previous best tool managed 16 (Institute for Protein Design, 2025). And these weren't lab curiosities.</p>
+
+<blockquote class="pullquote">"This technology allows us to build enzymes around the specific chemistry we want to see happen, opening the door to advanced medicines and materials that nature has not had time to explore." — David Baker, Institute for Protein Design</blockquote>
+
+<h2>Enzymes That Work on Day One</h2>
+<p>The word that matters here is <strong>catalyst</strong> — a molecule that speeds up a chemical reaction without being consumed. An <strong>enzyme</strong> is nature's version, and they run everything from your digestion to the fermentation in your morning yogurt. Historically, computer-designed enzymes came out barely functional, and researchers spent years coaxing them toward real activity. RFdiffusion2 flipped that: its enzymes reached catalytic proficiencies comparable to those in living cells and worked immediately upon synthesis, collapsing timelines from years to weeks (IPD, published in Nature, 2025). As one IPD researcher put it, the tools now hand scientists "high-performance catalysts immediately" — imagine designing an enzyme to chew up an environmental pollutant, and having a working one within the month.</p>
+
+<h2>The Frontier Is Widening Fast</h2>
+<p>It's not stopping at proteins alone. RFdiffusion3, released as a preprint in 2025 and listed as available in 2026, generates structures in the context of ligands, nucleic acids, and other non-protein atoms — modeling all the messy stuff real biology sits inside (bioRxiv, 2025). And crucially, IPD put RFdiffusion2 on GitHub for free. That means the tool that just won a Nobel-adjacent breakthrough is downloadable by a grad student, a startup, or a curious tinkerer tonight.</p>
+
+<h2>The Honest Reckoning</h2>
+<p>Now the part enthusiasm tends to skip. Those glorious headline numbers — "90% of designs bind!" — mostly live in silico. In real wet-lab campaigns, the hit rate for raw generative output is a small fraction of that, and the exceptions usually mean the target was unusually cooperative (Ranomics, 2026). The problem is subtle: a model's confidence that a <strong>binder</strong> will grab its target is correlated with success, not proof of it. Structure-prediction confidence isn't a true oracle of whether a designed protein actually folds or stays stable (bioRxiv, 2025). Worse, the metric of <strong>designability</strong> quietly favors compact, rigid structures — underrepresenting the floppy, disordered regions that huge swaths of real biology depend on. Optimize too hard for the score, and you inflate false positives. Every candidate still has to survive the bench.</p>
+
+<h2>What You Can Do With This</h2>
+<p>That gap isn't a reason for cynicism — it's an invitation. The code is open. The papers are readable. If you've ever wanted to watch a field cross from reading nature to authoring it, this is the front row, and the door is unlocked. Go download RFdiffusion, read the Nature paper, or just sit with the strangeness of it: we can now design the proteins that never were — molecular machines evolution never got around to building — and the hardest, most human part of the job is still checking, honestly, whether they truly work.</p>
+
+<div class="stat-grid">
+<div class="stat-card"><span class="stat-number">41 / 41</span><span class="stat-label">enzyme-design challenges RFdiffusion2 solved vs. 16 for the prior best tool (Nature Methods, 2025)</span></div>
+<div class="stat-card"><span class="stat-number">Years → Weeks</span><span class="stat-label">design-to-working-catalyst timeline; RFdiffusion2 enzymes functioned immediately on synthesis (IPD, 2025)</span></div>
+<div class="stat-card"><span class="stat-number">~200 Million</span><span class="stat-label">protein structures in the AlphaFold database — the baseline de novo design now builds beyond (EMBL-EBI)</span></div>
+<div class="stat-card"><span class="stat-number">2024</span><span class="stat-label">Nobel Prize in Chemistry for protein design (Baker) and structure prediction (Hassabis, Jumper)</span></div>
+</div>
+
+<div class="glossary">
+<dl>
+<dt data-term="De novo protein design">De novo protein design</dt><dd>Creating entirely new proteins from scratch — designing life's machinery rather than discovering it in nature.</dd>
+<dt data-term="AlphaFold">AlphaFold</dt><dd>Google DeepMind's AI system that predicts a protein's 3D structure from its amino-acid sequence.</dd>
+<dt data-term="RFdiffusion">RFdiffusion</dt><dd>The Institute for Protein Design's generative model line that builds new protein structures toward a specified target.</dd>
+<dt data-term="Diffusion model">Diffusion model</dt><dd>An AI approach that starts with random noise and iteratively removes it to arrive at a coherent output — used here to sculpt a protein.</dd>
+<dt data-term="Enzyme">Enzyme</dt><dd>A protein that acts as a biological catalyst, speeding up specific chemical reactions in living systems.</dd>
+<dt data-term="Catalyst">Catalyst</dt><dd>A substance that accelerates a chemical reaction without being consumed by it.</dd>
+<dt data-term="Binder">Binder</dt><dd>A designed protein whose job is to attach tightly and selectively to a specific target molecule.</dd>
+<dt data-term="Designability">Designability</dt><dd>A computational score for how likely a designed sequence is to fold as intended — a proxy for, not proof of, real-world stability.</dd>
+</dl>
+</div>
+
+<div class="references">
+<ol>
+<li>Institute for Protein Design, University of Washington. "RFdiffusion2: Efficient Enzymes from Prompts." 2025. https://www.ipd.uw.edu/2025/12/rfdiffusion2-efficient-enzymes-from-prompts/</li>
+<li>Ranomics. "Why AI-Designed Binders Fail Wet Lab (and Fixes)." 2026. https://www.ranomics.com/de-novo-protein-design-failure-modes</li>
+<li>"Limitations of the Refolding Pipeline for De Novo Protein Design." bioRxiv preprint, 2025. https://www.biorxiv.org/content/10.64898/2025.12.09.693122v1.full-text</li>
+<li>Royal Swedish Academy of Sciences. "The Nobel Prize in Chemistry 2024." NobelPrize.org, 2024. https://www.nobelprize.org/prizes/chemistry/2024/summary/</li>
+<li>Google DeepMind / EMBL-EBI. "AlphaFold Protein Structure Database." 2022. https://alphafold.ebi.ac.uk/</li>
+<li>"RFdiffusion3: Generating Protein Structures in the Context of Ligands and Nucleic Acids." bioRxiv preprint, 2025. https://www.biorxiv.org/content/10.1101/2025.09.18.676967v2</li>
+</ol>
+</div>

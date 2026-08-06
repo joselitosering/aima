@@ -1,0 +1,128 @@
+{
+  "article_number": 37,
+  "slug": "the-proteins-that-never-were",
+  "title": "The Proteins That Never Were: How AI Is Designing Life's Machinery From Scratch",
+  "author": "Kenji Nakamoto",
+  "category": "AI Science",
+  "target_words": 750,
+  "research_date": "2026-08-05",
+  "researched_by": "Scout (Exa semantic search + curated IPD/bioRxiv primary sources)",
+  "summary": "AI-driven de novo protein design has moved from predicting existing protein structures (AlphaFold) to generating entirely new proteins and enzymes that do not exist in nature (David Baker's Institute for Protein Design, RFdiffusion line of models). RFdiffusion2 (Nature, 2025) produced working enzymes immediately, solving 41/41 benchmark challenges vs. 16 for the prior best tool, and RFdiffusion3 (2025-2026) extended generation to ligands and nucleic acids. The strongest counterargument: published headline hit rates ('90% bind') collapse in the wet lab, and structure-prediction confidence is not a true 'oracle' of whether a designed protein actually folds, binds tightly, or functions.",
+
+  "statistics": [
+    {
+      "stat": "In a Nature Methods computational benchmark, RFdiffusion2 solved 41 out of 41 difficult enzyme-design challenges, compared with just 16 for the previous best protein-design tool.",
+      "source": "Institute for Protein Design (University of Washington), reporting the Nature / Nature Methods studies",
+      "year": "2025",
+      "url": "https://www.ipd.uw.edu/2025/12/rfdiffusion2-efficient-enzymes-from-prompts/",
+      "verified": true
+    },
+    {
+      "stat": "RFdiffusion2-generated enzymes reached catalytic proficiencies comparable to enzymes found in living cells and were functional immediately upon synthesis, shrinking design-to-working-catalyst timelines from months or years to weeks (prior tools yielded only trace activity requiring years of lab optimization).",
+      "source": "Institute for Protein Design (UW), Baker Lab; published in Nature",
+      "year": "2025",
+      "url": "https://www.ipd.uw.edu/2025/12/rfdiffusion2-efficient-enzymes-from-prompts/",
+      "verified": true
+    },
+    {
+      "stat": "In production binder-design campaigns, the wet-lab hit rate for raw RFdiffusion or BindCraft output is a small fraction of the ~90% 'designs bind' rate reported in method papers; hit rates approaching the headlines are exceptional and usually mean the target was unusually cooperative.",
+      "source": "Ranomics, 'Why AI-Designed Binders Fail Wet Lab (and Fixes)'",
+      "year": "2026",
+      "url": "https://www.ranomics.com/de-novo-protein-design-failure-modes",
+      "verified": true
+    },
+    {
+      "stat": "Structure-prediction 'designability' is not a true oracle of stability: AlphaFold2 single-sequence confidence correlates with — but does not equal — experimental success, and can assign high confidence to sequences that are structurally plausible in silico yet biophysically unstable or non-functional in reality.",
+      "source": "bioRxiv preprint, 'Limitations of the refolding pipeline for de novo protein design'",
+      "year": "2025",
+      "url": "https://www.biorxiv.org/content/10.64898/2025.12.09.693122v1.full-text",
+      "verified": true
+    },
+    {
+      "stat": "The 2024 Nobel Prize in Chemistry was awarded to David Baker (for computational de novo protein design) and to Demis Hassabis and John Jumper (for AlphaFold protein-structure prediction) — marking AI protein design's arrival in the scientific mainstream.",
+      "source": "The Nobel Prize / Royal Swedish Academy of Sciences",
+      "year": "2024",
+      "url": "https://www.nobelprize.org/prizes/chemistry/2024/summary/",
+      "verified": false,
+      "flag": "Well-established public fact but URL not fetched this run — confirm the exact nobelprize.org path before citing."
+    },
+    {
+      "stat": "AlphaFold's public database released predicted structures for roughly 200 million proteins — nearly all catalogued proteins known to science — which became the training and comparison baseline that de novo design now builds beyond.",
+      "source": "Google DeepMind / EMBL-EBI AlphaFold Protein Structure Database",
+      "year": "2022",
+      "url": "https://alphafold.ebi.ac.uk/",
+      "verified": false,
+      "flag": "Widely reported ~200M figure recalled from prior knowledge, NOT fetched this run. Verify the current count on alphafold.ebi.ac.uk before publishing."
+    }
+  ],
+
+  "quotes": [
+    {
+      "quote": "Deep learning has evolved from predicting protein structures to creating functional systems. This technology allows us to build enzymes around the specific chemistry we want to see happen, opening the door to advanced medicines and materials that nature has not had time to explore.",
+      "speaker": "David Baker",
+      "affiliation": "Director, Institute for Protein Design, University of Washington; 2024 Nobel laureate in Chemistry",
+      "year": "2025",
+      "url": "https://www.ipd.uw.edu/2025/12/rfdiffusion2-efficient-enzymes-from-prompts/",
+      "verified": true
+    },
+    {
+      "quote": "Historically, computational enzyme design was just the starting point for years of gradual lab optimization. Now, these AI tools give us high-performance catalysts immediately. This shrinks research timelines from months or years into weeks and opens up new possibilities for building catalysts for modern problems, like degrading environmental pollutants.",
+      "speaker": "Baker Lab / IPD researcher (RFdiffusion2 study team)",
+      "affiliation": "Institute for Protein Design, University of Washington",
+      "year": "2025",
+      "url": "https://www.ipd.uw.edu/2025/12/rfdiffusion2-efficient-enzymes-from-prompts/",
+      "verified": true,
+      "flag": "Quote appears in the IPD announcement but the individual speaker was not named in the retrieved excerpt (study authors include Donghyo Kim, Seth Woodbury, Doug Tischer, Samuel Pellock). Attribute to 'an IPD researcher' or confirm the exact name on the source page before assigning."
+    },
+    {
+      "quote": "The headline numbers in AI protein design papers — '90% of designs bind!' — are correct in their context and misleading out of it. A design that 'binds' the target on AlphaFold2 confidence metrics may bind with a Kd in the high micromolar range... it's that the model's scoring function is correlated with affinity but not equivalent to it.",
+      "speaker": "Ranomics (industry protein-engineering analysis)",
+      "affiliation": "Ranomics (protein-variant / developability firm)",
+      "year": "2026",
+      "url": "https://www.ranomics.com/de-novo-protein-design-failure-modes",
+      "verified": true,
+      "flag": "Institutional/company analysis, not an individually named academic. Useful as an industry-practitioner counterpoint; frame accordingly."
+    }
+  ],
+
+  "counterargument": {
+    "claim": "The gap between benchmark and bench. Impressive in-silico success rates do not translate cleanly to the lab: raw generative-model output binds far less often than headline rates suggest, structure-prediction confidence is a proxy for (not proof of) real stability and affinity, and metrics like designability systematically favor compact, rigid structures while underrepresenting the flexible/disordered regions that much of real biology depends on. 'Designing life's machinery from scratch' is real and accelerating, but each candidate still needs experimental validation, and reward-hacking the designability metric risks inflating false positives.",
+    "sources": [
+      "https://www.ranomics.com/de-novo-protein-design-failure-modes",
+      "https://www.biorxiv.org/content/10.64898/2025.12.09.693122v1.full-text"
+    ]
+  },
+
+  "recent_news": [
+    {
+      "item": "RFdiffusion2 announced by the Institute for Protein Design — AI-generated enzyme catalysts that work efficiently immediately upon synthesis, solving 41/41 benchmark enzyme-design challenges; published in Nature with a Nature Methods benchmark. Freely released on GitHub.",
+      "date": "2025-12-03",
+      "url": "https://www.ipd.uw.edu/2025/12/rfdiffusion2-efficient-enzymes-from-prompts/"
+    },
+    {
+      "item": "RFdiffusion3 (RFD3) preprint / release — a diffusion model that generates protein structures in the context of ligands, nucleic acids and other non-protein atoms, modeling all polymer atoms explicitly; IPD lists 'RFdiffusion3 now available' among 2026 updates.",
+      "date": "2025-09-18 (preprint v2); listed available 2026",
+      "url": "https://www.biorxiv.org/content/10.1101/2025.09.18.676967v2"
+    },
+    {
+      "item": "bioRxiv, 'Limitations of the refolding pipeline for de novo protein design' — systematic analysis showing AlphaFold/ESMfold confidence metrics are imperfect 'oracles' of designability and that current designability definitions bias toward rigid structures.",
+      "date": "2025-12-11",
+      "url": "https://www.biorxiv.org/content/10.64898/2025.12.09.693122v1.full-text"
+    }
+  ],
+
+  "narrative_angles": [
+    "From reading nature to writing it: AlphaFold predicted what proteins already exist; RFdiffusion designs proteins that never existed — 'the proteins that never were.'",
+    "The enzyme leap: RFdiffusion2 catalysts that work on day one, collapsing years of optimization into weeks (Kenji's analytical/AI-Science beat).",
+    "The honesty beat: what the benchmark numbers hide — the wet-lab hit-rate gap and the 'designability is not stability' problem — a fitting analytical counterweight for a thoughtful tone."
+  ],
+
+  "verification_flags": [
+    "Two statistics (2024 Nobel Prize path; AlphaFold ~200M structures) were recalled from prior knowledge and NOT fetched this run — verify both URLs/figures before publication.",
+    "The second IPD quote's individual speaker was not named in the retrieved excerpt — confirm or attribute to 'an IPD researcher'.",
+    "The Ranomics quote/stat is a company analysis, not peer-reviewed — frame as an industry-practitioner perspective, not an academic finding.",
+    "The '90% bind' figure is cited by Ranomics as a paraphrase of method-paper headlines, not a single named paper — if used directly, trace to the specific RFdiffusion/BindCraft paper."
+  ],
+
+  "budget_note": "Stayed within limits: 1 cache directory scan (cached files judged off-topic for protein design, not deeply read), 0 RSS feeds, 2 Exa semantic search calls, 0 full-page fetches. Well under the 60k token ceiling. No review pass per instructions."
+}

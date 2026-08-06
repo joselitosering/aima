@@ -39,9 +39,9 @@
 | 32 | 2026-07-11 | The Living Battery: How Bioengineered Microbes Are Powering the Next Wave of Clean Energy | Climate Tech | 8 min |  | Kenji Nakamoto |
 | 33 | 2026-07-12 | The Brain-Computer Interface Horizon: Where Mind Meets Machine | AI Science | 10 min |  | Joselito Sering |
 | 34 | 2026-07-13 | The Ghost Workers: Hidden Human Labor Behind AI's Illusion of Autonomy | AI Labor | 12 min | Bumped from 2026-07-06 to make room for overdue backlog · Post 4:00 PM PT | Joselito Sering |
-| 35 | 2026-07-13 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
+| 35 | 2026-07-13 | Surveillance Wages: How AI Turned Your Every Keystroke Into a Pay Cut | AI Labor / AI Ethics | 8 min |  | Dawn Ginhaua |
 | 36 | 2026-07-14 | A Teacher for Every Child: AI and the Education Revolution | AI Society | 11 min |  | Joselito Sering |
-| 37 | 2026-07-14 | TBD — Trending Topic | Trending | 8 min | Bumped from 2026-07-07 to make room for overdue backlog · Post 4:00 PM PT | Kenji Nakamoto |
+| 37 | 2026-07-14 | The Proteins That Never Were: How AI Is Designing Life's Machinery From Scratch | AI Science | 8 min | Bumped from 2026-07-07 to make room for overdue backlog · Post 4:00 PM PT | Kenji Nakamoto |
 | 38 | 2026-07-15 | What Is AGI, Actually? Separating Science from Hype | AI Science | 11 min | Bumped from 2026-07-08 to make room for overdue backlog · Post 4:00 PM PT | Joselito Sering |
 | 39 | 2026-07-15 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
 | 40 | 2026-07-16 | Autonomous Vehicles at the Crossroads: The Promise and the Peril | AI Innovation | 10 min |  | Joselito Sering |

@@ -1,0 +1,67 @@
+{
+  "row": 37,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-08-05",
+  "chosen": {
+    "title": "The Proteins That Never Were: How AI Is Designing Life's Machinery From Scratch",
+    "category": "AI Science",
+    "rationale": "De novo protein and enzyme design is the hottest science-AI story of 2026 \u2014 ESM3, OpenCRISPR-1 (a working CRISPR enzyme invented by a language model), GENzyme, and the new 'Sparks' multi-agent system that autonomously discovers design rules mean AI is now inventing biological machinery that evolution never made. It's mechanism-rich, wonder-driven bioengineering that lands dead-center in Kenji's beat, and nothing on the covered list touches designed-from-scratch proteins (Precision Medicine and The Healing Machine are about diagnosis/treatment, not molecular invention).",
+    "sources": [
+      {
+        "name": "Communications Biology (Nature) \u2014 AI protein binder design & conformational prediction",
+        "url": "https://www.nature.com/articles/s42003-026-10112-3"
+      },
+      {
+        "name": "Pharma's Almanac \u2014 How AI Is Transforming De Novo Protein Design",
+        "url": "https://www.pharmasalmanac.com/articles/reprogramming-the-rules-how-ai-is-transforming-de-novo-protein-design-in-drug-development"
+      },
+      {
+        "name": "SCIEPublish \u2014 Generative AI for Function-Driven De Novo Enzyme Design",
+        "url": "https://www.sciepublish.com/article/pii/701"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Taming the Star: How AI Plasma Control Is Finally Dragging Fusion Onto the Grid",
+      "category": "AI Science",
+      "rationale": "2026 is the year fusion crossed from physics demo to grid contracts \u2014 Commonwealth Fusion pledging power to PJM, General Fusion and China's EAST milestones, and AI-driven magnetic optimization making once-hopeless stellarator designs feasible. The AI-controls-the-plasma angle is exactly Kenji's clean-energy-with-honest-mechanics lane, and it's distinct from the covered #31 'Living Battery' (microbes) and #27 'Power Hungry' (AI's carbon cost).",
+      "sources": [
+        {
+          "name": "Earth911 \u2014 The State of Fusion Energy in 2026: Real Reactors, Real Grids",
+          "url": "https://earth911.com/eco-tech/the-state-of-fusion-energy-in-2026-real-reactors-real-grids-real-caveats/"
+        },
+        {
+          "name": "CBC \u2014 How close is nuclear fusion to reality?",
+          "url": "https://www.cbc.ca/news/science/fusion-startups-9.7045784"
+        },
+        {
+          "name": "Clean Energy Platform \u2014 Fusion Technology Leading 2026 Development",
+          "url": "https://www.cleanenergy-platform.com/insight/fusion-technology-that-will-lead-2026-development"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Print the Factory: The Swarm Robots 3D-Printing Manufacturing On Demand",
+      "category": "AI Science",
+      "rationale": "Additive manufacturing decisively flipped from prototyping to production in 2026, with AI-orchestrated 'production cells' and cooperative swarm 3D-printing robots that build big structures together while machine-vision self-inspects every layer. It's tactile, buildable, maker-culture catnip \u2014 Kenji's advanced-manufacturing beat \u2014 and the covered list has no 3D-printing/additive-manufacturing piece at all.",
+      "sources": [
+        {
+          "name": "Design News \u2014 3D Printing Shifts from Prototyping to Production in 2026",
+          "url": "https://www.designnews.com/3d-printing/additive-manufacturing-shifts-from-prototyping-to-strategic-production-in-2026"
+        },
+        {
+          "name": "RoboticsTomorrow \u2014 3D-Printed Robotic Hands & AI Production Lines, Hannover 2026",
+          "url": "https://www.roboticstomorrow.com/news/2026/03/31/robotic-hands-from-the-3d-printer-and-ai-powered-production-lines-eos-at-hannover-fair-2026/26336"
+        },
+        {
+          "name": "SelfCAD \u2014 9 3D Printing Advancements to Watch in 2026",
+          "url": "https://www.selfcad.com/blog/3d-printing-advancements-you-need-to-watch"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

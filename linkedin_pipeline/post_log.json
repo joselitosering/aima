@@ -329,5 +329,50 @@
     "posted_at": "2026-07-29T19:15:35",
     "analytics_collected": false,
     "reshare_id": "urn:li:share:7488311278453559296"
+  },
+  {
+    "post_id": "urn:li:share:7489070971262443521",
+    "article": "aima-article-the-brain-computer-interface-horizon-033.html",
+    "title": "The Brain-Computer Interface Horizon: Where Mind Meets Machine",
+    "persona": "joselito",
+    "posted_at": "2026-07-31T21:34:24",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7489070983308267520"
+  },
+  {
+    "post_id": "urn:li:share:7489073918947799041",
+    "article": "aima-article-the-ghost-workers-hidden-human-034.html",
+    "title": "The Ghost Workers: Hidden Human Labor Behind AI's Illusion of Autonomy",
+    "persona": "joselito",
+    "posted_at": "2026-07-31T21:46:07",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7489073931015032832"
+  },
+  {
+    "post_id": "urn:li:share:7490121017999118337",
+    "article": "aima-article-surveillance-wages-how-ai-turned-035.html",
+    "title": "Surveillance Wages: How AI Turned Your Every Keystroke Into a Pay Cut",
+    "persona": "dawn",
+    "posted_at": "2026-08-03T19:06:55",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7490121030011645952"
+  },
+  {
+    "post_id": "urn:li:share:7490482991849287680",
+    "article": "aima-article-a-teacher-for-every-child-036.html",
+    "title": "A Teacher for Every Child: AI and the Education Revolution",
+    "persona": "joselito",
+    "posted_at": "2026-08-04T19:05:15",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7490483003610243072"
+  },
+  {
+    "post_id": "urn:li:share:7490845743272914944",
+    "article": "aima-article-the-proteins-that-never-were-037.html",
+    "title": "The Proteins That Never Were: How AI Is Designing Life's Machinery From Scratch",
+    "persona": "kenji",
+    "posted_at": "2026-08-05T19:06:41",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7490845754886991872"
   }
 ]

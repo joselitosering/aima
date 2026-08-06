@@ -73,7 +73,12 @@ def _topic_tags_for_spec(spec: dict) -> set:
 
 
 def _filtered_sources(sources_config: dict, topic_tags: set) -> dict:
-    """Return a compact source list: only feeds/APIs matching topic_tags."""
+    """Return a compact source list: only feeds/APIs matching topic_tags.
+
+    search_backends is deliberately NOT topic-filtered — it is the general-purpose
+    STEP 3 gap-filling layer (Exa first, CC WebSearch second), so every run gets
+    the full list regardless of category. Added 2026-08-01.
+    """
     feeds = [
         f for f in sources_config.get("rss_feeds", [])
         if any(t in topic_tags for t in f.get("topic_tags", []))
@@ -82,10 +87,16 @@ def _filtered_sources(sources_config: dict, topic_tags: set) -> dict:
         a for a in sources_config.get("apis", [])
         if any(t in topic_tags for t in a.get("topic_tags", []))
     ]
+    backends = [
+        b for b in sources_config.get("search_backends", [])
+        if "_note" not in b
+    ]
+    backends.sort(key=lambda b: b.get("priority", 99))
     return {
         "rss_feeds": feeds[:12],
         "apis": apis[:6],
         "local_data_paths": sources_config.get("local_data_paths", []),
+        "search_backends": backends,
     }
 
 
@@ -268,9 +279,18 @@ STEP 2 — USE THESE TOPIC-FILTERED SOURCES (curated for this article)
 Fetch RSS feeds (no key required) and call APIs with keys from agents/.env.
 Prefer no-key sources if keys are unavailable. Stop after 4 feeds.
 
-STEP 3 — WEB SEARCH (only for gaps the above cannot fill)
-Use WebSearch only if local cache + feeds/APIs don't provide enough statistics,
-expert quotes, or recent news. Maximum 3 searches. Prefer primary sources.
+STEP 3 — SEARCH BACKENDS (only for gaps the above cannot fill)
+Use `search_backends` from STEP 2, in priority order. Maximum 3 calls TOTAL
+across all backends. Prefer primary sources.
+  - Priority 1 is Exa via the Bash tool:
+      mcporter call exa.web_search_exa query="<describe the ideal page>" numResults=5
+    Exa is SEMANTIC — describe the page you want, not keywords. It returns clean
+    page text with URL and publish date, so one call usually gives you a citable
+    stat without a follow-up fetch. To read one specific URL:
+      mcporter call exa.web_fetch_exa urls='["<url>"]' maxCharacters=8000
+    ALWAYS cap maxCharacters — an uncapped fetch will blow your token budget.
+  - Priority 2 is the built-in WebSearch tool, only if Exa returns nothing usable.
+  - Do NOT use Jina Reader (r.jina.ai) — it returns HTTP 401 from this network.
 
 OUTPUT REQUIREMENTS:
 - 4-6 statistics, each with source name + year + URL

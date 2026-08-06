@@ -1,0 +1,110 @@
+{
+  "_meta": {
+    "article_number": 35,
+    "slug": "surveillance-wages-how-ai-turned",
+    "title": "Surveillance Wages: How AI Turned Your Every Keystroke Into a Pay Cut",
+    "author": "Dawn Ginhaua",
+    "category": "AI Labor / AI Ethics",
+    "research_date": "2026-08-03",
+    "researcher": "Scout (Research Agent)",
+    "tone": "analytical",
+    "word_target": 1050,
+    "sources_attempted": [
+      "Local cache: governance-gap-ai-regulation-research.json (skimmed; synthesized-from-training, low direct relevance)",
+      "Exa semantic search x2 (surveillance wages / productivity monitoring; algorithmic wage discrimination)"
+    ],
+    "sources_note": "Live Exa web search returned real, 2025-2026-dated primary sources with clean extracted text and URLs. Statistics below are drawn directly from those source pages. Two Exa calls used (within the <=3 backend-call cap). Budget-limited run: no follow-up full-page fetches performed.",
+    "confidence": "high"
+  },
+  "thesis": "Algorithmic wage discrimination — 'surveillance pay' — has escaped the gig economy. AI-driven monitoring and dynamic-pay vendors now set or influence compensation in health care, retail, logistics and customer service, converting granular data on each worker's behavior into personalized, opaque, and frequently declining wages. The first measurable labor-market effect of AI adoption has been wage compression, not job loss, and it falls hardest on the lowest earners.",
+  "central_provocation": "The productivity gains from AI aren't reaching workers as raises — firms are capturing them as wage compression. Workers in the most AI-exposed jobs saw real wage growth fall 6.7 points behind everyone else, and service workers fell 24.3 points behind, all while being watched more closely than ever.",
+  "statistics": [
+    {
+      "stat": "Workers in high-exposure (AI-heavy) occupations saw real wage growth fall about 6.7 percentage points behind low-exposure workers after 2023 — with no detectable employment effect, meaning firms captured AI productivity gains through wage compression rather than layoffs. The bottom wage quartile fell 10.7% behind and service occupations 24.3% behind; top earners showed no significant effect.",
+      "source": "'The Impact of AI on the U.S. Labor Market' whitepaper (analysis using the Anthropic Economic Index + BLS OEWS data, difference-in-differences across 321 occupations, 2015-2025)",
+      "year": "2026",
+      "url": "https://www.apollo.com/content/dam/apolloaem/pdf/daily-spark/2026/jul/30/Whitepaper-Impact%20of%20AI%20on%20U.S.%20Labor%20Market-2026-R2%201.pdf",
+      "flag": "Hosted PDF lists author as N/A on the landing page; the underlying usage-based method is attributed in-text to Massenkoff and McCrory (2026) / the Anthropic Economic Index. Verify author attribution before citing by name. The -24.3% service-worker figure is from a small subsample (n=239 occupation-years) and is flagged as sensitive by the authors — cite as 'roughly a quarter' rather than a precise point estimate."
+    },
+    {
+      "stat": "The same analysis estimates a conservative lower-bound aggregate labor-income loss of $28 billion annually across the 5.8 million U.S. workers (about 3.7% of the labor force) currently in high-exposure occupations bearing wage costs of AI adoption.",
+      "source": "'The Impact of AI on the U.S. Labor Market' whitepaper",
+      "year": "2026",
+      "url": "https://www.apollo.com/content/dam/apolloaem/pdf/daily-spark/2026/jul/30/Whitepaper-Impact%20of%20AI%20on%20U.S.%20Labor%20Market-2026-R2%201.pdf",
+      "flag": "Same author-attribution caveat as above."
+    },
+    {
+      "stat": "In the U.S., algorithmic monitoring tools have a 90% adoption rate among firms and evaluation tools also 90%; 72% of U.S. firms use software to monitor the speed of work and 88% to monitor working time; 55% of U.S. firms monitor the content and tone of conversations, voice calls or emails — versus only 6% in Europe and 8% in Japan.",
+      "source": "OECD, 'Algorithmic management in the workplace' (representative survey of 6,047 firms across France, Germany, Italy, Japan, Spain and the United States, June-Aug 2024)",
+      "year": "2025",
+      "url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/02/algorithmic-management-in-the-workplace_3c84ed6d/287c13c4-en.pdf"
+    },
+    {
+      "stat": "A first-of-its-kind audit of 500 AI labor-management vendors identified 20 whose products are at high risk of producing 'surveillance pay' — algorithmic wage-setting — with the practice spreading beyond gig work into health care, customer service, logistics and retail. 16 of the 20 vendors link their products directly into payroll or HR systems, and most give workers zero visibility into the data or logic behind pay calculations.",
+      "source": "Washington Center for Equitable Growth (Maria Monroe et al.), 'How artificial intelligence uncouples hard work from fair wages through surveillance pay practices'",
+      "year": "2025",
+      "url": "https://equitablegrowth.org/how-artificial-intelligence-uncouples-hard-work-from-fair-wages-through-surveillance-pay-practices-and-how-to-fix-it/",
+      "flag": "The published piece carries a correction (Freddie Mac, Udemy) disputing named business relationships with one vendor; cite the aggregate audit findings, not specific employer-vendor pairings."
+    },
+    {
+      "stat": "Workers' exposure to algorithmic management in the EU is projected to rise from 42.3% to 55.5% in the medium term; 27% of managers surveyed by the OECD reported inadequate protection of workers' physical and mental wellbeing where these tools are in use.",
+      "source": "European Parliament / EPRS, 'Digitalisation, artificial intelligence and algorithmic management in the workplace' (STUD 2025/774670)",
+      "year": "2025",
+      "url": "https://www.europarl.europa.eu/RegData/etudes/STUD/2025/774670/EPRS_STU(2025)774670_EN.pdf"
+    },
+    {
+      "stat": "Historical illustration of AI-set pay: at IBM Japan, after the company introduced Watson-based 'compensation advisor' software, union members' individual performance rate averaged 63.6% versus 100% for all other employees in the June 2019 summer-bonus assessment, with an exceptional 0% assessment for many union members — one of the earliest documented cases of AI directly shaping wages in a traditional employment (non-gig) setting.",
+      "source": "Veena Dubal, 'On Algorithmic Wage Discrimination,' Columbia Law Review (Vol. 123)",
+      "year": "2023",
+      "url": "https://columbialawreview.org/content/on-algorithmic-wage-discrimination/"
+    }
+  ],
+  "quotes": [
+    {
+      "quote": "Algorithmic wage discrimination refers to a practice in which individual workers are paid different hourly wages — calculated with ever-changing formulas using granular data on location, individual behavior, demand, supply, or other factors — for broadly similar work.",
+      "speaker": "Veena Dubal",
+      "affiliation": "Professor of Law, University of California College of the Law, San Francisco; coined the term 'algorithmic wage discrimination'",
+      "year": "2023",
+      "url": "https://columbialawreview.org/content/on-algorithmic-wage-discrimination/"
+    },
+    {
+      "quote": "Traditional employers in industries including health care, customer service, logistics, and retail are now using automated surveillance and decision-making systems to set compensation structures and to calculate individual wages. Without policy interventions, we fear that these practices will become normalized, thus growing income uncertainty, entrenching bias, and eroding wage-setting transparency.",
+      "speaker": "Maria Monroe (and co-authors)",
+      "affiliation": "Washington Center for Equitable Growth",
+      "year": "2025",
+      "url": "https://equitablegrowth.org/how-artificial-intelligence-uncouples-hard-work-from-fair-wages-through-surveillance-pay-practices-and-how-to-fix-it/"
+    },
+    {
+      "quote": "AM systems have a strong potential for continuous worker monitoring and surveillance, including tracking location, keystrokes, and even biometric data like voice and facial expressions. This shifts the power balance towards management and raises significant privacy concerns, leading to anxiety and distrust.",
+      "speaker": "EPRS study authors",
+      "affiliation": "European Parliamentary Research Service (commissioned for the EMPL Committee)",
+      "year": "2025",
+      "url": "https://www.europarl.europa.eu/RegData/etudes/STUD/2025/774670/EPRS_STU(2025)774670_EN.pdf"
+    }
+  ],
+  "counterargument": {
+    "claim": "Proponents argue algorithmic management is not inherently a pay-cutting tool: in the OECD survey, 60% of managers said these tools improve the quality of their own decision-making, and managers more often reported improved than decreased job satisfaction (driven by reduced stress and repetitive work). Advocates say data-driven wage-setting can deliver greater consistency, objectivity, and productivity gains, and can reduce human bias in pay and promotion decisions.",
+    "rebuttal_hook": "But the same OECD data show U.S. managers are far more likely than European or Japanese counterparts to believe the tools reduce bias — a belief the European Parliament study directly disputes, noting algorithms 'seemingly objective' can reinforce existing bias. And 'objectivity' for the firm reads as opacity for the worker: most audited vendors give workers no way to see or contest the data and logic setting their pay.",
+    "source": "OECD 'Algorithmic management in the workplace' (2025)",
+    "url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/02/algorithmic-management-in-the-workplace_3c84ed6d/287c13c4-en.pdf"
+  },
+  "recent_news": [
+    {
+      "item": "The Washington Center for Equitable Growth published its 500-vendor 'surveillance pay' audit (Aug 21, 2025), the first systematic study of algorithmic wage discrimination spreading outside gig work — later appended with a correction (Mar-Apr 2026) after two named companies disputed vendor relationships.",
+      "date": "2025-08-21",
+      "url": "https://equitablegrowth.org/how-artificial-intelligence-uncouples-hard-work-from-fair-wages-through-surveillance-pay-practices-and-how-to-fix-it/"
+    },
+    {
+      "item": "The AI Now Institute released its 'Surveillance Prices and Wages Report' (Feb 2025), arguing for prohibiting surveillance-based pricing and wages — a policy companion to the growing evidence base.",
+      "date": "2025-02",
+      "url": "https://ainowinstitute.org/wp-content/uploads/2025/02/Real-Surveillance-Prices-and-Wages-Report.pdf",
+      "flag": "Surfaced in search results but not opened this run; verify exact publication month and specific figures before quoting."
+    }
+  ],
+  "unverified_flags": [
+    "Apollo-hosted whitepaper author attribution (see stat flags) — confirm the citable author/institution before naming in copy.",
+    "AI Now 'Surveillance Prices and Wages Report' specifics not opened this run.",
+    "Equitable Growth piece carries a published correction about specific employer-vendor pairings; cite aggregate audit findings only.",
+    "-24.3% service-worker wage figure is a small-subsample estimate flagged as sensitive by its own authors."
+  ]
+}

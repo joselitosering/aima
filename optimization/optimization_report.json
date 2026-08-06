@@ -2518,5 +2518,456 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-31",
+    "total_tokens_used": 0,
+    "by_agent": {
+      "SC": 0,
+      "QL": 0,
+      "MY": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "MEDIUM",
+        "stat": "Neuralink PRIME had ~21 implanted participants by early 2026",
+        "issue": "Source is a secondary tech aggregator (Programming Helper Tech), not Neuralink or ClinicalTrials.gov. Research JSON marks it PARTIALLY VERIFIED. Verify the '21' figure against a primary source before re-citation."
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "Synchron COMMAND study: six patients, zero serious adverse events",
+        "issue": "Clinical-outcome claim sourced only to TechTimes coverage; research JSON flags it for confirmation against Synchron's published/peer-reviewed results. 'Zero serious adverse events' should not be stated as a settled clinical fact without a primary citation."
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "CorTec received FDA Breakthrough Device Designation in April 2026",
+        "issue": "Date and designation status unconfirmed against the FDA device database per research JSON verification_flag."
+      },
+      {
+        "severity": "LOW",
+        "stat": "Global BCI market ~USD 3.75B (2026) to USD 15.04B (2035), ~16.7% CAGR",
+        "issue": "Estimates vary widely by firm (other 2026 base-year figures $2.7B-$3.2B). Research JSON instructs presenting as an approximate range, not a hard number; verify the article did so."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "severity": "HIGH",
+        "type": "quote_gap",
+        "issue": "Research JSON quote_gap_warning states NO verbatim, name-attributed expert quotes were secured \u2014 only paraphrased institutional positions (neuroethics literature, BMC Medical Ethics, ORF Online). The spec requires 2-3 named quotes. Any named + verbatim expert quote in the published article #33 is unverified and a potential fabrication; verify the article attributes positions only as paraphrase to the institution/paper, not to a named individual as a direct quote. Body prose was not available in the 8000-char excerpt, so this could not be confirmed against the live copy."
+      }
+    ],
+    "budget_alerts": [
+      {
+        "severity": "CRITICAL",
+        "issue": "Token usage tracking is non-functional: 'used' is 0 for every agent (SC/QL/MY/VR/TS/WR and all others) despite a full 7-stage run (priya->scout->quill->maya->vera->porter->nova) completing. No real per-agent token or cost measurement exists for article #33 \u2014 budgets are ceilings only, not measurements. This is the same unresolved defect flagged CRITICAL since articles #018-#019. No 80% threshold can be evaluated because no consumption is being recorded."
+      },
+      {
+        "severity": "INFO",
+        "issue": "QL budget is 0 with used 0. Run summary flag 'writer_draft_reused' indicates Quill reused a pre-staged Writer draft (edit path), consistent with 0 Quill revisions. No overspend detected, but attribution remains untrustworthy until tracking is wired in."
+      }
+    ],
+    "guardrails_applied": [
+      {
+        "type": "scope_check",
+        "result": "PASS",
+        "note": "No scope violations detected in run summary: revisions quill=0, maya=0; stages ran in canonical order. No evidence of Quill touching images or Maya editing copy."
+      },
+      {
+        "type": "recommendation",
+        "result": "HOLD_FOR_REVIEW",
+        "note": "Recommend Vera/human verify the published #33 copy for (a) any named verbatim expert quote (must be paraphrase-only per research) and (b) the three secondary-sourced stats above before further syndication. Escalate the token-tracking defect for actioning before article #34."
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-31",
+    "article_number": 33,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-brain-computer-interface-horizon-033.html",
+    "gs_row": 34,
+    "company_urn": "urn:li:share:7489070971262443521",
+    "reshare_urn": "urn:li:share:7489070983308267520",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-07-31",
+    "total_tokens_used": 535108,
+    "by_agent": {
+      "SC": 385249,
+      "WR": 149859,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "TS": 0,
+      "PR": 0,
+      "IR": 0,
+      "LM": 0,
+      "CO": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "low",
+        "agent": "SC",
+        "item": "Sama/OpenAI wage gap ($1.32-$2/hr vs $12.50/hr)",
+        "source": "TIME (Billy Perrigo), 2023",
+        "status": "OK \u2014 named source + year, primary investigation. Safe anchor stat, no action needed."
+      },
+      {
+        "severity": "medium",
+        "agent": "SC",
+        "item": "Data annotation market size (~$2.37B 2025 / ~$3.14B 2026, ~32% CAGR)",
+        "source": "Grand View / Straits / Research Nester aggregators, 2026",
+        "status": "FLAG \u2014 figures diverge widely across research firms (research JSON confidence=medium). Verify the precise number against ONE named firm, or present as 'multi-billion and growing ~32%/yr' rather than an exact figure."
+      },
+      {
+        "severity": "low",
+        "agent": "SC",
+        "item": "India annotator wages ~\u20b915,000-20,000/mo, 'stagnant since 2019'",
+        "source": "EnsureIAS/Qhala secondary/blog, 2025",
+        "status": "FLAG \u2014 low-confidence secondary sourcing (research JSON confidence=low). Only acceptable if attributed inline; 'stagnant since 2019' claim is not independently verified. Confirm article does not assert it as fact without attribution."
+      },
+      {
+        "severity": "medium",
+        "agent": "SC",
+        "item": "World Bank gig-work range (154M-435M) / Oxford Economics US figures / Gray-Suri 8%",
+        "source": "World Bank 2023 / Oxford Economics 2024 / Gray & Suri 2019",
+        "status": "FLAG \u2014 all have named source+year but were captured from search summaries, not primary docs opened this run. Oxford Economics is industry-commissioned (positive framing bias). Verify each against primary document before re-citation."
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "agent": "SC",
+        "used": 385249,
+        "budget": 500000,
+        "pct": 77.05,
+        "threshold": 80,
+        "status": "BELOW threshold \u2014 no 80% trip, but SC is the single largest consumer this run (77% of its ceiling) and drove the entire tracked spend alongside WR. Watch on next run; if research scope grows it will cross 80%.",
+        "last_call_cost_usd": 1.121218
+      },
+      {
+        "agent": "WR",
+        "used": 149859,
+        "budget": 300000,
+        "pct": 49.95,
+        "threshold": 80,
+        "status": "OK \u2014 49.95% of budget. writer_ran flag set (standalone Writer authored, Quill edited).",
+        "last_call_cost_usd": 0.781806
+      },
+      {
+        "note": "QL budget=0/used=0: consistent with Direction B merge (Quill edited a pre-staged Writer draft rather than cold-authoring). No overrun. All other agents (IR/PR/TS/MY/VR/PT/NV/EC/LM/CO/MR) at 0 tokens \u2014 none exceeded 80%.",
+        "tracked_cost_usd": 1.903024
+      }
+    ],
+    "guardrails_applied": [],
+    "quote_flags": [
+      {
+        "severity": "medium",
+        "quote": "'...at great cost to our health, our lives and our families... for less than $2 per hour.'",
+        "speaker": "Kenyan AI data labelers (collective, no named individual)",
+        "status": "FLAG \u2014 attributed to an unnamed collective of open-letter signatories, not a named/verifiable individual. Source (TechEquity) returned HTTP 403 and was not directly read. Verify exact wording and venue, or attribute to the specific named letter, before this appears in quotation marks."
+      },
+      {
+        "severity": "high",
+        "quote": "'Ghost work is the invisible human labor that powers many of the apps... made to look automated.'",
+        "speaker": "Mary L. Gray & Siddharth Suri (named authors)",
+        "status": "FLAG \u2014 research JSON marks this a PARAPHRASE of the authors' concept, NOT a verbatim quotation. Must NOT be presented inside quotation marks as their exact words. Confirm the article either uses a verified verbatim line or clearly frames it as a paraphrase."
+      }
+    ],
+    "scope_violations": [],
+    "notes": [
+      "No scope violations detected: quill revisions=0, maya revisions=0; run completed cleanly through Porter (GS row 35) and Nova (company + reshare URNs present). No evidence of Quill touching images or Maya touching copy.",
+      "METADATA discrepancy (non-hallucination): article meta publish-date and article:published_time = 2026-07-13, but run date is 2026-07-31. Recommend Iris/Porter reconcile the publish date before it propagates to sitemap/schema.",
+      "Article body prose was not available in the provided HTML excerpt (head only). Stat/quote flags above are raised at the research-source level; a full body-vs-research trace should be run by Vera on the rendered article to confirm which flagged items actually appear in copy."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-07-31",
+    "article_number": 34,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-ghost-workers-hidden-human-034.html",
+    "gs_row": 35,
+    "company_urn": "urn:li:share:7489073918947799041",
+    "reshare_urn": "urn:li:share:7489073931015032832",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-03",
+    "row": 35,
+    "author": "Dawn Ginhaua",
+    "title": "Surveillance Wages: How AI Turned Your Every Keystroke Into a Pay Cut",
+    "category": "AI Labor / AI Ethics",
+    "rationale": "\"Surveillance pay\" \u2014 AI systems that monitor workers in real time and quietly individualize wages downward \u2014 has become the summer 2026 flashpoint in labor economics and privacy law, with economists and AGs now naming it directly. It's the cleanest possible Dawn story: surveillance capitalism, data justice, and automation's human cost fused into a single mechanism that follows the money and names who pays.",
+    "sources": [
+      {
+        "name": "Washington Center for Equitable Growth",
+        "url": "https://equitablegrowth.org/how-artificial-intelligence-uncouples-hard-work-from-fair-wages-through-surveillance-pay-practices-and-how-to-fix-it/"
+      },
+      {
+        "name": "Let's Data Science \u2014 AI Workplace Surveillance Raises Legal and Ethical Questions",
+        "url": "https://letsdatascience.com/news/ai-workplace-surveillance-raises-legal-and-ethical-questions-13d15729"
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-03",
+    "article_number": 35,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-surveillance-wages-how-ai-turned-035.html",
+    "gs_row": 36,
+    "company_urn": "urn:li:share:7490121017999118337",
+    "reshare_urn": "urn:li:share:7490121030011645952",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova"
+    ],
+    "flags": [
+      "writer_ran",
+      "cora_error: CC agent [cora] failed (exit 1):\nSTDERR: (empty)\nSTDOUT (first 500): {\"type\":\"result\",\"subtype\":\"error_max_turns\",\"duration_ms\":22206,\"duration_api_ms\":28003,\"is_error\":true,\"num_turns\":2,\"stop_reason\":\"tool_use\",\"session_id\":\"a9500e2b-fd6e-4092-8a78-a3aa7a578051\",\"total_cost_usd\":0.564838,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":50908,\"cache_read_input_tokens\":20042,\"output_tokens\":1525,\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":50908,\"ephemeral_5m_inpu"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-04",
+    "total_tokens_used": 460750,
+    "by_agent": {
+      "SC": 312028,
+      "WR": 148722,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0
+    },
+    "hallucination_flags": [
+      {
+        "agent": "SC/WR",
+        "stat": "A majority of U.S. teenagers say AI-powered cheating is at least somewhat prevalent in their schools (Pew Research).",
+        "issue": "Research JSON marks this stat verified:false \u2014 reported secondhand via Chalkbeat, exact Pew figure and survey date never confirmed against the Pew source directly. If cited in the article body with a specific percentage, it is an unsourced/unverified claim. Must be attributed loosely ('a recent Pew survey') or dropped.",
+        "severity": "MEDIUM"
+      },
+      {
+        "agent": "SC/WR",
+        "stat": "Bloom 1984 'two-sigma' individualized-tutoring study",
+        "issue": "Research verification_flags note this study is 'seminal but controversial' and was not independently re-verified this pass. If invoked, it should be framed as contested, not settled fact.",
+        "severity": "LOW"
+      },
+      {
+        "note": "Body-copy verification LIMITED: only the first 8000 chars (document head/meta/JSON-LD) were provided to Cora, not the running prose. Named-source+year presence of the Harvard RCT (Nature 2025), UNESCO 44M/15M teacher stats (2024), and the 4.6%\u21929% attrition figure (UNESCO 2025) could not be confirmed in-body from the supplied excerpt. All are 'verified:true' in research; flagged only as an audit-coverage gap, not a detected fabrication."
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "agent": "SC",
+        "used_pct": 62.4,
+        "used": 312028,
+        "budget": 500000,
+        "status": "OK \u2014 under 80% threshold"
+      },
+      {
+        "agent": "WR",
+        "used_pct": 49.6,
+        "used": 148722,
+        "budget": 300000,
+        "status": "OK \u2014 under 80% threshold"
+      },
+      {
+        "agent": "QL",
+        "note": "QL budget is 0 and used 0. Writer ran standalone this run (writer_ran flag, quill revisions=0), so the merged author+edit QL path did not fire; no breach. Config note only: a 0 QL budget would trip immediately if the from-scratch merged path ever runs \u2014 verify against the current pipeline mode before next run."
+      }
+    ],
+    "guardrails_applied": [],
+    "scope_check": "No scope violations detected in the run summary \u2014 quill revisions=0, maya revisions=0; no evidence of Quill editing images or Maya editing copy. Note: article meta publish-date is 2026-07-14 (stale vs run date 2026-08-04) \u2014 cosmetic metadata issue, outside token/quality governance scope, forwarded for Iris/human review."
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-04",
+    "article_number": 36,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-a-teacher-for-every-child-036.html",
+    "gs_row": 37,
+    "company_urn": "urn:li:share:7490482991849287680",
+    "reshare_urn": "urn:li:share:7490483003610243072",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-05",
+    "row": 37,
+    "author": "Kenji Nakamoto",
+    "title": "The Proteins That Never Were: How AI Is Designing Life's Machinery From Scratch",
+    "category": "AI Science",
+    "rationale": "De novo protein and enzyme design is the hottest science-AI story of 2026 \u2014 ESM3, OpenCRISPR-1 (a working CRISPR enzyme invented by a language model), GENzyme, and the new 'Sparks' multi-agent system that autonomously discovers design rules mean AI is now inventing biological machinery that evolution never made. It's mechanism-rich, wonder-driven bioengineering that lands dead-center in Kenji's beat, and nothing on the covered list touches designed-from-scratch proteins (Precision Medicine and The Healing Machine are about diagnosis/treatment, not molecular invention).",
+    "sources": [
+      {
+        "name": "Communications Biology (Nature) \u2014 AI protein binder design & conformational prediction",
+        "url": "https://www.nature.com/articles/s42003-026-10112-3"
+      },
+      {
+        "name": "Pharma's Almanac \u2014 How AI Is Transforming De Novo Protein Design",
+        "url": "https://www.pharmasalmanac.com/articles/reprogramming-the-rules-how-ai-is-transforming-de-novo-protein-design-in-drug-development"
+      },
+      {
+        "name": "SCIEPublish \u2014 Generative AI for Function-Driven De Novo Enzyme Design",
+        "url": "https://www.sciepublish.com/article/pii/701"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-05",
+    "total_tokens_used": 769145,
+    "by_agent": {
+      "IR": 0,
+      "PR": 0,
+      "SC": 308902,
+      "TS": 314190,
+      "WR": 146053,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "LM": 0,
+      "CO": 0
+    },
+    "hallucination_flags": [
+      {
+        "agent": "SC",
+        "type": "unverified_stat",
+        "severity": "MEDIUM",
+        "detail": "Stat '2024 Nobel Prize in Chemistry awarded to Baker/Hassabis/Jumper' has a named source (Nobel Prize / Royal Swedish Academy) and year (2024) but verified=false \u2014 recalled from prior knowledge, nobelprize.org path NOT fetched this run. Well-established public fact; confirm exact URL before re-citation."
+      },
+      {
+        "agent": "SC",
+        "type": "unverified_stat",
+        "severity": "MEDIUM",
+        "detail": "Stat 'AlphaFold DB released ~200 million predicted structures' has named source (DeepMind / EMBL-EBI) and year (2022) but verified=false \u2014 figure recalled from prior knowledge, alphafold.ebi.ac.uk NOT fetched this run. Verify current count before publication."
+      },
+      {
+        "agent": "SC",
+        "type": "quote_no_named_individual",
+        "severity": "MEDIUM",
+        "detail": "Quote 'Historically, computational enzyme design was just the starting point...' attributed to 'Baker Lab / IPD researcher' \u2014 no individual named in the retrieved excerpt. Must attribute to 'an IPD researcher' or confirm exact name (candidates: Kim, Woodbury, Tischer, Pellock) before assigning."
+      },
+      {
+        "agent": "SC",
+        "type": "quote_no_named_individual",
+        "severity": "LOW",
+        "detail": "Quote 'The headline numbers in AI protein design papers...' attributed to 'Ranomics' \u2014 an institution/company, not a named individual, and not peer-reviewed. Acceptable only if framed explicitly as an industry-practitioner counterpoint, not an academic finding."
+      },
+      {
+        "agent": "SC",
+        "type": "sourcing_traceability",
+        "severity": "LOW",
+        "detail": "'90% of designs bind' figure is a Ranomics paraphrase of method-paper headlines, not a single named paper. If used directly in body copy, trace to the specific RFdiffusion/BindCraft source."
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "agent": "TS",
+        "severity": "CRITICAL",
+        "used": 314190,
+        "budget": 150000,
+        "pct_of_budget": 209.5,
+        "detail": "Trend Scout OVER BUDGET at 209% (314,190 / 150,000; last-call cost $1.21). Exceeds the 80% alert threshold and the hard ceiling. TS is a topic-selection agent budgeted at 12k-15k-class work \u2014 314k tokens for a single row resolution is a gross overspend. Recommend a prompt-level guardrail capping TS reads/searches and reducing MAX_TURNS; investigate whether TS looped or ingested oversized cached files (same failure class as the prior Scout overspend fix)."
+      },
+      {
+        "agent": "SC",
+        "severity": "OK",
+        "used": 308902,
+        "budget": 500000,
+        "pct_of_budget": 61.8,
+        "detail": "Scout at 61.8% of budget \u2014 under the 80% threshold, no alert. Note self-reported budget_note claims 'well under 60k ceiling' yet ledger shows 308,902 tokens used; the discrepancy between Scout's self-report and recorded usage is worth reconciling but is not a budget breach."
+      }
+    ],
+    "guardrails_applied": []
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-05",
+    "article_number": 37,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-proteins-that-never-were-037.html",
+    "gs_row": 38,
+    "company_urn": "urn:li:share:7490845743272914944",
+    "reshare_urn": "urn:li:share:7490845754886991872",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]

@@ -1,0 +1,55 @@
+{
+  "row": 35,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-08-03",
+  "chosen": {
+    "title": "Surveillance Wages: How AI Turned Your Every Keystroke Into a Pay Cut",
+    "category": "AI Labor / AI Ethics",
+    "rationale": "\"Surveillance pay\" \u2014 AI systems that monitor workers in real time and quietly individualize wages downward \u2014 has become the summer 2026 flashpoint in labor economics and privacy law, with economists and AGs now naming it directly. It's the cleanest possible Dawn story: surveillance capitalism, data justice, and automation's human cost fused into a single mechanism that follows the money and names who pays.",
+    "sources": [
+      {
+        "name": "Washington Center for Equitable Growth",
+        "url": "https://equitablegrowth.org/how-artificial-intelligence-uncouples-hard-work-from-fair-wages-through-surveillance-pay-practices-and-how-to-fix-it/"
+      },
+      {
+        "name": "Let's Data Science \u2014 AI Workplace Surveillance Raises Legal and Ethical Questions",
+        "url": "https://letsdatascience.com/news/ai-workplace-surveillance-raises-legal-and-ethical-questions-13d15729"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The Last Referees: State Attorneys General Are the Only Thing Left Standing Between AI and Its Victims",
+      "category": "AI Ethics / AI Policy",
+      "rationale": "With Colorado gutting its landmark AI antidiscrimination law under industry pressure (July 2026) and federal enforcement in retreat, a wave of state AGs has become the de facto national regulator of algorithmic harm \u2014 a structural power shift happening right now. Dawn owns the 'corporate capture of public institutions' angle: what happens to accountability when the law is repealed and only a patchwork of understaffed state offices is left to enforce it.",
+      "sources": [
+        {
+          "name": "Quinn Emanuel \u2014 When Machines Discriminate: The Rise of AI Bias Lawsuits",
+          "url": "https://www.quinnemanuel.com/the-firm/publications/when-machines-discriminate-the-rise-of-ai-bias-lawsuits/"
+        },
+        {
+          "name": "Mondaq \u2014 AI Reporter, July 2026",
+          "url": "https://www.mondaq.com/unitedstates/new-technology/1818766/ai-reporter-july-2026"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Engineered Precarity: The Global South Workers Who Train AI Under Constant Machine Surveillance",
+      "category": "AI Labor / AI Ethics",
+      "rationale": "A February 2026 GIZ study drawing on 35+ expert interviews documents how algorithmic management \u2014 live-video monitoring, keystroke discipline, zero-tolerance error metrics \u2014 governs data workers and content moderators with almost no legal protection outside the Global North. This is Dawn's postcolonial/data-colonialism lane specifically: not the existence of hidden labor, but the surveillance apparatus that disciplines it, and who is excluded from the room where the rules get written.",
+      "sources": [
+        {
+          "name": "GIZ (2026) \u2014 Engineered Precarities: Algorithmic Management in Data Work and Content Moderation",
+          "url": "https://www.bmz-digital.global/wp-content/uploads/2026/02/GIZ_2026_EngineeredPrecarities.pdf"
+        },
+        {
+          "name": "Washington Center for Equitable Growth",
+          "url": "https://equitablegrowth.org/how-artificial-intelligence-uncouples-hard-work-from-fair-wages-through-surveillance-pay-practices-and-how-to-fix-it/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}
