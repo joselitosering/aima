@@ -829,19 +829,9 @@ document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 /* ════════════════════════════════════════════════════════════
    UTILITY
 ════════════════════════════════════════════════════════════ */
-function decodeEntities(str) {
-  // Sheet data sometimes arrives already HTML-entity-encoded (e.g. titles
-  // extracted from raw <title> tags contain literal "&#x27;"). Decoding
-  // first prevents escHtml from double-escaping that into visible "&#x27;".
-  if (!str) return '';
-  const ta = document.createElement('textarea');
-  ta.innerHTML = str;
-  return ta.value;
-}
-
 function escHtml(str) {
   const d = document.createElement('div');
-  d.textContent = decodeEntities(str);
+  d.textContent = str || '';
   return d.innerHTML;
 }
 
