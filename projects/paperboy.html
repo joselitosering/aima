@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../img/favicon-dark.svg">
+<link rel="icon" type="image/x-icon" href="../img/favicon-dark.ico">
+<title>Paperboy — A Novel by Joselito Sering</title>
+
+<!-- ═══════════════════════════════════════════════════════
+     SEO & DISCOVERY METADATA
+═══════════════════════════════════════════════════════ -->
+<!-- SEO -->
+<meta name="description"  content="A nine-year-old immigrant, a fog-bound San Francisco paper route, and a country still being earned. Paperboy — a genre-breaking literary debut by Joselito Sering, forty years in the making."/>
+<meta name="keywords"     content="Paperboy novel, Joselito Sering, immigrant coming of age novel, Filipino American literary fiction, San Francisco novel, autobiographical fiction, literary debut 2026"/>
+<meta name="author"       content="Joselito Sering"/>
+<meta name="robots"       content="index, follow"/>
+<link rel="canonical"     href="https://aima.productions/projects/paperboy.html"/>
+
+<!-- Open Graph -->
+<meta property="og:type"          content="book"/>
+<meta property="og:title"         content="Paperboy — A Novel by Joselito Sering"/>
+<meta property="og:description"   content="A nine-year-old immigrant, a fog-bound San Francisco paper route, and a country still being earned. A genre-breaking literary debut, forty years in the making."/>
+<meta property="og:image"         content="https://aima.productions/img/paperboy-cover.jpg"/>
+<meta property="og:url"           content="https://aima.productions/projects/paperboy.html"/>
+<meta property="og:site_name"     content="AIMA — AI Media Agency"/>
+<meta property="og:locale"        content="en_US"/>
+<meta property="book:author"      content="Joselito Sering"/>
+<meta property="book:release_date" content="2026-09-30"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image"/>
+<meta name="twitter:title"       content="Paperboy — A Novel by Joselito Sering"/>
+<meta name="twitter:description" content="A nine-year-old immigrant, a fog-bound San Francisco paper route, and a country still being earned. A genre-breaking literary debut, forty years in the making."/>
+<meta name="twitter:image"       content="https://aima.productions/img/paperboy-cover.jpg"/>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "Paperboy",
+  "author": {
+    "@type": "Person",
+    "name": "Joselito Sering",
+    "url": "https://aima.productions/index.html#about"
+  },
+  "image": "https://aima.productions/img/paperboy-cover.jpg",
+  "description": "A nine-year-old immigrant, a fog-bound San Francisco paper route, and a country still being earned. Paperboy is a genre-breaking literary debut, forty years in the making — a novel about class, race, belonging, and the friendships that shape us.",
+  "genre": ["Literary Fiction", "Coming-of-Age", "Autobiographical Fiction"],
+  "inLanguage": "en-US",
+  "datePublished": "2026-09-30",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://www.amazon.com/dp/B0HCTK4KWJ",
+    "price": "4.99",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/PreOrder",
+    "seller": { "@type": "Organization", "name": "Amazon" }
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS — ported from the AIMA brand system
+   (aima.productions design tokens, adapted for a project/
+   book-launch page: same palette, type, nav & footer components)
+═══════════════════════════════════════════════════════════ */
+:root {
+  --bg:       #060810;
+  --surface:  #0B0E1C;
+  --surface2: #10142A;
+  --surface3: #161B36;
+  --cyan:     #00D9F5;
+  --orange:   #FF5E20;
+  --gold:     #C8A84B;
+  --gold-lt:  #EDD483;
+  --green:    #2DCA73;
+  --purple:   #A259FF;
+  --text:     #DFE6F5;
+  --muted:    #7A8BAA;
+  --border:   rgba(0,217,245,0.10);
+  --border2:  rgba(255,255,255,0.05);
+  --glow-c:   rgba(0,217,245,0.20);
+  --radius:   6px;
+  --mono:     'Courier Prime', monospace;
+  --nav-h:    72px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.65;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; font-family: inherit; }
+[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+
+/* ─── SHARED UTILITY ─── */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--cyan); border: 1px solid var(--border);
+  border-radius: 2px; padding: 4px 10px; margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(32px, 5vw, 60px);
+  line-height: .98; letter-spacing: .01em; text-transform: uppercase; color: #fff;
+}
+.section-title .c  { color: var(--cyan); }
+.section-title .o  { color: var(--orange); }
+.section-title .g  { color: var(--gold-lt); }
+.section-title .gr { color: var(--green); }
+.section-title .p  { color: var(--purple); }
+.lead { font-size: 16px; color: var(--muted); max-width: 580px; line-height: 1.82; margin-top: 16px; }
+.divider { width: 44px; height: 2px; background: linear-gradient(90deg, var(--cyan), transparent); margin: 18px 0 28px; }
+.sec-header { margin-bottom: 56px; }
+.fi  { opacity:0; transform:translateY(22px);  transition: opacity .6s ease, transform .6s ease; }
+.fi.vis { opacity:1; transform:none; }
+
+/* ═══════════════════════════════════════════════════
+   NAV — ported 1:1 from aima.productions
+═══════════════════════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--nav-h);
+  display:flex;align-items:center;
+  background:rgba(6,8,16,.60);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,217,245,0.10);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Anton',sans-serif;font-size:17px;letter-spacing:.05em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.nav-logo .pulse{width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
+.nav-logo .m3{color:var(--cyan)}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:color .2s;position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:10px 20px;border-radius:var(--radius);transition:box-shadow .2s,opacity .2s;white-space:nowrap}
+.nav-cta:hover{box-shadow:0 0 22px var(--glow-c);opacity:.9}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:4px;cursor:pointer;background:none;border:none}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu {
+  display: none;
+  position: fixed; inset: 0; z-index: 190;
+  background: rgba(6,8,16,.60); backdrop-filter: blur(20px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+  padding-top: var(--nav-h, 72px);
+  overflow-y: auto;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Anton',sans-serif;font-size:32px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);transition:color .2s}
+.mobile-menu a:hover{color:#fff}
+.mobile-menu .m-cta{font-size:14px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;background:var(--cyan);color:var(--bg);padding:14px 36px;border-radius:var(--radius);margin-top:12px}
+@media(max-width:900px){.nav-links{display:none}}
+@media(max-width:640px){.nav-cta{display:none}.nav-burger{display:flex}}
+
+#page-content { flex: 1; padding-top: var(--nav-h); min-height: calc(100vh - var(--nav-h)); }
+
+/* ═══════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════ */
+#home{ position:relative; overflow:hidden; }
+.hero-bg {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 68% 42%, rgba(0,217,245,.08) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 45% at 8% 92%, rgba(255,94,32,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 90% 10%, rgba(162,89,255,.05) 0%, transparent 60%),
+    linear-gradient(160deg,#06080F 40%,#0A0D1E 100%);
+}
+.hero-grid {
+  position:absolute; inset:0; opacity:.035;
+  background-image:
+    linear-gradient(var(--cyan) 1px,transparent 1px),
+    linear-gradient(90deg,var(--cyan) 1px,transparent 1px);
+  background-size:64px 64px;
+  animation:gridMove 20s linear infinite;
+}
+@keyframes gridMove { from{background-position:0 0} to{background-position:64px 64px} }
+.hero-content { position:relative; z-index:2; padding:64px 0 76px; }
+.hero-2col { display:grid; grid-template-columns:320px 1fr; gap:64px; align-items:center; }
+.hero-cover-frame {
+  border-radius:8px; overflow:hidden; border:1px solid var(--border);
+  box-shadow:0 0 0 1px var(--border2), 0 40px 80px -30px rgba(0,0,0,.7), 0 0 40px -10px var(--glow-c);
+}
+.hero-eyebrow { display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+.hero-eyebrow .ln { width:38px; height:1px; background:var(--cyan); }
+.hero-eyebrow span { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan); }
+.hero-title {
+  font-family:'Anton',sans-serif;
+  font-size: clamp(48px,7vw,86px);
+  line-height:.92; text-transform:uppercase; letter-spacing:.01em; color:#fff;
+  margin-bottom:22px;
+}
+.hero-title .c1 { color:var(--cyan); }
+.hero-hook { font-family:'Anton',sans-serif; font-size:22px; text-transform:none; letter-spacing:.01em; color:var(--cyan); margin-bottom:14px; }
+.hero-sub { font-size:16px; color:var(--muted); max-width:520px; line-height:1.82; margin-bottom:38px; }
+.hero-sub strong { color:var(--text); font-weight:500; }
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-fill {
+  font-size:12px; letter-spacing:.11em; text-transform:uppercase; font-weight:700;
+  background:var(--cyan); color:var(--bg);
+  padding:14px 30px; border-radius:var(--radius);
+  transition:box-shadow .25s, opacity .2s; display:inline-block;
+}
+.btn-fill:hover { box-shadow:0 0 30px var(--glow-c); opacity:.9; }
+.btn-outline {
+  font-size:12px; letter-spacing:.11em; text-transform:uppercase; font-weight:500;
+  border:1px solid var(--border); color:var(--text);
+  padding:14px 30px; border-radius:var(--radius);
+  transition:border-color .2s, color .2s; display:inline-block;
+}
+.btn-outline:hover { border-color:var(--cyan); color:var(--cyan); }
+.hero-stats {
+  display:flex; flex-wrap:wrap; gap:40px;
+  margin-top:52px; padding-top:28px;
+  border-top:1px solid var(--border2);
+}
+.stat-item .num { font-family:'Anton',sans-serif; font-size:38px; color:#fff; line-height:1; }
+.stat-item .num sup { font-size:18px; color:var(--cyan); }
+.stat-item .lbl { font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+
+/* ═══════════════════════════════════════════════════
+   CONTENTS BAR — ported from AIMA project-page template
+═══════════════════════════════════════════════════ */
+.contents-bar {
+  position:relative; z-index:2;
+  border-top:1px solid var(--border2); border-bottom:1px solid var(--border2);
+  background:var(--surface);
+}
+.contents-inner { display:flex; align-items:center; gap:28px; flex-wrap:wrap; padding:16px 0; }
+.contents-label { font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+.contents-inner a { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); transition:color .2s; }
+.contents-inner a:hover { color:var(--cyan); }
+
+/* ═══════════════════════════════════════════════════
+   NUMBERED SECTIONS
+═══════════════════════════════════════════════════ */
+section.numbered { padding:100px 0; }
+.kicker { font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan); margin-bottom:14px; }
+
+.story-lead { font-family:'Anton',sans-serif; font-size:20px; text-transform:none; letter-spacing:.01em; color:#fff; max-width:62ch; margin-bottom:32px; line-height:1.3; }
+.story-lead em { color:var(--cyan); font-style:normal; }
+.story-copy p { color:var(--muted); font-size:15.5px; line-height:1.85; margin-bottom:20px; max-width:70ch; }
+.story-copy p.first { color:var(--text); font-size:18px; font-family:'DM Sans',sans-serif; font-weight:500; }
+
+.excerpt { margin-top:36px; max-width:70ch; border:1px solid var(--border2); border-radius:8px; background:var(--surface2); overflow:hidden; }
+.excerpt summary {
+  list-style:none; cursor:pointer; padding:20px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--cyan);
+}
+.excerpt summary::-webkit-details-marker{ display:none; }
+.excerpt summary .plus{ font-family:'Anton',sans-serif; font-size:18px; color:var(--muted); transition:transform .2s; }
+.excerpt[open] summary .plus{ transform:rotate(45deg); }
+.excerpt-body{ padding:0 24px 28px; }
+.excerpt-body h3{ font-family:'Anton',sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:.03em; color:#fff; margin-bottom:16px; }
+.excerpt-body p{ color:var(--muted); font-size:14.5px; line-height:1.85; margin-bottom:16px; }
+.excerpt-body .fade{ color:var(--text); font-style:italic; }
+.excerpt-actions{ display:flex; gap:24px; flex-wrap:wrap; align-items:center; }
+.excerpt-more{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--cyan); }
+.excerpt-more:hover{ color:var(--gold-lt); }
+.excerpt-more-secondary{ color:var(--muted); }
+.excerpt-more-secondary:hover{ color:var(--cyan); }
+
+.content-note {
+  margin-top:24px; max-width:70ch; padding:14px 18px;
+  border:1px solid var(--border2); border-left:2px solid var(--gold); border-radius:6px;
+  background:var(--surface2);
+}
+.content-note p{ color:var(--muted); font-size:12.5px; line-height:1.7; margin:0; max-width:none; }
+.content-note strong{ color:var(--gold-lt); font-weight:600; }
+
+.review-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:16px; }
+@media(max-width:780px){ .review-grid{ grid-template-columns:1fr; } }
+.rate-card {
+  background:var(--surface2); border:1px solid var(--border2);
+  border-radius:8px; padding:28px 26px 24px;
+  display:flex; flex-direction:column; gap:0;
+  transition:border-color .2s, transform .2s;
+  position:relative; overflow:hidden;
+}
+.rate-card:hover { border-color:var(--border); transform:translateY(-3px); }
+.rate-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: var(--accent-line, var(--cyan));
+}
+.rc-quote { font-size:14.5px; line-height:1.8; color:var(--text); font-style:italic; margin-bottom:18px; }
+.rc-name { font-family:'Anton',sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:.04em; color:#fff; }
+.rc-sub { font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+
+.author-2col { display:grid; grid-template-columns:180px 1fr; gap:48px; align-items:start; }
+@media(max-width:700px){ .author-2col{ grid-template-columns:1fr; } }
+.author-badge {
+  width:100%; aspect-ratio:1; border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Anton',sans-serif; font-size:2.4rem; color:var(--bg);
+  box-shadow:0 0 40px -8px var(--glow-c);
+}
+.author-2col p { color:var(--muted); font-size:15.5px; line-height:1.85; max-width:65ch; }
+.author-links { margin-top:20px; display:flex; gap:12px; flex-wrap:wrap; }
+
+/* ─ FORMAT / TIER CARDS ─ */
+.tiers-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:16px; }
+@media(max-width:900px){ .tiers-grid { grid-template-columns:1fr; } }
+.tier-card {
+  background:var(--surface2); border:1px solid var(--border2);
+  border-radius:10px; padding:30px 26px 26px;
+  display:flex; flex-direction:column; position:relative; overflow:hidden;
+  transition:transform .25s, box-shadow .25s;
+}
+.tier-card:hover { transform:translateY(-5px); box-shadow:0 20px 44px rgba(0,0,0,.4); }
+.tier-card.featured { border-color:var(--cyan); box-shadow:0 0 30px var(--glow-c); }
+.tier-badge {
+  font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  padding:4px 10px; border-radius:2px; display:inline-block; margin-bottom:16px; width:fit-content;
+}
+.tb1 { background:rgba(45,202,115,.10); color:var(--green); }
+.tb2 { background:rgba(200,168,75,.09); color:var(--gold-lt); }
+.tb4 { background:rgba(162,89,255,.09); color:#C59FFF; }
+.tier-icon { font-size:22px; margin-bottom:10px; }
+.tier-name { font-family:'Anton',sans-serif; font-size:26px; text-transform:uppercase; letter-spacing:.04em; color:#fff; margin-bottom:4px; }
+.tier-price { font-family:'Anton',sans-serif; font-size:26px; color:var(--cyan); margin-bottom:12px; }
+.tier-tag { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:20px; }
+.tier-feats { list-style:none; flex:1; margin-bottom:24px; }
+.tier-feats li {
+  font-size:12.5px; color:var(--muted); padding:7px 0;
+  border-bottom:1px solid var(--border2);
+  display:flex; gap:10px; align-items:flex-start;
+}
+.tier-feats li::before { content:'✓'; color:var(--cyan); font-weight:700; flex-shrink:0; margin-top:1px; }
+.tier-btn {
+  display:block; text-align:center; padding:13px 20px;
+  border-radius:var(--radius); font-size:12px; letter-spacing:.11em;
+  text-transform:uppercase; font-weight:700;
+  transition:all .2s; border:none; width:100%;
+}
+.tb-line { border:1px solid var(--border); color:var(--muted); background:transparent; cursor:default; }
+.tb-notify { border:1px solid var(--border); color:var(--text); background:transparent; transition:border-color .2s, color .2s; }
+.tb-notify:hover { border-color:var(--cyan); color:var(--cyan); }
+.tb-cyan { background:var(--cyan); color:var(--bg); }
+.tb-cyan:hover { box-shadow:0 0 22px var(--glow-c); opacity:.9; }
+.buy-note { margin-top:24px; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--muted); }
+
+/* ═══════════════════════════════════════════════════
+   FOOTER — ported 1:1 from aima.productions
+═══════════════════════════════════════════════════ */
+footer {
+  background: #030508;
+  border-top: 1px solid var(--border);
+  padding: 56px 0 28px;
+  flex-shrink: 0;
+}
+.footer-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 44px; }
+@media (max-width: 780px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }
+.fb-logo-wrap { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.fb-logo-wrap .pulse-ft {
+  width: 7px; height: 7px; flex-shrink: 0;
+  background: var(--cyan); border-radius: 50%;
+  box-shadow: 0 0 7px var(--cyan);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+.fb-wordmark { font-family: 'Anton', sans-serif; font-size: 20px; text-transform: uppercase; letter-spacing: .05em; }
+.fb-wordmark .ai { color: #fff; }
+.fb-wordmark .ma { color: var(--cyan); }
+.fb-sub { font-family: var(--mono); font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+.fb-tagline { font-size: 13px; color: var(--muted); line-height: 1.75; margin-bottom: 20px; max-width: 300px; }
+.back-to-top {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); background: var(--surface2);
+  border: 1px solid var(--border2); border-radius: var(--radius);
+  padding: 9px 16px; transition: border-color .2s, color .2s, box-shadow .2s;
+}
+.back-to-top:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 14px var(--glow-c); }
+.back-to-top .arr { font-size: 14px; transition: transform .2s; }
+.back-to-top:hover .arr { transform: translateY(-3px); }
+.fl-head { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.fl-list { list-style: none; }
+.fl-list li { margin-bottom: 9px; }
+.fl-list a { font-size: 13px; color: var(--muted); transition: color .2s; }
+.fl-list a:hover { color: var(--cyan); }
+.footer-bottom {
+  padding-top: 24px; border-top: 1px solid var(--border2);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p { font-size: 12px; color: var(--muted); }
+.footer-bottom span { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+@media(max-width:860px){
+  .hero-2col{ grid-template-columns:1fr; gap:36px; text-align:left; }
+  .hero-cover-frame{ max-width:260px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="https://aima.productions/index.html" class="nav-logo">
+      <div class="pulse"></div>
+      <span><span style="color:#fff">AI</span><span class="m3">MA</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="https://aima.productions/index.html" class="nav-lnk">Home</a></li>
+      <li><a href="https://aima.productions/index.html#services" class="nav-lnk">Services</a></li>
+      <li><a href="https://aima.productions/index.html#rates" class="nav-lnk">Rates</a></li>
+      <li><a href="https://aima.productions/index.html#work" class="nav-lnk">Work</a></li>
+      <li><a href="https://aima.productions/index.html#process" class="nav-lnk">Process</a></li>
+      <li><a href="https://aima.productions/index.html#about" class="nav-lnk">About</a></li>
+      <li><a href="https://aima.productions/insights.html" class="nav-lnk">Insights</a></li>
+      <li><a href="https://aima.productions/gallery.html" class="nav-lnk">Gallery</a></li>
+    </ul>
+    <a href="https://aima.productions/index.html#contact" class="nav-cta">Get a Quote</a>
+    <button class="nav-burger" id="navBurger" onclick="toggleMobile()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://aima.productions/index.html" onclick="toggleMobile()">Home</a>
+  <a href="https://aima.productions/index.html#services" onclick="toggleMobile()">Services</a>
+  <a href="https://aima.productions/index.html#rates" onclick="toggleMobile()">Rates</a>
+  <a href="https://aima.productions/index.html#work" onclick="toggleMobile()">Work</a>
+  <a href="https://aima.productions/index.html#process" onclick="toggleMobile()">Process</a>
+  <a href="https://aima.productions/index.html#about" onclick="toggleMobile()">About</a>
+  <a href="https://aima.productions/insights.html" onclick="toggleMobile()">Insights</a>
+  <a href="https://aima.productions/gallery.html" onclick="toggleMobile()">Gallery</a>
+  <a href="https://aima.productions/index.html#contact" class="m-cta" onclick="toggleMobile()">Get a Quote</a>
+</div>
+
+<main id="page-content">
+
+  <!-- ╔══════════════════════════════════════════════╗
+       ║  PAGE START — Paperboy launch page           ║
+       ║  (drop-in body per the AIMA page template;    ║
+       ║  nav + footer above/below stay fixed)         ║
+       ╚══════════════════════════════════════════════╝ -->
+
+  <section id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-2col">
+
+          <img class="hero-cover-frame fi-l vis" src="../img/paperboy-cover.jpg" alt="Paperboy — novel cover, a boy on a BMX bike carrying a newspaper bag through a fog-lit San Francisco street">
+
+          <div>
+            <div class="hero-eyebrow fi vis">
+              <div class="ln"></div>
+              <span>A Novel · Joselito Sering · Literary Debut</span>
+            </div>
+
+            <h1 class="hero-title fi vis">PAPER<span class="c1">BOY</span></h1>
+
+            <p class="hero-hook fi vis">Mama called it an upgrade.</p>
+
+            <p class="hero-sub fi vis">March 1981. Nine-year-old Jojo trades the maids, the driver, and a father the newspapers call a statesman for a San Francisco walk-up — and <strong>a canvas bag of newspapers heavier than he is</strong>.</p>
+
+            <div class="hero-btns fi vis">
+              <a href="https://www.amazon.com/dp/B0HCTK4KWJ" data-book-cta="kindle-url" target="_blank" rel="noopener" class="btn-fill">Pre-order on Kindle →</a>
+              <a href="#buy" class="btn-outline">See All Formats</a>
+            </div>
+
+            <div class="hero-stats fi vis">
+              <div class="stat-item"><div class="num">40<sup>yrs</sup></div><div class="lbl">In the Making</div></div>
+              <div class="stat-item"><div class="num">1986</div><div class="lbl">Story Began</div></div>
+              <div class="stat-item"><div class="num">SF</div><div class="lbl">Sunset District &amp; Tenderloin</div></div>
+              <div class="stat-item"><div class="num">1<sup>st</sup></div><div class="lbl">Literary Debut</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="contents-bar">
+    <div class="container contents-inner">
+      <span class="contents-label">Contents</span>
+      <a href="#story">01 — The Story</a>
+      <a href="#reviews">02 — Praise</a>
+      <a href="#author">03 — The Author</a>
+      <a href="#buy">04 — Get the Book</a>
+    </div>
+  </div>
+
+  <!-- 01 — THE STORY -->
+  <section id="story" class="numbered">
+    <div class="container">
+      <div class="sec-header fi vis">
+        <div class="kicker">01 — The Story</div>
+        <h2 class="section-title">A Boy Between <span class="c">Two</span> Countries</h2>
+        <div class="divider"></div>
+      </div>
+      <p class="story-lead fi vis"><em>Paperboy</em> is a genre-breaking literary debut — a novel with a memoir's pulse: the immigrant story, retold at kid height, on a paper route, in the fog.</p>
+      <div class="story-copy fi vis">
+        <p class="first">Mama called it an upgrade.</p>
+        <p>March 1981. Nine-year-old Jojo boards a plane in Manila — leaving behind the maids, the driver, and a father the newspapers call a statesman — and lands in San Francisco, where the fog never lifts and the upgrade turns out to be a walk-up flat, a quiet stranger called Uncle Rey, and a canvas bag of newspapers heavier than he is.</p>
+        <p>Over three years, Jojo learns America the hard way: block by block, curb by curb, quarter by quarter. Little League and liquor-store arcades. Heavy metal and Catholic guilt. Neighbors with new names for him, none of them his. A lawsuit that empties the family coffee can. And a best friend on a Mongoose who teaches him the one thing the letters home never mention — how to stay upright when the hill drops out from under you.</p>
+        <p>Begun as a high-school English assignment in 1986 and forged over forty years, <em>Paperboy</em> is funny and brutal in the same breath: a story about class, race, and belonging; about the friendships that shape us and the ones that break something we didn't know could break; about a boy caught between two countries, neither of which entirely wants to claim him.</p>
+        <p>This is a novel about growing up between the country you lost and the one you're still trying to earn — and about finding, in the most unlikely places, someone glad you came.</p>
+      </div>
+
+      <details class="excerpt fi vis">
+        <summary>Read the Opening — Chapter One <span class="plus">+</span></summary>
+        <div class="excerpt-body">
+          <h3>Fresh Off the Sushi Boat</h3>
+          <p>Mama called it an upgrade. She said the word the way she said grace — fast, certain, and only once.</p>
+          <p>She'd written it in the letters, the ones that came in thin blue airmail envelopes with American stamps and her convent handwriting, every loop identical, like she'd practiced being legible her whole life because someone had once told her illegible girls didn't get hired. Upgrade. Jojo turned the word over the way he turned over the coins Kuya Bert let him keep from the ashtray in the car. It sounded like a toy you got for behaving. It sounded like something with a bag and a receipt.</p>
+          <p>He was nine. His birthday was September 30, 1971, which on March 3, 1981, made him nine exactly — no fractions, no almost. Still short enough that the airplane seatbelt cut across his stomach instead of his hips. Still the kind of nine-year-old who believed the things his mother put in writing, because his mother did not write things that weren't true, she only left things out, which — he would spend the rest of his life discovering — is a different skill entirely, and a more useful one.</p>
+          <p class="fade">What he was leaving: a house with three maids; a cook, a cleaner, and a nanny. A driver named Kuya Bert — "kuya" is a title reserved for all the men who did not yet earn the respects of a Tito — who let him sit up front and hold the wheel at forty kilometers an hour, both of them laughing like it was a heist…</p>
+          <div class="excerpt-actions">
+            <a href="../docs/paperboy-chapter-one.pdf" download class="excerpt-more">Download Chapter One (PDF) →</a>
+            <a href="#buy" class="excerpt-more excerpt-more-secondary">Or buy the full book →</a>
+          </div>
+        </div>
+      </details>
+
+      <div class="content-note fi vis">
+        <p><strong>A note on content:</strong> Paperboy includes depictions of child abuse, racial violence, and explicit language, as disclosed on the book's copyright page.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 — PRAISE -->
+  <section id="reviews" class="numbered" style="background:var(--surface);">
+    <div class="container">
+      <div class="sec-header fi vis">
+        <div class="kicker">02 — Early Praise</div>
+        <h2 class="section-title">What Early <span class="c">Readers</span> Are Saying</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="review-grid">
+        <div class="rate-card fi vis" style="--accent-line:var(--cyan);">
+          <p class="rc-quote">"With Joselito Sering's <em>Paperboy</em> we navigate the immigrant experience, the coming of age experience, and the humanity readers draw from — all in this Paperboy paper call. Loud and clear."</p>
+          <div class="rc-name">Oscar Penaranda</div>
+          <div class="rc-sub">Author &amp; Filipino-American Literary Elder</div>
+        </div>
+        <div class="rate-card fi vis" style="--accent-line:var(--purple);">
+          <p class="rc-quote">"As a born-and-raised Gen X San Francisco native, reading this autobiographical fiction brings back so many memories… For a Gen X Fil-Am like myself, this is my <em>America Is in the Heart</em>, for my former tween self."</p>
+          <div class="rc-name">Elrik Jundis</div>
+          <div class="rc-sub">Filipino Martial Arts Researcher &amp; Stunt Professional</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — AUTHOR -->
+  <section id="author" class="numbered">
+    <div class="container">
+      <div class="sec-header fi vis">
+        <div class="kicker">03 — The Author</div>
+        <h2 class="section-title">Joselito <span class="c">"Jojo"</span> Sering</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="author-2col fi vis">
+        <div class="author-badge" id="authorBadge">JS</div>
+        <div>
+          <p>Joselito "Jojo" Sering was born in Manila and landed in San Francisco in 1981, nine years old. <em>Paperboy</em> began as a memoir written for an English class at El Camino High School in 1986 and took forty years to finish. In between, he fronted a metal band, released electronic records, taught filmmaking, and wrote, directed, and scored the award-winning animated feature <em>Love Letter Templates</em> (2021). In 2023, after reconnecting with his mother's side of the family and visiting her home village for the first time, he pursued and regained his Philippine dual citizenship under the birthright provisions of Republic Act 9225. He is an audiovisual engineer with IATSE Local 16 and recently launched AIMA, an AI media agency — the venture that made this literary debut possible. He lives in San Francisco with his wife of thirty years and their son.</p>
+          <div class="author-links">
+            <a id="bmac-coffee-btn" href="https://www.buymeacoffee.com/aimaproductions" target="_blank" rel="noopener" onclick="trackCoffeeClick()"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=aimaproductions&button_colour=00d9f5&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="Buy me a coffee" loading="lazy" style="height:40px;" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — GET THE BOOK -->
+  <section id="buy" class="numbered" style="background:var(--surface);">
+    <div class="container">
+      <div class="sec-header fi vis">
+        <div class="kicker">04 — Get the Book</div>
+        <h2 class="section-title">Choose Your <span class="c">Format</span></h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="tiers-grid">
+
+        <div class="tier-card featured fi vis">
+          <span class="tier-badge tb2" data-book-cta="launch-date-badge">Pre-order · Sept 30, 2026</span>
+          <div class="tier-icon">📖</div>
+          <div class="tier-name">Kindle</div>
+          <div class="tier-price">$4.99</div>
+          <p class="tier-tag">Pre-order now — delivers automatically to your Kindle or the free Kindle app on release day.</p>
+          <ul class="tier-feats">
+            <li>Delivers on release day</li>
+            <li>Read on any device</li>
+            <li data-book-cta="asin">ASIN B0HCTK4KWJ</li>
+          </ul>
+          <a href="https://www.amazon.com/dp/B0HCTK4KWJ" data-book-cta="kindle-url" target="_blank" rel="noopener" class="tier-btn tb-cyan">Pre-order on Amazon →</a>
+        </div>
+
+        <div class="tier-card fi vis">
+          <span class="tier-badge tb2" data-book-cta="launch-date-badge">Sept 30, 2026</span>
+          <div class="tier-icon">📕</div>
+          <div class="tier-name">Paperback</div>
+          <div class="tier-price">$12.99</div>
+          <p class="tier-tag">Currently in print review. Ships via Amazon once live.</p>
+          <ul class="tier-feats">
+            <li>Print-on-demand</li>
+            <li>Ships worldwide</li>
+            <li>Same story, print edition</li>
+          </ul>
+          <a href="#" data-book-cta="paperback-notify" class="tier-btn tb-notify">Notify Me →</a>
+        </div>
+
+        <div class="tier-card fi vis">
+          <span class="tier-badge tb4">In Production</span>
+          <div class="tier-icon">🎧</div>
+          <div class="tier-name">Audiobook</div>
+          <div class="tier-price">$14.99</div>
+          <p class="tier-tag">Narration is in production. Chapter 1 sample coming soon.</p>
+          <ul class="tier-feats">
+            <li>Full-length narration</li>
+            <li>Chapter 1 preview coming soon</li>
+            <li>Purchase link coming soon</li>
+          </ul>
+          <a href="#" data-book-cta="audiobook-notify" class="tier-btn tb-notify">Notify Me →</a>
+        </div>
+
+      </div>
+      <p class="buy-note">More retailers (Bookshop.org, Barnes &amp; Noble, Audible) will be added here as they go live.</p>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════════╗
+       ║  PAGE END                                    ║
+       ╚══════════════════════════════════════════════╝ -->
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="fb-logo-wrap">
+          <div class="pulse-ft"></div>
+          <span class="fb-wordmark"><span class="ai">AI</span><span class="ma">MA</span></span>
+        </div>
+        <div class="fb-sub">AI Media Agency</div>
+        <p class="fb-tagline">A Creative Engineering Company. Cinema-grade production at the speed of thought. A Monkey Matters LLC Production · San Francisco, CA · Remote Worldwide.</p>
+        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top <span class="arr">↑</span></button>
+      </div>
+      <div>
+        <div class="fl-head">Services</div>
+        <ul class="fl-list">
+          <li><a href="https://aima.productions/index.html#services">Music Video</a></li>
+          <li><a href="https://aima.productions/index.html#services">Corporate Explainer</a></li>
+          <li><a href="https://aima.productions/index.html#services">TV Commercial</a></li>
+          <li><a href="https://aima.productions/index.html#rates">Social Media Packages</a></li>
+          <li><a href="https://aima.productions/index.html#rates">Monthly Retainers</a></li>
+          <li><a href="https://aima.productions/index.html#rates">AI Automation Pipeline</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fl-head">Company</div>
+        <ul class="fl-list">
+          <li><a href="https://aima.productions/index.html#about">About Us</a></li>
+          <li><a href="https://aima.productions/index.html#process">Our Process</a></li>
+          <li><a href="https://aima.productions/index.html#work">Portfolio</a></li>
+          <li><a href="https://aima.productions/gallery.html">Gallery</a></li>
+          <li><a href="https://aima.productions/insights.html">Insights</a></li>
+          <li><a href="https://aima.productions/careers.html">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fl-head">Legal</div>
+        <ul class="fl-list">
+          <li><a href="https://aima.productions/index.html#tos">Terms of Service</a></li>
+          <li><a href="https://aima.productions/index.html#privacy">Privacy Policy</a></li>
+          <li><a href="https://aima.productions/index.html#refund">Refund Policy</a></li>
+          <li><a href="https://aima.productions/index.html#licensing">Licensing FAQ</a></li>
+          <li><a href="https://aima.productions/index.html#cookies">Cookie Settings</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AIMA · AI Media Agency · A Monkey Matters LLC Production · Wyoming LLC</p>
+      <span>v12.0 · aima.media</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobile(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('navBurger').classList.toggle('open');
+}
+document.querySelectorAll('.fi').forEach(el => el.classList.add('vis'));
+
+// ── AUTHOR PHOTO — same load/fallback pattern used on aima.productions articles ──
+(function(){
+  var el = document.getElementById('authorBadge');
+  if(!el) return;
+  var img = new Image();
+  img.onload = function(){
+    el.textContent = '';
+    el.style.background = 'none';
+    var i = document.createElement('img');
+    i.src = this.src;
+    i.loading = 'lazy';
+    i.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;';
+    el.appendChild(i);
+  };
+  img.src = 'https://aima.productions/img/author-joselito.png';
+})();
+
+// ── BuyMeACoffee click tracking — ported from the AIMA article template ──
+function trackCoffeeClick(){
+  if(typeof gtag==='function'){ gtag('event','coffee_click',{article_id:'paperboy-landing',author:'Joselito Sering'}); }
+}
+
+// ══════════════════════════════════════════════════
+// CENTRALIZED CTA STATE — single source of truth for every
+// buy/format link on the page (and, once this block is ported
+// into aima.productions, the only place that needs editing to
+// update it everywhere it's embedded).
+// ══════════════════════════════════════════════════
+var BOOK_CTA = {
+  kindleUrl: 'https://www.amazon.com/dp/B0HCTK4KWJ',
+  asin: 'B0HCTK4KWJ',
+  paperbackDateShort: 'Sept 30, 2026',
+  paperbackDateLong: 'September 30, 2026',
+  notifyEmail: 'joselitovsering@gmail.com'
+};
+(function(){
+  document.querySelectorAll('[data-book-cta]').forEach(function(el){
+    var key = el.getAttribute('data-book-cta');
+    if(key === 'kindle-url'){ el.href = BOOK_CTA.kindleUrl; }
+    if(key === 'asin'){ el.textContent = 'ASIN ' + BOOK_CTA.asin; }
+    if(key === 'launch-date-badge'){ el.textContent = el.textContent.indexOf('Pre-order') === 0 ? ('Pre-order · ' + BOOK_CTA.paperbackDateShort) : BOOK_CTA.paperbackDateShort; }
+    if(key === 'paperback-notify'){
+      el.href = 'mailto:' + BOOK_CTA.notifyEmail
+        + '?subject=' + encodeURIComponent('Notify me — Paperboy Paperback (' + BOOK_CTA.paperbackDateLong + ')')
+        + '&body=' + encodeURIComponent('Please notify me when the Paperboy paperback is available.');
+    }
+    if(key === 'audiobook-notify'){
+      el.href = 'mailto:' + BOOK_CTA.notifyEmail
+        + '?subject=' + encodeURIComponent('Notify me — Paperboy Audiobook')
+        + '&body=' + encodeURIComponent('Please notify me when the Paperboy audiobook is available.');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
