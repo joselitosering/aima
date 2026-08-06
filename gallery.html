@@ -1118,6 +1118,10 @@ async function loadProjects() {
 
     ALL_PROJECTS = data.projects;
 
+    // Default the initial render to Newest First, matching the sortSelect default,
+    // regardless of whatever row order the Sheets API returns.
+    ALL_PROJECTS.sort((a, b) => new Date(b.date) - new Date(a.date));
+
     loading.style.display = 'none';
     grid.style.display    = 'grid';
     apiStatus.textContent = 'Live';
