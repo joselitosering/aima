@@ -432,7 +432,7 @@ footer {
             <p class="hero-sub fi vis">March 1981. Nine-year-old Jojo trades the maids, the driver, and a father the newspapers call a statesman for a San Francisco walk-up — and <strong>a canvas bag of newspapers heavier than he is</strong>.</p>
 
             <div class="hero-btns fi vis">
-              <a href="https://www.amazon.com/dp/B0HCTK4KWJ" data-book-cta="kindle-url" target="_blank" rel="noopener" class="btn-fill">Buy on Kindle →</a>
+              <a href="https://www.amazon.com/dp/B0HCTK4KWJ" data-book-cta="kindle-url" target="_blank" rel="noopener" class="btn-fill">Pre-order on Kindle →</a>
               <a href="#buy" class="btn-outline">See All Formats</a>
             </div>
 
@@ -552,20 +552,20 @@ footer {
       <div class="tiers-grid">
 
         <div class="tier-card featured fi vis">
-          <span class="tier-badge tb1">Available Now</span>
+          <span class="tier-badge tb2" data-book-cta="launch-date-badge">Pre-order · Sept 30, 2026</span>
           <div class="tier-icon">📖</div>
           <div class="tier-name">Kindle</div>
-          <p class="tier-tag">Instant delivery to any Kindle device or the free Kindle app.</p>
+          <p class="tier-tag">Pre-order now — delivers automatically to your Kindle or the free Kindle app on release day.</p>
           <ul class="tier-feats">
-            <li>Delivered instantly</li>
+            <li>Delivers on release day</li>
             <li>Read on any device</li>
             <li data-book-cta="asin">ASIN B0HCTK4KWJ</li>
           </ul>
-          <a href="https://www.amazon.com/dp/B0HCTK4KWJ" data-book-cta="kindle-url" target="_blank" rel="noopener" class="tier-btn tb-cyan">Buy on Amazon →</a>
+          <a href="https://www.amazon.com/dp/B0HCTK4KWJ" data-book-cta="kindle-url" target="_blank" rel="noopener" class="tier-btn tb-cyan">Pre-order on Amazon →</a>
         </div>
 
         <div class="tier-card fi vis">
-          <span class="tier-badge tb2" data-book-cta="paperback-date-badge">Sept 30, 2026</span>
+          <span class="tier-badge tb2" data-book-cta="launch-date-badge">Sept 30, 2026</span>
           <div class="tier-icon">📕</div>
           <div class="tier-name">Paperback</div>
           <p class="tier-tag">Currently in print review. Ships via Amazon once live.</p>
@@ -700,7 +700,7 @@ var BOOK_CTA = {
     var key = el.getAttribute('data-book-cta');
     if(key === 'kindle-url'){ el.href = BOOK_CTA.kindleUrl; }
     if(key === 'asin'){ el.textContent = 'ASIN ' + BOOK_CTA.asin; }
-    if(key === 'paperback-date-badge'){ el.textContent = BOOK_CTA.paperbackDateShort; }
+    if(key === 'launch-date-badge'){ el.textContent = el.textContent.indexOf('Pre-order') === 0 ? ('Pre-order · ' + BOOK_CTA.paperbackDateShort) : BOOK_CTA.paperbackDateShort; }
     if(key === 'paperback-notify'){
       el.href = 'mailto:' + BOOK_CTA.notifyEmail
         + '?subject=' + encodeURIComponent('Notify me — Paperboy Paperback (' + BOOK_CTA.paperbackDateLong + ')')
