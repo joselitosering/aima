@@ -43,7 +43,7 @@
 | 36 | 2026-07-14 | A Teacher for Every Child: AI and the Education Revolution | AI Society | 11 min |  | Joselito Sering |
 | 37 | 2026-07-14 | The Proteins That Never Were: How AI Is Designing Life's Machinery From Scratch | AI Science | 8 min | Bumped from 2026-07-07 to make room for overdue backlog · Post 4:00 PM PT | Kenji Nakamoto |
 | 38 | 2026-07-15 | What Is AGI, Actually? Separating Science from Hype | AI Science | 11 min | Bumped from 2026-07-08 to make room for overdue backlog · Post 4:00 PM PT | Joselito Sering |
-| 39 | 2026-07-15 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
+| 39 | 2026-07-15 | The Robot That Dreams First: How World Models Are Teaching Machines to Imagine Before They Move | AI Science | 8 min |  | Kenji Nakamoto |
 | 40 | 2026-07-16 | Autonomous Vehicles at the Crossroads: The Promise and the Peril | AI Innovation | 10 min |  | Joselito Sering |
 | 41 | 2026-07-16 | TBD — Trending Topic | Trending | 8 min | Bumped from 2026-07-09 to make room for overdue backlog · Post 4:00 PM PT | Dawn Ginhaua |
 | 42 | 2026-07-17 | Deepfakes and Democracy: The Synthetic Media Threat to Truth | AI Ethics | 12 min | Bumped from 2026-07-10 to make room for overdue backlog · Post 4:00 PM PT | Joselito Sering |

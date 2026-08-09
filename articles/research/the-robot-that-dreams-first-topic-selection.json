@@ -1,0 +1,55 @@
+{
+  "row": 39,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-08-07",
+  "chosen": {
+    "title": "The Robot That Dreams First: How World Models Are Teaching Machines to Imagine Before They Move",
+    "category": "AI Science",
+    "rationale": "World foundation models are the hottest frontier in robotics right now \u2014 Google DeepMind shipped Gemini Robotics 2 (July 30, 2026) and NVIDIA's open Cosmos 3 omni-model lets robots simulate outcomes in a closed loop before acting. It's a pure mechanism story (how a machine 'imagines' physics before it moves) with grounded optimism and honest limits \u2014 exactly Kenji's wheelhouse, and distinct from AIMA's existing humanoid-IPO and factory-floor pieces.",
+    "sources": [
+      {
+        "name": "Google DeepMind \u2014 Gemini Robotics 2",
+        "url": "https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/"
+      },
+      {
+        "name": "NVIDIA \u2014 Cosmos 3 world foundation model",
+        "url": "https://blogs.nvidia.com/blog/cosmos-3-physical-ai-open-world-foundation-model/"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Breaking the Rare-Earth Curse: How AI Found 25 New Magnets That Could Set the Electric Car Free",
+      "category": "AI Science",
+      "rationale": "A University of New Hampshire team used AI to build a 67,573-compound magnetic database and surface 25 new rare-earth-free magnets that hold up at high temperature (Nature Communications) \u2014 landing straight into 2026's rare-earth supply-chain anxiety. Materials science + clean energy + geopolitics, with a hopeful-but-skeptical arc; distinct from #29's autonomous-lab method piece because it's about the outcome and the stakes, not the lab.",
+      "sources": [
+        {
+          "name": "ScienceDaily \u2014 AI could replace rare-earth magnets in EVs",
+          "url": "https://www.sciencedaily.com/releases/2026/02/260218031611.htm"
+        },
+        {
+          "name": "IDTechEx \u2014 Magnetic materials that could replace rare earths in EV motors",
+          "url": "https://www.idtechex.com/en/research-article/magnetic-materials-that-could-replace-rare-earths-in-ev-motors/32237"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Machines Building the Solar Farm: Inside the Robots Learning to Construct Clean Energy",
+      "category": "Climate Tech",
+      "rationale": "Gritt exited stealth with $32M (TechCrunch, July 21, 2026) to build robots that assemble solar plants \u2014 a fresh, sensory, boots-in-the-dirt robotics-meets-climate story that isn't another warehouse-humanoid piece. Perfect for Kenji: a specific frontier (autonomous construction in the field), a real mechanism, and an honest reckoning about labor and buildout speed.",
+      "sources": [
+        {
+          "name": "TechCrunch \u2014 Gritt exits stealth with $32M for robots to build solar plants",
+          "url": "https://techcrunch.com/2026/07/21/gritt-exits-stealth-with-34-million-for-robots-to-build-solar-plants-then-everything-else/"
+        },
+        {
+          "name": "NVIDIA Newsroom \u2014 Physical AI to the real world",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-and-global-robotics-leaders-take-physical-ai-to-the-real-world"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

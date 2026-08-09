@@ -381,6 +381,37 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 .stat-number.gold{color:var(--gold);}
 .stat-number.green{color:var(--green);}
 .stat-label{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;}
+
+/* ===== NEWSLETTER SIGNUP (article footer) — client lives in /docs/aima-newsletter.js ===== */
+.nl-form{margin-top:4px}
+.nl-input{width:100%;height:46px;padding:0 14px;margin-bottom:10px;background:var(--surface2);border:1px solid var(--surface3);border-radius:var(--radius);color:var(--text);font-family:inherit;font-size:14px;transition:border-color .15s,box-shadow .15s}
+.nl-input::placeholder{color:#4A5670}
+.nl-input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px var(--glow-c)}
+.nl-input[aria-invalid="true"]{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,94,32,.18)}
+
+
+
+
+
+
+.nl-consent{display:flex;gap:9px;align-items:flex-start;margin-bottom:16px;cursor:pointer}
+.nl-consent input{appearance:none;-webkit-appearance:none;flex:0 0 16px;width:16px;height:16px;margin:2px 0 0;border:1px solid var(--surface3);border-radius:4px;background:var(--surface2);cursor:pointer}
+.nl-consent input:checked{background:var(--cyan);border-color:var(--cyan);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23060810' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3.2L13 5'/%3E%3C/svg%3E");background-size:11px;background-position:center;background-repeat:no-repeat}
+.nl-consent input:focus-visible{box-shadow:0 0 0 3px var(--glow-c)}
+.nl-consent span{font-size:12px;line-height:18px;color:var(--muted)}
+.nl-btn{width:100%;border:0;cursor:pointer;font-family:inherit;text-align:center}
+.nl-btn[disabled]{opacity:.55;cursor:not-allowed}
+/* off-screen rather than display:none — some bots skip hidden fields */
+.nl-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
+.nl-msg{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:var(--radius);margin-top:14px;font-size:12.5px;line-height:19px}
+.nl-msg[data-tone="ok"]{background:rgba(45,202,115,.08);border:1px solid rgba(45,202,115,.30);color:#8FE3B4}
+.nl-msg[data-tone="err"]{background:rgba(255,94,32,.08);border:1px solid rgba(255,94,32,.30);color:#FFB79A}
+.nl-msg[data-tone="info"]{background:rgba(0,217,245,.07);border:1px solid rgba(0,217,245,.26);color:#8FE6FF}
+.nl-msg b{display:block;color:#fff;font-weight:600;margin-bottom:2px}
+.nl-msg-ico{flex:0 0 16px;font-size:13px;line-height:19px}
+.nl-spin{display:inline-block;width:12px;height:12px;vertical-align:-2px;margin-right:8px;border:2px solid rgba(6,8,16,.28);border-top-color:#060810;border-radius:50%;animation:nlspin .7s linear infinite}
+@keyframes nlspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.nl-spin{animation-duration:2.4s}}
 </style>
 <meta name="article:persona" content="dawn">
 </head>
@@ -641,10 +672,26 @@ Automated Decision-Making Technology (ADMT)
 </div>
 </div>
 <div class="explore-services-card">
-<div class="services-card-header">Explore Our Services</div>
-<h3 class="services-card-title">AI Built for <span class="highlight">Human Creativity</span></h3>
-<p class="services-card-text">Cinema-grade AI-powered production, media automation, and content systems — built for creators who believe the future should work for everyone.</p>
-<a href="../index.html#services" class="services-card-button">View Our Services</a>
+<div class="services-card-header">The AI Creative Dispatch</div>
+<h3 class="services-card-title">One Teardown, <span class="highlight">Every Week</span></h3>
+<p class="services-card-text">One production teardown every Thursday &mdash; the tools, the costs, the mistakes, and what actually shipped.</p>
+
+<form class="nl-form" data-aima-subscribe data-source="article_end" novalidate>
+<label class="nl-hp" for="nlName">First name</label>
+<input class="nl-input" id="nlName" type="text" name="first_name" autocomplete="given-name" placeholder="First name"/>
+<label class="nl-hp" for="nlEmail">Email address</label>
+<input class="nl-input" id="nlEmail" type="email" name="email" required inputmode="email" autocomplete="email" placeholder="you@studio.com"/>
+
+<label class="nl-consent"><input type="checkbox" name="consent" required/><span>Send me the weekly Dispatch. Unsubscribe in one click.</span></label>
+
+<div class="nl-hp" aria-hidden="true">
+<label for="nlHp">Leave this field empty</label>
+<input id="nlHp" type="text" name="website" tabindex="-1" autocomplete="off"/>
+</div>
+
+<button class="services-card-button nl-btn" type="submit">Subscribe Free</button>
+<div class="nl-msg" data-aima-msg hidden></div>
+</form>
 </div>
 </section>
 

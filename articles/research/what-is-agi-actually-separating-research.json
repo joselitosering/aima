@@ -1,0 +1,183 @@
+{
+  "_meta": {
+    "article_number": 38,
+    "slug": "what-is-agi-actually-separating",
+    "title": "What Is AGI, Actually? Separating Science from Hype",
+    "author": "Joselito Sering",
+    "category": "AI Science",
+    "research_date": "2026-08-06",
+    "researcher": "Scout (Research Agent)",
+    "word_target": 1350,
+    "tone": "analytical, thoughtful",
+    "sources_used": [
+      "IEEE Spectrum (via Exa semantic search)",
+      "New Scientist reporting on AAAI 2025 report (via Exa)",
+      "JAIR / AI Impacts 2023 expert survey (via Exa)",
+      "Local cache: governance-gap-ai-regulation-research.json (context only)"
+    ],
+    "budget_note": "Completed within 60k working-token budget. 1 cached file read, 2 Exa semantic searches, 0 web fetches. Stopped at 6 stats + 5 quotes per instruction.",
+    "confidence": "high on sourced figures; see verification_flags for items needing a live check before citation"
+  },
+
+  "thesis": "AGI has no agreed definition, and that vacuum is exactly what lets the term function as marketing. When you replace the vibe with measurement — benchmarks like ARC-AGI, expert surveys, and the actual economic thresholds labs use internally — the picture that emerges is far more sober than the 'AGI within a few years' headlines suggest. The science is about narrow, testable capabilities that machines still fail at; the hype is about a single mythic threshold that no one can define.",
+
+  "central_provocation": "The clearest definition of AGI in use anywhere isn't scientific at all: Microsoft and OpenAI reportedly agreed, in a commercial contract, that AGI is achieved when OpenAI has built a system that generates $100 billion in profit. When the operational definition of 'human-level intelligence' is a revenue number, the debate stopped being about science a while ago.",
+
+  "statistics": [
+    {
+      "stat": "76% of AI researchers say scaling up current approaches is 'unlikely' or 'very unlikely' to achieve AGI",
+      "detail": "From a survey of 475 AI researchers in a report by the Association for the Advancement of Artificial Intelligence (AAAI). Marks a sharp break from the 'scaling is all you need' consensus that dominated after 2022.",
+      "source": "AAAI report, reported by New Scientist",
+      "year": "2025",
+      "url": "https://www.newscientist.com/article/2471759-ai-scientists-are-sceptical-that-modern-models-will-lead-to-agi/"
+    },
+    {
+      "stat": "80% of surveyed researchers say current public perceptions of AI capabilities do NOT match reality",
+      "detail": "Same AAAI survey. Direct evidence of a hype-vs-reality gap coming from within the research community itself.",
+      "source": "AAAI report, reported by New Scientist",
+      "year": "2025",
+      "url": "https://www.newscientist.com/article/2471759-ai-scientists-are-sceptical-that-modern-models-will-lead-to-agi/"
+    },
+    {
+      "stat": "On ARC-AGI-2, the best AI scores ~16% while the average human scores 60%",
+      "detail": "ARC-AGI-2 (launched March 2025, overseen by François Chollet's ARC Prize Foundation) is designed to test fluid intelligence — abstracting a new rule from a few examples. It currently shows the largest performance gap between frontier AI and ordinary people of any major benchmark, making it a potent reality check on AGI claims.",
+      "source": "IEEE Spectrum",
+      "year": "2025",
+      "url": "https://spectrum.ieee.org/agi-benchmark"
+    },
+    {
+      "stat": "OpenAI's o3 reached 88% on the original ARC-AGI at an estimated ~$20,000 of compute per puzzle",
+      "detail": "Illustrates that even benchmark-beating performance came at a cost no human would need — undercutting simple 'it matched humans' narratives. That model was never publicly released.",
+      "source": "IEEE Spectrum",
+      "year": "2025",
+      "url": "https://spectrum.ieee.org/agi-benchmark"
+    },
+    {
+      "stat": "Expert median forecast: 50% chance machines outperform humans at EVERY task by 2047 — but only 50% chance ALL occupations are fully automatable by 2116",
+      "detail": "From a survey of 2,778 researchers who published at top AI venues (Oct 2023). The 2047 date for 'all tasks' was pulled 13 years earlier than the same survey found in 2022, but the ~90-year gap before 'all jobs automatable' shows how much uncertainty and disagreement remain. 10% chance of full task-outperformance was put at 2027.",
+      "source": "Grace et al., 'Thousands of AI Authors on the Future of AI' (JAIR / AI Impacts)",
+      "year": "2023 survey (published 2024)",
+      "url": "https://jair.org/index.php/jair/article/view/19087"
+    },
+    {
+      "stat": "Microsoft and OpenAI's reported internal definition of AGI: a model that can generate $100 billion in profit",
+      "detail": "An internal/contractual threshold, not a cognitive-science one — the sharpest single example of AGI being defined by economics rather than by any test of intelligence.",
+      "source": "Reported by New Scientist",
+      "year": "2025",
+      "url": "https://www.newscientist.com/article/2471759-ai-scientists-are-sceptical-that-modern-models-will-lead-to-agi/",
+      "verification_flag": "Secondary reporting of a private agreement. Frame as 'reportedly' / 'according to reporting on an internal document' — do not state as a confirmed public definition."
+    }
+  ],
+
+  "expert_quotes": [
+    {
+      "name": "Geoffrey Hinton",
+      "affiliation": "Professor Emeritus, University of Toronto; Nobel Prize laureate for foundational AI work",
+      "quote": "We're building alien beings.",
+      "context": "On why comparing AI to humans is fraught — AI systems have strengths and weaknesses fundamentally different from ours, so 'matches humans at most tasks' is harder to pin down than it sounds.",
+      "source": "IEEE Spectrum",
+      "year": "2025",
+      "url": "https://spectrum.ieee.org/agi-benchmark"
+    },
+    {
+      "name": "Melanie Mitchell",
+      "affiliation": "Professor / computer scientist, Santa Fe Institute",
+      "quote": "I don't think it captures what people mean when they say general intelligence.",
+      "context": "On the ARC-AGI benchmark — she credits it for capturing real abilities like abstracting a rule from few examples, but argues its narrow task format is not the same as general intelligence. Good voice for the 'benchmarks are proxies, not proof' point.",
+      "source": "IEEE Spectrum",
+      "year": "2025",
+      "url": "https://spectrum.ieee.org/agi-benchmark"
+    },
+    {
+      "name": "Thomas Dietterich",
+      "affiliation": "Distinguished Professor Emeritus, Oregon State University (AAAI report contributor)",
+      "quote": "Systems proclaimed to be matching human performance — such as on coding problems or mathematics problems — still make bone-headed mistakes. These systems can be very useful as tools for assisting in research and coding, but they are not going to replace any human workers.",
+      "context": "On why 80% of surveyed researchers say perceptions don't match reality.",
+      "source": "New Scientist",
+      "year": "2025",
+      "url": "https://www.newscientist.com/article/2471759-ai-scientists-are-sceptical-that-modern-models-will-lead-to-agi/"
+    },
+    {
+      "name": "Arvind Narayanan",
+      "affiliation": "Professor of Computer Science, Princeton University (co-author, 'AI Snake Oil')",
+      "quote": "[Inference-time scaling is] unlikely to be a silver bullet [for reaching AGI].",
+      "context": "On the industry's pivot from pretraining scale to 'reasoning'/test-time compute as the new road to AGI.",
+      "source": "New Scientist",
+      "year": "2025",
+      "url": "https://www.newscientist.com/article/2471759-ai-scientists-are-sceptical-that-modern-models-will-lead-to-agi/"
+    },
+    {
+      "name": "François Chollet",
+      "affiliation": "Creator of the ARC-AGI benchmark; founder of Ndea (formerly Google engineer)",
+      "quote": "To solve any problem, you need some knowledge, and then you're going to recombine that knowledge on the fly.",
+      "context": "His definition of intelligence — the ability to acquire and recombine new skills efficiently, not raw stored knowledge. LLMs, in his framing, excel at recall but 'lack intelligence' when faced with the genuinely novel. Central to the science-vs-hype spine of the article.",
+      "source": "IEEE Spectrum (referencing Chollet's 2019 'On the Measure of Intelligence')",
+      "year": "2025 (paper 2019)",
+      "url": "https://spectrum.ieee.org/agi-benchmark"
+    }
+  ],
+
+  "definitional_landscape": {
+    "note": "The core reporting hook: there is no single AGI definition. Competing operational definitions in active use:",
+    "definitions": [
+      "Benchmark-based: performance on cognitive tests (Google DeepMind: a system that can outperform all humans on a set of cognitive tests).",
+      "Skill-acquisition (Chollet): the efficiency with which a system acquires NEW skills outside its training, not breadth of stored ability.",
+      "Embodiment-based (Huawei's suggested framing): requires a body that lets the AI interact with its environment.",
+      "Economic (Microsoft/OpenAI, reportedly): achieved when a model can generate $100 billion in profit.",
+      "'Vibes'-based: as IEEE Spectrum bluntly notes, some define AGI 'by vibes' — no operational test at all."
+    ],
+    "why_it_matters": "Because the definition is unsettled, any claim that 'AGI is X years away' is unfalsifiable — you can move the goalposts in either direction. This is the strongest structural argument that AGI-timeline hype is rhetoric, not measurement."
+  },
+
+  "counterargument": {
+    "strongest_counter": "The leaders of the major AI labs — OpenAI, Anthropic, and Google DeepMind — have each recently said they expect AGI within a few years. These are the people closest to the frontier models and their internal, unreleased capabilities, so their optimism can't be dismissed as ignorance.",
+    "rebuttal_hooks": [
+      "Those same leaders have direct financial incentives — fundraising, valuations, recruiting — tied to AGI narratives, so proximity to the frontier is also proximity to the hype's beneficiaries.",
+      "The independent research community disagrees at scale: 76% of surveyed researchers doubt current methods scale to AGI, and 80% say public perception overshoots reality.",
+      "Capability has repeatedly plateaued between recent model releases (per the AAAI report), and the pivot to inference-time 'reasoning' is itself an admission that pure scaling stalled."
+    ],
+    "source": "IEEE Spectrum (lab-leader timelines); New Scientist/AAAI (researcher skepticism)",
+    "url": "https://spectrum.ieee.org/agi-benchmark"
+  },
+
+  "historical_hype_context": {
+    "note": "Useful for the 'we've been here before' beat — AGI predictions have a 55-year track record of being wrong.",
+    "example": "In 1970, AI pioneer Marvin Minsky told Life magazine that 'in three to eight years we will have a machine with the general intelligence of an average human being. I mean a machine that will be able to read Shakespeare, grease a car, play office politics, tell a joke, have a fight.'",
+    "lesson": "Confident near-term AGI forecasts from credible insiders are not new — and have a poor track record. The specific, embodied, socially-embedded tasks Minsky listed (office politics, physical work) remain unsolved.",
+    "source": "Marvin Minsky, Life magazine, 1970 (cited in IEEE Spectrum 2025)",
+    "url": "https://spectrum.ieee.org/agi-benchmark"
+  },
+
+  "recent_news_items": [
+    {
+      "item": "AAAI report finds AI scientists broadly skeptical that today's models lead to AGI; 76% doubt scaling suffices, 80% say perceptions exceed reality.",
+      "date": "March 2025",
+      "source": "New Scientist",
+      "url": "https://www.newscientist.com/article/2471759-ai-scientists-are-sceptical-that-modern-models-will-lead-to-agi/",
+      "recency_flag": "~17 months before the 2026-08 research date — not strictly 'last 6 months.' See verification_flags."
+    },
+    {
+      "item": "ARC-AGI-2 launched with a $1M+ prize; best AI ~16% vs 60% human average; Chollet already developing ARC-AGI-3 (interactive, video-game-style tasks).",
+      "date": "March–September 2025",
+      "source": "IEEE Spectrum",
+      "url": "https://spectrum.ieee.org/agi-benchmark",
+      "recency_flag": "~11 months before research date."
+    }
+  ],
+
+  "verification_flags": [
+    "RECENCY: Both primary sources are 2025 (March and Sept), 11–17 months before the 2026-08 research date. Budget capped searches at 2, so no 2026 update was pulled. Before publish, Scout/Quill should confirm no newer ARC-AGI-3 results or 2026 AAAI follow-up have superseded these figures — verify the ARC-AGI-2 'best AI ~16%' number is still current (the article itself said AI 'might match human performance in a year or two').",
+    "$100B DEFINITION: This is secondary reporting of a private Microsoft/OpenAI agreement. Cite as 'reportedly' and attribute to the reporting, not to either company directly.",
+    "o3 ARC-AGI: The '88% at ~$20,000/puzzle' figure is described by IEEE Spectrum as an OpenAI-reported/estimated result for a model that was never released — frame as reported, not independently verified.",
+    "SURVEY N: The AAAI figure (475 researchers) and the AI Impacts figure (2,778 researchers) are two DIFFERENT surveys — do not conflate them or their percentages."
+  ],
+
+  "suggested_structure": {
+    "hook": "Open on the $100 billion definition — the moment the reader realizes 'AGI' is defined commercially, not scientifically, the whole hype apparatus reframes.",
+    "section_1": "There is no agreed definition — walk the competing definitions (benchmark / skill-acquisition / embodiment / economic / vibes). This IS the story.",
+    "section_2": "What the science actually measures — ARC-AGI, fluid vs crystallized intelligence, the 16%-vs-60% gap, o3's $20k-per-puzzle asterisk. Chollet and Mitchell voices.",
+    "section_3": "What the insiders vs the field believe — lab leaders' 'few years' claims (counterargument) against the 76%/80% researcher skepticism and Dietterich/Narayanan quotes.",
+    "section_4": "Why the hype persists — incentives, the unfalsifiable-definition problem, Minsky 1970 as the cautionary echo.",
+    "closing": "Return to definition: the honest answer to 'What is AGI?' in 2026 is that no one can say — and an undefined finish line is one you can always claim to be approaching."
+  }
+}

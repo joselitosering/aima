@@ -374,5 +374,23 @@
     "posted_at": "2026-08-05T19:06:41",
     "analytics_collected": false,
     "reshare_id": "urn:li:share:7490845754886991872"
+  },
+  {
+    "post_id": "urn:li:share:7491207790749802497",
+    "article": "aima-article-what-is-agi-actually-separating-038.html",
+    "title": "What Is AGI, Actually? Separating Science from Hype",
+    "persona": "joselito",
+    "posted_at": "2026-08-06T19:05:21",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7491207802191978496"
+  },
+  {
+    "post_id": "urn:li:share:7491570435432841216",
+    "article": "aima-article-the-robot-that-dreams-first-039.html",
+    "title": "The Robot That Dreams First: How World Models Are Teaching Machines to Imagine Before They Move",
+    "persona": "kenji",
+    "posted_at": "2026-08-07T19:06:22",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7491570447692734464"
   }
 ]

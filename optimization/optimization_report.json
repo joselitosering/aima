@@ -2969,5 +2969,186 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-06",
+    "total_tokens_used": 500149,
+    "by_agent": {
+      "SC": 349186,
+      "WR": 150963,
+      "QL": 0,
+      "MY": 0
+    },
+    "hallucination_flags": [
+      {
+        "stat": "Microsoft/OpenAI define AGI as a model that generates $100 billion in profit",
+        "severity": "MEDIUM",
+        "reason": "Secondary reporting of a private contractual agreement (New Scientist, 2025). Research verification_flag requires it be attributed as 'reportedly'/'according to reporting on an internal document' and NOT stated as a confirmed public definition. Verify the published article frames it this way.",
+        "source_present": true
+      },
+      {
+        "stat": "OpenAI o3 reached 88% on original ARC-AGI at ~$20,000 compute per puzzle",
+        "severity": "MEDIUM",
+        "reason": "IEEE Spectrum-reported/estimated figure for a model that was never publicly released; not independently verified. Must be framed as reported, not confirmed.",
+        "source_present": true
+      },
+      {
+        "stat": "ARC-AGI-2 best AI ~16% vs 60% human; AAAI 76%/80% skepticism figures",
+        "severity": "LOW",
+        "reason": "RECENCY: both primary sources are 2025 (Mar/Sept), 11-17 months before the 2026-08 publish date. Scout capped searches at 2 and pulled no 2026 update. Confirm no newer ARC-AGI-3 result or 2026 AAAI follow-up has superseded these numbers before citation.",
+        "source_present": true
+      },
+      {
+        "note": "SCOPE LIMITATION: Only the article <head>/meta (first 8000 chars) was provided \u2014 the body stat-grid and prose were not visible to this review, so stat presence/attribution in the published copy could not be directly confirmed. Flags above are derived from the research JSON's own verification_flags and should be spot-checked against the live body. Also note conflicting publish-date metadata: article:publish-date=2026-07-15 while run date is 2026-08-06."
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "agent": "SC",
+        "used": 349186,
+        "budget": 500000,
+        "pct": 69.8,
+        "level": "OK",
+        "note": "Highest consumer this run but below the 80% threshold. Scout remains the dominant cost center (~$1.32); watch on future runs."
+      },
+      {
+        "agent": "WR",
+        "used": 150963,
+        "budget": 300000,
+        "pct": 50.3,
+        "level": "OK",
+        "note": "writer_ran flag present; Writer authored fresh (no pre-staged draft). QL budget=0/used=0 is expected under the Writer-merged-into-Quill design \u2014 QL cold call was not spent this run."
+      }
+    ],
+    "guardrails_applied": [
+      "No agent exceeded the 80% per-agent budget threshold \u2014 no reallocation or SAVE_AS_DRAFT recommended.",
+      "All 5 expert quotes (Hinton, Mitchell, Dietterich, Narayanan, Chollet) are attributed to named, verifiable individuals with affiliation and source \u2014 no anonymous quotes flagged.",
+      "No scope violations detected: quill revisions=0, maya revisions=0; no evidence of Quill touching images or Maya editing copy. Porter published + Nova posted within their lanes.",
+      "Read-only governance: no files written, read, or mutated \u2014 report returned to Marco for persistence."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-06",
+    "article_number": 38,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-what-is-agi-actually-separating-038.html",
+    "gs_row": 39,
+    "company_urn": "urn:li:share:7491207790749802497",
+    "reshare_urn": "urn:li:share:7491207802191978496",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-07",
+    "row": 39,
+    "author": "Kenji Nakamoto",
+    "title": "The Robot That Dreams First: How World Models Are Teaching Machines to Imagine Before They Move",
+    "category": "AI Science",
+    "rationale": "World foundation models are the hottest frontier in robotics right now \u2014 Google DeepMind shipped Gemini Robotics 2 (July 30, 2026) and NVIDIA's open Cosmos 3 omni-model lets robots simulate outcomes in a closed loop before acting. It's a pure mechanism story (how a machine 'imagines' physics before it moves) with grounded optimism and honest limits \u2014 exactly Kenji's wheelhouse, and distinct from AIMA's existing humanoid-IPO and factory-floor pieces.",
+    "sources": [
+      {
+        "name": "Google DeepMind \u2014 Gemini Robotics 2",
+        "url": "https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/"
+      },
+      {
+        "name": "NVIDIA \u2014 Cosmos 3 world foundation model",
+        "url": "https://blogs.nvidia.com/blog/cosmos-3-physical-ai-open-world-foundation-model/"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-07",
+    "total_tokens_used": 724524,
+    "by_agent": {
+      "SC": 258872,
+      "TS": 313035,
+      "WR": 152617,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PT": 0,
+      "NV": 0
+    },
+    "hallucination_flags": [],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "agent": "TS",
+        "budget": 150000,
+        "used": 313035,
+        "pct_of_budget": 208.7,
+        "severity": "CRITICAL",
+        "note": "Trend Scout exceeded 80% threshold \u2014 in fact 208.7% of its 150k ceiling (313,035 tokens, status=over_budget, cost $1.14). This is a hard overspend on a stage budgeted only for topic selection (not research). Recommend raising TS budget to reflect real cost or capping its --max-turns; investigate why a title-resolution call consumed more than Scout's full 500k-budgeted research run."
+      },
+      {
+        "agent": "SC",
+        "budget": 500000,
+        "used": 258872,
+        "pct_of_budget": 51.8,
+        "severity": "OK",
+        "note": "Within budget (51.8%). Scout's own budget_note confirms a lean run: 0 cached reads, 0 page fetches, 2 Exa searches."
+      },
+      {
+        "agent": "WR",
+        "budget": 300000,
+        "used": 152617,
+        "pct_of_budget": 50.9,
+        "severity": "OK",
+        "note": "Within budget (50.9%)."
+      }
+    ],
+    "guardrails_applied": [],
+    "notes": [
+      "Task 2 (stat verification): all 6 stats in the research JSON carry a named source + year; none lack attribution. NOTE: only the article HTML head/meta (first 8000 chars) was provided \u2014 the article body prose was not visible, so in-body stat placement/citation could not be independently confirmed against the rendered copy. Two research-side caveats persist from Scout's own unverified_flags and should not be re-cited elsewhere without independent verification: the $1T Omniverse figure is NVIDIA's own estimate (attribute as company projection, not independent), and all arXiv benchmark numbers (WoVR 2602.13977, DreamSteer 2607.02865, Say/Dream/Act 2602.10717) are self-reported preprints, mostly simulation.",
+      "Task 3 (quotes): all 3 expert quotes attributed to named, verifiable individuals with affiliations and source URLs (Fei-Fei Li / Stanford & World Labs; Anirudha Majumdar / Princeton; Moritz Reuss / NVIDIA Developer Blog). Reuss is bylined on an NVIDIA corporate blog with a vendor interest \u2014 treat his forward-looking claim as informed practitioner opinion, not neutral analysis. No unattributed quotes.",
+      "Task 4 (scope): Marco run summary shows revisions quill=0, maya=0 and a clean stage sequence through porter+nova. No evidence of scope violations (no Quill image edits, no Maya copy edits)."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-07",
+    "article_number": 39,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-robot-that-dreams-first-039.html",
+    "gs_row": 40,
+    "company_urn": "urn:li:share:7491570435432841216",
+    "reshare_urn": "urn:li:share:7491570447692734464",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]

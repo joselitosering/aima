@@ -1,0 +1,61 @@
+<p class="lead">Picture a robot arm — a Franka Emika Panda, all seven joints and a two-finger gripper — reaching for a banana on a cluttered table. In the old way of doing things it would just reach, and hope the training held. But this arm does something stranger first. For a few milliseconds, it imagines. It runs a little movie in its head of what happens if it moves left, then another if it moves right, and picks the future where the banana ends up in its grip. Then it moves. Researchers are calling this a robot that dreams before it acts — and the numbers coming out of the labs are turning heads.</p>
+
+<h2>The moment the machine looked before it leapt</h2>
+<p>That banana test isn't a metaphor. In a 2026 paper called WoVR, a team let a robot optimize its behavior against internal simulations of what an action would cause, and watched Pick Banana success climb from 14 of 30 tries to 28 of 30 (WoVR, 2026). Across a full manipulation suite, real-robot success jumped from 61.7% to 91.7%. The engine behind this is a <strong>world model</strong>: an AI that has learned the physics and cause-and-effect of a scene well enough to predict what comes next. Language taught machines to talk about the world. As Stanford's Fei-Fei Li frames it, world models are how they will finally learn to imagine it (Li, 2026).</p>
+
+<h2>How a robot learns to daydream</h2>
+<p>Here's the mechanism, in plain terms. A traditional robot brain is a <strong>Vision-Language-Action (VLA) model</strong> — it sees pixels, reads an instruction, and outputs a motion, all in one imitative leap. A world model adds a step. Before committing, the robot generates candidate futures, often as short predicted videos of the task succeeding, then uses an <strong>inverse dynamics model</strong> — the math that works backward from "here's the outcome I want" to "here are the moves that get me there." Think of a chess player who sees three moves ahead instead of grabbing the nearest piece. A system called DreamSteer does exactly this at deployment, imagining the outcomes of candidate action chunks and ranking them with no retraining at all, lifting task success from 23.75% to 66.25% (DreamSteer, 2026).</p>
+
+<blockquote class="pullquote">Language gave machines a way to talk about that world. World models are how machines will finally come to understand, imagine, reason and interact with it. — Fei-Fei Li</blockquote>
+
+<h2>The numbers coming out of the labs</h2>
+<div class="stat-grid">
+  <div class="stat-card"><strong>61.7% &rarr; 91.7%</strong><span>Real-robot manipulation success after training against imagined rollouts (WoVR, 2026)</span></div>
+  <div class="stat-card"><strong>23.75% &rarr; 66.25%</strong><span>Task success from DreamSteer's deployment-time imagination, no fine-tuning (DreamSteer, 2026)</span></div>
+  <div class="stat-card"><strong>98.2%</strong><span>Total success on the LIBERO benchmark for a "Say, Dream, and Act" video-world model (Dream4manip, 2026)</span></div>
+  <div class="stat-card"><strong>77% &rarr; 25.5%</strong><span>Collapse when Motus's imagination expert is removed — a bigger drop than removing its sight (Motus, CVPR 2026)</span></div>
+  <div class="stat-card"><strong>200,000 hrs</strong><span>Egocentric human video used to teach Being-H0.7 physical dynamics by watching us act (NVIDIA, 2026)</span></div>
+</div>
+<p>The evidence that imagination is doing the real work is almost poetic. When researchers behind a unified model called Motus surgically removed its video-generation "imagination" expert, manipulation success collapsed from 77% to 25.5% — a bigger fall than removing the vision-language part, which only dropped it to 64.94% (Motus, CVPR 2026). The robot without its dreams was worse off than the robot without much of its sight. And these systems increasingly learn to imagine by watching us: Being-H0.7 trained on 200,000 hours of human video alongside just 15,000 hours of robot demonstrations (NVIDIA, 2026).</p>
+
+<h2>Two ways to dream, and no winner yet</h2>
+<p>Zoom out and a genuine scientific fight is underway. Some teams predict pixels — literally imagining video frames. Princeton's Anirudha Majumdar questions whether pixel-level prediction is even the right substrate, while others champion leaner latent approaches. NVIDIA's Moritz Reuss argues that <strong>World-Action Models (WAMs)</strong> will become a second major recipe for robot foundation models — but hedges that the winner is "likely neither pure VLA nor pure WAM, but a hybrid of both" (Reuss, 2026). That honesty matters; the field is exciting precisely because it isn't settled. The commercial gravity is real, too: NVIDIA estimates its simulation platform alone targets a market north of $1 trillion (Li, 2026) — a company projection, worth a grain of salt.</p>
+
+<h2>When the dream is wrong</h2>
+<p>Now the reckoning, because grounded optimism demands it. A robot that imagines can imagine badly. WoVR's own authors admit that closed-loop imagined rollouts "inevitably suffer from <strong>hallucination</strong> and long-horizon error accumulation" — the robot can be fooled by its own bad dream, chasing a fantasy of success instead of the real thing (WoVR, 2026). Their fix reduces but does not eliminate it. And nearly every dazzling result lives in a constrained lab. Li is blunt: none of these demos have been validated at the complexity or duration real deployment demands, and the gap between a demo reel and a robot that reliably works in an actual kitchen "remains vast" (Li, 2026). <strong>Long-horizon manipulation</strong> — tasks with many steps where small errors compound — is still where dreams tend to unravel.</p>
+
+<h2>What to watch, and where to jump in</h2>
+<p>So what can you do with this? Watch the benchmarks, but read them like a skeptic: the <strong>LIBERO benchmark</strong> figures are self-reported preprints, not gospel, and most of the flashiest numbers come from simulation rather than a real arm. If you tinker, the papers are open and the code often is too — DreamSteer needs no fine-tuning to try. But the deeper invitation is a mindset. We are teaching machines the oldest trick brains ever learned: to fail safely in imagination before risking it in the world. Get that right, carefully, and the robot that pauses to dream isn't slower than the one that lunges — it's the one you'd actually trust in your kitchen.</p>
+
+<div class="glossary">
+  <dl>
+    <dt data-term="World model">World model</dt>
+    <dd>An AI that has learned the cause-and-effect and physics of a scene well enough to predict what happens next, letting an agent simulate outcomes internally before acting.</dd>
+    <dt data-term="Vision-Language-Action (VLA) model">Vision-Language-Action (VLA) model</dt>
+    <dd>A robot policy that maps camera pixels and a language instruction directly to a motion in one imitative step, without an explicit forward-simulation of consequences.</dd>
+    <dt data-term="World-Action Model (WAM)">World-Action Model (WAM)</dt>
+    <dd>A robot foundation-model recipe that reuses a pretrained video or world-model backbone inside the policy, so the system predicts futures and acts on them.</dd>
+    <dt data-term="Imagined rollout">Imagined rollout</dt>
+    <dd>A predicted sequence of future states an agent generates internally to evaluate a candidate action before executing it in the real world.</dd>
+    <dt data-term="Inverse dynamics model">Inverse dynamics model</dt>
+    <dd>A component that works backward from a desired outcome to infer the specific actions required to produce it.</dd>
+    <dt data-term="LIBERO benchmark">LIBERO benchmark</dt>
+    <dd>A standard suite of simulated robot-manipulation tasks used to compare how reliably different policies complete instructions.</dd>
+    <dt data-term="Hallucination">Hallucination</dt>
+    <dd>In generative rollouts, a plausible-looking but physically wrong predicted future that can mislead a planner into optimizing against a fantasy.</dd>
+    <dt data-term="Long-horizon manipulation">Long-horizon manipulation</dt>
+    <dd>Multi-step robotic tasks over extended time frames, where small per-step errors accumulate and make reliable completion hard.</dd>
+  </dl>
+</div>
+
+<div class="references">
+  <ol>
+    <li>"WoVR: World Models as Reliable Simulators for Post-Training VLA Policies with RL." <em>arXiv</em>, 2026, https://arxiv.org/html/2602.13977v1.</li>
+    <li>"DreamSteer: Latent World Models Can Steer VLA Policies During Deployment Without Any Finetuning." <em>arXiv</em>, 2026, https://arxiv.org/html/2607.02865.</li>
+    <li>"Say, Dream, and Act: Learning Video World Models for Instruction-Driven Robot Manipulation." <em>arXiv</em>, 2026, https://doi.org/10.48550/arxiv.2602.10717.</li>
+    <li>Bi, et al. "Motus: A Unified Latent Action World Model." <em>CVPR 2026</em>, https://openaccess.thecvf.com/content/CVPR2026/papers/Bi_Motus_A_Unified_Latent_Action_World_Model_CVPR_2026_paper.pdf.</li>
+    <li>Reuss, Moritz. "Pretrained to Imagine, Fine-Tuned to Act: The Rise of World-Action Models." <em>NVIDIA Developer Blog</em>, 15 June 2026, https://developer.nvidia.com/blog/pretrained-to-imagine-fine-tuned-to-act-the-rise-of-world-action-models/.</li>
+    <li>Li, Fei-Fei. "A Functional Taxonomy of World Models." <em>World Labs / Substack</em>, 3 June 2026, https://drfeifei.substack.com/p/a-functional-taxonomy-of-world-models.</li>
+    <li>Majumdar, Anirudha. "Should We Predict Pixels for World Models in Robotics?" <em>Substack</em>, 10 Feb. 2026, https://animajumdar.substack.com/p/should-we-predict-pixels-for-world.</li>
+  </ol>
+</div>
