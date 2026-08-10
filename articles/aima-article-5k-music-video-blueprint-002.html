@@ -1009,5 +1009,6 @@ if(_bt)_bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'
 (function(){var ob=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ob.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(function(el){ob.observe(el);});})();
 setTimeout(function(){document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});},800);
 </script>
+<script src="/docs/aima-newsletter.js" defer></script>
 </body>
 </html>
