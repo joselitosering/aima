@@ -367,7 +367,6 @@ footer {
   .hero-cover-frame{ max-width:260px; }
 }
 
-
 /* ══════════════════════════════════════════════════════════════════
    NEWSLETTER PAGES — additive only. Every colour, radius and face
    below resolves through the tokens already declared in :root above.
@@ -436,29 +435,6 @@ footer {
 .aima-sub__input[aria-invalid="true"]{border-color:var(--orange);
   box-shadow:0 0 0 3px rgba(255,94,32,.18)}
 
-.aima-sub__cadence{display:flex;gap:8px;margin:0 0 14px}
-.aima-sub__pill{flex:1;position:relative}
-.aima-sub__pill input{position:absolute;opacity:0;width:0;height:0}
-.aima-sub__pill span{display:block;text-align:center;padding:12px 8px;cursor:pointer;
-  background:var(--surface2);border:1px solid var(--surface3);border-radius:var(--radius);
-  font-size:13px;font-weight:500;color:var(--muted);transition:.15s}
-.aima-sub__pill span small{display:block;font-family:var(--mono);font-size:10px;
-  letter-spacing:.1em;text-transform:uppercase;color:#4A5670;margin-top:4px}
-.aima-sub__pill input:checked+span{border-color:var(--cyan);
-  background:rgba(0,217,245,.10);color:#fff}
-.aima-sub__pill input:checked+span small{color:var(--cyan)}
-.aima-sub__pill input:focus-visible+span{box-shadow:0 0 0 3px var(--glow-c)}
-
-.aima-sub__topics{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
-.aima-sub__topic{position:relative}
-.aima-sub__topic input{position:absolute;opacity:0;width:0;height:0}
-.aima-sub__topic span{display:block;padding:8px 14px;cursor:pointer;font-size:12px;
-  border-radius:100px;background:var(--surface2);border:1px solid var(--surface3);
-  color:var(--muted);transition:.15s}
-.aima-sub__topic input:checked+span{border-color:var(--cyan);
-  background:rgba(0,217,245,.10);color:#fff}
-.aima-sub__topic input:focus-visible+span{box-shadow:0 0 0 3px var(--glow-c)}
-
 .aima-sub__consent{display:flex;gap:11px;align-items:flex-start;margin:0 0 18px;cursor:pointer}
 .aima-sub__consent input{appearance:none;-webkit-appearance:none;flex:0 0 18px;
   width:18px;height:18px;margin:2px 0 0;border:1px solid var(--surface3);border-radius:4px;
@@ -503,7 +479,7 @@ footer {
 @media(max-width:640px){
   .nl-pad,.nl-pad-sm{padding:110px 0 70px}
   .aima-sub{padding:24px 20px}
-  .aima-sub__row,.aima-sub__cadence{flex-direction:column}
+  .aima-sub__row,
   .nl-actions{flex-direction:column}
   .nl-btn{width:100%;text-align:center}
 }
@@ -546,7 +522,6 @@ footer {
   <a href="https://aima.productions/index.html#contact" class="m-cta" onclick="toggleMobile()">Get a Quote</a>
 </div>
 
-
 <main id="page-content">
 
 <section class="nl-pad-sm">
@@ -559,17 +534,7 @@ footer {
       Thanks for the time you did give us.
     </p>
 
-    <div class="nl-card" id="reasonCard" style="text-align:left">
-      <p class="nl-meta">Mind telling us why? <span style="text-transform:none;letter-spacing:0">(optional, 5 seconds)</span></p>
-      <div class="aima-sub__topics" style="margin-bottom:16px">
-        <label class="aima-sub__topic"><input type="radio" name="reason" value="too_frequent"><span>Too frequent</span></label>
-        <label class="aima-sub__topic"><input type="radio" name="reason" value="not_relevant"><span>Not relevant</span></label>
-        <label class="aima-sub__topic"><input type="radio" name="reason" value="never_signed_up"><span>Never signed up</span></label>
-        <label class="aima-sub__topic"><input type="radio" name="reason" value="temporary"><span>Just a break</span></label>
-      </div>
-      <button class="nl-btn ghost" id="reasonBtn" style="width:100%">Send feedback</button>
-      <div class="aima-sub__msg" id="reasonMsg" hidden></div>
-    </div>
+    <p class="nl-lead" style="margin:0">If you change your mind, the door is open.</p>
 
     <p class="nl-lead" style="margin:34px 0 0;font-size:15px">
       Changed your mind? <a href="https://aima.productions/newsletter/" style="color:var(--cyan)">Resubscribe here</a>
@@ -632,7 +597,6 @@ footer {
   </div>
 </footer>
 
-<script src="/docs/aima-newsletter.js"></script>
 <script>
 function toggleMobile(){
   document.getElementById('mobileMenu').classList.toggle('open');
@@ -640,38 +604,11 @@ function toggleMobile(){
 }
 document.querySelectorAll('.fi').forEach(function(el){el.classList.add('vis');});
 
-  /* Endpoint comes from /docs/aima-newsletter.js — the single source. */
-  var AIMA_ENDPOINT = window.AIMA_ENDPOINT;
+  
 
 /* Feedback is fire-and-forget. The unsubscribe itself already happened
    server-side before this page loaded — nothing here can undo it, and
    nothing here is required. */
-(function(){
-  var btn=document.getElementById('reasonBtn'),
-      msg=document.getElementById('reasonMsg');
-  if(!btn) return;
-  var qs=new URLSearchParams(location.search);
-  btn.addEventListener('click',function(){
-    var picked=document.querySelector('input[name="reason"]:checked');
-    if(!picked){
-      msg.setAttribute('data-tone','info');
-      msg.innerHTML='<span class="aima-sub__msg-ico">&#8987;</span><span>Pick one first &mdash; or just close the tab, that&rsquo;s fine too.</span>';
-      msg.hidden=false; return;
-    }
-    btn.disabled=true; btn.textContent='Sending…';
-    fetch(AIMA_ENDPOINT+'?action=unsubscribe'
-          +'&e='+encodeURIComponent(qs.get('e')||'')
-          +'&t='+encodeURIComponent(qs.get('t')||'')
-          +'&reason='+encodeURIComponent(picked.value),
-          {method:'GET',redirect:'follow'})
-      .catch(function(){/* already unsubscribed; feedback is best-effort */})
-      .then(function(){
-        document.getElementById('reasonCard').innerHTML =
-          '<p style="margin:0;font-size:15px;line-height:26px;color:var(--muted);font-weight:300">'
-          +'Noted &mdash; thank you. That genuinely changes what gets sent.</p>';
-      });
-  });
-})();
 
 </script>
 </body>

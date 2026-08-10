@@ -9,8 +9,7 @@
  * and anywhere in the body:
  *   <form data-aima-subscribe data-source="article_end"> … </form>
  *
- * WEEKLY ONLY. There is no cadence choice anywhere in the UI; the server
- * stamps every signup as 'weekly'.
+ * WEEKLY ONLY.
  *
  * The form must contain:
  *   input[name=first_name] asked for on every form
@@ -21,9 +20,7 @@
  *   [data-aima-msg]        empty div for status messages
  *
  * Captured per signup → Google Sheet `Subscribers`:
- *   email (col B) · first_name (C) · last_name (D) · cadence (F, always 'weekly')
- *   · source (H)
- *   plus consent text, user agent and timestamp for proof of opt-in.
+ *   email (A) · first_name (B) · last_name (C) · status (D) · source (E)
  *
  * Nothing is ever mailed to an address until the subscriber clicks the
  * one-time confirmation link — that is what moves them pending → active.
@@ -35,8 +32,7 @@
   var AIMA_ENDPOINT =
     'https://script.google.com/macros/s/AKfycbxCUeYRCxd3A_rgDIF9s8OUiRzrcmaYn5rOfDSbZ8mIAj934WbLi-9DecHSQyRYxJkW/exec';
 
-  /* Exported so /newsletter/ utility pages (preferences, goodbye) can reuse
-     the same value instead of keeping their own copy. */
+  /* Exported so /newsletter/goodbye.html can reuse the same value. */
   window.AIMA_ENDPOINT = AIMA_ENDPOINT;
 
   var MIN_FILL_MS = 2500;
@@ -147,11 +143,7 @@
         email:        email,
         first_name:   nameEl ? nameEl.value.trim() : '',
         last_name:    lastEl ? lastEl.value.trim() : '',
-        cadence:      'weekly',
         source:       form.dataset.source || 'unknown',
-        consent_text: consent ? consent.parentElement.innerText.trim() : '',
-        ua:           navigator.userAgent.slice(0, 200),
-        page:         location.pathname,
         t:            Number(form.dataset.rendered)
       };
 
