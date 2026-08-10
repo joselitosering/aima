@@ -30,7 +30,7 @@
 
   /* ── Replace after deploying Code.gs. This is the only occurrence. ──────── */
   var AIMA_ENDPOINT =
-    'https://script.google.com/macros/s/AKfycby9FgDXDviC6GOcNEBRGPW4aDGTEZeFBgOu5-pOL5X6256i_c4JAj3rzCduAPKqm90WbA/exec';
+    'https://script.google.com/macros/s/AKfycbxrhyPAizj-y5kHevgR79NRTsKJ1EPqFdWxEHUEpWvEHcJcjrsnywZ9I1vnGp4zvsFVXw/exec';
 
   /* Exported so /newsletter/goodbye.html can reuse the same value. */
   window.AIMA_ENDPOINT = AIMA_ENDPOINT;
