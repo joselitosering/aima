@@ -560,7 +560,7 @@ footer {
           <p>He was nine. His birthday was September 30, 1971, which on March 3, 1981, made him nine exactly — no fractions, no almost. Still short enough that the airplane seatbelt cut across his stomach instead of his hips. Still the kind of nine-year-old who believed the things his mother put in writing, because his mother did not write things that weren't true, she only left things out, which — he would spend the rest of his life discovering — is a different skill entirely, and a more useful one.</p>
           <p class="fade">What he was leaving: a house with three maids; a cook, a cleaner, and a nanny. A driver named Kuya Bert — "kuya" is a title reserved for all the men who did not yet earn the respects of a Tito — who let him sit up front and hold the wheel at forty kilometers an hour, both of them laughing like it was a heist…</p>
           <div class="excerpt-actions">
-            <a href="../docs/paperboy-chapter-one.pdf" download class="excerpt-more">Download Chapter One (PDF) →</a>
+            <a href="../docs/paperboy-chapter-one.pdf" download class="excerpt-more" onclick="trackChapterDownload()">Download Chapter One (PDF) →</a>
             <a href="#buy" class="excerpt-more excerpt-more-secondary">Or buy the full book →</a>
           </div>
         </div>
@@ -758,7 +758,18 @@ document.querySelectorAll('.fi').forEach(el => el.classList.add('vis'));
 // ── BuyMeACoffee click tracking — ported from the AIMA article template ──
 function trackCoffeeClick(){
   if(typeof gtag==='function'){ gtag('event','coffee_click',{article_id:'paperboy-landing',author:'Joselito Sering'}); }
+  if(typeof fbq==='function'){ fbq('track','Donate',{content_name:'Buy Me A Coffee'}); }
 }
+
+// ── Meta Pixel: Chapter One excerpt engagement ──
+function trackChapterDownload(){
+  if(typeof fbq==='function'){ fbq('trackCustom','DownloadExcerpt',{content_name:'Chapter One PDF'}); }
+}
+document.querySelectorAll('details.excerpt').forEach(function(d){
+  d.addEventListener('toggle', function(){
+    if(d.open && typeof fbq==='function'){ fbq('trackCustom','ExpandExcerpt',{content_name:'Chapter One Teaser'}); }
+  });
+});
 
 // ══════════════════════════════════════════════════
 // CENTRALIZED CTA STATE — single source of truth for every
@@ -776,18 +787,29 @@ var BOOK_CTA = {
 (function(){
   document.querySelectorAll('[data-book-cta]').forEach(function(el){
     var key = el.getAttribute('data-book-cta');
-    if(key === 'kindle-url'){ el.href = BOOK_CTA.kindleUrl; }
+    if(key === 'kindle-url'){
+      el.href = BOOK_CTA.kindleUrl;
+      el.addEventListener('click', function(){
+        if(typeof fbq === 'function'){ fbq('track', 'Lead', {content_name: 'Kindle Preorder Click', content_category: 'book_format'}); }
+      });
+    }
     if(key === 'asin'){ el.textContent = 'ASIN ' + BOOK_CTA.asin; }
     if(key === 'launch-date-badge'){ el.textContent = el.textContent.indexOf('Pre-order') === 0 ? ('Pre-order · ' + BOOK_CTA.paperbackDateShort) : BOOK_CTA.paperbackDateShort; }
     if(key === 'paperback-notify'){
       el.href = 'mailto:' + BOOK_CTA.notifyEmail
         + '?subject=' + encodeURIComponent('Notify me — Paperboy Paperback (' + BOOK_CTA.paperbackDateLong + ')')
         + '&body=' + encodeURIComponent('Please notify me when the Paperboy paperback is available.');
+      el.addEventListener('click', function(){
+        if(typeof fbq === 'function'){ fbq('trackCustom', 'NotifyMePaperback', {content_name: 'Paperback Notify Me'}); }
+      });
     }
     if(key === 'audiobook-notify'){
       el.href = 'mailto:' + BOOK_CTA.notifyEmail
         + '?subject=' + encodeURIComponent('Notify me — Paperboy Audiobook')
         + '&body=' + encodeURIComponent('Please notify me when the Paperboy audiobook is available.');
+      el.addEventListener('click', function(){
+        if(typeof fbq === 'function'){ fbq('trackCustom', 'NotifyMeAudiobook', {content_name: 'Audiobook Notify Me'}); }
+      });
     }
   });
 })();
