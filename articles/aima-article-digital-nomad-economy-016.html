@@ -378,6 +378,10 @@ footer{background:var(--surface);border-top:1px solid var(--border2);padding:64p
 
 /* ===== NEWSLETTER SIGNUP (article footer) — client lives in /docs/aima-newsletter.js ===== */
 .nl-form{margin-top:4px}
+.nl-names{display:flex;gap:8px}
+.nl-names>div{flex:1;min-width:0}
+@media(max-width:520px){.nl-names{flex-direction:column;gap:0}}
+
 .nl-input{width:100%;height:46px;padding:0 14px;margin-bottom:10px;background:var(--surface2);border:1px solid var(--surface3);border-radius:var(--radius);color:var(--text);font-family:inherit;font-size:14px;transition:border-color .15s,box-shadow .15s}
 .nl-input::placeholder{color:#4A5670}
 .nl-input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px var(--glow-c)}
@@ -785,8 +789,12 @@ Bandwidth Poverty
 <p class="services-card-text">One production teardown every Thursday &mdash; the tools, the costs, the mistakes, and what actually shipped.</p>
 
 <form class="nl-form" data-aima-subscribe data-source="article_end" novalidate>
-<label class="nl-hp" for="nlName">First name</label>
-<input class="nl-input" id="nlName" type="text" name="first_name" autocomplete="given-name" placeholder="First name"/>
+<div class="nl-names">
+<div><label class="nl-hp" for="nlFirst">First name</label>
+<input class="nl-input" id="nlFirst" type="text" name="first_name" autocomplete="given-name" placeholder="First name"/></div>
+<div><label class="nl-hp" for="nlLast">Last name</label>
+<input class="nl-input" id="nlLast" type="text" name="last_name" autocomplete="family-name" placeholder="Last name"/></div>
+</div>
 <label class="nl-hp" for="nlEmail">Email address</label>
 <input class="nl-input" id="nlEmail" type="email" name="email" required inputmode="email" autocomplete="email" placeholder="you@studio.com"/>
 

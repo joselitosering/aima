@@ -13,14 +13,16 @@
  * stamps every signup as 'weekly'.
  *
  * The form must contain:
- *   input[name=first_name] optional but asked for on every form
+ *   input[name=first_name] asked for on every form
+ *   input[name=last_name]  asked for on every form
  *   input[name=email]      required
  *   input[name=consent]    required checkbox   (never pre-checked — GDPR)
  *   input[name=website]    honeypot, visually hidden
  *   [data-aima-msg]        empty div for status messages
  *
  * Captured per signup → Google Sheet `Subscribers`:
- *   email (col B) · first_name (C) · cadence (E, always 'weekly') · source (G)
+ *   email (col B) · first_name (C) · last_name (D) · cadence (F, always 'weekly')
+ *   · source (H)
  *   plus consent text, user agent and timestamp for proof of opt-in.
  *
  * Nothing is ever mailed to an address until the subscriber clicks the
@@ -115,6 +117,7 @@
       var consent  = form.querySelector('input[name="consent"]');
       var honeypot = form.querySelector('input[name="website"]');
       var nameEl   = form.querySelector('input[name="first_name"]');
+      var lastEl   = form.querySelector('input[name="last_name"]');
 
       /* Bot gates fail SILENTLY and look exactly like success — telling a bot
          it was caught only teaches the operator what to fix. */
@@ -143,6 +146,7 @@
       var payload = {
         email:        email,
         first_name:   nameEl ? nameEl.value.trim() : '',
+        last_name:    lastEl ? lastEl.value.trim() : '',
         cadence:      'weekly',
         source:       form.dataset.source || 'unknown',
         consent_text: consent ? consent.parentElement.innerText.trim() : '',
