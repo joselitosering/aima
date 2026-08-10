@@ -33,7 +33,7 @@
 
   /* ── Replace after deploying Code.gs. This is the only occurrence. ──────── */
   var AIMA_ENDPOINT =
-    'https://script.google.com/macros/s/AKfycbxl1njMQuNOA_Ri_zFt8jDW1CvdJzCNw7_D4xphH3_gIMzB-ySk4FkyAW5xeMdMynLc/exec';
+    'https://script.google.com/macros/s/AKfycbxCUeYRCxd3A_rgDIF9s8OUiRzrcmaYn5rOfDSbZ8mIAj934WbLi-9DecHSQyRYxJkW/exec';
 
   /* Exported so /newsletter/ utility pages (preferences, goodbye) can reuse
      the same value instead of keeping their own copy. */
