@@ -1313,3 +1313,108 @@ RuntimeError: [quill] Draft incomplete, HALTING (Writer must fix — Quill does 
 
 ```
 - Full run log: pipeline.log
+
+
+### Pipeline Failure — Article #40 (2026-08-10)
+- **Error:** Vera halted the article (verdict=needs_revision: copy). Reported to Marco for Iris/human review — no auto-revision (publish/marketing skipped).
+- **Notes:**
+  - PASS: meta og:title
+  - PASS: meta og:description
+  - PASS: meta og:image
+  - PASS: meta og:url
+  - PASS: meta article:author
+  - PASS: meta article:published_time
+  - PASS: meta article:persona
+  - PASS: meta twitter:title
+  - PASS: meta twitter:image
+  - PASS: canonical link
+  - PASS: 6 H2 sections
+  - PASS: stat grid 4 cards
+  - PASS: pullquote present
+  - PASS: 6 glossary terms
+  - PASS: 6 references
+  - PASS: og:image file exists
+  - PASS: og:image wired into HTML
+  - PASS: persona meta matches author
+  - PASS: word count 1023
+  - FAIL (copy): contains TODO / PLACEHOLDER / lorem / leftover skeleton token
+
+### Pipeline Failure — Article #40 (2026-08-10)
+- **Error:** Vera halted the article (verdict=needs_revision: copy). Reported to Marco for Iris/human review — no auto-revision (publish/marketing skipped).
+- **Notes:**
+  - PASS: meta og:title
+  - PASS: meta og:description
+  - PASS: meta og:image
+  - PASS: meta og:url
+  - PASS: meta article:author
+  - PASS: meta article:published_time
+  - PASS: meta article:persona
+  - PASS: meta twitter:title
+  - PASS: meta twitter:image
+  - PASS: canonical link
+  - PASS: 6 H2 sections
+  - PASS: stat grid 4 cards
+  - PASS: pullquote present
+  - PASS: 6 glossary terms
+  - PASS: 6 references
+  - PASS: og:image file exists
+  - PASS: og:image wired into HTML
+  - PASS: persona meta matches author
+  - PASS: word count 1023
+  - FAIL (copy): contains TODO / PLACEHOLDER / lorem / leftover skeleton token
+
+### Pipeline CRASH — #40 'Autonomous Vehicles at the Crossroads: The Promise and the Peril' — stage 'porter' (2026-08-10)
+<!-- aima-failure-key: 2026-08-10|porter|The read operation timed out -->
+- **Occurrences:** 1
+- **First seen:** 2026-08-10T13:37:45
+- **Last seen:** 2026-08-10T13:37:45
+- **Error:** The read operation timed out
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 418, in run
+    porter_result = porter.run(spec, dry_run=dry_run, gs_enabled=cfg["GS_ENABLED"])
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 139, in run
+    response = _post_to_gas(gas_endpoint, live_url)
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 48, in _post_to_gas
+    with urllib.request.urlopen(req, timeout=15) as resp:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 487, in open
+    response = self._open(req, data)
+  File "C:\Python314\Lib\urllib\request.py", line 504, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Python314\Lib\urllib\request.py", line 464, in _call_chain
+    result = func(*args)
+  File "C:\Python314\Lib\urllib\request.py", line 1369, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 1325, in do_open
+    r = h.getresponse()
+  File "C:\Python314\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socket.py", line 725, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Python314\Lib\ssl.py", line 1304, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\ssl.py", line 1138, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+```
+- Full run log: pipeline.log

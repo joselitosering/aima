@@ -96,7 +96,11 @@ def run(article_path: str, spec: dict) -> dict:
         f"{refs} references" + ("" if refs >= 6 else " (need >=6)"))
 
     # 7 — no TODO / PLACEHOLDER / lorem ipsum / leftover skeleton tokens
-    if re.search(r"\bTODO\b|PLACEHOLDER|lorem ipsum|\[FULL TITLE\]|\[CATEGORY\]|\[Section", html, re.I):
+    # Note: PLACEHOLDER is checked case-sensitively (uppercase only) to avoid false positives
+    # on legitimate HTML placeholder= attributes and CSS ::placeholder pseudo-class in the
+    # newsletter form boilerplate. Skeleton tokens are always uppercase; HTML attrs are lowercase.
+    if (re.search(r"\bTODO\b|lorem ipsum|\[FULL TITLE\]|\[CATEGORY\]|\[Section", html, re.I)
+            or "PLACEHOLDER" in html):
         copy_fail.append("contains TODO / PLACEHOLDER / lorem / leftover skeleton token")
     else:
         passed.append("no placeholders/leftover tokens")

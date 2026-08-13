@@ -45,9 +45,9 @@
 | 38 | 2026-07-15 | What Is AGI, Actually? Separating Science from Hype | AI Science | 11 min | Bumped from 2026-07-08 to make room for overdue backlog · Post 4:00 PM PT | Joselito Sering |
 | 39 | 2026-07-15 | The Robot That Dreams First: How World Models Are Teaching Machines to Imagine Before They Move | AI Science | 8 min |  | Kenji Nakamoto |
 | 40 | 2026-07-16 | Autonomous Vehicles at the Crossroads: The Promise and the Peril | AI Innovation | 10 min |  | Joselito Sering |
-| 41 | 2026-07-16 | TBD — Trending Topic | Trending | 8 min | Bumped from 2026-07-09 to make room for overdue backlog · Post 4:00 PM PT | Dawn Ginhaua |
+| 41 | 2026-07-16 | Conversations That Never Happened: How Your Therapy Became Training Data | AI Ethics | 8 min | Bumped from 2026-07-09 to make room for overdue backlog · Post 4:00 PM PT | Dawn Ginhaua |
 | 42 | 2026-07-17 | Deepfakes and Democracy: The Synthetic Media Threat to Truth | AI Ethics | 12 min | Bumped from 2026-07-10 to make room for overdue backlog · Post 4:00 PM PT | Joselito Sering |
-| 43 | 2026-07-17 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
+| 43 | 2026-07-17 | The Deadline That Moved: How Industry Lobbied the EU Into Delaying Its Own AI Law | AI Ethics / Tech Policy | 8 min |  | Dawn Ginhaua |
 | 44 | 2026-07-18 | English Is Not the World: Why AI Language Monoculture Fails 6 Billion People | AI Society | 10 min |  | Joselito Sering |
 | 45 | 2026-07-19 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
 | 46 | 2026-07-20 | Can Machines Learn to Care? Emotional AI and the Empathy Question | AI Philosophy | 9 min |  | Joselito Sering |

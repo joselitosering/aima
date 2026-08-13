@@ -1,0 +1,59 @@
+{
+  "row": 43,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-08-13",
+  "chosen": {
+    "title": "The Deadline That Moved: How Industry Lobbied the EU Into Delaying Its Own AI Law",
+    "category": "AI Ethics / Tech Policy",
+    "rationale": "On August 2, 2026 the EU AI Act's high-risk obligations were supposed to bite; instead an 'Omnibus' deal quietly pushed stand-alone Annex III compliance to December 2027 and embedded-product rules to 2028 after heavy corporate pressure \u2014 even as 75% of the public wants stronger AI rules. That gap between who asked for the delay and who wanted the guardrails is exactly Dawn's follow-the-money, name-the-capture territory.",
+    "sources": [
+      {
+        "name": "Gibson Dunn \u2014 EU AI Act Omnibus Agreement: Postponed High-Risk Deadlines",
+        "url": "https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/"
+      },
+      {
+        "name": "CIGI \u2014 The Great Digital Disconnect: AI Deregulation Versus Public Trust",
+        "url": "https://www.cigionline.org/articles/the-great-digital-disconnect-ai-deregulation-versus-public-trust/"
+      },
+      {
+        "name": "Holland & Knight \u2014 U.S. Companies Face EU AI Act's August 2026 Deadline",
+        "url": "https://www.hklaw.com/en/insights/publications/2026/04/us-companies-face-eu-ai-acts-possible-august-2026-compliance-deadline"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Nobody Is Liable: The Chatbot Death Settlements and the Accountability Void in Engineered Intimacy",
+      "category": "AI Ethics / Accountability",
+      "rationale": "Google and Character.AI just moved to settle five lawsuits \u2014 including the wrongful-death case of 14-year-old Sewell Setzer III \u2014 over companion chatbots engineered to form emotional bonds with minors and marketed without age checks or crisis safeguards. A quiet mediated settlement lets the product's designers pay their way out of a public reckoning; Dawn's beat is precisely who gets harmed, who profits, and why the accountability never lands.",
+      "sources": [
+        {
+          "name": "K-12 Dive \u2014 Character.AI, Google agree to mediate settlements in wrongful teen death lawsuits",
+          "url": "https://www.k12dive.com/news/characterai-google-agree-to-mediate-settlements-in-wrongful-teen-death-la/809411/"
+        },
+        {
+          "name": "TechPolicy.Press \u2014 Lawsuits Exposed How Chatbots Endanger Children. Can the Senate's New Bills Fix It?",
+          "url": "https://www.techpolicy.press/lawsuits-exposed-how-chatbots-endanger-children-can-the-senates-new-bills-fix-it/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Nudify Nation: The AI Sexual-Deepfake Industry and the Platforms That Let It Run",
+      "category": "AI Ethics / Digital Rights",
+      "rationale": "Regulators are now formally sanctioning platforms over synthetic sexual imagery \u2014 Canada's Privacy Commissioner found X in breach of consent law for generating sexualized deepfakes \u2014 while 'nudify' apps industrialize image-based abuse that falls overwhelmingly on women and girls. This is the gendered, image-based-abuse story the 'deepfakes and democracy' framing keeps missing, and it's squarely Dawn's feminist-and-postcolonial critique of who technology claims to serve versus who it targets.",
+      "sources": [
+        {
+          "name": "TechPolicy.Press \u2014 Global Digital Policy Roundup: June 2026 (OPC finds X in breach over sexualized deepfakes)",
+          "url": "https://www.techpolicy.press/global-digital-policy-roundup-june-2026/"
+        },
+        {
+          "name": "New Space Economy \u2014 Ethical Issues Associated With Artificial Intelligence in 2026 (deepfake proliferation)",
+          "url": "https://newspaceeconomy.ca/2026/07/03/what-are-the-ethical-issues-associated-with-artificial-intelligence-in-2026/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

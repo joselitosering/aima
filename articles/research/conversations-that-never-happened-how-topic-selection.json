@@ -1,0 +1,55 @@
+{
+  "row": 41,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-08-11",
+  "chosen": {
+    "title": "Conversations That Never Happened: How Your Therapy Became Training Data",
+    "category": "AI Ethics",
+    "rationale": "Virtual-therapy giants (Talkspace citing 153M patient messages) are racing to train chatbots on real therapy transcripts while rivals fabricate synthetic sessions, with 'consent' buried in terms and conditions \u2014 a data-colonialism story about the most intimate data there is, exactly Dawn's consent-labor-and-power register.",
+    "sources": [
+      {
+        "name": "Endpoints News",
+        "url": "https://endpoints.news/how-mental-health-chatbots-are-trained-on-therapy-sessions/"
+      },
+      {
+        "name": "CalMatters (Kaiser therapists on session-transcript training)",
+        "url": "https://calmatters.org/economy/technology/2026/07/kaiser-nurses-workplace-surveillance-ai/"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The Preemption Machine: Washington's Campaign to Erase Every State AI Law at Once",
+      "category": "AI Ethics",
+      "rationale": "With Congress's moratorium struck down 99-1 but a December 2025 executive order now siccing the DOJ on state AI statutes \u2014 and Colorado already gutting its own landmark law under industry pressure \u2014 the fight over WHO gets to regulate AI is peaking in 2026; a follow-the-money federalism piece squarely in Dawn's corporate-capture-of-public-institutions beat (distinct from the earlier single-brief DOJ story).",
+      "sources": [
+        {
+          "name": "Ropes & Gray \u2014 federal push to override state AI regulation",
+          "url": "https://www.ropesgray.com/en/insights/alerts/2026/03/examining-the-landscape-and-limitations-of-the-federal-push-to-override-state-ai-regulation"
+        },
+        {
+          "name": "Center for American Progress \u2014 preemption risks",
+          "url": "https://www.americanprogress.org/article/moratoriums-and-federal-preemption-of-state-artificial-intelligence-laws-pose-serious-risks/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Trust Nurses, Not AI: Algorithmic Management Comes for the People Who Keep You Alive",
+      "category": "AI Labor",
+      "rationale": "Kaiser call-center nurses \u2014 25,000 now in CNA contract talks where AI is the flashpoint \u2014 say surveillance tools grading their 'empathy' and capping call times override professional judgment and threaten patient safety; a fresh labor-and-care angle on automation's human cost that goes beyond the generic keystroke-surveillance framing.",
+      "sources": [
+        {
+          "name": "CalMatters \u2014 Khari Johnson",
+          "url": "https://calmatters.org/economy/technology/2026/07/kaiser-nurses-workplace-surveillance-ai/"
+        },
+        {
+          "name": "National Nurses United survey",
+          "url": "https://www.nationalnursesunited.org/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

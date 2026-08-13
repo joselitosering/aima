@@ -392,5 +392,41 @@
     "posted_at": "2026-08-07T19:06:22",
     "analytics_collected": false,
     "reshare_id": "urn:li:share:7491570447692734464"
+  },
+  {
+    "post_id": "urn:li:share:7493018713030549504",
+    "article": "aima-article-autonomous-vehicles-at-the-crossroads-040.html",
+    "title": "Autonomous Vehicles at the Crossroads: The Promise and the Peril",
+    "persona": "joselito",
+    "posted_at": "2026-08-11T19:01:18",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7493018724988280832"
+  },
+  {
+    "post_id": "urn:li:share:7493030755468681216",
+    "article": "aima-article-conversations-that-never-happened-how-041.html",
+    "title": "Conversations That Never Happened: How Your Therapy Became Training Data",
+    "persona": "dawn",
+    "posted_at": "2026-08-11T19:49:10",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7493030769209077760"
+  },
+  {
+    "post_id": "urn:li:share:7493382021092671488",
+    "article": "aima-article-deepfakes-and-democracy-the-synthetic-042.html",
+    "title": "Deepfakes and Democracy: The Synthetic Media Threat to Truth",
+    "persona": "joselito",
+    "posted_at": "2026-08-12T19:04:57",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7493382033361010690"
+  },
+  {
+    "post_id": "urn:li:share:7493744739792609282",
+    "article": "aima-article-the-deadline-that-moved-how-043.html",
+    "title": "The Deadline That Moved: How Industry Lobbied the EU Into Delaying Its Own AI Law",
+    "persona": "dawn",
+    "posted_at": "2026-08-13T19:06:16",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7493744751909847040"
   }
 ]

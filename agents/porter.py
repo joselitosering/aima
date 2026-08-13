@@ -45,7 +45,7 @@ def _post_to_gas(gas_endpoint: str, url: str) -> dict:
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=15) as resp:
+    with urllib.request.urlopen(req, timeout=30) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
 
@@ -136,9 +136,13 @@ def run(spec: dict, dry_run: bool = False, gs_enabled: bool = True) -> dict:
         log.info("[porter] GS_ENABLED=false — skipping Google Sheets log")
     elif gas_endpoint:
         log.info(f"[porter] posting canonical to GAS: {live_url}")
-        response = _post_to_gas(gas_endpoint, live_url)
-        gs_row = response.get("row", -1)
-        log.info(f"[porter] GAS confirmed: row={gs_row}")
+        try:
+            response = _post_to_gas(gas_endpoint, live_url)
+            gs_row = response.get("row", -1)
+            log.info(f"[porter] GAS confirmed: row={gs_row}")
+        except Exception as gas_err:
+            log.warning(f"[porter] GAS log failed (non-fatal) — {gas_err}. "
+                        "Article is live; GS row not recorded. Re-run publish batch to retry.")
     else:
         log.warning("[porter] GAS_ENDPOINT not set — skipping GAS log")
 

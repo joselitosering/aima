@@ -3150,5 +3150,406 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-11",
+    "total_tokens_used": 0,
+    "by_agent": {
+      "SC": 0,
+      "QL": 0,
+      "MY": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "MEDIUM",
+        "claim": "Fortune analysis (Feb 2026): Tesla robotaxis ~4x-8x worse at driving than humans",
+        "issue": "Research marks this CONTESTED/methodology-dependent (unverified_flags). Must appear only as an attributed claim ('a Fortune analysis argued...') paired with the reporting-gap counterargument, never as settled fact. Article body not visible in the 8000-char sample provided \u2014 verify framing before re-citation.",
+        "source_present": true,
+        "url": "https://fortune.com/2026/02/26/tesla-robotaxis-4x-8x-worse-than-humans-at-driving-safety-record-crashes/"
+      },
+      {
+        "severity": "LOW",
+        "claim": "Waymo 56.7M-mile / rider-only safety study figures",
+        "issue": "Company-funded self-research (unverified_flags). Directionally corroborated by independent IIHS, but must be attributed to Waymo, not presented as neutral/independent.",
+        "source_present": true,
+        "url": "https://waymo.com/research/comparison-of-waymo-rider-only-crash-rates-by-crash-type-to-human-benchmarks/"
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "severity": "CRITICAL",
+        "issue": "token_budget.json reports used=0 for every agent (SC, TS, WR, QL, MY, VR, LM, CO, all others) \u2014 the long-standing token-metering bug (first flagged #018, escalated CRITICAL at #019) is STILL unfixed at #40. No real per-agent consumption exists this run; budgets are ceilings only, not measurements. No agent can be assessed against the 80% threshold because no usage was recorded.",
+        "agents_affected": "ALL",
+        "threshold_check": "cannot_evaluate"
+      },
+      {
+        "severity": "INFO",
+        "issue": "QL budget=0 and WR used=0 with run flag 'writer_draft_reused' \u2014 consistent with Direction B merge and a reused pre-staged draft (no fresh Writer/Quill cold call this run). Quill/Maya revisions both 0. No overspend possible when no CC calls fired."
+      }
+    ],
+    "guardrails_applied": [
+      {
+        "scope_check": "PASS",
+        "detail": "No scope violations detected. Quill revisions=0, Maya revisions=0; no evidence of Quill touching images or Maya editing copy. Stages ran priya\u2192scout\u2192quill\u2192maya\u2192vera\u2192porter\u2192nova in order."
+      },
+      {
+        "quote_check": "PASS",
+        "detail": "Both research quotes attributed to named, verifiable individuals with affiliation, year, and URL: David Harkey (President, IIHS) and Eric Teoh (Director of Statistical Services, IIHS). No anonymous quotes."
+      },
+      {
+        "stat_source_check": "PASS",
+        "detail": "All 6 research statistics carry a named source + year + URL (IIHS 2026 x3, Waymo 2025, Electrek/NHTSA 2026, NHTSA/Autoblog 2026). Two flagged for attribution framing (see hallucination_flags), not for missing sourcing."
+      },
+      {
+        "recommendation": "HOLD escalation: token-usage metering has now been broken across ~22 consecutive articles (#018\u2192#040). Wire real per-agent usage into each agent's completion callback (per the #019 CRITICAL recommendation) before trusting any future cost/budget number. This report's token figures are structurally unavailable, not zero-consumption."
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-11",
+    "article_number": 40,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-autonomous-vehicles-at-the-crossroads-040.html",
+    "gs_row": 42,
+    "company_urn": "urn:li:share:7493018713030549504",
+    "reshare_urn": "urn:li:share:7493018724988280832",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-11",
+    "row": 41,
+    "author": "Dawn Ginhaua",
+    "title": "Conversations That Never Happened: How Your Therapy Became Training Data",
+    "category": "AI Ethics",
+    "rationale": "Virtual-therapy giants (Talkspace citing 153M patient messages) are racing to train chatbots on real therapy transcripts while rivals fabricate synthetic sessions, with 'consent' buried in terms and conditions \u2014 a data-colonialism story about the most intimate data there is, exactly Dawn's consent-labor-and-power register.",
+    "sources": [
+      {
+        "name": "Endpoints News",
+        "url": "https://endpoints.news/how-mental-health-chatbots-are-trained-on-therapy-sessions/"
+      },
+      {
+        "name": "CalMatters (Kaiser therapists on session-transcript training)",
+        "url": "https://calmatters.org/economy/technology/2026/07/kaiser-nurses-workplace-surveillance-ai/"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-11",
+    "total_tokens_used": 873126,
+    "by_agent": {
+      "SC": 391329,
+      "QL": 0,
+      "MY": 0
+    },
+    "hallucination_flags": [
+      {
+        "claim": "As of mid-2026 there is no FDA-cleared AI diagnostic for any primary psychiatric condition (used as background for the article's regulatory framing).",
+        "issue": "No named external primary source + year. Research sources this to AIMA's own internal Scout cache synthesis ('Diagnosis by Algorithm'), not a citable third party. Must be sourced to a primary reference or dropped/softened before it appears as a hard stat.",
+        "severity": "MEDIUM"
+      },
+      {
+        "claim": "All six leading U.S. AI companies feed user inputs back into their models (Stanford analysis).",
+        "issue": "Figure is cited second-hand inside the PIRG report; the primary Stanford study (name/date) was not opened this run. Named source is one layer removed \u2014 verify the underlying Stanford paper before citing it by name/year.",
+        "severity": "MEDIUM"
+      },
+      {
+        "claim": "Talkspace: 140M message exchanges, 8B words, 6.2M clinical assessments, ~200M eligible patients.",
+        "issue": "Has a named source + year (Proof News, 2026; Jon Cohen) but figures are self-reported by Talkspace's CEO at an investor conference and not independently audited. Acceptable ONLY if attributed to the company in-copy \u2014 flag if stated as neutral fact.",
+        "severity": "LOW"
+      },
+      {
+        "claim": "2022 Warren/Booker/Wyden letter and NYC teen-data-sharing allegations.",
+        "issue": "Reported second-hand within the Proof News piece; primary records not confirmed this run. Attribute cautiously if foregrounded.",
+        "severity": "LOW"
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "agent": "TS",
+        "budget": 150000,
+        "used": 330154,
+        "pct": 220,
+        "status": "over_budget",
+        "note": "Trend Scout exceeded its 150k ceiling by 2.2x (used 330,154). Also anomalous: #41 already had a resolved, non-TBD title, so TS should have been a no-op/skip on this row \u2014 investigate why it ran and consumed a full topic-selection call ($1.06). Root-cause the trigger before the next run."
+      },
+      {
+        "agent": "SC",
+        "budget": 500000,
+        "used": 391329,
+        "pct": 78.3,
+        "status": "approaching_threshold",
+        "note": "Scout at 78.3% of its 500k budget \u2014 below the 80% alert line but close. No action required; monitor next run."
+      },
+      {
+        "agent": "QL",
+        "budget": 0,
+        "used": 0,
+        "pct": 0,
+        "status": "anomaly",
+        "note": "Quill is listed in Marco's executed stages (quill, 0 revisions) yet shows budget 0 / used 0. Either token usage was not recorded on Quill's completion callback (recurrence of the known used=0 tracking gap) or QL's budget entry was left at 0 by config. No real cost visibility for the Quill stage this run."
+      }
+    ],
+    "guardrails_applied": [],
+    "guardrail_recommendations": [
+      "TS: add a pre-call skip guard \u2014 do not invoke trend_scout / bill topic-selection tokens when the target calendar row already carries a resolved (non-placeholder) title. This run paid ~$1.06 for a topic that was not TBD.",
+      "QL: verify Quill's per-call token usage is written to token_budget.json on completion; used=0 for an executed stage means Cora has no cost measurement (ongoing since the #018/#019 tracking gap).",
+      "Editorial (out-of-scope note, non-blocking): article:publish-date / published_time meta reads 2026-07-16, but the actual deploy timestamp is 2026-08-11. Meta publish date does not match the real publish date."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-11",
+    "article_number": 41,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-conversations-that-never-happened-how-041.html",
+    "gs_row": 42,
+    "company_urn": "urn:li:share:7493030755468681216",
+    "reshare_urn": "urn:li:share:7493030769209077760",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-12",
+    "total_tokens_used": 539445,
+    "by_agent": {
+      "SC": 384790,
+      "WR": 154655,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PR": 0,
+      "TS": 0,
+      "IR": 0,
+      "LM": 0,
+      "CO": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "MEDIUM",
+        "stat": "WEF Global Risks Report 2024 \u2014 AI mis/disinformation as most severe short-term global risk",
+        "issue": "Research JSON flags this as confidence=medium, cited secondhand via an academic paper (Hameleers et al.), not the original WEF report. If it appears in the published article, verify exact WEF wording/year against the primary source before it is re-cited elsewhere.",
+        "source_present": true
+      },
+      {
+        "severity": "MEDIUM",
+        "stat": "~23% of visual political information on Facebook contains inaccurate information (Yang et al. 2023)",
+        "issue": "Research JSON flags this as confidence=low-medium \u2014 a secondary citation of an older (2023) figure nested inside another study, predating the current deepfake wave. Trace to the original Yang et al. study before using as a headline stat.",
+        "source_present": true
+      },
+      {
+        "severity": "LOW",
+        "stat": "Metadata date mismatch (not a fabricated fact)",
+        "issue": "Article meta article:publish-date and og article:published_time/modified_time are set to 2026-07-17, but this is article #42 produced 2026-08-12. Likely a leftover skeleton/template date, not a content hallucination. Recommend correcting before/at re-verification; does not block on fabricated-claim grounds."
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "agent": "SC",
+        "severity": "INFO",
+        "used": 384790,
+        "budget": 500000,
+        "pct": 76.96,
+        "note": "Approaching but NOT exceeding the 80% threshold (76.96%). No action required this run; SC remains the dominant cost driver at $1.43/run. Monitor \u2014 a slightly heavier research pass would trip the 80% alert."
+      }
+    ],
+    "guardrails_applied": [],
+    "notes": [
+      "No agent exceeded the 80% budget threshold; WR at 51.6% (154655/300000), all other active agents nominal.",
+      "QL budget=0/used=0 is expected: WR ran standalone (writer_ran flag) and the merged Quill authoring path was not billed \u2014 one honest bucket, no fabricated split.",
+      "All 3 expert quotes attributed to a named, verifiable individual (Hany Farid, UC Berkeley/Dartmouth) with source URLs \u2014 no anonymous quotes.",
+      "No scope violations observed: revisions quill=0/maya=0, no evidence of Quill touching images or Maya touching copy.",
+      "Article body beyond first 8000 chars (head/meta only) was not provided, so in-body stat-to-source tracing could not be fully verified \u2014 hallucination flags above are drawn from the research JSON's own unverified_flags and should be confirmed against the published body."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-12",
+    "article_number": 42,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-deepfakes-and-democracy-the-synthetic-042.html",
+    "gs_row": 43,
+    "company_urn": "urn:li:share:7493382021092671488",
+    "reshare_urn": "urn:li:share:7493382033361010690",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-13",
+    "row": 43,
+    "author": "Dawn Ginhaua",
+    "title": "The Deadline That Moved: How Industry Lobbied the EU Into Delaying Its Own AI Law",
+    "category": "AI Ethics / Tech Policy",
+    "rationale": "On August 2, 2026 the EU AI Act's high-risk obligations were supposed to bite; instead an 'Omnibus' deal quietly pushed stand-alone Annex III compliance to December 2027 and embedded-product rules to 2028 after heavy corporate pressure \u2014 even as 75% of the public wants stronger AI rules. That gap between who asked for the delay and who wanted the guardrails is exactly Dawn's follow-the-money, name-the-capture territory.",
+    "sources": [
+      {
+        "name": "Gibson Dunn \u2014 EU AI Act Omnibus Agreement: Postponed High-Risk Deadlines",
+        "url": "https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/"
+      },
+      {
+        "name": "CIGI \u2014 The Great Digital Disconnect: AI Deregulation Versus Public Trust",
+        "url": "https://www.cigionline.org/articles/the-great-digital-disconnect-ai-deregulation-versus-public-trust/"
+      },
+      {
+        "name": "Holland & Knight \u2014 U.S. Companies Face EU AI Act's August 2026 Deadline",
+        "url": "https://www.hklaw.com/en/insights/publications/2026/04/us-companies-face-eu-ai-acts-possible-august-2026-compliance-deadline"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-13",
+    "total_tokens_used": 850502,
+    "by_agent": {
+      "IR": 0,
+      "PR": 0,
+      "SC": 373722,
+      "TS": 322833,
+      "WR": 153947,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "LM": 0,
+      "CO": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "HIGH",
+        "item": "EU-specific lobbying dollar figures (OpenAI +576% / $260K\u2192$1.76M, Meta ~$19.2M, Alphabet ~$13M+)",
+        "reason": "Research JSON _meta and unverified_flags explicitly mark these as sourced from the governance-gap cache, which was TRAINING-SYNTHESIZED, not live-fetched. They are US-lobbying figures, not tied to this article's specific EU delay event. If any appear as a stat-grid card or an in-text precise figure, they are an unverified/hallucination-risk citation.",
+        "action": "Article body not verifiable from provided data (only HTML <head>/meta supplied, not the stat grid or prose). Verify against OpenSecrets + EU Transparency Register before publication; safest is to characterize lobbying as 'intense' per Reuters/POLITICO rather than cite precise numbers."
+      },
+      {
+        "severity": "MEDIUM",
+        "item": "Michael McNamara quote ('no further delays... undermine regulation and rule of law beyond just the AI Act')",
+        "reason": "Flagged in research as a paraphrase assembled from quoted fragments in POLITICO, not confirmed verbatim. Named/verifiable individual (MEP, AI Act co-negotiator), but exact wording unconfirmed.",
+        "action": "Acceptable inside quotation marks ONLY if exact wording confirmed against the POLITICO original; otherwise render as reported paraphrase."
+      },
+      {
+        "severity": "MEDIUM",
+        "item": "Marietje Schaake quote ('outsourced our democratic decision-making to... Silicon Valley')",
+        "reason": "From her 2024 book 'The Tech Coup' per research cache \u2014 thematic framing, NOT a statement about the 2025 Digital Omnibus. Risk of implying she commented on this specific delay.",
+        "action": "Must be framed as general regulatory-capture context, not a reaction to the Digital Omnibus."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "severity": "INFO",
+        "item": "Anonymous Euractiv standards-source quote ('pressing pause could set a dangerous precedent...')",
+        "reason": "Task 3 check: this quote has NO named individual. Research flags it as anonymous/paraphrased. Permissible only if attributed explicitly as 'a person involved in the standards work, speaking to Euractiv' \u2014 not presented as a named source."
+      }
+    ],
+    "budget_alerts": [
+      {
+        "agent": "TS",
+        "budget": 150000,
+        "used": 322833,
+        "pct_of_budget": 215.2,
+        "severity": "CRITICAL",
+        "note": "OVER BUDGET \u2014 215% of allotted 150,000-token ceiling (status: over_budget), cost $1.20. Trend Scout is scoped as topic-SELECTION (budget sized at 12k-150k), not research; a 322k-token spend on a TBD-row resolution is anomalous. Investigate whether TS looped on feeds/WebSearch or duplicated Scout's research work. Recommend Round-1 guardrail: cap TS turns and reads before next run."
+      },
+      {
+        "agent": "SC",
+        "budget": 500000,
+        "used": 373722,
+        "pct_of_budget": 74.7,
+        "severity": "WATCH",
+        "note": "Below 80% threshold but elevated at 74.7% ($1.26). Combined SC+TS spend of 696,555 tokens on research/topic stages for one article is high \u2014 the two live-research stages together are the run's dominant cost."
+      }
+    ],
+    "guardrails_applied": [
+      {
+        "type": "verification_hold",
+        "detail": "Article stat grid and running prose could NOT be verified \u2014 only the HTML <head>/meta block (first 8000 chars) was provided, which contains no body stats or citations. Full stat-vs-source and inline-citation traceability check is INCOMPLETE and must be run against the full article before treating this report as a clean pass."
+      },
+      {
+        "type": "scope_check",
+        "detail": "No scope violations detected in run summary. Quill authored+edited (WR bucket used, QL idle \u2014 consistent with Direction B merge); Maya revisions 0, Quill revisions 0; no evidence of Quill touching images or Maya touching copy."
+      },
+      {
+        "type": "recommendation",
+        "detail": "Before re-citing the training-synthesized lobbying figures anywhere, verify against OpenSecrets/EU Transparency Register. Hold precise dollar figures unless confirmed."
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-13",
+    "article_number": 43,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-deadline-that-moved-how-043.html",
+    "gs_row": 44,
+    "company_urn": "urn:li:share:7493744739792609282",
+    "reshare_urn": "urn:li:share:7493744751909847040",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]

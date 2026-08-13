@@ -1,0 +1,107 @@
+{
+  "article_number": 40,
+  "slug": "autonomous-vehicles-at-the-crossroads",
+  "title": "Autonomous Vehicles at the Crossroads: The Promise and the Peril",
+  "author": "Joselito Sering",
+  "category": "AI Innovation",
+  "researched_at": "2026-08-10",
+  "research_summary": "Two-sided evidence picture as of mid-2026. The 'promise' side is anchored by an independent IIHS study (July 2026) finding Waymo driverless vehicles crash 68% less often than human drivers per mile. The 'peril' side is anchored by NHTSA investigations into Tesla and Avride robotaxi incidents and a contested Fortune analysis suggesting Tesla's robotaxis perform worse than humans. The strongest cross-cutting counterargument, voiced by IIHS itself, is that the national data-collection system is too weak to verify safety claims at scale.",
+  "statistics": [
+    {
+      "stat": "Waymo's driverless vehicles were involved in 68% fewer crashes per vehicle mile traveled than human drivers, based on police-reportable crashes across San Francisco, Phoenix, Los Angeles and Austin.",
+      "source": "Insurance Institute for Highway Safety (IIHS)",
+      "year": "2026",
+      "url": "https://www.iihs.org/news/detail/waymos-driverless-cars-crash-less-often-than-people",
+      "verified": true,
+      "note": "Independent third-party study — strongest single stat. Regional variation: 76% lower in Phoenix, 71% LA, 35% SF, but 4% HIGHER in Austin (small sample)."
+    },
+    {
+      "stat": "Waymo vehicles were involved in 85% fewer single-vehicle crashes and 81% fewer injury crashes per mile traveled than human drivers.",
+      "source": "Insurance Institute for Highway Safety (IIHS)",
+      "year": "2026",
+      "url": "https://www.iihs.org/news/detail/waymos-driverless-cars-crash-less-often-than-people",
+      "verified": true
+    },
+    {
+      "stat": "Waymo logged about 50 million driverless miles over the 2021-2024 study period, compared with about 222 billion miles driven by humans in the same locations; only 89 of Waymo's crash involvements were judged police-reportable, of which 64 were in fully driverless operation.",
+      "source": "Insurance Institute for Highway Safety (IIHS)",
+      "year": "2026",
+      "url": "https://www.iihs.org/news/detail/waymos-driverless-cars-crash-less-often-than-people",
+      "verified": true,
+      "note": "Useful for conveying the still-limited scale of AV deployment vs human driving."
+    },
+    {
+      "stat": "Across 56.7 million rider-only (fully driverless) miles through January 2025, Waymo reported a statistically significant lower crash rate than human benchmarks for any-injury-reported, airbag-deployment, and suspected-serious-injury-or-worse crashes.",
+      "source": "Waymo (company research)",
+      "year": "2025",
+      "url": "https://waymo.com/research/comparison-of-waymo-rider-only-crash-rates-by-crash-type-to-human-benchmarks/",
+      "verified": true,
+      "note": "COMPANY-FUNDED self-study — cite as Waymo's own analysis, not independent. Directionally consistent with the independent IIHS finding."
+    },
+    {
+      "stat": "Tesla disclosed 17 autonomous-driving-system incidents to NHTSA spanning July 2025 through March 2026 during its Austin robotaxi pilot; all involved a 2026 Model Y with the system engaged and a safety monitor present (13 property-damage-only, 1 minor injury, 2 during teleoperator takeover).",
+      "source": "Electrek / NHTSA disclosure",
+      "year": "2026",
+      "url": "https://electrek.co/2026/05/15/tesla-unredacts-robotaxi-crash-narratives-nhtsa/",
+      "verified": true,
+      "note": "Peril-side anchor. Small denominator; not directly comparable to Waymo's per-mile rates."
+    },
+    {
+      "stat": "NHTSA opened an investigation into 16 crashes involving Avride autonomous vehicles in Dallas and Austin, citing alleged system failures including changing lanes into the path of other vehicles and striking partially obstructing stationary objects.",
+      "source": "NHTSA / Autoblog",
+      "year": "2026",
+      "url": "https://www.autoblog.com/autonomous/tesla-robotaxi-rival-under-investigation-after-16-accidents",
+      "verified": true,
+      "note": "Recent news item (within 6 months) — shows regulatory scrutiny is broadening beyond Tesla."
+    }
+  ],
+  "quotes": [
+    {
+      "quote": "The results show that, on a limited scale, these driverless cars are safer than human drivers — who can be impaired or drowsy or suffer lapses in attention. However, the present data collection system isn't good enough to allow continuous monitoring of a large-scale expansion.",
+      "name": "David Harkey",
+      "affiliation": "President, Insurance Institute for Highway Safety (IIHS)",
+      "year": "2026",
+      "url": "https://www.iihs.org/news/detail/waymos-driverless-cars-crash-less-often-than-people",
+      "verified": true,
+      "note": "Ideal 'promise and peril in one sentence' quote — captures both sides of the article thesis."
+    },
+    {
+      "quote": "Those are encouraging signs for the future of driverless vehicles. Now we need to get the data collection system right, so that we can ensure that level of safety continues as these technologies become more prevalent.",
+      "name": "Eric Teoh",
+      "affiliation": "Director of Statistical Services, IIHS; lead author of the 2026 Waymo crash study",
+      "year": "2026",
+      "url": "https://www.iihs.org/news/detail/waymos-driverless-cars-crash-less-often-than-people",
+      "verified": true
+    }
+  ],
+  "strongest_counterargument": {
+    "claim": "The safety numbers cannot yet be trusted at scale because the national reporting system is too weak to verify them. NHTSA's Standing General Order (SGO) database — the only national tool tracking self-driving crashes — was built to enforce recalls, not to compare crash rates. Companies must report crashes but are NOT required to report the miles they log; only Waymo voluntarily publishes its mileage, so no true per-mile crash rate can be computed for Cruise, Zoox, Tesla, or others. IIHS researchers had to discard roughly a quarter of reported crashes as redundant or non-qualifying just to make a rough comparison. The impressive Waymo figures therefore describe a single, well-behaved operator on a limited scale — not the industry, and not what happens when deployment scales up.",
+    "source": "IIHS 2026",
+    "url": "https://www.iihs.org/news/detail/waymos-driverless-cars-crash-less-often-than-people"
+  },
+  "recent_news": [
+    {
+      "item": "NHTSA opened an investigation (2026) into 16 Avride robotaxi crashes in Dallas and Austin, alleging autonomous-system failures such as unsafe lane changes and striking stationary obstructions.",
+      "url": "https://www.autoblog.com/autonomous/tesla-robotaxi-rival-under-investigation-after-16-accidents",
+      "date": "2026"
+    },
+    {
+      "item": "Tesla unredacted narratives for its 17 Austin robotaxi crashes to NHTSA (May 2026); two occurred while a remote teleoperator had taken control, raising questions about the human-backup model. Regulators, several U.S. senators, and some states are weighing tighter rules on AV rollouts even as Tesla prepares to expand with its two-seat Cybercab.",
+      "url": "https://electrek.co/2026/05/15/tesla-unredacts-robotaxi-crash-narratives-nhtsa/",
+      "date": "2026"
+    }
+  ],
+  "unverified_flags": [
+    {
+      "claim": "A Fortune analysis (Feb 2026) argued that 'by Tesla's own math' its robotaxis are roughly 4x (and possibly up to 8x) worse at driving than humans.",
+      "url": "https://fortune.com/2026/02/26/tesla-robotaxis-4x-8x-worse-than-humans-at-driving-safety-record-crashes/",
+      "reason": "CONTESTED / methodology-dependent. Derived from a very small crash count with redactions, extrapolated against human benchmarks; Tesla disputes such comparisons and the denominators (miles driven) are not transparently reported. Use only as an attributed claim ('a Fortune analysis argued...'), never as a settled fact, and pair it with the reporting-gap counterargument."
+    },
+    {
+      "claim": "Waymo's own 56.7M-mile safety study conclusions.",
+      "reason": "Company-funded self-research. Directionally corroborated by the independent IIHS study, but should be attributed to Waymo rather than presented as neutral."
+    }
+  ],
+  "cached_files_reviewed": [],
+  "research_notes": "Budget-constrained run. Cached files (BCI, surveillance-wages, governance-gap, clinical-medicine) were not topically relevant to autonomous vehicles and were skipped to conserve budget. Primary sourcing: 1 Exa semantic search (IIHS + Waymo primary sources) + 1 WebSearch (NHTSA/Tesla/Avride peril side). Exa's second call hit the free-tier rate limit. All six statistics and both quotes trace to named, dated, URL-backed sources. Article thesis ('promise vs peril') is well supported by the Harkey quote, which encapsulates both sides."
+}
