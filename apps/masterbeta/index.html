@@ -1507,12 +1507,12 @@ function buildConsole(){
  mkSwitch(r,{label:'REVERB',path:'chain.verb.on'});
  mkKnob(r,K('V.SIZE','chain.verb.size',.4,3,.1,v=>v.toFixed(1)+'s',1.6));
  mkKnob(r,K('DIST','chain.verb.dist',0,250,5,v=>v.toFixed(0)+'m',40));
- mkHS(r,K('V.MIX','chain.verb.mix',0,.6,.01,v=>Math.round(v*100)+'%',0));
+ mkKnob(r,K('V.MIX','chain.verb.mix',0,.6,.01,v=>Math.round(v*100)+'%',0));
  r=row(b,'k4');
  mkSwitch(r,{label:'DELAY',path:'chain.dly.on'});
  mkKnob(r,K('D.TIME','chain.dly.time',60,500,5,v=>v.toFixed(0)+'m',160));
  mkKnob(r,K('D.FBK','chain.dly.fb',0,.7,.02,v=>Math.round(v*100)+'%',.3));
- mkHS(r,K('D.MIX','chain.dly.mix',0,.5,.01,v=>Math.round(v*100)+'%',0));
+ mkKnob(r,K('D.MIX','chain.dly.mix',0,.5,.01,v=>Math.round(v*100)+'%',0));
  b=$('#pb-tex');
  r=row(b,'flex');r.style.gap='4px';TXROW=r;
  TEX_ICONS.forEach(pair=>{
