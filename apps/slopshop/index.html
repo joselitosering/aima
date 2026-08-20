@@ -1591,20 +1591,25 @@ const TEMPLATES=[
   {name:'Print 8.5×11',w:2550,h:3300,desc:'Letter · 300 DPI'},
   {name:'Print 11×17',w:3300,h:5100,desc:'Tabloid · 300 DPI'}
 ];
-function applyTemplate(t){
+function applyTemplate(t,mode){
   if(xf)commitTransform();
   commitTextEditor();
   const nw=t.w,nh=t.h;
-  const s=Math.max(nw/doc.w,nh/doc.h);
+  // fit  = scale so ALL content stays visible (never crops)
+  // fill = old cover behaviour (scales past the edges, crops to canvas)
+  const fill=mode==='fill';
+  const s=fill?Math.max(nw/doc.w,nh/doc.h):Math.min(nw/doc.w,nh/doc.h);
+  const ox=(nw-doc.w*s)/2, oy=(nh-doc.h*s)/2; // centring offset
   for(const L of layers){
     if(L.type==='text'){
-      L.text.x*=s;L.text.y*=s;
+      L.text.x=Math.round(ox+L.text.x*s);
+      L.text.y=Math.round(oy+L.text.y*s);
       L.text.size=clamp(Math.round(L.text.size*s),4,2000);
       continue;
     }
     const n=mkCanvas(nw,nh),c=n.getContext('2d');
     c.imageSmoothingQuality='high';
-    c.drawImage(L.canvas,(nw-doc.w*s)/2+L.x*s,(nh-doc.h*s)/2+L.y*s,doc.w*s,doc.h*s);
+    c.drawImage(L.canvas,ox+L.x*s,oy+L.y*s,doc.w*s,doc.h*s);
     L.canvas=n;L.ctx=n.getContext('2d',{willReadFrequently:true});L.x=0;L.y=0;
   }
   doc={w:nw,h:nh};
@@ -1612,15 +1617,29 @@ function applyTemplate(t){
   sel=null;cropState.rect=null;guideV=[];guideH=[];
   rebuildLayerPanel();render();fitView();
   pushHistory('Template: '+t.name);
-  toast(`“${t.name}” applied — canvas ${nw}×${nh}, artwork cover-scaled to fill`);
+  toast(`“${t.name}” — canvas ${nw}×${nh} · ${fill?'fill-scaled (edges may crop)':'fit-scaled — nothing cropped'}`);
 }
 function buildTemplateGallery(){
   const g=$('tpl-grid');g.innerHTML='';
+  const bar=document.createElement('div');
+  bar.style.cssText='display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap';
+  bar.innerHTML=`<span style="color:var(--muted);font-size:11.5px">Scale</span>
+    <div class="seg" id="tpl-scale">
+      <button data-v="fit" class="on">Fit · nothing cropped</button>
+      <button data-v="fill">Fill · crops edges</button>
+    </div>
+    <span style="color:var(--muted);font-size:11px;font-style:italic">Fit keeps every layer fully visible — Fill covers the canvas like before</span>`;
+  g.parentNode.insertBefore(bar,g);
+  let mode='fit';
+  bar.querySelectorAll('#tpl-scale button').forEach(b=>b.onclick=()=>{
+    mode=b.dataset.v;
+    bar.querySelectorAll('#tpl-scale button').forEach(x=>x.classList.toggle('on',x===b));
+  });
   TEMPLATES.forEach(t=>{
     const c=document.createElement('button');
     c.className='tpl-card';
     c.innerHTML=`<b>${t.name}</b><span>${t.w} × ${t.h}</span><span>${t.desc}</span>`;
-    c.onclick=()=>{closeModal();setTimeout(()=>applyTemplate(t),40);};
+    c.onclick=()=>{closeModal();setTimeout(()=>applyTemplate(t,mode),40);};
     g.appendChild(c);
   });
 }
