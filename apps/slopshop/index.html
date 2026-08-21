@@ -400,7 +400,7 @@ const stack=$('stack'),workspace=$('workspace');
 let strokeCv=null,sctx=null,scratch=null,sctx2=null,erasePrevCv=null,epctx=null;
 const measureCtx=mkCanvas(8,8).getContext('2d');
 /* ---------- layers ---------- */
-function makeLayer(name){const canvas=mkCanvas(doc.w,doc.h);return{id:layerSeq++,name,canvas,ctx:canvas.getContext('2d',{willReadFrequently:true}),visible:true,opacity:1,blend:'source-over',x:0,y:0,locked:false,type:null,text:null,adj:{...DEFAULT_ADJ}};}
+function makeLayer(name){const canvas=mkCanvas(doc.w,doc.h);return{id:layerSeq++,name,canvas,ctx:canvas.getContext('2d',{willReadFrequently:true}),visible:true,opacity:1,blend:'source-over',x:0,y:0,locked:false,type:null,text:null,fx:null,adj:{...DEFAULT_ADJ}};}
 const active=()=>layers[activeIdx];
 function rebase(L){if(!L.x&&!L.y)return;const n=mkCanvas(doc.w,doc.h);n.getContext('2d').drawImage(L.canvas,L.x,L.y);L.canvas=n;L.ctx=n.getContext('2d',{willReadFrequently:true});L.x=0;L.y=0;}
 function ensureScratch(){if(!scratch||scratch.width!==doc.w||scratch.height!==doc.h){scratch=mkCanvas(doc.w,doc.h);sctx2=scratch.getContext('2d');erasePrevCv=mkCanvas(doc.w,doc.h);epctx=erasePrevCv.getContext('2d');}}
@@ -501,6 +501,11 @@ function convolveData(d,w,h,K){
     d[o]=r;d[o+1]=g;d[o+2]=b;
   }
 }
+const IMGF={glow:false,shadow:false,outline:false,amount:6,ocolor:'#ffffff'};
+function layerFX(L){
+  if(L.type==='text')return L.text.fx||(L.text.fx={...DEFFX});
+  return L.fx||(L.fx={...IMGF});
+}
 function drawLayer(ctx,L,srcOverride){
   const cv=srcOverride||(L.type==='text'?getTextCanvas(L):L.canvas);
   const fs=filterString(L.adj);
@@ -517,6 +522,43 @@ function drawLayer(ctx,L,srcOverride){
     }
     if(L.adj.temp!==0){const t=L.adj.temp/100;sctx2.globalCompositeOperation='source-atop';sctx2.fillStyle=t>0?`rgba(255,148,60,${(t*.3).toFixed(3)})`:`rgba(88,144,255,${(-t*.3).toFixed(3)})`;sctx2.fillRect(0,0,doc.w,doc.h);}
     sctx2.restore();img=scratch;
+  }
+  const fx=L.type==='text'?null:L.fx;
+  if(fx&&(fx.glow||fx.shadow||fx.outline)){
+    const amt=Math.max(1,fx.amount||6);
+    const e=mkCanvas(doc.w,doc.h),ec=e.getContext('2d');
+    if(fx.shadow){
+      const sh=mkCanvas(doc.w,doc.h),sc=sh.getContext('2d');
+      sc.drawImage(img,0,0);
+      sc.globalCompositeOperation='source-in';
+      sc.fillStyle='rgba(0,0,0,.55)';
+      sc.fillRect(0,0,doc.w,doc.h);
+      ec.save();
+      ec.filter=`blur(${(amt*.8).toFixed(1)}px)`;
+      ec.drawImage(sh,amt*.6,amt*.6);
+      ec.restore();
+    }
+    if(fx.glow){
+      ec.save();
+      ec.globalCompositeOperation='lighter';
+      ec.filter=`blur(${(amt*1.4).toFixed(1)}px)`;
+      ec.globalAlpha=.85;
+      ec.drawImage(img,0,0);
+      ec.restore();
+    }
+    if(fx.outline){
+      const sil=mkCanvas(doc.w,doc.h),sic=sil.getContext('2d');
+      sic.drawImage(img,0,0);
+      sic.globalCompositeOperation='source-in';
+      sic.fillStyle=fx.ocolor||'#ffffff';
+      sic.fillRect(0,0,doc.w,doc.h);
+      for(let a=0;a<12;a++){
+        const an=a/12*TAU;
+        ec.drawImage(sil,Math.cos(an)*amt,Math.sin(an)*amt);
+      }
+    }
+    ec.drawImage(img,0,0);
+    img=e;
   }
   ctx.save();ctx.globalAlpha=L.opacity;ctx.globalCompositeOperation=L.blend;ctx.drawImage(img,L.x,L.y);ctx.restore();
 }
@@ -753,7 +795,7 @@ function snapAxis(edges,targets,thr){let best=null;for(const e of edges)for(cons
 function snapTargetsX(){return[0,doc.w/2,doc.w].concat(guidesOn?guideV:[]);}
 function snapTargetsY(){return[0,doc.h/2,doc.h].concat(guidesOn?guideH:[]);}
 /* ---------- history ---------- */
-function snapLayer(L){const base={name:L.name,visible:L.visible,opacity:L.opacity,blend:L.blend,x:L.x,y:L.y,locked:!!L.locked,adj:{...L.adj}};if(L.type==='text')return{...base,type:'text',text:{...L.text,fx:{...DEFFX,...(L.text.fx||{})}}};return{...base,type:'raster',data:L.ctx.getImageData(0,0,doc.w,doc.h)};}
+function snapLayer(L){const base={name:L.name,visible:L.visible,opacity:L.opacity,blend:L.blend,x:L.x,y:L.y,locked:!!L.locked,adj:{...L.adj},fx:L.fx?{...L.fx}:null};if(L.type==='text')return{...base,type:'text',text:{...L.text,fx:{...DEFFX,...(L.text.fx||{})}}};return{...base,type:'raster',data:L.ctx.getImageData(0,0,doc.w,doc.h)};}
 function pushHistory(name){
   if(textEdit)commitTextEditor(true);
   if(xf)commitTransform(true);
@@ -767,7 +809,7 @@ function jumpHistory(i){
   if(textEdit)commitTextEditor(true);
   if(xf)cancelTransform();
   histIndex=i;const st=hist[i];doc={...st.doc};sizeCanvases();textCache.clear();multiSel.clear();
-  layers=st.layers.map(s=>{const L=makeLayer(s.name);L.visible=s.visible;L.opacity=s.opacity;L.blend=s.blend;L.x=s.x;L.y=s.y;L.locked=!!s.locked;L.adj={...s.adj};if(s.type==='text'){L.type='text';L.text={...s.text,fx:{...DEFFX,...(s.text.fx||{})}};}else L.ctx.putImageData(s.data,0,0);return L;});
+  layers=st.layers.map(s=>{const L=makeLayer(s.name);L.visible=s.visible;L.opacity=s.opacity;L.blend=s.blend;L.x=s.x;L.y=s.y;L.locked=!!s.locked;L.adj={...s.adj};L.fx=s.fx?{...s.fx}:null;if(s.type==='text'){L.type='text';L.text={...s.text,fx:{...DEFFX,...(s.text.fx||{})}};}else L.ctx.putImageData(s.data,0,0);return L;});
   activeIdx=clamp(st.active,0,layers.length-1);
   sel=null;cropState.rect=null;snapGuides=[];polyPts=[];bezAnchors=[];bezDragIdx=-1;
   refreshAll();fitView();refreshHistoryPanel();refreshUndoButtons();
@@ -1128,6 +1170,17 @@ function updateOptionsBar(){
       const g=add(`<button class="opt-btn primary" id="crop-apply">Apply Crop</button><button class="opt-btn" id="crop-cancel">Cancel</button><span class="opt-hint">Drag on canvas, Enter applies · Esc cancels</span>`);
       g.querySelector('#crop-apply').onclick=applyCrop;
       g.querySelector('#crop-cancel').onclick=()=>{cropState.rect=null;drawOverlay();};
+      break;}
+        case 'move':{
+      const L=active(),fx=layerFX(L);
+      const g=add(`<span class="opt-label">FX</span><div class="seg" id="img-tfx"><button data-k="glow" class="${fx.glow?'on':''}">Glow</button><button data-k="shadow" class="${fx.shadow?'on':''}">Shadow</button><button data-k="outline" class="${fx.outline?'on':''}">Outline</button></div><span class="opt-label">FX size</span><input type="range" id="img-fxamt" min="1" max="40" value="${fx.amount}"><input type="color" id="img-focolor" value="${fx.ocolor}" class="color-in" title="Outline colour"><span class="opt-hint">Live effects on the active layer · double-click a layer to move / resize / rotate</span>`);
+      g.querySelectorAll('#img-tfx button').forEach(b=>b.onclick=()=>{
+        const k=b.dataset.k;fx[k]=!fx[k];b.classList.toggle('on');
+        render();pushHistory('Layer effect');
+      });
+      g.querySelector('#img-fxamt').oninput=e=>{fx.amount=+e.target.value;render();};
+      g.querySelector('#img-fxamt').onchange=()=>pushHistory('Layer effect size');
+      g.querySelector('#img-focolor').oninput=e=>{fx.ocolor=e.target.value;render();};
       break;}
     default:add(`<span class="opt-hint">${HINTS[tool]||''}</span>`);
   }
@@ -2497,7 +2550,7 @@ function serializeProject(){
     layers:layers.map(L=>{
       const o={name:L.name,visible:L.visible,opacity:L.opacity,blend:L.blend,x:L.x,y:L.y,adj:{...L.adj},locked:!!L.locked};
       if(L.type==='text'){o.type='text';o.text={...L.text,fx:{...DEFFX,...(L.text.fx||{})}};}
-      else o.png=L.canvas.toDataURL('image/png');
+      else{o.fx=L.fx?{...L.fx}:null;o.png=L.canvas.toDataURL('image/png');}
       return o;
     })};
 }
