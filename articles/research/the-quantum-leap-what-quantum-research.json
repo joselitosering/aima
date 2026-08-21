@@ -1,0 +1,106 @@
+{
+  "article_number": 48,
+  "slug": "the-quantum-leap-what-quantum",
+  "title": "The Quantum Leap: What Quantum Computing Actually Means for Ordinary Life",
+  "category": "AI Science",
+  "author": "Joselito Sering",
+  "research_date": "2026-08-20",
+  "research_backend": "exa_semantic_search (3 calls)",
+  "budget_note": "Cached files (BCI, surveillance-wages, governance-gap, clinical-AI) were deliberately NOT read — none are topic-relevant to quantum computing; skipping them saved budget.",
+
+  "thesis_framing": "Quantum computers are not a faster laptop; they are a fundamentally different tool for a narrow class of problems (molecular simulation, certain optimization, breaking specific encryption). For ordinary people the impact in 2026 is mostly indirect — accelerated drug/material discovery — plus one concrete, well-anticipated risk: the eventual obsolescence of today's encryption, which institutions are already quietly migrating away from.",
+
+  "statistics": [
+    {
+      "stat": "A late-2024 Global Risk Institute survey of 32 quantum computing experts put the odds at an even 50-50 that a quantum computer could break a 2048-bit RSA key within 24 hours by 2040 — an uncertain but measurable timeline, not an imminent one.",
+      "source": "MIT Technology Review (citing Global Risk Institute)",
+      "year": 2026,
+      "url": "https://www.technologyreview.com/2026/08/13/1141041/building-a-practical-path-to-post-quantum-cryptography/",
+      "verified": true
+    },
+    {
+      "stat": "Under U.S. directive CNSSP-15, beginning January 2027 new National Security Systems acquisitions must support post-quantum (CNSA 2.0 / NIST-standardized) algorithms, with implementation required by 2031 and 100% adoption targeted by 2035 — a concrete government migration schedule already in motion.",
+      "source": "MIT Technology Review",
+      "year": 2026,
+      "url": "https://www.technologyreview.com/2026/08/13/1141041/building-a-practical-path-to-post-quantum-cryptography/",
+      "verified": true
+    },
+    {
+      "stat": "In July 2026, IBM added three new entries to its 'quantum advantage tracker,' each using a different error-handling approach and claiming to clearly demonstrate a calculation quantum hardware can do that classical supercomputers cannot reliably reproduce.",
+      "source": "Ars Technica",
+      "year": 2026,
+      "url": "https://arstechnica.com/science/2026/07/if-a-quantum-computer-outperforms-normal-ones-can-you-tell-if-its-right/",
+      "verified": true
+    },
+    {
+      "stat": "Post-quantum security is already shipping in consumer silicon: the Intel Xeon 6 processor now incorporates quantum-safe AES-256 memory encryption and microcode signing, with more firmware/software signing PQC extensions planned.",
+      "source": "MIT Technology Review",
+      "year": 2026,
+      "url": "https://www.technologyreview.com/2026/08/13/1141041/building-a-practical-path-to-post-quantum-cryptography/",
+      "verified": true
+    },
+    {
+      "stat": "For certain problems (molecular simulation, specific optimization, breaking RSA/ECC), a sufficiently powerful quantum computer could complete in practical time calculations that would take a classical supercomputer longer than the age of the universe — the source of the 'quantum advantage.'",
+      "source": "Technonguide (explanatory, 2026)",
+      "year": 2026,
+      "url": "https://technonguide.com/quantum-computing-explained-for-non-scientists-what-it-means-for-everyday-tech/",
+      "verified": "partial",
+      "flag": "Widely-repeated framing claim rather than a measured figure — use as illustration of scale, not as a precise benchmark. Secondary/explainer source, not primary."
+    }
+  ],
+
+  "quotes": [
+    {
+      "quote": "Trusted computing when you can do classical simulations is irrelevant. Trusted computing when you can't do classical simulations is a big deal.",
+      "name": "Jay Gambetta",
+      "affiliation": "IBM (Vice President, IBM Quantum)",
+      "context": "On why IBM's newest results matter: the point is demonstrating quantum results that classical machines cannot check.",
+      "url": "https://arstechnica.com/science/2026/07/if-a-quantum-computer-outperforms-normal-ones-can-you-tell-if-its-right/",
+      "verified": true
+    },
+    {
+      "quote": "It's got a stronger complexity argument because of the [T gates], which you can prove on average is exponentially hard to sample for a classical computer.",
+      "name": "Jay Gambetta",
+      "affiliation": "IBM (Vice President, IBM Quantum)",
+      "context": "On a new IBM/University of Chicago algorithm designed so classical hardware cannot easily catch up.",
+      "url": "https://arstechnica.com/science/2026/07/if-a-quantum-computer-outperforms-normal-ones-can-you-tell-if-its-right/",
+      "verified": true,
+      "flag": "Both quotes are from the same expert (Gambetta). Writer/editor should source one additional independent expert voice (e.g., an academic or a PQC/NIST-side commentator) before publication for balance."
+    }
+  ],
+
+  "strongest_counterargument": {
+    "claim": "Quantum computing for ordinary life is largely overhyped in the near term. Quantum computers are highly specialized accelerators, not general-purpose machines — they will never replace the laptop, and there is 'no expectation that they ever will.' For the average person in 2026 there is no urgent individual action required: the encryption risk is years away, well-understood, and being managed at the infrastructure level by banks, platforms, and standards bodies. Framing PQC as a crisis is itself the hype; MIT Technology Review calls it 'a manageable evolution, not a crisis.'",
+    "sources": [
+      "https://www.technologyreview.com/2026/08/13/1141041/building-a-practical-path-to-post-quantum-cryptography/",
+      "https://technonguide.com/quantum-computing-explained-for-non-scientists-what-it-means-for-everyday-tech/"
+    ]
+  },
+
+  "recent_news": [
+    {
+      "item": "MIT Technology Review published 'Building a practical path to post-quantum cryptography,' arguing PQC is a phased, manageable transition and detailing the CNSA 2.0 government migration timeline (2027–2035).",
+      "date": "2026-08-13",
+      "url": "https://www.technologyreview.com/2026/08/13/1141041/building-a-practical-path-to-post-quantum-cryptography/"
+    },
+    {
+      "item": "IBM announced three new quantum-advantage results (with RIKEN/Qedma, University of Chicago, and Algorithmiq), each a different creative approach to producing trustworthy quantum results on today's error-prone hardware — verified across IBM and Quantinuum processors.",
+      "date": "2026-07-30",
+      "url": "https://arstechnica.com/science/2026/07/if-a-quantum-computer-outperforms-normal-ones-can-you-tell-if-its-right/"
+    }
+  ],
+
+  "everyday_impact_angles": [
+    "Your passwords/banking: 'harvest now, decrypt later' — adversaries can store encrypted traffic today to decrypt once quantum hardware matures; why long-confidentiality data (health, IP, state secrets) is migrated first.",
+    "Your medicines: pharma and materials firms already run early-stage molecular simulations on cloud quantum hardware; benefit reaches consumers indirectly through future drugs/batteries.",
+    "Your laptop: unchanged — quantum is a different tool, not a faster PC.",
+    "What to actually do: essentially nothing individually in 2026; awareness of why apps/banks are quietly changing encryption is the real takeaway."
+  ],
+
+  "verification_flags": [
+    "The 'age of the universe' scale comparison (stat #5) is an illustrative explainer claim, not a benchmarked measurement — do not cite as precise.",
+    "Both expert quotes are from Jay Gambetta (IBM) — add one independent voice for balance.",
+    "Technonguide is a secondary explainer source; the Global Risk Institute / RSA-2040 figure is reported via MIT Tech Review (not read at the primary GRI report) — the primary GRI 'Quantum Threat Timeline' report should be checked if this figure becomes a headline stat.",
+    "No independent market-size figure was captured within budget; if the article needs a market-value stat, it must be sourced in a follow-up pass."
+  ]
+}

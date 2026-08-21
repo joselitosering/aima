@@ -1,0 +1,63 @@
+<p class="lead">Every few years a technology arrives wearing a cape, and the first job of anyone who works with real tools is to take the cape off and look at what's underneath. Quantum computing is having that moment now. You have seen the headlines — machines that break every password, computers a trillion times faster, the end of privacy — and almost all of them are wrong in the same way: they treat a quantum computer as if it were a faster laptop. It isn't. It is a different instrument entirely, built for a narrow set of problems most of us will never touch directly. And yet its shadow already reaches into your bank, your phone, and the medicine cabinet you'll open ten years from now. I want to walk you through what's real, because the real story is stranger and more useful than the hype.</p>
+
+<h2>What Quantum Actually Is (And Isn't)</h2>
+<p>Start with the smallest honest description. A normal computer stores information in bits — ones and zeros, on and off, one certain answer at a time. A quantum computer stores information in a <strong>qubit</strong>, which can hold a blend of possibilities at once and, working alongside other qubits, explore an enormous space of combinations in parallel. That is the entire trick, and it is not a general-purpose superpower. For a specific class of problems — molecular simulation, certain kinds of optimization, and breaking particular encryption schemes — a sufficiently powerful machine could complete in practical time a calculation that would take a classical supercomputer longer than the age of the universe (Technonguide). That gap is what people mean by <strong>quantum advantage</strong>.</p>
+<p>But hold onto the word "narrow." A quantum computer will not edit your video faster, load a webpage faster, or run your spreadsheet at all. There is no expectation that it ever will (MIT Technology Review). It is a specialized accelerator for hard math, not a replacement for the machine on your desk. I have spent two years watching AI agents collapse weeks of creative work into an afternoon, so I know the difference between a tool that changes what you can afford to attempt and a tool that just runs the same errand faster — quantum is the first kind, for a handful of people, and for the rest of us its effects arrive secondhand.</p>
+
+<h2>The Only Risk That Reaches Your Phone</h2>
+<p>Here is where it gets personal. The encryption that protects your banking, your messages, and your medical records leans on the fact that classical computers cannot factor very large numbers quickly. A mature quantum machine could. That is the one direct threat to ordinary life, and it has a name in the security world: <strong>harvest now, decrypt later</strong>. An adversary doesn't need a quantum computer today — they can simply record your encrypted traffic now and store it, waiting to unlock it once the hardware matures. Anything that must stay confidential for a decade or more — health data, intellectual property, state secrets — is already living on borrowed time.</p>
+<p>How close is "eventually"? Less imminent than the headlines suggest. A late-2024 Global Risk Institute survey of 32 quantum experts put the odds at an even 50-50 that a quantum computer could break a <strong>2048-bit RSA key</strong> within 24 hours by the year 2040 (MIT Technology Review, citing Global Risk Institute). That is an uncertain, measurable horizon — not a fire alarm. Which is exactly why panic is the wrong response and preparation is the right one.</p>
+
+<blockquote class="pullquote">A quantum computer will not make your laptop faster. It will, someday, make your old secrets readable — which is why the smart institutions are changing the locks now, quietly, while there's still time.</blockquote>
+
+<h2>The Quiet Migration Already Underway</h2>
+<p>The fix is called <strong>post-quantum cryptography</strong> — new encryption algorithms designed to resist both classical and quantum attacks, standardized by NIST and already being rolled out. This is not theoretical. Under U.S. directive CNSSP-15, beginning in January 2027 new national security systems must support post-quantum algorithms under the <strong>CNSA 2.0</strong> standard, with implementation required by 2031 and full adoption targeted for 2035 (MIT Technology Review). That is a concrete government migration schedule, already in motion, with dates you can put on a calendar.</p>
+<p>It is reaching consumer hardware, too. Intel's Xeon 6 processor now ships with quantum-safe AES-256 memory encryption and microcode signing, with more firmware and software signing extensions planned (MIT Technology Review). This is the part I find genuinely reassuring: the transition is being handled at the infrastructure level, by banks, chipmakers, platforms, and standards bodies, largely without you having to do anything. MIT Technology Review makes the honest case plainly — this is "a manageable evolution, not a crisis." The people warning you to buy a "quantum-proof" gadget are selling the cape, not the machine.</p>
+
+<h2>Proof You Can't Check by Hand</h2>
+<p>So is any of the hardware real yet, or is this all future tense? Something meaningful shifted in mid-2026. In July, IBM added three new entries to its "quantum advantage tracker," each using a different error-handling approach, each claiming a calculation its hardware can do that classical supercomputers cannot reliably reproduce (Ars Technica). The results were verified across IBM and Quantinuum processors — a detail that matters, because the whole point is producing answers no ordinary machine can double-check.</p>
+<p>Jay Gambetta, who runs IBM's quantum division, framed the stakes with unusual clarity: "Trusted computing when you can do classical simulations is irrelevant. Trusted computing when you can't do classical simulations is a big deal" (Ars Technica). One of the new algorithms, built with the University of Chicago, was designed so classical hardware simply cannot keep pace — it "has a stronger complexity argument," Gambetta said, one "you can prove on average is exponentially hard to sample for a classical computer" (Ars Technica). I'll flag the obvious: both of those quotes come from IBM itself, a company with a product to sell, and the research I was handed did not include an independent academic voice to weigh them against. Read them as a vendor's confident claim, not a settled verdict.</p>
+
+<h2>What Actually Changes for You</h2>
+<p>Strip away the encryption drama and the near-term payoff is quieter and more human. The same machines that can simulate molecules — real <strong>molecular simulation</strong>, modeling how atoms actually behave — are already being used in early-stage work by pharmaceutical and materials companies on cloud quantum hardware. You will never log into one. But the benefit reaches you the way most deep science does: indirectly, years later, as a drug that works better, a battery that holds more, a material that didn't exist before. That is the economic unlock hiding under the jargon. When you lower the cost of discovering things, you widen the circle of who gets to discover — and problems that were once too expensive to even attempt become tractable.</p>
+<p>This is the pattern I keep seeing across every powerful tool of this decade. It doesn't hand the average person a superpower on day one. It collapses the cost of a hard thing, and that collapse eventually reaches the people who were priced out — the small lab, the underfunded clinic, the researcher far from the money. Quantum computing, honestly told, is not a gadget you'll buy. It is a lever under industries whose output lands in your life whether you follow the news or not.</p>
+
+<h2>What To Do Monday Morning</h2>
+<p>Here is the practical truth, and it's almost a relief: as an individual in 2026, you need to do essentially nothing. There is no app to install, no setting to change, no panic to buy your way out of. The single most useful thing you can carry is understanding — knowing <em>why</em> your bank, your messaging app, and your operating system are quietly swapping out their encryption over the next few years, so that when it happens you recognize it as maintenance, not menace. If you run a business that holds data which must stay private for a decade, then one concrete first step is worth taking now: ask your vendors, in writing, what their post-quantum migration plan is. The good ones already have an answer. The cape-sellers won't. And that difference, more than any headline, tells you who is actually building for the future you're going to live in.</p>
+
+<div class="stat-grid">
+<div class="stat-card"><span class="stat-number">50-50</span><span class="stat-label">Expert odds that a quantum computer could break a 2048-bit RSA key within 24 hours by 2040 (Global Risk Institute, via MIT Technology Review)</span></div>
+<div class="stat-card"><span class="stat-number">2027–2035</span><span class="stat-label">U.S. CNSA 2.0 post-quantum migration window: support required by 2027, full adoption targeted by 2035 (MIT Technology Review)</span></div>
+<div class="stat-card"><span class="stat-number">3</span><span class="stat-label">New quantum-advantage results IBM added to its tracker in July 2026, each verified across IBM and Quantinuum hardware (Ars Technica)</span></div>
+<div class="stat-card"><span class="stat-number">AES-256</span><span class="stat-label">Quantum-safe memory encryption now shipping in Intel's Xeon 6 consumer-grade silicon (MIT Technology Review)</span></div>
+</div>
+
+<div class="glossary">
+<dl>
+<dt data-term="Qubit">Qubit</dt>
+<dd>The basic unit of quantum information. Unlike a classical bit, which is either one or zero, a qubit can hold a blend of possibilities at once, letting many combinations be explored in parallel.</dd>
+<dt data-term="Quantum advantage">Quantum advantage</dt>
+<dd>The point at which a quantum computer completes a specific calculation that a classical supercomputer cannot reliably reproduce in practical time.</dd>
+<dt data-term="Post-quantum cryptography">Post-quantum cryptography</dt>
+<dd>New encryption algorithms, standardized by NIST, designed to resist attacks from both classical and quantum computers.</dd>
+<dt data-term="Harvest now, decrypt later">Harvest now, decrypt later</dt>
+<dd>An attack strategy in which encrypted data is recorded and stored today so it can be unlocked in the future once quantum hardware is powerful enough.</dd>
+<dt data-term="Molecular simulation">Molecular simulation</dt>
+<dd>Modeling how atoms and molecules actually behave — a natural fit for quantum computers and an early source of real-world benefit in drug and materials discovery.</dd>
+<dt data-term="2048-bit RSA key">2048-bit RSA key</dt>
+<dd>A widely used encryption key whose security relies on the difficulty of factoring very large numbers — the kind of problem a mature quantum computer could eventually crack.</dd>
+<dt data-term="CNSA 2.0">CNSA 2.0</dt>
+<dd>The U.S. government's post-quantum cryptography standard, with a phased adoption schedule running from 2027 to 2035 for national security systems.</dd>
+</dl>
+</div>
+
+<div class="references">
+<ol>
+<li>"Building a Practical Path to Post-Quantum Cryptography." <em>MIT Technology Review</em>, 13 Aug. 2026, https://www.technologyreview.com/2026/08/13/1141041/building-a-practical-path-to-post-quantum-cryptography/.</li>
+<li>"If a Quantum Computer Outperforms Normal Ones, Can You Tell If It's Right?" <em>Ars Technica</em>, July 2026, https://arstechnica.com/science/2026/07/if-a-quantum-computer-outperforms-normal-ones-can-you-tell-if-its-right/.</li>
+<li>Global Risk Institute. "Quantum Threat Timeline" expert survey, late 2024, as reported in <em>MIT Technology Review</em>, 13 Aug. 2026, https://www.technologyreview.com/2026/08/13/1141041/building-a-practical-path-to-post-quantum-cryptography/.</li>
+<li>Gambetta, Jay (Vice President, IBM Quantum). Quoted in "If a Quantum Computer Outperforms Normal Ones, Can You Tell If It's Right?" <em>Ars Technica</em>, July 2026, https://arstechnica.com/science/2026/07/if-a-quantum-computer-outperforms-normal-ones-can-you-tell-if-its-right/.</li>
+<li>"Quantum Computing Explained for Non-Scientists: What It Means for Everyday Tech." <em>Technonguide</em>, 2026, https://technonguide.com/quantum-computing-explained-for-non-scientists-what-it-means-for-everyday-tech/.</li>
+<li>U.S. National Security Systems directive CNSSP-15 (CNSA 2.0 migration schedule), summarized in <em>MIT Technology Review</em>, 13 Aug. 2026, https://www.technologyreview.com/2026/08/13/1141041/building-a-practical-path-to-post-quantum-cryptography/.</li>
+</ol>
+</div>

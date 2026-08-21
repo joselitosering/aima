@@ -1,0 +1,47 @@
+<p class="lead">The first time I really sat up in my seat was a line buried in a research paper about a dish of brain cells: they started learning to play Pong within five minutes. Not five hours of training. Five minutes. A blob of living neurons, floating in nutrient fluid on a chip, figured out a video game faster than I figure out a new airport. That's the moment biocomputing stopped being a thought experiment for me and became something I couldn't stop reading about — and by 2026, it's not a lab curiosity anymore. It's a product you can buy, or rent by the hour, in the cloud.</p>
+
+<h2>Brain Cells That Learned to Play Doom</h2>
+<p>It started with DishBrain, a system built from more than 800,000 living human and mouse brain cells grown on a chip and wired into a simulated game of Pong (New Scientist; Kagan et al., <em>Neuron</em>). The neurons didn't just twitch — they changed their firing in a goal-directed way within about five minutes of play, something the control cultures never did (Kagan et al., <em>Neuron</em>). Then, in February 2026, the sequel landed: a Cortical Labs chip using only about a quarter as many neurons was taught to play Doom in roughly a week — not by a lab veteran, but by an independent developer, Sean Cole, using a plain Python interface (New Scientist). The barrier to entry just fell off a cliff.</p>
+
+<div class="stat-grid">
+  <div class="stat-card"><strong>800,000+</strong><span>living brain cells in the original DishBrain Pong chip (New Scientist; Kagan et al.)</span></div>
+  <div class="stat-card"><strong>5 minutes</strong><span>before cultured neurons showed goal-directed learning (Kagan et al., <em>Neuron</em>)</span></div>
+  <div class="stat-card"><strong>~1 week</strong><span>to teach a ~200,000-neuron chip to play Doom (New Scientist)</span></div>
+  <div class="stat-card"><strong>30 TB</strong><span>of neuronal activity data FinalSpark says it has recorded (FinalSpark)</span></div>
+</div>
+
+<h2>How a Living Computer Actually Works</h2>
+<p>Here's the mechanism, in plain language. You grow neurons — sometimes flat sheets, sometimes little 3D balls of tissue called an <strong>organoid</strong> — on top of a <strong>multi-electrode array</strong>, a grid of tiny electrical contacts that can both listen to the cells and talk to them. The game state (where the ball is, where the wall is) gets translated into patterns of electrical stimulation. The neurons fire back. Read those firings, move the paddle, and feed the result straight back in as more stimulation. That last part is the trick: it's a <strong>closed-loop interface</strong>, a constant back-and-forth where the cells' output immediately becomes their next input. The cells aren't following code. They're settling into patterns that make their little world more predictable — which, it turns out, looks a lot like learning.</p>
+
+<blockquote class="pullquote">"Yes, it's alive, and yes, it's biological, but really what it is being used as is a material that can process information in very special ways that we can't recreate in silicon." — Brett Kagan, Cortical Labs (New Scientist)</blockquote>
+
+<h2>From Viral Demo to Shippable Device</h2>
+<p>What makes 2026 different is that <strong>biocomputing</strong> grew a supply chain. Cortical Labs now ships the CL1, described in <em>Nature Reviews Bioengineering</em> as a "body-in-a-box" — neural cultures bundled with a closed-loop interface and an integrated life-support perfusion circuit that keeps the cells fed and alive (Kagan, <em>Nature Reviews Bioengineering</em>). It's a device, not a one-off rig. Meanwhile FinalSpark rents 24/7 remote access to living organoids over the cloud and says it has piled up over 30 terabytes of recorded activity, handed out free to researchers (FinalSpark). One selling point above all: energy. Proponents argue neurons process information with orders of magnitude less power than digital silicon (FinalSpark) — an exciting claim, though I haven't seen it pinned to a clean benchmark, so hold it loosely.</p>
+
+<h2>The Honest Reckoning</h2>
+<p>Now the cold water, because enthusiasm without rigor is just hype with better branding. These are captivating demos, not useful computers — yet. The Doom-playing culture beat a random player but performed "far below the performance of the best human players" (New Scientist). Even the field's own leaders admit they don't fully understand the machine they built. As Steve Furber of the University of Manchester put it, Doom is "a significant level up from playing Pong — but there is still a lot we don't understand about how these neurons are playing the game," including how they "see" the screen with no eyes (New Scientist). Add the real ethical weight of computing on living, human-derived tissue, and the fact that the flashiest numbers are vendor-reported, and the honest read is this: biocomputing in 2026 looks less like a finished product and more like the transistor in 1948 — clearly important, commercially unproven.</p>
+
+<h2>What You Can Do With This</h2>
+<p>And that's exactly why it's the good stuff. As Andrew Adamatzky of the University of the West of England notes, what's exciting isn't just that a biological system can play Doom, but that "it can cope with complexity, uncertainty, and real-time decision-making" (New Scientist) — the hard part of intelligence. If you want in, you don't need a wet lab anymore: FinalSpark's Neuroplatform gives researchers remote access, and Cortical Labs shipped a Python interface a hobbyist used to program neurons in a week. Read the DishBrain paper. Watch this space with equal parts wonder and skepticism. The world's first living computers are learning in a dish right now — and for once, you might actually get to reach in.</p>
+
+<div class="glossary">
+<dl>
+<dt data-term="Biocomputing">Biocomputing</dt><dd>Using living biological components, such as cultured neurons, to process information instead of (or alongside) conventional silicon chips.</dd>
+<dt data-term="DishBrain">DishBrain</dt><dd>The Cortical Labs system of ~800,000 living brain cells on a chip that first demonstrated cultured neurons learning to play the video game Pong.</dd>
+<dt data-term="Organoid">Organoid</dt><dd>A small three-dimensional cluster of lab-grown cells — here, brain tissue — used as the living substrate for a biological computer.</dd>
+<dt data-term="Multi-electrode array">Multi-electrode array</dt><dd>A grid of microscopic electrical contacts that both records neurons' firing and stimulates them, forming the interface between living cells and a digital system.</dd>
+<dt data-term="Closed-loop interface">Closed-loop interface</dt><dd>A setup where a system's output is immediately fed back as its next input, letting neurons adjust their firing in response to the consequences of their own activity.</dd>
+<dt data-term="Perfusion circuit">Perfusion circuit</dt><dd>An integrated life-support system that continuously supplies nutrients and removes waste to keep cultured neurons alive inside a device.</dd>
+</dl>
+</div>
+
+<div class="references">
+<ol>
+<li>Wilkins, Alex. "Human Brain Cells on a Chip Learned to Play Doom in a Week." <em>New Scientist</em>, 27 Feb. 2026, https://www.newscientist.com/article/2517389-human-brain-cells-on-a-chip-learned-to-play-doom-in-a-week/.</li>
+<li>Kagan, Brett J., et al. "In Vitro Neurons Learn and Exhibit Sentience When Embodied in a Simulated Game-World." <em>Neuron</em>, 2022, https://discovery.ucl.ac.uk/id/eprint/10158064/1/1-s2.0-S0896627322008066-main.pdf.</li>
+<li>Kagan, Brett J. "The CL1 as a Platform Technology to Leverage Biological Neural System Functions." <em>Nature Reviews Bioengineering</em>, vol. 3, 2025, pp. 724–725, https://www.nature.com/articles/s44222-025-00340-3.</li>
+<li>FinalSpark. "Neuroplatform." FinalSpark, 2025, https://finalspark.com/neuroplatform/.</li>
+<li>FinalSpark. "Unconventional Computing." FinalSpark, 2025, https://finalspark.com/unconventional-computing/.</li>
+<li>Furber, Steve, and Andrew Adamatzky. Quoted in Wilkins, Alex, "Human Brain Cells on a Chip Learned to Play Doom in a Week." <em>New Scientist</em>, 27 Feb. 2026, https://www.newscientist.com/article/2517389-human-brain-cells-on-a-chip-learned-to-play-doom-in-a-week/.</li>
+</ol>
+</div>

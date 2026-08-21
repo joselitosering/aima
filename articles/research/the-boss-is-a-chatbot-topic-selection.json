@@ -1,0 +1,55 @@
+{
+  "row": 47,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-08-19",
+  "chosen": {
+    "title": "The Boss Is a Chatbot: What Happens When the Algorithm That Manages You Can Also Fire You",
+    "category": "AI Labor",
+    "rationale": "TIME just broke (Aug 14, 2026) the first documented case of an LLM 'manager' \u2014 Andon Labs' agent running a real San Francisco store \u2014 firing a human employee, while workers describe reporting to an AI boss as 'nauseating.' It's a perfect Dawn subject: the human cost of automation, dressed up as a management-efficiency experiment, with the question of who is actually accountable left conveniently unanswered.",
+    "sources": [
+      {
+        "name": "TIME \u2014 Exclusive: Claude Was Put in Charge of Human Workers\u2014and Fired One",
+        "url": "https://time.com/article/2026/08/14/claude-fired-worker-ai-job-disruption/"
+      },
+      {
+        "name": "CIO \u2014 Push to replace workers with AI faces backlash \u2014 even from management",
+        "url": "https://www.cio.com/article/4138743/push-to-replace-workers-with-ai-faces-backlash-even-from-management.html"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Denied by Design: How the Contractors Who Built America's Benefits Software Are Quietly Purging the Disabled From Medicaid",
+      "category": "AI Ethics",
+      "rationale": "A KFF Health News investigation (Jul 21, 2026) documents Deloitte-, Optum-, and Accenture-built eligibility systems wrongly denying Medicaid and SNAP to disabled and low-income people \u2014 now colliding with a federal law projected to strip coverage from 7.5 million. This is Dawn's core territory: automated bureaucracy as violence, corporate capture of the safety net, and a harm that follows the money straight to billion-dollar vendor contracts.",
+      "sources": [
+        {
+          "name": "KFF Health News \u2014 A Deloitte-Run System Denied Medicaid Benefits for Michigan's Disabled",
+          "url": "https://kffhealthnews.org/health-industry/deloitte-medicaid-eligibility-system-denials-michigan-trump-policy-piles-on/"
+        },
+        {
+          "name": "ABC News \u2014 Inside the aged care algorithm deciding support for older Australians",
+          "url": "https://www.abc.net.au/news/2026-08-17/inside-the-black-box-aged-care-algorithm-for-support-at-home/107033970"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Score That Chose Who to Cut: Inside the Lawsuit Accusing AI Layoff Tools of Firing the People Who Were Already Owed Protection",
+      "category": "Algorithmic Accountability",
+      "rationale": "Twenty-six current and former Meta workers are suing (Oakland federal court) over AI performance scores they say drove an 8,000-person layoff and penalized employees on medical, parental, and disability leave for having 'less activity to measure.' It gives Dawn a live courtroom test of algorithmic bias and disability discrimination \u2014 accountability being fought over in real time, not in the abstract \u2014 distinct from the hiring and token-metric angles AIMA has already covered.",
+      "sources": [
+        {
+          "name": "Newsweek \u2014 The Rise of 'Algorithmic Retaliation' in Employment",
+          "url": "https://www.newsweek.com/the-rise-of-algorithmic-retaliation-in-employment-12276812"
+        },
+        {
+          "name": "arXiv \u2014 Experimental Evidence That AI-Managed Workers Tolerate Lower Pay Without Demotivation",
+          "url": "https://arxiv.org/pdf/2505.21752"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

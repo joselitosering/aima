@@ -1,0 +1,63 @@
+{
+  "row": 45,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-08-17",
+  "chosen": {
+    "title": "Thinking in a Dish: How Lab-Grown Neurons Became the World's First Living Computers",
+    "category": "AI Science",
+    "rationale": "Wetware computing hit real commercialization in 2026 \u2014 Cortical Labs' CL1 (the first commercial biological computer) and FinalSpark's cloud of 16 human brain organoids are now rentable, running ~1,000,000x more efficiently than silicon neurons. It's exactly Kenji's cybernetics/bioengineering beat: a vivid, mechanism-rich frontier with a built-in honest reckoning (consciousness ethics), and it's distinct from the covered BCI piece \u2014 this is growing neurons to compute, not wiring a human brain to a machine.",
+    "sources": [
+      {
+        "name": "TechXplore \u2014 'Wetware': Scientists use human mini-brains to power computers",
+        "url": "https://techxplore.com/news/2025-10-wetware-scientists-human-mini-brains.html"
+      },
+      {
+        "name": "Advanced Science (Wiley) \u2014 Advanced Brain-on-a-Chip for Wetware Computing: A Review",
+        "url": "https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202508120"
+      },
+      {
+        "name": "E&T \u2014 'Wetware': Is your next computer a living one?",
+        "url": "https://eandt.theiet.org/2026/03/13/wetware-your-next-computer-living-one"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Teaching the Star to Behave: How AI Learned to Tame Fusion Plasma",
+      "category": "AI Science",
+      "rationale": "2026 is the year AI moved from the fusion lab bench toward the reactor \u2014 deep reinforcement learning (DeepMind/EPFL on TCV, the DIII-D tearing-instability controller) now steers plasma with millisecond magnetic tweaks, and the DOE's Genesis Mission is building AI-ready datasets to push toward commercial net gain. Perfect Kenji clean-energy + AI story: contagious wonder about controlling a miniature sun, grounded by an honest 'net-gain isn't confirmed yet' reckoning, and untouched by any covered energy piece (which cover carbon and microbial batteries, not fusion).",
+      "sources": [
+        {
+          "name": "U.S. DOE \u2014 AI Tackles Disruptive Tearing Instability in Fusion Plasma",
+          "url": "https://www.energy.gov/science/fes/articles/ai-tackles-disruptive-tearing-instability-fusion-plasma"
+        },
+        {
+          "name": "Google DeepMind \u2014 Accelerating fusion science through learned plasma control",
+          "url": "https://deepmind.google/blog/accelerating-fusion-science-through-learned-plasma-control/"
+        },
+        {
+          "name": "Nature \u2014 Avoiding fusion plasma tearing instability with deep reinforcement learning",
+          "url": "https://www.nature.com/articles/s41586-024-07024-9"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Shapes No Human Would Draw: How Generative AI Is Redesigning What Machines Can Print",
+      "category": "AI Science",
+      "rationale": "Additive manufacturing crossed a threshold in 2026: generative-design algorithms now output load-bearing geometries no engineer would sketch, CNNs catch defects at 99%+ in real time, and green-laser systems finally print copper/gold \u2014 Boeing, GE Aviation and BMW report 50\u201390% cost and weight savings. This lands squarely on Kenji's 3D-printing / advanced-manufacturing / maker-culture beat and speaks directly to the 'I could build this' audience, with no overlap on the covered autonomous-materials-lab piece.",
+      "sources": [
+        {
+          "name": "Bits From Bytes \u2014 AI-Powered 3D Printing 2026: Automated Design Optimization",
+          "url": "https://bitsfrombytes.com/ai-powered-3d-printing-2026-automated-design/"
+        },
+        {
+          "name": "Coruzant \u2014 3D Printing Innovations 2026: Advanced Materials and AI Designs",
+          "url": "https://coruzant.com/3d-printing/3d-printing-innovations/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

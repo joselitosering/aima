@@ -49,9 +49,9 @@
 | 42 | 2026-07-17 | Deepfakes and Democracy: The Synthetic Media Threat to Truth | AI Ethics | 12 min | Bumped from 2026-07-10 to make room for overdue backlog · Post 4:00 PM PT | Joselito Sering |
 | 43 | 2026-07-17 | The Deadline That Moved: How Industry Lobbied the EU Into Delaying Its Own AI Law | AI Ethics / Tech Policy | 8 min |  | Dawn Ginhaua |
 | 44 | 2026-07-18 | English Is Not the World: Why AI Language Monoculture Fails 6 Billion People | AI Society | 10 min |  | Joselito Sering |
-| 45 | 2026-07-19 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
+| 45 | 2026-07-19 | Thinking in a Dish: How Lab-Grown Neurons Became the World's First Living Computers | AI Science | 8 min |  | Kenji Nakamoto |
 | 46 | 2026-07-20 | Can Machines Learn to Care? Emotional AI and the Empathy Question | AI Philosophy | 9 min |  | Joselito Sering |
-| 47 | 2026-07-21 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
+| 47 | 2026-07-21 | The Boss Is a Chatbot: What Happens When the Algorithm That Manages You Can Also Fire You | AI Labor | 8 min |  | Dawn Ginhaua |
 | 48 | 2026-07-22 | The Quantum Leap: What Quantum Computing Actually Means for Ordinary Life | AI Science | 12 min |  | Joselito Sering |
 | 49 | 2026-07-23 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
 | 50 | 2026-07-24 | The Regulation Race: US vs. EU vs. China on AI Governance in 2026 | AI Law | 13 min |  | Joselito Sering |

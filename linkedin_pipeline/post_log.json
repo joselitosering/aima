@@ -428,5 +428,50 @@
     "posted_at": "2026-08-13T19:06:16",
     "analytics_collected": false,
     "reshare_id": "urn:li:share:7493744751909847040"
+  },
+  {
+    "post_id": "urn:li:share:7494106877983674368",
+    "article": "aima-article-english-is-not-the-world-044.html",
+    "title": "English Is Not the World: Why AI Language Monoculture Fails 6 Billion People",
+    "persona": "joselito",
+    "posted_at": "2026-08-14T19:05:17",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7494106890306572289"
+  },
+  {
+    "post_id": "urn:li:share:7495194574571585536",
+    "article": "aima-article-thinking-in-a-dish-how-045.html",
+    "title": "Thinking in a Dish: How Lab-Grown Neurons Became the World's First Living Computers",
+    "persona": "kenji",
+    "posted_at": "2026-08-17T19:07:24",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7495194586298986496"
+  },
+  {
+    "post_id": "urn:li:share:7495556402225098753",
+    "article": "aima-article-can-machines-learn-to-care-046.html",
+    "title": "Can Machines Learn to Care? Emotional AI and the Empathy Question",
+    "persona": "joselito",
+    "posted_at": "2026-08-18T19:05:10",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7495556414816378880"
+  },
+  {
+    "post_id": "urn:li:share:7495919384427683840",
+    "article": "aima-article-the-boss-is-a-chatbot-047.html",
+    "title": "The Boss Is a Chatbot: What Happens When the Algorithm That Manages You Can Also Fire You",
+    "persona": "dawn",
+    "posted_at": "2026-08-19T19:07:32",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7495919396180131840"
+  },
+  {
+    "post_id": "urn:li:share:7496281054954156032",
+    "article": "aima-article-the-quantum-leap-what-quantum-048.html",
+    "title": "The Quantum Leap: What Quantum Computing Actually Means for Ordinary Life",
+    "persona": "joselito",
+    "posted_at": "2026-08-20T19:04:41",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7496281067331432448"
   }
 ]

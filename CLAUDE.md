@@ -1418,3 +1418,23 @@ TimeoutError: The read operation timed out
 
 ```
 - Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — (spec not yet built) — stage 'priya' (2026-08-21)
+<!-- aima-failure-key: 2026-08-21|priya|[trend_scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-08-21T12:00:09
+- **Last seen:** 2026-08-21T12:00:09
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[trend_scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so trend_scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for trend_scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log

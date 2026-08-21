@@ -1,0 +1,136 @@
+{
+  "article_number": 44,
+  "slug": "english-is-not-the-world",
+  "title": "English Is Not the World: Why AI Language Monoculture Fails 6 Billion People",
+  "category": "AI Society",
+  "compiled": "2026-08-14",
+  "compiled_by": "Scout (research agent)",
+  "budget_note": "Compiled within 60k token cap. 2 Exa semantic searches, 0 cached-file reads (the 4 offered cache files were off-topic to language monoculture). No follow-up fetches needed — Exa returned citable page text directly.",
+
+  "thesis_support": "English is the native or second language of roughly 19% of humanity (~1.5B people), yet it dominates AI training data far out of proportion (45% of web URLs, 56% of Hugging Face datasets, ~98% of scientific papers). The result is an AI language monoculture that performs measurably worse for the ~6 billion people whose primary language is not English, and risks accelerating 'digital language death' for thousands of languages.",
+
+  "statistics": [
+    {
+      "stat": "English is spoken by 19% of the global population, but makes up 45% of global web URLs, 56% of open-source datasets on Hugging Face (as of April 2024), and nearly 98% of scientific papers.",
+      "source": "World Bank Group, Digital Progress and Trends Report 2025: Strengthening AI Foundations",
+      "year": 2025,
+      "url": "https://openknowledge.worldbank.org/server/api/core/bitstreams/6bf9eeb7-3548-4fa5-b2f3-22d9ea3c3cd5/content",
+      "confidence": "high",
+      "note": "Primary source, World Bank flagship report. Also notes 28 of the 50 largest (>1T token) datasets are English-based."
+    },
+    {
+      "stat": "More than 7,000 languages are spoken worldwide; the 20 largest are the native tongues of over 3.6 billion people (44% of the global population). English is the most-spoken with ~1.5 billion speakers (19%), of whom only 390 million are native speakers.",
+      "source": "World Bank Group, Digital Progress and Trends Report 2025",
+      "year": 2025,
+      "url": "https://openknowledge.worldbank.org/server/api/core/bitstreams/6bf9eeb7-3548-4fa5-b2f3-22d9ea3c3cd5/content",
+      "confidence": "high"
+    },
+    {
+      "stat": "Of the world's 7,613 living languages, roughly 2,000 'Invisible Giants' (27%) have millions of speakers yet near-zero digital presence and are effectively absent from LLM training data. A further 36% ('Fading Voices') are low on both speaker vitality and digital footprint.",
+      "source": "Khanna & Li, 'Invisible Languages of the LLM Universe' (Univ. of Amsterdam / Oxford), arXiv:2510.11557",
+      "year": 2025,
+      "url": "https://doi.org/10.48550/arxiv.2510.11557",
+      "confidence": "high",
+      "note": "Categories: Strongholds 33%, Digital Echoes 6%, Fading Voices 36%, Invisible Giants 27%."
+    },
+    {
+      "stat": "Only 33 languages (0.4% of the world's languages) achieve full digital capabilities across 143 digital platforms.",
+      "source": "Simons et al. (2022), cited in Khanna & Li, arXiv:2510.11557 (2025)",
+      "year": 2022,
+      "url": "https://doi.org/10.48550/arxiv.2510.11557",
+      "confidence": "medium",
+      "note": "Secondary citation — figure reported inside the Invisible Languages paper; original Simons et al. 2022 not directly fetched. Flag for direct verification if used as a headline stat."
+    },
+    {
+      "stat": "In a controlled benchmark of 2,000 responses across 8 leading LLMs, models scored a mean of 90.7% in English but only 76.9% in Kazakh and 74.0% in Mongolian — a 13.8 to 16.7 percentage-point accuracy gap when prompted in low-resource languages.",
+      "source": "Beibitkhan & Abdul-Salem, 'Left Behind: Cross-Lingual Transfer as a Bridge for Low-Resource Languages in LLMs', arXiv:2603.21036",
+      "year": 2026,
+      "url": "https://arxiv.org/html/2603.21036",
+      "confidence": "high",
+      "note": "Also documents a 'fluency illusion': fluency degrades far less than accuracy, so models produce natural-sounding but factually wrong text in low-resource languages — a deceptive failure mode for users who can't verify against English."
+    },
+    {
+      "stat": "For non-text data the imbalance eases: only about 21% of YouTube videos are estimated to be in English (vs 45% of web URLs), pointing to video/audio as a potential path to more linguistically diverse training data.",
+      "source": "World Bank Group, Digital Progress and Trends Report 2025",
+      "year": 2025,
+      "url": "https://openknowledge.worldbank.org/server/api/core/bitstreams/6bf9eeb7-3548-4fa5-b2f3-22d9ea3c3cd5/content",
+      "confidence": "high",
+      "note": "Useful for the 'is this solvable?' section."
+    },
+    {
+      "stat": "For all 2,123 native African languages — every one classified low-resource, including 31 with more than 10 million speakers — GPT-4o's average accuracy across benchmarks fell from ~89.8% in English to ~70.6% across 11 African languages.",
+      "source": "'Enhancing LLM Performance for Low-Resource African Languages', AAAI 2025 (article 34996)",
+      "year": 2025,
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/34996/37151",
+      "confidence": "medium",
+      "note": "Averaged figure read from the highlighted results table; exact per-benchmark numbers should be checked in the PDF before precise quotation."
+    }
+  ],
+
+  "expert_quotes": [
+    {
+      "quote": "English dominance in AI is not a technical necessity but an artifact of power structures that systematically exclude marginalized linguistic knowledge.",
+      "attribution": "Saurabh Khanna & Xinxu Li, University of Amsterdam / Pembroke College, Oxford",
+      "source": "'Invisible Languages of the LLM Universe', arXiv:2510.11557",
+      "year": 2025,
+      "url": "https://doi.org/10.48550/arxiv.2510.11557",
+      "confidence": "high"
+    },
+    {
+      "quote": "There are over 7,000 languages spoken worldwide, yet the internet is primarily written in English and a small group of other languages. Building inclusive digital ecosystems will require bridging the digital language divide by ensuring greater linguistic representation in AI training data.",
+      "attribution": "Regina Ta and Darrell M. West, Brookings Institution (Center for Technology Innovation)",
+      "source": "'How language gaps constrain generative AI development', Brookings",
+      "year": 2023,
+      "url": "https://www.brookings.edu/articles/how-language-gaps-constrain-generative-ai-development/",
+      "confidence": "high"
+    },
+    {
+      "quote": "Poor LLM performance discourages speakers from using their languages digitally, reducing digital content generation, which further reduces training data, which worsens performance — self-reinforcing cycles where invisibility begets further invisibility.",
+      "attribution": "Khanna & Li (paraphrase-adjacent direct language)",
+      "source": "'Invisible Languages of the LLM Universe', arXiv:2510.11557",
+      "year": 2025,
+      "url": "https://doi.org/10.48550/arxiv.2510.11557",
+      "confidence": "high",
+      "note": "Describes the 'feedback loop' harm; lightly compressed from the original for readability — verify exact wording before quoting verbatim."
+    }
+  ],
+
+  "strongest_counterargument": {
+    "claim": "Some argue the gap is a solvable engineering problem, not a structural injustice: machine translation, cross-lingual transfer (reason in English, translate out), and multilingual-specific models can serve low-resource speakers without full native-language corpora, and non-text data (only ~21% of YouTube is English) offers a diversifying path.",
+    "rebuttal_evidence": "The Kazakh/Mongolian benchmark shows cross-lingual transfer yields only selective, modest gains (+0.4 to +4.3pp, and slightly NEGATIVE for English-first models), while the one model explicitly built for multilingual coverage (Aya Expanse) performed WORST on the languages it claims to support (collapsing to 15.7% Kazakh, 4.7% Mongolian). The 'fluency illusion' means translated output reads naturally while being factually wrong — arguably worse than an obvious failure, because users can't detect it. So technical fixes exist but are architecture-dependent and far from closing the gap.",
+    "source_urls": [
+      "https://arxiv.org/html/2603.21036",
+      "https://openknowledge.worldbank.org/server/api/core/bitstreams/6bf9eeb7-3548-4fa5-b2f3-22d9ea3c3cd5/content"
+    ]
+  },
+
+  "recent_news": [
+    {
+      "item": "MuBench (Findings of ACL 2026) benchmarked LLM multilingual ability across 61 languages / 3.9M samples and found 'notable gaps between claimed and actual language coverage,' with a persistent English-vs-low-resource performance disparity; larger model size did NOT improve mixed-language handling.",
+      "source": "Han et al., MuBench, Findings of ACL 2026",
+      "date": "2026-07",
+      "url": "https://aclanthology.org/2026.findings-acl.794/"
+    },
+    {
+      "item": "'Invisible Languages of the LLM Universe' (Oct 2025) introduced the vitality-vs-digitality framework and the 'Invisible Giants' category, framing AI language exclusion as 'digital-epistemic injustice' and a continuation of colonial-era linguistic hierarchies.",
+      "source": "Khanna & Li, arXiv:2510.11557",
+      "date": "2025-10-13",
+      "url": "https://doi.org/10.48550/arxiv.2510.11557"
+    }
+  ],
+
+  "framing_angles": [
+    "The '6 billion' in the title ties directly to World Bank data: English reaches ~19% (~1.5B), leaving ~6B whose primary language is under-served.",
+    "Kornai's 'digital language death' (only ~5% of languages will achieve meaningful digital vitality) + the feedback-loop mechanism = AI as an accelerant of monoculture, not a neutral mirror.",
+    "The Javanese (68M speakers, negligible digital footprint) vs Icelandic (350K speakers, robust digital footprint) paradox is a vivid, concrete lede.",
+    "'Fluency illusion' is the sharpest technical hook: the danger isn't broken output, it's confident, fluent, wrong output that non-English users cannot fact-check."
+  ],
+
+  "verification_flags": [
+    "The '33 languages / 0.4%' figure (Simons et al. 2022) is a second-hand citation inside the Invisible Languages paper — verify against the original before headlining it.",
+    "AAAI African-languages GPT-4o averages (89.8% -> 70.6%) were read from a results-table highlight, not the full PDF — confirm exact numbers before precise quotation.",
+    "arXiv:2603.21036 and the ACL 2026 / arXiv:2510.11557 papers are preprints/recent conference findings; treat as credible but not peer-review-final where noted.",
+    "The Khanna & Li 'feedback loop' quote is lightly compressed — verify verbatim wording if used inside quotation marks.",
+    "Kornai (2013) 'digital language death' and the 5% figure are cited via the Invisible Languages paper, not fetched directly."
+  ]
+}

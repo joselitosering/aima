@@ -3551,5 +3551,389 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-14",
+    "article_number": 44,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-english-is-not-the-world-044.html",
+    "gs_row": 45,
+    "company_urn": "urn:li:share:7494106877983674368",
+    "reshare_urn": "urn:li:share:7494106890306572289",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova"
+    ],
+    "flags": [
+      "writer_ran",
+      "cora_error: CC agent [cora] failed (exit 1):\nSTDERR: (empty)\nSTDOUT (first 500): {\"type\":\"result\",\"subtype\":\"error_max_turns\",\"duration_ms\":24282,\"duration_api_ms\":25212,\"is_error\":true,\"num_turns\":2,\"stop_reason\":\"tool_use\",\"session_id\":\"519fb63d-b490-406f-8975-44044343b293\",\"total_cost_usd\":0.5825555,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":52741,\"cache_read_input_tokens\":20355,\"output_tokens\":1489,\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":52741,\"ephemeral_5m_inp"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-17",
+    "row": 45,
+    "author": "Kenji Nakamoto",
+    "title": "Thinking in a Dish: How Lab-Grown Neurons Became the World's First Living Computers",
+    "category": "AI Science",
+    "rationale": "Wetware computing hit real commercialization in 2026 \u2014 Cortical Labs' CL1 (the first commercial biological computer) and FinalSpark's cloud of 16 human brain organoids are now rentable, running ~1,000,000x more efficiently than silicon neurons. It's exactly Kenji's cybernetics/bioengineering beat: a vivid, mechanism-rich frontier with a built-in honest reckoning (consciousness ethics), and it's distinct from the covered BCI piece \u2014 this is growing neurons to compute, not wiring a human brain to a machine.",
+    "sources": [
+      {
+        "name": "TechXplore \u2014 'Wetware': Scientists use human mini-brains to power computers",
+        "url": "https://techxplore.com/news/2025-10-wetware-scientists-human-mini-brains.html"
+      },
+      {
+        "name": "Advanced Science (Wiley) \u2014 Advanced Brain-on-a-Chip for Wetware Computing: A Review",
+        "url": "https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202508120"
+      },
+      {
+        "name": "E&T \u2014 'Wetware': Is your next computer a living one?",
+        "url": "https://eandt.theiet.org/2026/03/13/wetware-your-next-computer-living-one"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-17",
+    "total_tokens_used": 808780,
+    "by_agent": {
+      "SC": 331790,
+      "TS": 326702,
+      "WR": 150288,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "IR": 0,
+      "PR": 0,
+      "LM": 0,
+      "CO": 0
+    },
+    "hallucination_flags": [
+      {
+        "stat": "~1,000,000x energy-efficiency multiplier of neurons vs. silicon",
+        "issue": "UNVERIFIED PRECISION \u2014 field talking point, not tied to a controlled benchmark (research verification_flag). Acceptable ONLY if article frames as 'proponents claim / orders of magnitude'; flag any hard multiplier stated as measured fact.",
+        "source_in_research": "FinalSpark 'Unconventional Computing' (2025)",
+        "severity": "MEDIUM"
+      },
+      {
+        "stat": "FinalSpark 30 TB recorded neuronal activity + 24/7 remote organoid access",
+        "issue": "COMPANY SELF-REPORTED marketing claim, not independently audited. Must be attributed as 'FinalSpark says'.",
+        "source_in_research": "FinalSpark Neuroplatform page (2025)",
+        "severity": "LOW"
+      },
+      {
+        "stat": "~200,000 neurons for the Doom chip",
+        "issue": "DERIVED figure ('~a quarter of 800,000'), not independently sourced. Must be presented as clearly derived, not an independent count.",
+        "source_in_research": "New Scientist (2026) \u2014 arithmetic derivation",
+        "severity": "LOW"
+      },
+      {
+        "stat": "DishBrain 'sentience' framing",
+        "issue": "Contested term in the neuroscience community; use 'learning' framing, do not assert sentience as fact.",
+        "source_in_research": "Kagan et al., Neuron (2022)",
+        "severity": "LOW"
+      }
+    ],
+    "reversion_flags": [
+      {
+        "item": "Steve Furber quote (University of Manchester)",
+        "issue": "Research verification_flag marks it LIGHTLY PARAPHRASED / STITCHED from two adjacent New Scientist sentences with a bracketed paraphrase. If rendered as a verbatim direct quote in the article body it should be split or attributed as 'reported/paraphrased' \u2014 verify against published copy.",
+        "severity": "MEDIUM"
+      }
+    ],
+    "budget_alerts": [
+      {
+        "agent": "TS",
+        "budget": 150000,
+        "used": 326702,
+        "pct_of_budget": 217.8,
+        "status": "OVER_BUDGET",
+        "note": "Trend Scout consumed 2.18x its 150k ceiling (cost $1.26). Exceeds the 80% threshold and the hard cap. TS is a topic-selection stage (budget sized for selection, not research) \u2014 a run this large signals repeated CC calls or a topic-resolution retry loop. Recommend raising the TS ceiling or capping its turns; investigate why selection spent more than Scout's own research call."
+      },
+      {
+        "agent": "SC",
+        "budget": 500000,
+        "used": 331790,
+        "pct_of_budget": 66.4,
+        "status": "OK",
+        "note": "Below 80% threshold ($1.02). No action."
+      },
+      {
+        "agent": "WR",
+        "budget": 300000,
+        "used": 150288,
+        "pct_of_budget": 50.1,
+        "status": "OK",
+        "note": "Below threshold ($0.70). writer_ran flag set \u2014 from-scratch authoring, not a pre-staged draft reuse."
+      }
+    ],
+    "guardrails_applied": [
+      {
+        "type": "measurement_gap",
+        "agent": "QL",
+        "note": "Quill ran as a pipeline stage (present in Marco stage list, 0 revisions) but token_budget shows QL budget=0, used=0, status=idle \u2014 no usage recorded. Because writer_ran is set, Quill operated as EDITOR of the Writer draft; its edit-pass tokens are untracked. Cost attribution for this run is therefore incomplete. Recommend wiring QL's completion callback (and allocating a non-zero QL budget for the editor path) before trusting per-stage cost totals."
+      },
+      {
+        "type": "recommendation",
+        "agent": "TS",
+        "note": "TS over_budget is the single actionable governance issue this run. Round 1: raise TS ceiling to reflect real selection cost OR add a turn/retry cap in trend_scout to prevent runaway CC calls. Escalate to Iris/Marco if TS exceeds budget again on the next trending row."
+      }
+    ],
+    "scope_violations": []
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-17",
+    "article_number": 45,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-thinking-in-a-dish-how-045.html",
+    "gs_row": 46,
+    "company_urn": "urn:li:share:7495194574571585536",
+    "reshare_urn": "urn:li:share:7495194586298986496",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-18",
+    "total_tokens_used": 560319,
+    "by_agent": {
+      "SC": 402517,
+      "WR": 157802,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0,
+      "PT": 0,
+      "NV": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "MEDIUM",
+        "agent": "SC",
+        "stat": "700% surge in AI companion apps (2022 \u2192 mid-2025)",
+        "issue": "Research JSON marks this verified:false \u2014 attributed to 'a technology news site' inside secondary commentary (Turkle essay), no primary source traced. Has no reliably-named primary source+year. If used in the article it must carry attribution ('by one estimate'); flag for verification before re-citation."
+      },
+      {
+        "severity": "MEDIUM",
+        "agent": "SC",
+        "stat": "Emotion detection + conversational AI markets = ~USD 55B+ in 2026",
+        "issue": "Research JSON marks this verified:false \u2014 market figures embedded in the Turkle essay, not traced to originating market-research reports. Directional only; no primary named source+year. Flag if asserted as fact in copy."
+      },
+      {
+        "severity": "LOW",
+        "agent": "SC",
+        "stat": "AMIE rated MORE empathetic than physicians on 29 of 32 axes",
+        "issue": "Verified (Nature Medicine 2026, named source+year) but carries a simulation-artifact caveat \u2014 empathy rated by patient ACTORS in a chat interface, not real patients. Must be cited with the simulation caveat, not as a real-encounter finding."
+      },
+      {
+        "severity": "LOW",
+        "agent": "SC",
+        "stat": "Affective computing / AI companion market-sizing figures (USD 62.53B/388.28B; USD 28.19B)",
+        "issue": "Verified named source+year (Grand View Research 2024) but internally inconsistent (2023 base quoted as both USD 62.53B and USD 78.36B; companion CAGR quoted at both 30.8% and 33.8%). Treat as approximate/directional."
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "severity": "HIGH",
+        "agent": "SC",
+        "budget": 500000,
+        "used": 402517,
+        "pct": 80.5,
+        "message": "Scout exceeded the 80% budget threshold (402,517 / 500,000 = 80.5%), status 'warning'. last_call_cost_usd $1.59 for a single research pass (2 Exa searches + 1 cached read) is high relative to the ~$0.30\u20130.40 target set after the article-#28 Scout overspend fix. Recommend re-verifying that _list_cached_research topic-filter + max_files=5 guardrail and the token_budget.json in-prompt ceiling are actually being injected for Scout."
+      },
+      {
+        "severity": "INFO",
+        "agent": "WR",
+        "budget": 300000,
+        "used": 157802,
+        "pct": 52.6,
+        "message": "Writer at 52.6% \u2014 within budget. QL budget=0/used=0 confirms the standalone Writer path (not the merged Quill author+edit branch) ran this article; 0 quill/maya revisions reported."
+      }
+    ],
+    "guardrails_applied": []
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-18",
+    "article_number": 46,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-can-machines-learn-to-care-046.html",
+    "gs_row": 47,
+    "company_urn": "urn:li:share:7495556402225098753",
+    "reshare_urn": "urn:li:share:7495556414816378880",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-19",
+    "row": 47,
+    "author": "Dawn Ginhaua",
+    "title": "The Boss Is a Chatbot: What Happens When the Algorithm That Manages You Can Also Fire You",
+    "category": "AI Labor",
+    "rationale": "TIME just broke (Aug 14, 2026) the first documented case of an LLM 'manager' \u2014 Andon Labs' agent running a real San Francisco store \u2014 firing a human employee, while workers describe reporting to an AI boss as 'nauseating.' It's a perfect Dawn subject: the human cost of automation, dressed up as a management-efficiency experiment, with the question of who is actually accountable left conveniently unanswered.",
+    "sources": [
+      {
+        "name": "TIME \u2014 Exclusive: Claude Was Put in Charge of Human Workers\u2014and Fired One",
+        "url": "https://time.com/article/2026/08/14/claude-fired-worker-ai-job-disruption/"
+      },
+      {
+        "name": "CIO \u2014 Push to replace workers with AI faces backlash \u2014 even from management",
+        "url": "https://www.cio.com/article/4138743/push-to-replace-workers-with-ai-faces-backlash-even-from-management.html"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-19",
+    "total_tokens_used": 828009,
+    "by_agent": {
+      "SC": 334926,
+      "QL": 0,
+      "MY": 0
+    },
+    "hallucination_flags": [
+      "Apollo-hosted whitepaper stat (real wage growth -6.7pp / bottom-quartile -10.7%; -24.3% service-worker figure): research JSON explicitly flags author attribution as 'N/A on landing page' and unconfirmed. If this stat appears in the article body with a named author/institution, it is a citation-risk stat \u2014 verify Massenkoff/McCrory (2026) / Anthropic Economic Index attribution before naming. Cannot confirm from provided HTML (only <head>/meta included, stat-grid body not in the 8000-char excerpt).",
+      "OECD '14% sanction-tool adoption' is NOT a measured 'algorithmic firing rate' (research unverified_flag). If the article body presents 14% as a firing/termination statistic it overstates the source \u2014 must be framed as adoption of performance-sanction tools only.",
+      "HRW '40 of 127 deactivated' / near-50% cleared figures come from a non-representative n=127 Texas sample \u2014 must read as illustrative worker-reported experience, not a national rate. Confirm article body frames it as such.",
+      "NOTE: Full stat-grid/body verification not possible \u2014 only the document head/meta was supplied. Above flags derive from research JSON unverified_flags; body-level stat-to-source matching should be re-run against the full article HTML."
+    ],
+    "reversion_flags": [
+      "TS (Trend Scout) status=over_budget: consumed 332,295 tokens against a 150,000 budget (221% of ceiling; last-call cost $1.26). This is a recurring TS overspend pattern \u2014 recommend Marco RE-SCOPE TS (topic selection, not research: tighten source-call cap and max_tokens) or RE-ALLOCATE its ceiling. Per Cora Round-2 protocol, flag to Marco + note here.",
+      "Metadata discrepancy (non-blocking): article:publish-date / published_time = 2026-07-21 while run_date = 2026-08-19. Publish date appears stale/incorrect for article #47 \u2014 recommend Porter/Maya date-stamp check."
+    ],
+    "budget_alerts": [
+      "TS: 332,295 / 150,000 = 221% \u2014 OVER BUDGET (>80% threshold breached, status=over_budget). CRITICAL.",
+      "SC: 334,926 / 500,000 = 67% \u2014 within budget (below 80%, no alert).",
+      "WR: 160,788 / 300,000 = 54% \u2014 within budget.",
+      "All other tracked agents (IR, PR, QL, MY, VR, PT, NV, EC, LM, CO) at 0 used \u2014 no alerts. NOTE: MY and VR ran per Marco stage list but recorded used=0 \u2014 token tracking may not be wired into Maya/Vera completion callbacks (known ledger gap)."
+    ],
+    "guardrails_applied": [
+      "No scope violations detected: Marco revisions quill=0, maya=0; no evidence of Quill editing images or Maya editing copy. Stage boundaries intact.",
+      "Recommended guardrail (not applied \u2014 Cora does not touch files): cap TS max_tokens and backend source-call count in the trend_scout prompt to bring it under its 150k budget on the next run; TS overspend recurred, so escalate to re-scope if it repeats a 3rd time.",
+      "Quote-attribution check (Task 3): research quotes include two institutional (non-named-individual) attributions \u2014 'Human Rights Watch report authors' and 'EPRS study authors'. Only Veena Dubal is a named, verifiable individual. If the article body carries the HRW/EPRS quotes attributed to an institution rather than a named person, that is acceptable as organizational attribution but should be worded as 'the report states' rather than presented as an individual's direct quote \u2014 verify in body copy."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-19",
+    "article_number": 47,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-boss-is-a-chatbot-047.html",
+    "gs_row": 48,
+    "company_urn": "urn:li:share:7495919384427683840",
+    "reshare_urn": "urn:li:share:7495919396180131840",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-20",
+    "total_tokens_used": 478412,
+    "by_agent": {
+      "SC": 326281,
+      "WR": 152131,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0
+    },
+    "hallucination_flags": [
+      "Research stat #5 (a quantum computer could complete in practical time a calculation that would take a classical supercomputer 'longer than the age of the universe') is marked verified='partial' with an explicit flag: it is a widely-repeated illustrative framing claim from a secondary explainer source (Technonguide), NOT a benchmarked measurement. If it appears in the article stat grid as a hard figure, it must be framed as illustration of scale only, not cited as a precise benchmark.",
+      "The RSA-2040 / 50-50 Global Risk Institute figure (stat #1) is reported via MIT Technology Review, not read from the primary GRI 'Quantum Threat Timeline' report. Named source + year present (MIT Technology Review, 2026), so it clears the sourcing gate, but the primary GRI report should be verified before this becomes a headline stat.",
+      "The stat grid could not be inspected \u2014 the article HTML excerpt provided (first 8000 chars) is head/meta only and does not include the visible stat cards or body prose. Stat-card-to-source traceability (a recurring failure mode on prior articles, e.g. #25's uncited '90%') could NOT be fully verified this run; flag for confirmation against the rendered body."
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      "No agent exceeded the 80% budget threshold. Highest utilization: SC 326,281/500,000 = 65.3%; WR 152,131/300,000 = 50.7%. All others at 0%.",
+      "TOKEN-TRACKING GAP: Quill (QL) ran this pipeline (stages list includes 'quill', revisions.quill=0) but QL shows budget=0 and used=0 with status 'idle'. Either the quill edit stage recorded no usage (a recurrence of the token-tracking gap logged in CLAUDE.md) or QL was configured with a 0 budget for this standalone-Writer path. Cost attribution for the quill edit is therefore unmeasured \u2014 total_tokens_used above counts only SC+WR."
+    ],
+    "guardrails_applied": [
+      "BALANCE FLAG (not blocking): Both expert quotes in the research (and presumably the article) are from the same individual \u2014 Jay Gambetta, VP IBM Quantum. Both are named and verifiable, so no hallucination, but the research explicitly recommends sourcing one additional independent expert voice (academic or PQC/NIST-side) before publication for balance. Article already published (GS row 49, Nova posted); flag for Iris/editorial follow-up on future quantum coverage.",
+      "METADATA NOTE (not blocking, out of strict scope but surfaced): article:publish-date and article:published_time are set to 2026-07-22, but the actual run/deploy date is 2026-08-20. Publish-date metadata does not match deploy timestamp \u2014 recommend Porter/Maya reconcile the published_time to the real deploy date.",
+      "SCOPE CHECK: No scope violations detected. revisions.quill=0 and revisions.maya=0; no evidence of Quill editing images or Maya editing copy. Nova and Porter operated within their publish/marketing lanes."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-20",
+    "article_number": 48,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-quantum-leap-what-quantum-048.html",
+    "gs_row": 49,
+    "company_urn": "urn:li:share:7496281054954156032",
+    "reshare_urn": "urn:li:share:7496281067331432448",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]
