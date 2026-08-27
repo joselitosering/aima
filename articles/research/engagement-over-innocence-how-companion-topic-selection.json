@@ -1,0 +1,67 @@
+{
+  "row": 51,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-08-26",
+  "chosen": {
+    "title": "Engagement Over Innocence: How Companion Chatbots Turned Children Into a Growth Metric",
+    "category": "AI Ethics",
+    "rationale": "A wave of 2026 wrongful-death and child-harm suits (Character.AI/Google sued again Aug 13, 20+ pending against OpenAI, ChatGPT's teen product launched Aug 22 under fire) has made engagement-optimized companion bots the defining accountability story of the moment \u2014 exactly Dawn's terrain of corporate capture, dark patterns, and naming who pays when a design choice becomes a body count.",
+    "sources": [
+      {
+        "name": "Gibbs Mura \u2014 Character.AI Child/Teen Harm Lawsuits (filed Aug 13, 2026)",
+        "url": "https://www.classlawgroup.com/character-ai-lawsuits"
+      },
+      {
+        "name": "Colombia One \u2014 ChatGPT for Teens Amid Wrongful-Death Lawsuits (Aug 22, 2026)",
+        "url": "https://colombiaone.com/2026/08/22/chatgpt-for-teens-launch-lawsuits/"
+      },
+      {
+        "name": "California Lawyers Association \u2014 Regulatory Focus on AI Companion Chatbots (SB 243)",
+        "url": "https://calawyers.org/privacy-law/regulatory-focus-on-ai-companion-character-chatbots/"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The Data Center Says No One Asked You: The Revolt Against AI's Infrastructure Land Grab",
+      "category": "AI Ethics",
+      "rationale": "In 2026 nearly 150 protests across 42 states and 69\u201378 local moratoriums (plus New York's first hyperscale pause) have turned AI's water-and-power footprint into a live fight over local democracy and climate justice \u2014 Dawn's follow-the-money, whose-community-pays angle, and distinct from AIMA's existing carbon-ledger piece because the story here is consent and power, not kilowatts.",
+      "sources": [
+        {
+          "name": "TIME \u2014 Community Backlash to AI Data Centers Is Growing Across the U.S. (Jul 22, 2026)",
+          "url": "https://time.com/article/2026/07/22/community-backlash-ai-data-centers/"
+        },
+        {
+          "name": "Water Foundation \u2014 Water & Data Centers 2026",
+          "url": "https://waterfdn.org/wp-content/uploads/2026/07/Water-Data-Centers-2026.pdf"
+        },
+        {
+          "name": "Wikipedia \u2014 Opposition to AI data centers",
+          "url": "https://en.wikipedia.org/wiki/Opposition_to_AI_data_centers"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Grading Their Own Homework: How AI Hiring Audits Became an Industry That Answers to No One",
+      "category": "AI Labor",
+      "rationale": "The 2026 Workday bias suit plus California/EEOC's shift from internal vetting to mandated independent third-party bias audits raises the question Dawn would press hardest \u2014 who audits the auditors, and does a compliance industry actually protect workers or just launder the same proxy discrimination \u2014 a fresh regulatory angle distinct from AIMA's earlier r\u00e9sum\u00e9-bias coverage.",
+      "sources": [
+        {
+          "name": "Quinn Emanuel \u2014 When Machines Discriminate: The Rise of AI Bias Lawsuits",
+          "url": "https://www.quinnemanuel.com/the-firm/publications/when-machines-discriminate-the-rise-of-ai-bias-lawsuits/"
+        },
+        {
+          "name": "Bochner PLLC \u2014 Algorithmic Bias Audit Compliance: Navigating the 2026 Frontier",
+          "url": "https://www.bochner.law/news/publications/2026-04-30-algorithmic-bias-audit-compliance-navigating-the-2026-frontier"
+        },
+        {
+          "name": "TechXplore \u2014 AI bias isn't just an error in the algorithm, it's a chain of human decisions (Aug 2026)",
+          "url": "https://techxplore.com/news/2026-08-ai-bias-isnt-error-algorithm.html"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

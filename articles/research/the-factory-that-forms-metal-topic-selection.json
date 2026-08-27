@@ -1,0 +1,63 @@
+{
+  "row": 49,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-08-24",
+  "chosen": {
+    "title": "The Factory That Forms Metal by Hand: Inside the Robotic Craftsmen Reshaping Aerospace Manufacturing",
+    "category": "AI Science",
+    "rationale": "Machina Labs just opened a 200,000 sq-ft 'physical AI' factory where two-armed robots use real-time AI to shape titanium and aluminum aerospace parts in days instead of months \u2014 backed by a fresh $124M round with Toyota and Lockheed Martin. It's a perfect Kenji story: a tangible mechanism (robots literally hammering metal into shape), a maker's sense of wonder, and honest stakes about labor and defense.",
+    "sources": [
+      {
+        "name": "The Metalnomist \u2014 Machina Labs Aerospace Factory",
+        "url": "https://www.metalnomist.com/2026/04/machina-labs-aerospace-factory-signals.html"
+      },
+      {
+        "name": "RAISE Summit \u2014 20 Physical AI Companies to Watch in 2026",
+        "url": "https://www.raisesummit.com/post/20-physical-ai-companies-to-watch-in-2026"
+      },
+      {
+        "name": "The Fabricator \u2014 How AI and physical robotics are accelerating manufacturing",
+        "url": "https://www.thefabricator.com/thefabricator/article/automationrobotics/how-ai-and-physical-robotics-are-accelerating-automation-in-manufacturing"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The Weather Machine Learned to Guess: How AI Forecasts Now See 45 Days Into the Sky",
+      "category": "Climate Tech",
+      "rationale": "NOAA just put a new generation of AI-driven global weather models into operation, and systems like DeepMet are pushing accurate long-range forecasts out to 45 days while using a fraction of the compute \u2014 cutting error 20-60% versus the leading physics model. This lands squarely in Kenji's climate-tech and 'planet as a character' territory, with a clean mechanism to explain and real stakes for extreme-heat warning.",
+      "sources": [
+        {
+          "name": "NOAA \u2014 New generation of AI-driven global weather models",
+          "url": "https://www.noaa.gov/news-release/noaa-deploys-new-generation-of-ai-driven-global-weather-models"
+        },
+        {
+          "name": "EurekAlert! \u2014 AI breakthrough boosts long-range weather forecasting",
+          "url": "https://www.eurekalert.org/news-releases/1110082"
+        },
+        {
+          "name": "Cambridge Review \u2014 AI climate modelling 2026",
+          "url": "https://cambridgereview.uk/posts/ai-climate-modelling-2026"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Teaching Robots to Move in Zero Gravity: How AI Path-Planning Is Rewiring Work in Orbit",
+      "category": "AI Science",
+      "rationale": "NASA is now using AI-enabled 'warm start' motion planning to speed up ISS robot path-planning by 50-60%, while labs push dexterous multi-fingered manipulation for unstructured environments. It's an aerospace-meets-robotics story with a vivid physical hook \u2014 a robot learning to reach for a bolt in freefall \u2014 that fits Kenji's window-seat-with-a-research-paper enthusiasm perfectly.",
+      "sources": [
+        {
+          "name": "Tech Briefs \u2014 Advances in Robotics, Automation & Motion Control",
+          "url": "https://www.techbriefs.com/component/content/article/55632-doc-9975"
+        },
+        {
+          "name": "Stanford Emerging Technology Review \u2014 Robotics 2026",
+          "url": "https://setr.stanford.edu/technology/robotics/2026"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

@@ -53,9 +53,9 @@
 | 46 | 2026-07-20 | Can Machines Learn to Care? Emotional AI and the Empathy Question | AI Philosophy | 9 min |  | Joselito Sering |
 | 47 | 2026-07-21 | The Boss Is a Chatbot: What Happens When the Algorithm That Manages You Can Also Fire You | AI Labor | 8 min |  | Dawn Ginhaua |
 | 48 | 2026-07-22 | The Quantum Leap: What Quantum Computing Actually Means for Ordinary Life | AI Science | 12 min |  | Joselito Sering |
-| 49 | 2026-07-23 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
+| 49 | 2026-07-23 | The Factory That Forms Metal by Hand: Inside the Robotic Craftsmen Reshaping Aerospace Manufacturing | AI Science | 8 min |  | Kenji Nakamoto |
 | 50 | 2026-07-24 | The Regulation Race: US vs. EU vs. China on AI Governance in 2026 | AI Law | 13 min |  | Joselito Sering |
-| 51 | 2026-07-25 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
+| 51 | 2026-07-25 | Engagement Over Innocence: How Companion Chatbots Turned Children Into a Growth Metric | AI Ethics | 8 min |  | Dawn Ginhaua |
 | 52 | 2026-07-26 | From Pixel to Presence: AI and the Immersive Media Future | AI Creative | 10 min |  | Joselito Sering |
 | 53 | 2026-07-27 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
 | 54 | 2026-07-28 | Skills That Remain Human: What AI Cannot Automate and Why It Matters | AI Labor | 10 min |  | Joselito Sering |

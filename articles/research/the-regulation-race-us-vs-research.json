@@ -1,0 +1,126 @@
+{
+  "_meta": {
+    "article_number": 50,
+    "slug": "the-regulation-race-us-vs",
+    "title": "The Regulation Race: US vs. EU vs. China on AI Governance in 2026",
+    "author": "Joselito Sering",
+    "category": "AI Law",
+    "research_date": "2026-08-25",
+    "researcher": "Scout (Research Agent)",
+    "tone": "analytical",
+    "mood": "thoughtful",
+    "word_target": 1350,
+    "sources_attempted": [
+      "Local cache: governance-gap-ai-regulation-research.json (#17 — high relevance, but synthesized-from-training through June 2026; use for structure/background, re-verify any stat before citing as current)",
+      "Local cache: surveillance-wages-how-ai-turned-research.json (#35 — low direct relevance; skimmed for OECD/EU governance framing only)",
+      "Exa semantic search x2 (EU GPAI enforcement vs US AI Action Plan; China 2025-2026 AI governance) — returned real 2025-dated primary/secondary sources with clean text + URLs"
+    ],
+    "sources_note": "Two Exa backend calls used (within the <=3 cap). No follow-up full-page fetches (budget-limited run). The EU, US and China 2025 developments below are drawn directly from the Exa-surfaced source pages (EU Commission press release; Jones Day; Mayer Brown). Background/comparative-history stats carried from the #17 cache are explicitly flagged as needing live re-verification because that file was synthesized from training data, not live fetch.",
+    "confidence": "high on the 2025 three-jurisdiction primary developments; medium on carried-forward background stats (flagged)"
+  },
+  "thesis": "By 2026 the world has not converged on one AI rulebook — it has split into three incompatible regulatory philosophies. The EU governs by comprehensive risk-tiered law (rights-first), the US governs by deregulatory executive action (innovation-first), and China governs by fast top-down administrative decree (control-first). The 'race' is not about who regulates fastest; it is about which model exports its norms to everyone else. In 2025 all three made decisive, divergent moves within weeks of each other, hardening the split rather than closing it.",
+    "central_provocation": "Within a single stretch of summer 2025, the EU switched on binding obligations for general-purpose AI, the White House issued an AI Action Plan explicitly built to deregulate, and China unveiled a Global AI Governance Action Plan to write the world's rules its way. Three superpowers, one technology, three opposite bets — and every company building AI now has to comply with all three at once.",
+  "statistics": [
+    {
+      "stat": "The EU AI Act's obligations for providers of general-purpose AI (GPAI) models entered into application on 2 August 2025 (transparency + copyright). GPAI is defined as models trained with over 10^23 FLOP; the most capable models presenting 'systemic risk' — those exceeding 10^25 FLOP — face additional obligations including Commission notification and safety/security assurance. Models already on the market before 2 August 2025 have until 2 August 2027 to comply.",
+      "source": "European Commission, 'EU rules on general-purpose AI models start to apply' (Shaping Europe's digital future)",
+      "year": "2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/eu-rules-general-purpose-ai-models-start-apply-bringing-more-transparency-safety-and-accountability"
+    },
+    {
+      "stat": "The EU AI Act entered into force 1 August 2024 and became broadly applicable on 2 August 2026. From 2 August 2026 the AI Office and Member-State authorities enforce the Act, with the AI Office holding power over GPAI models to request technical documentation, evaluate models, require corrective measures and issue fines. High-risk rules were extended (Annex III use cases to 2 December 2027; Annex I embedded products to 2 August 2028) under the 'AI Omnibus' simplification.",
+      "source": "European Commission, 'AI Act' regulatory framework page (Shaping Europe's digital future)",
+      "year": "2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+    },
+    {
+      "stat": "The United States pivoted the opposite way: 'America's AI Action Plan,' announced with three accompanying executive orders in July-August 2025, prioritizes innovation and deregulation — reshaping federal AI procurement, data-center permitting and AI export practice, and explicitly departing from the EU, China and some US state laws by 'evaluating national security risks ahead of potential consumer protection, civil rights, privacy, and climate concerns.'",
+      "source": "Jones Day, 'White House Issues Executive Orders on AI Action Plan'",
+      "year": "2025",
+      "url": "https://www.jonesday.com/en/insights/2025/08/white-house-issues-executive-orders-on-ai-action-plan"
+    },
+    {
+      "stat": "China issued its Global AI Governance Action Plan at the World Artificial Intelligence Conference on 26 July 2025, alongside draft AI ethics management measures — signaling an ambition to shape international AI governance while tightening domestic control. Its 'AI Plus' implementation guideline (August 2025) targets a penetration rate of new-generation intelligent terminals and AI agents exceeding 70% by 2027 and 90% by 2030.",
+      "source": "Mayer Brown, 'Artificial Intelligence: A Brave New World — China Formulates New AI Global Governance Action Plan and Issues Draft Ethics Rules and AI Labelling Rules'",
+      "year": "2025",
+      "url": "https://www.mayerbrown.com/en/insights/publications/2025/10/artificial-intelligence-a-brave-new-world-china-formulates-new-ai-global--governance-action-plan-and-issues-draft-ethics-rules-and-ai-labelling-rules"
+    },
+    {
+      "stat": "China's Measures for Labelling of AI-Generated Synthetic Content (released by the Cyberspace Administration of China on 14 March 2025) took effect 1 September 2025, together with the national technical standard GB 45438-2025. They require BOTH explicit labels (perceivable text/audio/graphics on AI content) and implicit labels embedded in file metadata, and obligate distribution platforms to verify metadata and flag suspected AI content — the most prescriptive AI-content-labelling regime of the three jurisdictions.",
+      "source": "Mayer Brown (citing CAC Labelling Measures + GB 45438-2025)",
+      "year": "2025",
+      "url": "https://www.mayerbrown.com/en/insights/publications/2025/10/artificial-intelligence-a-brave-new-world-china-formulates-new-ai-global--governance-action-plan-and-issues-draft-ethics-rules-and-ai-labelling-rules"
+    },
+    {
+      "stat": "The scale of legislative motion versus outcome frames the whole race: 1,600+ AI-related bills were introduced globally in 2023, yet fewer than 12 became substantive law — under a 1% passage rate. The EU AI Act itself passed the European Parliament 523-46 (13 March 2024).",
+      "source": "OECD AI Policy Observatory; European Parliament records — carried from AIMA research cache #17 (governance-gap)",
+      "year": "2023-2024",
+      "flag": "SYNTHESIZED-FROM-TRAINING in the source cache (not a live fetch). Re-verify the '1,600+ bills / <12 passed' figure against OECD.AI and the 523-46 vote against European Parliament records before publishing as fact."
+    }
+  ],
+  "quotes": [
+    {
+      "quote": "These rules mean clearer information about how AI models are trained, better enforcement of copyright protections and more responsible AI development... bringing more transparency, safety and accountability to AI systems on the market.",
+      "speaker": "European Commission",
+      "affiliation": "Official EU press release on GPAI obligations entering application (2 August 2025)",
+      "year": "2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/eu-rules-general-purpose-ai-models-start-apply-bringing-more-transparency-safety-and-accountability",
+      "note": "Institutional (not individual) attribution — use as the EU's own framing of its rights-first model."
+    },
+    {
+      "quote": "The Plan departs from trends seen in the European Union, the People's Republic of China, and in some state laws and regulations by prioritizing innovation, exporting American AI to allies and partners, and evaluating national security risks ahead of potential consumer protection, civil rights, privacy, and climate concerns.",
+      "speaker": "Jones Day (analysis)",
+      "affiliation": "Jones Day law firm client insight on America's AI Action Plan",
+      "year": "2025",
+      "url": "https://www.jonesday.com/en/insights/2025/08/white-house-issues-executive-orders-on-ai-action-plan",
+      "note": "Secondary/analytical source. Good for the explicit US-vs-EU-vs-China contrast in one sentence."
+    },
+    {
+      "quote": "We have outsourced our democratic decision-making to a small number of people in Silicon Valley who were never elected and are not accountable to the public.",
+      "speaker": "Marietje Schaake",
+      "affiliation": "Former MEP; International Policy Director, Stanford HAI; author of 'The Tech Coup' (2024)",
+      "year": "2024",
+      "url": "https://cyber.fsi.stanford.edu/people/marietje-schaake",
+      "note": "Carried from cache #17 — documented public position from her published book. URL is a general profile link; verify exact sourcing/quotation before print. Use as the critical 'regulatory capture' voice cutting across all three models."
+    }
+  ],
+  "counterargument": {
+    "claim": "Divergence is a feature, not a failure: regulatory competition lets each bloc pick the trade-off it values (EU rights, US speed, China control), and the strictest regime — the EU's — becomes a de facto global floor anyway via the 'Brussels effect,' because global firms build one compliant product for all markets. On this view the race produces convergence through the market even without a treaty.",
+    "rebuttal_hook": "But the 2025 moves cut against the Brussels-effect optimism: the US didn't quietly follow the EU floor — it issued an Action Plan explicitly designed to diverge and to export a rival (deregulatory) model to allies, while China built its OWN global-governance plan to export a third. When the two largest AI powers actively campaign to export incompatible norms, 'convergence via the strictest regime' stops being automatic. Firms increasingly face fragmentation — comply with three regimes at once — not harmonization.",
+    "source": "Contrast of European Commission GPAI rollout vs Jones Day analysis of the US AI Action Plan vs Mayer Brown analysis of China's Global AI Governance Action Plan (all 2025)",
+    "url": "https://www.jonesday.com/en/insights/2025/08/white-house-issues-executive-orders-on-ai-action-plan"
+  },
+  "recent_news": [
+    {
+      "item": "EU: GPAI obligations under the AI Act entered into application on 2 August 2025 (transparency + copyright); a voluntary GPAI Code of Practice, scope guidelines, and a training-data summary template were published in July 2025 to ease compliance. Full AI Act enforcement by the AI Office begins 2 August 2026.",
+      "date": "2025-08-02",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/eu-rules-general-purpose-ai-models-start-apply-bringing-more-transparency-safety-and-accountability"
+    },
+    {
+      "item": "US: The White House announced 'America's AI Action Plan' with three executive orders in July-August 2025, reorienting federal policy toward deregulation, faster data-center permitting, and AI export to allies.",
+      "date": "2025-08",
+      "url": "https://www.jonesday.com/en/insights/2025/08/white-house-issues-executive-orders-on-ai-action-plan"
+    },
+    {
+      "item": "China: Global AI Governance Action Plan unveiled at WAIC (26 July 2025); AI-content Labelling Measures + GB 45438-2025 standard took effect 1 September 2025; 'AI Plus' guideline (Aug 2025) sets 70%-by-2027 / 90%-by-2030 AI penetration targets.",
+      "date": "2025-09-01",
+      "url": "https://www.mayerbrown.com/en/insights/publications/2025/10/artificial-intelligence-a-brave-new-world-china-formulates-new-ai-global--governance-action-plan-and-issues-draft-ethics-rules-and-ai-labelling-rules"
+    }
+  ],
+  "background_from_cache_reverify": {
+    "note": "These framing points come from AIMA cache #17 (governance-gap), which was SYNTHESIZED FROM TRAINING, not live-fetched. Useful for narrative scaffolding; each must be re-verified before citing as a live 2026 fact.",
+    "points": [
+      "US had no comprehensive federal AI law as of mid-2026; Biden's Oct 2023 AI Safety EO was revoked by Trump on 20 Jan 2025; California SB 1047 vetoed 29 Sep 2024.",
+      "China's foundational stack pre-2025: Deep Synthesis Provisions (Jan 2023), GenAI Interim Measures (Aug 2023), Algorithmic Recommendation Provisions (Mar 2022) — confirmed/expanded by the 2025 Mayer Brown source.",
+      "The 'pacing problem' / Collingridge dilemma framing: legislation runs on 2-5 year cycles while model generations turn over every 6-24 months — the EU Act was drafted (proposed Apr 2021) before ChatGPT (Nov 2022) existed.",
+      "OpenAI lobbying reportedly rose ~576% ($260K 2022 -> $1.76M 2023); Meta ~$19.2M US lobbying 2023 — RE-VERIFY against US Senate LDA / OpenSecrets before use."
+    ]
+  },
+  "unverified_flags": [
+    "Marietje Schaake quote carried from cache #17 — verify exact wording/source URL before printing.",
+    "'1,600+ AI bills / fewer than 12 passed (2023)' and '523-46 EU Parliament vote' — from synthesized cache; re-verify against OECD.AI and European Parliament records.",
+    "All lobbying figures (OpenAI +576%, Meta $19.2M) — from synthesized cache; confirm against US Senate LDA / OpenSecrets.",
+    "US federal-law status 'no comprehensive AI law as of 2026' — confirm no federal statute passed between June 2026 and publish date (2026-07-24 spec / 2026-08-25 research).",
+    "China 'AI Plus' 70%/90% penetration targets and the exact WAIC date (26 July 2025) are from the Mayer Brown secondary source — solid, but ideally corroborate against the primary Chinese State Council/CAC releases if quoted precisely."
+  ]
+}

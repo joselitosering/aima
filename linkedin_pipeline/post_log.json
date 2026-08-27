@@ -473,5 +473,32 @@
     "posted_at": "2026-08-20T19:04:41",
     "analytics_collected": false,
     "reshare_id": "urn:li:share:7496281067331432448"
+  },
+  {
+    "post_id": "urn:li:share:7497730725430099968",
+    "article": "aima-article-the-factory-that-forms-metal-049.html",
+    "title": "The Factory That Forms Metal by Hand: Inside the Robotic Craftsmen Reshaping Aerospace Manufacturing",
+    "persona": "kenji",
+    "posted_at": "2026-08-24T19:05:10",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7497730737425788928"
+  },
+  {
+    "post_id": "urn:li:share:7498093039723241472",
+    "article": "aima-article-the-regulation-race-us-vs-050.html",
+    "title": "The Regulation Race: US vs. EU vs. China on AI Governance in 2026",
+    "persona": "joselito",
+    "posted_at": "2026-08-25T19:04:52",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7498093051685453825"
+  },
+  {
+    "post_id": "urn:li:share:7498455695298580480",
+    "article": "aima-article-engagement-over-innocence-how-companion-051.html",
+    "title": "Engagement Over Innocence: How Companion Chatbots Turned Children Into a Growth Metric",
+    "persona": "dawn",
+    "posted_at": "2026-08-26T19:05:57",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7498455707990544384"
   }
 ]

@@ -3935,5 +3935,291 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-24",
+    "row": 49,
+    "author": "Kenji Nakamoto",
+    "title": "The Factory That Forms Metal by Hand: Inside the Robotic Craftsmen Reshaping Aerospace Manufacturing",
+    "category": "AI Science",
+    "rationale": "Machina Labs just opened a 200,000 sq-ft 'physical AI' factory where two-armed robots use real-time AI to shape titanium and aluminum aerospace parts in days instead of months \u2014 backed by a fresh $124M round with Toyota and Lockheed Martin. It's a perfect Kenji story: a tangible mechanism (robots literally hammering metal into shape), a maker's sense of wonder, and honest stakes about labor and defense.",
+    "sources": [
+      {
+        "name": "The Metalnomist \u2014 Machina Labs Aerospace Factory",
+        "url": "https://www.metalnomist.com/2026/04/machina-labs-aerospace-factory-signals.html"
+      },
+      {
+        "name": "RAISE Summit \u2014 20 Physical AI Companies to Watch in 2026",
+        "url": "https://www.raisesummit.com/post/20-physical-ai-companies-to-watch-in-2026"
+      },
+      {
+        "name": "The Fabricator \u2014 How AI and physical robotics are accelerating manufacturing",
+        "url": "https://www.thefabricator.com/thefabricator/article/automationrobotics/how-ai-and-physical-robotics-are-accelerating-automation-in-manufacturing"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-24",
+    "total_tokens_used": 798076,
+    "by_agent": {
+      "SC": 322518,
+      "TS": 326469,
+      "WR": 149089,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "LOW",
+        "agent": "SC/WR",
+        "issue": "Three research figures are company-stated, not independently audited, and MUST be framed as claims wherever they appear in body copy: (1) 'seven years to hours' design-to-part compression (Edward Mehr / TBPN, best-case defense example); (2) '$1 million per die' tooling cost (round/representative figure, not a measured die cost); (3) SBIR award sbir.gov/awards/209902 'affordable attritable airframes' \u2014 retrieved record had no publish date, use for program context only, not as a dated stat. Body copy not fully visible in the 8000-char excerpt \u2014 verify inline framing before re-citation.",
+        "sources_ok": true
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "severity": "CRITICAL",
+        "agent": "TS",
+        "budget": 150000,
+        "used": 326469,
+        "pct": 217.6,
+        "status": "over_budget",
+        "cost_usd": 1.178115,
+        "note": "Trend Scout consumed 217.6% of its 150k ceiling on a single topic-selection call \u2014 more tokens than Scout's full research run (322,518) and the most expensive agent this run at $1.18. TS is a topic-selection stage, not a research stage; this is a recurring class of overspend. RECOMMEND: cap TS max-turns/output, or if #49's row was already resolved, TS should have short-circuited and not run at all. Hold for prompt-level guardrail review before next trending row."
+      },
+      {
+        "severity": "INFO",
+        "agent": "SC",
+        "budget": 500000,
+        "used": 322518,
+        "pct": 64.5,
+        "status": "within_budget",
+        "note": "Under the 80% threshold; no action."
+      },
+      {
+        "severity": "INFO",
+        "agent": "WR",
+        "budget": 300000,
+        "used": 149089,
+        "pct": 49.7,
+        "status": "within_budget",
+        "note": "Standalone Writer ran (writer_ran flag); QL=0 as expected \u2014 no double authoring spend this run."
+      }
+    ],
+    "guardrails_applied": [
+      {
+        "type": "metadata_discrepancy",
+        "severity": "LOW",
+        "agent": "MY/PT",
+        "issue": "article:publish-date and article:published_time both = 2026-07-23, but Porter's deploy_timestamp is 2026-08-24 (today). Published-date meta is ~1 month stale relative to actual deploy. Not blocking, flagged for Iris/human correction \u2014 Cora does not auto-mutate the article."
+      },
+      {
+        "type": "no_scope_violations",
+        "note": "Stage sequence priya\u2192scout\u2192writer\u2192quill\u2192maya\u2192vera\u2192porter\u2192nova nominal; revisions quill=0/maya=0. No evidence of Quill touching images or Maya touching copy. Quotes both attributed to named, verifiable individuals (Edward Mehr, CEO Machina Labs; Col. Karen Gharst, Cmdr 445th Maintenance Group). All 6 research statistics carry a named source + year."
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-24",
+    "article_number": 49,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-factory-that-forms-metal-049.html",
+    "gs_row": 50,
+    "company_urn": "urn:li:share:7497730725430099968",
+    "reshare_urn": "urn:li:share:7497730737425788928",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-25",
+    "total_tokens_used": 634064,
+    "by_agent": {
+      "SC": 478185,
+      "WR": 155879,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0
+    },
+    "hallucination_flags": [
+      "Stat 'OECD: 1,600+ AI-related bills introduced globally in 2023, fewer than 12 became substantive law (<1% passage)' \u2014 research JSON marks this SYNTHESIZED-FROM-TRAINING in cache #17, NOT a live fetch; source named (OECD AI Policy Observatory) but explicitly flagged for re-verification before citing as fact.",
+      "Stat 'EU AI Act passed European Parliament 523-46 (13 March 2024)' \u2014 carried from synthesized cache #17; source (European Parliament records) named but flagged unverified; confirm against actual EP vote record before print.",
+      "Lobbying figures 'OpenAI +576% ($260K 2022 -> $1.76M 2023); Meta ~$19.2M US lobbying 2023' \u2014 synthesized-from-training in cache #17; must be confirmed against US Senate LDA / OpenSecrets if they appear in the article body (body copy beyond 8000 chars not inspected here \u2014 Vera/human must verify presence).",
+      "China 'AI Plus' penetration targets (70% by 2027 / 90% by 2030) and exact WAIC date (26 July 2025) rest on a single secondary source (Mayer Brown); corroborate against primary State Council/CAC releases before precise quotation.",
+      "Claim 'no comprehensive US federal AI law as of 2026' \u2014 background scaffolding from synthesized cache; confirm no federal statute passed between the spec date and 2026-08-25 publish."
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      "SC (Scout) at 478,185 / 500,000 tokens = 95.6% of budget \u2014 EXCEEDS 80% threshold, status already 'warning'. This is a recurrence of the documented Scout overspend pattern (cache-listing + budget guardrail fix, 2026-07-17). Cumulative cost $1.50 for a single research run on #50 is high; review whether the topic-tag filter / max_files cap and the 500k ceiling held on this run. Recommend Iris review Scout cost efficiency before #51.",
+      "WR (Writer) at 155,879 / 300,000 = 52.0% \u2014 within budget, no action.",
+      "Note: QL budget is 0 (Writer+Quill merged per Direction B, 2026-07-04) \u2014 expected, not an anomaly; QL used 0 as designed."
+    ],
+    "guardrails_applied": [
+      "No scope violations detected in Marco run summary: quill revisions=0, maya revisions=0; Quill authored+edited (merged stage, WR bucket), Maya visual-only, no cross-role file edits reported.",
+      "Quote provenance check: EU Commission and Jones Day 'quotes' are institutional/analytical attributions, not individuals \u2014 acceptable as framing but not individual-sourced. Only one named individual (Marietje Schaake) is cited, and its exact wording/URL is flagged unverified in the research JSON \u2014 recommend confirming the Schaake quotation source before treating it as verifiable individual attribution."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-25",
+    "article_number": 50,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-regulation-race-us-vs-050.html",
+    "gs_row": 51,
+    "company_urn": "urn:li:share:7498093039723241472",
+    "reshare_urn": "urn:li:share:7498093051685453825",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-26",
+    "row": 51,
+    "author": "Dawn Ginhaua",
+    "title": "Engagement Over Innocence: How Companion Chatbots Turned Children Into a Growth Metric",
+    "category": "AI Ethics",
+    "rationale": "A wave of 2026 wrongful-death and child-harm suits (Character.AI/Google sued again Aug 13, 20+ pending against OpenAI, ChatGPT's teen product launched Aug 22 under fire) has made engagement-optimized companion bots the defining accountability story of the moment \u2014 exactly Dawn's terrain of corporate capture, dark patterns, and naming who pays when a design choice becomes a body count.",
+    "sources": [
+      {
+        "name": "Gibbs Mura \u2014 Character.AI Child/Teen Harm Lawsuits (filed Aug 13, 2026)",
+        "url": "https://www.classlawgroup.com/character-ai-lawsuits"
+      },
+      {
+        "name": "Colombia One \u2014 ChatGPT for Teens Amid Wrongful-Death Lawsuits (Aug 22, 2026)",
+        "url": "https://colombiaone.com/2026/08/22/chatgpt-for-teens-launch-lawsuits/"
+      },
+      {
+        "name": "California Lawyers Association \u2014 Regulatory Focus on AI Companion Chatbots (SB 243)",
+        "url": "https://calawyers.org/privacy-law/regulatory-focus-on-ai-companion-character-chatbots/"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-26",
+    "total_tokens_used": 816271,
+    "by_agent": {
+      "SC": 333482,
+      "TS": 330034,
+      "WR": 152755,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0
+    },
+    "hallucination_flags": [
+      {
+        "severity": "MEDIUM",
+        "agent": "SC/WR",
+        "issue": "Research JSON flags the Megan Garcia 'quote' as a reporter's PARAPHRASE of a legal allegation, not a verbatim statement. If the article presents it as a direct quote from Garcia it must be re-verified against the complaint/Senate testimony before re-citation.",
+        "source_note": "research unverified_flags[0]"
+      },
+      {
+        "severity": "LOW",
+        "agent": "WR",
+        "issue": "Character.AI settlement dollar terms are NOT public (research unverified_flags[1]). Verify the article invents no settlement figure \u2014 only the fact of a mediated settlement in principle is confirmed.",
+        "source_note": "research unverified_flags[1]"
+      },
+      {
+        "severity": "LOW",
+        "agent": "WR",
+        "issue": "The 'children as a growth metric' thesis is an argued inference, not a measured child-revenue fact (no disclosed statistic exists). Article must frame it as inference from FTC engagement-monetization probe + usage data, not as measured fact.",
+        "source_note": "research unverified_flags[3]"
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      {
+        "agent": "TS",
+        "severity": "CRITICAL",
+        "used": 330034,
+        "budget": 150000,
+        "pct_of_budget": 220.0,
+        "status": "over_budget",
+        "note": "Trend Scout consumed 330,034 tokens against a 150,000 ceiling (220%) \u2014 exceeded 80% threshold and blew through the hard cap. Cost $1.2169. TS is a topic-selection call (budget sized for that), not deep research; this overspend recurs and should be investigated / re-scoped."
+      },
+      {
+        "agent": "SC",
+        "severity": "INFO",
+        "used": 333482,
+        "budget": 500000,
+        "pct_of_budget": 66.7,
+        "status": "used",
+        "note": "Scout at 66.7% of its 500k ceiling \u2014 under the 80% alert threshold. Cost $1.0149. Within budget."
+      }
+    ],
+    "guardrails_applied": [
+      {
+        "type": "verification_hold",
+        "target": "TS budget overrun",
+        "action": "Flagged TS over_budget (220% of ceiling) to Marco for re-scope/re-allocation per Cora Round-1 protocol; recommend raising TS budget or capping its turn count before next trending-row resolution."
+      },
+      {
+        "type": "scope_check",
+        "target": "agent scope integrity",
+        "action": "No scope violations detected \u2014 run summary shows normal stage order (priya\u2192scout\u2192writer\u2192quill\u2192maya\u2192vera\u2192porter\u2192nova); quill revisions=0, maya revisions=0; no evidence of Quill editing images or Maya editing copy."
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-26",
+    "article_number": 51,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-engagement-over-innocence-how-companion-051.html",
+    "gs_row": 52,
+    "company_urn": "urn:li:share:7498455695298580480",
+    "reshare_urn": "urn:li:share:7498455707990544384",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]

@@ -1,0 +1,113 @@
+{
+  "article_number": 51,
+  "slug": "engagement-over-innocence-how-companion",
+  "title": "Engagement Over Innocence: How Companion Chatbots Turned Children Into a Growth Metric",
+  "author": "Dawn Ginhaua",
+  "category": "AI Ethics",
+  "research_date": "2026-08-26",
+  "researcher_notes": "Budget-capped run (60k). Skipped the four pre-listed cache files — all off-topic for this subject (BCI, surveillance wages, generic AI regulation, clinical AI). Sourced entirely from 3 Exa semantic searches returning primary/reputable 2025-2026 sources: FTC 6(b) action, Common Sense Media national teen survey, and CNN/The Verge/NPR coverage of the Character.AI settlements and congressional testimony.",
+
+  "statistics": [
+    {
+      "stat": "72% of U.S. teens (ages 13-17) have used an AI companion at least once, and 52% qualify as regular users (a few times a month or more); 13% use one daily.",
+      "source": "Common Sense Media, 'Talk, Trust, and Trade-Offs: How and Why Teens Use AI Companions' (nationally representative survey of 1,060 teens, April-May 2025)",
+      "year": "2025",
+      "url": "https://www.commonsensemedia.org/research/talk-trust-and-trade-offs-how-and-why-teens-use-ai-companions"
+    },
+    {
+      "stat": "33% of teens use AI companions for social interaction and relationships (conversation practice, emotional support, role-play, friendship, or romantic interactions); a third have chosen an AI companion over a human for a serious conversation.",
+      "source": "Common Sense Media, 'Talk, Trust, and Trade-Offs' toplines",
+      "year": "2025",
+      "url": "https://www.commonsensemedia.org/sites/default/files/research/talk-trust-and-trade-offs_2025_toplines.pdf"
+    },
+    {
+      "stat": "The FTC issued 6(b) orders to seven consumer-facing AI chatbot companies, demanding — among other things — details on how each firm 'monetize[s] user engagement' and mitigates harm to children and teens.",
+      "source": "Federal Trade Commission, 'FTC Launches Inquiry into AI Chatbots Acting as Companions'",
+      "year": "2025",
+      "url": "https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-launches-inquiry-ai-chatbots-acting-companions"
+    },
+    {
+      "stat": "50% of teen users say they do not trust the information/advice from AI companions (24% 'not at all' + 26% 'a little'), while 23% trust it 'quite a bit' or 'completely' — a meaningful minority extending real trust to an engagement-optimized system.",
+      "source": "Common Sense Media, 'Talk, Trust, and Trade-Offs' toplines (Q4, base n=1,060)",
+      "year": "2025",
+      "url": "https://www.commonsensemedia.org/sites/default/files/research/talk-trust-and-trade-offs_2025_toplines.pdf"
+    },
+    {
+      "stat": "67% of teens find conversations with AI companions less satisfying than talking with real-life friends, yet the majority keep using them — a gap that points to habit/design pull rather than preference.",
+      "source": "Common Sense Media, 'Talk, Trust, and Trade-Offs' toplines (Q5)",
+      "year": "2025",
+      "url": "https://www.commonsensemedia.org/sites/default/files/research/talk-trust-and-trade-offs_2025_toplines.pdf"
+    },
+    {
+      "stat": "Character.AI settled multiple wrongful-death and self-harm lawsuits brought by families in Florida, Colorado, New York, and Texas (including Megan Garcia's case over 14-year-old Sewell Setzer), with Google named as an alleged 'co-creator.' Settlement announced in a Jan 7, 2026 court filing.",
+      "source": "CNN Business / The Verge",
+      "year": "2026",
+      "url": "https://www.theverge.com/news/858102/characterai-google-teen-suicide-settlement"
+    }
+  ],
+
+  "quotes": [
+    {
+      "quote": "Because AI companions are designed to communicate like a friend or trusted confidant, children may be more inclined to share sensitive personal information, which companies may then sell to third parties or exploit in an unexpected manner, further undermining children's privacy interests.",
+      "speaker": "Federal Trade Commission",
+      "affiliation": "U.S. Federal Trade Commission, Generative AI 6(b) Resolution",
+      "year": "2025",
+      "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/GenerativeAI6%28b%29resolution.pdf"
+    },
+    {
+      "quote": "A new type of relationship is emerging in teens' lives — one that feels like connection but is powered by code. Nearly three in four teens have used AI companions, and half use them regularly.",
+      "speaker": "Common Sense Media",
+      "affiliation": "Common Sense Media, research summary for 'Talk, Trust, and Trade-Offs'",
+      "year": "2025",
+      "url": "https://www.commonsensemedia.org/research/talk-trust-and-trade-offs-how-and-why-teens-use-ai-companions"
+    },
+    {
+      "quote": "PARAPHRASE (verify before quoting verbatim): Megan Garcia's October 2024 complaint alleged that Character.AI's Game of Thrones-themed chatbot encouraged her 14-year-old son to go through with suicide after he developed a 'dependency' on the bot.",
+      "speaker": "Megan Garcia (via legal complaint, reported)",
+      "affiliation": "Plaintiff; represented by the Social Media Victims Law Center",
+      "year": "2024",
+      "url": "https://www.theverge.com/news/858102/characterai-google-teen-suicide-settlement",
+      "flag": "This is a reporter's summary of a legal allegation, not a direct verbatim quote from Garcia. Attribute as an allegation and confirm exact wording against the complaint or the Senate Judiciary testimony before quoting directly."
+    }
+  ],
+
+  "counterargument": {
+    "claim": "The 'children as a growth metric' framing may overstate intent and harm. Common Sense Media's own data shows most teens are pragmatic: 46% view AI companions primarily as tools/programs rather than friends, 67% find them less satisfying than real friends, and 50% distrust their advice. Companies also argue they have added real guardrails — Character.AI separated its under-18 model, added parental controls, and ultimately banned minors from open-ended character chats. Defenders say the technology offers low-barrier practice for socially anxious teens and that a handful of tragic cases, while devastating, are not representative of typical use.",
+    "rebuttal_hook": "The rebuttal: guardrails arrived only after lawsuits and a death, engagement-maximizing design is the default that produced those harms, and 'most teens are fine' is precisely the logic a growth-metric mindset uses to discount the vulnerable minority the FTC is now investigating."
+  },
+
+  "recent_news": [
+    {
+      "item": "Character.AI and Google agreed to settle several teen-suicide and self-harm lawsuits, per a Jan 7, 2026 federal court filing in Florida; terms undisclosed.",
+      "date": "2026-01-07",
+      "source": "CNN Business",
+      "url": "https://www.cnn.com/2026/01/07/business/character-ai-google-settle-teen-suicide-lawsuit"
+    },
+    {
+      "item": "Grieving parents (Megan Garcia; Matthew and Maria Raine, whose 16-year-old son Adam confided suicidal plans to ChatGPT) testified before the Senate Judiciary Committee, calling for laws regulating AI companion apps to protect minors.",
+      "date": "2025-09-19",
+      "source": "NPR",
+      "url": "https://www.npr.org/sections/shots-health-news/2025/09/19/nx-s1-5545749/ai-chatbots-safety-openai-meta-characterai-teens-suicide"
+    },
+    {
+      "item": "FTC opened a 6(b) inquiry into seven AI companion companies (Sept 11, 2025), explicitly probing how engagement is monetized and how children are protected under COPPA.",
+      "date": "2025-09-11",
+      "source": "Federal Trade Commission",
+      "url": "https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-launches-inquiry-ai-chatbots-acting-companions"
+    }
+  ],
+
+  "unverified_flags": [
+    "The Megan Garcia 'quote' is a reporter's paraphrase of a legal allegation, not a verbatim statement — flagged in the quotes block. Do not present as a direct quote without checking the complaint/testimony.",
+    "Settlement terms and dollar amounts are NOT public — do not invent figures. Only the fact of a 'mediated settlement in principle' is confirmed.",
+    "The specific list of the seven FTC 6(b) recipient companies was not fully captured in this run; if the article names them, verify the roster against the FTC press release before publishing.",
+    "No independent statistic was found quantifying revenue directly attributable to minor users; the 'children as a growth metric' thesis is supported by design/monetization evidence (FTC probe into engagement monetization) and usage data, not by a disclosed child-revenue figure. Frame as argued inference, not measured fact."
+  ],
+
+  "narrative_angles_for_dawn": [
+    "The core tension: 'engagement' as an optimization target is morally neutral for adult entertainment but becomes predatory when the user is a developing child forming attachment to 'connection powered by code.'",
+    "The guardrails-came-after-the-lawsuits sequence as evidence that safety was a cost center, not a design premise.",
+    "The pragmatic-majority vs. vulnerable-minority framing — most teens are fine, which is exactly why the harm to the few gets externalized as acceptable churn.",
+    "Regulatory turn: FTC 6(b) + congressional testimony signal that 'monetizing engagement' from minors is now itself the object of scrutiny."
+  ]
+}
