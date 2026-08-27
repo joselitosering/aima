@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>WAXWERK — two-deck vinyl console</title>
+    <meta
+      name="description"
+      content="A two-deck DJ console that runs in the browser: scratchable platters, beat-locked sync, loops, an effects rack and an automixer. Your music never leaves your machine."
+    />
+    <meta property="og:title" content="WAXWERK — two-deck vinyl console" />
+    <meta
+      property="og:description"
+      content="A two-deck DJ console that runs in the browser. Your music never leaves your machine."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%230b0d0f'/><circle cx='16' cy='16' r='11' fill='none' stroke='%23262c33' stroke-width='1'/><circle cx='16' cy='16' r='5' fill='%23ff6a3d'/><circle cx='16' cy='16' r='1.6' fill='%230b0d0f'/></svg>" />
+
+    <style>
+      /* Nothing above the console. It has a hard minimum size and anything
+         this page keeps for itself comes straight out of the mixer, so the
+         frame takes the whole viewport and gets out of the way. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        background: #0b0d0f;
+        overflow: hidden;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <iframe
+      src="https://joselitosering.github.io/waxwerk/trainwreck.html"
+      title="WAXWERK console"
+      allow="midi; fullscreen; autoplay"
+    ></iframe>
+  </body>
+</html>
