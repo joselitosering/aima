@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>RACKSMITH — virtual 19″ studio rack</title>
+    <meta
+      name="description"
+      content="A modular virtual 19″ studio rack that runs in the browser: mixing console, synths, a drum machine, a step sequencer and a line input, patched together with draggable cables. Your audio never leaves your machine."
+    />
+    <meta property="og:title" content="RACKSMITH — virtual 19″ studio rack" />
+    <meta
+      property="og:description"
+      content="A modular virtual studio rack that runs in the browser. Your audio never leaves your machine."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='4' width='28' height='24' rx='2' fill='%230b0d0f'/><rect x='2' y='4' width='28' height='24' rx='2' fill='none' stroke='%23262c33' stroke-width='1'/><circle cx='9' cy='11' r='3' fill='none' stroke='%23f2a33c' stroke-width='1.6'/><circle cx='9' cy='21' r='3' fill='none' stroke='%235fc9b8' stroke-width='1.6'/><rect x='18' y='8' width='3' height='16' fill='%238ab4ff'/><rect x='23' y='12' width='3' height='12' fill='%238ab4ff'/></svg>" />
+
+    <style>
+      /* Nothing above the rack. It has a hard minimum size and anything
+         this page keeps for itself comes straight out of the workstation,
+         so the frame takes the whole viewport and gets out of the way. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        background: #0b0d0f;
+        overflow: hidden;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <iframe
+      src="https://joselitosering.github.io/racksmith/racksmith.html"
+      title="RACKSMITH studio rack"
+      allow="microphone; midi; fullscreen; autoplay"
+    ></iframe>
+  </body>
+</html>

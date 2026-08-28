@@ -1,6 +1,6 @@
 {
-  "run_date": "2026-08-26",
-  "article_number": 51,
+  "run_date": "2026-08-27",
+  "article_number": 52,
   "agents": {
     "IR": {
       "budget": 50000,
@@ -14,24 +14,22 @@
     },
     "SC": {
       "budget": 500000,
-      "used": 333482,
+      "used": 240144,
       "status": "used",
-      "last_call_cost_usd": 1.0148560000000002,
-      "cumulative_cost_usd": 1.014856
+      "last_call_cost_usd": 1.099355,
+      "cumulative_cost_usd": 1.099355
     },
     "TS": {
       "budget": 150000,
-      "used": 330034,
-      "status": "over_budget",
-      "last_call_cost_usd": 1.2169269999999996,
-      "cumulative_cost_usd": 1.216927
+      "used": 0,
+      "status": "idle"
     },
     "WR": {
       "budget": 300000,
-      "used": 152755,
+      "used": 151563,
       "status": "used",
-      "last_call_cost_usd": 0.7347194999999999,
-      "cumulative_cost_usd": 0.734719
+      "last_call_cost_usd": 0.7241589999999998,
+      "cumulative_cost_usd": 0.724159
     },
     "QL": {
       "budget": 0,
@@ -70,10 +68,10 @@
     },
     "CO": {
       "budget": 5000,
-      "used": 75044,
+      "used": 73906,
       "status": "over_budget",
-      "last_call_cost_usd": 0.5919965,
-      "cumulative_cost_usd": 0.591997
+      "last_call_cost_usd": 0.5761145,
+      "cumulative_cost_usd": 0.576114
     },
     "MR": {
       "budget": 0,

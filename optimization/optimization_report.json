@@ -4221,5 +4221,72 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-27",
+    "total_tokens_used": 391707,
+    "by_agent": {
+      "SC": 240144,
+      "WR": 151563,
+      "QL": 0,
+      "MY": 0
+    },
+    "hallucination_flags": [
+      {
+        "stat": "89% of game developers believe AI is changing what players expect from a game.",
+        "issue": "Named source + year present (Google Cloud / The Harris Poll, 2026), but underlying Harris Poll sample size/methodology not disclosed in the cited blog. Verify before re-citing.",
+        "severity": "MEDIUM"
+      },
+      {
+        "stat": "Immersive entertainment is projected to grow by 36% over the next decade.",
+        "issue": "Secondary citation \u2014 attributed to University of Birmingham but quoted second-hand via The Business Research Company market report; primary release URL not verified.",
+        "severity": "MEDIUM"
+      },
+      {
+        "stat": "Market-size figures $5.08B (2025) / $6.73B (2026) / $20.23B (2030).",
+        "issue": "Single commercial vendor (The Business Research Company) \u2014 has named source + year, but represents one forecast, not consensus. Should be framed as such.",
+        "severity": "LOW"
+      },
+      {
+        "quote": "We're moving into an era of what I call living games...",
+        "issue": "Quote lacks a named, verifiable individual \u2014 attributed to 'Google Cloud (gaming solutions team)', no published author name. Not traceable to a person.",
+        "severity": "MEDIUM"
+      }
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [],
+    "guardrails_applied": [
+      "Reviewed all agents vs 80% budget threshold: SC 240144/500000 (48%), WR 151563/300000 (51%) \u2014 both under 80%, no reallocation needed.",
+      "Scope check: Quill revisions=0, Maya revisions=0; no evidence of Quill editing images or Maya editing copy. No scope violations.",
+      "Note: QL budget=0 in token_budget.json (Writer/Quill authoring merged) \u2014 WR carried the authoring bucket this run as designed; not an anomaly."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-27",
+    "article_number": 52,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-from-pixel-to-presence-ai-052.html",
+    "gs_row": 53,
+    "company_urn": "urn:li:share:7498817757501607936",
+    "reshare_urn": "urn:li:share:7498817769862332419",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]
