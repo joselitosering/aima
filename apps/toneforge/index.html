@@ -840,6 +840,11 @@ const PRESETS=[
   cab:{cab:'blue2',level:0,blend:.5,mic2on:true,mics:[{model:'121',pos:.35,dist:2.5,axis:true},{model:'414',pos:.5,dist:9,axis:false}]},
   gtr:{guitar:'a12',pup:null,pos:2},
   pedals:{flanger:{on:1,params:{rate:.25,dep:.8,fb:.6,mix:.5}},delay:{on:1,params:{time:.52,fb:.55,tone:2600,mix:.4}},verb:{on:1,params:{dec:5.5,damp:.55,pre:60,mix:.5}}}},
+ {n:'GATED ICON LEAD',amp:'jcm800',ap:{channel:1,gain:.68,bass:.5,mid:.58,treb:.55,pres:.5,depth:.4,power:.55,sag:.5,master:.55},
+  cab:{cab:'v30',level:0,blend:.3,mic2on:true,mics:[{model:'57',pos:.35,dist:1.5,axis:true},{model:'421',pos:.5,dist:4,axis:false}]},
+  gtr:{guitar:'lp',pup:null,pos:2},
+  pedals:{gate:{on:1,params:{thr:.028,atk:.003,rel:.13}},comp:{on:1,params:{sus:.4,atk:.3,rel:.4,lvl:1}},od:{on:1,params:{drv:.55,tone:3400,lvl:-2}},
+    phaser:{on:1,params:{rate:.6,dep:.6,fb:.35,mix:.4}},delay:{on:1,params:{time:.36,fb:.32,tone:3200,mix:.24}},verb:{on:1,params:{dec:2.2,damp:.5,pre:18,mix:.22}}}},
 ];
 
 /* ================= state ================= */
@@ -881,7 +886,7 @@ function mkKnob(host,o){
 /* ================= audio engine ================= */
 let AC=null,E=null,ampN=null,enginePromise=null,WORKLET_OK=false;
 const pedalEng={};
-function setG(g,v,t){t=t==null?.035:t;if(!AC)return;const now=AC.currentTime;g.cancelScheduledValues(now);g.setValueAtTime(g.value,now);g.linearRampToValueAtTime(v,now+t);}
+function setG(node,v,t){t=t==null?.035:t;if(!AC)return;const g=node.gain;const now=AC.currentTime;g.cancelScheduledValues(now);g.setValueAtTime(g.value,now);g.linearRampToValueAtTime(v,now+t);}
 function seq(from){let p=from;for(let i=1;i<arguments.length;i++){p.connect(arguments[i]);p=arguments[i];}return p;}
 const WORKLET_SRC=
 'class GateProcessor extends AudioWorkletProcessor{\n'+
@@ -1003,7 +1008,7 @@ async function ensureEngine(){
       rewireChains();
       rebuildAmp();
       syncEngine();
-      if(!WORKLET_OK)toast('AudioWorklet unavailable here — GATE and WAH pedals run as bypass.',true);
+      if(!WORKLET_OK)toast('AudioWorklet unavailable here — GATE and WAH are using a compatibility engine instead (same behavior, slightly more CPU).');
     }catch(err){console.error(err);toast('Audio engine error: '+err.message,true);}
     return E;
   })();
@@ -1078,9 +1083,28 @@ function buildPedal(id){
   const ws=curve=>{const w=AC.createWaveShaper();w.oversample='4x';w.curve=curve;return w;};
   switch(id){
     case 'gate':{
-      if(!WORKLET_OK)break;
-      const n=new AudioWorkletNode(AC,'gate');shell.wet.connect(n);n.connect(shell.output);
-      extra=(k,v)=>{n.parameters.get(k).value=v;};break;}
+      if(WORKLET_OK){
+        const n=new AudioWorkletNode(AC,'gate');shell.wet.connect(n);n.connect(shell.output);
+        extra=(k,v)=>{n.parameters.get(k).value=v;};
+      }else{
+        const n=AC.createScriptProcessor(1024,1,1);
+        const prm={threshold:.035,attack:.003,release:.15};
+        let env=0,gv=0;
+        n.onaudioprocess=ev=>{
+          const i=ev.inputBuffer.getChannelData(0),o=ev.outputBuffer.getChannelData(0);
+          const ga=Math.exp(-1/(AC.sampleRate*prm.attack)),gr=Math.exp(-1/(AC.sampleRate*prm.release));
+          for(let k=0;k<i.length;k++){
+            const a=Math.abs(i[k]);
+            env=a>env?a:env*gr+a*(1-gr);
+            const tg=env>prm.threshold?1:0;
+            gv+=(tg-gv)*(tg>gv?(1-ga):(1-gr));
+            o[k]=i[k]*gv;
+          }
+        };
+        shell.wet.connect(n);n.connect(shell.output);
+        extra=(k,v)=>{prm[k]=v;};
+      }
+      break;}
     case 'tuner':break;
     case 'comp':{const c=AC.createDynamicsCompressor(),mk=AC.createGain();shell.wet.connect(c);c.connect(mk);mk.connect(shell.output);
       pe.meter=()=>c.reduction;
@@ -1089,9 +1113,34 @@ function buildPedal(id){
         else if(k==='rel')c.release.value=.05+Math.pow(v,1.6)*.75;
         else if(k==='lvl')mk.gain.value=dbG(v);};break;}
     case 'wah':{
-      if(!WORKLET_OK)break;
-      const n=new AudioWorkletNode(AC,'wah');shell.wet.connect(n);n.connect(shell.output);
-      extra=(k,v)=>{if(k==='mode')n.parameters.get('mode').value=v;else n.parameters.get(k).value=v;};break;}
+      if(WORKLET_OK){
+        const n=new AudioWorkletNode(AC,'wah');shell.wet.connect(n);n.connect(shell.output);
+        extra=(k,v)=>{if(k==='mode')n.parameters.get('mode').value=v;else n.parameters.get(k).value=v;};
+      }else{
+        const n=AC.createScriptProcessor(1024,1,1);
+        const prm={sens:.5,speed:.4,peak:3.5,manual:.35,mode:0};
+        let envw=0,posw=0,lpw=0,bpw=0;
+        n.onaudioprocess=ev=>{
+          const i=ev.inputBuffer.getChannelData(0),o=ev.outputBuffer.getChannelData(0),sr=AC.sampleRate;
+          const relc=Math.exp(-1/(sr*(.02+(1-prm.speed)*1.1)));
+          const d=1/Math.max(prm.peak,.8);
+          for(let k=0;k<i.length;k++){
+            const a=Math.abs(i[k]);
+            envw=a>envw?a:envw*relc+a*(1-relc);
+            const tg=prm.mode<.5?Math.min(1,envw*(.6+prm.sens*7)):prm.manual;
+            posw+=(tg-posw)*.0016;
+            const f=220*Math.pow(2600/220,posw);
+            const f1=2*Math.sin(Math.PI*Math.min(f,sr*.16)/sr);
+            const hp=i[k]-lpw-d*bpw;
+            bpw+=f1*hp;
+            lpw+=f1*bpw;
+            o[k]=bpw*d*.95;
+          }
+        };
+        shell.wet.connect(n);n.connect(shell.output);
+        extra=(k,v)=>{prm[k]=v;};
+      }
+      break;}
     case 'boost':{const g1=AC.createGain(),tilt=bi('highshelf',1500,1,0);shell.wet.connect(g1);g1.connect(tilt);tilt.connect(shell.output);
       extra=(k,v)=>{if(k==='lvl')g1.gain.value=dbG(v);if(k==='tilt')tilt.gain.value=v;};break;}
     case 'od':{const hp=bi('highpass',640,.7),pre=AC.createGain(),w=ws(clipCurve(2.4,.18)),
@@ -1142,7 +1191,7 @@ function buildPedal(id){
       let t;extra=(k,v)=>{if(k==='pre')pre.delayTime.value=v/1000;if(k==='dec'||k==='damp'){clearTimeout(t);t=setTimeout(queue,160);}};
       pe._initIR=()=>queue();break;}
   }
-  if(id==='tuner'||((id==='gate'||id==='wah')&&!WORKLET_OK))pe.broken=true;
+  if(id==='tuner')pe.broken=true;
   pe.apply=(k,v)=>{extra&&extra(k,v);};
   pe.applyMix=()=>{
     if(pe.broken){shell.wet.gain.value=0;shell.dry.gain.value=1;return;}
@@ -2725,7 +2774,7 @@ function init(){
   const lvStr=document.querySelector('#liveView .t-str');
   ['E','A','D','G','B','e'].forEach(s=>{const b=document.createElement('b');b.textContent=s;lvStr.appendChild(b);});
   document.addEventListener('pointerdown',()=>{ensureEngine().then(()=>{if(AC&&AC.state==='suspended')AC.resume();}).catch(()=>{});},true);
-  loadPresetIdx(2);
+  loadPresetIdx(7);
   updateSrcStatus();
   icons();
   requestAnimationFrame(frame);
