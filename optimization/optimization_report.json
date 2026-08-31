@@ -4288,5 +4288,135 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-08-28",
+    "row": 53,
+    "author": "Kenji Nakamoto",
+    "title": "The Satellite Factory: Inside the Robotic Assembly Line That Builds a Spacecraft in 30 Hours",
+    "category": "AI Science",
+    "rationale": "China just switched on its first fully automated satellite production line, collapsing assembly time from seven days to 30 hours to feed megaconstellations \u2014 a car-factory model for spacecraft that sits dead-center in Kenji's aerospace + robotics + advanced-manufacturing beat and his love of *where and how things actually get built*. It's brand new (Aug 27, 2026) and distinct from the covered orbital-data-center and aerospace-metal-forming pieces because the story is throughput and industrialization of orbit, not a single part or a power problem.",
+    "sources": [
+      {
+        "name": "The Defense News \u2014 China's First Automated Satellite Production Line",
+        "url": "https://www.thedefensenews.com/Chinas-First-Automated-Satellite-Production-Line-Cuts-Assembly-Time-From-Seven-Days-to-30-Hours/"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-08-28",
+    "total_tokens_used": 734118,
+    "by_agent": {
+      "SC": 333451,
+      "TS": 249349,
+      "WR": 151318,
+      "QL": 0,
+      "MY": 0,
+      "VR": 0
+    },
+    "hallucination_flags": [
+      {
+        "type": "stat_verification_risk",
+        "severity": "MEDIUM",
+        "detail": "Core automation/throughput figures (30-hour build, >70% automation, 100+ satellites/year, 10x efficiency, 6-8 workers, 500 sqm) have named sources+years in the research JSON, but the research itself flags them as manufacturer self-reported (Beijing LandSpace Hongqing) relayed through Chinese state/state-adjacent outlets (Global Times, Xiong'an gov) plus a low-authority aggregator (thedefensenews.com). No independent third-party verification. Passes the source+year gate but should be framed as vendor/nameplate claims, not demonstrated output.",
+        "affected_stats": [
+          "30-hour production cycle",
+          "70% automated workstations",
+          "100+ satellites/year capacity",
+          "10x efficiency gain"
+        ]
+      },
+      {
+        "type": "low_authority_source",
+        "severity": "LOW",
+        "detail": "thedefensenews.com is the cited source for two headline stats. Research JSON explicitly warns it is a low-authority aggregator; prefer Global Times + hongqing.tech as primaries. Verify article does not present thedefensenews.com as an independent/primary source.",
+        "affected_stats": [
+          "30-hour production cycle",
+          "70% automated workstations"
+        ]
+      },
+      {
+        "type": "ai_framing_overstatement_risk",
+        "severity": "LOW",
+        "detail": "Research flags that sources describe robotic/automated assembly, not explicitly AI/ML control systems. Verify article body (not visible in first 8000 chars) does not overstate the role of artificial intelligence beyond 'automation/robotics'."
+      }
+    ],
+    "reversion_flags": [
+      {
+        "type": "quote_not_named_individual",
+        "severity": "MEDIUM",
+        "detail": "Research supplies two 'quotes' but only one (Ye Tanglin, City planning expert, Capital University of Economics and Business) is an independent named individual. The second 'quote' is attributed to 'Beijing LandSpace Hongqing Technology (company statement)' \u2014 a corporate self-description, not a named verifiable person. If used verbatim in the article it must be presented as a vendor statement, not an independent expert voice. Only one independent named expert was located within budget."
+      }
+    ],
+    "budget_alerts": [
+      {
+        "agent": "TS",
+        "severity": "HIGH",
+        "budget": 150000,
+        "used": 249349,
+        "pct": 166.2,
+        "status": "over_budget",
+        "detail": "Trend Scout exceeded its 150k budget by 66% (249,349 tokens used, $1.1495). Well past the 80% threshold. TS is a topic-selection agent (not research) budgeted at 150k \u2014 a 249k spend indicates the trending-topic resolution over-consumed. Recommend investigating the TS call for #53 and tightening the trend_scout prompt/turn cap, or raising its budget ceiling if this scope is now expected."
+      },
+      {
+        "agent": "SC",
+        "severity": "INFO",
+        "budget": 500000,
+        "used": 333451,
+        "pct": 66.7,
+        "status": "used",
+        "detail": "Scout at 66.7% of budget ($1.0175) \u2014 under the 80% threshold, no action needed."
+      },
+      {
+        "agent": "WR",
+        "severity": "INFO",
+        "budget": 300000,
+        "used": 151318,
+        "pct": 50.4,
+        "status": "used",
+        "detail": "Writer at 50.4% of budget ($0.7151) \u2014 under threshold, no action. Writer ran (no pre-staged draft reused)."
+      }
+    ],
+    "guardrails_applied": [
+      {
+        "type": "scope_check",
+        "result": "PASS",
+        "detail": "No scope violations detected in run summary. quill revisions=0, maya revisions=0; stages ran in canonical order (priya\u2192scout\u2192writer\u2192quill\u2192maya\u2192vera\u2192porter\u2192nova). No evidence of Quill editing images or Maya editing copy."
+      },
+      {
+        "type": "budget_overrun_recommendation",
+        "target": "TS",
+        "detail": "Recommend Round-1 guardrail per Cora protocol: identify root cause of TS 166% overrun, add a token/turn guardrail to the trend_scout prompt, and re-scope its 150k budget. If TS over_budget recurs on the next article, escalate to Round-2 (flag to Marco + append to CLAUDE.md)."
+      }
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-08-28",
+    "article_number": 53,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-satellite-factory-inside-the-053.html",
+    "gs_row": 54,
+    "company_urn": "urn:li:share:7499180506475950080",
+    "reshare_urn": "urn:li:share:7499180519151222785",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "writer",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_ran"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]

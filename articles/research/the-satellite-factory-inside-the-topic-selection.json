@@ -1,0 +1,51 @@
+{
+  "row": 53,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-08-28",
+  "chosen": {
+    "title": "The Satellite Factory: Inside the Robotic Assembly Line That Builds a Spacecraft in 30 Hours",
+    "category": "AI Science",
+    "rationale": "China just switched on its first fully automated satellite production line, collapsing assembly time from seven days to 30 hours to feed megaconstellations \u2014 a car-factory model for spacecraft that sits dead-center in Kenji's aerospace + robotics + advanced-manufacturing beat and his love of *where and how things actually get built*. It's brand new (Aug 27, 2026) and distinct from the covered orbital-data-center and aerospace-metal-forming pieces because the story is throughput and industrialization of orbit, not a single part or a power problem.",
+    "sources": [
+      {
+        "name": "The Defense News \u2014 China's First Automated Satellite Production Line",
+        "url": "https://www.thedefensenews.com/Chinas-First-Automated-Satellite-Production-Line-Cuts-Assembly-Time-From-Seven-Days-to-30-Hours/"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "The Mind in Orbit: How Autonomous AI Learned to Fly Satellites Without Us",
+      "category": "AI Science",
+      "rationale": "Shield AI just flew its Hivemind autonomy stack on the NOVI satellite in orbit (Aug 24, 2026), with a physics simulator vetting every command before execution \u2014 the moment edge-AI decision-making moved off Earth and onto the spacecraft itself. It hits Kenji's exact trifecta (AI + aerospace + autonomous systems), gives him a real mechanism to unpack, and comes with a built-in honest reckoning: the company is a defense contractor, so autonomous judgment in orbit carries genuine stakes.",
+      "sources": [
+        {
+          "name": "SpaceNews \u2014 Shield AI flies Hivemind autonomy software on satellite in orbit",
+          "url": "https://spacenews.com/shield-ai-flies-hivemind-autonomy-software-on-satellite-in-orbit/"
+        },
+        {
+          "name": "TechTimes \u2014 Hivemind Flies Satellite in Orbit: Physics Simulation Clears Every Command",
+          "url": "https://www.techtimes.com/articles/325543/20260825/shield-ais-hivemind-flies-satellite-orbit-physics-simulation-clears-every-command.htm"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Taming the Star: How AI Is Learning to Hold Plasma Together and Make Fusion Real",
+      "category": "AI Science",
+      "rationale": "A fresh wave of fusion news (Berkeley Lab's AI-plus-new-materials work, Aug 25, and Marathon Fusion's isotope-enrichment demo, Aug 27) puts machine-learning plasma control back in the spotlight \u2014 exactly Kenji's clean-energy beat delivered with earned, grounded optimism rather than hype. It's distinct from the covered microbial-battery piece because the mechanism is AI steering a 100-million-degree plasma in real time, a tangible, wonder-inducing story he can make readers feel they could almost build.",
+      "sources": [
+        {
+          "name": "Neodimo \u2014 Berkeley Lab's Fusion Breakthrough: How AI & New Materials Could Solve the Energy Crisis (2026)",
+          "url": "https://neodimo.com/article/berkeley-lab-s-fusion-breakthrough-how-ai-new-materials-could-solve-energy-crisis"
+        },
+        {
+          "name": "PRNewswire \u2014 Marathon Fusion Demonstrates Lithium and Hydrogen Isotope Enrichment",
+          "url": "https://www.prnewswire.com/news-releases/marathon-fusion-demonstrates-lithium-and-hydrogen-isotope-enrichment-using-proprietary-plasma-centrifuge-technology-302861336.html"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

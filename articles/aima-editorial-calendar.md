@@ -57,7 +57,7 @@
 | 50 | 2026-07-24 | The Regulation Race: US vs. EU vs. China on AI Governance in 2026 | AI Law | 13 min |  | Joselito Sering |
 | 51 | 2026-07-25 | Engagement Over Innocence: How Companion Chatbots Turned Children Into a Growth Metric | AI Ethics | 8 min |  | Dawn Ginhaua |
 | 52 | 2026-07-26 | From Pixel to Presence: AI and the Immersive Media Future | AI Creative | 10 min |  | Joselito Sering |
-| 53 | 2026-07-27 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
+| 53 | 2026-07-27 | The Satellite Factory: Inside the Robotic Assembly Line That Builds a Spacecraft in 30 Hours | AI Science | 8 min |  | Kenji Nakamoto |
 | 54 | 2026-07-28 | Skills That Remain Human: What AI Cannot Automate and Why It Matters | AI Labor | 10 min |  | Joselito Sering |
 | 55 | 2026-07-29 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
 | 56 | 2026-07-30 | The Precision Medicine Promise: AI, Genomics, and the Curable Future | AI Healthcare | 13 min |  | Joselito Sering |
