@@ -59,13 +59,13 @@
 | 52 | 2026-07-26 | From Pixel to Presence: AI and the Immersive Media Future | AI Creative | 10 min |  | Joselito Sering |
 | 53 | 2026-07-27 | The Satellite Factory: Inside the Robotic Assembly Line That Builds a Spacecraft in 30 Hours | AI Science | 8 min |  | Kenji Nakamoto |
 | 54 | 2026-07-28 | Skills That Remain Human: What AI Cannot Automate and Why It Matters | AI Labor | 10 min |  | Joselito Sering |
-| 55 | 2026-07-29 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
+| 55 | 2026-07-29 | No Robo Bosses: Inside the 13-Day Fight to Make It Illegal for an Algorithm to Fire You | AI Labor | 8 min |  | Dawn Ginhaua |
 | 56 | 2026-07-30 | The Precision Medicine Promise: AI, Genomics, and the Curable Future | AI Healthcare | 13 min |  | Joselito Sering |
-| 57 | 2026-07-31 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
+| 57 | 2026-07-31 | Taming the Star: How AI Learned to Hold Fusion Plasma Together | AI Science | 8 min |  | Kenji Nakamoto |
 | 58 | 2026-08-01 | Designed for Harm: The Dark Patterns of AI Consumer Products | AI Ethics | 11 min |  | Joselito Sering |
-| 59 | 2026-08-02 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
+| 59 | 2026-08-02 | The Algorithm Did It Is Not a Defense: How the Courts Ended AI's Accountability Holiday | AI Ethics | 8 min |  | Dawn Ginhaua |
 | 60 | 2026-08-03 | Who Controls the Stack? The AI Supply Chain Behind the Revolution | AI Business | 12 min |  | Joselito Sering |
-| 61 | 2026-08-04 | TBD — Trending Topic | Trending | 8 min |  | Kenji Nakamoto |
+| 61 | 2026-08-04 | One Brain, Many Bodies: How Robot Foundation Models Learned to Move the Whole Machine | AI Science | 8 min |  | Kenji Nakamoto |
 | 62 | 2026-08-05 | Philanthropy 3.0: How AI Agents Could Transform Charitable Giving | AI Society | 11 min |  | Joselito Sering |
-| 63 | 2026-08-06 | TBD — Trending Topic | Trending | 8 min |  | Dawn Ginhaua |
+| 63 | 2026-08-06 | The Warning That Never Came: How OpenAI's PR Team Overruled Its Own Safety Engineers | AI Ethics | 8 min |  | Dawn Ginhaua |
 | 64 | 2026-08-07 | The Creative Director Is Not Dead: Human Vision in an AI Production World | AI Creative | 9 min |  | Joselito Sering |
