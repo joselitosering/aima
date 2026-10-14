@@ -6,7 +6,7 @@ and LinkedIn referral traffic per article URL. Writes ga4_traffic.csv
 and pushes to GitHub so the dashboard auto-fetches it.
 
 Run manually:  python ga4_collector.py
-Also called by pipeline.py on each run.
+Run manually or via the scheduled task.
 
 Requires:
   pip install google-analytics-data
