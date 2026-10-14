@@ -1,0 +1,59 @@
+<p class="lead">Picture a chamber shaped like a doughnut, the size of a small room, and inside it a ribbon of gas heated past a hundred million degrees — hotter than the core of the Sun. It isn't touching the walls. It can't, or it would erase them. Instead it hangs there, wrapped in magnetic fields, twitching and buckling like something alive that very much does not want to be held. For decades, keeping that ribbon steady long enough to make energy has been one of the hardest control problems on Earth. And in the last four years, we've started handing the reins to AI — not because we gave up, but because the plasma moves faster than any human ever could.</p>
+
+<h2>The Machine That Holds a Sun</h2>
+<p>The machine is a tokamak, and the ribbon inside it is plasma — matter so hot its atoms have shattered into a soup of charged particles. Because it's charged, magnetic fields can grip it, squeeze it, and float it in the vacuum away from the walls. That's the whole trick of fusion: hold the fuel still and hot enough, long enough, for atomic nuclei to slam together and release energy. The holding is the problem. A plasma is not a calm thing. It sloshes, it leaks, it finds new ways to wobble every millisecond. And when the wobble wins, you get a disruption — a sudden collapse where the plasma dumps its energy and quits. Traditional controllers, hand-tuned by brilliant physicists, spent decades chasing those wobbles. They worked, mostly. But they were built for states we designed in advance.</p>
+
+<h2>Why a Millisecond Is Too Slow for a Human</h2>
+<p>Here's the sentence that made me look up from my screen: a plasma instability can grow in a few thousandths of a second, far faster than any human operator can react (PPPL, via Phys.org, 2026). Think about that. By the time you'd noticed the flicker on a screen, the event is over. This is why control is being handed to machines — the timescale simply isn't human anymore. The breakthrough came in 2022, when a team from DeepMind and EPFL trained a neural network with reinforcement learning to command a tokamak's full set of magnetic coils. It ran zero-shot on the TCV tokamak — meaning it went straight from simulation to real hardware with no retraining — and sculpted the plasma into elongated, negative-triangularity, and even "snowflake" shapes, once holding two separate plasma droplets at the same time (Degrave et al., Nature, 2022).</p>
+
+<h2>From Reacting to Avoiding</h2>
+<p>Shaping a plasma is one thing. Keeping it out of trouble is another. In 2024, a Princeton-led team pushed further: instead of suppressing a tearing mode — a specific instability that shreds the magnetic surfaces and triggers disruptions — after it appeared, their reinforcement learning controller learned to steer around it before it started. On DIII-D, the largest magnetic fusion facility in the United States, the system predicted future plasma pressure and "tearability" 25 milliseconds ahead of its own actions and adjusted course to keep the plasma healthy (Seo et al., Nature, 2024). That's the shift Degrave's team named best: from engineering the exact state in advance to specifying a goal and letting a learned policy find the path there.</p>
+
+<blockquote class="pullquote">"This approach enables a fundamental shift from engineering-driven control of a pre-designed state to artificial-intelligence-driven optimization of objectives specified by an operator." — Degrave et al., Nature, 2022</blockquote>
+
+<h2>PACMAN and the Jump to Infrastructure</h2>
+<p>Demos are exciting. Infrastructure is what actually changes a field. In September 2026, PPPL and Princeton unveiled PACMAN — a modular AI framework that makes control decisions in milliseconds and was validated across five experiments on DIII-D. In one run, a model predicted a tearing mode about 200 milliseconds in advance, giving the system time to reshape the plasma and dodge it entirely (Rothstein et al., Nuclear Fusion, 2026). In another, it steered all six of the machine's gyrotrons — the microwave systems that heat the plasma — at once, retargeting mirrors and tuning power in real time, an optimization the team says had no prior algorithm.</p>
+<p>What makes PACMAN matter is its shape. "You can add a new one, swap one out or run several at once without touching the rest of the system," says Egemen Kolemen of Princeton and PPPL. That modularity is what turns a pile of one-off wins into something the whole community can build on.</p>
+
+<div class="stat-grid">
+<div class="stat-card"><span class="stat-number">~3 ms</span><span class="stat-label">How fast a plasma instability can grow — faster than any human can react (PPPL, 2026).</span></div>
+<div class="stat-card"><span class="stat-number">200 ms</span><span class="stat-label">How far ahead PACMAN predicted a tearing mode on DIII-D, in time to avoid it (Nuclear Fusion, 2026).</span></div>
+<div class="stat-card"><span class="stat-number">6</span><span class="stat-label">Gyrotrons steered simultaneously by PACMAN in real time — no prior algorithm existed for it (PPPL, 2026).</span></div>
+<div class="stat-card"><span class="stat-number">~$1B</span><span class="stat-label">Raised again by Commonwealth Fusion Systems in 2026 to chase commercial fusion (Canary Media, 2026).</span></div>
+</div>
+
+<h2>The Honest Reckoning</h2>
+<p>Now the part enthusiasm tends to skip. Every result above ran on a research tokamak, for seconds, not on a plant feeding your city's grid. AI has gotten very good at plasma control, but control is only one of fusion's hard problems — and maybe not the hardest. Materials that survive endless neutron bombardment, net energy gain at real scale, closing the tritium fuel cycle: none of those are software problems, and no policy network solves them. Calling this "taming the star" oversells the AI's role. Better control shortens experiment cycles and avoids disruptions; it does not, by itself, make fusion cheap or move it from lab to grid. The researchers are refreshingly clear-eyed here: humans set the objectives, and hardware safety limits enforce hard caps no matter what the model suggests. As one PPPL scientist put it, "in the end it's a human operator that sets the parameters."</p>
+
+<h2>What to Watch, What to Build</h2>
+<p>So watch the timescales, not the hype. When you read that a controller predicted trouble 200 milliseconds out, you're watching a machine do something a human nervous system physically cannot — and doing it inside a bottle of artificial starlight. That's worth being amazed by, honestly. If you want to go deeper, the three Nature and Nuclear Fusion papers are open and readable. Track whether PACMAN-style frameworks get adopted on other machines, and whether ITER's baseline scenarios start leaning on learned controllers. The star isn't tamed. But for the first time, we've built something quick enough to hold its hand.</p>
+
+<div class="glossary">
+<dl>
+<dt data-term="Plasma">Plasma</dt>
+<dd>Matter heated so hot its atoms break into charged particles; because it's charged, magnetic fields can grip and shape it.</dd>
+<dt data-term="Tokamak">Tokamak</dt>
+<dd>A doughnut-shaped device that uses magnetic fields to confine a fusion plasma away from its walls.</dd>
+<dt data-term="Reinforcement learning">Reinforcement learning</dt>
+<dd>A machine-learning method where an AI learns a control policy by trial and reward, discovering actions that reach a specified goal.</dd>
+<dt data-term="Tearing mode">Tearing mode</dt>
+<dd>A plasma instability that shreds magnetic surfaces and can trigger a disruption; PACMAN learned to predict and avoid it.</dd>
+<dt data-term="Disruption">Disruption</dt>
+<dd>A sudden collapse in which the plasma dumps its energy and stops — the failure mode fusion control works hardest to prevent.</dd>
+<dt data-term="Gyrotron">Gyrotron</dt>
+<dd>A microwave system used to heat plasma; DIII-D has six, which PACMAN steered simultaneously in real time.</dd>
+<dt data-term="Zero-shot">Zero-shot</dt>
+<dd>Running a trained AI controller directly on real hardware with no on-hardware retraining, straight from simulation.</dd>
+</dl>
+</div>
+
+<div class="references">
+<ol>
+<li>Degrave, Jonas, et al. "Magnetic Control of Tokamak Plasmas through Deep Reinforcement Learning." <em>Nature</em>, 2022, https://www.nature.com/articles/s41586-021-04301-9.</li>
+<li>Seo, Jaemin, et al. "Avoiding Fusion Plasma Tearing Instability with Deep Reinforcement Learning." <em>Nature</em>, 2024, https://www.nature.com/articles/s41586-024-07024-9.</li>
+<li>Princeton Plasma Physics Laboratory. "PACMAN: AI Framework Controls Fusion Plasma Safely." <em>Phys.org</em>, 2 Sept. 2026, https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html.</li>
+<li>Rothstein, et al. "Prediction and Control Using Machine Learning (PACMAN) on DIII-D." <em>Nuclear Fusion</em>, 2026, https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html.</li>
+<li>Kolemen, Egemen, and colleagues, quoted in "PACMAN: AI Framework Controls Fusion Plasma Safely." <em>Phys.org</em>, 2 Sept. 2026, https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html.</li>
+<li>"Commonwealth Fusion Systems Raises Roughly $1 Billion to Pursue Commercial Fusion." <em>Canary Media</em>, 2026, https://www.canarymedia.com/articles/nuclear/cfs-1billion-nuclear-fusion.</li>
+</ol>
+</div>

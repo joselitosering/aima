@@ -518,5 +518,32 @@
     "posted_at": "2026-08-28T19:06:04",
     "analytics_collected": false,
     "reshare_id": "urn:li:share:7499180519151222785"
+  },
+  {
+    "post_id": "urn:li:share:7506064691182526464",
+    "article": "aima-article-skills-that-remain-human-what-054.html",
+    "title": "Skills That Remain Human: What AI Cannot Automate and Why It Matters",
+    "persona": "joselito",
+    "posted_at": "2026-09-16T19:01:23",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7506064707385053187"
+  },
+  {
+    "post_id": "urn:li:share:7506562736269643776",
+    "article": "aima-article-the-scapegoat-in-the-server-055.html",
+    "title": "The Scapegoat in the Server Room: How 'AI Did It' Became Corporate America's Favorite Layoff Excuse",
+    "persona": "dawn",
+    "posted_at": "2026-09-18T04:00:26",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7506562748508631040"
+  },
+  {
+    "post_id": "urn:li:share:7506789465139363840",
+    "article": "aima-article-the-precision-medicine-promise-ai-056.html",
+    "title": "The Precision Medicine Promise: AI, Genomics, and the Curable Future",
+    "persona": "joselito",
+    "posted_at": "2026-09-18T19:01:22",
+    "analytics_collected": false,
+    "reshare_id": "urn:li:share:7506789478825369600"
   }
 ]

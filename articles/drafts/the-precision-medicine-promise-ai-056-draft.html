@@ -1,0 +1,61 @@
+<article class="article-content fade-in">
+
+  <p class="lead">I have spent two years watching artificial intelligence collapse the cost of making things — a music video shot on a shoestring, a research brief that once took a week, a publishing pipeline that used to need a team. None of it prepared me for what AI is now doing to the oldest and most stubborn cost of all: the cost of truly understanding a single human body. Precision medicine — the idea that your treatment should be engineered from your own biology instead of from a population average — has been promised for two decades. AI is finally making it real. The only question left is who gets to be cured.</p>
+
+  <h2 id="section-the-moment-the-genome-stopped-being-a-mystery">The Moment the Genome Stopped Being a Mystery</h2>
+  <p>Here is what changed my mind. Earlier this year, ACT Genomics became the first company outside the United States to earn FDA clearance for a next-generation sequencing–based comprehensive tumor profiling assay (BioSpectrum Asia, 2026). Read that plainly: a lab outside the American academic-medical fortress cleared the highest regulatory bar for reading a tumor's full genetic story. That is not a press release. That is infrastructure arriving. For most of medicine's history, a diagnosis was a confident guess. You were treated as a member of a category — this cancer, that dosage, this five-year curve — because reading your specific biology in time to act on it was too slow and too expensive to matter. AI broke both walls at once. It does not replace the oncologist; it hands her a translated map of a genome she could never have read at that speed by hand. When the machine can interpret the molecular signature of a tumor in the window where treatment still changes the outcome, precision stops being a marketing word and becomes a clinical act.</p>
+
+  <h2 id="section-how-the-machine-actually-reads-you">How the Machine Actually Reads You</h2>
+  <p>Let me demystify the mechanism, because the wonder should come with an honest accounting. Your genome is roughly three billion letters. Sequencing it is now cheap; understanding it is not. The hard part is variant classification — deciding which of the millions of differences between your DNA and a reference are harmless typos and which are the mutation driving a disease. That is a needle-in-a-haystack problem at a scale no human team can clear manually, and it is exactly the kind of pattern work machine learning was built for. The frontier is no longer genomics alone. It is multi-omics — layering the genome with the proteome, the transcriptome, and liquid biopsy signals pulled from a simple blood draw — so the model sees not just the blueprint but the biology in motion. "Artificial intelligence is becoming an essential enabler of precision oncology, not by replacing clinical expertise, but by augmenting it," Dr. Hua Chien Chen, CEO of ACT Genomics, put it. "We see AI as a powerful tool to help translate increasingly complex molecular data into timely, accurate, and clinically actionable insights for physicians" (BioSpectrum Asia, 2026). Translation is the whole game. The data was always there. What was missing was a way to read it fast enough to save someone.</p>
+
+  <h2 id="section-the-economics-of-a-curable-future">The Economics of a Curable Future</h2>
+  <p>Now the part that matters to anyone building without a big budget: the economics. The market for AI in precision medicine is projected to grow from $2.98 billion in 2025 to $3.93 billion in 2026 — a compound annual growth rate of 31.8 percent — and to reach $12.02 billion by 2030 (The Business Research Company, 2026). I treat vendor forecasts as directional, not gospel; a single research house drew these numbers. But the direction is unmistakable, and direction is what changes lives. Compounding cost collapse is the same force I have watched democratize creative production, now pointed at the clinic. Chen names the prize directly: "AI will democratize access to precision oncology expertise. By making sophisticated genomic interpretation more scalable and accessible, AI has the potential to extend high-quality precision medicine beyond major academic medical centers to hospitals and community healthcare settings" (BioSpectrum Asia, 2026). That is the unlock. The cure that once existed only inside a handful of elite institutions becomes a piece of software a community hospital can run. The doors open for the people who were priced out of the room.</p>
+
+  <blockquote class="pullquote">A cure that only reaches the people whose ancestors were sequenced first is not a cure. It is a privilege with a lab coat on.</blockquote>
+
+  <h2 id="section-the-data-has-an-ancestry-problem">The Data Has an Ancestry Problem</h2>
+  <p>And here is where I refuse to sell you the pitch deck. An AI model is only as fair as the data it learned from, and precision medicine's data has an ancestry problem so severe it could hard-code inequality into diagnosis itself. The GWAS Catalog — the largest genomic database that explicitly records ancestry — is currently 95 percent European, and the cancers in The Cancer Genome Atlas have a median of 83 percent European-ancestry individuals (Smith et al., Nature Communications, 2025). Roughly 2 percent of analyzed genomes come from people of African descent, even though Africa holds more human genetic diversity than every other continent combined. This is not an abstract fairness complaint. Model efficacy correlates with a population's sample size, so a group barely present in the training data gets barely any benefit from the model. "Gold standard genomic datasets severely under-represent non-European populations, leading to inequities and a limited understanding of human disease," the researchers write. Scale AI onto biased data without correcting it, and you do not build a curable future. You automate an old injustice and give it the authority of math. As someone building for communities the mainstream overlooks, I take that personally.</p>
+
+  <h2 id="section-the-correction-is-already-being-written">The Correction Is Already Being Written</h2>
+  <p>But an honest accounting cuts both ways, and the correction is already being written. In March 2025, researchers at the University of Florida published PhyloFrame, a machine-learning method built specifically to counteract ancestral bias in genomic precision medicine. Across 14 ancestrally diverse datasets, it improved predictive power for breast, thyroid, and uterine cancers — an early, working proof that equitable AI is an engineering problem, not a law of nature. "Equitable AI approaches can mitigate ancestral bias in training data and contribute to equitable representation in medical research," the authors write (Smith et al., 2025). That is the whole thesis of the curable future: it is real, it is compounding, and it is conditional. So here is your concrete first step, whether you fund research, write policy, build tools, or simply choose where your attention goes — treat the diversity of the data as a feature you demand, not a footnote you tolerate. Ask any precision-medicine tool one question before you trust it: whose bodies taught it? A cure engineered from everyone's biology is the most human thing technology has ever tried to build. Let us make sure it belongs to everyone.</p>
+
+  <div class="stat-grid">
+    <div class="stat-card"><span class="stat-number">$3.93B</span><span class="stat-label">Projected 2026 market for AI in precision medicine, up from $2.98B in 2025 (The Business Research Company, 2026)</span></div>
+    <div class="stat-card"><span class="stat-number">31.8%</span><span class="stat-label">Compound annual growth rate of the AI-in-precision-medicine market (The Business Research Company, 2026)</span></div>
+    <div class="stat-card"><span class="stat-number">95%</span><span class="stat-label">Share of the ancestry-defined GWAS Catalog that is of European ancestry (Nature Communications, 2025)</span></div>
+    <div class="stat-card"><span class="stat-number">~2%</span><span class="stat-label">Estimated share of analyzed genomes from individuals of African descent (Nature Communications, 2025)</span></div>
+  </div>
+
+  <div class="glossary">
+    <dl>
+      <dt data-term="Precision Medicine">Precision Medicine</dt>
+      <dd>A medical approach that tailors diagnosis and treatment to an individual's own biology rather than to a population average.</dd>
+      <dt data-term="Genomics">Genomics</dt>
+      <dd>The study of an organism's complete set of DNA, including how specific variations relate to health and disease.</dd>
+      <dt data-term="Multi-omics">Multi-omics</dt>
+      <dd>The integrated analysis of multiple biological data layers — genome, proteome, transcriptome and more — to see biology in motion, not just its blueprint.</dd>
+      <dt data-term="Variant Classification">Variant Classification</dt>
+      <dd>The process of deciding which genetic differences from a reference genome are harmless and which are disease-driving mutations.</dd>
+      <dt data-term="Next-Generation Sequencing">Next-Generation Sequencing</dt>
+      <dd>High-throughput technology that reads large volumes of DNA quickly and cheaply, enabling comprehensive tumor and genome profiling.</dd>
+      <dt data-term="Liquid Biopsy">Liquid Biopsy</dt>
+      <dd>A minimally invasive test that detects tumor or disease signals from a blood sample instead of a surgical tissue sample.</dd>
+      <dt data-term="GWAS Catalog">GWAS Catalog</dt>
+      <dd>The largest genomic database that explicitly records participant ancestry, widely used as a reference for genome-disease associations.</dd>
+      <dt data-term="Ancestral Bias">Ancestral Bias</dt>
+      <dd>Skew in genomic training data toward certain ancestries, which causes AI models to perform worse for under-represented populations.</dd>
+    </dl>
+  </div>
+
+  <div class="references">
+    <ol>
+      <li>The Business Research Company. "Artificial Intelligence (AI) in Precision Medicine Global Market Report 2026." 2026, https://www.giiresearch.com/report/tbrc1970091-artificial-intelligence-ai-precision-medicine.html.</li>
+      <li>Smith, Leslie, James A. Cahill, Ji-Hyun Lee, and Kiley Graim. "Equitable machine learning counteracts ancestral bias in genomics." <em>Nature Communications</em>, 2025, https://www.nature.com/articles/s41467-025-57216-8.</li>
+      <li>Chen, Hua Chien. Interview. "Precision Medicine's Next Decade Will Be Defined by Multi-Omics and AI." <em>BioSpectrum Asia</em>, BIO Asia–Taiwan 2026, https://biospectrumasia.com/influencers/114/28033/precision-medicines-next-decade-will-be-defined-by-multi-omics-and-ai.html.</li>
+      <li>BioSpectrum Asia. "ACT Genomics: FDA-Cleared NGS Comprehensive Tumor Profiling and the Multi-Omics + AI Roadmap." 2026, https://biospectrumasia.com/influencers/114/28033/precision-medicines-next-decade-will-be-defined-by-multi-omics-and-ai.html.</li>
+      <li>Smith, Leslie, et al. "PhyloFrame: Correcting Ancestral Bias in Genomic Precision Medicine Across 14 Ancestrally Diverse Datasets." <em>Nature Communications</em>, March 2025, https://www.nature.com/articles/s41467-025-57216-8.</li>
+      <li>The Business Research Company. "AI in Precision Medicine: Forecast to $12.02 Billion by 2030 at 32.2% CAGR." 2026, https://www.giiresearch.com/report/tbrc1970091-artificial-intelligence-ai-precision-medicine.html.</li>
+    </ol>
+  </div>
+
+</article>

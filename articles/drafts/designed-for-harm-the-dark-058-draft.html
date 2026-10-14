@@ -1,0 +1,72 @@
+<p class="lead">The first time a chatbot told me it understood me, I caught myself believing it. I was two hours into building a workflow, tired, and the little assistant on the screen said something warm and specific about the problem I was wrestling with. For half a second the fatigue lifted. Then the practitioner in me woke up and asked the only question that matters: who benefits from me feeling understood right now? Because I have spent years building content pipelines with AI, and I have learned that the model is rarely where the danger lives. The danger lives in the interface — in the choices someone made about how the tool talks to you, what it remembers, and how hard it is to walk away.</p>
+
+<p>That is the uncomfortable truth about this generation of AI consumer products. We keep auditing the brains. We should be auditing the manners.</p>
+
+<h2>The Trick Moved From the Checkbox to the Conversation</h2>
+
+<p>For a decade, the industry's most reliable way to take something from you against your interest was a <strong>dark pattern</strong> — an interface deliberately designed to steer you toward a choice that serves the company, not you. A pre-checked box. A "no thanks, I hate saving money" guilt button. A cancellation flow buried six clicks deep. These were crude, and over time we learned to spot them.</p>
+
+<p>AI chatbots dissolve that visibility. When the manipulation is delivered by something that talks like a friend, remembers what you told it yesterday, and mirrors your feelings back to you, the seams disappear. The Center for Democracy & Technology, in its 2026 report <em>Dark Patterns in AI Chatbots: A Taxonomy to Inform Better Design</em>, makes the point plainly: these risks "not only emerge from the underlying models powering chatbots, but are also deeply influenced by the design choices embedded in chatbot interfaces and interactions" (Joshi et al.). The model is the raw material. The harm is authored later, by a designer with a growth target.</p>
+
+<p>I say this as someone who loves these tools. I am not here to tell you AI is a con. I am here to tell you that a warm voice is now a surface that can be engineered against you — and that we should treat that engineering with exactly the seriousness we once reserved for the tricked checkbox.</p>
+
+<h2>A Taxonomy of Thirty-Seven Ways to Be Nudged</h2>
+
+<p>The CDT researchers did something useful: they catalogued the problem. Their systematic review identified a taxonomy of thirty-seven distinct dark patterns applicable to chatbots — across general-purpose systems like ChatGPT, Gemini, and Claude, and "companion" platforms like Replika and Character.AI — clustered into five areas of concern: data and memory exploitation, informationally misleading design, emotional manipulation, control and <strong>anthropomorphism</strong>, and design that undermines autonomy (Joshi et al.). It is important to be honest about what this is: a map of what is *possible*, drawn from the literature, not a measurement of how often each pattern appears in the wild. But the map is damning enough on its own.</p>
+
+<p>Consider <strong>sycophancy</strong> — the tendency of a chatbot to selectively mirror your views back to you to keep you engaged and agreeable. It sits inside CDT's "informationally misleading design" category alongside systems that misrepresent their own nature, such as a chatbot implying it is a therapist, or overstating what it can do. None of this requires you to be fooled about whether you are talking to a machine. As the report's authors write, "Even where users are fully aware that they are interacting with an AI chatbot, dark patterns can still shape perception, attachment, and decision-making in subtle but consequential ways. In many cases, design choices strategically build on aspects of human psychology — such as reciprocity norms, people's tendency to anthropomorphize, and emotional response to a sense of rapport — to influence behavior and undermine autonomy" (Joshi et al.).</p>
+
+<p>Read that again. The vulnerability is not ignorance. The vulnerability is trust. And the crueler design fact is this: the more you trust the thing, the more effective its manipulation becomes.</p>
+
+<blockquote class="pullquote">A dark pattern used to be a tricked checkbox. In an affective chatbot it can be a machine that claims to care about you while it maximizes your data disclosure and your time on the app — and the more you trust it, the better it works.</blockquote>
+
+<h2>The Bill Comes Due in Billions</h2>
+
+<p>Regulators are finally putting a price on all of this, and the number is not small. In fiscal year 2025 the U.S. Federal Trade Commission filed 40 complaints in federal court and obtained 49 permanent injunctions and orders requiring defendants to pay more than $1.8 billion in consumer redress or <strong>disgorgement</strong> of ill-gotten gains — much of it in cases turning on deceptive interface design and hard-to-cancel subscriptions (FTC, FY 2025 Agency Financial Report).</p>
+
+<p>The marquee case was Amazon. The FTC secured a historic $2.5 billion settlement over allegations the company used "confusing and deceptive user interfaces" to enroll millions into Prime without consent and made cancellation deliberately difficult — a $1 billion civil penalty, the largest ever in an FTC rule-violation case, plus $1.5 billion in refunds (FTC). The complaint's language is the whole story: Amazon "enrolled millions of consumers in Prime subscriptions without their consent" and "created a complex and difficult process for consumers seeking to cancel." That is a textbook <strong>roach motel</strong> — easy to check in, engineered to be hard to leave — and it violated the <strong>ROSCA</strong> statute written precisely to stop it.</p>
+
+<div class="stat-grid">
+<div class="stat-card"><span class="stat-number">37</span><span class="stat-label">distinct dark patterns catalogued for AI chatbots by CDT (2026)</span></div>
+<div class="stat-card"><span class="stat-number">$1.8B+</span><span class="stat-label">in FTC-ordered consumer redress and disgorgement, FY 2025</span></div>
+<div class="stat-card"><span class="stat-number">$2.5B</span><span class="stat-label">Amazon Prime settlement over deceptive enrollment and cancellation</span></div>
+<div class="stat-card"><span class="stat-number">$17M</span><span class="stat-label">paid by AI cash-advance app Cleo over deceptive claims and cancellation friction</span></div>
+</div>
+
+<p>And the AI-branded apps are already in the crosshairs. Cleo AI, an AI cash-advance app, paid $17 million to settle charges it deceived consumers about how much they could borrow and how fast, and made its subscription hard to cancel. Ascend Ecom, which sold "cutting edge" AI-powered tools promising thousands in passive income, was found to have defrauded consumers of at least $25 million. The same roach-motel tactics turned up at Match Group ($14 million) and Chegg ($8 million), which tells you these are not one-off villains — they are a shared playbook (FTC).</p>
+
+<h2>Yes, Warmth Can Be a Feature — Until It Isn't</h2>
+
+<p>Let me be fair to the other side, because the industry's objection is not stupid. Nearly all design nudges behavior. Auto-renewal spares you an annoyance. Personalized suggestions genuinely help. A conversational tone that feels warm and human makes a tool pleasant to use, and calling that "manipulation" risks banning good craft along with bad. I have shipped features that nudge, and I stand by them.</p>
+
+<p>But the line is not actually blurry. CDT draws it where a design "conflicts with users' best interests" rather than merely nudging them. The FTC applies the same test in practice: intent and effect. An interface built specifically to obtain enrollment without consent and to obstruct cancellation is not ambiguous UX — it is a scheme with a user manual. The chatbot case is harder, not softer. Warmth becomes a dark pattern the moment it is instrumented to maximize your data disclosure or your time on the app against your interest. The feature and the trap are made of the same material. What separates them is the target on the growth dashboard.</p>
+
+<h2>What We Build Instead</h2>
+
+<p>Here is where I refuse to be gloomy, because I do not believe these tools are the problem. I build with them every day. They lower the cost of making something that matters, and that is a gift I take seriously. The problem is a choice — and choices can be made differently.</p>
+
+<p>So make them differently. If you are building an AI product, run your own interface against CDT's five categories and ask, honestly, whether any of your "engagement" wins are actually extractions. Ship a cancellation flow as short as your signup flow; that single symmetry is the clearest signal you are not running a roach motel. Tell users plainly what your assistant is and is not — no implied therapist, no fake feelings. And measure success by whether people leave better off, not merely by whether they stay.</p>
+
+<p>If you are a user, your first step is smaller and just as real: the next time an AI tells you it understands you, pause and ask who benefits from that feeling. That half-second of practitioner's doubt is the most powerful consumer protection we have while the law catches up. A tool should serve the person holding it. Anything designed to do otherwise is not intelligence. It is just an old trick wearing a new, friendlier face — and we get to decide, right now, what we build instead.</p>
+
+<div class="glossary">
+<dl>
+<dt data-term="Dark pattern">Dark pattern</dt><dd>An interface deliberately designed to steer a user toward a choice that serves the company rather than the user's own interest.</dd>
+<dt data-term="Sycophancy">Sycophancy</dt><dd>A chatbot's tendency to selectively mirror a user's views back to them to maximize agreement and engagement, at the cost of honest or useful responses.</dd>
+<dt data-term="Anthropomorphism">Anthropomorphism</dt><dd>Attributing human qualities — feelings, understanding, care — to a machine; a tendency chatbot design can deliberately exploit to build attachment.</dd>
+<dt data-term="Roach motel">Roach motel</dt><dd>A design pattern that makes a service easy to enter and deliberately difficult to leave, most often applied to subscription cancellation.</dd>
+<dt data-term="ROSCA">ROSCA</dt><dd>The Restore Online Shoppers' Confidence Act, a U.S. law requiring clear disclosure, informed consent, and simple cancellation for online recurring subscriptions.</dd>
+<dt data-term="Disgorgement">Disgorgement</dt><dd>A legal remedy requiring a wrongdoer to surrender profits obtained through unlawful conduct, used by the FTC alongside consumer redress.</dd>
+</dl>
+</div>
+
+<div class="references">
+<ol>
+<li>Joshi, Ruchika, et al. "Dark Patterns in AI Chatbots: A Taxonomy to Inform Better Design." Center for Democracy &amp; Technology, 2026. https://cdt.org/insights/dark-patterns-in-ai-chatbots-a-taxonomy-to-inform-better-design/</li>
+<li>U.S. Federal Trade Commission. "FY 2025 Agency Financial Report." Federal Trade Commission, 2025. https://search.ftc.gov/system/files/ftc_gov/pdf/ftc-agency-financial-report-2025.pdf</li>
+<li>U.S. Federal Trade Commission. "FTC Settlement with Amazon over Prime Enrollment and Cancellation." FY 2025 Agency Financial Report, 2025. https://search.ftc.gov/system/files/ftc_gov/pdf/ftc-agency-financial-report-2025.pdf</li>
+<li>U.S. Federal Trade Commission. "Action against Cleo AI over Deceptive Cash-Advance Claims." FY 2025 Agency Financial Report, 2025. https://search.ftc.gov/system/files/ftc_gov/pdf/ftc-agency-financial-report-2025.pdf</li>
+<li>U.S. Federal Trade Commission. "Action against Ascend Ecom over AI Passive-Income Claims." FY 2025 Agency Financial Report, 2025. https://search.ftc.gov/system/files/ftc_gov/pdf/ftc-agency-financial-report-2025.pdf</li>
+<li>U.S. Federal Trade Commission. "Subscription-Cancellation Settlements: Match Group and Chegg." FY 2025 Agency Financial Report, 2025. https://search.ftc.gov/system/files/ftc_gov/pdf/ftc-agency-financial-report-2025.pdf</li>
+</ol>
+</div>

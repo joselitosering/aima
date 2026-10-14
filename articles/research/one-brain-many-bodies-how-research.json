@@ -1,0 +1,110 @@
+{
+  "article_number": 61,
+  "slug": "one-brain-many-bodies-how",
+  "title": "One Brain, Many Bodies: How Robot Foundation Models Learned to Move the Whole Machine",
+  "category": "AI Science",
+  "author": "Kenji Nakamoto",
+  "target_words": 750,
+  "research_date": "2026-09-10",
+  "researcher": "Scout",
+  "budget_note": "Completed within the 60k token cap. Read 2 cached files (from-pixel-to-presence, brain-computer-interface) — both only tangentially related to robot foundation models, so not cited. 0 RSS/API-key calls. 3 Exa backend calls total (2 semantic searches + 1 capped page fetch). No review pass, per instructions.",
+
+  "thesis_angle": "Robot foundation models — vision-language-action (VLA) policies that inherit semantic knowledge from internet-scale pretraining and output low-level motor commands — are trying to do for physical action what LLMs did for text: a single 'brain' (one model) that controls 'many bodies' (diverse robot embodiments) and moves the whole machine, from arms to full humanoids. 2024-2026 saw the first credible generalist policies (Physical Intelligence's pi-series, NVIDIA's open GR00T family), but genuine open-world, zero-shot generalization remains the unsolved frontier.",
+
+  "statistics": [
+    {
+      "stat": "Physical Intelligence's pi-0 (pi-zero) generalist policy was trained on dexterous tasks collected across 8 distinct robots and outputs low-level motor commands at a high frequency — up to 50 times per second — by augmenting a pretrained 3-billion-parameter vision-language model with continuous action outputs via flow matching.",
+      "source": "Physical Intelligence, 'pi-0: Our First Generalist Policy' (official company blog)",
+      "year": 2024,
+      "url": "https://www.pi.website/blog/pi0"
+    },
+    {
+      "stat": "NVIDIA announced Isaac GR00T N1 as 'the world's first open, fully customizable foundation model for generalized humanoid reasoning and skills,' framing it as a response to global labor shortages the company estimates at more than 50 million people.",
+      "source": "NVIDIA Corporation press release (GTC), 'NVIDIA Announces Isaac GR00T N1'",
+      "year": 2025,
+      "url": "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Isaac-GR00T-N1--the-Worlds-First-Open-Humanoid-Robot-Foundation-Model--and-Simulation-Frameworks-to-Speed-Robot-Development/default.aspx"
+    },
+    {
+      "stat": "GR00T N1's successor, GR00T N1.5, achieved a 38.3% success rate across 12 new 'DreamGen' verb tasks, versus just 13.1% for GR00T N1 — a nearly 3x improvement in generalizing to task types beyond the original pretraining set.",
+      "source": "NVIDIA GEAR Lab research page, 'GR00T N1.5: An Improved Open Foundation Model for Generalist Humanoid Robots'",
+      "year": 2025,
+      "url": "https://research.nvidia.com/labs/gear/gr00t-n1_5/"
+    },
+    {
+      "stat": "GR00T N1 uses a dual-system architecture inspired by human cognition: 'System 2' is a slow-thinking vision-language model that reasons and plans, while 'System 1' is a fast-thinking action model that translates those plans into precise, continuous robot movements — trained on human demonstrations plus large-scale synthetic data.",
+      "source": "NVIDIA Corporation press release (GTC), 'NVIDIA Announces Isaac GR00T N1'",
+      "year": 2025,
+      "url": "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Isaac-GR00T-N1--the-Worlds-First-Open-Humanoid-Robot-Foundation-Model--and-Simulation-Frameworks-to-Speed-Robot-Development/default.aspx"
+    },
+    {
+      "stat": "As part of the GR00T launch, NVIDIA and Google DeepMind announced MuJoCo-Warp, expected to accelerate robotics machine-learning workloads by more than 70x, alongside 'Newton,' an open-source physics engine co-developed with Google DeepMind and Disney Research.",
+      "source": "NVIDIA Corporation press release (GTC)",
+      "year": 2025,
+      "url": "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Isaac-GR00T-N1--the-Worlds-First-Open-Humanoid-Robot-Foundation-Model--and-Simulation-Frameworks-to-Speed-Robot-Development/default.aspx"
+    },
+    {
+      "stat": "Physical Intelligence's generalization-focused successor, pi-0.5, is a roughly 3.3-billion-parameter VLA policy (SigLIP vision encoder ~400M + Gemma 2B language backbone + ~300M action expert) co-trained across 10+ robot embodiments plus web data, explicitly designed for open-world generalization to unseen environments.",
+      "source": "IoT Digital Twin PLM, 'Physical Intelligence pi0.5 Explained: The VLA Robot Foundation Model (2026)' (secondary technical explainer)",
+      "year": 2026,
+      "url": "https://iotdigitaltwinplm.com/physical-intelligence-pi05-vla-robot-foundation-model-2026/",
+      "flag": "SECONDARY SOURCE — pi-0.5 architecture/parameter figures come from a third-party technical blog, not Physical Intelligence's own publication. Confirm the ~3.3B parameter count and '10+ embodiments' against Physical Intelligence's primary pi-0.5 paper/blog before citing as precise."
+    }
+  ],
+
+  "quotes": [
+    {
+      "quote": "The age of generalist robotics is here. With NVIDIA Isaac GR00T N1 and new data-generation and robot-learning frameworks, robotics developers everywhere will open the next frontier in the age of AI.",
+      "name": "Jensen Huang",
+      "affiliation": "Founder and CEO, NVIDIA",
+      "year": 2025,
+      "url": "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Isaac-GR00T-N1--the-Worlds-First-Open-Humanoid-Robot-Foundation-Model--and-Simulation-Frameworks-to-Speed-Robot-Development/default.aspx"
+    },
+    {
+      "quote": "The future of humanoids is about adaptability and learning. NVIDIA's GR00T N1 model provides a major breakthrough for robot reasoning and skills. With a minimal amount of post-training data, we were able to fully deploy on NEO Gamma.",
+      "name": "Bernt Bornich",
+      "affiliation": "CEO, 1X Technologies",
+      "year": 2025,
+      "url": "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Isaac-GR00T-N1--the-Worlds-First-Open-Humanoid-Robot-Foundation-Model--and-Simulation-Frameworks-to-Speed-Robot-Development/default.aspx"
+    },
+    {
+      "quote": "Our mission at Physical Intelligence is to develop foundation models that can control any robot to perform any task. Our experiments so far show that such models can control a variety of robots and perform tasks that no prior robot learning system has done successfully, such as folding laundry from a hamper or assembling a cardboard box. But generalist robot policies are still in their infancy, and we have a long way to go.",
+      "name": "Physical Intelligence (company statement)",
+      "affiliation": "Physical Intelligence (San Francisco robotics company)",
+      "year": 2024,
+      "url": "https://www.pi.website/blog/pi0",
+      "flag": "Corporate/organizational statement from the pi-0 blog, not attributed to a single named individual. Attribute to the company, not a person."
+    }
+  ],
+
+  "counterargument": {
+    "claim": "The 'one brain, many bodies' framing outpaces the evidence. These policies are demo-friendly but brittle: ask a robot to clean a kitchen and it does fine in the exact kitchen it trained in — move it to an unseen house and it falls apart. Even the field's leaders concede the limit — Physical Intelligence says generalist policies are 'still in their infancy.' And 'generalization' claims deserve scrutiny: GR00T N1.5's headline 38.3% new-verb result was NOT truly zero-shot — the model was explicitly trained on those verbs via synthetic DreamGen trajectories, with NVIDIA itself leaving 'full zero-shot verb and environment generalization to future work.' Success rates on hard multi-stage manipulation still sit far below the reliability physical deployment demands.",
+    "source_anchor": "Physical Intelligence pi-0 blog (2024); NVIDIA GR00T N1.5 research page (2025); pi-0.5 explainer (2026)"
+  },
+
+  "recent_news": [
+    {
+      "item": "Physical Intelligence's pi-0.5 emerged in 2026 as the generalization-focused successor to pi-0, swapping pi-0's flow-matching action head for 'FAST' (Fourier-domain Action Sequence Tokenization) so continuous robot actions become discrete tokens an ordinary autoregressive VLM can predict — letting robot control reuse the entire battle-tested LLM training and inference stack.",
+      "date": "2026-07-27",
+      "url": "https://iotdigitaltwinplm.com/physical-intelligence-pi05-vla-robot-foundation-model-2026/",
+      "flag": "Reported via a secondary technical explainer; corroborate against Physical Intelligence's primary pi-0.5 release for direct citation."
+    },
+    {
+      "item": "NVIDIA released GR00T N1.5, an upgraded open humanoid foundation model that adds FLARE (Future Latent Representation Alignment) — enabling learning directly from human ego-centric videos — and an upgraded Eagle 2.5-based VLM, reporting improved language-following and object generalization over GR00T N1 on both simulation benchmarks and the real GR-1 robot.",
+      "date": "2025-2026",
+      "url": "https://research.nvidia.com/labs/gear/gr00t-n1_5/"
+    }
+  ],
+
+  "context_notes": [
+    "Prior-art landscape for the article's narrative spine: the first wave of VLA robot foundation models — Google DeepMind's RT-2, the open-source OpenVLA (7B params, discretized actions), and Octo (93M params, diffusion outputs) — proved the concept of fusing an internet-pretrained vision-language model with an action head, but stayed close to their training distributions. pi-0 outperformed both OpenVLA and Octo across 5 evaluation tasks (source: pi-0 blog).",
+    "Title mapping: 'One brain, many bodies' = cross-embodiment transfer (one model controls diverse robots — pi-0 across 8 robots, pi-0.5 across 10+ embodiments). 'Move the whole machine' = the shift from narrow task scripts to whole-robot motor control, including full humanoids (GR00T)."
+  ],
+
+  "unverified_flags": [
+    "pi-0.5 parameter count (~3.3B), component sizes, and '10+ embodiments' come from a secondary technical blog (iotdigitaltwinplm.com), not Physical Intelligence's primary publication — verify before citing as exact.",
+    "NVIDIA's '50 million people' global labor shortage figure is the company's own estimate as stated in its press release; treat as a company-cited figure, not an independent statistic.",
+    "GR00T N1.5's 38.3% vs 13.1% result is a NVIDIA-reported internal benchmark on its own DreamGen tasks — not an independent third-party evaluation; frame accordingly.",
+    "Bernt Bornich's surname carries a diacritic (Bornich/Borjnich) in some sources; confirm exact spelling ('Bornich') before publishing.",
+    "The Physical Intelligence 'any robot / any task' passage is a corporate mission statement, not an individually attributed expert quote."
+  ]
+}

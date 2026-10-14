@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "article_number": 60,
+    "slug": "who-controls-the-stack-the",
+    "title": "Who Controls the Stack? The AI Supply Chain Behind the Revolution",
+    "author": "Joselito Sering",
+    "category": "AI Business",
+    "research_date": "2026-09-09",
+    "researcher": "Scout (Research Agent)",
+    "tone": "analytical",
+    "word_target": 1350,
+    "sources_attempted": [
+      "Local cache: surveillance-wages-how-ai-turned-research.json + the-precision-medicine-promise-ai-research.json (skimmed; not topic-relevant to the AI supply chain, no data reused)",
+      "Exa semantic search x2 (AI hardware supply chain concentration; expert quotes on chip chokepoints/geopolitics)"
+    ],
+    "sources_note": "Two Exa semantic web searches returned real 2025-2026 primary sources with clean extracted text and URLs. Statistics and quotes below are drawn directly from those source pages. No follow-up full-page fetches performed (budget-limited run). Within the <=3 backend-call cap.",
+    "budget_note": "Completed under 60k token cap: 2 cached files skimmed (both irrelevant, discarded), 2 Exa searches, 0 full-page fetches.",
+    "confidence": "high"
+  },
+  "thesis": "The AI 'revolution' rides on a supply chain that is astonishingly concentrated at every layer of the stack — one dominant GPU designer (NVIDIA), one dominant leading-edge foundry (TSMC in Taiwan), one supplier of the lithography machines that make those chips (ASML), and three US hyperscalers renting most of the world's compute. Control of AI is therefore less about who builds the best model and more about who controls these chokepoints. The countervailing trend — custom ASICs, 'neoclouds', and state-backed cloud-sovereignty and domestic-chip programs — signals the stack is being contested, not permanently monopolized.",
+
+  "statistics": [
+    {
+      "stat": "NVIDIA held over 90% of the market for data-center GPUs used in AI in 2025, with AMD at roughly 4% of the AI-server chip market.",
+      "source": "Goldman School of Public Policy, UC Berkeley — 'An Evolving AI Supply Chain'",
+      "year": "2025",
+      "url": "https://gspp.berkeley.edu/archived/files/page/An_Evolving_AI_Supply_Chain_-_Berkeley.pdf"
+    },
+    {
+      "stat": "The three US hyperscalers — Amazon Web Services, Microsoft Azure, and Google Cloud — collectively held about 63% of the global cloud market as of Q2 2025.",
+      "source": "Goldman School of Public Policy, UC Berkeley — 'An Evolving AI Supply Chain'",
+      "year": "2025",
+      "url": "https://gspp.berkeley.edu/archived/files/page/An_Evolving_AI_Supply_Chain_-_Berkeley.pdf"
+    },
+    {
+      "stat": "More than 90% of the most advanced (most efficient) chips are produced by TSMC in Taiwan, using EUV lithography equipment supplied only by ASML in the Netherlands — a single-point dependency at the foundry and equipment layers.",
+      "source": "Goldman School of Public Policy, UC Berkeley — 'An Evolving AI Supply Chain'",
+      "year": "2025",
+      "url": "https://gspp.berkeley.edu/archived/files/page/An_Evolving_AI_Supply_Chain_-_Berkeley.pdf"
+    },
+    {
+      "stat": "'Neocloud' CoreWeave has locked in landmark GPU-capacity contracts including a $22.4 billion deal with OpenAI and a $14.2 billion deal with Meta, illustrating how scarce GPU supply is being pre-committed years in advance.",
+      "source": "Goldman School of Public Policy, UC Berkeley — 'An Evolving AI Supply Chain'",
+      "year": "2025",
+      "url": "https://gspp.berkeley.edu/archived/files/page/An_Evolving_AI_Supply_Chain_-_Berkeley.pdf"
+    },
+    {
+      "stat": "China's 'Big Fund' (China Integrated Circuit Industry Investment Fund) launched a third phase in 2024 worth $47 billion to accelerate domestic semiconductor capability in response to US-led export controls.",
+      "source": "Goldman School of Public Policy, UC Berkeley — 'An Evolving AI Supply Chain'",
+      "year": "2024",
+      "url": "https://gspp.berkeley.edu/archived/files/page/An_Evolving_AI_Supply_Chain_-_Berkeley.pdf"
+    },
+    {
+      "stat": "By mid-2025 the US export-control regime had become significantly less restrictive: the Trump administration set up a licensing regime allowing some previously restricted NVIDIA and AMD chip exports to China under fees and conditions.",
+      "source": "Goldman School of Public Policy, UC Berkeley — 'An Evolving AI Supply Chain'",
+      "year": "2025",
+      "url": "https://gspp.berkeley.edu/archived/files/page/An_Evolving_AI_Supply_Chain_-_Berkeley.pdf"
+    }
+  ],
+
+  "quotes": [
+    {
+      "quote": "Today there's not a single country in the world that can produce, not even an advanced chip, but a moderately advanced chip on its own.",
+      "name": "Chris Miller",
+      "affiliation": "Professor, Fletcher School at Tufts University; nonresident senior fellow, American Enterprise Institute; author of 'Chip War'",
+      "url": "https://www.cmu.edu/cmist/news-archive/news/2026/march/chips-and-chokepoints-chris-miller-on-the-geopolitics-of-the-ai-supply-chain.html"
+    },
+    {
+      "quote": "As costs of AI decline, we're just going to put more of these capabilities in an ever-larger number of our devices.",
+      "name": "Chris Miller",
+      "affiliation": "Professor, Fletcher School at Tufts University; author of 'Chip War'",
+      "url": "https://www.cmu.edu/cmist/news-archive/news/2026/march/chips-and-chokepoints-chris-miller-on-the-geopolitics-of-the-ai-supply-chain.html"
+    },
+    {
+      "quote": "While the primary concern regarding semiconductors today is access, the defining question of tomorrow will be trust — who has access to autonomous systems, how they operate, who writes the software, and who provides the over-the-air updates.",
+      "name": "Chris Miller (paraphrased by Carnegie Mellon Institute for Strategy & Technology)",
+      "affiliation": "Fletcher School, Tufts University",
+      "url": "https://www.cmu.edu/cmist/news-archive/news/2026/march/chips-and-chokepoints-chris-miller-on-the-geopolitics-of-the-ai-supply-chain.html",
+      "note": "This is a paraphrase in CMU's write-up, not a verbatim quotation — treat as a summary of Miller's argument, not a direct quote."
+    }
+  ],
+
+  "counterargument": {
+    "claim": "The 'winner takes the whole stack' narrative overstates permanence. Concentration is real today, but the stack is actively diversifying: hyperscalers are shipping their own custom ASICs (Google TPUs, Amazon Trainium/Inferentia) to reduce NVIDIA dependence; a class of 'neoclouds' (CoreWeave, Lambda Labs, G42) has emerged to break the hyperscaler monopoly on GPU access; nations are funding 'cloud sovereignty' and domestic fabs; and Chinese labs such as DeepSeek have advanced despite chip restrictions. The chokepoints are being contested, so control of the stack is a moving target rather than a settled monopoly.",
+    "strength": "Strong — grounded in the same Berkeley source that documents the concentration, which also documents each countervailing force."
+  },
+
+  "recent_news": [
+    {
+      "item": "Chris Miller (author of 'Chip War') delivered a February 2026 lecture, 'Geopolitics of AI Supply Chains,' at Carnegie Mellon's Institute for Strategy & Technology, arguing chip supply chains have become the defining chokepoint of US-China competition and that in 2026 tariffs and tightened export controls are intensifying.",
+      "date": "2026-03 (reported)",
+      "url": "https://www.cmu.edu/cmist/news-archive/news/2026/march/chips-and-chokepoints-chris-miller-on-the-geopolitics-of-the-ai-supply-chain.html"
+    },
+    {
+      "item": "By mid-2025 US chip export controls loosened via a licensing-and-fees regime permitting some NVIDIA/AMD exports to China — a notable reversal of the tightening trend since 2022.",
+      "date": "mid-2025",
+      "url": "https://gspp.berkeley.edu/archived/files/page/An_Evolving_AI_Supply_Chain_-_Berkeley.pdf"
+    }
+  ],
+
+  "supporting_context": [
+    "The AI stack, top to bottom: (1) equipment — ASML (sole EUV lithography supplier); (2) foundry — TSMC (>90% of leading-edge chips, in Taiwan); (3) chips — NVIDIA (>90% data-center GPU share), AMD (~4%), plus hyperscaler ASICs (Google TPU, Amazon Trainium/Inferentia); (4) software lock-in — NVIDIA's CUDA (cuDNN, cuBLAS) is the default across every major AI framework, creating a powerful moat; (5) compute/cloud — AWS, Azure, Google Cloud (~63%) plus neoclouds.",
+    "CUDA lock-in is the underappreciated chokepoint: even a competitive rival chip struggles because CUDA's mature libraries are the developer default.",
+    "Geographic single-point-of-failure risk: the supply chain is 'highly vulnerable to a devastating earthquake in Taiwan' (Miller), because leading-edge fabrication is concentrated there."
+  ],
+
+  "unverified_flags": [
+    "The Berkeley GSPP PDF ('An Evolving AI Supply Chain') carries no visible publication date in the extracted text; figures are internally attributed to 2024-2025 data points (e.g., 'as of Q2 2025'). Treat the report itself as 2025-vintage. Recommend confirming the exact publication month before citing a year in the article body.",
+    "The 63% cloud-market and >90% GPU/foundry shares are as reported by the Berkeley report, which footnotes primary market-research sources it does not name in the extracted highlights; figures are consistent with widely reported industry ranges but the underlying market-research firm was not captured in this run.",
+    "The third Miller item is a CMU paraphrase ('access today, trust tomorrow'), not a verbatim quote — flagged inline in the quotes array."
+  ]
+}

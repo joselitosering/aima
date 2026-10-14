@@ -4418,5 +4418,193 @@
       "quill": 0,
       "maya": 0
     }
+  },
+  {
+    "source": "cora",
+    "date": "2026-09-16",
+    "total_tokens_used": 0,
+    "by_agent": {
+      "SC": 0,
+      "QL": 0,
+      "MY": 0
+    },
+    "hallucination_flags": [
+      "MIT/Mertens-Thompson '88-97% of text-based tasks automatable by 2030' is an EXTRAPOLATION from an arXiv preprint (2604.01363v3, not peer-reviewed), self-flagged in research. If it appears in the article body it must be framed as a working-paper projection, not an observed figure \u2014 verify before re-citation.",
+      "Third research quote attributed to 'Mertens & Thompson' is a condensed PARAPHRASE of two adjacent passages, not a verbatim single sentence. Acceptable only if presented as the paper's finding, not inside quotation marks as a direct quote.",
+      "PwC 2026 AI Jobs Barometer was surfaced but NOT opened/verified in research \u2014 no specific PwC figure may appear in the article. Flagged for confirmation.",
+      "WEF wage-premium / reskilling figures (69% low-substitution, 77% reskilling, +22pt leadership, +17pt creative thinking) were pulled from source highlights, not the full PDF \u2014 sources are named (WEF Future of Jobs Report 2025) with year, so they clear the named-source+year gate, but exact numbers should be confirmed against the PDF before publication.",
+      "NOTE: only the article <head> (first 8000 chars) was available; in-body stats/quotes could not be directly verified against the research JSON this run \u2014 flags above are drawn from research's own unverified_flags and require Vera/human confirmation on the rendered body."
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      "No agent exceeded 80% of budget \u2014 but this is NOT a clean bill: token_budget.json shows used=0 for EVERY agent (SC/TS/WR/MY/VR/LM/CO all zero). This is the known-CRITICAL usage-tracking failure (open since #018/#019). No real per-agent token or cost measurement exists for article #54; budgets are ceilings only, not measurements.",
+      "QL budget is 0 this run while summary flag 'writer_draft_reused' is set and revisions.quill=0 \u2014 consistent with Quill reusing the pre-staged Writer draft (no fresh authoring call), so a 0 QL bucket is expected here, not an anomaly."
+    ],
+    "guardrails_applied": [
+      "None applied this run \u2014 Cora is read-only for #54 (report-only, no file writes). Standing recommendation reiterated: wire real usage from call_cc_agent's JSON envelope into each agent's token_budget.json bucket before trusting any future cost/budget number; until then treat all overspend detection as blind."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-09-16",
+    "article_number": 54,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-skills-that-remain-human-what-054.html",
+    "gs_row": 64,
+    "company_urn": "urn:li:share:7506064691182526464",
+    "reshare_urn": "urn:li:share:7506064707385053187",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "trend_scout",
+    "date": "2026-09-17",
+    "row": 55,
+    "author": "Dawn Ginhaua",
+    "title": "No Robo Bosses: Inside the 13-Day Fight to Make It Illegal for an Algorithm to Fire You",
+    "category": "AI Labor",
+    "rationale": "California's SB 947 ('No Robo Bosses Act') is sitting on Newsom's desk with a September 30 deadline \u2014 a revived version of the SB 7 he vetoed in October 2025, and the first-in-nation attempt to force human oversight before an AI can discipline or terminate a worker. The ticking clock, the veto history, the lobbying, and the documented racial gap in who gets monitored (82% of Black workers vs 65% of White) are exactly Dawn's corporate-capture-of-public-institutions terrain \u2014 and distinct from AIMA's existing 'Boss Is a Chatbot' phenomenon piece because it's about the law and who is fighting it.",
+    "sources": [
+      {
+        "name": "Senator Jerry McNerney \u2014 Legislature Approves No Robo Bosses Act of 2026",
+        "url": "https://sd05.senate.ca.gov/news/legislature-approves-no-robo-bosses-act-2026-ensure-human-oversight-ai-workplace"
+      },
+      {
+        "name": "Bloomberg Law \u2014 California's Workplace AI Decision-Making Bill Heads to Governor",
+        "url": "https://news.bloomberglaw.com/daily-labor-report/californias-workplace-ai-decision-making-bill-heads-to-governor"
+      },
+      {
+        "name": "National Institute for Workers' Rights \u2014 AI Is Not the Boss of Me",
+        "url": "https://niwr.org/2026/08/11/ai-is-not-the-boss-of-me/"
+      }
+    ]
+  },
+  {
+    "source": "cora",
+    "date": "2026-09-17",
+    "total_tokens_used": 345049,
+    "by_agent": {
+      "SC": 0,
+      "QL": 0,
+      "MY": 0
+    },
+    "hallucination_flags": [
+      "STAT (backdrop): 'workers in high-AI-exposure occupations saw real wage growth fall ~6.7pp behind low-exposure workers' \u2014 sourced to an Apollo-hosted whitepaper whose author is listed as N/A; method attributed in-text to Massenkoff & McCrory (2026)/Anthropic Economic Index but not confirmed. Named source is unverified \u2014 verify author before hard-citing.",
+      "STAT: Challenger 'roughly 55,000 AI layoffs of 1.17M total (2025)' has a named source+year (Challenger, Gray & Christmas, 2025) but reaches us only via CNBC secondary relay \u2014 confirm against Challenger's own year-end report before citing as primary.",
+      "STAT: Forrester '55% of employers regret AI layoffs / half quietly rehired' has named source+year (Forrester Predictions 2026) but is relayed via HR Executive, not read from Forrester directly \u2014 attribute to the reporting, not to Forrester directly.",
+      "STAT: Company-specific tallies (Amazon 14,000, Microsoft ~15,000, Salesforce 4,000, CrowdStrike 500, IBM 'few hundred') carry named sources+years via CNBC only \u2014 verify each against the company's own announcement before hard-citing exact figures.",
+      "QUOTE: 'AI hype gives executives cover to make cost-cutting decisions disguised as innovation' attributed to Jill Barth/HR Executive is the outlet's framing of Forrester's analysis, NOT a direct quotation from a named, verifiable individual analyst.",
+      "QUOTE: Fabian Stephany (Oxford Internet Institute) passage is condensed from two adjacent CNBC passages \u2014 present as his stated view, not a single verbatim sentence.",
+      "NOTE: Article body (stat grid, in-text citations) not verifiable from the 8000-char HTML excerpt provided \u2014 only meta tags visible; stat/quote sourcing above assessed from research JSON, not the rendered article."
+    ],
+    "reversion_flags": [],
+    "budget_alerts": [
+      "CRITICAL: TS (Trend Scout) used 345,049 tokens against a 150,000 budget = 230% \u2014 150% OVER ceiling, well past the 80% threshold. status=over_budget, last_call_cost=$1.42, cumulative_cost=$1.42. Investigate Trend Scout token overspend (recurrence risk \u2014 prior TS/Scout overspend fix logged 2026-07-17).",
+      "TRACKING GAP: All other agents (SC/WR/MY/VR active this run per Marco summary) report used=0. Per Marco's run summary these stages executed, so used=0 reflects the long-standing token-tracking gap, not zero real consumption \u2014 total_tokens_used (345,049) is TS-only and understates true run cost. Do not treat non-TS budgets as measured."
+    ],
+    "guardrails_applied": [
+      "No auto-mutation performed (read-only governance pass; report returned to Marco for save).",
+      "Recommend HOLD/re-scope of TS budget or investigation of its 2.3x overspend before next run; a same-issue recurrence should be escalated to Marco + CLAUDE.md per round-2 protocol."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-09-17",
+    "article_number": 55,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-scapegoat-in-the-server-055.html",
+    "gs_row": 65,
+    "company_urn": "urn:li:share:7506562736269643776",
+    "reshare_urn": "urn:li:share:7506562748508631040",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
+  },
+  {
+    "source": "cora",
+    "date": "2026-09-18",
+    "total_tokens_used": 0,
+    "by_agent": {
+      "SC": 0,
+      "QL": 0,
+      "MY": 0,
+      "TS": 0,
+      "WR": 0,
+      "VR": 0,
+      "PR": 0,
+      "IR": 0,
+      "LM": 0,
+      "CO": 0
+    },
+    "hallucination_flags": [
+      "MEDIUM \u2014 Market-size figures ($2.98B/$3.93B 2025\u21922026, 31.8% CAGR; $12.02B by 2030, 32.2% CAGR) trace to a SINGLE commercial vendor (The Business Research Company via GII). Named source + year present, so not fabricated, but Scout's own unverified_flags label them directional/not cross-checked against a second analyst house. If these appear in the stat grid, they should be framed as vendor projections, not authoritative measurements.",
+      "LOW \u2014 Third research quote (Smith/Cahill/Lee/Graim, Nature Communications 2025) is lifted verbatim from a paper ABSTRACT, not spoken commentary. Named + attributable + verified, so acceptable, but if presented as an interview quote in the article it would misrepresent the source. Attribute as a paper statement.",
+      "SCOPE LIMIT \u2014 Only the first 8,000 chars (document head, no body) of the article HTML were provided. Stat-grid cards, pullquote, inline citations, glossary and references could NOT be verified against the research JSON. All 5 research statistics and all 3 quotes carry named sources + years + verified:true, so the underlying research is clean; the article-body match is UNVERIFIED and should be confirmed by Vera's checklist output."
+    ],
+    "reversion_flags": [
+      "None. Run stages (priya\u2192scout\u2192quill\u2192maya\u2192vera\u2192porter\u2192nova) and revisions (quill:0, maya:0) show no scope crossover \u2014 no evidence of Quill editing images or Maya editing copy. Trend Scout not invoked (row #56 pre-resolved). writer_draft_reused flag is normal skip-and-reuse behavior.",
+      "DATA-INTEGRITY (non-blocking) \u2014 Article meta publish-date is 2026-07-30 (article:publish-date, article:published_time, article:modified_time) while run date is 2026-09-18 and research_date is 2026-09-03. Stale/incorrect publish timestamp likely inherited from a reused draft skeleton. Not a scope violation; flag to Iris/human for correction."
+    ],
+    "budget_alerts": [
+      "CRITICAL (recurring, unresolved) \u2014 token_budget.json shows used=0 for EVERY agent (SC/TS/WR/QL/MY/VR/PR/IR/LM/CO). This is the long-standing broken usage-tracking defect logged against runs #018/#019 and never wired into per-call completion. No real token or cost measurement exists for run #56; all budgets are ceilings only, not measurements.",
+      "No 80% threshold breach can be reported \u2014 with used=0 across the board, per-agent consumption is unmeasured, not zero. Do not read this as 'under budget'; read it as 'unmeasured.'",
+      "INFO \u2014 QL budget=0 and PT/NV/EC/PT=0 are expected (Quill authoring merged / no-token stages); WR carries the 300k authoring bucket and shows the writer_draft_reused path, consistent with the merged-pipeline design."
+    ],
+    "guardrails_applied": [
+      "None. Cora ran read-only this pass (no files touched, no prompt-level guardrail injected). Standing recommendation carried forward: HOLD is NOT advised for #56 (already published \u2014 Porter GS row 66, Nova company+reshare URNs live), but per-agent token usage MUST be wired into each agent's completion callback before the next run so real cost governance is possible. This is round-2+ on the same tracking defect \u2014 escalate to Marco/human per the round-2 protocol."
+    ]
+  },
+  {
+    "source": "marco",
+    "date": "2026-09-18",
+    "article_number": 56,
+    "live_url": "https://joselitosering.github.io/aima/articles/aima-article-the-precision-medicine-promise-ai-056.html",
+    "gs_row": 66,
+    "company_urn": "urn:li:share:7506789465139363840",
+    "reshare_urn": "urn:li:share:7506789478825369600",
+    "stages_completed": [
+      "priya",
+      "scout",
+      "quill",
+      "maya",
+      "vera",
+      "porter",
+      "nova",
+      "cora"
+    ],
+    "flags": [
+      "writer_draft_reused"
+    ],
+    "revisions": {
+      "quill": 0,
+      "maya": 0
+    }
   }
 ]

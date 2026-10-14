@@ -1,6 +1,8 @@
 # AIMA Editorial Calendar
-**Updated 7/2/2026 — Articles 001–064, one unified canonical sequence**
+**Updated 10/13/2026 — Articles 001–100, one unified canonical sequence**
 **2026-07-02: Slot-label tracking (D1–D13 / K1–K12) retired per Joe — every row now carries one canonical number; Author is a per-row attribute anyone can reassign, not a track. Published rows keep their real article:id (fixes the #014/#015/#017 desyncs); unpublished rows are numbered 19+ in date order across all authors. Full mapping in DECISION-LOG.md.**
+**2026-10-13: Calendar expanded to #100. Cadence 3x/week: Joselito Mondays, Dawn Wednesdays, Kenji Fridays, starting Mon 2026-10-19 (#64 moved there from 2026-10-14). Rows #65–#100 are TBD — Trending Topic slots (topic chosen by Trend Scout at run time).**
+**2026-10-13: Row #55 title synced to the published article (was "No Robo Bosses…"; published file is "The Scapegoat in the Server Room…"). Row #28 title synced to the published article (quotes removed). Row #64 rescheduled 2026-08-07 → 2026-10-14 (unpublished, overdue).**
 **2026-07-02: Overdue backlog (9 rows) rescheduled to 07/06–07/10 at 2/day; 5 already-queued rows bumped to 07/13–07/17ff to preserve the 2/day cap. See DECISION-LOG.md for the full before/after.**
 
 | # | Date | Title | Category | Read | Tone Note | Author |
@@ -32,7 +34,7 @@
 | 25 | 2026-07-07 | The Government Filed a Brief for the Algorithm: How the DOJ Killed America's First AI Antidiscrimination Law | AI Ethics | 8 min | Rescheduled (was 2026-06-23, overdue) · Post 10:00 AM PT | Dawn Ginhaua |
 | 26 | 2026-07-07 | Data Centers in Orbit: Why Big Tech Wants to Move AI's Power Problem to Space | AI Science | 8 min | Rescheduled (was 2026-06-25, overdue) · Post 4:00 PM PT | Kenji Nakamoto |
 | 27 | 2026-07-08 | Power Hungry: The Carbon Ledger of the AI Compute Boom | AI Environment | 10 min | Rescheduled (was 2026-06-26, overdue) · Post 10:00 AM PT | Joselito Sering |
-| 28 | 2026-07-08 | The Termination Algorithm: How 'Token Consumption' Became a Layoff Metric | AI Labor | 8 min | Rescheduled (was 2026-06-27, overdue) · Post 4:00 PM PT | Dawn Ginhaua |
+| 28 | 2026-07-08 | The Termination Algorithm: How Token Consumption Became a Layoff Metric | AI Labor | 8 min | Rescheduled (was 2026-06-27, overdue) · Post 4:00 PM PT | Dawn Ginhaua |
 | 29 | 2026-07-09 | The Lab That Runs Itself: How Autonomous Labs Are Compressing Materials Discovery From Years to Days | AI Science | 8 min | Rescheduled (was 2026-06-29, overdue) · Post 10:00 AM PT | Kenji Nakamoto |
 | 30 | 2026-07-09 | Who Owns the Output? The Intellectual Property Crisis in Generative AI | AI Law | 11 min | Rescheduled (was 2026-06-30, overdue) · Post 4:00 PM PT | Joselito Sering |
 | 31 | 2026-07-10 | The Clause That Broke the Contract: What Anthropic's Refusal to Arm the Pentagon Reveals About Who Really Governs AI | AI Ethics | 8 min | Rescheduled (was 2026-07-01, overdue) · Post 10:00 AM PT | Dawn Ginhaua |
@@ -59,7 +61,7 @@
 | 52 | 2026-07-26 | From Pixel to Presence: AI and the Immersive Media Future | AI Creative | 10 min |  | Joselito Sering |
 | 53 | 2026-07-27 | The Satellite Factory: Inside the Robotic Assembly Line That Builds a Spacecraft in 30 Hours | AI Science | 8 min |  | Kenji Nakamoto |
 | 54 | 2026-07-28 | Skills That Remain Human: What AI Cannot Automate and Why It Matters | AI Labor | 10 min |  | Joselito Sering |
-| 55 | 2026-07-29 | No Robo Bosses: Inside the 13-Day Fight to Make It Illegal for an Algorithm to Fire You | AI Labor | 8 min |  | Dawn Ginhaua |
+| 55 | 2026-07-29 | The Scapegoat in the Server Room: How 'AI Did It' Became Corporate America's Favorite Layoff Excuse | AI Labor | 8 min |  | Dawn Ginhaua |
 | 56 | 2026-07-30 | The Precision Medicine Promise: AI, Genomics, and the Curable Future | AI Healthcare | 13 min |  | Joselito Sering |
 | 57 | 2026-07-31 | Taming the Star: How AI Learned to Hold Fusion Plasma Together | AI Science | 8 min |  | Kenji Nakamoto |
 | 58 | 2026-08-01 | Designed for Harm: The Dark Patterns of AI Consumer Products | AI Ethics | 11 min |  | Joselito Sering |
@@ -68,4 +70,40 @@
 | 61 | 2026-08-04 | One Brain, Many Bodies: How Robot Foundation Models Learned to Move the Whole Machine | AI Science | 8 min |  | Kenji Nakamoto |
 | 62 | 2026-08-05 | Philanthropy 3.0: How AI Agents Could Transform Charitable Giving | AI Society | 11 min |  | Joselito Sering |
 | 63 | 2026-08-06 | The Warning That Never Came: How OpenAI's PR Team Overruled Its Own Safety Engineers | AI Ethics | 8 min |  | Dawn Ginhaua |
-| 64 | 2026-08-07 | The Creative Director Is Not Dead: Human Vision in an AI Production World | AI Creative | 9 min |  | Joselito Sering |
+| 64 | 2026-10-19 | The Creative Director Is Not Dead: Human Vision in an AI Production World | AI Creative | 9 min | Rescheduled (was 2026-08-07, overdue) | Joselito Sering |
+| 65 | 2026-10-21 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 66 | 2026-10-23 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 67 | 2026-10-26 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 68 | 2026-10-28 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 69 | 2026-10-30 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 70 | 2026-11-02 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 71 | 2026-11-04 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 72 | 2026-11-06 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 73 | 2026-11-09 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 74 | 2026-11-11 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 75 | 2026-11-13 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 76 | 2026-11-16 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 77 | 2026-11-18 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 78 | 2026-11-20 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 79 | 2026-11-23 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 80 | 2026-11-25 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 81 | 2026-11-27 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 82 | 2026-11-30 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 83 | 2026-12-02 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 84 | 2026-12-04 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 85 | 2026-12-07 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 86 | 2026-12-09 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 87 | 2026-12-11 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 88 | 2026-12-14 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 89 | 2026-12-16 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 90 | 2026-12-18 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 91 | 2026-12-21 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 92 | 2026-12-23 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 93 | 2026-12-25 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 94 | 2026-12-28 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 95 | 2026-12-30 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 96 | 2027-01-01 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 97 | 2027-01-04 | TBD — Trending Topic | Trending | — |  | Joselito Sering |
+| 98 | 2027-01-06 | TBD — Trending Topic | Trending | — |  | Dawn Ginhaua |
+| 99 | 2027-01-08 | TBD — Trending Topic | Trending | — |  | Kenji Nakamoto |
+| 100 | 2027-01-11 | TBD — Trending Topic | Trending | — |  | Joselito Sering |

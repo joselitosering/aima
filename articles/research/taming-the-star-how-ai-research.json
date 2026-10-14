@@ -1,0 +1,119 @@
+{
+  "article_number": 57,
+  "slug": "taming-the-star-how-ai",
+  "title": "Taming the Star: How AI Learned to Hold Fusion Plasma Together",
+  "author": "Kenji Nakamoto",
+  "category": "AI Science",
+  "researched_at": "2026-09-04",
+  "researcher": "Scout",
+  "budget_note": "Completed within 60k working budget: 0 cache files read (none topically relevant to fusion — cache list covered BCI/precision-medicine/surveillance, not plasma control), 3 Exa semantic searches, 0 full-page fetches. Search highlights were citable directly.",
+
+  "summary": "Controlling a fusion plasma is a millisecond-scale, high-dimensional control problem that has long outpaced human operators and hand-tuned controllers. Since 2022, deep reinforcement learning has moved from lab demonstration to a genuine control tool: DeepMind/EPFL showed neural-network controllers could shape and hold tokamak plasmas on real hardware; a 2024 Princeton-led team used RL to actively AVOID the tearing instabilities that cause disruptions rather than merely suppress them; and by September 2026 PPPL's PACMAN framework packaged these one-off demos into modular, safety-gated AI infrastructure tested on DIII-D. The through-line for Kenji's beat: AI is shifting fusion control from 'engineer the exact state in advance' to 'specify the goal and let a learned policy find the path,' while keeping humans in charge of the objectives and hardware safety limits.",
+
+  "statistics": [
+    {
+      "stat": "Plasma instabilities can grow in a few thousandths of a second — far faster than any human operator can react — which is why real-time control is being handed to AI.",
+      "source": "Princeton Plasma Physics Laboratory (PPPL), via Phys.org",
+      "year": 2026,
+      "url": "https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html",
+      "verified": true
+    },
+    {
+      "stat": "In a PACMAN experiment on DIII-D, a machine-learning model predicted a tearing mode about 200 milliseconds in advance, giving the system time to change the plasma to avoid the instability before it began (vs. conventional controllers that can only detect a tearing mode AFTER it starts).",
+      "source": "PPPL / Nuclear Fusion (Rothstein et al. 2026), quoted via Phys.org",
+      "year": 2026,
+      "url": "https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html",
+      "verified": true
+    },
+    {
+      "stat": "PACMAN simultaneously steered all six of DIII-D's gyrotrons (microwave plasma-heating systems), retargeting mirrors and adjusting power in real time to hit researcher-set goals — an optimization the team says had no prior algorithm.",
+      "source": "PPPL / Princeton, via Phys.org",
+      "year": 2026,
+      "url": "https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html",
+      "verified": true
+    },
+    {
+      "stat": "The 2024 RL tearing-avoidance controller made its predictions of future normalized plasma pressure and 'tearability' 25 milliseconds ahead based on the AI controller's action, and was demonstrated on DIII-D, described as the largest magnetic fusion facility in the United States.",
+      "source": "Seo et al., Nature (\"Avoiding fusion plasma tearing instability with deep reinforcement learning\")",
+      "year": 2024,
+      "url": "https://www.nature.com/articles/s41586-024-07024-9",
+      "verified": true
+    },
+    {
+      "stat": "The 2022 DeepMind/EPFL controller learned to command a tokamak's full set of magnetic control coils and ran 'zero shot' (directly, no on-hardware retraining) on the TCV tokamak, producing configurations including elongated, negative-triangularity and 'snowflake' shapes — and even sustaining two separate plasma 'droplets' in the vessel at once.",
+      "source": "Degrave et al., Nature (\"Magnetic control of tokamak plasmas through deep reinforcement learning\")",
+      "year": 2022,
+      "url": "https://www.nature.com/articles/s41586-021-04301-9",
+      "verified": true
+    },
+    {
+      "stat": "Commonwealth Fusion Systems raised another ~$1 billion in 2026 to pursue commercial fusion — a marker of the scale of private capital now riding on making plasma control (increasingly AI-assisted) work reliably.",
+      "source": "Canary Media",
+      "year": 2026,
+      "url": "https://www.canarymedia.com/articles/nuclear/cfs-1billion-nuclear-fusion",
+      "verified": "partial — headline/figure from Exa search highlight; exact round terms not fully fetched. Use as context, not a load-bearing precise figure."
+    }
+  ],
+
+  "quotes": [
+    {
+      "quote": "PACMAN uses a flexible setup where building block AI algorithms can be put together. You can add a new one, swap one out or run several at once without touching the rest of the system. That modularity is what turns AI plasma control from a series of one-off demonstrations into infrastructure the whole fusion community can build on.",
+      "speaker": "Egemen Kolemen",
+      "affiliation": "Associate professor of mechanical and aerospace engineering, Princeton University (jointly appointed with the Andlinger Center for Energy and the Environment and PPPL)",
+      "year": 2026,
+      "url": "https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html",
+      "verified": true
+    },
+    {
+      "quote": "Conventional controllers can only detect a tearing mode after it has started. Then they try to suppress it, and that can come with a lot of performance degradation. In one of the experiments we present, a machine learning model predicts the tearing mode about 200 milliseconds in advance, so the plasma can be changed to avoid it in the first place. No matter how sophisticated your controllers, in the end it's a human operator that sets the parameters for that control.",
+      "speaker": "Farre Kaga",
+      "affiliation": "PPPL / Princeton (PACMAN research team)",
+      "year": 2026,
+      "url": "https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html",
+      "verified": "true — two adjacent quotes from the same researcher combined; both appear verbatim in the source. First name/full title not given in the highlight."
+    },
+    {
+      "quote": "This represents a notable advance for tokamak feedback control, showing the potential of reinforcement learning to accelerate research in the fusion domain, and is one of the most challenging real-world systems to which reinforcement learning has been applied. This approach... enables a fundamental shift from engineering-driven control of a pre-designed state to artificial-intelligence-driven optimization of objectives specified by an operator.",
+      "speaker": "Degrave et al. (DeepMind & EPFL Swiss Plasma Center)",
+      "affiliation": "Nature 2022 paper abstract/body",
+      "year": 2022,
+      "url": "https://www.nature.com/articles/s41586-021-04301-9",
+      "verified": true
+    }
+  ],
+
+  "counterargument": {
+    "claim": "AI plasma control is still confined to research tokamaks (TCV, DIII-D) running for seconds, not to a power-producing reactor — and the hard, unsolved problems (materials that survive continuous neutron bombardment, net-energy-gain at scale, tritium fuel cycles) are not control-software problems at all. Critics argue that framing AI as 'taming the star' overstates its role: better control shortens experiment cycles and avoids disruptions, but it does not by itself make fusion economical or move it from lab to grid. The researchers themselves stress that humans set the goals and hardware safety limits enforce hard caps regardless of what the model suggests.",
+    "source_basis": "Synthesized from PPPL's own 'humans firmly in charge' framing and the fact that all cited demonstrations ran on research machines.",
+    "url": "https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html"
+  },
+
+  "recent_news": [
+    {
+      "item": "PPPL/Princeton unveiled PACMAN (Prediction And Control using MAchiNe learning), a modular AI framework that makes fusion-control decisions in milliseconds and was validated in five experiments on the DIII-D National Fusion Facility — including predicting and pre-empting a tearing mode. Detailed in Nuclear Fusion (Rothstein et al., 2026).",
+      "date": "2026-09-02",
+      "url": "https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html"
+    },
+    {
+      "item": "Commonwealth Fusion Systems raised roughly another $1B in mid-2026 to chase commercial fusion, underscoring the capital now betting on reliable plasma operation.",
+      "date": "2026-07-30",
+      "url": "https://www.canarymedia.com/articles/nuclear/cfs-1billion-nuclear-fusion"
+    }
+  ],
+
+  "unverified_flags": [
+    "CFS $1B figure taken from an Exa search-result highlight, not a fetched article — treat the dollar amount as approximate context, not a precise citable stat.",
+    "'Farre Kaga' and 'Rothstein' appear by surname only in the Phys.org highlight; first names/exact titles were not captured. Verify full names before printing bylines.",
+    "The 2022 paper's citation count (~703) and 2024 paper's (~139) come from Exa metadata, not the journals directly — omit or re-verify if citing counts.",
+    "ITER relevance (all three works cite ITER baseline scenarios) is described in the sources but no ITER-specific stat was independently verified this run."
+  ],
+
+  "suggested_angle_for_kenji": "Trace the three-step arc — 2022 DeepMind/EPFL (can AI shape a plasma at all? yes, zero-shot on TCV) -> 2024 Seo/Princeton (can it AVOID disruptions, not just react? yes, on DIII-D) -> 2026 PACMAN (can it become reusable infrastructure the whole field builds on? that's the claim). Frame the deeper shift Degrave names: from 'engineer the exact state in advance' to 'specify the goal, let the policy find the path' — with the honest caveat that control is only one of fusion's hard problems and humans still hold the safety limits.",
+
+  "sources_master_list": [
+    "https://www.nature.com/articles/s41586-021-04301-9",
+    "https://www.nature.com/articles/s41586-024-07024-9",
+    "https://phys.org/news/2026-09-pacman-ai-framework-fusion-safely.html",
+    "https://www.canarymedia.com/articles/nuclear/cfs-1billion-nuclear-fusion"
+  ]
+}

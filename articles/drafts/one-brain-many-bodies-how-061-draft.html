@@ -1,0 +1,52 @@
+<p class="lead">The first robot foundation model I really understood wasn't in a glossy launch reel. It was a grainy clip of a two-armed machine folding laundry — pulling a crumpled shirt out of a hamper, shaking it flat, tucking the sleeves in. Nothing about it was fast, and nothing about it was graceful. That was exactly the point. Nobody had scripted those motions frame by frame. The same "brain" that folded that shirt could also assemble a cardboard box, and — this is the part that made me look up from my screen — it could run on a robot it had never been built for. One brain. Many bodies. Suddenly the machine's whole body was in play.</p>
+
+<h2>The Moment the Machine Moved Itself</h2>
+<p>For decades, getting a robot to do something meant hand-writing the something. Weld here, at this angle, at this speed. Move a robot to a new task and an engineer rewrote the script. Robot foundation models flip that. A <strong>foundation model</strong> is a single large model pretrained on a mountain of general data, then adapted to specific jobs — the same idea that gave us large language models, now aimed at physical action. Instead of predicting the next word, these models predict the next <em>move</em>: they inherit semantic knowledge from internet-scale pretraining and output the low-level motor commands that actually drive the joints.</p>
+
+<h2>One Model, Eight Robots, Fifty Moves a Second</h2>
+<p>Physical Intelligence's pi-0 policy is the cleanest example I've found. It's a <strong>vision-language-action (VLA) policy</strong> — it sees, it reads the instruction, it acts. pi-0 was trained on dexterous tasks collected across eight distinct robots and outputs low-level motor commands up to 50 times per second, by bolting continuous action outputs onto a pretrained 3-billion-parameter vision-language model using a technique called <strong>flow matching</strong> (Physical Intelligence, 2024). Here's the analogy that clicked for me: it's less like reading sheet music and more like a jazz musician who learned theory from a thousand records, then improvises live. That ability to run one model across eight different machines is <strong>cross-embodiment transfer</strong> — the "many bodies" in the headline.</p>
+
+<blockquote class="pullquote">Our mission is to develop foundation models that can control any robot to perform any task — but generalist robot policies are still in their infancy, and we have a long way to go.</blockquote>
+
+<p>That's Physical Intelligence's own team talking (Physical Intelligence, 2024). I love that they said the quiet part out loud.</p>
+
+<h2>Two Brains in One Head</h2>
+<p>NVIDIA took the whole-body idea to humanoids. Isaac GR00T N1 shipped as what the company called "the world's first open, fully customizable foundation model for generalized humanoid reasoning and skills," pitched against a global labor shortage NVIDIA estimates at more than 50 million people (NVIDIA, 2025). What makes it tick is a <strong>dual-system architecture</strong> borrowed from how we think: a slow "System 2" vision-language model that reasons and plans, feeding a fast "System 1" action model that turns those plans into smooth, continuous motion (NVIDIA, 2025). "The age of generalist robotics is here," said NVIDIA CEO Jensen Huang (NVIDIA, 2025) — and for once the launch-day line had mechanics underneath it.</p>
+
+<h2>The Race Toward the Open World</h2>
+<p>Then it got faster. GR00T N1.5 hit a 38.3% success rate across 12 new "DreamGen" verb tasks, versus 13.1% for the original — nearly a 3x jump in handling task types beyond its first training set (NVIDIA GEAR Lab, 2025). To feed models like these, NVIDIA and Google DeepMind announced MuJoCo-Warp, expected to accelerate robotics ML workloads by more than 70x. Physical Intelligence's generalization-focused pi-0.5 — reportedly a roughly 3.3-billion-parameter policy co-trained across 10-plus robot embodiments plus web data (secondary explainer, IoT Digital Twin PLM, 2026; verify against the primary release) — is chasing the same prize: robots that work in a house they've never seen.</p>
+
+<div class="stat-grid">
+<div class="stat-card"><strong>8 robots</strong><span>pi-0 trained across eight distinct machines, one policy</span></div>
+<div class="stat-card"><strong>50 / sec</strong><span>Motor commands pi-0 outputs per second</span></div>
+<div class="stat-card"><strong>38.3%</strong><span>GR00T N1.5 new-verb success, up from 13.1%</span></div>
+<div class="stat-card"><strong>70x</strong><span>Expected MuJoCo-Warp speedup for robot ML</span></div>
+</div>
+
+<h2>The Honest Part: Now Move It to a New Kitchen</h2>
+<p>Here's where my optimism puts its boots on. Ask one of these robots to clean the exact kitchen it trained in and it shines; move it to an unseen house and it stumbles. The field's own leaders say generalist policies are "still in their infancy." And the headline numbers deserve a hard look: GR00T N1.5's 38.3% was <em>not</em> true <strong>zero-shot generalization</strong> — the model was trained on those verbs via synthetic DreamGen trajectories, with NVIDIA explicitly leaving full zero-shot verb-and-environment generalization "to future work" (NVIDIA GEAR Lab, 2025). Success rates on hard, multi-stage manipulation still sit well below what real deployment demands. "With a minimal amount of post-training data, we were able to fully deploy on NEO Gamma," said 1X Technologies CEO Bernt Bornich (NVIDIA, 2025) — encouraging, but "minimal" still means real-world tuning, robot by robot.</p>
+
+<h2>What You Can Actually Do With This</h2>
+<p>The wild thing for makers: GR00T N1 is open. You can read the papers, poke the weights, and simulate in engines like Newton without owning a humanoid. Start with the pi-0 write-up, then the GR00T research pages — watch how the same brain adapts to a new body, and ask where it breaks. That gap between the demo and the messy real kitchen? That's the frontier, and it's wide open. Go find its edge.</p>
+
+<div class="glossary">
+<dl>
+<dt data-term="Foundation model">Foundation model</dt><dd>A single large model pretrained on broad, internet-scale data and then adapted to many specific tasks, rather than built narrowly for one job.</dd>
+<dt data-term="Vision-language-action (VLA) policy">Vision-language-action (VLA) policy</dt><dd>A robot control model that takes in camera images and a language instruction and outputs motor actions — it sees, reads, and moves.</dd>
+<dt data-term="Cross-embodiment transfer">Cross-embodiment transfer</dt><dd>The ability of one model to control several physically different robot bodies, rather than a separate model per machine.</dd>
+<dt data-term="Flow matching">Flow matching</dt><dd>A technique for generating smooth continuous outputs — here, letting a pretrained vision-language model produce fluid robot motor commands.</dd>
+<dt data-term="Dual-system architecture">Dual-system architecture</dt><dd>A design pairing a slow reasoning-and-planning "System 2" model with a fast motion-generating "System 1" model, inspired by human cognition.</dd>
+<dt data-term="Zero-shot generalization">Zero-shot generalization</dt><dd>Performing a task or working in an environment the model was never trained on, with no task-specific fine-tuning first.</dd>
+</dl>
+</div>
+
+<div class="references">
+<ol>
+<li>Physical Intelligence. "pi-0: Our First Generalist Policy." Physical Intelligence Blog, 2024, https://www.pi.website/blog/pi0.</li>
+<li>NVIDIA Corporation. "NVIDIA Announces Isaac GR00T N1 — the World's First Open Humanoid Robot Foundation Model." NVIDIA Investor Press Release (GTC), 2025, https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Isaac-GR00T-N1--the-Worlds-First-Open-Humanoid-Robot-Foundation-Model--and-Simulation-Frameworks-to-Speed-Robot-Development/default.aspx.</li>
+<li>NVIDIA GEAR Lab. "GR00T N1.5: An Improved Open Foundation Model for Generalist Humanoid Robots." NVIDIA Research, 2025, https://research.nvidia.com/labs/gear/gr00t-n1_5/.</li>
+<li>Huang, Jensen. Quoted in "NVIDIA Announces Isaac GR00T N1." NVIDIA Investor Press Release (GTC), 2025.</li>
+<li>Bornich, Bernt (1X Technologies). Quoted in "NVIDIA Announces Isaac GR00T N1." NVIDIA Investor Press Release (GTC), 2025.</li>
+<li>IoT Digital Twin PLM. "Physical Intelligence pi0.5 Explained: The VLA Robot Foundation Model (2026)." 2026, https://iotdigitaltwinplm.com/physical-intelligence-pi05-vla-robot-foundation-model-2026/. [Secondary source — pi-0.5 parameter and embodiment figures unverified against the primary release.]</li>
+</ol>
+</div>

@@ -1,0 +1,67 @@
+{
+  "row": 57,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-09-04",
+  "chosen": {
+    "title": "Taming the Star: How AI Learned to Hold Fusion Plasma Together",
+    "category": "AI Science",
+    "rationale": "In June 2026 the U.S. DOE launched STELLAR-AI (Princeton Plasma Physics Lab) and researchers are now handing second-by-second plasma control to AI fast enough to kill an instability before a human could register it \u2014 a genuine 2026 inflection for clean energy that sits exactly at Kenji's intersection of AI, clean energy, and physical mechanism-you-can-picture, with a built-in honest reckoning (private-sector hype vs. scientific verification).",
+    "sources": [
+      {
+        "name": "Forbes \u2014 Working On Fusion: AI Drives Energy Acceleration",
+        "url": "https://www.forbes.com/sites/johnwerner/2026/07/15/working-on-fusion-ai-drives-energy-acceleration-processes/"
+      },
+      {
+        "name": "World Economic Forum \u2014 How AI will help get fusion from lab to grid",
+        "url": "https://www.weforum.org/stories/energy-transition/how-ai-will-help-get-fusion-from-lab-to-grid-by-the-2030s/"
+      },
+      {
+        "name": "VoltaicBox \u2014 2026 Fusion Energy Progress",
+        "url": "https://voltaicbox.com/post/2026-fusion-energy-progress-breakthroughs-announced"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "One Brain, Many Bodies: The Race to Build a Foundation Model for Every Robot",
+      "category": "AI Science",
+      "rationale": "2026 is the year of the vision-language-action 'robot foundation model' \u2014 GEN-1 crossed a mastery threshold (99% success where prior models hit 64%) and startups like Physical Intelligence and Skild sell the brain, not the body; this is the mechanism story behind the humanoid headlines, distinct from AIMA's deployment/IPO and 'world model' pieces, and squarely Kenji's love of how the thing actually works.",
+      "sources": [
+        {
+          "name": "Generalist AI \u2014 GEN-1: Scaling Embodied Foundation Models to Mastery",
+          "url": "https://generalistai.com/blog/apr-02-2026-GEN-1"
+        },
+        {
+          "name": "MarkTechPost \u2014 Top 10 Physical AI Models Powering Real-World Robots 2026",
+          "url": "https://www.marktechpost.com/2026/04/28/top-10-physical-ai-models-powering-real-world-robots-in-2026/"
+        },
+        {
+          "name": "NVIDIA Blog \u2014 Physical AI Research & Breakthroughs (Isaac GR00T)",
+          "url": "https://blogs.nvidia.com/blog/national-robotics-week-2026/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Forecasting the Planet: How AI Weather Models Went Operational and Left the Supercomputers Behind",
+      "category": "Climate Tech",
+      "rationale": "NOAA just deployed a full operational suite of AI-driven global weather models (fine-tuned from GraphCast), and foundation models like Microsoft's Aurora and NVIDIA's Earth-2/Atlas now match physics-based forecasts in seconds of GPU inference instead of hours \u2014 a watershed for climate resilience and disaster warning that fits Kenji's climate-tech beat and his gift for making scale feel like wonder.",
+      "sources": [
+        {
+          "name": "NOAA \u2014 New generation of AI-driven global weather models",
+          "url": "https://www.noaa.gov/news-release/noaa-deploys-new-generation-of-ai-driven-global-weather-models"
+        },
+        {
+          "name": "DIGITIMES \u2014 Forecasting the planet, one foundation model at a time",
+          "url": "https://www.digitimes.com/news/a20260811PD219/weather-2026-forecast.html"
+        },
+        {
+          "name": "ORNL \u2014 AI for climate and weather forecasting",
+          "url": "https://www.ornl.gov/blog/ai-climate-and-weather-forecasting"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "next_article_number": 64,
-  "next_article_date": "2026-06-28",
+  "next_article_date": "2026-10-19",
   "joselito": {
     "next_calendar_index": 4,
     "post_count": 17,
@@ -101,8 +101,7 @@
     "AI Labor / AI Ethics",
     "AI Innovation",
     "AI Ethics / Tech Policy",
-    "AI Philosophy",
-    "Trending"
+    "AI Philosophy"
   ],
   "category_priority_note": "Ranked by avg LinkedIn impressions (post_analytics.csv). Pick the next article whose category ranks highest here, then by oldest scheduled date within that category tier."
 }

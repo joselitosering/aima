@@ -1,0 +1,67 @@
+{
+  "row": 59,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-09-08",
+  "chosen": {
+    "title": "The Algorithm Did It Is Not a Defense: How the Courts Ended AI's Accountability Holiday",
+    "category": "AI Ethics",
+    "rationale": "As of mid-2026 a wave of rulings (Garcia v. Character Technologies, the pending OpenAI wrongful-death and school-shooting suits) has rejected Section 230 and First Amendment shields and let product-liability and failure-to-warn claims proceed against AI makers \u2014 the first time the 'someone has to answer' question is being decided in court, not a press release. This is Dawn's exact terrain: who is finally held liable when a machine harms, and who spent years engineering the shield that said no one was.",
+    "sources": [
+      {
+        "name": "Northeastern News \u2014 ChatGPT faces a lawsuit onslaught. Can a chatbot be held liable?",
+        "url": "https://news.northeastern.edu/2026/05/22/chatgpt-lawsuit-ai-ethics/"
+      },
+      {
+        "name": "SoftwareSeni \u2014 Beyond Section 230: Why AI Chatbots Face Product Liability Instead of Platform Immunity",
+        "url": "https://www.softwareseni.com/beyond-section-230-why-ai-chatbots-face-product-liability-instead-of-platform-immunity/"
+      },
+      {
+        "name": "Moody's \u2014 Section 230 immunity for AI chatbot lawsuits 2026",
+        "url": "https://www.moodys.com/web/en/us/insights/insurance/230-immunity-for-AI-chatbot-lawsuits.html"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Reading the Worker: The Fight to Keep AI Out of Your Emotions and Your Brain",
+      "category": "AI Labor",
+      "rationale": "California's AB 1883 \u2014 banning employers from using AI to infer workers' emotional states or collect 'neural data' \u2014 cleared the legislature August 30, 2026 and sits on Newsom's desk with a September 30 deadline, making emotion-and-brain surveillance the live labor-rights flashpoint right now. It's a fresh angle distinct from AIMA's keystroke-surveillance and algorithmic-boss pieces: the frontier has moved from what you type to what you feel and what your nervous system does \u2014 precisely Dawn's surveillance-meets-labor-meets-bodily-autonomy beat.",
+      "sources": [
+        {
+          "name": "Bloomberg Law \u2014 California Passes Bill to Ban AI Tracking of Worker Neural Data",
+          "url": "https://news.bloomberglaw.com/daily-labor-report/california-passes-bill-to-ban-ai-tracking-of-worker-neural-data"
+        },
+        {
+          "name": "HR Dive \u2014 California ban on workplace AI emotion surveillance heads to Newsom's desk",
+          "url": "https://www.hrdive.com/news/california-ban-on-workplace-ai-emotion-surveillance-heads-to-newsom/829207/"
+        },
+        {
+          "name": "Mondaq \u2014 California Passes AB-1883 Targeting AI Workplace Surveillance of Employees' Emotional State and Neural Data",
+          "url": "https://www.mondaq.com/unitedstates/employee-rights-labour-relations/1837556/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Bias-Audit Industrial Complex: Who Watches the Algorithm, and Who Pays Them",
+      "category": "AI Ethics",
+      "rationale": "2026's defining regulatory shift is the move from companies grading their own homework to mandatory independent third-party bias audits (Colorado SB 24-205's June 30 deadline, NYC/Illinois/NY layered audit rules, EEOC's 'the algorithm did it is no defense' stance) \u2014 spawning a fast-growing compliance-audit industry. Dawn's 'follow the money' instinct fits: an audit paid for by the audited is a new form of accountability theater, and someone is quietly building a market on it.",
+      "sources": [
+        {
+          "name": "Bochner PLLC \u2014 Algorithmic Bias Audit Compliance: Navigating the 2026 Frontier",
+          "url": "https://www.bochner.law/news/publications/2026-04-30-algorithmic-bias-audit-compliance-navigating-the-2026-frontier"
+        },
+        {
+          "name": "Gunderson Dettmer \u2014 2026 AI Laws Update: Key Regulations and Practical Guidance",
+          "url": "https://www.gunder.com/en/news-insights/insights/2026-ai-laws-update-key-regulations-and-practical-guidance"
+        },
+        {
+          "name": "Angela Reddock-Wright \u2014 AI-Driven Hiring Bias: The Next Frontier of EEOC Enforcement 2026",
+          "url": "https://angelareddock-wright.com/ai-driven-hiring-bias-the-next-frontier-of-eeoc-enforcement/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "row": 55,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-09-17",
+  "chosen": {
+    "title": "No Robo Bosses: Inside the 13-Day Fight to Make It Illegal for an Algorithm to Fire You",
+    "category": "AI Labor",
+    "rationale": "California's SB 947 ('No Robo Bosses Act') is sitting on Newsom's desk with a September 30 deadline \u2014 a revived version of the SB 7 he vetoed in October 2025, and the first-in-nation attempt to force human oversight before an AI can discipline or terminate a worker. The ticking clock, the veto history, the lobbying, and the documented racial gap in who gets monitored (82% of Black workers vs 65% of White) are exactly Dawn's corporate-capture-of-public-institutions terrain \u2014 and distinct from AIMA's existing 'Boss Is a Chatbot' phenomenon piece because it's about the law and who is fighting it.",
+    "sources": [
+      {
+        "name": "Senator Jerry McNerney \u2014 Legislature Approves No Robo Bosses Act of 2026",
+        "url": "https://sd05.senate.ca.gov/news/legislature-approves-no-robo-bosses-act-2026-ensure-human-oversight-ai-workplace"
+      },
+      {
+        "name": "Bloomberg Law \u2014 California's Workplace AI Decision-Making Bill Heads to Governor",
+        "url": "https://news.bloomberglaw.com/daily-labor-report/californias-workplace-ai-decision-making-bill-heads-to-governor"
+      },
+      {
+        "name": "National Institute for Workers' Rights \u2014 AI Is Not the Boss of Me",
+        "url": "https://niwr.org/2026/08/11/ai-is-not-the-boss-of-me/"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Computer Says Fraud: How Welfare Algorithms Turned Being Poor Into a Crime",
+      "category": "AI Ethics",
+      "rationale": "Amnesty International's 'Coded Injustice' report on Denmark's fraud-scoring system, the Dutch toeslagenaffaire repayments (~$32,000 to each of 20,000 wrongly-accused, largely immigrant families), and an April 2026 arXiv audit ('Holes in the Public Record') showing governments are hiding these welfare systems from their own AI registers make this a live, escalating story. It is the purest Dawn subject on the board \u2014 bureaucracy as violence, opaque black boxes punishing the powerless, class and race baked into the code \u2014 and it appears nowhere in the covered list.",
+      "sources": [
+        {
+          "name": "GIJN \u2014 Amnesty International's Investigation of Algorithms in Denmark's Welfare System",
+          "url": "https://gijn.org/stories/amnesty-internationals-investigation-algorithms-denmarks-welfare-system/"
+        },
+        {
+          "name": "UBalt Law \u2014 Code and Consequences: How Fraud Detection Algorithms Criminalize Welfare",
+          "url": "https://scholarworks.law.ubalt.edu/all_fac/1205/"
+        },
+        {
+          "name": "Lighthouse Reports \u2014 Inside a Fraud Prediction Algorithm",
+          "url": "https://www.lighthousereports.com/investigation/unlocking-a-welfare-fraud-prediction-algorithm/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "The Town That Said No: How AI's Data Center Buildout Ran Into Local Democracy",
+      "category": "AI Society",
+      "rationale": "In Q1 2026 alone, local resistance blocked or delayed ~75 data-center projects worth ~$130B, with 71% of Americans (Gallup) opposing one in their area \u2014 a cross-partisan revolt over secret deals, rising water and power bills, and the absence of community consent, now spreading across four continents. Dawn's angle is the democratic-consent and 'who pays' story, not the carbon math already covered in 'Power Hungry' \u2014 following the money and naming who was left out of the room.",
+      "sources": [
+        {
+          "name": "The Fulcrum \u2014 Americans Are Revolting Against the Data Centers Powering AI",
+          "url": "https://thefulcrum.us/media-technology/ai-data-centers"
+        },
+        {
+          "name": "Dissent Magazine \u2014 After the Data Centers",
+          "url": "https://dissentmagazine.org/article/ai-data-center-backlash/"
+        },
+        {
+          "name": "Waging Nonviolence \u2014 The Data Center Fight Is Going Global",
+          "url": "https://wagingnonviolence.org/2026/07/the-data-center-fight-is-going-global/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

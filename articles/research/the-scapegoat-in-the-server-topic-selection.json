@@ -1,0 +1,63 @@
+{
+  "row": 55,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-09-01",
+  "chosen": {
+    "title": "The Scapegoat in the Server Room: How 'AI Did It' Became Corporate America's Favorite Layoff Excuse",
+    "category": "AI Labor",
+    "rationale": "AI became the single most-cited layoff reason in 2026 even as total layoffs fell 43% year-over-year and ~90% of 6,000 surveyed executives said AI had essentially zero effect on productivity or headcount \u2014 a live, documented gap between the automation story companies tell and the balance sheets they're actually managing. This is Dawn's exact register: follow the money, name who pays, and refuse the tech-inevitability framing that lets employers launder ordinary cost-cutting as progress.",
+    "sources": [
+      {
+        "name": "The Interview Guys \u2014 '56% of 2026 Layoffs Now Blame AI, But the Companies Cutting Jobs Are the Same Ones Spending Billions on It'",
+        "url": "https://blog.theinterviewguys.com/56-of-2026-layoffs-now-blame-ai-but-the-companies-cutting-jobs-are/"
+      },
+      {
+        "name": "Dataconomy \u2014 'Study Finds AI-driven Layoffs Are Failing To Deliver Productivity Gains'",
+        "url": "https://dataconomy.com/2026/08/13/ai-driven-layoffs-undermine-productivity/"
+      },
+      {
+        "name": "IBTimes UK \u2014 'More Than Half of Layoff Events Tracked in 2026 Cited AI or Automation'",
+        "url": "https://www.ibtimes.co.uk/ai-layoffs-2026-impact-1816503"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Your Voice Was Never Yours to Give: The Voiceprint Lawsuits Exposing How AI Was Trained on People Who Never Said Yes",
+      "category": "AI Ethics",
+      "rationale": "In May 2026 nine BIPA class actions hit Meta, Google, Apple, Amazon, NVIDIA and others, alleging they harvested voiceprints from public audio to train commercial voice models without consent \u2014 and because no AI-specific law exists, plaintiffs are reaching for decades-old biometric and wiretap statutes. It's a clean data-colonialism-and-consent story that lets Dawn build the argument like a legal brief and land it as a gut punch about who owns the raw material of the AI economy.",
+      "sources": [
+        {
+          "name": "American Bar Association \u2014 'Voiceprints, AI, and BIPA: New Trends in Biometric Privacy Litigation'",
+          "url": "https://www.americanbar.org/groups/litigation/resources/newsletters/class-actions-derivative-suits/voiceprints-ai-bipa-new-trends-biometric-privacy-litigation/"
+        },
+        {
+          "name": "Zwillgen \u2014 'Old Statutes, New Targets: How Plaintiffs Are Using Existing Privacy and Consumer Laws Against AI Companies'",
+          "url": "https://www.zwillgen.com/litigation/old-statutes-new-targets-plaintiffs-using-existing-privacy-consumer-laws-against-ai-companies/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Fifty Laws, No Floor: How the AI Chatbot Safety Fight Became a State-by-State Patchwork Nobody Can Enforce",
+      "category": "AI Ethics",
+      "rationale": "With wrongful-death settlements, an FTC inquiry into seven companion-chatbot companies, and nearly 100 chatbot bills across 34 states filling the vacuum where federal law should be, 2026 is the year AI accountability fractured into contradictory local rules companies can lobby, forum-shop, and outlast. Dawn can name the subtext the polite policy conversation avoids \u2014 that regulatory fragmentation is not a bug but a business model, and a patchwork is what capture looks like when it wants to be mistaken for progress.",
+      "sources": [
+        {
+          "name": "MultiState \u2014 'State Children's Online Safety Laws Expand to AI Chatbots'",
+          "url": "https://www.multistate.us/insider/2026/4/30/state-childrens-online-safety-laws-expand-beyond-social-media-in-2026"
+        },
+        {
+          "name": "TechPolicy.Press \u2014 'Lawsuits Exposed How Chatbots Endanger Children. Can the Senate's New Bills Fix It?'",
+          "url": "https://www.techpolicy.press/lawsuits-exposed-how-chatbots-endanger-children-can-the-senates-new-bills-fix-it/"
+        },
+        {
+          "name": "Built In \u2014 '12 Tech Laws Taking Effect in 2026 You Need to Know'",
+          "url": "https://builtin.com/articles/tech-laws-2026"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

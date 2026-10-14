@@ -1438,3 +1438,337 @@ This is a RECOVERABLE operator condition, not a code bug. Fix by:
   3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for trend_scout. (Joe's call — currently commented out in agents/.env on purpose.)
 ```
 - Full run log: pipeline.log
+
+
+### Pipeline CRASH — #63 'The Warning That Never Came: How OpenAI's PR Team Overruled Its Own Safety Engineers' — stage 'porter' (2026-09-15)
+<!-- aima-failure-key: 2026-09-15|porter|Command '['git', 'stash', '-u']' returned non-zero exit status 1. -->
+- **Occurrences:** 1
+- **First seen:** 2026-09-15T17:54:30
+- **Last seen:** 2026-09-15T17:54:30
+- **Error:** Command '['git', 'stash', '-u']' returned non-zero exit status 1.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 418, in run
+    porter_result = porter.run(spec, dry_run=dry_run, gs_enabled=cfg["GS_ENABLED"])
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 103, in run
+    git_push()
+    ~~~~~~~~^^
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 604, in git_push
+    subprocess.run(["git", "stash", "-u"], cwd=REPO_ROOT, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'stash', '-u']' returned non-zero exit status 1.
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline CRASH — #63 'The Warning That Never Came: How OpenAI's PR Team Overruled Its Own Safety Engineers' — stage 'porter' (2026-09-15)
+<!-- aima-failure-key: 2026-09-15|porter|Command '['git', 'pull', '--rebase', 'origin', 'main']' returned non-zero exit status 128. -->
+- **Occurrences:** 1
+- **First seen:** 2026-09-15T17:54:31
+- **Last seen:** 2026-09-15T17:54:31
+- **Error:** Command '['git', 'pull', '--rebase', 'origin', 'main']' returned non-zero exit status 128.
+- **Traceback:**
+```
+Traceback (most recent call last):
+  File "D:\Apps\DevOps\Github\aima\agents\marco.py", line 418, in run
+    porter_result = porter.run(spec, dry_run=dry_run, gs_enabled=cfg["GS_ENABLED"])
+  File "D:\Apps\DevOps\Github\aima\agents\porter.py", line 103, in run
+    git_push()
+    ~~~~~~~~^^
+  File "D:\Apps\DevOps\Github\aima\agents\base.py", line 607, in git_push
+    subprocess.run(["git", "pull", "--rebase", "origin", "main"],
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   cwd=REPO_ROOT, check=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'pull', '--rebase', 'origin', 'main']' returned non-zero exit status 128.
+
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — (spec not yet built) — stage 'priya' (2026-09-21)
+<!-- aima-failure-key: 2026-09-21|priya|[trend_scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-09-21T12:00:08
+- **Last seen:** 2026-09-21T12:00:08
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[trend_scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so trend_scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for trend_scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-09-21)
+<!-- aima-failure-key: 2026-09-21|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-09-21T17:23:32
+- **Last seen:** 2026-09-21T17:23:32
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-09-22)
+<!-- aima-failure-key: 2026-09-22|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 2
+- **First seen:** 2026-09-22T12:00:08
+- **Last seen:** 2026-09-22T12:16:09
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-09-29)
+<!-- aima-failure-key: 2026-09-29|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 2
+- **First seen:** 2026-09-29T12:58:15
+- **Last seen:** 2026-09-29T14:10:51
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-09-30)
+<!-- aima-failure-key: 2026-09-30|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-09-30T12:00:06
+- **Last seen:** 2026-09-30T12:00:06
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-01)
+<!-- aima-failure-key: 2026-10-01|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-10-01T12:00:06
+- **Last seen:** 2026-10-01T12:00:06
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-02)
+<!-- aima-failure-key: 2026-10-02|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-10-02T12:00:07
+- **Last seen:** 2026-10-02T12:00:07
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-05)
+<!-- aima-failure-key: 2026-10-05|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-10-05T12:00:06
+- **Last seen:** 2026-10-05T12:00:06
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-06)
+<!-- aima-failure-key: 2026-10-06|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-10-06T19:08:05
+- **Last seen:** 2026-10-06T19:08:05
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-07)
+<!-- aima-failure-key: 2026-10-07|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 2
+- **First seen:** 2026-10-07T14:13:30
+- **Last seen:** 2026-10-07T14:35:50
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-08)
+<!-- aima-failure-key: 2026-10-08|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-10-08T19:04:32
+- **Last seen:** 2026-10-08T19:04:32
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-09)
+<!-- aima-failure-key: 2026-10-09|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-10-09T12:00:07
+- **Last seen:** 2026-10-09T12:00:07
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-12)
+<!-- aima-failure-key: 2026-10-12|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 2
+- **First seen:** 2026-10-12T12:00:08
+- **Last seen:** 2026-10-12T12:07:36
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log
+
+
+### Pipeline HALT (recoverable) — #64 'The Creative Director Is Not Dead: Human Vision in an AI Production World' — stage 'scout' (2026-10-13)
+<!-- aima-failure-key: 2026-10-13|scout|[scout] needs a SEARCH-CAPABLE backend and none is available. -->
+- **Occurrences:** 1
+- **First seen:** 2026-10-13T12:00:07
+- **Last seen:** 2026-10-13T12:00:07
+- **What happened:** scout/trend_scout had no search-capable backend, so the run stopped cleanly rather than fabricating research from a tool-less fallback.
+- **Not a code bug.** No state advanced, no calendar row changed, nothing published.
+- **Fix:**
+```
+[scout] needs a SEARCH-CAPABLE backend and none is available.
+Claude Code OAuth is expired, so the CLI (with WebSearch/WebFetch) cannot run.
+Deliberately NOT falling back to the direct Anthropic API: it has no tools, so scout would invent trends/statistics from training data instead of surveying real sources. A clean halt beats fabricated research.
+This is a RECOVERABLE operator condition, not a code bug. Fix by:
+  1. Re-authenticate the CLI: open a terminal, run 'claude', complete OAuth. (Best option — restores real search, subscription-billed.)
+  2. Resolve the work by hand: for trend_scout, put a real title in the calendar row; for scout, pre-stage a research brief in articles/research/.
+  3. Fund OpenRouter and set OPENROUTER_API_KEY — its ':online' models keep real web search, so it IS an acceptable backend for scout. (Joe's call — currently commented out in agents/.env on purpose.)
+```
+- Full run log: pipeline.log

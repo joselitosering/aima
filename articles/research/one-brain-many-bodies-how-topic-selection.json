@@ -1,0 +1,55 @@
+{
+  "row": 61,
+  "author": "Kenji Nakamoto",
+  "persona": "kenji-nakamoto",
+  "date": "2026-09-10",
+  "chosen": {
+    "title": "One Brain, Many Bodies: How Robot Foundation Models Learned to Move the Whole Machine",
+    "category": "AI Science",
+    "rationale": "Google DeepMind's just-shipped Gemini Robotics 2 moves from tabletop upper-body tasks to true whole-body control, and its 'motion transfer' lets one learned policy adapt to a brand-new robot body in a few hours with under 200 examples \u2014 the mechanism-rich, embodied-AI story Kenji owns, and distinct from AIMA's existing IPO/factory-floor/world-model robot pieces.",
+    "sources": [
+      {
+        "name": "Google DeepMind \u2014 Gemini Robotics 2 brings whole body intelligence to robots",
+        "url": "https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/"
+      },
+      {
+        "name": "The Robot Report \u2014 DeepMind says Gemini Robotics 2 enables full body control",
+        "url": "https://www.therobotreport.com/google-deepmind-says-gemini-robotics-2-enables-full-body-control/"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Printing the Unprintable: How Green Lasers Finally Cracked Copper for the AI Hardware Boom",
+      "category": "AI Science",
+      "rationale": "2026 is a genuine inflection point for metal additive manufacturing: green-laser powder-bed fusion now prints pure copper at 99.8% density \u2014 the material behind the liquid cold plates cooling AI accelerators \u2014 plus gold, silver, and space-grade parts, with AI-driven process control making it production-ready. A sensory, build-it-yourself manufacturing/materials piece squarely in Kenji's wheelhouse, and untouched by the autonomous-lab and robotic-aerospace articles already covered.",
+      "sources": [
+        {
+          "name": "3Dnatives \u2014 Green laser enables 3D printing of pure copper and copper alloys",
+          "url": "https://www.3dnatives.com/en/addireen-green-laser-3d-printing-pure-copper-and-copper-alloys-301020244/"
+        },
+        {
+          "name": "TCT Magazine \u2014 Big metal 3D printing and lots of laser power: TCT Asia 2026",
+          "url": "https://www.tctmagazine.com/big-metal-3d-printing-and-lots-of-laser-power-tct-asia-2026-in-pictures/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Eyes That Never Blink: How AI Is Turning a Flood of Satellite Data Into a Living Map of Earth",
+      "category": "AI Science",
+      "rationale": "Private Earth-observation constellations (spotlighted at Small Satellite 2026) are generating more imagery than any human team can read, and AI is now the only way to make sense of the glut \u2014 powering climate and disaster monitoring while raising real surveillance and access risks. It sits at Kenji's aerospace + climate-tech + AI intersection and doesn't overlap AIMA's orbital-data-center or consumer-surveillance pieces.",
+      "sources": [
+        {
+          "name": "Space.com \u2014 The future of Earth observation: private satellites and AI bring benefits but also pose risks",
+          "url": "https://www.space.com/astronomy/earth/the-future-of-earth-observation-private-satellites-and-ai-bring-benefits-but-also-pose-risks"
+        },
+        {
+          "name": "SpaceNews \u2014 Small Satellite 2026 coverage",
+          "url": "https://spacenews.com/small-satellite-2026/"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}

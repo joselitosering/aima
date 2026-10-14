@@ -1,0 +1,67 @@
+{
+  "row": 63,
+  "author": "Dawn Ginhaua",
+  "persona": "dawn-ginhaua",
+  "date": "2026-09-15",
+  "chosen": {
+    "title": "The Warning That Never Came: How OpenAI's PR Team Overruled Its Own Safety Engineers",
+    "category": "AI Ethics",
+    "rationale": "Breaking right now (Sept 2-3, 2026): 30 new civil complaints allege OpenAI's safety team recommended referring a user's violent ChatGPT conversations to police before the Tumbler Ridge school shooting, and that global-affairs/PR leadership overrode them and stayed silent, invoking 'aiding and abetting' liability. It's the exact Arendtian banality-of-complicity, image-over-accountability story Dawn owns, and distinct from AIMA's existing 'courts ended the accountability holiday' piece because the hook is the internal corporate decision, not the courtroom outcome.",
+    "sources": [
+      {
+        "name": "NPR \u2014 New lawsuits claim OpenAI execs put image ahead of safety",
+        "url": "https://www.npr.org/2026/09/02/nx-s1-5953021/openai-tumbler-ridge-mass-shooting"
+      },
+      {
+        "name": "Bloomberg Law \u2014 OpenAI Faces New Lawsuits Linked to Shooting at Canadian School",
+        "url": "https://news.bloomberglaw.com/litigation/openai-faces-new-lawsuits-linked-to-shooting-at-canadian-school"
+      },
+      {
+        "name": "Al Jazeera \u2014 Families sue OpenAI, alleging chatbot aided in Canadian school shooting",
+        "url": "https://www.aljazeera.com/economy/2026/4/29/families-sue-openai-alleging-chatbot-aided-in-canadian-school-shooting"
+      }
+    ]
+  },
+  "rejected_candidates": [
+    {
+      "title": "Guilty Until Audited: How Welfare-Fraud Algorithms Turned Poverty Into Probable Cause",
+      "category": "AI Ethics",
+      "rationale": "A live 2026 thread \u2014 the April 2026 'Holes in the Public Record' paper shows welfare-adjudication algorithms are buried so claimants can't even prove one touched their case, while Sweden's fraud model was found to discriminate against women, migrants, and low-income claimants. Pure Dawn: follow-the-money, data colonialism, bureaucracy-as-violence, and a harm that lands only on people without lawyers. Not covered by AIMA's insurance/eviction/r\u00e9sum\u00e9 pieces, which target different systems.",
+      "sources": [
+        {
+          "name": "European AI & Society Fund \u2014 How AI-driven welfare systems are deepening inequality across Europe",
+          "url": "https://europeanaifund.org/newspublications/how-ai-driven-welfare-systems-are-deepening-inequality-and-poverty-across-europe/"
+        },
+        {
+          "name": "MIT Technology Review \u2014 Inside Amsterdam's high-stakes experiment to create fair welfare AI",
+          "url": "https://www.technologyreview.com/2025/06/11/1118233/amsterdam-fair-welfare-ai-discriminatory-algorithms-failure/"
+        },
+        {
+          "name": "The Conversation \u2014 AI algorithms intended to root out welfare fraud often end up punishing the poor",
+          "url": "https://theconversation.com/ai-algorithms-intended-to-root-out-welfare-fraud-often-end-up-punishing-the-poor-instead-131625"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    },
+    {
+      "title": "Whose Outbreak Counts: AI Disease Surveillance and the New Data Colonialism",
+      "category": "AI Ethics",
+      "rationale": "A cluster of Sept 2026 reviews (Frontiers, Lancet Regional Health, and an AJPH call flagged via EurekAlert) warn AI disease surveillance is outpacing governance \u2014 trusting hospital/lab data while dismissing community-generated data as 'noise,' entrenching bias against Indigenous, migrant, and low-resource populations. It's Dawn's feminist/postcolonial-critique-of-tech and surveillance beat applied to global public health, an angle none of AIMA's clinical-medicine pieces ('Healing Machine,' 'Diagnosis by Algorithm') touch.",
+      "sources": [
+        {
+          "name": "Frontiers in Digital Health \u2014 AI is transforming disease surveillance, but governance is failing to keep pace",
+          "url": "https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2026.1939009/full"
+        },
+        {
+          "name": "EurekAlert / American Journal of Public Health \u2014 need for stronger governance for ethical AI in public health",
+          "url": "https://www.eurekalert.org/news-releases/1142949"
+        },
+        {
+          "name": "The Lancet Regional Health \u2013 Americas \u2014 Modernizing public health surveillance leveraging AI",
+          "url": "https://www.thelancet.com/journals/lanam/article/PIIS2667-193X(26)00082-7/fulltext"
+        }
+      ],
+      "rejected_reason": "lower_rank"
+    }
+  ]
+}
